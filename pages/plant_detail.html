@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Detail | GNFC</title>
+
+  <link rel="stylesheet" href="css/phosphor.css">
+  <link rel="stylesheet" href="css/theme-vars.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/modal-ui.css">
+  <link rel="stylesheet" href="css/pages/style.css">
+
+  <script src="js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="js/theme-control.js"></script>
+  <script src="js/sidebar.js" defer></script>
+  <script src="js/header.js" defer></script>
+  <script src="js/plant.js" defer></script>
+</head>
+
+<body class="dashboard-body plant-page">
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <div id="header-container" data-title="Plant Logbook" data-back="technicianlogbook.html"></div>
+
+    <div class="dashboard-content plant-page__content">
+      <section class="plant-page__nav-card">
+        <div class="plant-page__nav-left">
+          <div class="plant-page__nav-icon">
+            <i class="ph-fill ph-factory" aria-hidden="true"></i>
+          </div>
+          <div class="plant-page__nav-copy">
+            <p class="plant-page__breadcrumb">Technician Logbook / Plant Detail</p>
+            <h2 class="plant-page__title" id="plant-page-title">Plant Logbook</h2>
+          </div>
+        </div>
+        <div class="plant-page__nav-meta">
+          <span class="elog-chip" id="plant-name-chip">Plant: METHANOL-1</span>
+          <span class="elog-chip" id="plant-view-chip">View: Today</span>
+        </div>
+      </section>
+
+      <section class="plant-toolbar-card">
+        <div class="plant-toolbar">
+          <div class="plant-toolbar__left">
+            <div class="plant-period-switcher" role="group" aria-label="Select period">
+              <button type="button" class="plant-period-switcher__button" data-view="tomorrow">Tomorrow</button>
+              <button type="button" class="plant-period-switcher__button is-active" data-view="today">Today</button>
+              <button type="button" class="plant-period-switcher__button" data-view="prev">PrevDay</button>
+              <span class="plant-period-switcher__divider" aria-hidden="true"></span>
+              <button type="button" class="plant-period-switcher__button" data-view="weekly">Weekly</button>
+              <button type="button" class="plant-period-switcher__button" data-view="monthly">Monthly</button>
+            </div>
+          </div>
+
+          <div class="plant-toolbar__right">
+            <button type="button" class="plant-action-button plant-action-button--primary" data-open-modal="job-modal">
+              <i class="ph-bold ph-plus" aria-hidden="true"></i>
+              <span>Add Job</span>
+            </button>
+            <button type="button" class="plant-action-button plant-action-button--primary plant-nav-button" data-target="/src/pages/assigntoday.html">
+              <span>Assign Today</span>
+            </button>
+            <button type="button" class="plant-action-button plant-action-button--primary plant-nav-button" data-target="/src/pages/assigntomorrow.html">
+              <span>Assign Tomorrow</span>
+            </button>
+            <span class="plant-toolbar__tools-divider" aria-hidden="true"></span>
+            <div class="plant-toolbar__tools">
+              <button type="button" class="plant-tool-button" id="toggle-pending-btn">
+                <i class="ph-bold ph-clock" aria-hidden="true"></i>
+                <span>Pending</span>
+              </button>
+              <button type="button" class="plant-tool-button plant-tool-button--warning is-hidden" id="acknowledge-btn" data-open-modal="ack-modal">
+                <i class="ph-bold ph-warning" aria-hidden="true"></i>
+                <span>Acknowledge</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="plant-filter-card is-hidden" id="job-filter-bar">
+        <div class="plant-filter-bar">
+          <div class="plant-filter-field-group">
+            <span class="plant-filter-label">Range:</span>
+            <input type="date" id="start-date" class="plant-filter-input">
+            <span class="plant-filter-separator">-</span>
+            <input type="date" id="end-date" class="plant-filter-input">
+          </div>
+
+          <div class="plant-filter-field-group plant-filter-field-group--wide">
+            <span class="plant-filter-label">Type:</span>
+            <select id="job-type-select" class="plant-filter-input plant-filter-select">
+              <option value="">All Jobs</option>
+            </select>
+          </div>
+
+          <button type="button" class="plant-filter-close" id="close-filter-bar" aria-label="Close filters">
+            <i class="ph-bold ph-x" aria-hidden="true"></i>
+          </button>
+        </div>
+      </section>
+
+      <section class="plant-table-card">
+        <div class="plant-table-card__header">
+          <div class="plant-table-card__summary">
+            <i class="ph-fill ph-table" aria-hidden="true"></i>
+            <span id="view-title" class="plant-table-card__title">Today Log Book</span>
+            <span id="record-count" class="plant-record-count">0 Records</span>
+          </div>
+
+          <div class="plant-table-card__actions">
+            <label class="plant-search-field">
+              <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+              <input type="text" id="table-search" placeholder="Search logs...">
+            </label>
+            <span id="view-date" class="plant-view-date">--.--.----</span>
+          </div>
+        </div>
+
+        <div class="plant-table-wrap">
+          <table id="plant-table" class="gnfc-table plant-table">
+            <thead class="plant-table__head">
+              <tr>
+                <th rowspan="2" data-sort="sr">Sr</th>
+                <th rowspan="2">Area</th>
+                <th>Loop No</th>
+                <th>Job</th>
+                <th rowspan="2" data-sort="tech">Tech</th>
+                <th rowspan="2">Description</th>
+                <th data-sort="engineer">Tech</th>
+                <th rowspan="2">Status</th>
+                <th rowspan="2" class="is-hidden" id="priority-column-header">Prio</th>
+                <th rowspan="2">Remarks</th>
+                <th rowspan="2">Add</th>
+              </tr>
+              <tr>
+                <th>Tag No</th>
+                <th>Type of Job</th>
+                <th>ENG</th>
+              </tr>
+            </thead>
+            <tbody id="plantTableBody" class="plant-table__body"></tbody>
+          </table>
+        </div>
+
+        <div class="plant-pagination" id="plant-table-pagination">
+          <button type="button" class="plant-pagination__button" id="page-prev">Prev</button>
+          <span class="plant-pagination__label" id="page-label">Page 1</span>
+          <button type="button" class="plant-pagination__button" id="page-next">Next</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="job-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell plant-modal-shell">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Assign Job</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="job-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+      </div>
+      <form id="job-modal-form">
+        <div class="gnfc-modal-body gnfc-modal-body--tight plant-modal-body--scroll">
+          <div class="plant-form-grid plant-form-grid--three">
+            <div class="plant-field">
+              <label class="gnfc-modal-label" for="job-date">Date (Server)</label>
+              <input id="job-date" type="text" readonly class="gnfc-modal-input">
+            </div>
+            <div class="plant-field">
+              <label class="gnfc-modal-label" for="job-tech">Technician</label>
+              <select id="job-tech" class="gnfc-modal-input"></select>
+            </div>
+            <div class="plant-field">
+              <label class="gnfc-modal-label" for="job-tech-custom">Or Enter Tech</label>
+              <input id="job-tech-custom" type="text" placeholder="Optional" class="gnfc-modal-input">
+            </div>
+            <div class="plant-field">
+              <label class="gnfc-modal-label" for="job-loop">Loop</label>
+              <select id="job-loop" class="gnfc-modal-input"></select>
+            </div>
+            <div class="plant-field">
+              <label class="gnfc-modal-label" for="job-tag">Tag</label>
+              <select id="job-tag" class="gnfc-modal-input"></select>
+            </div>
+            <div class="plant-field">
+              <label class="gnfc-modal-label" for="job-area">Area</label>
+              <select id="job-area" class="gnfc-modal-input"></select>
+            </div>
+            <div class="plant-field">
+              <label class="gnfc-modal-label" for="job-type">Type Of Job</label>
+              <select id="job-type" class="gnfc-modal-input"></select>
+            </div>
+            <div class="plant-field">
+              <label class="gnfc-modal-label" for="job-inst">Type Of Inst</label>
+              <select id="job-inst" class="gnfc-modal-input"></select>
+            </div>
+            <div class="plant-field plant-field--full">
+              <label class="gnfc-modal-label" for="job-desc">Description</label>
+              <textarea id="job-desc" rows="3" class="gnfc-modal-input" placeholder="Enter job description"></textarea>
+            </div>
+          </div>
+
+          <div class="plant-subpanel">
+            <div class="plant-subpanel__header">Operation Job Register / Weekly Pending</div>
+            <div class="plant-subpanel__body" id="ojr-pending-list"></div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="job-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="edit-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell plant-modal-shell">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Edit Assigned Job</h3>
+          <p class="gnfc-modal-subtitle">JOB ID: <span id="edit-job-id-display" class="plant-inline-accent">--</span></p>
+        </div>
+        <button type="button" class="gnfc-modal-close" data-close-modal="edit-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+      </div>
+      <form id="edit-modal-form" class="plant-modal-form">
+        <input id="edit-job-id" type="hidden">
+        <div class="gnfc-modal-body plant-modal-body--scroll">
+          <div class="plant-modal-stack">
+            <div class="plant-context-strip">
+              <div class="plant-context-strip__item">
+                <label class="gnfc-modal-label" for="edit-job-date">Date</label>
+                <input id="edit-job-date" type="text" readonly class="plant-context-strip__value">
+              </div>
+              <div class="plant-context-strip__item">
+                <label class="gnfc-modal-label" for="edit-job-assigned-to">Assigned To</label>
+                <input id="edit-job-assigned-to" type="text" readonly class="plant-context-strip__value plant-context-strip__value--accent">
+              </div>
+              <div class="plant-context-strip__item">
+                <label class="gnfc-modal-label" for="edit-job-by">Assigned By</label>
+                <input id="edit-job-by" type="text" readonly class="plant-context-strip__value">
+              </div>
+            </div>
+
+            <section class="plant-form-section">
+              <h4 class="plant-form-section__title plant-form-section__title--blue">Job Context</h4>
+              <div class="plant-section-card">
+                <div class="plant-field">
+                  <label class="gnfc-modal-label" for="edit-job-summary">Job Summary</label>
+                  <textarea id="edit-job-summary" rows="1" readonly class="gnfc-modal-input"></textarea>
+                </div>
+                <div class="plant-form-grid plant-form-grid--four">
+                  <div class="plant-field">
+                    <label class="gnfc-modal-label" for="edit-job-detail-date">Date</label>
+                    <input id="edit-job-detail-date" type="text" readonly class="gnfc-modal-input">
+                  </div>
+                  <div class="plant-field plant-field--span-two">
+                    <label class="gnfc-modal-label" for="edit-job-loop-tag">Loop / Tag</label>
+                    <input id="edit-job-loop-tag" type="text" readonly class="gnfc-modal-input plant-code-input">
+                  </div>
+                  <div class="plant-field">
+                    <label class="gnfc-modal-label" for="edit-job-type">Type</label>
+                    <input id="edit-job-type" type="text" readonly class="gnfc-modal-input">
+                    <input id="edit-job-inst" type="hidden">
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="plant-form-section">
+              <h4 class="plant-form-section__title plant-form-section__title--green">Execution Update</h4>
+              <div class="plant-modal-stack">
+                <div class="plant-field">
+                  <label class="gnfc-modal-label" for="edit-job-desc">Description / Remarks</label>
+                  <textarea id="edit-job-desc" rows="6" class="gnfc-modal-input plant-code-textarea" placeholder="Enter detailed job description..."></textarea>
+                </div>
+
+                <div class="plant-form-grid plant-form-grid--two">
+                  <div class="plant-field">
+                    <label class="gnfc-modal-label" for="edit-job-status">Current Status</label>
+                    <div class="plant-select-wrap">
+                      <select id="edit-job-status" class="gnfc-modal-input">
+                        <option value="IN PROGRESS">IN PROGRESS</option>
+                        <option value="OVER">OVER</option>
+                        <option value="HOLD">HOLD</option>
+                      </select>
+                      <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div class="plant-field">
+                    <label class="gnfc-modal-label" for="edit-job-extra-hours">Extra Duty (Hrs)</label>
+                    <input id="edit-job-extra-hours" type="number" min="0" step="1" class="gnfc-modal-input plant-code-input">
+                  </div>
+                </div>
+
+                <div class="plant-form-grid plant-form-grid--two">
+                  <div class="plant-field">
+                    <label class="gnfc-modal-label" for="edit-job-tech">Technician</label>
+                    <div class="plant-select-wrap">
+                      <select id="edit-job-tech" class="gnfc-modal-input"></select>
+                      <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div class="plant-field">
+                    <label class="gnfc-modal-label" for="edit-job-engineer">Engineer</label>
+                    <div class="plant-select-wrap">
+                      <select id="edit-job-engineer" class="gnfc-modal-input"></select>
+                      <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <label class="plant-toggle-row">
+                  <span>Emergency Call</span>
+                  <input id="edit-job-emergency" type="checkbox">
+                  <span class="plant-toggle-row__switch" aria-hidden="true"></span>
+                </label>
+              </div>
+            </section>
+
+            <div id="edit-warning" class="plant-inline-alert is-hidden">
+              <i class="ph-bold ph-warning" aria-hidden="true"></i>
+              <p id="edit-warning-text"></p>
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="edit-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="remark-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium plant-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Remark</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="remark-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+      </div>
+      <form id="remark-modal-form">
+        <input id="remark-job-id" type="hidden">
+        <div class="gnfc-modal-body plant-modal-body">
+          <div class="plant-remark-strip">
+            <span>Remark By: <span id="remark-by-display">ENGINEER</span></span>
+          </div>
+          <div class="plant-modal-stack">
+            <div class="plant-field">
+              <label class="gnfc-modal-label" for="remark-text">New Remark</label>
+              <textarea id="remark-text" rows="4" class="gnfc-modal-input plant-remark-textarea" placeholder="Enter remark..."></textarea>
+            </div>
+            <label class="plant-check-row"><input id="remark-status-over" type="checkbox"><span>Mark the job status as "OVER"</span></label>
+            <label class="plant-check-row"><input id="remark-ack-tech" type="checkbox"><span>Remark Acknowledgement By Technician</span></label>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="remark-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="priority-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Job Priority</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="priority-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+      </div>
+      <form id="priority-modal-form">
+        <input id="priority-job-id" type="hidden">
+        <input id="priority-value" type="hidden" value="0">
+        <div class="gnfc-modal-body plant-modal-body">
+          <label class="gnfc-modal-label" for="priority-grid">Select Priority (0-25)</label>
+          <div id="priority-grid" class="plant-priority-grid"></div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="priority-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Set Priority</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="ack-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Pending Remark Acknowledgement</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="ack-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+      </div>
+      <div class="gnfc-modal-body gnfc-modal-body--tight">
+        <div id="ack-list" class="plant-list-panel"></div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="ack-modal">Close</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="acknowledge-selected-btn">Acknowledge Selected</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="reminder-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Job Planner / ISO14001 Due Jobs</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="reminder-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+      </div>
+      <div id="reminder-list" class="gnfc-modal-body gnfc-modal-body--tight plant-modal-body--scroll"></div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="reminder-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="history-type-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header plant-modal-header--center">
+        <h3 class="gnfc-modal-title" id="history-plant-name">METHANOL-1</h3>
+        <p class="gnfc-modal-subtitle">Add To History</p>
+      </div>
+      <div class="gnfc-modal-body gnfc-modal-body--tight plant-modal-center">
+        <p class="plant-center-label">Select History Type</p>
+        <div class="plant-history-options">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="history-system-btn">System History</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-success" id="history-general-btn">General History</button>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer plant-modal-footer--center">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="history-type-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="general-history-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell plant-modal-shell">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Add To History</h3>
+          <span class="gnfc-modal-subtitle" id="general-history-plant-name">METHANOL-1</span>
+        </div>
+        <div class="plant-header-badge-row">
+          <span id="history-type-badge" class="plant-history-badge">General History</span>
+          <button type="button" class="gnfc-modal-close" data-close-modal="general-history-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="gnfc-modal-body gnfc-modal-body--tight plant-modal-body--scroll">
+        <p class="plant-section-note">New Record</p>
+        <div class="plant-form-grid plant-form-grid--four">
+          <div class="plant-field plant-field--stack">
+            <label class="gnfc-modal-label" for="hist-date">Date</label>
+            <input type="date" id="hist-date" class="gnfc-modal-input">
+            <label class="gnfc-modal-label" for="hist-loop">Loop Name</label>
+            <input type="text" id="hist-loop" readonly class="gnfc-modal-input">
+          </div>
+          <div class="plant-field">
+            <label class="gnfc-modal-label" for="hist-insttag">InstTag</label>
+            <select id="hist-insttag" class="gnfc-modal-input"></select>
+          </div>
+          <div class="plant-field">
+            <label class="gnfc-modal-label" for="hist-jobtype">Type of Job</label>
+            <select id="hist-jobtype" class="gnfc-modal-input"></select>
+          </div>
+          <div class="plant-field">
+            <label class="gnfc-modal-label" for="hist-insttype">Type of Inst</label>
+            <input type="text" id="hist-insttype" readonly class="gnfc-modal-input">
+          </div>
+        </div>
+        <div class="plant-field plant-field--spaced">
+          <label class="gnfc-modal-label" for="hist-desc">Job Description</label>
+          <textarea id="hist-desc" rows="4" class="gnfc-modal-input plant-code-textarea"></textarea>
+        </div>
+        <div class="plant-form-grid plant-form-grid--four">
+          <div class="plant-field">
+            <label class="gnfc-modal-label" for="hist-status">Job Status</label>
+            <select id="hist-status" class="gnfc-modal-input"></select>
+          </div>
+          <div class="plant-field">
+            <label class="gnfc-modal-label" for="hist-tech">Tech Name</label>
+            <select id="hist-tech" class="gnfc-modal-input"></select>
+          </div>
+          <div class="plant-field">
+            <label class="gnfc-modal-label" for="hist-eng">Eng</label>
+            <select id="hist-eng" class="gnfc-modal-input"></select>
+          </div>
+          <div class="plant-field">
+            <label class="gnfc-modal-label" for="hist-area">Area</label>
+            <select id="hist-area" class="gnfc-modal-input"></select>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="general-history-modal">Cancel</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="add-history-btn">Add</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

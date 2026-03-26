@@ -15,163 +15,21 @@
 
   <script src="js/vendor/jquery-3.7.1.min.js"></script>
   <script src="js/theme-control.js"></script>
+  <script src="js/sidebar.js" defer></script>
+  <script src="js/header.js" defer></script>
 </head>
 
 <body class="dashboard-body">
 
   <!-- Sidebar Container -->
   <div class="sidebar-container">
-    <aside class="app-sidebar w-60">
-      <div class="sidebar-header px-4">
-        <div class="logo-wrapper">
-          <img src="assets/images/gnfc-full-logo.png"
-            onerror="this.onerror=null;this.src='assets/images/gnfc-logo.png';" class="logo-img" alt="GNFC Logo">
-        </div>
-      </div>
-
-      <nav class="sidebar-nav">
-        <!-- Dashboard -->
-        <a href="dashboard.html" class="sidebar-link active" data-id="dashboard">
-          <i class="ph ph-bold ph-squares-four"></i>
-          <span class="sidebar-text">Dashboard</span>
-        </a>
-        <!-- Plants -->
-        <a href="#" class="sidebar-link" data-id="spp">
-          <i class="ph ph-bold ph-plant"></i>
-          <span class="sidebar-text">SPP</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="plants">
-          <i class="ph ph-bold ph-buildings"></i>
-          <span class="sidebar-text">Plant</span>
-        </a>
-
-        <!-- Logs -->
-        <a href="#" class="sidebar-link" data-id="technician_logbook">
-          <i class="ph ph-bold ph-factory"></i>
-          <span class="sidebar-text">Technician Logbook</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="shift_logbook_officer">
-          <i class="ph ph-bold ph-notebook"></i>
-          <span class="sidebar-text">Officer Logbook</span>
-        </a>
-
-        <!-- Compliance -->
-        <a href="#" class="sidebar-link" data-id="iso">
-          <i class="ph ph-bold ph-certificate"></i>
-          <span class="sidebar-text">ISO/OHSAS/CPCB</span>
-        </a>
-
-        <!-- Jobs & Utility -->
-        <a href="#" class="sidebar-link" data-id="job_list">
-          <i class="ph ph-bold ph-list-bullets"></i>
-          <span class="sidebar-text">JOB LIST</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="utility">
-          <i class="ph ph-bold ph-lightning"></i>
-          <span class="sidebar-text">UTILITY</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="cms">
-          <i class="ph ph-bold ph-monitor"></i>
-          <span class="sidebar-text">CMS</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="inst_ws">
-          <i class="ph ph-bold ph-desktop"></i>
-          <span class="sidebar-text">INST WS</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="opr_job_reg">
-          <i class="ph ph-bold ph-clipboard-text"></i>
-          <span class="sidebar-text">OPR. Job Reg</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="job_analysis">
-          <i class="ph ph-bold ph-chart-bar"></i>
-          <span class="sidebar-text">Job Analysis</span>
-        </a>
-
-        <!-- Communication & Helpers -->
-        <a href="#" class="sidebar-link" data-id="send_mail">
-          <i class="ph ph-bold ph-envelope"></i>
-          <span class="sidebar-text">SEND MAIL</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="helper_details">
-          <i class="ph ph-bold ph-users-three"></i>
-          <span class="sidebar-text">HELPER DETAILS</span>
-        </a>
-
-        <!-- System -->
-        <a href="#" class="sidebar-link" data-id="user_info">
-          <i class="ph ph-bold ph-user"></i>
-          <span class="sidebar-text">USER INFO</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="settings">
-          <i class="ph ph-bold ph-gear"></i>
-          <span class="sidebar-text">Settings</span>
-        </a>
-        <a href="#" class="sidebar-link" data-id="help">
-          <i class="ph ph-bold ph-question"></i>
-          <span class="sidebar-text">Help</span>
-        </a>
-
-        <a href="#" class="sidebar-link" data-id="admin">
-          <i class="ph ph-bold ph-shield-check"></i>
-          <span class="sidebar-text">Admin</span>
-        </a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <div class="user-profile">
-          <img src="https://ui-avatars.com/api/?name=Admin+User&background=2c3235&color=fff" class="user-avatar"
-            alt="User">
-          <div class="user-info">
-            <p class="user-name">Admin User</p>
-            <p class="sign-out-btn">Sign out</p>
-          </div>
-          <i class="ph ph-bold ph-sign-out cursor-pointer font-24px" style="color: var(--typo-label);"></i>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Custom Tooltip Element -->
-    <div class="sidebar-tooltip hidden">
-      <span class="sidebar-tooltip-text"></span>
-      <div class="tooltip-arrow"></div>
-    </div>
+    <!-- Sidebar will be injected here by js/sidebar.js -->
   </div>
 
   <main class="main-wrapper">
     <!-- Header Placeholder -->
-    <div id="header-container">
-      <div class="header-bar">
-        <div class="flex items-center gap-4px font-20px">
-          <i class="sidebar-toggle-header ph ph-list color-label cursor-pointer font-20px"></i>
-          <h2 class="header-title">Dashboard</h2>
-        </div>
-
-        <div class="flex items-center gap-2px">
-          <!-- Theme & Font Controls -->
-          <div class="flex items-center gap-2px">
-            <!-- Font Size & Theme Group -->
-            <div class="ui-control-set">
-              <button class="fontDecreaseBtn ui-btn-icon" title="Decrease Font">
-                <i class="ph ph-text-aa font-12px"></i>
-              </button>
-              <div class="ui-divider-v"></div>
-              <button class="fontIncreaseBtn ui-btn-icon" title="Increase Font">
-                <i class="ph ph-text-aa font-12px"></i>
-              </button>
-              <div class="ui-divider-v"></div>
-              <button class="themeToggleBtn ui-btn-icon" title="Toggle Theme">
-                <i class="themeIcon ph ph-moon"></i>
-              </button>
-            </div>
-
-            <!-- Back Button -->
-            <button class="ui-btn-pill" id="backBtn">
-              <i class="ph-bold ph-arrow-u-up-left"></i>
-              <span>Back</span>
-            </button>
-          </div>
-        </div>
-      </div>
+    <div id="header-container" data-title="Dashboard" data-back="login.html">
+      <!-- Header will be injected by js/header.js -->
     </div>
 
     <!-- ═══════ SCROLLABLE CONTENT ═══════ -->
@@ -515,54 +373,7 @@
   <script>
     $(function () {
 
-      // --- Sidebar & Profile Logic ---
-      const $sidebar = $('.app-sidebar');
-      const $toggleBtn = $('.sidebar-toggle-header');
-      const $sidebarTexts = $('.sidebar-text');
-      const $userInfo = $('.user-info');
-      const $userAvatar = $('.user-avatar');
-
-      // Load User Info
-      const currentUserName = localStorage.getItem('currentUserName') || 'Admin User';
-      $('.user-name').text(currentUserName);
-      $('.user-avatar').attr('src', `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUserName)}&background=2c3235&color=fff`);
-
-      // Sidebar Toggle Function
-      const updateSidebarUI = (collapsed) => {
-        if (collapsed) {
-          $sidebar.removeClass('w-60').addClass('w-20');
-          $sidebarTexts.addClass('hidden');
-          $userInfo.addClass('hidden');
-          $userAvatar.addClass('hidden');
-          $toggleBtn.removeClass('ph-sidebar-simple').addClass('ph-list');
-        } else {
-          $sidebar.removeClass('w-20').addClass('w-60');
-          $sidebarTexts.removeClass('hidden');
-          $userInfo.removeClass('hidden');
-          $userAvatar.removeClass('hidden');
-          $toggleBtn.removeClass('ph-list').addClass('ph-sidebar-simple');
-        }
-      };
-
-      // Initial State
-      let isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-      updateSidebarUI(isCollapsed);
-
-      $toggleBtn.on('click', function () {
-        isCollapsed = !isCollapsed;
-        localStorage.setItem('sidebarCollapsed', isCollapsed);
-        updateSidebarUI(isCollapsed);
-      });
-
-      // Sign Out Logic
-      const logout = () => {
-        localStorage.removeItem('sidebarCollapsed');
-        localStorage.removeItem("userRole");
-        localStorage.removeItem("currentUserName");
-        window.location.href = "Login.html";
-      };
-
-      $('.sign-out-btn, .ph-sign-out').on('click', logout);
+      // --- Sidebar & Profile Logic moved to js/sidebar.js ---
 
       // --- Live Data (Clock, Date, Greeting) ---
       const $greetingEl = $('#greeting-time');
@@ -602,10 +413,7 @@
       setInterval(updateDateTime, 1000);
       setInterval(updateGreeting, 60000);
 
-      // Back Button Logic
-      $('#backBtn').on('click', function () {
-        window.location.href = "login.html";
-      });
+      // Back Button Logic moved to js/header.js
 
       // Notice Modal Logic
       const $modal = $('#notice-modal');

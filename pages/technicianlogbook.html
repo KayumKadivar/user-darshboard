@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technician's Logbook | GNFC</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'technician_logbook';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <div class="sidebar-container"></div>
+
+  <main class="technician-main">
+
+    <div id="header-container" data-title="Technician's Logbook" data-back="dashboard.html">
+    </div>
+
+    <div class="main-scroll custom-scroll">
+
+      <!-- Topbar -->
+      <div class="logbook-custom-topbar animate-fade-in">
+
+        <div class="time-range-label">
+
+          <div class="time-label-row">
+            <span class="icon-box">
+              <i class="ph-fill ph-calendar-blank"></i>
+            </span>
+            <span>Time Range</span>
+          </div>
+
+          <div class="time-btn-container">
+            <button data-view="today" class="time-btn is-active">Today</button>
+            <button data-view="prev" class="time-btn">Prev Day</button>
+            <button data-view="weekly" class="time-btn">Weekly</button>
+          </div>
+
+        </div>
+
+        <div class="total-count-chip">
+          <i class="ph-bold ph-factory"></i>
+          <span>Total : <span id="total-count">17</span></span>
+        </div>
+
+      </div>
+
+      <!-- Plant Panel -->
+      <div class="logbook-main-panel animate-fade-in">
+
+        <h3 class="section-label mb-16px plant-unit-label">Select Plant Unit</h3>
+
+        <div id="plant-grid" class="logbook-plant-list"></div>
+
+      </div>
+
+    </div>
+
+    <!-- Quick Access Section -->
+    <div class="quick-access-wrapper animate-fade-in">
+
+      <div class="quick-access-header">
+        <h3 class="section-label">Officer Logbook Quick Access</h3>
+        <div class="header-line"></div>
+      </div>
+
+      <div class="quick-access-grid">
+
+        <!-- Card 1 -->
+        <button onclick="window.location.href='pages/shift_logbook.html?view=today'" class="qa-card qa-blue">
+
+          <div class="qa-icon-box">
+            <i class="ph-fill ph-calendar-check"></i>
+          </div>
+
+          <div class="qa-content">
+            <p class="qa-label">View Report</p>
+            <h4 class="qa-title">Today</h4>
+          </div>
+
+          <i class="ph-bold ph-arrow-up-right qa-arrow"></i>
+        </button>
+
+        <!-- Card 2 -->
+        <button onclick="window.location.href='pages/shift_logbook.html?view=prev'" class="qa-card qa-teal">
+
+          <div class="qa-icon-box">
+            <i class="ph-fill ph-clock-counter-clockwise"></i>
+          </div>
+
+          <div class="qa-content">
+            <p class="qa-label">View Report</p>
+            <h4 class="qa-title">Previous Day</h4>
+          </div>
+
+          <i class="ph-bold ph-arrow-up-right qa-arrow"></i>
+        </button>
+
+        <!-- Card 3 -->
+        <button onclick="window.location.href='pages/shift_logbook.html?view=weekly'" class="qa-card qa-purple">
+
+          <div class="qa-icon-box">
+            <i class="ph-fill ph-calendar-plus"></i>
+          </div>
+
+          <div class="qa-content">
+            <p class="qa-label">View Report</p>
+            <h4 class="qa-title">Weekly</h4>
+          </div>
+
+          <i class="ph-bold ph-arrow-up-right qa-arrow"></i>
+        </button>
+
+        <!-- Card 4 -->
+        <button onclick="window.location.href='pages/shift_logbook.html?view=monthly'" class="qa-card qa-green">
+
+          <div class="qa-icon-box">
+            <i class="ph-fill ph-calendar"></i>
+          </div>
+
+          <div class="qa-content">
+            <p class="qa-label">View Report</p>
+            <h4 class="qa-title">Monthly</h4>
+          </div>
+
+          <i class="ph-bold ph-arrow-up-right qa-arrow"></i>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="custom-footer">
+      <p class="footer-text">Instrument Department • GNFC Ltd.</p>
+      <p class="footer-copy">© 2026</p>
+    </footer>
+
+  </main>
+
+  <!-- JS -->
+  <script>
+    const timeButtons = document.querySelectorAll(".time-btn");
+    let selectedView = localStorage.getItem('technicianSelectedView') || "today";
+
+    function setSelectedView(viewName, persist = true) {
+      selectedView = ["today", "prev", "weekly", "monthly"].includes(viewName) ? viewName : "today";
+
+      timeButtons.forEach(btn => {
+        btn.classList.toggle("is-active", btn.dataset.view === selectedView);
+      });
+
+      if (persist) {
+        localStorage.setItem('technicianSelectedView', selectedView);
+      }
+
+      renderPlantCards();
+    }
+
+    timeButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        setSelectedView(btn.dataset.view, true);
+      });
+    });
+  </script>
+
+  <script>
+    const units = [
+      'AA', 'AAQM', 'AMM', 'ANIPF', 'ANITDI',
+      'ASGP', 'BAGG', 'BOILER', 'CMS', 'CPSU',
+      'DM', 'EA', 'FA', 'INST WS', 'M1', 'M2', 'UREA'
+    ];
+
+    const grid = document.getElementById('plant-grid');
+
+    function buildPlantGrid() {
+      let html = '';
+
+      units.forEach(code => {
+        html += `
+          <a href="pages/plant_detail.html?plant=${code}&view=${selectedView}"
+             class="plant-card" data-plant="${code}">
+             
+            <div class="plant-card-content">
+              <span class="plant-card-label">Unit Code</span>
+              <span class="plant-card-name">${code}</span>
+            </div>
+
+            <i class="ph ph-caret-right plant-card-chevron"></i>
+
+          </a>
+        `;
+      });
+
+      grid.innerHTML = html;
+      document.getElementById('total-count').textContent = units.length;
+    }
+
+    function renderPlantCards() {
+      document.querySelectorAll('[data-plant]').forEach(card => {
+        const code = card.dataset.plant;
+        card.href = `pages/plant_detail.html?plant=${code}&view=${selectedView}`;
+      });
+    }
+
+    buildPlantGrid();
+    setSelectedView(selectedView, false);
+  </script>
+
+</body>
+
+</html>
