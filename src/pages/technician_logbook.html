@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technician's Logbook | GNFC</title>
+
+  <!-- External Styles -->
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/logbook_styles.css">
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <!-- Vendor Scripts -->
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <script>
+    window.activePage = 'technician_logbook';
+  </script>
+</head>
+
+<body class="bg-dark-bg color-primary font-sans h-screen flex overflow-hidden">
+
+  <!-- Sidebar Placeholder (assuming project structure handles this) -->
+  <div id="sidebar-container"></div>
+  
+  <main class="flex-1 flex flex-col h-screen overflow-hidden">
+
+    <!-- Header Placeholder -->
+    <div id="header-container">
+      <div class="header-bar">
+        <div class="flex items-center gap-4px font-20px">
+          <i class="sidebar-toggle-header ph ph-list color-label cursor-pointer font-20px"></i>
+          <h2 class="header-title">Technician's Logbook</h2>
+        </div>
+
+        <div class="flex items-center gap-2px">
+          <!-- Theme & Font Controls -->
+          <div class="flex items-center gap-2px">
+            <!-- Font Size & Theme Group -->
+            <div class="ui-control-set">
+              <button class="fontDecreaseBtn ui-btn-icon" title="Decrease Font">
+                <i class="ph ph-text-aa font-12px"></i>
+              </button>
+              <div class="ui-divider-v"></div>
+              <button class="fontIncreaseBtn ui-btn-icon" title="Increase Font">
+                <i class="ph ph-text-aa font-12px"></i>
+              </button>
+              <div class="ui-divider-v"></div>
+              <button class="themeToggleBtn ui-btn-icon" title="Toggle Theme">
+                <i class="themeIcon ph ph-moon"></i>
+              </button>
+            </div>
+
+            <!-- Back Button -->
+            <button class="ui-btn-pill" id="backBtn">
+              <i class="ph-bold ph-arrow-u-up-left"></i>
+              <span>Back</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto custom-scroll">
+
+      <!-- Top Stats Bar + Time Range -->
+      <div class="px-4 pt-4 pb-2">
+        <div class="glass-card gradient-border rounded-xl p-4 animate-fade-in">
+          <div class="flex flex-col lg-flex-row items-start lg:items-center justify-between gap-4 flex-wrap">
+
+            <!-- Time Range Selector -->
+            <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-gnfc-blue-15 flex items-center justify-center">
+                  <i class="ph-fill ph-calendar-blank color-blue font-15px"></i>
+                </div>
+                <span class="font-14px fw-bold text-upper ls-widest color-secondary">Time Range</span>
+              </div>
+              <div class="h-5 w-px border-slate-600"></div>
+              <div class="flex bg-dark-bg-80 p-1 rounded-lg border border-slate-700 gap-x-1">
+                <button data-view="today"
+                  class="time-btn px-4 py-1 font-14px fw-bold rounded-md transition-all duration-300 border border-transparent"
+                  aria-pressed="true">
+                  Today
+                </button>
+                <button data-view="prev"
+                  class="time-btn px-4 py-1 font-14px fw-bold rounded-md transition-all duration-300 border border-transparent color-secondary"
+                  aria-pressed="false">
+                  Prev Day
+                </button>
+                <button data-view="weekly"
+                  class="time-btn px-4 py-1 font-14px fw-bold rounded-md transition-all duration-300 border border-transparent color-secondary"
+                  aria-pressed="false">
+                  Weekly
+                </button>
+              </div>
+            </div>
+
+            <!-- Summary Stats -->
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-2 bg-gnfc-blue-10 border border-gnfc-blue-20 rounded-lg px-3 py-1p5">
+                <i class="ph-bold ph-factory color-blue font-14px"></i>
+                <span class="font-13px fw-bold color-blue text-upper ls-wider">Total: <span
+                    id="total-count">17</span></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Plant Units Grid -->
+      <div class="px-4 py-2">
+        <div class="glass-card rounded-xl overflow-hidden animate-fade-in shadow-md"
+          style="animation-delay: 0.1s;">
+
+          <div class="flex items-center justify-between px-5 py-3 border-b border-slate-700">
+            <div class="flex items-center gap-3">
+              <div class="w-1 h-5 rounded-full bg-gradient-to-b from-gnfc-blue to-gnfc-teal"></div>
+              <h3 class="fw-bold font-18px tracking-tight section-label cursor-default">Select Plant Unit</h3>
+            </div>
+          </div>
+
+          <div id="plant-grid"
+            class="p-4 grid grid-cols-2 sm-grid-cols-3 lg-grid-cols-4 xl-grid-cols-5 grid-cols-xxl-6 gap-3">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Officer Logbook Quick Access -->
+      <div class="px-4 pt-2 pb-6">
+        <div class="animate-fade-in" style="animation-delay: 0.2s;">
+
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-1 h-6 rounded-full bg-gradient-to-b from-gnfc-blue to-gnfc-purple"></div>
+            <h3 class="fw-bold font-18px tracking-tight section-label cursor-default">Officer Logbook Quick Access</h3>
+            <div class="h-px flex-1 bg-gradient-to-r from-slate-600 to-transparent"></div>
+          </div>
+
+          <div class="grid grid-cols-2 lg-grid-cols-4 gap-3">
+
+            <button onclick="window.location.href='shift_logbook.html?view=today'"
+              class="qa-card today border-2 border-slate-600 p-5 rounded-xl group text-left">
+              <div class="flex items-start justify-between mb-3">
+                <div
+                  class="w-10 h-10 rounded-xl bg-gnfc-blue-10 border border-gnfc-blue-20 flex items-center justify-center group-hover-scale-110 transition-all duration-300">
+                  <i class="ph-fill ph-calendar-check color-blue font-15px"></i>
+                </div>
+                <i
+                  class="ph-bold ph-arrow-up-right color-secondary group-hover-color-blue transition-colors font-15px"></i>
+              </div>
+              <p class="font-13px fw-bold color-secondary text-upper ls-widest mb-0-5">View Report</p>
+              <h4 class="font-15px fw-bold group-hover-color-blue transition-colors m-0">Today</h4>
+            </button>
+
+            <button onclick="window.location.href='shift_logbook.html?view=prev'"
+              class="qa-card prev border-2 border-slate-600 p-5 rounded-xl group text-left">
+              <div class="flex items-start justify-between mb-3">
+                <div
+                  class="w-10 h-10 rounded-xl bg-gnfc-teal-10 border border-gnfc-teal-20 flex items-center justify-center group-hover-scale-110 transition-all duration-300">
+                  <i class="ph-fill ph-clock-counter-clockwise color-teal font-15px"></i>
+                </div>
+                <i
+                  class="ph-bold ph-arrow-up-right color-secondary group-hover-color-teal transition-colors font-15px"></i>
+              </div>
+              <p class="font-13px fw-bold color-secondary text-upper ls-widest mb-0-5">View Report</p>
+              <h4 class="font-15px fw-bold group-hover-color-teal transition-colors m-0">Previous Day</h4>
+            </button>
+
+            <button onclick="window.location.href='shift_logbook.html?view=weekly'"
+              class="qa-card weekly border-2 border-slate-600 p-5 rounded-xl group text-left">
+              <div class="flex items-start justify-between mb-3">
+                <div
+                  class="w-10 h-10 rounded-xl bg-gnfc-purple-10 border border-gnfc-purple-20 flex items-center justify-center group-hover-scale-110 transition-all duration-300">
+                  <i class="ph-fill ph-calendar-plus color-purple font-15px"></i>
+                </div>
+                <i
+                  class="ph-bold ph-arrow-up-right color-secondary group-hover-color-purple transition-colors font-15px"></i>
+              </div>
+              <p class="font-13px fw-bold color-secondary text-upper ls-widest mb-0-5">View Report</p>
+              <h4 class="font-15px fw-bold group-hover-color-purple transition-colors m-0">Weekly</h4>
+            </button>
+
+            <button onclick="window.location.href='shift_logbook.html?view=monthly'"
+              class="qa-card monthly border-2 border-slate-600 p-5 rounded-xl group text-left">
+              <div class="flex items-start justify-between mb-3">
+                <div
+                  class="w-10 h-10 rounded-xl bg-gnfc-emerald-10 border border-gnfc-emerald-20 flex items-center justify-center group-hover-scale-110 transition-all duration-300">
+                  <i class="ph-fill ph-calendar color-green font-15px"></i>
+                </div>
+                <i
+                  class="ph-bold ph-arrow-up-right color-secondary group-hover-color-green transition-colors font-15px"></i>
+              </div>
+              <p class="font-13px fw-bold color-secondary text-upper ls-widest mb-0-5">View Report</p>
+              <h4 class="font-15px fw-bold group-hover-color-green transition-colors m-0">Monthly</h4>
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-700 py-2p5 px-4 bg-dark-panel backdrop-blur-sm">
+      <div class="flex items-center justify-between">
+        <p class="font-13px color-secondary fw-medium">Instrument Department &bull; GNFC Ltd.</p>
+        <p class="font-13px color-secondary typo-mono m-0">&copy; 2026</p>
+      </div>
+    </footer>
+
+  </main>
+
+
+  <!-- Time Range Logic -->
+  <script>
+    $(document).ready(function() {
+      const $timeButtons = $(".time-btn");
+      let selectedView = "today";
+
+      function setSelectedView(viewName, persist = true) {
+        selectedView = ["today", "prev", "weekly", "monthly"].includes(viewName) ? viewName : "today";
+
+        $timeButtons.each(function() {
+          const $btn = $(this);
+          const btnView = $btn.data("view") || "";
+          const isActive = btnView === selectedView;
+
+          $btn.removeClass("bg-gnfc-blue color-white shadow-md active");
+
+          if (isActive) {
+            $btn.addClass("active").attr("aria-pressed", "true");
+          } else {
+            $btn.attr("aria-pressed", "false");
+          }
+        });
+
+        // Mock Store interaction
+        if (persist && window.ElogbookStore && typeof window.ElogbookStore.setTechnicianSelectedView === "function") {
+          window.ElogbookStore.setTechnicianSelectedView(selectedView);
+        }
+        renderPlantCards();
+      }
+
+      $timeButtons.on("click", function() {
+        setSelectedView($(this).data("view") || "today", true);
+      });
+
+      // Plant Grid Logic
+      const units = [
+        'AA', 'AAQM', 'AMM', 'ANIPF', 'ANITDI',
+        'ASGP', 'BAGG', 'BOILER', 'CMS', 'CPSU',
+        'DM', 'EA', 'FA', 'INST WS', 'M1', 'M2', 'UREA'
+      ];
+
+      const $grid = $('#plant-grid');
+
+      function buildPlantGrid() {
+        let gridContent = '';
+        for (let i = 0; i < units.length; i++) {
+          const code = units[i];
+          const href = `/src/pages/plant_detail.html?plant=${encodeURIComponent(code)}&view=${encodeURIComponent(selectedView)}`;
+          gridContent += `
+            <a href="${href}" data-plant="${code}"
+               class="plant-card rounded-lg px-4 py-3 group flex items-center justify-between gap-2"
+               style="animation: fadeInUp 0.4s cubic-bezier(0.4,0,0.2,1) ${i * 0.03}s both;">
+              <div class="min-w-0">
+                <p class="plant-card-subtitle mb-0-5">Unit Code</p>
+                <h3 class="plant-card-title truncate">${code}</h3>
+              </div>
+              <div class="plant-card-action shrink-0">
+                <i class="ph-bold ph-caret-right font-15px"></i>
+              </div>
+            </a>
+          `;
+        }
+        $grid.html(gridContent);
+        $('#total-count').text(units.length);
+      }
+
+      function renderPlantCards() {
+        const $cards = $grid.find('a[data-plant]');
+        if ($cards.length === 0) {
+          buildPlantGrid();
+          return;
+        }
+        $cards.each(function() {
+          const $card = $(this);
+          const code = $card.attr('data-plant');
+          $card.attr("href", `/src/pages/plant_detail.html?plant=${encodeURIComponent(code)}&view=${encodeURIComponent(selectedView)}`);
+        });
+      }
+
+      // Initialize
+      const persistedView = (window.ElogbookStore && typeof window.ElogbookStore.getTechnicianSelectedView === "function")
+        ? window.ElogbookStore.getTechnicianSelectedView()
+        : "today";
+      buildPlantGrid();
+      setSelectedView(persistedView, false);
+
+      // Initialize Sidebar
+      if (typeof renderSidebar === 'function') {
+        renderSidebar('technician_logbook');
+      }
+
+      // Back Button Logic
+      $('#backBtn').on('click', function () {
+        window.location.href = "../../index.html";
+      });
+    });
+  </script>
+
+</body>
+
+</html>

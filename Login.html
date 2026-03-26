@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GNFC | Login</title>
+
+  <link rel="stylesheet" href="src/css/phosphor.css">
+  <link rel="stylesheet" href="src/css/theme-vars.css">
+  <link rel="stylesheet" href="src/css/utilities.css">
+  <link rel="stylesheet" href="src/css/common.css">
+  <link rel="stylesheet" href="src/css/modal-ui.css">
+  <link rel="stylesheet" href="src/css/pages/style.css">
+
+  <script src="src/js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="src/js/theme-control.js"></script>
+</head>
+
+<body>
+
+  <div class="theme-toggle-header">
+    <button title="Toggle Theme" class="themeToggleBtn theme-toggle-button">
+      <i class="themeIcon ph-bold ph-moon"></i>
+    </button>
+  </div>
+
+  <main class="login-wrapper">
+    <div class="login-card">
+
+      <div class="logo-container">
+        <img src="src/assets/images/gnfc-full-logo.png"
+          onerror="this.onerror=null;this.src='src/assets/images/gnfc-logo.png';" class="logo" alt="GNFC Logo">
+      </div>
+
+      <div class="login-content">
+        <p id="login-subtitle" class="subtitle">
+          Welcome back. Please enter your credentials to access the system.
+        </p>
+
+        <form id="loginForm" action="index.html">
+
+          <div class="form-group">
+            <label for="ec-no" class="form-label">EC Number</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <i class="ph-bold ph-user"></i>
+              </span>
+              <input type="text" id="ec-no" name="ec-no" placeholder="e.g. 123456" class="form-input">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <i class="ph-bold ph-lock-key"></i>
+              </span>
+              <input type="password" id="password" name="password" placeholder="••••••••" class="form-input">
+
+              <button type="button" id="togglePasswordBtn" class="password-toggle">
+                <i class="ph-bold ph-eye font-18px" id="password-icon"></i>
+              </button>
+            </div>
+          </div>
+
+          <div id="email-row" class="form-group">
+            <label for="email-password" class="form-label">Email Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <i class="ph-bold ph-envelope-simple"></i>
+              </span>
+              <input type="password" id="email-password" name="email-password" placeholder="Email Password"
+                class="form-input">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-login">
+            <i class="ph-bold ph-sign-in"></i> Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(function () {
+      $('#togglePasswordBtn').on('click', function () {
+        const $input = $('#password');
+        const $icon = $('#password-icon');
+        const isPassword = $input.attr('type') === 'password';
+
+        $input.attr('type', isPassword ? 'text' : 'password');
+        $icon.toggleClass('ph-eye', !isPassword)
+             .toggleClass('ph-eye-slash', isPassword);
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | GNFC E-Logbook</title>
+
+  <link rel="stylesheet" href="src/css/phosphor.css">
+  <link rel="stylesheet" href="src/css/theme-vars.css">
+  <link rel="stylesheet" href="src/css/utilities.css">
+  <link rel="stylesheet" href="src/css/common.css">
+  <link rel="stylesheet" href="src/css/pages/style.css">
+  <link rel="stylesheet" href="src/css/modal-ui.css">
+
+  <script src="src/js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="src/js/theme-control.js"></script>
+  <script src="src/js/sidebar.js"></script>
+</head>
+
+<body class="dashboard-body">
+
+  <div id="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Placeholder -->
+    <div id="header-container">
+      <div class="header-bar">
+        <div class="flex items-center gap-4px font-20px">
+          <i class="sidebar-toggle-header ph ph-list color-label cursor-pointer font-20px"></i>
+          <h2 class="header-title">Dashboard</h2>
+        </div>
+
+        <div class="flex items-center gap-2px">
+          <!-- Theme & Font Controls -->
+          <div class="flex items-center gap-2px">
+            <!-- Font Size & Theme Group -->
+            <div class="ui-control-set">
+              <button class="fontDecreaseBtn ui-btn-icon" title="Decrease Font">
+                <i class="ph ph-text-aa font-12px"></i>
+              </button>
+              <div class="ui-divider-v"></div>
+              <button class="fontIncreaseBtn ui-btn-icon" title="Increase Font">
+                <i class="ph ph-text-aa font-12px"></i>
+              </button>
+              <div class="ui-divider-v"></div>
+              <button class="themeToggleBtn ui-btn-icon" title="Toggle Theme">
+                <i class="themeIcon ph ph-moon"></i>
+              </button>
+            </div>
+
+            <!-- Back Button -->
+            <button class="ui-btn-pill" id="backBtn">
+              <i class="ph-bold ph-arrow-u-up-left"></i>
+              <span>Back</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ SCROLLABLE CONTENT ═══════ -->
+    <div class="dashboard-content dashboard-scroll">
+
+      <!-- ─── Top Bar: Welcome + Clock ─── -->
+      <div class="welcome-section">
+        <div class="welcome-text">
+          <h2>Good <span id="greeting-time">Afternoon</span>, <span id="user-display-name">Admin</span></h2>
+          <p>Plant operations overview for today</p>
+        </div>
+        <div class="status-widgets">
+          <div class="widget-item">
+            <i class="ph ph-calendar-blank color-blue"></i>
+            <span id="live-date" class="widget-text">Monday, 23 Feb 2026</span>
+          </div>
+          <div class="widget-item">
+            <i class="ph ph-clock color-orange"></i>
+            <span id="live-clock" class="widget-text tabular-nums">14:58:42</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Active Alerts & Notifications Column ─── -->
+      <div class="alerts-container">
+        <div class="noticeboard-header">
+          <h2 class="noticeboard-title">
+            <i class="ph-fill ph-bell color-red"></i>
+            Active Alerts & Notifications
+          </h2>
+        </div>
+        <div class="alerts-card-list">
+          <!-- Alert 1: Critical -->
+          <div class="alert-card cursor-pointer" id="calibration-alert-card">
+            <div class="alert-icon-box alert-icon-critical">
+              <i class="ph-fill ph-warning-diamond"></i>
+            </div>
+            <div class="alert-content">
+              <div class="alert-top">
+                <h4 class="alert-title">CALIBRATION DUE</h4>
+                <span class="alert-time">2m ago</span>
+              </div>
+              <p class="alert-desc">4 equipment items require mandatory calibration review.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ─── KPI STAT CARDS ─── -->
+      <div class="kpi-grid">
+        <!-- Calibration Due -->
+        <div id="kpi-card-cal" class="kpi-card">
+
+          <div class="kpi-header">
+            <div class="kpi-icon-box icon-box-red">
+              <i class="ph-fill ph-warning-diamond text-lg"></i>
+            </div>
+            <span class="action-status">ACTION</span>
+          </div>
+          <div class="kpi-value counter-value" id="kpi-cal-count">3</div>
+          <p class="kpi-label">Calibration Due</p>
+        </div>
+
+        <!-- Today Total Jobs -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon-box icon-box-blue">
+              <i class="ph-fill ph-briefcase text-lg"></i>
+            </div>
+            <span class="kpi-label mt-0px">Today</span>
+          </div>
+          <div class="kpi-value counter-value" id="kpi-total">12</div>
+          <p class="kpi-label">Today Total Jobs</p>
+        </div>
+
+        <!-- Completed Jobs -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon-box icon-box-green">
+              <i class="ph-fill ph-check-circle text-lg"></i>
+            </div>
+            <i class="ph-fill ph-checks color-green"></i>
+          </div>
+          <div class="kpi-value counter-value" id="kpi-completed">8</div>
+          <p class="kpi-label">Completed Jobs</p>
+        </div>
+
+        <!-- ISO Jobs -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon-box icon-box-orange">
+              <i class="ph-fill ph-certificate text-lg"></i>
+            </div>
+            <span class="badge-iso">ISO</span>
+          </div>
+          <div class="kpi-value counter-value" id="kpi-iso">5</div>
+          <p class="kpi-label">ISO Jobs</p>
+        </div>
+
+        <!-- All Pending Jobs -->
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-icon-box icon-box-red">
+              <i class="ph-fill ph-warning-circle text-lg"></i>
+            </div>
+            <i class="ph-fill ph-arrow-down color-red"></i>
+          </div>
+          <div class="kpi-value counter-value" id="kpi-pending">4</div>
+          <p class="kpi-label">All Pending Jobs</p>
+        </div>
+      </div>
+
+      <!-- ─── DASHBOARD BOTTOM ROW: Noticeboard + Alerts ─── -->
+      <div class="dashboard-row">
+        <!-- Noticeboard Column -->
+        <div class="noticeboard-container">
+          <div class="noticeboard-header">
+            <h2 class="noticeboard-title">
+              <i class="ph ph-megaphone color-blue"></i>
+              Important Announcements
+            </h2>
+          </div>
+          <div id="noticeboard-container" class="notice-grid">
+            <!-- Notice 1: Urgent -->
+            <div class="notice-card" data-priority="urgent"
+              style="border-left: 4px solid var(--red); background: rgba(242, 73, 92, 0.05);">
+              <div class="notice-title-area">
+                <h3 class="notice-title">Plant Shutdown Schedule - Q2</h3>
+                <div class="notice-pin flex-shrink-0 mt-0px">
+                  <i class="ph ph-push-pin color-orange font-12px"></i>
+                </div>
+              </div>
+              <p class="notice-content">Maintenance schedule for Ammonia plant starting April 15th.</p>
+              <div class="notice-footer">
+                <div class="notice-meta notice-author">
+                  <i class="ph ph-user"></i>
+                  <span>Plant Manager</span>
+                </div>
+                <div class="notice-meta font-mono notice-date">
+                  <i class="ph ph-calendar"></i>
+                  <span>23 Feb 2026</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notice 2: Normal -->
+            <div class="notice-card" data-priority="normal"
+              style="border-left: 4px solid var(--blue); background: rgba(87, 148, 242, 0.05);">
+              <div class="notice-title-area">
+                <h3 class="notice-title">Safety Drill Today</h3>
+                <div class="notice-pin flex-shrink-0 mt-0px"></div>
+              </div>
+              <p class="notice-content">Drill at 14:00 today. Report to assembly points.</p>
+              <div class="notice-footer">
+                <div class="notice-meta notice-author">
+                  <i class="ph ph-user"></i>
+                  <span>Safety Officer</span>
+                </div>
+                <div class="notice-meta font-mono notice-date">
+                  <i class="ph ph-calendar"></i>
+                  <span>23 Feb 2026</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notice 3: Important -->
+            <div class="notice-card" data-priority="important"
+              style="border-left: 4px solid var(--orange); background: rgba(255, 153, 0, 0.05);">
+              <div class="notice-title-area">
+                <h3 class="notice-title">New Calibration Kit</h3>
+                <div class="notice-pin flex-shrink-0 mt-0px"></div>
+              </div>
+              <p class="notice-content">Fluke 754 calibrators are now available.</p>
+              <div class="notice-footer">
+                <div class="notice-meta notice-author">
+                  <i class="ph ph-user"></i>
+                  <span>Workshop In-charge</span>
+                </div>
+                <div class="notice-meta font-mono notice-date">
+                  <i class="ph ph-calendar"></i>
+                  <span>22 Feb 2026</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Notice Details Modal (using modal-ui.css) -->
+  <div id="notice-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <div class="modal-title-box">
+          <h2 id="modal-notice-title" class="gnfc-modal-title">Notice Details</h2>
+          <p id="modal-notice-subtitle" class="gnfc-modal-subtitle">Full announcement details</p>
+        </div>
+        <button id="close-modal" class="gnfc-modal-close" title="Close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body gnfc-modal-body--tight">
+        <div id="modal-notice-priority" class="modal-priority-badge">Normal</div>
+        <p id="modal-notice-content" class="modal-text"></p>
+
+        <div class="modal-footer-meta">
+          <div class="modal-meta-item">
+            <i class="ph ph-user"></i>
+            <div>
+              <span class="label">Posted by:</span>
+              <span id="modal-notice-author" class="value"></span>
+            </div>
+          </div>
+          <div class="modal-meta-item">
+            <i class="ph ph-calendar"></i>
+            <div>
+              <span class="label">Date:</span>
+              <span id="modal-notice-date" class="value font-mono"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="close-notice-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── CALIBRATION ALERTS MODAL ─── -->
+  <div id="calibration-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div class="flex items-center gap-4">
+          <div>
+            <h2 class="gnfc-modal-title">CALIBRATION ALERTS</h2>
+            <p class="gnfc-modal-subtitle">Mandatory equipment review required</p>
+          </div>
+        </div>
+        <button class="gnfc-modal-close" id="close-calibration-modal">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <!-- Section Header -->
+        <a href="#" class="alert-section-card">
+          <h3>BOILER</h3>
+          <p>4 equipment item(s) pending review</p>
+        </a>
+
+        <!-- Table Container -->
+        <div class="table-responsive">
+          <table class="gnfc-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th style="width: 300px;">Equipment Item</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Serial No.</th>
+                <th>Last Cal</th>
+                <th>Due Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+                  <div class="fw-bold font-14px">BLR-027 (mAmV Simulator)</div>
+                  <div class="font-12px color-secondary">ID: CAL-001</div>
+                </td>
+                <td class="font-16px">Fluke</td>
+                <td>715</td>
+                <td>-</td>
+                <td class="font-16px">20/02/2025</td>
+                <td class="fw-bold font-16px">20/02/2026</td>
+                <td><span class="status-badge badge-red">OVERDUE 33D</span></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  <div class="fw-bold font-14px">BLR-003 (Temp Simulator)</div>
+                  <div class="font-12px color-secondary">ID: CAL-002</div>
+                </td>
+                <td class="font-16px">Fluke</td>
+                <td>724</td>
+                <td class="font-16px">3745297</td>
+                <td class="font-16px">17/02/2025</td>
+                <td class="fw-bold font-16px">17/02/2026</td>
+                <td><span class="status-badge badge-red">OVERDUE 36D</span></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>
+                  <div class="fw-bold font-14px">BLR-002 (Digital Multimeter)</div>
+                  <div class="font-12px color-secondary">ID: CAL-003</div>
+                </td>
+                <td class="font-16px">MOTWANE</td>
+                <td>M63</td>
+                <td class="font-16px">A04071D14</td>
+                <td class="font-16px">17/02/2025</td>
+                <td class="fw-bold font-16px">17/02/2026</td>
+                <td><span class="status-badge badge-red">OVERDUE 36D</span></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>
+                  <div class="fw-bold font-14px">FT-101 (Flow Transmitter)</div>
+                  <div class="font-12px color-secondary">ID: CAL-004</div>
+                </td>
+                <td class="font-16px">Rosemount</td>
+                <td class="font-16px">3051</td>
+                <td class="font-16px">SN12345</td>
+                <td class="font-16px">01/01/2025</td>
+                <td class="fw-bold font-16px">01/01/2026</td>
+                <td><span class="status-badge badge-red">OVERDUE 83D</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Modal footer -->
+      <div class="gnfc-modal-footer">
+        <p>
+          <i class="ph-fill ph-warning-circle color-orange font-16px"></i>
+          VERIFY PHYSICAL CONDITION AND UPDATE CALIBRATION RECORDS.
+        </p>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="acknowledgeBtn">
+          <i class="ph-fill ph-check-circle"></i> ACKNOWLEDGE
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- JavaScript Logic -->
+  <script>
+    $(function () {
+
+      // --- Sidebar Initialization ---
+      if (typeof renderSidebar === 'function') {
+        renderSidebar('dashboard');
+      }
+
+      // --- Live Data (Clock, Date, Greeting) ---
+      const $greetingEl = $('#greeting-time');
+      const $dateEl = $('#live-date');
+      const $clockEl = $('#live-clock');
+      const $displayNameEl = $('#user-display-name');
+
+      if ($displayNameEl.length) $displayNameEl.text(currentUserName);
+
+      const updateGreeting = () => {
+        if (!$greetingEl.length) return;
+        const hour = new Date().getHours();
+        let greeting = "Evening";
+        if (hour >= 5 && hour < 12) greeting = "Morning";
+        else if (hour >= 12 && hour < 17) greeting = "Afternoon";
+        else if (hour >= 17 && hour < 21) greeting = "Evening";
+        else greeting = "Night";
+        $greetingEl.text(greeting);
+      };
+
+      const updateDateTime = () => {
+        const now = new Date();
+        if ($dateEl.length) {
+          $dateEl.text(now.toLocaleDateString('en-GB', {
+            weekday: 'long', day: '2-digit', month: 'short', year: 'numeric'
+          }));
+        }
+        if ($clockEl.length) {
+          $clockEl.text(now.toLocaleTimeString('en-GB', {
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+          }));
+        }
+      };
+
+      updateGreeting();
+      updateDateTime();
+      setInterval(updateDateTime, 1000);
+      setInterval(updateGreeting, 60000);
+
+      // Back Button Logic
+      $('#backBtn').on('click', function () {
+        window.location.href = "login.html";
+      });
+
+      // Notice Modal Logic
+      const $modal = $('#notice-modal');
+      const $modalTitle = $('#modal-notice-title');
+      const $modalContent = $('#modal-notice-content');
+      const $modalPriority = $('#modal-notice-priority');
+      const $modalAuthor = $('#modal-notice-author');
+      const $modalDate = $('#modal-notice-date');
+
+      $('#close-calibration-modal').on('click', function () {
+        $('#calibration-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      $('#acknowledgeBtn').on('click', function () {
+        $('#calibration-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      $('#close-notice-modal').on('click', function () {
+        $('#notice-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      $('.notice-grid').on('click', '.notice-card', function () {
+        const $card = $(this);
+        const title = $card.find('.notice-title').text();
+        const content = $card.find('.notice-content').text();
+        const author = $card.find('.notice-author span').text();
+        const date = $card.find('.notice-date span').text();
+
+        // Extract priority from data-attribute
+        const priorityAttr = $card.attr('data-priority') || 'normal';
+        let priority = 'Normal';
+        let priorityClass = 'modal-priority-normal';
+
+        if (priorityAttr === 'urgent') {
+          priority = 'Urgent';
+          priorityClass = 'modal-priority-urgent';
+        } else if (priorityAttr === 'important') {
+          priority = 'Important';
+          priorityClass = 'modal-priority-important';
+        }
+
+        // Populate Modal
+        $modalTitle.text(title);
+        $modalContent.text(content);
+        $modalPriority.text(priority)
+          .removeClass('modal-priority-urgent modal-priority-important modal-priority-normal')
+          .addClass(priorityClass);
+        $modalAuthor.text(author);
+        $modalDate.text(date);
+
+        // Show Modal
+        $modal.addClass('is-open');
+        $('body').css('overflow', 'hidden'); // Prevent scroll
+      });
+
+      // Close Modal Logic
+      const closeModal = () => {
+        $modal.removeClass('is-open');
+        $('body').css('overflow', '');
+      };
+
+      $('#close-modal').on('click', closeModal);
+
+      $modal.on('click', function (e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) closeModal();
+      });
+
+      // Esc key to close
+      $(document).on('keydown', function (e) {
+        if (e.key === 'Escape' && $modal.hasClass('is-open')) closeModal();
+        if (e.key === 'Escape' && $('#calibration-modal').hasClass('is-open')) {
+          $('#calibration-modal').removeClass('is-open');
+          $('body').css('overflow', '');
+        }
+      });
+
+      // Calibration Alert Modal Toggle (Triggered by both Card and Notification)
+      $('#calibration-alert-card, #kpi-card-cal').css('cursor', 'pointer').on('click', function () {
+        $('#calibration-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+    });
+  </script>
+</body>
+
+</html>
