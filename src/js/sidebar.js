@@ -203,7 +203,68 @@ class SidebarManager {
   }
 }
 
-// To preserve backwards compatibility with HTML calling renderSidebar
+class HeaderManager {
+  constructor(containerId) {
+    this.containerId = containerId;
+  }
+
+  render(title, showBackBtn = false, basePath = "./") {
+    const headerHTML = `
+      <div class="header-bar">
+        <div class="flex items-center gap-4px font-20px">
+          <i class="sidebar-toggle-header ph ph-list color-label cursor-pointer font-20px" onclick="window.sidebarManager.toggle()"></i>
+          <h2 class="header-title">${title}</h2>
+        </div>
+
+        <div class="flex items-center gap-2px">
+          <div class="flex items-center gap-2px">
+            <div class="ui-control-set">
+              <button class="fontDecreaseBtn ui-btn-icon" title="Decrease Font">
+                <i class="ph ph-text-aa font-12px"></i>
+              </button>
+              <div class="ui-divider-v"></div>
+              <button class="fontIncreaseBtn ui-btn-icon" title="Increase Font">
+                <i class="ph ph-text-aa font-12px"></i>
+              </button>
+              <div class="ui-divider-v"></div>
+              <button class="themeToggleBtn ui-btn-icon" title="Toggle Theme">
+                <i class="themeIcon ph ph-moon"></i>
+              </button>
+            </div>
+
+            ${showBackBtn ? `
+            <button class="ui-btn-pill" id="backBtn" onclick="window.history.back()">
+              <i class="ph-bold ph-arrow-u-up-left"></i>
+              <span>Back</span>
+            </button>` : ''}
+          </div>
+        </div>
+      </div>`;
+
+    const container = document.getElementById(this.containerId);
+    if (container) {
+      container.innerHTML = headerHTML;
+    }
+  }
+}
+
+// Global initialization function
+function initPageLayout(config) {
+  const isSubPage = window.location.pathname.includes('/src/pages/');
+  const basePath = isSubPage ? '../../' : './';
+  
+  if (!window.sidebarManager) {
+    window.sidebarManager = new SidebarManager("sidebar-container");
+  }
+  window.sidebarManager.render(config.activeId);
+
+  if (!window.headerManager) {
+    window.headerManager = new HeaderManager("header-container");
+  }
+  window.headerManager.render(config.title, config.showBackBtn, basePath);
+}
+
+// To preserve backwards compatibility
 function renderSidebar(activePageId) {
   if (!window.sidebarManager) {
     window.sidebarManager = new SidebarManager("sidebar-container");

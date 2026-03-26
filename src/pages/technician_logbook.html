@@ -32,40 +32,7 @@
   <main class="flex-1 flex flex-col h-screen overflow-hidden">
 
     <!-- Header Placeholder -->
-    <div id="header-container">
-      <div class="header-bar">
-        <div class="flex items-center gap-4px font-20px">
-          <i class="sidebar-toggle-header ph ph-list color-label cursor-pointer font-20px"></i>
-          <h2 class="header-title">Technician's Logbook</h2>
-        </div>
-
-        <div class="flex items-center gap-2px">
-          <!-- Theme & Font Controls -->
-          <div class="flex items-center gap-2px">
-            <!-- Font Size & Theme Group -->
-            <div class="ui-control-set">
-              <button class="fontDecreaseBtn ui-btn-icon" title="Decrease Font">
-                <i class="ph ph-text-aa font-12px"></i>
-              </button>
-              <div class="ui-divider-v"></div>
-              <button class="fontIncreaseBtn ui-btn-icon" title="Increase Font">
-                <i class="ph ph-text-aa font-12px"></i>
-              </button>
-              <div class="ui-divider-v"></div>
-              <button class="themeToggleBtn ui-btn-icon" title="Toggle Theme">
-                <i class="themeIcon ph ph-moon"></i>
-              </button>
-            </div>
-
-            <!-- Back Button -->
-            <button class="ui-btn-pill" id="backBtn">
-              <i class="ph-bold ph-arrow-u-up-left"></i>
-              <span>Back</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="header-container"></div>
 
     <div class="flex-1 overflow-y-auto custom-scroll">
 
@@ -305,15 +272,14 @@
       buildPlantGrid();
       setSelectedView(persistedView, false);
 
-      // Initialize Sidebar
-      if (typeof renderSidebar === 'function') {
-        renderSidebar('technician_logbook');
+      // --- Layout Initialization ---
+      if (typeof initPageLayout === 'function') {
+        initPageLayout({
+          title: "Technician's Logbook",
+          activeId: 'technician_logbook',
+          showBackBtn: true
+        });
       }
-
-      // Back Button Logic
-      $('#backBtn').on('click', function () {
-        window.location.href = "../../index.html";
-      });
     });
   </script>
 

@@ -24,40 +24,7 @@
 
   <main class="main-wrapper">
     <!-- Header Placeholder -->
-    <div id="header-container">
-      <div class="header-bar">
-        <div class="flex items-center gap-4px font-20px">
-          <i class="sidebar-toggle-header ph ph-list color-label cursor-pointer font-20px"></i>
-          <h2 class="header-title">Dashboard</h2>
-        </div>
-
-        <div class="flex items-center gap-2px">
-          <!-- Theme & Font Controls -->
-          <div class="flex items-center gap-2px">
-            <!-- Font Size & Theme Group -->
-            <div class="ui-control-set">
-              <button class="fontDecreaseBtn ui-btn-icon" title="Decrease Font">
-                <i class="ph ph-text-aa font-12px"></i>
-              </button>
-              <div class="ui-divider-v"></div>
-              <button class="fontIncreaseBtn ui-btn-icon" title="Increase Font">
-                <i class="ph ph-text-aa font-12px"></i>
-              </button>
-              <div class="ui-divider-v"></div>
-              <button class="themeToggleBtn ui-btn-icon" title="Toggle Theme">
-                <i class="themeIcon ph ph-moon"></i>
-              </button>
-            </div>
-
-            <!-- Back Button -->
-            <button class="ui-btn-pill" id="backBtn">
-              <i class="ph-bold ph-arrow-u-up-left"></i>
-              <span>Back</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="header-container"></div>
 
     <!-- ═══════ SCROLLABLE CONTENT ═══════ -->
     <div class="dashboard-content dashboard-scroll">
@@ -400,9 +367,13 @@
   <script>
     $(function () {
 
-      // --- Sidebar Initialization ---
-      if (typeof renderSidebar === 'function') {
-        renderSidebar('dashboard');
+      // --- Layout Initialization ---
+      if (typeof initPageLayout === 'function') {
+        initPageLayout({
+          title: 'Dashboard',
+          activeId: 'dashboard',
+          showBackBtn: true
+        });
       }
 
       // --- Live Data (Clock, Date, Greeting) ---
