@@ -1,11 +1,13 @@
-
 $(function () {
+    const isSubPage = window.location.pathname.includes('/pages/');
+    const basePath = isSubPage ? '../' : './';
+
     const sidebarHTML = `
     <aside class="app-sidebar w-60">
       <div class="sidebar-header px-4">
         <div class="logo-wrapper">
-          <img src="assets/images/gnfc-full-logo.png"
-            onerror="this.onerror=null;this.src='assets/images/gnfc-logo.png';" class="logo-img" alt="GNFC Logo">
+          <img src="${basePath}assets/images/gnfc-full-logo.png"
+            onerror="this.onerror=null;this.src='${basePath}assets/images/gnfc-sidebar-logo.png';" class="logo-img" alt="GNFC Logo">
         </div>
       </div>
 
