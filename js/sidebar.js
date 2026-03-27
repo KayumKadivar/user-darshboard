@@ -13,7 +13,7 @@ $(function () {
 
       <nav class="sidebar-nav">
         <!-- Dashboard -->
-        <a href="dashboard.html" class="sidebar-link" data-id="dashboard">
+        <a href="${basePath}dashboard.html" class="sidebar-link" data-id="dashboard">
           <i class="ph ph-bold ph-squares-four"></i>
           <span class="sidebar-text">Dashboard</span>
         </a>
@@ -29,7 +29,7 @@ $(function () {
           <span class="sidebar-text">Officer Logbook</span>
         </a>
 
-        <a href="technicianlogbook.html" class="sidebar-link" data-id="technician_logbook">
+        <a href="${basePath}pages/technicianlogbook.html" class="sidebar-link" data-id="technician_logbook">
           <i class="ph ph-bold ph-factory"></i>
           <span class="sidebar-text">Technician Logbook</span>
         </a>
@@ -179,7 +179,7 @@ $(function () {
         localStorage.removeItem('sidebarCollapsed');
         localStorage.removeItem("userRole");
         localStorage.removeItem("currentUserName");
-        window.location.href = "Login.html";
+        window.location.href = "${basePath}Login.html";
     };
 
     $('.sign-out-btn, .ph-sign-out').on('click', logout);

@@ -6,18 +6,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Detail | GNFC</title>
 
-  <link rel="stylesheet" href="css/phosphor.css">
-  <link rel="stylesheet" href="css/theme-vars.css">
-  <link rel="stylesheet" href="css/utilities.css">
-  <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/modal-ui.css">
-  <link rel="stylesheet" href="css/pages/style.css">
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
 
-  <script src="js/vendor/jquery-3.7.1.min.js"></script>
-  <script src="js/theme-control.js"></script>
-  <script src="js/sidebar.js" defer></script>
-  <script src="js/header.js" defer></script>
-  <script src="js/plant.js" defer></script>
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+  <script>
+    $(function() {
+      let selectedView = 'today';
+      let searchTerm = '';
+      let jobTypeFilter = '';
+
+      function filterTable() {
+        let visibleCount = 0;
+        $('#plantTableBody tr').each(function() {
+          const $row = $(this);
+          const rowView = $row.data('view');
+          const rowType = $row.data('job-type');
+          const rowText = $row.text().toLowerCase();
+
+          const viewMatch = rowView === selectedView;
+          const typeMatch = !jobTypeFilter || rowType === jobTypeFilter;
+          const textMatch = !searchTerm || rowText.indexOf(searchTerm) !== -1;
+
+          if (viewMatch && typeMatch && textMatch) {
+            $row.show();
+            visibleCount++;
+          } else {
+            $row.hide();
+          }
+        });
+        $('#record-count').text(visibleCount + ' Records');
+      }
+
+      // View Buttons
+      $('.plant-period-switcher__button').on('click', function() {
+        $('.plant-period-switcher__button').removeClass('is-active');
+        $(this).addClass('is-active');
+        selectedView = $(this).data('view');
+        filterTable();
+      });
+
+      // Search
+      $('#table-search').on('input', function() {
+        searchTerm = $(this).val().toLowerCase();
+        filterTable();
+      });
+
+      // Job Type Filter
+      $('#job-type-select').on('change', function() {
+        jobTypeFilter = $(this).val();
+        filterTable();
+      });
+
+      // Modal Logic
+      $(document).on('click', '[data-open-modal]', function() {
+        const modalId = $(this).data('open-modal');
+        $('#' + modalId).addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      $(document).on('click', '[data-close-modal]', function() {
+        const modalId = $(this).data('close-modal');
+        $('#' + modalId).removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      // Initialize
+      filterTable();
+    });
+  </script>
 </head>
 
 <body class="dashboard-body plant-page">
@@ -95,6 +159,11 @@
             <span class="plant-filter-label">Type:</span>
             <select id="job-type-select" class="plant-filter-input plant-filter-select">
               <option value="">All Jobs</option>
+              <option value="PROCESS REQMT">PROCESS REQMT</option>
+              <option value="CMS JOB">CMS JOB</option>
+              <option value="PM JOB">PM JOB</option>
+              <option value="BREAKDOWN">BREAKDOWN</option>
+              <option value="N.A.">N.A.</option>
             </select>
           </div>
 
@@ -143,7 +212,148 @@
                 <th>ENG</th>
               </tr>
             </thead>
-            <tbody id="plantTableBody" class="plant-table__body"></tbody>
+            <tbody id="plantTableBody" class="plant-table__body">
+            <!-- Record 1 -->
+            <tr data-record-id="1" data-view="today" data-job-type="PROCESS REQMT">
+              <td>1</td>
+              <td>METH</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">LIC101</span><span class="plant-table__cell-secondary">LT101A</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Level calibration</span><span class="plant-table__cell-secondary">PROCESS REQMT</span></div></td>
+              <td>BPB</td>
+              <td>Calibrate level transmitter and verify scaling with DCS operator.</td>
+              <td>SHC</td>
+              <td><span class="plant-status-chip plant-status-chip--over">OVER</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">4</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">Completed and handed over.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+            <!-- Record 2 -->
+            <tr data-record-id="2" data-view="today" data-job-type="BREAKDOWN">
+              <td>2</td>
+              <td>AA</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">FIC204</span><span class="plant-table__cell-secondary">FV204</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Valve stroking issue</span><span class="plant-table__cell-secondary">BREAKDOWN</span></div></td>
+              <td>PBS</td>
+              <td>Investigate erratic travel feedback on control valve.</td>
+              <td>MAJ</td>
+              <td><span class="plant-status-chip plant-status-chip--progress">IN PROGRESS</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">16</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">Need positioner tuning.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+            <!-- Record 3 -->
+            <tr data-record-id="3" data-view="today" data-job-type="CMS JOB">
+              <td>3</td>
+              <td>FA</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">TIC310</span><span class="plant-table__cell-secondary">TT310A</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Temperature loop check</span><span class="plant-table__cell-secondary">CMS JOB</span></div></td>
+              <td>NRK</td>
+              <td>Loop test for high drift observed in overnight report.</td>
+              <td>CKV</td>
+              <td><span class="plant-status-chip plant-status-chip--hold">HOLD</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">10</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">Awaiting shutdown window.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+            <!-- Record 4 -->
+            <tr data-record-id="4" data-view="prev" data-job-type="PROCESS REQMT">
+              <td>4</td>
+              <td>DCS</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">PIC415</span><span class="plant-table__cell-secondary">PV415</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Pressure controller tuning</span><span class="plant-table__cell-secondary">PROCESS REQMT</span></div></td>
+              <td>SHC</td>
+              <td>Controller gain adjusted to reduce hunting.</td>
+              <td>MDM</td>
+              <td><span class="plant-status-chip plant-status-chip--over">OVER</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">3</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">Stable after tuning.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+            <!-- Record 5 -->
+            <tr data-record-id="5" data-view="tomorrow" data-job-type="PM JOB">
+              <td>5</td>
+              <td>UTIL</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">AIC525</span><span class="plant-table__cell-secondary">AT525A</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Analyzer preventive check</span><span class="plant-table__cell-secondary">PM JOB</span></div></td>
+              <td>NHP</td>
+              <td>Scheduled analyzer health check and line cleaning.</td>
+              <td>SHC</td>
+              <td><span class="plant-status-chip plant-status-chip--progress">IN PROGRESS</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">7</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">Planned for morning shift.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+            <!-- Record 6 -->
+            <tr data-record-id="6" data-view="weekly" data-job-type="PM JOB">
+              <td>6</td>
+              <td>METH</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">LIC101</span><span class="plant-table__cell-secondary">LT101B</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Impulse line flushing</span><span class="plant-table__cell-secondary">PM JOB</span></div></td>
+              <td>BPB</td>
+              <td>Flush impulse line due to slow response during trend review.</td>
+              <td>MAJ</td>
+              <td><span class="plant-status-chip plant-status-chip--over">OVER</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">2</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">Response normalized.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+            <!-- Record 7 -->
+            <tr data-record-id="7" data-view="weekly" data-job-type="BREAKDOWN">
+              <td>7</td>
+              <td>AA</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">PIC415</span><span class="plant-table__cell-secondary">PT415A</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Pressure transmitter replacement</span><span class="plant-table__cell-secondary">BREAKDOWN</span></div></td>
+              <td>PBS</td>
+              <td>Replace faulty transmitter and verify calibration range.</td>
+              <td>CKV</td>
+              <td><span class="plant-status-chip plant-status-chip--progress">IN PROGRESS</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">18</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">Spare received from store.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+            <!-- Record 8 -->
+            <tr data-record-id="8" data-view="monthly" data-job-type="BREAKDOWN">
+              <td>8</td>
+              <td>FA</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">TIC310</span><span class="plant-table__cell-secondary">TV310</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Control valve seat leakage</span><span class="plant-table__cell-secondary">BREAKDOWN</span></div></td>
+              <td>NRK</td>
+              <td>Seat leakage observed during maintenance round.</td>
+              <td>MDM</td>
+              <td><span class="plant-status-chip plant-status-chip--hold">HOLD</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">22</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">Requires outage planning.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+            <!-- Record 9 -->
+            <tr data-record-id="9" data-view="monthly" data-job-type="CMS JOB">
+              <td>9</td>
+              <td>UTIL</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">FIC204</span><span class="plant-table__cell-secondary">FT204A</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Flow transmitter verification</span><span class="plant-table__cell-secondary">CMS JOB</span></div></td>
+              <td>SHC</td>
+              <td>Cross-check transmitter output against local indicator.</td>
+              <td>SHC</td>
+              <td><span class="plant-status-chip plant-status-chip--over">OVER</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">5</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">No deviation found.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+            <!-- Record 10 -->
+            <tr data-record-id="10" data-view="today" data-job-type="CMS JOB">
+              <td>10</td>
+              <td>DCS</td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">AIC525</span><span class="plant-table__cell-secondary">AV525</span></div></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Signal card diagnostics</span><span class="plant-table__cell-secondary">CMS JOB</span></div></td>
+              <td>NHP</td>
+              <td>Investigate intermittent analyzer signal at marshalling panel.</td>
+              <td>CKV</td>
+              <td><span class="plant-status-chip plant-status-chip--progress">IN PROGRESS</span></td>
+              <td class="is-hidden"><span class="plant-priority-chip">11</span></td>
+              <td><div class="plant-table__cell-stack"><span class="plant-table__cell-secondary">Monitoring after card reseat.</span><div class="plant-inline-actions"><button type="button" class="plant-inline-button" data-action="edit"><i class="ph-bold ph-pencil-simple" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button><button type="button" class="plant-inline-button" data-action="priority"><i class="ph-bold ph-number-square-eight" aria-hidden="true"></i></button></div></div></td>
+              <td><button type="button" class="plant-inline-button" data-action="history"><i class="ph-bold ph-plus-circle" aria-hidden="true"></i></button></td>
+            </tr>
+          </tbody>
           </table>
         </div>
 
@@ -171,7 +381,13 @@
             </div>
             <div class="plant-field">
               <label class="gnfc-modal-label" for="job-tech">Technician</label>
-              <select id="job-tech" class="gnfc-modal-input"></select>
+              <select id="job-tech" class="gnfc-modal-input">
+                <option value="BPB">BPB</option>
+                <option value="PBS">PBS</option>
+                <option value="NRK">NRK</option>
+                <option value="SHC">SHC</option>
+                <option value="NHP">NHP</option>
+              </select>
             </div>
             <div class="plant-field">
               <label class="gnfc-modal-label" for="job-tech-custom">Or Enter Tech</label>
@@ -179,23 +395,55 @@
             </div>
             <div class="plant-field">
               <label class="gnfc-modal-label" for="job-loop">Loop</label>
-              <select id="job-loop" class="gnfc-modal-input"></select>
+              <select id="job-loop" class="gnfc-modal-input">
+                <option value="LIC101">LIC101</option>
+                <option value="FIC204">FIC204</option>
+                <option value="TIC310">TIC310</option>
+                <option value="PIC415">PIC415</option>
+                <option value="AIC525">AIC525</option>
+              </select>
             </div>
             <div class="plant-field">
               <label class="gnfc-modal-label" for="job-tag">Tag</label>
-              <select id="job-tag" class="gnfc-modal-input"></select>
+              <select id="job-tag" class="gnfc-modal-input">
+                <option value="LT101A">LT101A</option>
+                <option value="LT101B">LT101B</option>
+                <option value="FT204A">FT204A</option>
+                <option value="FV204">FV204</option>
+                <option value="TT310A">TT310A</option>
+                <option value="TV310">TV310</option>
+              </select>
             </div>
             <div class="plant-field">
               <label class="gnfc-modal-label" for="job-area">Area</label>
-              <select id="job-area" class="gnfc-modal-input"></select>
+              <select id="job-area" class="gnfc-modal-input">
+                <option value="METH">METH</option>
+                <option value="FA">FA</option>
+                <option value="AA">AA</option>
+                <option value="DCS">DCS</option>
+                <option value="UTIL">UTIL</option>
+              </select>
             </div>
             <div class="plant-field">
               <label class="gnfc-modal-label" for="job-type">Type Of Job</label>
-              <select id="job-type" class="gnfc-modal-input"></select>
+              <select id="job-type" class="gnfc-modal-input">
+                <option value="PROCESS REQMT">PROCESS REQMT</option>
+                <option value="CMS JOB">CMS JOB</option>
+                <option value="PM JOB">PM JOB</option>
+                <option value="BREAKDOWN">BREAKDOWN</option>
+                <option value="N.A.">N.A.</option>
+              </select>
             </div>
             <div class="plant-field">
               <label class="gnfc-modal-label" for="job-inst">Type Of Inst</label>
-              <select id="job-inst" class="gnfc-modal-input"></select>
+              <select id="job-inst" class="gnfc-modal-input">
+                <option value="DCS">DCS</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="CONTROL VALVE">CONTROL VALVE</option>
+                <option value="SWITCH">SWITCH</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="OTHERS">OTHERS</option>
+              </select>
             </div>
             <div class="plant-field plant-field--full">
               <label class="gnfc-modal-label" for="job-desc">Description</label>
@@ -299,14 +547,25 @@
                   <div class="plant-field">
                     <label class="gnfc-modal-label" for="edit-job-tech">Technician</label>
                     <div class="plant-select-wrap">
-                      <select id="edit-job-tech" class="gnfc-modal-input"></select>
+                      <select id="edit-job-tech" class="gnfc-modal-input">
+                <option value="BPB">BPB</option>
+                <option value="PBS">PBS</option>
+                <option value="NRK">NRK</option>
+                <option value="SHC">SHC</option>
+                <option value="NHP">NHP</option>
+              </select>
                       <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
                     </div>
                   </div>
                   <div class="plant-field">
                     <label class="gnfc-modal-label" for="edit-job-engineer">Engineer</label>
                     <div class="plant-select-wrap">
-                      <select id="edit-job-engineer" class="gnfc-modal-input"></select>
+                      <select id="edit-job-engineer" class="gnfc-modal-input">
+                <option value="SHC">SHC</option>
+                <option value="MAJ">MAJ</option>
+                <option value="CKV">CKV</option>
+                <option value="MDM">MDM</option>
+              </select>
                       <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
                     </div>
                   </div>
@@ -455,11 +714,24 @@
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-insttag">InstTag</label>
-            <select id="hist-insttag" class="gnfc-modal-input"></select>
+            <select id="hist-insttag" class="gnfc-modal-input">
+                  <option value="DCS">DCS</option>
+                  <option value="TRANSMITTER">TRANSMITTER</option>
+                  <option value="CONTROL VALVE">CONTROL VALVE</option>
+                  <option value="SWITCH">SWITCH</option>
+                  <option value="ANALYZER">ANALYZER</option>
+                  <option value="OTHERS">OTHERS</option>
+                </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-jobtype">Type of Job</label>
-            <select id="hist-jobtype" class="gnfc-modal-input"></select>
+            <select id="hist-jobtype" class="gnfc-modal-input">
+                  <option value="PROCESS REQMT">PROCESS REQMT</option>
+                  <option value="CMS JOB">CMS JOB</option>
+                  <option value="PM JOB">PM JOB</option>
+                  <option value="BREAKDOWN">BREAKDOWN</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-insttype">Type of Inst</label>
@@ -473,19 +745,40 @@
         <div class="plant-form-grid plant-form-grid--four">
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-status">Job Status</label>
-            <select id="hist-status" class="gnfc-modal-input"></select>
+            <select id="hist-status" class="gnfc-modal-input">
+                  <option value="OVER">OVER</option>
+                  <option value="IN PROGRESS">IN PROGRESS</option>
+                  <option value="HOLD">HOLD</option>
+                </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-tech">Tech Name</label>
-            <select id="hist-tech" class="gnfc-modal-input"></select>
+            <select id="hist-tech" class="gnfc-modal-input">
+                  <option value="BPB">BPB</option>
+                  <option value="PBS">PBS</option>
+                  <option value="NRK">NRK</option>
+                  <option value="SHC">SHC</option>
+                  <option value="NHP">NHP</option>
+                </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-eng">Eng</label>
-            <select id="hist-eng" class="gnfc-modal-input"></select>
+            <select id="hist-eng" class="gnfc-modal-input">
+                  <option value="SHC">SHC</option>
+                  <option value="MAJ">MAJ</option>
+                  <option value="CKV">CKV</option>
+                  <option value="MDM">MDM</option>
+                </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-area">Area</label>
-            <select id="hist-area" class="gnfc-modal-input"></select>
+            <select id="hist-area" class="gnfc-modal-input">
+                  <option value="METH">METH</option>
+                  <option value="FA">FA</option>
+                  <option value="AA">AA</option>
+                  <option value="DCS">DCS</option>
+                  <option value="UTIL">UTIL</option>
+                </select>
           </div>
         </div>
       </div>
