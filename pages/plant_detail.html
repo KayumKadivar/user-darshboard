@@ -17,83 +17,7 @@
   <script src="../js/theme-control.js"></script>
   <script src="../js/sidebar.js" defer></script>
   <script src="../js/header.js" defer></script>
-  <script>
-    $(function() {
-      let selectedView = 'prev';
-      let searchTerm = '';
-      let jobTypeFilter = '';
 
-      function filterTable() {
-        let visibleCount = 0;
-        $('#plantTableBody tr').each(function() {
-          const $row = $(this);
-          const rowView = $row.data('view');
-          const rowType = $row.data('job-type');
-          const rowText = $row.text().toLowerCase();
-
-          const viewMatch = rowView === selectedView;
-          const typeMatch = !jobTypeFilter || rowType === jobTypeFilter;
-          const textMatch = !searchTerm || rowText.indexOf(searchTerm) !== -1;
-
-          if (viewMatch && typeMatch && textMatch) {
-            $row.show();
-            visibleCount++;
-          } else {
-            $row.hide();
-          }
-        });
-        $('#record-count').text(visibleCount + ' Records');
-      }
-
-      // View Buttons
-      $('.ui-switcher-btn').on('click', function() {
-        $('.ui-switcher-btn').removeClass('is-active');
-        $(this).addClass('is-active');
-        selectedView = $(this).data('view');
-        filterTable();
-      });
-
-      // Search
-      $('#table-search').on('input', function() {
-        searchTerm = $(this).val().toLowerCase();
-        filterTable();
-      });
-
-      // Job Type Filter
-      $('#job-type-select').on('change', function() {
-        jobTypeFilter = $(this).val();
-        filterTable();
-      });
-
-      // Modal Logic
-      $(document).on('click', '[data-open-modal]', function() {
-        const modalId = $(this).data('open-modal');
-        $('#' + modalId).addClass('is-open');
-        $('body').css('overflow', 'hidden');
-      });
-
-      $(document).on('click', '[data-close-modal]', function() {
-        const modalId = $(this).data('close-modal');
-        $('#' + modalId).removeClass('is-open');
-        $('body').css('overflow', '');
-      });
-
-      // Remark Button Logic
-      $(document).on('click', '[data-action="remark"]', function() {
-        const $row = $(this).closest('tr');
-        const recordId = $row.data('record-id');
-        const loopTag = $row.find('.plant-tag-link').first().text() || 'N.A';
-        const remarkText = $row.find('.plant-table__cell-secondary').text().trim();
-        
-        $('#remark-job-id').val(recordId);
-        $('#remark-text').val(''); // Clear for new remark or populate existing?
-        // Maybe show context?
-      });
-
-      // Initialize
-      filterTable();
-    });
-  </script>
 </head>
 
 <body class="dashboard-body plant-page">
@@ -137,19 +61,23 @@
               <i class="ph-bold ph-plus" aria-hidden="true"></i>
               <span>Add Job</span>
             </button>
-            <button type="button" class="plant-action-button plant-action-button--primary plant-nav-button" data-target="/src/pages/assigntoday.html">
+            <button type="button" class="plant-action-button plant-action-button--primary plant-nav-button"
+              data-target="/src/pages/assigntoday.html">
               <span>Assign Today</span>
             </button>
-            <button type="button" class="plant-action-button plant-action-button--primary plant-nav-button" data-target="/src/pages/assigntomorrow.html">
+            <button type="button" class="plant-action-button plant-action-button--primary plant-nav-button"
+              data-target="/src/pages/assigntomorrow.html">
               <span>Assign Tomorrow</span>
             </button>
             <span class="plant-toolbar__tools-divider" aria-hidden="true"></span>
             <div class="plant-toolbar__tools">
-              <button type="button" class="ui-btn ui-btn--secondary" id="toggle-pending-btn" style="height: 36px; padding: 0 12px;">
+              <button type="button" class="ui-btn ui-btn--secondary" id="toggle-pending-btn"
+                style="height: 36px; padding: 0 12px;">
                 <i class="ph-bold ph-clock" aria-hidden="true"></i>
                 <span>Pending</span>
               </button>
-              <button type="button" class="ui-btn ui-btn--warning is-hidden" id="acknowledge-btn" data-open-modal="ack-modal" style="height: 36px; padding: 0 12px;">
+              <button type="button" class="ui-btn ui-btn--warning is-hidden" id="acknowledge-btn"
+                data-open-modal="ack-modal" style="height: 36px; padding: 0 12px;">
                 <i class="ph-bold ph-warning" aria-hidden="true"></i>
                 <span>Acknowledge</span>
               </button>
@@ -186,25 +114,27 @@
       </section>
 
       <section class="ui-card plant-table-card">
+        <div id="table-container-today" class="plant-table-container">
         <div class="plant-table-card__header">
           <div class="plant-table-card__summary">
             <i class="ph-fill ph-table" aria-hidden="true"></i>
-            <span id="view-title" class="plant-table-card__title">Today Log Book</span>
-            <span id="record-count" class="plant-record-count">0 Records</span>
+            <span class="view-title plant-table-card__title">Today Log Book</span>
+            <span class="plant-view-date today-date-text">( --.--.---- )</span>
           </div>
 
           <div class="plant-table-card__actions">
+            <span class="record-count plant-record-count">0 Records</span>
+
             <label class="plant-search-field">
               <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-              <input type="text" id="table-search" placeholder="Search logs...">
+              <input type="text" class="table-search" placeholder="Search logs...">
             </label>
-            <span id="view-date" class="plant-view-date">--.--.----</span>
           </div>
         </div>
 
         <div class="user-table-scroll plant-table-wrap">
           <!-- Plant Logbook Table -->
-          <table class="user-table" id="plantLogbookTable">
+          <table class="user-table" id="plantLogbookTableToday">
             <thead>
               <tr>
                 <th class="user-table-head-cell text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
@@ -215,7 +145,308 @@
                 <th class="user-table-head-cell" rowspan="2" style="width: auto;">Description</th>
                 <th class="user-table-head-cell" data-sort="engineer" style="width: 80px;">Tech</th>
                 <th class="user-table-head-cell text-center" rowspan="2" style="width: 100px;">Status</th>
-                <th class="user-table-head-cell is-hidden" rowspan="2" id="priority-column-header">Prio</th>
+                <th class="user-table-head-cell" rowspan="2" id="priority-column-header-today">Prio</th>
+                <th class="user-table-head-cell" rowspan="2" style="width: 20%;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="user-table-head-cell">Tag No</th>
+                <th class="user-table-head-cell">Type of Job</th>
+                <th class="user-table-head-cell">ENG</th>
+              </tr>
+            </thead>
+            <tbody class="plant-table-body">
+              <!-- Record 1 -->
+              <tr class="user-table-row" data-record-id="1" data-view="today" data-job-type="PROCESS REQMT">
+                <td class="user-table-cell text-center">1</td>
+                <td class="user-table-cell">N.A</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">PROCESS REQMT</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame
+                  scanner checked found OK.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell"><span class="plant-priority-chip">1</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary">
+                      Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                    </div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"
+                        data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots"
+                          aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-record-id="1" data-view="today" data-job-type="PROCESS REQMT">
+                <td class="user-table-cell text-center">1</td>
+                <td class="user-table-cell">N.A</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">PROCESS REQMT</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame
+                  scanner checked found OK.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell"><span class="plant-priority-chip">1</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary">
+                      Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                    </div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"
+                        data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots"
+                          aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-record-id="1" data-view="prev" data-job-type="PROCESS REQMT">
+                <td class="user-table-cell text-center">1</td>
+                <td class="user-table-cell">N.A</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">PROCESS REQMT</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame
+                  scanner checked found OK.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell"><span class="plant-priority-chip">1</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary">
+                      Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                    </div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"
+                        data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots"
+                          aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Record 2 -->
+              <tr class="user-table-row" data-record-id="2" data-view="prev" data-job-type="PM">
+                <td class="user-table-cell text-center">2</td>
+                <td class="user-table-cell">N.A</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">PM</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame
+                  scanner checked found OK.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell"><span class="plant-priority-chip">2</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Record 3 -->
+              <tr class="user-table-row" data-record-id="3" data-view="prev" data-job-type="DEFECT MAINTENANCE">
+                <td class="user-table-cell text-center">3</td>
+                <td class="user-table-cell">ASH</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">3SV1</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Seal not coming due to mech . so bypass it as per process requirements.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell"><span class="plant-priority-chip">3</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Record 4 -->
+              <tr class="user-table-row" data-record-id="4" data-view="prev" data-job-type="DEFECT MAINTENANCE">
+                <td class="user-table-cell text-center">4</td>
+                <td class="user-table-cell">BOILER-2</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler-2 start up related activity done. Boiler lit up at 12.12 and paralled
+                  at 16.10. Logic related tags forced and taken in line as per process requirements. Job done with JDB.
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell"><span class="plant-priority-chip">4</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Record 5 -->
+              <tr class="user-table-row" data-record-id="5" data-view="prev" data-job-type="DEFECT MAINTENANCE">
+                <td class="user-table-cell text-center">5</td>
+                <td class="user-table-cell">BOILER-2</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">2AB1IGN</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Ignitor not coming and found eye not sensing properly. Eye adjustment done
+                  and trail taken now it is ok. Job done with JDB</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell"><span class="plant-priority-chip">5</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Record 6 -->
+              <tr class="user-table-row" data-record-id="6" data-view="prev" data-job-type="DEFECT MAINTENANCE">
+                <td class="user-table-cell text-center">6</td>
+                <td class="user-table-cell">BOILER-2</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">2AB2IGN</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Ignitor not coming. Its IFM cleaning done and also found its card not
+                  working properly . so card replaced with spare one. Trail taken , now working ok. Job done with JDB.
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell"><span class="plant-priority-chip">6</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <div id="table-container-prev" class="plant-table-container is-hidden">
+        <div class="plant-table-card__header">
+          <div class="plant-table-card__summary">
+            <i class="ph-fill ph-table" aria-hidden="true"></i>
+            <span class="view-title plant-table-card__title">Prev Day Log Book</span>
+            <span class="plant-view-date prev-date-text">( --.--.---- )</span>
+          </div>
+
+          <div class="plant-table-card__actions">
+            <span class="record-count plant-record-count">0 Records</span>
+
+            <label class="plant-search-field">
+              <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+              <input type="text" class="table-search" placeholder="Search logs...">
+            </label>
+          </div>
+        </div>
+
+        <div class="user-table-scroll plant-table-wrap">
+          <!-- Plant Logbook Table -->
+          <table class="user-table" id="plantLogbookTablePrev">
+            <thead>
+              <tr>
+                <th class="user-table-head-cell text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                <th class="user-table-head-cell" rowspan="2" data-sort="area" style="width: 120px;">Area</th>
+                <th class="user-table-head-cell" style="width: 120px;">Loop No</th>
+                <th class="user-table-head-cell" style="width: 180px;">Job</th>
+                <th class="user-table-head-cell" rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                <th class="user-table-head-cell" rowspan="2" style="width: auto;">Description</th>
+                <th class="user-table-head-cell" data-sort="engineer" style="width: 80px;">Tech</th>
+                <th class="user-table-head-cell text-center" rowspan="2" style="width: 100px;">Status</th>
+                <th class="user-table-head-cell is-hidden" rowspan="2" id="priority-column-header-prev">Prio</th>
                 <th class="user-table-head-cell" rowspan="2" style="width: 20%;">Remarks</th>
                 <th class="user-table-head-cell text-center" rowspan="2" style="width: 60px;">Add</th>
               </tr>
@@ -225,278 +456,562 @@
                 <th class="user-table-head-cell">ENG</th>
               </tr>
             </thead>
-            <tbody id="plantTableBody" class="plant-table__body">
-            <!-- Record 1 -->
-            <tr class="user-table-row" data-record-id="1" data-view="today" data-job-type="PROCESS REQMT">
-              <td class="user-table-cell text-center">1</td>
-              <td class="user-table-cell">N.A</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">PROCESS REQMT</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">1</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary">
-                    Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+            <tbody class="plant-table-body">
+              <!-- Record 1 -->
+              <tr class="user-table-row" data-record-id="1" data-view="today" data-job-type="PROCESS REQMT">
+                <td class="user-table-cell text-center">1</td>
+                <td class="user-table-cell">N.A</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">PROCESS REQMT</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame
+                  scanner checked found OK.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">1</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary">
+                      Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                    </div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"
+                        data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots"
+                          aria-hidden="true"></i></button>
+                    </div>
                   </div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark" data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center">
+                  <div class="plant-table__cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        data-open-modal="history-type-modal" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" data-open-modal="history-type-modal" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-            <tr class="user-table-row" data-record-id="1" data-view="today" data-job-type="PROCESS REQMT">
-              <td class="user-table-cell text-center">1</td>
-              <td class="user-table-cell">N.A</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">PROCESS REQMT</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">1</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary">
-                    Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                </td>
+              </tr>
+              <tr class="user-table-row" data-record-id="1" data-view="today" data-job-type="PROCESS REQMT">
+                <td class="user-table-cell text-center">1</td>
+                <td class="user-table-cell">N.A</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">PROCESS REQMT</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame
+                  scanner checked found OK.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">1</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary">
+                      Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                    </div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"
+                        data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots"
+                          aria-hidden="true"></i></button>
+                    </div>
                   </div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark" data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center">
+                  <div class="plant-table__cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        data-open-modal="history-type-modal" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" data-open-modal="history-type-modal" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-            <tr class="user-table-row" data-record-id="1" data-view="today" data-job-type="PROCESS REQMT">
-              <td class="user-table-cell text-center">1</td>
-              <td class="user-table-cell">N.A</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">PROCESS REQMT</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">1</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary">
-                    Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                </td>
+              </tr>
+              <tr class="user-table-row" data-record-id="1" data-view="prev" data-job-type="PROCESS REQMT">
+                <td class="user-table-cell text-center">1</td>
+                <td class="user-table-cell">N.A</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">PROCESS REQMT</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame
+                  scanner checked found OK.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">1</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary">
+                      Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                    </div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"
+                        data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots"
+                          aria-hidden="true"></i></button>
+                    </div>
                   </div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark" data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center">
+                  <div class="plant-table__cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        data-open-modal="history-type-modal" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" data-open-modal="history-type-modal" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-            <tr class="user-table-row" data-record-id="1" data-view="prev" data-job-type="PROCESS REQMT">
-              <td class="user-table-cell text-center">1</td>
-              <td class="user-table-cell">N.A</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">PROCESS REQMT</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">1</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary">
-                    Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                </td>
+              </tr>
+              <!-- Record 2 -->
+              <tr class="user-table-row" data-record-id="2" data-view="prev" data-job-type="PM">
+                <td class="user-table-cell text-center">2</td>
+                <td class="user-table-cell">N.A</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">PM</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame
+                  scanner checked found OK.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">2</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
                   </div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark" data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center">
+                  <div class="plant-table__cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" data-open-modal="history-type-modal" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-            <tr class="user-table-row" data-record-id="1" data-view="prev" data-job-type="PROCESS REQMT">
-              <td class="user-table-cell text-center">1</td>
-              <td class="user-table-cell">N.A</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">PROCESS REQMT</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">BSU</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">1</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary">
-                    Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                </td>
+              </tr>
+              <!-- Record 3 -->
+              <tr class="user-table-row" data-record-id="3" data-view="prev" data-job-type="DEFECT MAINTENANCE">
+                <td class="user-table-cell text-center">3</td>
+                <td class="user-table-cell">ASH</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">3SV1</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Seal not coming due to mech . so bypass it as per process requirements.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">3</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
                   </div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark" data-open-modal="remark-modal"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center">
+                  <div class="plant-table__cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" data-open-modal="history-type-modal" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-            <!-- Record 2 -->
-            <tr class="user-table-row" data-record-id="2" data-view="prev" data-job-type="PM">
-              <td class="user-table-cell text-center">2</td>
-              <td class="user-table-cell">N.A</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">PM</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">2</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary"></div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+              </tr>
+              <!-- Record 4 -->
+              <tr class="user-table-row" data-record-id="4" data-view="prev" data-job-type="DEFECT MAINTENANCE">
+                <td class="user-table-cell text-center">4</td>
+                <td class="user-table-cell">BOILER-2</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Boiler-2 start up related activity done. Boiler lit up at 12.12 and paralled
+                  at 16.10. Logic related tags forced and taken in line as per process requirements. Job done with JDB.
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">4</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-            <!-- Record 3 -->
-            <tr class="user-table-row" data-record-id="3" data-view="prev" data-job-type="DEFECT MAINTENANCE">
-              <td class="user-table-cell text-center">3</td>
-              <td class="user-table-cell">ASH</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">3SV1</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Seal not coming due to mech . so bypass it as per process requirements.</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">3</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary"></div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center">
+                  <div class="plant-table__cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-            <!-- Record 4 -->
-            <tr class="user-table-row" data-record-id="4" data-view="prev" data-job-type="DEFECT MAINTENANCE">
-              <td class="user-table-cell text-center">4</td>
-              <td class="user-table-cell">BOILER-2</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">NOTAG</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Boiler-2 start up related activity done. Boiler lit up at 12.12 and paralled at 16.10. Logic related tags forced and taken in line as per process requirements. Job done with JDB.</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">4</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary"></div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+              </tr>
+              <!-- Record 5 -->
+              <tr class="user-table-row" data-record-id="5" data-view="prev" data-job-type="DEFECT MAINTENANCE">
+                <td class="user-table-cell text-center">5</td>
+                <td class="user-table-cell">BOILER-2</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">2AB1IGN</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Ignitor not coming and found eye not sensing properly. Eye adjustment done
+                  and trail taken now it is ok. Job done with JDB</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">5</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-            <!-- Record 5 -->
-            <tr class="user-table-row" data-record-id="5" data-view="prev" data-job-type="DEFECT MAINTENANCE">
-              <td class="user-table-cell text-center">5</td>
-              <td class="user-table-cell">BOILER-2</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">2AB1IGN</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Ignitor not coming and found eye not sensing properly. Eye adjustment done and trail taken now it is ok. Job done with JDB</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">5</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary"></div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center">
+                  <div class="plant-table__cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-            <!-- Record 6 -->
-            <tr class="user-table-row" data-record-id="6" data-view="prev" data-job-type="DEFECT MAINTENANCE">
-              <td class="user-table-cell text-center">6</td>
-              <td class="user-table-cell">BOILER-2</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">2AB2IGN</a></span></div></td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div></td>
-              <td class="user-table-cell"></td>
-              <td class="user-table-cell">Ignitor not coming. Its IFM cleaning done and also found its card not working properly . so card replaced with spare one. Trail taken , now working ok. Job done with JDB.</td>
-              <td class="user-table-cell user-table-cell--nopadding"><div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span class="plant-table__cell-secondary">ARP</span></div></td>
-              <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
-              <td class="user-table-cell is-hidden"><span class="plant-priority-chip">6</span></td>
-              <td class="user-table-cell user-table-cell--nopadding">
-                <div class="plant-table__cell-stack">
-                  <div class="plant-table__cell-secondary"></div>
-                  <div class="plant-inline-actions">
-                    <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                </td>
+              </tr>
+              <!-- Record 6 -->
+              <tr class="user-table-row" data-record-id="6" data-view="prev" data-job-type="DEFECT MAINTENANCE">
+                <td class="user-table-cell text-center">6</td>
+                <td class="user-table-cell">BOILER-2</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">N.A</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">2AB2IGN</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary"></span><span
+                      class="plant-table__cell-secondary">DEFECT MAINTENANCE</span></div>
+                </td>
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell">Ignitor not coming. Its IFM cleaning done and also found its card not
+                  working properly . so card replaced with spare one. Trail taken , now working ok. Job done with JDB.
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">JMD</span><span
+                      class="plant-table__cell-secondary">ARP</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">OVER</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">6</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-table__cell-secondary"></div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td class="user-table-cell user-table-cell--nopadding text-center">
-                <div class="plant-table__cell-stack">
-                  <div><button type="button" class="plant-inline-button" data-action="history" title="History">H</button></div>
-                  <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center">
+                  <div class="plant-table__cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center"></td>
+              </tr>
+            </tbody>
           </table>
         </div>
+        </div>
 
-      </section>
+        <div id="table-container-weekly" class="plant-table-container is-hidden">
+        <div class="plant-table-card__header">
+          <div class="plant-table-card__summary">
+            <i class="ph-fill ph-table" aria-hidden="true"></i>
+            <span class="view-title plant-table-card__title">Weekly Log Book</span>
+            <span class="plant-view-date weekly-date-text">( 21.03.2026 - 27.03.2026 )</span>
+          </div>
+
+          <div class="plant-table-card__actions">
+            <span class="record-count plant-record-count">4 Records</span>
+
+            <label class="plant-search-field">
+              <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+              <input type="text" class="table-search" placeholder="Search logs...">
+            </label>
+          </div>
+        </div>
+
+        <div class="user-table-scroll plant-table-wrap">
+          <table class="user-table" id="plantLogbookTableWeekly">
+            <thead>
+              <tr>
+                <th class="user-table-head-cell text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                <th class="user-table-head-cell" rowspan="2" data-sort="area" style="width: 120px;">Area</th>
+                <th class="user-table-head-cell" style="width: 120px;">Loop No</th>
+                <th class="user-table-head-cell" style="width: 180px;">Job</th>
+                <th class="user-table-head-cell" rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                <th class="user-table-head-cell" rowspan="2" style="width: auto;">Description</th>
+                <th class="user-table-head-cell" data-sort="engineer" style="width: 80px;">Tech</th>
+                <th class="user-table-head-cell text-center" rowspan="2" style="width: 100px;">Status</th>
+                <th class="user-table-head-cell is-hidden" rowspan="2">Prio</th>
+                <th class="user-table-head-cell" rowspan="2" style="width: 20%;">Remarks</th>
+                <th class="user-table-head-cell text-center" rowspan="2" style="width: 60px;">Add</th>
+              </tr>
+              <tr>
+                <th class="user-table-head-cell">Tag No</th>
+                <th class="user-table-head-cell">Type of Job</th>
+                <th class="user-table-head-cell">ENG</th>
+              </tr>
+            </thead>
+            <tbody class="plant-table-body">
+              <tr class="plant-date-row">
+                <td colspan="11"><i class="ph ph-calendar-blank" aria-hidden="true"></i> 27/03/2026</td>
+              </tr>
+              <tr class="user-table-row" data-record-id="1" data-view="weekly" data-job-type="PROCESS REQMT">
+                <td class="user-table-cell text-center">01</td>
+                <td class="user-table-cell">FA</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Loop-202</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">PT5087K</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Routine Check</span><span
+                      class="plant-table__cell-secondary">TRANSMITTER</span></div>
+                </td>
+                <td class="user-table-cell">NRK</td>
+                <td class="user-table-cell">Assigned. Awaiting technician log entry.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">--</span><span
+                      class="plant-table__cell-secondary">NA</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--primary">ASSIGNED</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">1</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center"></td>
+              </tr>
+              <tr class="user-table-row" data-record-id="2" data-view="weekly" data-job-type="CMS JOB">
+                <td class="user-table-cell text-center">02</td>
+                <td class="user-table-cell">MF</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Loop-101</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">FT5021A</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Abnormality</span><span
+                      class="plant-table__cell-secondary">CONTROL VALVE</span></div>
+                </td>
+                <td class="user-table-cell">DPB</td>
+                <td class="user-table-cell"><span class="status-text status-text--warning">Valve position hunting observed near 44%.</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">AMS</span><span
+                      class="plant-table__cell-secondary">A</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--warning">IN PROGRESS</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">2</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center"></td>
+              </tr>
+              <tr class="plant-date-row">
+                <td colspan="11"><i class="ph ph-calendar-blank" aria-hidden="true"></i> 26/03/2026</td>
+              </tr>
+              <tr class="user-table-row" data-record-id="3" data-view="weekly" data-job-type="PROCESS REQMT">
+                <td class="user-table-cell text-center">03</td>
+                <td class="user-table-cell">DCS</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Loop-DCS</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">SYS-1</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Shutdown</span><span
+                      class="plant-table__cell-secondary">DCS</span></div>
+                </td>
+                <td class="user-table-cell">PHB</td>
+                <td class="user-table-cell">Shutdown interlock simulation completed.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">PHB</span><span
+                      class="plant-table__cell-secondary">P</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--success">✓ OVER</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">3</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center">
+                  <div class="plant-table__cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button></div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="plant-date-row">
+                <td colspan="11"><i class="ph ph-calendar-blank" aria-hidden="true"></i> 23/03/2026</td>
+              </tr>
+              <tr class="user-table-row" data-record-id="4" data-view="weekly" data-job-type="PROCESS REQMT">
+                <td class="user-table-cell text-center">04</td>
+                <td class="user-table-cell">UTIL</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Loop-UTIL</span><span
+                      class="plant-table__cell-secondary"><a href="#" class="plant-tag-link">COND-VALVE</a></span></div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">Routine Check</span><span
+                      class="plant-table__cell-secondary">CONTROL VALVE</span></div>
+                </td>
+                <td class="user-table-cell">NRK</td>
+                <td class="user-table-cell">Assigned. Awaiting technician log entry.</td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack"><span class="plant-table__cell-primary">--</span><span
+                      class="plant-table__cell-secondary">NA</span></div>
+                </td>
+                <td class="user-table-cell text-center"><span class="status-text status-text--primary">ASSIGNED</span></td>
+                <td class="user-table-cell is-hidden"><span class="plant-priority-chip">4</span></td>
+                <td class="user-table-cell user-table-cell--nopadding">
+                  <div class="plant-table__cell-stack">
+                    <div class="plant-inline-actions">
+                      <button type="button" class="plant-inline-button" data-action="remark"><i
+                          class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-cell user-table-cell--nopadding text-center"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+        <div id="table-container-monthly" class="plant-table-container is-hidden">
+        <div class="plant-table-card__header">
+          <div class="plant-table-card__summary">
+            <i class="ph-fill ph-table" aria-hidden="true"></i>
+            <span class="view-title plant-table-card__title">Monthly Log Book</span>
+            <span class="plant-view-date monthly-date-text">( March 2026 )</span>
+          </div>
+
+          <div class="plant-table-card__actions">
+            <span class="record-count plant-record-count">0 Records</span>
+
+            <label class="plant-search-field">
+              <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+              <input type="text" class="table-search" placeholder="Search logs...">
+            </label>
+          </div>
+        </div>
+
+        <div class="user-table-scroll plant-table-wrap">
+          <table class="user-table" id="plantLogbookTableMonthly">
+            <thead>
+              <tr>
+                <th class="user-table-head-cell text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                <th class="user-table-head-cell" rowspan="2" data-sort="area" style="width: 120px;">Area</th>
+                <th class="user-table-head-cell" style="width: 120px;">Loop No</th>
+                <th class="user-table-head-cell" style="width: 180px;">Job</th>
+                <th class="user-table-head-cell" rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                <th class="user-table-head-cell" rowspan="2" style="width: auto;">Description</th>
+                <th class="user-table-head-cell" data-sort="engineer" style="width: 80px;">Tech</th>
+                <th class="user-table-head-cell text-center" rowspan="2" style="width: 100px;">Status</th>
+                <th class="user-table-head-cell is-hidden" rowspan="2">Prio</th>
+                <th class="user-table-head-cell" rowspan="2" style="width: 20%;">Remarks</th>
+                <th class="user-table-head-cell text-center" rowspan="2" style="width: 60px;">Add</th>
+              </tr>
+              <tr>
+                <th class="user-table-head-cell">Tag No</th>
+                <th class="user-table-head-cell">Type of Job</th>
+                <th class="user-table-head-cell">ENG</th>
+              </tr>
+            </thead>
+            <tbody class="plant-table-body">
+              <tr class="plant-date-row">
+                <td colspan="11"><i class="ph ph-calendar-blank" aria-hidden="true"></i> 01/03/2026</td>
+              </tr>
+              <!-- Empty for now -->
+            </tbody>
+          </table>
+        </div>
     </div>
   </main>
 
@@ -504,7 +1019,8 @@
     <div class="gnfc-modal-shell plant-modal-shell">
       <div class="gnfc-modal-header">
         <h3 class="gnfc-modal-title">Assign Job</h3>
-        <button type="button" class="gnfc-modal-close" data-close-modal="job-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+        <button type="button" class="gnfc-modal-close" data-close-modal="job-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
       </div>
       <form id="job-modal-form">
         <div class="gnfc-modal-body gnfc-modal-body--tight plant-modal-body--scroll">
@@ -591,7 +1107,8 @@
           </div>
         </div>
         <div class="gnfc-modal-footer">
-          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="job-modal">Cancel</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="job-modal">Cancel</button>
           <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
         </div>
       </form>
@@ -603,9 +1120,11 @@
       <div class="gnfc-modal-header">
         <div>
           <h3 class="gnfc-modal-title">Edit Assigned Job</h3>
-          <p class="gnfc-modal-subtitle">JOB ID: <span id="edit-job-id-display" class="plant-inline-accent">--</span></p>
+          <p class="gnfc-modal-subtitle">JOB ID: <span id="edit-job-id-display" class="plant-inline-accent">--</span>
+          </p>
         </div>
-        <button type="button" class="gnfc-modal-close" data-close-modal="edit-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+        <button type="button" class="gnfc-modal-close" data-close-modal="edit-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
       </div>
       <form id="edit-modal-form" class="plant-modal-form">
         <input id="edit-job-id" type="hidden">
@@ -618,7 +1137,8 @@
               </div>
               <div class="plant-context-strip__item">
                 <label class="gnfc-modal-label" for="edit-job-assigned-to">Assigned To</label>
-                <input id="edit-job-assigned-to" type="text" readonly class="plant-context-strip__value plant-context-strip__value--accent">
+                <input id="edit-job-assigned-to" type="text" readonly
+                  class="plant-context-strip__value plant-context-strip__value--accent">
               </div>
               <div class="plant-context-strip__item">
                 <label class="gnfc-modal-label" for="edit-job-by">Assigned By</label>
@@ -656,7 +1176,8 @@
               <div class="plant-modal-stack">
                 <div class="plant-field">
                   <label class="gnfc-modal-label" for="edit-job-desc">Description / Remarks</label>
-                  <textarea id="edit-job-desc" rows="6" class="gnfc-modal-input plant-code-textarea" placeholder="Enter detailed job description..."></textarea>
+                  <textarea id="edit-job-desc" rows="6" class="gnfc-modal-input plant-code-textarea"
+                    placeholder="Enter detailed job description..."></textarea>
                 </div>
 
                 <div class="plant-form-grid plant-form-grid--two">
@@ -673,7 +1194,8 @@
                   </div>
                   <div class="plant-field">
                     <label class="gnfc-modal-label" for="edit-job-extra-hours">Extra Duty (Hrs)</label>
-                    <input id="edit-job-extra-hours" type="number" min="0" step="1" class="gnfc-modal-input plant-code-input">
+                    <input id="edit-job-extra-hours" type="number" min="0" step="1"
+                      class="gnfc-modal-input plant-code-input">
                   </div>
                 </div>
 
@@ -682,12 +1204,12 @@
                     <label class="gnfc-modal-label" for="edit-job-tech">Technician</label>
                     <div class="plant-select-wrap">
                       <select id="edit-job-tech" class="gnfc-modal-input">
-                <option value="BPB">BPB</option>
-                <option value="PBS">PBS</option>
-                <option value="NRK">NRK</option>
-                <option value="SHC">SHC</option>
-                <option value="NHP">NHP</option>
-              </select>
+                        <option value="BPB">BPB</option>
+                        <option value="PBS">PBS</option>
+                        <option value="NRK">NRK</option>
+                        <option value="SHC">SHC</option>
+                        <option value="NHP">NHP</option>
+                      </select>
                       <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
                     </div>
                   </div>
@@ -695,11 +1217,11 @@
                     <label class="gnfc-modal-label" for="edit-job-engineer">Engineer</label>
                     <div class="plant-select-wrap">
                       <select id="edit-job-engineer" class="gnfc-modal-input">
-                <option value="SHC">SHC</option>
-                <option value="MAJ">MAJ</option>
-                <option value="CKV">CKV</option>
-                <option value="MDM">MDM</option>
-              </select>
+                        <option value="SHC">SHC</option>
+                        <option value="MAJ">MAJ</option>
+                        <option value="CKV">CKV</option>
+                        <option value="MDM">MDM</option>
+                      </select>
                       <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
                     </div>
                   </div>
@@ -720,7 +1242,8 @@
           </div>
         </div>
         <div class="gnfc-modal-footer">
-          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="edit-modal">Cancel</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="edit-modal">Cancel</button>
           <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Changes</button>
         </div>
       </form>
@@ -731,7 +1254,8 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--medium plant-modal-shell--wide">
       <div class="gnfc-modal-header">
         <h3 class="gnfc-modal-title">Remark</h3>
-        <button type="button" class="gnfc-modal-close" data-close-modal="remark-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+        <button type="button" class="gnfc-modal-close" data-close-modal="remark-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
       </div>
       <form id="remark-modal-form">
         <input id="remark-job-id" type="hidden">
@@ -742,14 +1266,18 @@
           <div class="plant-modal-stack">
             <div class="plant-field">
               <label class="gnfc-modal-label" for="remark-text">New Remark</label>
-              <textarea id="remark-text" rows="4" class="gnfc-modal-input plant-remark-textarea" placeholder="Enter remark..."></textarea>
+              <textarea id="remark-text" rows="4" class="gnfc-modal-input plant-remark-textarea"
+                placeholder="Enter remark..."></textarea>
             </div>
-            <label class="plant-check-row"><input id="remark-status-over" type="checkbox"><span>Mark the job status as "OVER"</span></label>
-            <label class="plant-check-row"><input id="remark-ack-tech" type="checkbox"><span>Remark Acknowledgement By Technician</span></label>
+            <label class="plant-check-row"><input id="remark-status-over" type="checkbox"><span>Mark the job status as
+                "OVER"</span></label>
+            <label class="plant-check-row"><input id="remark-ack-tech" type="checkbox"><span>Remark Acknowledgement By
+                Technician</span></label>
           </div>
         </div>
         <div class="gnfc-modal-footer">
-          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="remark-modal">Cancel</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="remark-modal">Cancel</button>
           <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Changes</button>
         </div>
       </form>
@@ -760,18 +1288,31 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
       <div class="gnfc-modal-header">
         <h3 class="gnfc-modal-title">Job Priority</h3>
-        <button type="button" class="gnfc-modal-close" data-close-modal="priority-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+        <button type="button" class="gnfc-modal-close" data-close-modal="priority-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
       </div>
       <form id="priority-modal-form">
         <input id="priority-job-id" type="hidden">
-        <input id="priority-value" type="hidden" value="0">
         <div class="gnfc-modal-body plant-modal-body">
-          <label class="gnfc-modal-label" for="priority-grid">Select Priority (0-25)</label>
-          <div id="priority-grid" class="plant-priority-grid"></div>
+          <div class="plant-field">
+            <label class="gnfc-modal-label" for="priority-select">Job Priority</label>
+            <select id="priority-select" class="gnfc-modal-input">
+              <option value="0">0 (Undefined)</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+            </select>
+          </div>
         </div>
         <div class="gnfc-modal-footer">
-          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="priority-modal">Cancel</button>
-          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Set Priority</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="priority-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Apply</button>
         </div>
       </form>
     </div>
@@ -781,14 +1322,17 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--medium">
       <div class="gnfc-modal-header">
         <h3 class="gnfc-modal-title">Pending Remark Acknowledgement</h3>
-        <button type="button" class="gnfc-modal-close" data-close-modal="ack-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+        <button type="button" class="gnfc-modal-close" data-close-modal="ack-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
       </div>
       <div class="gnfc-modal-body gnfc-modal-body--tight">
         <div id="ack-list" class="plant-list-panel"></div>
       </div>
       <div class="gnfc-modal-footer">
-        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="ack-modal">Close</button>
-        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="acknowledge-selected-btn">Acknowledge Selected</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          data-close-modal="ack-modal">Close</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="acknowledge-selected-btn">Acknowledge
+          Selected</button>
       </div>
     </div>
   </div>
@@ -797,11 +1341,13 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--medium">
       <div class="gnfc-modal-header">
         <h3 class="gnfc-modal-title">Job Planner / ISO14001 Due Jobs</h3>
-        <button type="button" class="gnfc-modal-close" data-close-modal="reminder-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+        <button type="button" class="gnfc-modal-close" data-close-modal="reminder-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
       </div>
       <div id="reminder-list" class="gnfc-modal-body gnfc-modal-body--tight plant-modal-body--scroll"></div>
       <div class="gnfc-modal-footer">
-        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="reminder-modal">Close</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          data-close-modal="reminder-modal">Close</button>
       </div>
     </div>
   </div>
@@ -815,12 +1361,15 @@
       <div class="gnfc-modal-body gnfc-modal-body--tight plant-modal-center">
         <p class="plant-center-label">Select History Type</p>
         <div class="plant-history-options">
-          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="history-system-btn">System History</button>
-          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-success" id="history-general-btn">General History</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="history-system-btn">System
+            History</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-success" id="history-general-btn">General
+            History</button>
         </div>
       </div>
       <div class="gnfc-modal-footer plant-modal-footer--center">
-        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="history-type-modal">Cancel</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          data-close-modal="history-type-modal">Cancel</button>
       </div>
     </div>
   </div>
@@ -834,7 +1383,8 @@
         </div>
         <div class="plant-header-badge-row">
           <span id="history-type-badge" class="plant-history-badge">General History</span>
-          <button type="button" class="gnfc-modal-close" data-close-modal="general-history-modal"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+          <button type="button" class="gnfc-modal-close" data-close-modal="general-history-modal"><i
+              class="ph-bold ph-x" aria-hidden="true"></i></button>
         </div>
       </div>
       <div class="gnfc-modal-body gnfc-modal-body--tight plant-modal-body--scroll">
@@ -849,23 +1399,23 @@
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-insttag">InstTag</label>
             <select id="hist-insttag" class="gnfc-modal-input">
-                  <option value="DCS">DCS</option>
-                  <option value="TRANSMITTER">TRANSMITTER</option>
-                  <option value="CONTROL VALVE">CONTROL VALVE</option>
-                  <option value="SWITCH">SWITCH</option>
-                  <option value="ANALYZER">ANALYZER</option>
-                  <option value="OTHERS">OTHERS</option>
-                </select>
+              <option value="DCS">DCS</option>
+              <option value="TRANSMITTER">TRANSMITTER</option>
+              <option value="CONTROL VALVE">CONTROL VALVE</option>
+              <option value="SWITCH">SWITCH</option>
+              <option value="ANALYZER">ANALYZER</option>
+              <option value="OTHERS">OTHERS</option>
+            </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-jobtype">Type of Job</label>
             <select id="hist-jobtype" class="gnfc-modal-input">
-                  <option value="PROCESS REQMT">PROCESS REQMT</option>
-                  <option value="CMS JOB">CMS JOB</option>
-                  <option value="PM JOB">PM JOB</option>
-                  <option value="BREAKDOWN">BREAKDOWN</option>
-                  <option value="N.A.">N.A.</option>
-                </select>
+              <option value="PROCESS REQMT">PROCESS REQMT</option>
+              <option value="CMS JOB">CMS JOB</option>
+              <option value="PM JOB">PM JOB</option>
+              <option value="BREAKDOWN">BREAKDOWN</option>
+              <option value="N.A.">N.A.</option>
+            </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-insttype">Type of Inst</label>
@@ -880,48 +1430,198 @@
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-status">Job Status</label>
             <select id="hist-status" class="gnfc-modal-input">
-                  <option value="OVER">OVER</option>
-                  <option value="IN PROGRESS">IN PROGRESS</option>
-                  <option value="HOLD">HOLD</option>
-                </select>
+              <option value="OVER">OVER</option>
+              <option value="IN PROGRESS">IN PROGRESS</option>
+              <option value="HOLD">HOLD</option>
+            </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-tech">Tech Name</label>
             <select id="hist-tech" class="gnfc-modal-input">
-                  <option value="BPB">BPB</option>
-                  <option value="PBS">PBS</option>
-                  <option value="NRK">NRK</option>
-                  <option value="SHC">SHC</option>
-                  <option value="NHP">NHP</option>
-                </select>
+              <option value="BPB">BPB</option>
+              <option value="PBS">PBS</option>
+              <option value="NRK">NRK</option>
+              <option value="SHC">SHC</option>
+              <option value="NHP">NHP</option>
+            </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-eng">Eng</label>
             <select id="hist-eng" class="gnfc-modal-input">
-                  <option value="SHC">SHC</option>
-                  <option value="MAJ">MAJ</option>
-                  <option value="CKV">CKV</option>
-                  <option value="MDM">MDM</option>
-                </select>
+              <option value="SHC">SHC</option>
+              <option value="MAJ">MAJ</option>
+              <option value="CKV">CKV</option>
+              <option value="MDM">MDM</option>
+            </select>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-area">Area</label>
             <select id="hist-area" class="gnfc-modal-input">
-                  <option value="METH">METH</option>
-                  <option value="FA">FA</option>
-                  <option value="AA">AA</option>
-                  <option value="DCS">DCS</option>
-                  <option value="UTIL">UTIL</option>
-                </select>
+              <option value="METH">METH</option>
+              <option value="FA">FA</option>
+              <option value="AA">AA</option>
+              <option value="DCS">DCS</option>
+              <option value="UTIL">UTIL</option>
+            </select>
           </div>
         </div>
       </div>
       <div class="gnfc-modal-footer">
-        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="general-history-modal">Cancel</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          data-close-modal="general-history-modal">Cancel</button>
         <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="add-history-btn">Add</button>
       </div>
     </div>
   </div>
 </body>
+
+<script>
+  $(function () {
+    let selectedView = 'today';
+    let searchTerm = '';
+    let jobTypeFilter = '';
+
+    function filterTable() {
+      // Find the active container
+      const $activeContainer = $('.plant-table-container:not(.is-hidden)');
+      let visibleCount = 0;
+
+      $activeContainer.find('.plant-table-body tr').not('.plant-date-row').each(function () {
+        const $row = $(this);
+        const rowType = $row.data('job-type') || "";
+        const rowText = $row.text().toLowerCase();
+
+        const typeMatch = !jobTypeFilter || rowType === jobTypeFilter;
+        const textMatch = !searchTerm || rowText.indexOf(searchTerm) !== -1;
+
+        if (typeMatch && textMatch) {
+          $row.show();
+          visibleCount++;
+        } else {
+          $row.hide();
+        }
+      });
+
+      // Update record count for the active container
+      $activeContainer.find('.record-count').text(visibleCount + ' Records');
+      
+      // Handle date rows in Weekly/Monthly
+      $activeContainer.find('.plant-date-row').each(function() {
+        const $dateRow = $(this);
+        const $nextRows = $dateRow.nextUntil('.plant-date-row', 'tr:not(.plant-date-row)');
+        const hasVisibleChild = $nextRows.filter(':visible').length > 0;
+        
+        if (hasVisibleChild || (!searchTerm && !jobTypeFilter)) {
+           $dateRow.show();
+        } else {
+           $dateRow.hide();
+        }
+      });
+    }
+
+    // View Buttons (Switcher)
+    $('.ui-switcher-btn').on('click', function () {
+      $('.ui-switcher-btn').removeClass('is-active');
+      $(this).addClass('is-active');
+      selectedView = $(this).data('view');
+      
+      // Toggle Containers
+      $('.plant-table-container').addClass('is-hidden');
+      $('#table-container-' + selectedView).removeClass('is-hidden');
+      
+      // Update global title if needed (though each container has its own now)
+
+      filterTable();
+    });
+
+    // Search (Delegated for multiple inputs)
+    $(document).on('input', '.table-search', function () {
+      searchTerm = $(this).val().toLowerCase();
+      filterTable();
+    });
+
+    // Job Type Filter
+    $('#job-type-select').on('change', function () {
+      jobTypeFilter = $(this).val();
+      filterTable();
+    });
+
+    // Modal Logic
+    $(document).on('click', '[data-open-modal]', function () {
+      const modalId = $(this).data('open-modal');
+      $('#' + modalId).addClass('is-open');
+      $('body').css('overflow', 'hidden');
+    });
+
+    $(document).on('click', '[data-close-modal]', function () {
+      const modalId = $(this).data('close-modal');
+      $('#' + modalId).removeClass('is-open');
+      $('body').css('overflow', '');
+    });
+
+    // Remark Button Logic
+    $(document).on('click', '[data-action="remark"]', function () {
+      const $row = $(this).closest('tr');
+      const recordId = $row.data('record-id');
+      const loopTag = $row.find('.plant-tag-link').first().text() || 'N.A';
+      
+      $('#remark-job-id').val(recordId);
+      $('#remark-text').val('');
+      
+      const modalId = $(this).data('open-modal') || 'remark-modal';
+      $('#' + modalId).addClass('is-open');
+      $('body').css('overflow', 'hidden');
+    });
+
+    // Priority Chip Click
+    $(document).on('click', '.plant-priority-chip', function () {
+      const $row = $(this).closest('tr');
+      const recordId = $row.data('record-id');
+      const currentPriority = $(this).text().trim();
+
+      $('#priority-job-id').val(recordId);
+      $('#priority-select').val(currentPriority);
+      $('#priority-modal').addClass('is-open');
+      $('body').css('overflow', 'hidden');
+    });
+
+    // Priority Modal Form Submit
+    $('#priority-modal-form').on('submit', function (e) {
+      e.preventDefault();
+      const recordId = $('#priority-job-id').val();
+      const newPriority = $('#priority-select').val();
+
+      // Update the chip in the visible container for this record
+      const $activeBody = $('.plant-table-container:not(.is-hidden) .plant-table-body');
+      const $row = $activeBody.find('tr[data-record-id="' + recordId + '"]');
+      $row.find('.plant-priority-chip').text(newPriority);
+
+      $('#priority-modal').removeClass('is-open');
+      $('body').css('overflow', '');
+    });
+
+    // Date Initializations
+    const todayStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
+    $('.today-date-text').text("( " + todayStr + " )");
+
+    const prevDate = new Date();
+    prevDate.setDate(prevDate.getDate() - 1);
+    const prevStr = prevDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
+    $('.prev-date-text').text("( " + prevStr + " )");
+
+    // Weekly date range (example: last 7 days)
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 6);
+    const weekAgoStr = weekAgo.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
+    $('.weekly-date-text').text("( " + weekAgoStr + " - " + todayStr + " )");
+
+    // Monthly
+    const monthStr = new Date().toLocaleString('en-GB', { month: 'long', year: 'numeric' });
+    $('.monthly-date-text').text("( " + monthStr + " )");
+
+    // Initialize
+    filterTable();
+  });
+</script>
 
 </html>
