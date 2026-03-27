@@ -21,6 +21,172 @@
   --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+/* ════════════════════════════════════════════════════════════
+   GNFC UI COMPONENT LIBRARY (REUSABLE)
+   ════════════════════════════════════════════════════════════ */
+
+/* --- 1. CARDS --- */
+.ui-card {
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ui-card--interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--typo-blue);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 2. BUTTONS --- */
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+}
+
+.ui-btn--primary {
+  background: var(--typo-blue);
+  color: white;
+}
+
+.ui-btn--secondary {
+  background: var(--app-bg);
+  border-color: var(--app-border);
+  color: var(--typo-primary);
+}
+
+.ui-btn--icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+}
+
+.ui-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.ui-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- 3. BADGES & STATUS CHIPS --- */
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.ui-badge--success {
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(34, 197, 94, 0.25);
+  color: #4ade80;
+}
+
+.ui-badge--info {
+  background: rgba(59, 130, 246, 0.14);
+  border-color: rgba(59, 130, 246, 0.25);
+  color: #60a5fa;
+}
+
+.ui-badge--warning {
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+}
+
+.ui-badge--danger {
+  background: rgba(239, 68, 68, 0.14);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #f87171;
+}
+
+/* ── 3a. PLAIN STATUS TEXT (Badge Alternative) ── */
+.status-text {
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.status-text--success { color: #4ade80; }
+.status-text--info { color: #60a5fa; }
+.status-text--warning { color: #fbbf24; }
+.status-text--danger { color: #f87171; }
+
+/* (Unused - Migrated to .user-table from common.css) */
+
+/* ── 4a. TABLE HEADER CORRECTIONS (2-Row Layout) ── */
+.user-table-scroll {
+  overflow: auto;
+  border-radius: 0 0 8px 8px;
+  background: var(--app-panel);
+
+}
+
+.plant-table .user-table-head-cell {
+  background: var(--app-panel) !important;
+  border-bottom: 1px solid var(--app-border) !important;
+  border-right: 1px solid var(--app-border) !important;
+  padding: 10px 14px !important;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.plant-table thead tr:last-child .user-table-head-cell,
+.plant-table thead tr:first-child .user-table-head-cell[rowspan="2"] {
+  border-bottom: 2px solid var(--app-border) !important;
+}
+
+/* --- 5. SWITCHERS --- */
+.ui-switcher {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--app-bg);
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--app-border);
+}
+
+.ui-switcher-btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--typo-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ui-switcher-btn.is-active {
+  background: var(--app-panel);
+  color: var(--typo-blue);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* ── Login Page Styles ── */
 
 .login-wrapper {
@@ -224,8 +390,8 @@
 }
 
 .dashboard-content {
-  flex: 1;
-  overflow-y: auto;
+  /* flex: 1; */
+  /* overflow-y: auto; */
   padding: 16px;
   background-color: var(--dark-bg);
   display: flex;
@@ -1205,34 +1371,7 @@
   font-weight: 600;
 }
 
-.time-btn-container {
-  display: flex;
-  gap: 6px;
-  background: var(--dark-bg/80);
-  padding: 6px;
-  border-radius: 8px;
-  border: 1px solid var(--dark-border);
-  gap: 6px;
-}
-
-.time-btn {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background: transparent;
-  color: var(--app-muted);
-}
-
-.time-btn:hover {
-  background: var(--app-hover);
-  color: var(--app-primary);
-}
-
-.time-btn.is-active {
-  background: #5794F2;
-  color: white;
-}
+/* (Replaced by .ui-switcher) */
 
 /* ===== CHIP ===== */
 .total-count-chip {
@@ -1272,16 +1411,11 @@
   display: flex;
   justify-content: space-between;
   padding: 14px;
-  border-radius: 8px;
-  border: 1px solid var(--app-border);
-  background: var(--app-panel)  ;
   text-decoration: none;
-  transition: 0.2s;
   color: var(--app-primary);
 }
 
 .plant-card:hover {
-  border-color: #5794F2;
   background: var(--app-hover);
 }
 
@@ -1392,21 +1526,11 @@
 .qa-card {
   position: relative;
   padding: 16px;
-  border-radius: 12px;
-  border: 1px solid var(--app-border);
-  background: var(--app-panel);
   display: flex;
   flex-direction: column;
   gap: 10px;
   text-align: left;
   cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.qa-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  background: var(--app-hover);
 }
 
 /* ===== ICON ===== */
@@ -1512,15 +1636,7 @@
   gap: 16px;
 }
 
-.plant-page__nav-card,
-.plant-toolbar-card,
-.plant-filter-card,
-.plant-table-card {
-  background: var(--app-panel);
-  border: 1px solid var(--app-border);
-  border-radius: 10px;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-}
+/* (Handled by .ui-card) */
 
 .plant-page__nav-card {
   display: flex;
@@ -1613,35 +1729,9 @@
   flex-wrap: wrap;
 }
 
-.plant-period-switcher {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px;
-  border: 1px solid var(--app-border);
-  border-radius: 6px;
-  background: var(--app-bg);
-  overflow-x: auto;
-}
-
-.plant-period-switcher__button {
-  border: 0;
-  background: transparent;
-  color: var(--typo-secondary);
-  padding: 7px 14px;
-  border-radius: 3px;
-  font-size: 0.875rem;
-  font-weight: 700;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-}
-
-.plant-period-switcher__button:hover {
-  color: var(--typo-primary);
-}
-
+/* (Replaced by .ui-switcher in HTML) */
 .plant-period-switcher__button.is-active {
-  background: var(--app-panel);
   color: var(--typo-orange);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
 }
 
 .plant-period-switcher__divider,
@@ -1856,8 +1946,11 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-.plant-table-wrap {
-  overflow: auto;
+.plant-table-wrap,
+.user-table-scroll {
+  overflow-x: auto;
+  overflow-y: visible !important;
+  max-height: none !important;
 }
 
 .plant-table {
@@ -1881,69 +1974,52 @@
 .plant-table__cell-stack {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  height: 100%;
+  width: 100%;
+}
+
+.plant-table__cell-stack > * {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 38px; /* Standardize height to ensure borders align across columns */
+  width: 100%;
+}
+
+.plant-table__cell-stack > *:not(:last-child) {
+  border-bottom: 1px solid var(--app-border);
+  padding: 0px 8px 6px 8px;
+}
+
+.plant-table__cell-stack > *:last-child {
+  padding: 6px 8px 0px 8px;
 }
 
 .plant-table__cell-primary {
   color: var(--typo-primary);
-  font-weight: 700;
 }
 
 .plant-table__cell-secondary {
   color: var(--typo-secondary);
-  font-size: 0.8125rem;
+  font-size: 0.9125rem;
 }
 
-.plant-status-chip,
-.plant-priority-chip,
-.plant-remark-chip,
-.plant-history-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border: 1px solid transparent;
+.plant-tag-link {
+  color: #5794F2;
+  text-decoration: none;
 }
 
-.plant-status-chip--over {
-  background: rgba(34, 197, 94, 0.14);
-  border-color: rgba(34, 197, 94, 0.25);
-  color: #4ade80;
+.plant-tag-link:hover {
+  text-decoration: underline;
 }
 
-.plant-status-chip--progress {
-  background: rgba(59, 130, 246, 0.14);
-  border-color: rgba(59, 130, 246, 0.25);
-  color: #60a5fa;
-}
-
-.plant-status-chip--hold {
-  background: rgba(245, 158, 11, 0.14);
-  border-color: rgba(245, 158, 11, 0.25);
-  color: #fbbf24;
-}
-
-.plant-priority-chip {
-  background: rgba(168, 85, 247, 0.14);
-  border-color: rgba(168, 85, 247, 0.25);
-  color: #d8b4fe;
-}
-
-.plant-remark-chip {
-  background: rgba(148, 163, 184, 0.14);
-  border-color: rgba(148, 163, 184, 0.18);
-  color: var(--typo-secondary);
+.user-table-cell--nopadding {
+  padding: 0 !important;
 }
 
 .plant-inline-actions {
   display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .plant-inline-button {
@@ -1961,38 +2037,6 @@
   background: var(--app-panel-alt);
   border-color: var(--typo-blue);
   color: var(--typo-blue);
-}
-
-.plant-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border-top: 1px solid var(--app-border);
-  background: var(--app-panel);
-}
-
-.plant-pagination__button {
-  min-width: 74px;
-  padding: 8px 12px;
-  background: var(--app-bg);
-  border-color: var(--app-border);
-  color: var(--typo-primary);
-  font-size: 0.8125rem;
-  font-weight: 700;
-}
-
-.plant-pagination__button:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.plant-pagination__label {
-  color: var(--typo-secondary);
-  font-size: 0.875rem;
-  font-weight: 700;
 }
 
 .plant-modal-shell {
@@ -2149,11 +2193,6 @@
 .plant-inline-accent {
   color: var(--typo-blue);
   font-weight: 700;
-}
-
-.plant-code-input,
-.plant-code-textarea {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 .plant-form-section__title {
