@@ -99,7 +99,7 @@ $(function () {
           <span class="sidebar-text">Help</span>
         </a>
 
-        <a href="#" class="sidebar-link" data-id="opr_job_reg">
+        <a href="${basePath}pages/assigntoday.html" class="sidebar-link" data-id="opr_job_reg">
           <i class="ph ph-bold ph-clipboard-text"></i>
           <span class="sidebar-text">OPR. Job Reg</span>
         </a>
@@ -192,5 +192,16 @@ $(function () {
     // Highlight Active Sidebar Item
     const currentPage = window.location.pathname.split("/").pop() || "dashboard.html";
     $(".sidebar-link").removeClass("active");
-    $(`.sidebar-link[href="${currentPage}"]`).addClass("active");
+
+    if (window.activePage) {
+        $(`.sidebar-link[data-id="${window.activePage}"]`).addClass("active");
+    } else {
+        // Fallback: match by filename
+        $(`.sidebar-link`).each(function() {
+            const href = $(this).attr('href');
+            if (href && href.endsWith(currentPage)) {
+                $(this).addClass("active");
+            }
+        });
+    }
 });

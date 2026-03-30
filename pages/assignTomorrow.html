@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assign Tomorrow | GNFC E-Logbook</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'assign_tomorrow';
+  </script>
+</head>
+
+<body class="dashboard-body plant-page">
+
+  <!-- Sidebar Container (Injected by sidebar.js) -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+
+    <!-- Header Container (Injected by header.js) -->
+    <div id="header-container" data-title="Assign Tomorrow" data-back="technician_logbook.html"></div>
+
+    <div class="assign-content custom-scroll">
+
+      <!-- Stats / Top Bar -->
+      <div class="assign-top-bar">
+        <div class="assign-info-group">
+          <div class="assign-info-divider">
+            <div class="flex items-center gap-2">
+              <i class="ph-duotone ph-calendar color-blue font-18px"></i>
+              <span id="assign-date" class="fw-bold font-16px color-primary">31/03/2026</span>
+            </div>
+          </div>
+          <div class="flex gap-4 items-center">
+            <div class="flex items-center gap-2">
+              <label class="font-14px color-label">Plant:</label>
+              <span class="fw-bold color-blue font-14px">BOILER</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <label class="font-14px color-label">Engineer:</label>
+              <span class="fw-bold color-primary font-14px uppercase">ENG_TESTER</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="assign-actions">
+          <button onclick="openCJLModal()" class="btn-assign-action">
+            <i class="ph ph-list-checks"></i> Joblist
+          </button>
+          <button onclick="openSEModal()" class="btn-assign-action">
+            <i class="ph ph-warning-circle"></i> S/D
+          </button>
+          <button onclick="openSearchModal()" class="btn-assign-action">
+            <i class="ph ph-magnifying-glass"></i> Search Tag
+          </button>
+          <button type="button" onclick="openHSOModal()" class="btn-assign-iso">
+            <i class="ph-bold ph-plus-circle"></i> Assign ISO
+          </button>
+        </div>
+      </div>
+
+      <div class="assign-split-layout">
+
+        <!-- Left Side: Job Assignment Form -->
+        <div class="assign-side-panel">
+          <div class="assign-form-card">
+            <div class="assign-form-header">
+              <i class="ph-duotone ph-note-pencil color-blue font-16px"></i>
+              <span class="fw-bold color-primary font-14px">JOB ASSIGNMENT FORM</span>
+            </div>
+
+            <div class="assign-form-body">
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Assigned To</label>
+                <div class="assign-select-wrap">
+                  <select id="form-assigned-to" class="gnfc-modal-input assign-select-control">
+                    <option value="">Select Tech</option>
+                    <option>PVS</option>
+                    <option>VWM</option>
+                    <option>BDR</option>
+                    <option>PRP</option>
+                    <option>JDB</option>
+                    <option>JMD</option>
+                    <option>BSU</option>
+                    <option>CNJ_ISD</option>
+                    <option>TECH_TESTER</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Job Type</label>
+                <div class="assign-select-wrap">
+                  <select id="form-job-type" class="gnfc-modal-input assign-select-control">
+                    <option value="">-- Select --</option>
+                    <option>PM</option>
+                    <option>DOCUMENTATION</option>
+                    <option>HOUSE KEEPING</option>
+                    <option>ABNORMALITY</option>
+                    <option>MODIFICATION</option>
+                    <option>ISO14001</option>
+                    <option>OHSAS18001</option>
+                    <option>SYSTEM BACKUP</option>
+                    <option>REVAMP</option>
+                    <option>DEFECT MAINTENANCE</option>
+                    <option>CONFIGURATION</option>
+                    <option>SPARE REPAIR</option>
+                    <option>SCRAP</option>
+                    <option>MATL RETURN</option>
+                    <option>RANGE CHANGE</option>
+                    <option>CARD FAILURE</option>
+                    <option>INST FAILURE</option>
+                    <option>INSPECTION</option>
+                    <option>CASH PURCHASE</option>
+                    <option>PROCESS REQMT</option>
+                    <option>N.A.</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Area</label>
+                <div class="assign-select-wrap">
+                  <select id="form-area" class="gnfc-modal-input assign-select-control">
+                    <option>N.A.</option>
+                    <option>BOILER-1</option>
+                    <option>BOILER-2</option>
+                    <option>BOILER-3</option>
+                    <option>BOILER-4</option>
+                    <option>TG-1</option>
+                    <option>TG-2</option>
+                    <option>COMMON</option>
+                    <option>CPSU-HRSG</option>
+                    <option>CPSU-GT</option>
+                    <option>CPSU-BOP</option>
+                    <option>CPSU-BMS</option>
+                    <option>CHP</option>
+                    <option>ASH</option>
+                    <option>NG STN</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Loop Name</label>
+                <div class="assign-select-wrap">
+                  <select id="form-loop" class="gnfc-modal-input assign-select-control">
+                    <option>N.A.</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Inst Type</label>
+                <div class="assign-select-wrap">
+                  <select id="form-inst-type" class="gnfc-modal-input assign-select-control">
+                    <option value="">-- Select --</option>
+                    <option>ANALYZER</option>
+                    <option>C/V</option>
+                    <option>ENVIRON MONITORING</option>
+                    <option>MACHINE MONITORING</option>
+                    <option>PA SYSTEM</option>
+                    <option>PC</option>
+                    <option>PCV</option>
+                    <option>ROTAMETER</option>
+                    <option>SCANNER</option>
+                    <option>SWITCH</option>
+                    <option>PRIMARY ELEMENT</option>
+                    <option>TG/PG</option>
+                    <option>TX</option>
+                    <option>N.A.</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Tag No</label>
+                <div class="assign-select-wrap">
+                  <select id="form-tag" class="gnfc-modal-input assign-select-control">
+                    <option>NOTAG</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper form-filed-description">
+                <label class="assign-field-label">Description</label>
+                <textarea id="form-jobs-desc" rows="3" class="gnfc-modal-input assign-textarea-control"
+                  placeholder="Enter task details..."></textarea>
+              </div>
+
+              <div class="assign-form-footer form-filed-description pt-2">
+                <button onclick="saveAssignment()" class="gnfc-modal-btn gnfc-modal-btn-primary"
+                  style="padding: 10px 24px;">SAVE</button>
+                <button onclick="cancelAssignment()" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+                  style="padding: 10px 16px;">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Tables Area -->
+        <div class="assign-main-content">
+          <div class="flex flex-col mt-0">
+            <!-- Tabs Navigation -->
+            <div class="assign-tabs px-1 mb-0 border-b border-dark-border">
+              <div class="flex justify-between items-center">
+                <button id="tab-ojr" onclick="switchTab('ojr')" class="tab-btn is-active">
+                  <i class="ph-bold ph-article"></i> Operation Job Register
+                </button>
+                <button id="tab-pending" onclick="switchTab('pending')" class="tab-btn">
+                  <i class="ph-bold ph-timer"></i> Weekly Pending Jobs
+                </button>
+              </div>
+              <div class="assign-tabs-right flex items-center gap-3">
+                <span id="ojr-count-badge" class="badge-count">15 Records</span>
+                <span id="pending-count-badge" class="badge-count badge-count--amber hidden">10 Records</span>
+                <div class="assign-select-wrap" style="width: 130px;">
+                  <select class="gnfc-modal-input font-13px fw-bold assign-select-control">
+                    <option>RUNNING</option>
+                    <option>SHUTDOWN</option>
+                    <option>HOLD</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down" style="font-size: 12px; margin-right: 2px;"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- OJR Panel -->
+            <div id="panel-ojr" class="tab-panel flex flex-col shadow-md rounded-b-lg border border-t-0 border-dark-border">
+              <div class="custom-scroll flex-1" style="overflow: auto;">
+                <table class="theme-table">
+                  <thead class="sticky top-0 z-10">
+                    <tr>
+                      <th style="width: 50px;">Sr</th>
+                      <th style="width: 100px;">Date</th>
+                      <th style="width: 100px;">TagNo</th>
+                      <th style="width: 120px;">Area</th>
+                      <th>Description</th>
+                      <th style="width: 140px;">Status</th>
+                      <th style="width: 80px;">ENG</th>
+                      <th style="width: 100px;">Assign</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">1</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">LT-102</td>
+                      <td class="color-label">BOILER-1</td>
+                      <td class="text-left font-medium color-primary">Routine check of level sensor accuracy</td>
+                      <td><span class="status-pill status-pending border">PENDING</span></td>
+                      <td class="font-bold color-label">PVS</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">2</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">PT-301</td>
+                      <td class="color-label">BOILER-2</td>
+                      <td class="text-left font-medium color-primary">Pressure transmitter calibration due</td>
+                      <td><span class="status-pill status-progress border">IN PROGRESS</span></td>
+                      <td class="font-bold color-label">VWM</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">3</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">TT-504</td>
+                      <td class="color-label">TG-1</td>
+                      <td class="text-left font-medium color-primary">Temperature fluctuation observed</td>
+                      <td><span class="status-pill status-hold border">HOLD</span></td>
+                      <td class="font-bold color-label">BDR</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">4</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">FT-201</td>
+                      <td class="color-label">COMMON</td>
+                      <td class="text-left font-medium color-primary">Flow meter reading erratic</td>
+                      <td><span class="status-pill status-completed border">COMPLETED</span></td>
+                      <td class="font-bold color-label">PRP</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">5</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">CV-101</td>
+                      <td class="color-label">ASH</td>
+                      <td class="text-left font-medium color-primary">Control valve stuck at 50%</td>
+                      <td><span class="status-pill status-pending border">PENDING</span></td>
+                      <td class="font-bold color-label">JDB</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">6</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">XV-405</td>
+                      <td class="color-label">CHP</td>
+                      <td class="text-left font-medium color-primary">Solenoid valve coil replacement</td>
+                      <td><span class="status-pill status-progress border">IN PROGRESS</span></td>
+                      <td class="font-bold color-label">JMD</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">7</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">AT-902</td>
+                      <td class="color-label">BOILER-1</td>
+                      <td class="text-left font-medium color-primary">Analyzer showing drift</td>
+                      <td><span class="status-pill status-hold border">HOLD</span></td>
+                      <td class="font-bold color-label">BSU</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">8</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">PI-112</td>
+                      <td class="color-label">BOILER-2</td>
+                      <td class="text-left font-medium color-primary">Gauge glass cleaning</td>
+                      <td><span class="status-pill status-completed border">COMPLETED</span></td>
+                      <td class="font-bold color-label">ENG_TESTER</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">9</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">LI-304</td>
+                      <td class="color-label">TG-1</td>
+                      <td class="text-left font-medium color-primary">Vibration monitoring check</td>
+                      <td><span class="status-pill status-pending border">PENDING</span></td>
+                      <td class="font-bold color-label">PVS</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">10</td>
+                      <td class="font-mono color-label">31/03/2026</td>
+                      <td class="font-bold color-blue">TI-506</td>
+                      <td class="color-label">COMMON</td>
+                      <td class="text-left font-medium color-primary">Cable tray inspection</td>
+                      <td><span class="status-pill status-progress border">IN PROGRESS</span></td>
+                      <td class="font-bold color-label">VWM</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Pending Jobs Panel -->
+            <div id="panel-pending" class="tab-panel hidden flex-col shadow-md rounded-b-lg border border-t-0 border-dark-border">
+              <div class="custom-scroll flex-1 h-[500px]" style="overflow: auto;">
+                <table class="theme-table">
+                  <thead class="sticky top-0 z-10">
+                    <tr>
+                      <th style="width: 50px;">Sr</th>
+                      <th style="width: 100px;">Date</th>
+                      <th style="width: 100px;">Tag</th>
+                      <th style="width: 120px;">Job</th>
+                      <th>Description</th>
+                      <th style="width: 140px;">Status</th>
+                      <th style="width: 80px;">Tech</th>
+                      <th style="width: 100px;">ReAssign</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                      <td class="font-mono color-muted">1</td>
+                      <td class="font-mono color-label">29/03/2026</td>
+                      <td class="font-bold color-blue">LT-102</td>
+                      <td class="color-label">MAINTENANCE</td>
+                      <td class="text-left font-medium color-primary">Routine check of level sensor accuracy</td>
+                      <td><span class="status-pill status-pending border">PENDING</span></td>
+                      <td class="font-bold color-label">PVS</td>
+                      <td><button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs" onclick="fillAssignmentForm({tech:'PVS', desc:'Routine check of level sensor accuracy', area:'BOILER-1', tag:'LT-102'})">ReAssign</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals (Static Conversion) -->
+    
+    <!-- Current Job List Modal -->
+    <div id="cjl-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="gnfc-modal-shell gnfc-modal-shell--full">
+        <div class="gnfc-modal-header">
+          <div>
+            <h3 class="gnfc-modal-title">Current Job List</h3>
+            <p class="gnfc-modal-subtitle">Plant: <span id="cjl-plant-name">BOILER</span></p>
+          </div>
+          <button type="button" onclick="closeCJLModal()" class="gnfc-modal-close" aria-label="Close">
+            <i class="ph-bold ph-x text-lg"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body gnfc-modal-body--tight">
+          <div class="border border-dark-border p-4 mb-3 bg-[rgba(30,33,38,0.85)] rounded-md shadow-sm">
+            <div class="grid" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: end;">
+              <div>
+                <label for="cjl-filter-category" class="gnfc-modal-label">Category</label>
+                <select id="cjl-filter-category" class="gnfc-modal-input assign-select-control">
+                  <option value="ALL">ALL</option>
+                  <option value="OJR">OJR</option>
+                  <option value="WEEKLY PENDING">WEEKLY PENDING</option>
+                </select>
+              </div>
+              <div id="cjl-area-wrap">
+                <label for="cjl-filter-area" class="gnfc-modal-label">Area</label>
+                <select id="cjl-filter-area" class="gnfc-modal-input assign-select-control">
+                  <option value="ALL">ALL</option>
+                  <option value="BOILER-1">BOILER-1</option>
+                  <option value="BOILER-2">BOILER-2</option>
+                </select>
+              </div>
+              <div id="cjl-job-wrap" style="display: none;">
+                <label for="cjl-filter-job" class="gnfc-modal-label">Job</label>
+                <select id="cjl-filter-job" class="gnfc-modal-input assign-select-control">
+                  <option value="ALL">ALL</option>
+                </select>
+              </div>
+              <div style="display: flex; justify-content: flex-end;">
+                <button type="button" onclick="openCJLAttachmentModal()" class="gnfc-modal-btn gnfc-modal-btn-primary" style="width: 100%;">
+                  <i class="ph-bold ph-paperclip"></i> Attachment
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="border border-dark-border rounded-md shadow-sm overflow-auto custom-scroll" style="max-height: 62vh;">
+            <table class="theme-table">
+              <thead class="sticky top-0 z-10">
+                <tr>
+                  <th>Sr</th>
+                  <th>Area/Tag</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Target</th>
+                  <th>Status</th>
+                  <th>EngRemark</th>
+                  <th>ExRemark</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                  <td class="font-mono color-muted">1</td>
+                  <td class="text-left"><span class="font-bold color-blue">BOILER-1</span> <span class="color-label">/ LT-102</span></td>
+                  <td class="text-left font-medium color-primary">Routine check of level sensor accuracy</td>
+                  <td class="color-label">OJR</td>
+                  <td class="font-mono color-label">31/03/2026</td>
+                  <td><span class="status-pill status-pending border">PENDING</span></td>
+                  <td class="text-left color-label">Tech: PVS</td>
+                  <td class="text-left color-label">-</td>
+                </tr>
+                <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                  <td class="font-mono color-muted">2</td>
+                  <td class="text-left"><span class="font-bold color-blue">BOILER-2</span> <span class="color-label">/ PT-301</span></td>
+                  <td class="text-left font-medium color-primary">Pressure transmitter calibration due</td>
+                  <td class="color-label">OJR</td>
+                  <td class="font-mono color-label">31/03/2026</td>
+                  <td><span class="status-pill status-progress border">IN PROGRESS</span></td>
+                  <td class="text-left color-label">Tech: VWM</td>
+                  <td class="text-left color-label">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="closeCJLModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="cjl-attachment-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+        <div class="gnfc-modal-header">
+          <div>
+            <h3 class="gnfc-modal-title">Joblist Attachments</h3>
+            <p class="gnfc-modal-subtitle">Upload supporting file(s)</p>
+          </div>
+          <button type="button" onclick="closeCJLAttachmentModal()" class="gnfc-modal-close" aria-label="Close">
+            <i class="ph-bold ph-x text-lg"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body" style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <label class="gnfc-modal-label">Choose File</label>
+            <input type="file" class="gnfc-modal-input assign-input-control" />
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Choose File</label>
+            <input type="file" class="gnfc-modal-input assign-input-control" />
+          </div>
+          <p id="cjl-attachment-feedback" style="font-size: 13px; color: var(--typo-secondary);"></p>
+          <p style="font-size: 13px; color: var(--typo-label);">Note: Max size 10MB per upload.</p>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="handleCJLAttachmentUpload()" class="gnfc-modal-btn gnfc-modal-btn-primary">Upload</button>
+          <button type="button" onclick="closeCJLAttachmentModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="sd-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="gnfc-modal-shell gnfc-modal-shell--full">
+        <div class="gnfc-modal-header">
+          <div>
+            <h3 class="gnfc-modal-title">Shutdown Job List</h3>
+            <p class="gnfc-modal-subtitle">Plant: <span id="sd-plant-name">BOILER</span></p>
+          </div>
+          <button type="button" onclick="closeSEModal()" class="gnfc-modal-close" aria-label="Close">
+            <i class="ph-bold ph-x text-lg"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body gnfc-modal-body--tight">
+          <div class="border border-dark-border rounded-sm overflow-auto custom-scroll" style="max-height: 68vh;">
+            <table class="theme-table">
+              <thead class="sticky top-0 z-10">
+                <tr>
+                  <th style="width: 50px;">Sr</th>
+                  <th style="width: 150px;">Area / Tag</th>
+                  <th style="width: 250px;">Description</th>
+                  <th style="width: 150px;">MatReqmnt</th>
+                  <th style="width: 150px;">PreSDActivity</th>
+                  <th style="width: 120px;">int Dep<br/>Cordination</th>
+                  <th style="width: 120px;">Ext Dep<br/>Cordination</th>
+                  <th style="width: 200px;">Eng Remark<br/>Ex Remark</th>
+                </tr>
+              </thead>
+              <tbody class="text-left align-top">
+                <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                  <td class="font-mono color-muted align-top py-3">1</td>
+                  <td class="align-top py-3">
+                    <div class="flex flex-col">
+                        <span class="fw-bold color-primary">BOILER-1</span>
+                        <span class="font-mono color-blue text-xs mt-1 border-t border-dark-border pt-1 inline-block">1TE1563_3</span>
+                    </div>
+                  </td>
+                  <td class="text-left font-medium color-primary align-top py-3 pr-4 leading-relaxed">Boiler 1 AB elevation, the visible flame scanner 2/4 contact was not coming.</td>
+                  <td class="text-left color-label align-top py-3 text-xs italic"></td>
+                  <td class="text-left color-label align-top py-3 text-xs italic"></td>
+                  <td class="text-left color-label align-top py-3 text-xs italic"></td>
+                  <td class="text-left color-label align-top py-3 text-xs italic"></td>
+                  <td class="text-left align-top py-3">
+                      <div class="flex flex-col">
+                        <div class="flex items-start gap-1.5"><i class="ph-bold ph-chat-text text-amber-500 mt-0.5"></i><span class="text-xs color-text">Card replacement required.</span></div>
+                        <div class="border-b border-dark-border py-0.5"></div>
+                      </div>
+                  </td>
+                </tr>
+                <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                  <td class="font-mono color-muted align-top py-3">2</td>
+                  <td class="align-top py-3">
+                    <div class="flex flex-col">
+                        <span class="fw-bold color-primary">NG STN</span>
+                        <span class="font-mono color-blue text-xs mt-1 border-t border-dark-border pt-1 inline-block">GC</span>
+                    </div>
+                  </td>
+                  <td class="text-left font-medium color-primary align-top py-3 pr-4 leading-relaxed">GC shed structure welding work to be done</td>
+                  <td class="text-left color-label align-top py-3 text-xs italic"></td>
+                  <td class="text-left color-label align-top py-3 text-xs italic"></td>
+                  <td class="text-left color-label align-top py-3 text-xs italic"></td>
+                  <td class="text-left color-label align-top py-3 text-xs italic"></td>
+                  <td class="text-left align-top py-3">
+                      <div class="flex flex-col">
+                        <div class="flex items-start gap-1.5"><i class="ph-bold ph-chat-text text-amber-500 mt-0.5"></i><span class="text-xs color-text">Welder arranged by mech dept.</span></div>
+                        <div class="border-b border-dark-border py-0.5"></div>
+                        <span class="color-red mt-0.5">Pending due to clearance.</span>
+                      </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="closeSEModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ISO Modal updated from prompt to be hso/iso modal style -->
+    <div id="hso-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="gnfc-modal-shell gnfc-modal-shell--full">
+        <div class="gnfc-modal-header">
+          <div>
+            <h3 class="gnfc-modal-title">Assign ISO Jobs</h3>
+            <p class="gnfc-modal-subtitle">Plant: <span id="iso-plant-name">BOILER</span></p>
+          </div>
+          <button type="button" onclick="closeHSOModal()" class="gnfc-modal-close" aria-label="Close">
+            <i class="ph-bold ph-x text-lg"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body gnfc-modal-body--tight">
+          <div class="border border-dark-border rounded-sm overflow-auto custom-scroll" style="max-height: 68vh;">
+            <table class="theme-table">
+              <thead class="sticky top-0 z-10">
+                <tr>
+                  <th style="width: 50px;">Sr</th>
+                  <th style="width: 100px;">Tag</th>
+                  <th>Equipment</th>
+                  <th>Cali/Check Procedure</th>
+                  <th style="width: 120px;" class="text-center">Freq Of Check (Days)</th>
+                  <th style="width: 140px;">DUE DATE</th>
+                  <th style="width: 80px;">Assign</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                  <td class="font-mono color-muted align-top py-3">1</td>
+                  <td class="fw-bold color-blue align-top py-3 text-left">
+                    <a href="#" class="hover:underline">LT-2</a>
+                  </td>
+                  <td class="text-left font-medium color-primary align-top py-3">ASH SLURRY SUMP LEVEL</td>
+                  <td class="text-left color-label align-top py-3 text-sm">ULTRASONIC LEVEL : SENSOR TO BE CLEANED AND RESPONSE TO BE CHECKED.</td>
+                  <td class="font-mono color-label align-top py-3 text-center">90</td>
+                  <td class="align-top py-3">
+                     <div class="flex flex-col gap-1 items-start">
+                        <span class="font-mono text-xs color-primary">28/04/2026</span>
+                        <span class="font-mono text-xs color-muted">28/01/2026</span>
+                     </div>
+                  </td>
+                  <td class="align-top py-3 text-center">
+                    <button class="color-blue hover:color-orange font-bold text-xs hover:underline uppercase transition-colors">Assign</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="closeHSOModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="gnfc-modal-shell gnfc-modal-shell--large">
+        <div class="gnfc-modal-header">
+          <h3 class="gnfc-modal-title">Search Tag History</h3>
+          <button type="button" onclick="closeSearchModal()" class="gnfc-modal-close" aria-label="Close">
+            <i class="ph-bold ph-x text-lg"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body" style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Modern Search Bar -->
+          <div class="flex items-center gap-2 bg-dark-header/40 p-3 rounded-md border border-dark-border">
+            <div class="relative flex-1">
+              <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 color-secondary"></i>
+              <input id="search-tag-input" type="text"
+                class="assign-input-control pl-9"
+                placeholder="Search Tag (e.g. 111)" value="111">
+            </div>
+            <button type="button" onclick="searchByTag()"
+              class="gnfc-modal-btn gnfc-modal-btn-primary" style="display: flex; align-items: center; gap: 8px;">
+              <i class="ph-bold ph-arrow-right"></i> GO
+            </button>
+          </div>
+
+          <!-- Modern Table -->
+          <div class="overflow-x-auto rounded-md border border-dark-border shadow-inner">
+            <table class="theme-table">
+              <thead>
+                <tr>
+                  <th style="width: 15%;">Tag</th>
+                  <th style="width: 45%;">Description</th>
+                  <th style="width: 15%;">Inst Type</th>
+                  <th style="width: 15%;">Function</th>
+                  <th style="width: 10%;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="search-table-body" class="text-center">
+                <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                  <td class="font-bold color-blue">TT191111</td>
+                  <td class="text-left font-medium color-primary">MP STEAM TEMP BEFORE C/V</td>
+                  <td class="text-center color-label">TX</td>
+                  <td class="text-center color-label"></td>
+                  <td class="text-center">
+                    <button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button>
+                  </td>
+                </tr>
+                <tr class="transition-colors border-b border-dark-border hover:bg-dark-header">
+                  <td class="font-bold color-blue">PT191110</td>
+                  <td class="text-left font-medium color-primary">MP STEAM PRESS BEFORE C/V</td>
+                  <td class="text-center color-label">TX</td>
+                  <td class="text-center color-label"></td>
+                  <td class="text-center">
+                    <button class="color-blue hover:color-orange font-bold hover:underline transition-colors uppercase text-xs">Assign</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="closeSearchModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      $('.tab-btn').removeClass('is-active');
+      $('.tab-panel').addClass('hidden').removeClass('flex');
+
+      // Toggle badges
+      $('#ojr-count-badge, #pending-count-badge').addClass('hidden');
+      $('#' + tabId + '-count-badge').removeClass('hidden');
+
+      $('#tab-' + tabId).addClass('is-active');
+      $('#panel-' + tabId).removeClass('hidden').addClass('flex');
+    }
+
+    function fillAssignmentForm(row) {
+      $('#form-assigned-to').val(row.tech || '');
+      $('#form-jobs-desc').val(row.desc || '');
+      $('#form-area').val(row.area || '');
+      
+      const tagSelect = $('#form-tag');
+      if (tagSelect.find('option[value="' + row.tag + '"]').length === 0) {
+          tagSelect.append(new Option(row.tag, row.tag));
+      }
+      tagSelect.val(row.tag);
+
+      document.getElementById('form-assigned-to').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document.getElementById('form-assigned-to').focus();
+    }
+
+    // Modal Handling
+    function setModalState(modalId, isOpen) {
+      const modal = $('#' + modalId);
+      if (isOpen) {
+        modal.addClass('is-open').attr('aria-hidden', 'false');
+      } else {
+        modal.removeClass('is-open').attr('aria-hidden', 'true');
+      }
+    }
+
+    /* Modal Triggers */
+    function openCJLModal() { setModalState('cjl-modal', true); }
+    function closeCJLModal() { setModalState('cjl-modal', false); }
+    
+    function openCJLAttachmentModal() { setModalState('cjl-attachment-modal', true); }
+    function closeCJLAttachmentModal() { setModalState('cjl-attachment-modal', false); }
+    function handleCJLAttachmentUpload() {
+      $('#cjl-attachment-feedback').text('File uploaded successfully.');
+      setTimeout(() => closeCJLAttachmentModal(), 1000);
+    }
+    
+    function openSEModal() { setModalState('sd-modal', true); }
+    function closeSEModal() { setModalState('sd-modal', false); }
+    
+    function openHSOModal() { setModalState('hso-modal', true); }
+    function closeHSOModal() { setModalState('hso-modal', false); }
+    
+    function openSearchModal() { setModalState('search-modal', true); }
+    function closeSearchModal() { setModalState('search-modal', false); }
+    function searchByTag() { /* Search is mock data */ }
+
+    // Form Actions
+    function saveAssignment() {
+      const btn = $('button[onclick="saveAssignment()"]');
+      const originalText = btn.html();
+      btn.html('<i class="ph-bold ph-check"></i> SAVED!').css('background', '#10b981');
+
+      // Clear form
+      $('#form-assigned-to, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc').val('');
+
+      setTimeout(() => {
+        btn.html(originalText).css('background', '');
+      }, 1500);
+    }
+
+    function cancelAssignment() {
+      if (confirm("Clear all inputs?")) {
+        $('#form-assigned-to, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc').val('');
+      }
+    }
+
+    // Reset dropdown icon after selection
+    $(document).on('change', '.assign-select-control', function() {
+      $(this).blur();
+    });
+    
+    // Setup modal backdrop clicks to close
+    $('.gnfc-modal-overlay').on('click', function(e) {
+      if (e.target === this) {
+        $(this).removeClass('is-open').attr('aria-hidden', 'true');
+      }
+    });
+
+  </script>
+</body>
+
+</html>

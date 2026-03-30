@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assign Today | GNFC E-Logbook</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+
+<script>
+    window.activePage = 'technician_logbook';
+  </script>
+</head>
+
+<body class="dashboard-body plant-page">
+
+  <!-- Sidebar Container (Injected by sidebar.js) -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+
+    <!-- Header Container (Injected by header.js) -->
+    <div id="header-container" data-title="Assign Today" data-back="plant_detail.html"></div>
+
+    <div class="assign-content custom-scroll">
+
+      <!-- Stats / Top Bar -->
+      <div class="assign-top-bar">
+        <div class="assign-info-group">
+          <div class="assign-info-divider">
+            <div class="flex items-center gap-2">
+              <i class="ph-duotone ph-calendar color-blue font-18px"></i>
+              <span id="assign-date" class="fw-bold font-16px color-primary">30/03/2026</span>
+            </div>
+          </div>
+          <div class="flex gap-4 items-center">
+            <div class="flex items-center gap-2">
+              <label class="font-14px color-label">Plant:</label>
+              <span class="fw-bold color-blue font-14px">BOILER</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <label class="font-14px color-label">Engineer:</label>
+              <span class="fw-bold color-primary font-14px">ENG_TESTER</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="assign-actions">
+          <button onclick="openCJLModal()" class="btn-assign-action">
+            <i class="ph ph-list-checks"></i> Joblist
+          </button>
+          <button onclick="openSEModal()" class="btn-assign-action">
+            <i class="ph ph-warning-circle"></i> S/D
+          </button>
+          <button onclick="openSearchModal()" class="btn-assign-action">
+            <i class="ph ph-magnifying-glass"></i> Search Tag
+          </button>
+          <button type="button" onclick="openHSOModal()" class="btn-assign-iso">
+            <i class="ph-bold ph-plus-circle"></i> Assign ISO
+          </button>
+        </div>
+      </div>
+
+      <div class="assign-split-layout">
+
+        <!-- Left Side: Job Assignment Form -->
+        <div class="assign-side-panel">
+          <div class="assign-form-card">
+            <div class="assign-form-header">
+              <i class="ph-duotone ph-note-pencil color-blue font-16px"></i>
+              <span class="fw-bold color-primary font-14px">JOB ASSIGNMENT FORM</span>
+            </div>
+
+            <div class="assign-form-body">
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Assigned To</label>
+                <div class="assign-select-wrap">
+                  <select id="form-assigned-to" class="gnfc-modal-input">
+                    <option value="">Select Tech</option>
+                    <option>PVS</option>
+                    <option>VWM</option>
+                    <option>BDR</option>
+                    <option>PRP</option>
+                    <option>JDB</option>
+                    <option>JMD</option>
+                    <option>BSU</option>
+                    <option>CNJ_ISD</option>
+                    <option>TECH_TESTER</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Job Type</label>
+                <div class="assign-select-wrap">
+                  <select id="form-job-type" class="gnfc-modal-input">
+                    <option value="">-- Select --</option>
+                    <option>PM</option>
+                    <option>DOCUMENTATION</option>
+                    <option>ABNORMALITY</option>
+                    <option>ISO14001</option>
+                    <option>DEFECT MAINTENANCE</option>
+                    <option>INSPECTION</option>
+                    <option>N.A.</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Area</label>
+                <div class="assign-select-wrap">
+                  <select id="form-area" class="gnfc-modal-input">
+                    <option>N.A.</option>
+                    <option>BOILER-1</option>
+                    <option>BOILER-2</option>
+                    <option>TG-1</option>
+                    <option>COMMON</option>
+                    <option>ASH</option>
+                    <option>CHP</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Loop Name</label>
+                <div class="assign-select-wrap">
+                  <select id="form-loop" class="gnfc-modal-input">
+                    <option>N.A.</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Inst Type</label>
+                <div class="assign-select-wrap">
+                  <select id="form-inst-type" class="gnfc-modal-input">
+                    <option value="">-- Select --</option>
+                    <option>ANALYZER</option>
+                    <option>C/V</option>
+                    <option>TX</option>
+                    <option>N.A.</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper">
+                <label class="assign-field-label">Tag No</label>
+                <div class="assign-select-wrap">
+                  <select id="form-tag" class="gnfc-modal-input">
+                    <option>NOTAG</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+              </div>
+
+              <div class="form-field-wrapper form-filed-description">
+                <label class="assign-field-label">Description</label>
+                <textarea id="form-jobs-desc" rows="3" class="gnfc-modal-input"
+                  placeholder="Enter task details..."></textarea>
+              </div>
+
+              <div class="assign-form-footer form-filed-description">
+                <button onclick="saveAssignment()" class="gnfc-modal-btn gnfc-modal-btn-primary"
+                  style="padding: 10px 24px;">SAVE</button>
+                <button onclick="cancelAssignment()" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+                  style="padding: 10px 16px;">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Tables Area -->
+        <div class="assign-main-content">
+          <div class="" style="margin-top: 0;">
+            <!-- Tabs Navigation -->
+            <div class="assign-tabs">
+              <div class="flex justify-between items-center">
+                <button id="tab-ojr" onclick="switchTab('ojr')" class="tab-btn is-active">
+                  <i class="ph-bold ph-article"></i> Operation Job Register
+                </button>
+                <button id="tab-pending" onclick="switchTab('pending')" class="tab-btn">
+                  <i class="ph-bold ph-timer"></i> Weekly Pending Jobs
+                </button>
+              </div>
+              <div class="assign-tabs-right flex items-center gap-3">
+                <span id="ojr-count-badge" class="badge-count">15 Records</span>
+                <span id="pending-count-badge" class="badge-count badge-count--amber hidden">10 Records</span>
+                <div class="assign-select-wrap" style="width: 130px;">
+                  <select class="gnfc-modal-input font-13px fw-bold">
+                    <option>RUNNING</option>
+                    <option>SHUTDOWN</option>
+                    <option>HOLD</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down" style="font-size: 12px;"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- OJR Panel -->
+            <div id="panel-ojr" class="tab-panel">
+
+
+              <div class="custom-scroll" style="overflow: auto;">
+                <table class="theme-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 50px;">Sr</th>
+                      <th style="width: 100px;">Date</th>
+                      <th style="width: 100px;">TagNo</th>
+                      <th style="width: 120px;">Area</th>
+                      <th>Description</th>
+                      <th style="width: 140px;">Status</th>
+                      <th style="width: 80px;">ENG</th>
+                      <th style="width: 100px;">Assign</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr>
+                      <td>1</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">LT-102</td>
+                      <td class="color-label">BOILER-1</td>
+                      <td class="text-left fw-medium color-primary">Routine check of level sensor accuracy</td>
+                      <td><span class="status-pill status-pending">PENDING</span></td>
+                      <td class="fw-bold color-label">PVS</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">PT-301</td>
+                      <td class="color-label">BOILER-2</td>
+                      <td class="text-left fw-medium color-primary">Pressure transmitter calibration due</td>
+                      <td><span class="status-pill status-progress">IN PROGRESS</span></td>
+                      <td class="fw-bold color-label">VWM</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">TT-504</td>
+                      <td class="color-label">TG-1</td>
+                      <td class="text-left fw-medium color-primary">Temperature fluctuation observed</td>
+                      <td><span class="status-pill status-hold">HOLD</span></td>
+                      <td class="fw-bold color-label">BDR</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">FT-201</td>
+                      <td class="color-label">COMMON</td>
+                      <td class="text-left fw-medium color-primary">Flow meter reading erratic</td>
+                      <td><span class="status-pill status-completed">COMPLETED</span></td>
+                      <td class="fw-bold color-label">PRP</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">CV-101</td>
+                      <td class="color-label">ASH</td>
+                      <td class="text-left fw-medium color-primary">Control valve stuck at 50%</td>
+                      <td><span class="status-pill status-pending">PENDING</span></td>
+                      <td class="fw-bold color-label">JDB</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                    <tr>
+                      <td>6</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">XV-405</td>
+                      <td class="color-label">CHP</td>
+                      <td class="text-left fw-medium color-primary">Solenoid valve coil replacement</td>
+                      <td><span class="status-pill status-progress">IN PROGRESS</span></td>
+                      <td class="fw-bold color-label">JMD</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                    <tr>
+                      <td>7</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">AT-902</td>
+                      <td class="color-label">BOILER-1</td>
+                      <td class="text-left fw-medium color-primary">Analyzer showing drift</td>
+                      <td><span class="status-pill status-hold">HOLD</span></td>
+                      <td class="fw-bold color-label">BSU</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                    <tr>
+                      <td>8</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">PI-112</td>
+                      <td class="color-label">BOILER-2</td>
+                      <td class="text-left fw-medium color-primary">Gauge glass cleaning</td>
+                      <td><span class="status-pill status-completed">COMPLETED</span></td>
+                      <td class="fw-bold color-label">ENG_TESTER</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                    <tr>
+                      <td>9</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">LI-304</td>
+                      <td class="color-label">TG-1</td>
+                      <td class="text-left fw-medium color-primary">Vibration monitoring check</td>
+                      <td><span class="status-pill status-pending">PENDING</span></td>
+                      <td class="fw-bold color-label">PVS</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                    <tr>
+                      <td>10</td>
+                      <td class="color-label">30/03/2026</td>
+                      <td class="fw-bold color-blue">TI-506</td>
+                      <td class="color-label">COMMON</td>
+                      <td class="text-left fw-medium color-primary">Cable tray inspection</td>
+                      <td><span class="status-pill status-progress">IN PROGRESS</span></td>
+                      <td class="fw-bold color-label">VWM</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">Assign</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Pending Jobs Panel -->
+            <div id="panel-pending" class="tab-panel hidden">
+
+              <div class="custom-scroll" style="overflow: auto;">
+                <table class="theme-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 50px;">Sr</th>
+                      <th style="width: 100px;">Date</th>
+                      <th style="width: 100px;">Tag</th>
+                      <th>Description</th>
+                      <th style="width: 140px;">Status</th>
+                      <th style="width: 80px;">Tech</th>
+                      <th style="width: 100px;">ReAssign</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr>
+                      <td>1</td>
+                      <td class="color-label">28/03/2026</td>
+                      <td class="fw-bold color-blue">LT-102</td>
+                      <td class="text-left fw-medium color-primary">Routine check of level sensor accuracy</td>
+                      <td><span class="status-pill status-pending">PENDING</span></td>
+                      <td class="fw-bold color-label">PVS</td>
+                      <td><button class="color-blue fw-bold"
+                          style="background: none; border: none; cursor: pointer;">ReAssign</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- Modals (Refactored to Static) -->
+    <div id="cjl-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="gnfc-modal-shell gnfc-modal-shell--full">
+        <div class="gnfc-modal-header">
+          <div>
+            <h3 class="gnfc-modal-title">Current Job List</h3>
+            <p class="gnfc-modal-subtitle">Plant: BOILER</p>
+          </div>
+          <button type="button" onclick="closeCJLModal()" class="gnfc-modal-close">
+            <i class="ph-bold ph-x"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body gnfc-modal-body--tight">
+          <div class="custom-scroll" style="overflow: auto; max-height: 68vh;">
+            <table class="theme-table">
+              <thead>
+                <tr>
+                  <th>Sr</th>
+                  <th>Area/Tag</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Target</th>
+                  <th>Status</th>
+                  <th>EngRemark</th>
+                  <th>ExRemark</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <tr>
+                  <td class="color-muted">1</td>
+                  <td class="text-left"><span class="fw-bold color-blue">BOILER-1</span> <span class="color-label">/
+                      LT-102</span></td>
+                  <td class="text-left fw-medium color-primary">Routine check of level sensor accuracy</td>
+                  <td class="color-label">OJR</td>
+                  <td class="color-label">30/03/2026</td>
+                  <td><span class="status-pill status-pending">PENDING</span></td>
+                  <td class="text-left color-label">Tech: PVS</td>
+                  <td class="text-left color-label">-</td>
+                </tr>
+                <tr>
+                  <td class="color-muted">2</td>
+                  <td class="text-left"><span class="fw-bold color-blue">BOILER-2</span> <span class="color-label">/
+                      PT-301</span></td>
+                  <td class="text-left fw-medium color-primary">Pressure transmitter calibration due</td>
+                  <td class="color-label">OJR</td>
+                  <td class="color-label">30/03/2026</td>
+                  <td><span class="status-pill status-progress">IN PROGRESS</span></td>
+                  <td class="text-left color-label">Tech: VWM</td>
+                  <td class="text-left color-label">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="closeCJLModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- S/D Modal -->
+    <div id="sd-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="gnfc-modal-shell gnfc-modal-shell--full">
+        <div class="gnfc-modal-header">
+          <div>
+            <h3 class="gnfc-modal-title">Shutdown Job List</h3>
+            <p class="gnfc-modal-subtitle">Plant: BOILER</p>
+          </div>
+          <button type="button" onclick="closeSEModal()" class="gnfc-modal-close">
+            <i class="ph-bold ph-x"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body gnfc-modal-body--tight">
+          <div class="custom-scroll" style="overflow: auto; max-height: 68vh;">
+            <table class="theme-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">Sr</th>
+                  <th style="width: 150px;">Area / Tag</th>
+                  <th>Description</th>
+                  <th style="width: 150px;">MatReqmnt</th>
+                  <th style="width: 150px;">PreSDActivity</th>
+                  <th style="width: 120px;">int Dep</th>
+                  <th style="width: 120px;">Ext Dep</th>
+                  <th style="width: 200px;">Remarks</th>
+                </tr>
+              </thead>
+              <tbody class="text-left">
+                <tr>
+                  <td class="text-center">1</td>
+                  <td>
+                    <div class="flex flex-col">
+                      <span class="fw-bold color-primary">BOILER-1</span>
+                      <span class="color-blue text-xs">1TE1563_3</span>
+                    </div>
+                  </td>
+                  <td class="pr-4 leading-relaxed">Boiler 1 AB elevation, the visible flame scanner 2/4 contact was not
+                    coming.</td>
+                  <td class="text-xs color-label italic">-</td>
+                  <td class="text-xs color-label italic">-</td>
+                  <td class="text-xs color-label italic">-</td>
+                  <td class="text-xs color-label italic">-</td>
+                  <td><span class="text-xs color-label">Card replacement required.</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="closeSEModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ISO Modal -->
+    <div id="hso-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="gnfc-modal-shell gnfc-modal-shell--full">
+        <div class="gnfc-modal-header">
+          <div>
+            <h3 class="gnfc-modal-title">ISO/OHSAS/CPCB Due Jobs</h3>
+            <p class="gnfc-modal-subtitle">Plant: BOILER</p>
+          </div>
+          <button type="button" onclick="closeHSOModal()" class="gnfc-modal-close">
+            <i class="ph-bold ph-x"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body gnfc-modal-body--tight">
+          <div class="hso-report-container">
+            <div class="hso-report-header">
+              <div class="hso-report-title">
+                <i class="ph-duotone ph-file-text color-blue"></i>
+                <span>BOILER</span>
+              </div>
+            </div>
+
+            <div class="hso-report-section">
+              <div class="hso-section-label">
+                <i class="ph-bold ph-certificate" style="color: #10b981;"></i>
+                ISO14001/OHSAS18001 DUE JOBS
+              </div>
+              <table class="hso-table-modern">
+                <thead>
+                  <tr>
+                    <th class="text-center" style="width: 50px;">Sr</th>
+                    <th style="width: 120px;">Tag</th>
+                    <th>Equipment</th>
+                    <th>Cali/Check Procedure</th>
+                    <th style="width: 100px;">Freq (Days)</th>
+                    <th style="width: 120px;">Due Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-center color-muted">1</td>
+                    <td class="fw-bold color-blue">LT-2</td>
+                    <td class="color-primary fw-medium">ASH SLURRY SUMP LEVEL</td>
+                    <td class="color-label text-xs">ULTRASONIC LEVEL : SENSOR TO BE CLEANED AND RESPONSE TO BE CHECKED.
+                    </td>
+                    <td class="text-center color-muted">90</td>
+                    <td class="text-center fw-bold color-primary">28/04/2026</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="closeHSOModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      $('.tab-btn').removeClass('is-active');
+      $('.tab-panel').addClass('hidden');
+
+      // Toggle badges
+      $('#ojr-count-badge, #pending-count-badge').addClass('hidden');
+      $('#' + tabId + '-count-badge').removeClass('hidden');
+
+      $('#tab-' + tabId).addClass('is-active');
+      $('#panel-' + tabId).removeClass('hidden');
+    }
+
+    // Modal Handling
+    function setModalState(modalId, isOpen) {
+      const modal = $('#' + modalId);
+      if (isOpen) {
+        modal.addClass('is-open').attr('aria-hidden', 'false');
+      } else {
+        modal.removeClass('is-open').attr('aria-hidden', 'true');
+      }
+    }
+
+    function openCJLModal() { setModalState('cjl-modal', true); }
+    function closeCJLModal() { setModalState('cjl-modal', false); }
+    function openSEModal() { setModalState('sd-modal', true); }
+    function closeSEModal() { setModalState('sd-modal', false); }
+    function openHSOModal() { setModalState('hso-modal', true); }
+    function closeHSOModal() { setModalState('hso-modal', false); }
+    function openSearchModal() { /* Empty for static version */ }
+
+    // Form Actions
+    function saveAssignment() {
+      const btn = $('button[onclick="saveAssignment()"]');
+      const originalText = btn.html();
+      btn.html('<i class="ph-bold ph-check"></i> SAVED!').css('background', '#10b981');
+
+      // Clear form
+      $('#form-assigned-to, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc').val('');
+
+      setTimeout(() => {
+        btn.html(originalText).css('background', '');
+      }, 1500);
+    }
+
+    function cancelAssignment() {
+      if (confirm("Clear all inputs?")) {
+        $('#form-assigned-to, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc').val('');
+      }
+    }
+
+    // Reset dropdown icon after selection
+    $(document).on('change', '.assign-select-wrap select', function() {
+      $(this).blur();
+    });
+  </script>
+</body>
+
+</html>
