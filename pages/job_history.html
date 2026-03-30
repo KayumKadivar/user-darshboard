@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNFC | Job History Analysis</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+    <!-- Central CSS Architecture -->
+    <link rel="stylesheet" href="../css/theme-vars.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/modal-ui.css">
+    <link rel="stylesheet" href="../css/pages/style.css">
+    <link rel="stylesheet" href="../css/pages/job_history.css">
+
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+  <script src="../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'job_history';
+  </script>
+</head>
+
+<body class="dashboard-body plant-page">
+  <script src="../js/theme_manager.js"></script>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <!-- Header -->
+    <div id="header-container" data-title="Plant Logbook" data-back="plant_detail.html"></div>
+    <script src="../js/header.js"></script>
+    <script>
+      try {
+        renderHeader({
+          title: "Acetic Acid Logbook",
+          breadcrumbs: [
+            { label: "Technician Log", href: "technician_logbook.html" },
+            { label: "Plant Detail", href: "plant_detail.html" },
+            { label: "Job History" }
+          ],
+          backLink: "plant_detail.html"
+        });
+      } catch (e) { console.warn("Header script not found"); }
+    </script>
+
+    <section class="dashboard-content plant-page__content dashboard-scroll">
+      <!-- Plant Nav -->
+      <div id="plant-nav-container"></div>
+
+      <!-- Standardized Filter Card (Multi-row Search Criteria) -->
+      <section class="ui-card">
+        <div class="plant-filter-header">
+          <span class="plant-filter-label">
+            <i class="ph-bold ph-sliders-horizontal"></i> SEARCH CRITERIA
+          </span>
+          <div class="plant-filter-actions">
+            <button class="ui-btn ui-btn--primary">ADD JOB</button>
+            <button class="ui-btn ui-btn--dark">Default Date</button>
+            <button class="ui-btn ui-btn--dark">Prev Year</button>
+            <button class="ui-btn ui-btn--dark">This Year</button>
+            <button class="ui-btn ui-btn--dark">Next Year</button>
+          </div>
+        </div>
+        <div class="plant-filter-bar">
+          <!-- Filter Row 1 -->
+          <div class="plant-filter-row">
+            <div class="plant-filter-field-group">
+              <span class="plant-filter-label">LOOP</span>
+              <select id="filter-loop" class="plant-filter-input plant-filter-select">
+                <option value="">ALL</option>
+                <option value="0208">0208</option>
+              </select>
+            </div>
+            <div class="plant-filter-field-group">
+              <span class="plant-filter-label">TAG</span>
+              <select id="filter-tag" class="plant-filter-input plant-filter-select">
+                <option value="">ALL</option>
+              </select>
+            </div>
+            <div class="plant-filter-field-group">
+              <span class="plant-filter-label">TYPE OF JOB</span>
+              <select id="filter-jobtype" class="plant-filter-input plant-filter-select">
+                <option value="">ALL</option>
+              </select>
+            </div>
+            <div class="plant-filter-field-group">
+              <span class="plant-filter-label">INSTRUMENT TYPE</span>
+              <select id="filter-insttype" class="plant-filter-input plant-filter-select">
+                <option value="">ALL</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Filter Row 2 -->
+          <div class="plant-filter-row plant-filter-row--end">
+            <div class="plant-filter-field-group">
+              <span class="plant-filter-label">START DATE</span>
+              <input type="date" id="start-date" class="plant-filter-input">
+            </div>
+            <div class="plant-filter-field-group">
+              <span class="plant-filter-label">END DATE</span>
+              <input type="date" id="end-date" class="plant-filter-input">
+            </div>
+            <div class="plant-filter-field-group">
+              <span class="plant-filter-label">FILTER OPTIONS</span>
+              <div class="plant-filter-options-wrap">
+                <label>
+                  <input type="checkbox" id="opt-remark"> Remark
+                </label>
+                <label>
+                  <input type="checkbox" id="opt-attach"> Attach
+                </label>
+              </div>
+            </div>
+            <div class="plant-history-apply-wrap">
+                <button id="btn-apply-filters" class="ui-btn ui-btn--primary">
+                   <i class="ph-bold ph-sparkle"></i> APPLY
+                </button>
+                <button id="btn-reset-filters" class="ui-btn ui-btn--dark">RESET</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      </section>
+
+      <!-- Table Header (Standardized) -->
+      <div class="plant-filter-header plant-analysis-summary-header">
+        <span class="plant-filter-label" style="color: var(--typo-orange);">
+          <i class="ph-bold ph-equalizer"></i> JOB RECORDS
+        </span>
+        <span class="plant-record-count-badge">
+          10 Records Found
+        </span>
+      </div>
+
+            <!-- Table Container Area (Standardized) -->
+            <div class="user-table-scroll analysis-table-scroll theme-table-container ui-card">
+                <table class="user-table plant-table plant-table-fixed">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="user-table-head-cell cell-width-50">Sr</th>
+                            <th rowspan="2" class="user-table-head-cell cell-width-80">Area</th>
+                            <th class="user-table-head-cell cell-width-120 border-b-1">Loop</th>
+                            <th class="user-table-head-cell cell-width-160 border-b-1">Inst Type</th>
+                            <th rowspan="2" class="user-table-head-cell cell-width-100">Date</th>
+                            <th rowspan="2" class="user-table-head-cell cell-width-450">Description of Job</th>
+                            <th class="user-table-head-cell cell-width-80 border-b-1">Tech</th>
+                            <th rowspan="2" class="user-table-head-cell cell-width-60">Attch</th>
+                            <th class="user-table-head-cell cell-width-250 border-b-1">Eng Remark</th>
+                        </tr>
+                        <tr>
+                            <th class="user-table-head-cell cell-top-40 border-b-2">Tag No</th>
+                            <th class="user-table-head-cell cell-top-40 border-b-2">Job Type</th>
+                            <th class="user-table-head-cell cell-top-40 border-b-2">Eng</th>
+                            <th class="user-table-head-cell cell-top-40 border-b-2">Exec Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                        <!-- ROW 1 -->
+                        <tr class="user-table-row history-data-row" data-loop="0208" data-tag="FV0208B" data-jobType="CMS JOB" data-date="2026-01-13">
+                            <td class="user-table-cell text-center plant-text-blue-bold cursor-pointer" onclick="openJobDetailModal(1)">1</td>
+                            <td class="user-table-cell text-center fw-700">400</td>
+                            <td class="user-table-cell">
+                                <div class="font-12px plant-table-cell-split">0208</div>
+                                <div class="plant-text-blue-bold">FV0208B</div>
+                            </td>
+                            <td class="user-table-cell">
+                                <div class="font-12px plant-table-cell-split fw-700">C/V</div>
+                                <div class="plant-text-orange-bold">CMS JOB</div>
+                            </td>
+                            <td class="user-table-cell text-center">13/01/2026</td>
+                            <td class="user-table-cell plant-text-detail cursor-pointer" onclick="openJobDetailModal(1)">
+                                Defect: C/V is not closing during pressurized (in line condition).<br>Job Done: ignore this entry. (CMS Incharge: MAJ)
+                            </td>
+                            <td class="user-table-cell text-center">
+                                <div class="plant-table-cell-split">-</div>
+                                <div class="fw-700">MAJ</div>
+                            </td>
+                            <td class="user-table-cell text-center"><i class="ph-bold ph-minus opacity-30"></i></td>
+                            <td class="user-table-cell">
+                                <div class="font-12px italic color-red plant-table-cell-split">-</div>
+                                <div class="plant-text-blue-bold">-</div>
+                            </td>
+                        </tr>
+                        
+                        <!-- ROW 5 (Attachment Example) -->
+                        <tr class="user-table-row history-data-row" data-loop="0301" data-tag="FV301A" data-jobType="CMS JOB" data-date="2025-11-15">
+                            <td class="user-table-cell text-center plant-text-blue-bold cursor-pointer" onclick="openJobDetailModal(5)">5</td>
+                            <td class="user-table-cell text-center fw-700">300</td>
+                            <td class="user-table-cell">
+                                <div class="font-12px plant-table-cell-split">0301</div>
+                                <div class="plant-text-blue-bold">FV301A</div>
+                            </td>
+                            <td class="user-table-cell">
+                                <div class="font-12px plant-table-cell-split fw-700">C/V</div>
+                                <div class="plant-text-orange-bold">CMS JOB</div>
+                            </td>
+                            <td class="user-table-cell text-center">15/11/2025</td>
+                            <td class="user-table-cell plant-text-detail cursor-pointer" onclick="openJobDetailModal(5)">
+                                Defect: DROPPED FOR HEAVY VIBRATION IN VALVE. PLUG+STEM IS BROKEN. NEW STEM TO BE MFG. PLUG TO BE REPAIRED.
+                            </td>
+                            <td class="user-table-cell text-center">
+                                <div class="plant-table-cell-split">-</div>
+                                <div class="fw-700">MAJ</div>
+                            </td>
+                            <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip history-attach-icon"></i></td>
+                            <td class="user-table-cell">
+                                <div class="font-12px italic color-red plant-table-cell-split">URGENT REQUIREMENT</div>
+                                <div class="plant-text-blue-bold">-</div>
+                            </td>
+                        </tr>
+
+                        <tr id="history-empty-state" class="hidden">
+                            <td colspan="9" class="user-table-cell text-center p-40px color-hint italic">
+                                No records found matching current filter criteria.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- [Modal Code Remains Same but with ui-btn standardized] -->
+    <div id="modal-job-history" class="gnfc-modal-overlay" style="display: none;">
+        <div class="gnfc-modal-shell" style="max-width: 900px;">
+            <div class="gnfc-modal-header">
+                <h3 class="gnfc-modal-title">Job History Information</h3>
+                <button class="gnfc-modal-close" onclick="closeJobDetailModal()"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <div class="gnfc-modal-body">
+                <!-- Modal content... -->
+            </div>
+            <div class="gnfc-modal-footer gnfc-modal-footer--space-between">
+                <button class="ui-btn ui-btn--danger" id="btn-delete-job">Delete entry</button>
+                <div class="flex gap-8px">
+                    <button class="ui-btn ui-btn--secondary" onclick="closeJobDetailModal()">Cancel</button>
+                    <button class="ui-btn ui-btn--primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            function filterTable() {
+                const loop = $('#filter-loop').val();
+                const tag = $('#filter-tag').val();
+                const jobType = $('#filter-jobtype').val();
+                const start = $('#start-date').val();
+                const end = $('#end-date').val();
+
+                let count = 0;
+                $('.history-data-row').each(function() {
+                    let show = true;
+                    if (loop && $(this).attr('data-loop') !== loop) show = false;
+                    if (tag && $(this).attr('data-tag') !== tag) show = false;
+                    if (jobType && $(this).attr('data-jobType') !== jobType) show = false;
+                    
+                    const date = $(this).attr('data-date');
+                    if (start && date < start) show = false;
+                    if (end && date > end) show = false;
+
+                    if (show) {
+                        $(this).show();
+                        count++;
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                if (count === 0) $('#history-empty-state').show();
+                else $('#history-empty-state').hide();
+            }
+
+            $('#btn-apply-filters').on('click', filterTable);
+            $('#btn-reset-filters').on('click', function() {
+                $('.plant-filter-input').val('');
+                filterTable();
+            });
+
+            window.openJobDetailModal = function(id) {
+                $('#modal-job-history').fadeIn(200).css('display', 'flex');
+                $('body').css('overflow', 'hidden');
+            };
+
+            window.closeJobDetailModal = function() {
+                $('#modal-job-history').fadeOut(200);
+                $('body').css('overflow', 'auto');
+            };
+
+            filterTable();
+        });
+    </script>
+</body>
+</html>

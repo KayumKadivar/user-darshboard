@@ -18,8 +18,8 @@ function renderPlantNav(activePageId) {
         },
         {
             items: [
-                { id: 'job_types', label: 'Type Of Job', icon: 'ph-wrench', href: '#' },
-                { id: 'instrument_types', label: 'Type Of Inst', icon: 'ph-cpu', href: '#' }
+                { id: 'job_types', label: 'Type Of Job', icon: 'ph-wrench', href: 'job_types.html' },
+                { id: 'instrument_types', label: 'Type Of Inst', icon: 'ph-cpu', href: 'instrument_types.html' }
             ]
         },
         {
@@ -38,7 +38,7 @@ function renderPlantNav(activePageId) {
         },
         {
             items: [
-                { id: 'job_history', label: 'Job History', icon: 'ph-clock-counter-clockwise', href: '#' },
+                { id: 'job_history', label: 'Job History', icon: 'ph-clock-counter-clockwise', href: 'job_history.html' },
                 { id: 'ot_hours', label: 'OT Hrs', icon: 'ph-timer', href: '#' },
                 { id: 'pending_log', label: 'Pending Log', icon: 'ph-hourglass-medium', href: '#' }
             ]
