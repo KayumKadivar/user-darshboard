@@ -65,7 +65,12 @@
   border-color: var(--app-border);
   color: var(--typo-primary);
 }
-
+ 
+.ui-btn--danger {
+  background: #f2495c;
+  color: white;
+}
+ 
 .ui-btn--icon {
   width: 36px;
   height: 36px;
@@ -181,9 +186,11 @@
   transition: all 0.2s;
 }
 
-.ui-switcher-btn.is-active {
+.ui-switcher-btn.is-active,
+.ui-btn.is-active {
   background: var(--app-panel);
   color: var(--typo-blue);
+  border-color: var(--typo-blue);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -2478,4 +2485,26 @@
   border-top: 1px solid var(--app-border);
   border-bottom: 1px solid var(--app-border);
   text-align: left;
+}
+
+
+.delete-row-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.delete-row-btn:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.delete-row-btn i {
+  font-size: 1.125rem;
+  color: #ef4444;
 }

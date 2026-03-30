@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/pages/style.css">
 
   <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/vendor/sweetalert2.all.min.js"></script>
   <script src="../js/theme-control.js"></script>
   <script src="../js/sidebar.js" defer></script>
   <script src="../js/header.js" defer></script>
@@ -1236,6 +1237,246 @@
             </table>
           </div>
         </div>
+        
+        <!-- Pending Log Book -->
+        <div id="table-container-pending" class="plant-table-container is-hidden">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary pending-header-summary">
+              <div class="pending-title-group">
+                <i class="ph-fill ph-clock-counter-clockwise" aria-hidden="true"></i>
+                <span class="view-title plant-table-card__title">Pending Log Report</span>
+              </div>
+            </div>
+
+            <div class="plant-table-card__actions pending-actions-wrap">
+              <button type="button" class="ui-btn ui-btn--danger ui-btn--danger-sm" id="delete-all-pending-btn">
+                <i class="ph-bold ph-trash" aria-hidden="true"></i>
+                <span class="font-14px">Delete All</span>
+              </button>
+              <span class="record-count plant-record-count">14 Records</span>
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+                <input type="text" class="table-search" placeholder="Search pending...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-scroll plant-table-wrap">
+            <table class="user-table" id="plantLogbookTablePending">
+              <thead>
+                <tr>
+                  <th class="user-table-head-cell text-center" style="width: 40px;">Sr</th>
+                  <th class="user-table-head-cell" style="width: 120px;">TagNo</th>
+                  <th class="user-table-head-cell" style="width: 250px;">Job</th>
+                  <th class="user-table-head-cell" style="width: 80px;">Tech</th>
+                  <th class="user-table-head-cell" style="width: auto;">Description</th>
+                  <th class="user-table-head-cell" style="width: 80px;">Tech</th>
+                  <th class="user-table-head-cell text-center" style="width: 100px;">Status</th>
+                  <th class="user-table-head-cell" style="width: 20%;">Remarks</th>
+                  <th class="user-table-head-cell text-center" style="width: 50px;">Del</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <!-- Record 1 -->
+                <tr class="user-table-row" data-record-id="p1" data-view="pending">
+                  <td class="user-table-cell text-center">1</td>
+                  <td class="user-table-cell">NOTAG</td>
+                  <td class="user-table-cell">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.(By ARP : 18/03/2026)</td>
+                  <td class="user-table-cell">PVS</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 2 -->
+                <tr class="user-table-row" data-record-id="p2" data-view="pending">
+                  <td class="user-table-cell text-center">2</td>
+                  <td class="user-table-cell">NOTAG</td>
+                  <td class="user-table-cell">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.(By ARP : 19/03/2026)</td>
+                  <td class="user-table-cell">PVS</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 3 -->
+                <tr class="user-table-row" data-record-id="p3" data-view="pending">
+                  <td class="user-table-cell text-center">3</td>
+                  <td class="user-table-cell">NOTAG</td>
+                  <td class="user-table-cell">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.(By MMD : 20/03/2026)</td>
+                  <td class="user-table-cell">PVS</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 4 -->
+                <tr class="user-table-row" data-record-id="p4" data-view="pending">
+                  <td class="user-table-cell text-center">4</td>
+                  <td class="user-table-cell">4AT1803</td>
+                  <td class="user-table-cell">SoX Analyzer Multipoint calibration to be checked (By TRC : 23/03/2026)</td>
+                  <td class="user-table-cell">KBD</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 5 -->
+                <tr class="user-table-row" data-record-id="p5" data-view="pending">
+                  <td class="user-table-cell text-center">5</td>
+                  <td class="user-table-cell">4AT1810</td>
+                  <td class="user-table-cell">NoX Analyzer Multipoint calibration to be checked (By TRC : 23/03/2026)</td>
+                  <td class="user-table-cell">KBD</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 6 -->
+                <tr class="user-table-row" data-record-id="p6" data-view="pending">
+                  <td class="user-table-cell text-center">6</td>
+                  <td class="user-table-cell">NOTAG</td>
+                  <td class="user-table-cell">2 nos. of Radar LT to be checked for PO-4500004278 (By ARP : 27/03/2026)</td>
+                  <td class="user-table-cell">KBD</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 7 -->
+                <tr class="user-table-row" data-record-id="p7" data-view="pending">
+                  <td class="user-table-cell text-center">7</td>
+                  <td class="user-table-cell">BNC_GT</td>
+                  <td class="user-table-cell">BNC vibration system gap voltage and system healthiness to be checked(By TRC : 30/03/2026)</td>
+                  <td class="user-table-cell">PVS</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 8 -->
+                <tr class="user-table-row" data-record-id="p8" data-view="pending">
+                  <td class="user-table-cell text-center">8</td>
+                  <td class="user-table-cell">BNC_TG2</td>
+                  <td class="user-table-cell">BNC vibration system gap voltage and system healthiness to be checked(By TRC : 30/03/2026)</td>
+                  <td class="user-table-cell">PVS</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 9 -->
+                <tr class="user-table-row" data-record-id="p9" data-view="pending">
+                  <td class="user-table-cell text-center">9</td>
+                  <td class="user-table-cell">BNC_TG1</td>
+                  <td class="user-table-cell">BNC vibration system gap voltage and system healthiness to be checked(By TRC : 30/03/2026)</td>
+                  <td class="user-table-cell">PVS</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 10 -->
+                <tr class="user-table-row" data-record-id="p10" data-view="pending">
+                  <td class="user-table-cell text-center">10</td>
+                  <td class="user-table-cell">NOTAG</td>
+                  <td class="user-table-cell">DFA Ash SOVs to be checked for PO-6200024010(By ARP : 30/03/2026)</td>
+                  <td class="user-table-cell">KBD</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 11 -->
+                <tr class="user-table-row" data-record-id="p11" data-view="pending">
+                  <td class="user-table-cell text-center">11</td>
+                  <td class="user-table-cell">NOTAG</td>
+                  <td class="user-table-cell">O2 Analyzer Guide Pipe to be checked for PO-6200021384 (By ARP : 30/03/2026)(Reassign by ARP 30/03/2026)</td>
+                  <td class="user-table-cell">PVS</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 12 -->
+                <tr class="user-table-row" data-record-id="p12" data-view="pending">
+                  <td class="user-table-cell text-center">12</td>
+                  <td class="user-table-cell">DCS_COM SEC</td>
+                  <td class="user-table-cell">BHEL BLR at DCS Panels Dust Filter to be installed.(By ARP : 30/03/2026)</td>
+                  <td class="user-table-cell">PRP</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 13 -->
+                <tr class="user-table-row" data-record-id="p13" data-view="pending">
+                  <td class="user-table-cell text-center">13</td>
+                  <td class="user-table-cell">4BUR1</td>
+                  <td class="user-table-cell">Burner 1 Oil leakage to be checked from oil block valve.(By TRC : 30/03/2026)</td>
+                  <td class="user-table-cell">BDR</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+                <!-- Record 14 -->
+                <tr class="user-table-row" data-record-id="p14" data-view="pending">
+                  <td class="user-table-cell text-center">14</td>
+                  <td class="user-table-cell">4BUR2</td>
+                  <td class="user-table-cell">Scanner tightness to be checked (By TRC : 30/03/2026)</td>
+                  <td class="user-table-cell">BDR</td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center"></td>
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">
+                    <button type="button" class="delete-row-btn" ><i class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
       </section>
     </section>
@@ -1749,6 +1990,7 @@
     // View Buttons (Switcher)
     $('.ui-switcher-btn').on('click', function () {
       $('.ui-switcher-btn').removeClass('is-active');
+      $('#toggle-pending-btn').removeClass('is-active');
       $(this).addClass('is-active');
       selectedView = $(this).data('view');
 
@@ -1853,6 +2095,85 @@
     // Monthly
     const monthStr = new Date().toLocaleString('en-GB', { month: 'long', year: 'numeric' });
     $('.monthly-date-text').text("( " + monthStr + " )");
+
+    // Toggle Pending View
+    $('#toggle-pending-btn').on('click', function () {
+      $('.ui-switcher-btn').removeClass('is-active');
+      $(this).addClass('is-active');
+      $('.plant-table-container').addClass('is-hidden');
+      $('#table-container-pending').removeClass('is-hidden');
+      
+      // Update view-chip
+      $('#plant-view-chip').text('View: Pending');
+      
+      filterTable();
+    });
+
+    // Individual Row Delete (Pending)
+    $(document).on('click', '.delete-row-btn', function (e) {
+      e.stopPropagation();
+      const $row = $(this).closest('tr');
+      const recordId = $row.data('record-id');
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $row.fadeOut(300, function() {
+            $(this).remove();
+            // Update count
+            const count = $('#plantLogbookTablePending tbody tr').length;
+            $('#table-container-pending .record-count').text(count + ' Records');
+          });
+          Swal.fire(
+            'Deleted!',
+            'Your record has been deleted.',
+            'success'
+          );
+        }
+      });
+    });
+
+    // Delete All Pending
+    $('#delete-all-pending-btn').on('click', function () {
+      const rowCount = $('#plantLogbookTablePending tbody tr').length;
+      
+      if (rowCount === 0) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Empty',
+          text: 'No records to delete!'
+        });
+        return;
+      }
+
+      Swal.fire({
+        title: 'Delete All Records?',
+        text: "This will permanently remove all pending records from the report!",
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete all!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $('#plantLogbookTablePending tbody').empty();
+          $('#table-container-pending .record-count').text('0 Records');
+          
+          Swal.fire(
+            'Cleared!',
+            'All pending records have been deleted.',
+            'success'
+          );
+        }
+      });
+    });
 
     // Initialize
     filterTable();
