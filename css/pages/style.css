@@ -29,7 +29,7 @@
 .ui-card {
   background: var(--app-panel);
   border: 1px solid var(--app-border);
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -139,7 +139,7 @@
 .status-text--warning { color: #fbbf24; }
 .status-text--danger { color: #f87171; }
 
-
+/* (Unused - Migrated to .user-table from common.css) */
 
 /* ── 4a. TABLE HEADER CORRECTIONS (2-Row Layout) ── */
 .user-table-scroll {
@@ -194,9 +194,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* ════════════════════════════════════════════════════════════
-   LOGIN PAGE
-   ════════════════════════════════════════════════════════════ */
+/* ── Login Page Styles ── */
 
 .login-wrapper {
   min-height: 100vh;
@@ -382,9 +380,6 @@
   }
 }
 
-/* ════════════════════════════════════════════════════════════
-   DASHBOARD & MAIN LAYOUT
-   ════════════════════════════════════════════════════════════ */
 .dashboard-body {
   background-color: var(--dark-bg);
   color: var(--primary);
@@ -449,9 +444,6 @@
   border-radius: 10px;
 }
 
-/* ════════════════════════════════════════════════════════════
-   HEADER BAR
-   ════════════════════════════════════════════════════════════ */
 /* --- HEADER & TOP BAR --- */
 .header-bar {
   height: 60px;
@@ -986,8 +978,24 @@
 }
 
 /* ==========================================================================
-   OT MODAL FILTER BAR
+   OT MODAL SPECIALS
    ========================================================================== */
+.ot-modal-title-layout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ot-modal-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: rgba(87, 148, 242, 0.15);
+  border: 1px solid rgba(87, 148, 242, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--typo-blue);
+}
 .ot-filter-bar {
   display: flex;
   flex-wrap: wrap;
@@ -1002,12 +1010,132 @@
   align-items: center;
   gap: 10px;
 }
+.ot-select-sm { width: 140px; }
 .ot-input-sm { width: 160px; }
+.ot-btn-go {
+  margin-bottom: 0;
+}
+.ot-table-view {
+  overflow: auto;
+  flex: 1;
+}
+.ot-table {
+  width: 100%;
+  min-width: 1000px;
+  border-collapse: collapse;
+}
+.ot-table th {
+  padding: 10px 8px;
+  font-size: 0.75rem; /* 12px */
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--typo-label);
+  background: var(--dark-panel);
+  border-bottom: 1px solid var(--dark-border);
+  border-right: 1px solid var(--dark-border);
+  text-align: center;
+}
+.ot-table td {
+  padding: 8px;
+  font-size: 0.875rem; /* 14px */
+  color: var(--typo-primary);
+  border-bottom: 1px solid var(--dark-border);
+  border-right: 1px solid var(--dark-border);
+  vertical-align: top;
+}
+.ot-table-row {
+  transition: background-color 0.2s;
+}
+.ot-table-row:hover {
+  background-color: var(--btn-bg);
+}
+.ot-cell-center { text-align: center; }
+.ot-bold-blue { font-weight: 700; color: var(--typo-blue); font-family: monospace; }
+.ot-bold-primary { font-weight: 700; color: var(--typo-primary); }
+.ot-mono { font-family: monospace; color: var(--typo-secondary); }
+.ot-date { font-family: monospace; color: var(--typo-secondary); }
+.ot-cell-primary { color: var(--typo-primary); }
+.ot-cell-desc { white-space: pre-wrap; line-height: 1.4; }
+.ot-reason-pill {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--blue);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  font-size: 0.625rem; /* 10px */
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+.ot-reason-empty {
+  color: var(--typo-hint);
+  font-size: 0.75rem;
+}
+.ot-tfoot { background: var(--dark-panel); }
+.ot-tfoot th, .ot-tfoot td {
+  padding: 10px 8px;
+  border-top: 2px solid var(--dark-border);
+  border-right: 1px solid var(--dark-border);
+}
+.ot-tfoot-label {
+  text-align: right;
+  font-weight: 800;
+  color: var(--typo-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding-right: 16px !important;
+}
+.ot-tfoot-val {
+  text-align: center;
+  font-weight: 800;
+  color: var(--typo-blue);
+  font-size: 0.9375rem;
+}
 .ot-record-info {
   font-size: 0.8125rem;
   color: var(--typo-secondary);
 }
-
+.ot-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ot-summary-heading {
+  font-size: 1.0625rem;
+  color: var(--typo-primary);
+  border-bottom: 1px solid var(--dark-border);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+.ot-summary-details {
+  font-size: 0.9375rem;
+  color: var(--typo-primary);
+}
+.ot-summary-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ot-time-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.ot-min-input {
+  display: inline-block;
+  width: 60px;
+  padding: 4px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+:root[data-theme="light"] .ot-min-input { background: rgba(0, 0, 0, 0.03); }
+.ot-reason-input {
+  flex: 1;
+  max-width: 250px;
+}
 
 
 .modal-priority-normal {
@@ -1304,9 +1432,6 @@
   font-size: 1.25rem;
 }
 
-/* ════════════════════════════════════════════════════════════
-   SIDEBAR
-   ════════════════════════════════════════════════════════════ */
 .app-sidebar {
   background-color: var(--app-sidebar);
   border-right: 1px solid var(--app-sidebar-border);
@@ -1549,10 +1674,13 @@
   font-weight: 600;
 }
 
+/* ===== LAYOUT ===== */
+.dashboard-body {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
 
-/* ════════════════════════════════════════════════════════════
-   TECHNICIAN LOGBOOK PAGE
-   ════════════════════════════════════════════════════════════ */
 .technician-main {
   flex: 1;
   display: flex;
@@ -1595,7 +1723,7 @@
   font-weight: 600;
 }
 
-
+/* (Replaced by .ui-switcher) */
 
 /* ===== CHIP ===== */
 .total-count-chip {
@@ -1618,7 +1746,10 @@
   padding: 16px;
 }
 
-
+.logbook-panel-title {
+  font-size: 1.125rem;
+  margin-bottom: 10px;
+}
 
 /* ===== LIST ===== */
 .logbook-plant-list {
@@ -1663,7 +1794,21 @@
   opacity: 0.7;
 }
 
+/* ===== FOOTER ===== */
+.custom-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid var(--app-border);
+}
 
+.footer-text {
+  color: var(--app-muted);
+}
+
+.footer-copy {
+  opacity: 0.5;
+}
 
 /* ===== SCROLL ===== */
 .custom-scroll::-webkit-scrollbar {
@@ -1843,6 +1988,7 @@
   gap: 16px;
 }
 
+/* (Handled by .ui-card) */
 
 .plant-page__nav-card {
   display: flex;
@@ -1927,7 +2073,6 @@
 .plant-toolbar-card,
 .plant-filter-card {
   padding: 16px;
-
 }
 
 .plant-toolbar {
@@ -1936,7 +2081,7 @@
   flex-wrap: wrap;
 }
 
-
+/* (Replaced by .ui-switcher in HTML) */
 .plant-period-switcher__button.is-active {
   color: var(--typo-orange);
 }
@@ -2770,9 +2915,9 @@
 }
 
 
-/* ════════════════════════════════════════════════════════════
-   ASSIGN TODAY / TOMORROW PAGE
-   ════════════════════════════════════════════════════════════ */
+/* ==========================================================================
+   ASSIGN TODAY PAGE STYLES
+   ========================================================================== */
 
 /* --- Page Layout --- */
 .assign-split-layout {
@@ -3183,188 +3328,3 @@ select.gnfc-modal-input {
   line-height: 1.4;
   font-size: 13px;
 }
-
-/* Analysis Page Standardized Components */
-.plant-filter-header {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--app-border);
-  background: var(--app-panel-alt);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 8px 8px 0 0;
-}
-
-.plant-filter-header .plant-filter-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--typo-blue);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.plant-filter-separator {
-  color: var(--typo-label);
-  opacity: 0.5;
-  margin: 0 8px;
-  user-select: none;
-}
-
-.plant-filter-field-group .plant-filter-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--typo-label);
-  margin-bottom: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-/* Navigation Active State Fixes */
-.plant-nav-pill.is-active {
-  background: var(--typo-blue) !important;
-  color: #ffffff !important;
-  border-color: var(--typo-blue) !important;
-  box-shadow: 0 2px 4px rgba(87, 148, 242, 0.3);
-}
-
-.plant-nav-pill.is-active i {
-  color: #ffffff !important;
-}
-
-/* Table Record Summary Header (Reuses plant-filter-header styles) */
-.plant-analysis-summary-header {
-  margin-top: 16px;
-}
-
-.plant-filter-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-
-.plant-filter-row--end {
-  align-items: flex-end;
-}
-
-.plant-filter-actions,
-.plant-filter-options-wrap,
-.plant-history-apply-wrap {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.plant-filter-options-wrap {
-  background: var(--app-panel);
-  border: 1px solid var(--app-border);
-  border-radius: 4px;
-  padding: 6px 12px;
-  gap: 16px;
-}
-
-.plant-filter-options-wrap label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  cursor: pointer;
-  color: var(--typo-secondary);
-}
-
-.plant-record-count-badge {
-  background: var(--app-bg);
-  padding: 4px 10px;
-  border-radius: 4px;
-  border: 1px solid var(--app-border);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--typo-label);
-}
-
-.plant-history-apply-wrap .ui-btn--primary {
-  flex: 1;
-  height: 36px;
-  background: var(--typo-blue);
-  color: #ffffff;
-  font-weight: 700;
-}
-
-/* Table Content Specialized Styling */
-.plant-table-fixed {
-  table-layout: fixed;
-  min-width: 1400px;
-}
-
-.plant-table-group-header .user-table-cell {
-  background: var(--app-panel-alt) !important;
-  font-weight: 700;
-  color: var(--typo-blue);
-  padding: 8px 16px;
-}
-
-.plant-table-cell-split {
-  border-bottom: 1px solid var(--app-border);
-  padding-bottom: 4px;
-  margin-bottom: 4px;
-  font-weight: 700;
-}
-
-.plant-table-link-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.plant-table-link-stack a {
-  color: var(--typo-blue);
-  text-decoration: none;
-  font-size: 0.75rem;
-  font-weight: 700;
-  border-bottom: 1px solid var(--app-border);
-}
-
-.plant-table-link-stack a:last-child {
-  border-bottom: none;
-}
-
-.plant-text-detail {
-  line-height: 1.5;
-}
-
-.plant-text-small-muted {
-  font-size: 0.8rem;
-  color: var(--typo-secondary);
-}
-
-.plant-text-blue-bold {
-  color: var(--typo-blue);
-  font-weight: 700;
-}
-
-.plant-text-orange-bold {
-  color: var(--orange);
-  font-weight: 500;
-}
-
-/* Table Layout Helpers */
-.cell-width-50 { width: 50px; }
-.cell-width-60 { width: 60px; }
-.cell-width-70 { width: 70px; }
-.cell-width-80 { width: 80px; }
-.cell-width-100 { width: 100px; }
-.cell-width-120 { width: 120px; }
-.cell-width-130 { width: 130px; }
-.cell-width-160 { width: 160px; }
-.cell-width-250 { width: 250px; }
-.cell-width-380 { width: 380px; }
-.cell-width-400 { width: 400px; }
-.cell-width-450 { width: 450px; }
-
-.cell-top-40 { top: 40px; }
-
-.border-b-1 { border-bottom-width: 1px; }
-.border-b-2 { border-bottom-width: 2px; }
-
-.opacity-30 { opacity: 0.3 !important; }
