@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name Wise Report | GNFC</title>
+  <meta name="description" content="GNFC Technician Specific Job Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+  <script src="../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'namewise_report';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Name Wise Report" data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content" style="gap: 16px;">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            Report Filter
+          </h3>
+        </div>
+        <div class="jt-filter-body" style="grid-template-columns: repeat(3, 1fr) auto;">
+          
+          <!-- Start Date -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">Start Date</label>
+            <input type="date" id="startDateFilter" class="jt-input jt-date-input">
+          </div>
+
+          <!-- End Date -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">End Date</label>
+            <input type="date" id="endDateFilter" class="jt-input jt-date-input">
+          </div>
+
+          <!-- Select Name -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">Select Name</label>
+            <div class="jt-select-wrap">
+              <select id="nameFilter" class="jt-select">
+                <option value="">All Technicians</option>
+                <option value="PBS">PBS</option>
+                <option value="NRK">NRK</option>
+                <option value="MJ">MJ</option>
+                <option value="MR">MR</option>
+                <option value="R.R.">R.R.</option>
+                <option value="SHC">SHC</option>
+              </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="jt-filter-group" style="flex-direction: row; gap: 10px; align-items: flex-end;">
+            <button onclick="generateReport()" class="jt-btn-apply" style="width: auto; padding: 0 20px;">
+              <i class="ph-bold ph-sparkle"></i> GENERATE
+            </button>
+            <button onclick="resetFilters()" class="jt-btn-reset" style="width: auto; padding: 0 16px; height: 36px; border: 1px solid var(--app-border); background: var(--app-bg); color: var(--typo-label); border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+              <i class="ph-bold ph-x"></i> RESET
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── REPORT RESULTS ── -->
+      <div id="reportResults" style="display: none; flex-direction: column; gap: 16px;">
+        
+        <div class="jt-table-card">
+          <div class="jt-table-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+              <h3 class="jt-table-header-title">
+                <i class="ph-fill ph-user-list" style="color: var(--typo-blue, #5794F2);"></i>
+                <span id="reportTitle">Name Wise Report</span>
+              </h3>
+              <span id="recordCount" class="jt-record-count">0 Records</span>
+            </div>
+          </div>
+
+          <div class="jt-table-scroll">
+            <table class="jt-analysis-table">
+              <thead class="jt-analysis-thead">
+                <tr>
+                  <th class="jt-col-sr" style="text-align: center;">Sr</th>
+                  <th style="min-width: 150px;">Assign Job<br><span style="font-size: 9px; opacity: 0.7;">Assign To</span></th>
+                  <th style="width: 100px; text-align: center;">Date</th>
+                  <th style="width: 70px; text-align: center;">Tech</th>
+                  <th class="jt-col-tag" style="text-align: center;">Tag No</th>
+                  <th style="width: 120px;">Type of Job</th>
+                  <th class="jt-col-desc">Description</th>
+                  <th style="min-width: 150px;">Remarks</th>
+                  <th style="width: 70px; text-align: center;">OT Hr</th>
+                </tr>
+              </thead>
+              <tbody id="reportTableBody" class="jt-mono">
+                <!-- Rows injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const today = new Date();
+      const lastMonth = new Date(today);
+      lastMonth.setDate(lastMonth.getDate() - 30);
+
+      document.getElementById('endDateFilter').valueAsDate = today;
+      document.getElementById('startDateFilter').valueAsDate = lastMonth;
+      document.getElementById('nameFilter').value = 'PBS';
+
+      generateReport();
+    });
+
+    function resetFilters() {
+      const today = new Date();
+      const lastMonth = new Date(today);
+      lastMonth.setDate(lastMonth.getDate() - 30);
+
+      document.getElementById('nameFilter').value = '';
+      document.getElementById('startDateFilter').valueAsDate = lastMonth;
+      document.getElementById('endDateFilter').valueAsDate = today;
+      document.getElementById('reportResults').style.display = 'none';
+    }
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[m];
+      });
+    }
+
+    function generateReport() {
+      const selectedName = document.getElementById('nameFilter').value;
+      const startDate = document.getElementById('startDateFilter').value;
+      const endDate = document.getElementById('endDateFilter').value;
+
+      document.getElementById('reportResults').style.display = 'flex';
+
+      const formattedStart = new Date(startDate).toLocaleDateString('en-GB');
+      const formattedEnd = new Date(endDate).toLocaleDateString('en-GB');
+      const nameLabel = selectedName || 'All Technicians';
+      document.getElementById('reportTitle').textContent = `Name Wise Report: ${nameLabel} (${formattedStart} – ${formattedEnd})`;
+
+      const sampleData = [
+        {
+          sr: 1, assignJob: '', assignTo: '',
+          date: '01/02/2005', tech: 'PBS', tagNo: 'IIMS',
+          typeOfJob: 'N.A.',
+          desc: 'Job status report generated as discussed with SM(TMV).',
+          remarks: '', otHour: 0
+        },
+        {
+          sr: 2, assignJob: 'Exceed PC network is to be removed.',
+          assignTo: '(By:SHC : 01/02/2005)',
+          date: '01/02/2005', tech: 'PBS', tagNo: 'NOTAG',
+          typeOfJob: 'N.A.',
+          desc: 'Windows 98 reloaded. Exceed reloaded. All programs, applications except exceed are removed. It is now under observation.',
+          remarks: '', otHour: 0
+        },
+        {
+          sr: 3, assignJob: '', assignTo: 'PBS',
+          date: '22/01/2005', tech: 'PBS', tagNo: 'DCS',
+          typeOfJob: 'N.A.',
+          desc: 'During house-keeping of AWS101 it is observed that vmcore file observed in /opt/crash/AWS101. After referring edoc and comparing with that of meth2 this big size file is removed as it gets generated due to some software problem. Also AW is working ok so it is deleted other wise this file is to be sent to foxboro for analysis. The vmcore file was generated on 11 aug 04.',
+          remarks: '', otHour: 0
+        },
+        {
+          sr: 4,
+          assignJob: 'O/P lim is to be provided.(By:SHC : 22/01/2005)',
+          assignTo: 'PBS',
+          date: '22/01/2005', tech: 'PBS', tagNo: 'LV_1413',
+          typeOfJob: 'DEFECT MAINTENANCE',
+          desc: 'It is to be done on monday after discussing with SM(SD) as per SIE(MTP).',
+          remarks: '', otHour: 0
+        },
+        {
+          sr: 5, assignJob: '', assignTo: 'PBS',
+          date: '20/01/2005', tech: 'PBS', tagNo: 'DCS',
+          typeOfJob: 'N.A.',
+          desc: 'Various reports, find, filehistory, remarks history exported and verified with SM office for archival purpose.',
+          remarks: '', otHour: 0
+        },
+      ];
+
+      const tbody = document.getElementById('reportTableBody');
+      if (!tbody) return;
+      
+      let html = '';
+      for (let i = 0; i < sampleData.length; i++) {
+        const row = sampleData[i];
+        html += '<tr class="jt-analysis-tr">' +
+          '<td class="jt-analysis-td text-center" style="color: var(--typo-label);">' + row.sr + '</td>' +
+          '<td class="jt-analysis-td">' +
+            '<div class="jt-cell-stack">' +
+              '<div class="jt-cell-top" style="font-weight: 700; line-height: 1.3;">' + escapeHTML(row.assignJob || '-') + '</div>' +
+              (row.assignTo ? '<div class="jt-cell-divider"></div><div class="jt-cell-sub color-orange" style="font-size: 10px;">' + escapeHTML(row.assignTo) + '</div>' : '') +
+            '</div>' +
+          '</td>' +
+          '<td class="jt-analysis-td text-center" style="font-size: 13px;">' + row.date + '</td>' +
+          '<td class="jt-analysis-td text-center" style="font-weight: 700; color: var(--typo-label);">' + row.tech + '</td>' +
+          '<td class="jt-analysis-td text-center jt-col-tag">' + escapeHTML(row.tagNo) + '</td>' +
+          '<td class="jt-analysis-td" style="font-size: 11px; text-transform: uppercase;">' + escapeHTML(row.typeOfJob) + '</td>' +
+          '<td class="jt-analysis-td" style="font-size: 14px; line-height: 1.5;">' + escapeHTML(row.desc) + '</td>' +
+          '<td class="jt-analysis-td" style="font-size: 11px; font-style: italic; color: var(--typo-secondary);">' + escapeHTML(row.remarks || '-') + '</td>' +
+          '<td class="jt-analysis-td text-center" style="font-weight: 700;">' + row.otHour + '</td>' +
+        '</tr>';
+      }
+      
+      tbody.innerHTML = html;
+      document.getElementById('recordCount').textContent = `${sampleData.length} Records`;
+    }
+
+  </script>
+</body>
+
+</html>

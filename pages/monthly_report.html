@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monthly Report | GNFC</title>
+  <meta name="description" content="GNFC Monthly Logbook Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+  <script src="../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'monthly_report';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Acetic Acid Logbook" data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            Report Filter
+          </h3>
+        </div>
+        <div class="jt-filter-body">
+          
+          <!-- Plant Area -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">Plant Area</label>
+            <div class="jt-select-wrap">
+              <select id="filter-plant" class="jt-select">
+                <option>AMMONIA</option>
+                <option>UREA</option>
+                <option>METHANOL</option>
+              </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            </div>
+          </div>
+
+          <!-- Report Period -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">Report Period</label>
+            <div class="jt-date-range">
+              <input type="date" id="start-date" value="2026-02-01" class="jt-date-input">
+              <span class="jt-date-sep">to</span>
+              <input type="date" id="end-date" value="2026-02-28" class="jt-date-input">
+            </div>
+          </div>
+
+          <!-- Generate Button -->
+          <div class="jt-filter-group">
+            <button onclick="generateReport()" class="jt-btn-apply">
+              <i class="ph-bold ph-lightning"></i> GENERATE REPORT
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── REPORT CONTENT ── -->
+      <div id="report-content" class="animate-fade-in">
+
+        <div style="margin-bottom: 24px;">
+          <h1 style="font-size: 1.5rem; font-weight: 800; color: var(--typo-primary);">AMMONIA : Monthly Report</h1>
+          <p style="font-size: 1rem; color: var(--typo-orange); margin-top: 4px; font-weight: 600;">Period: February 2026</p>
+        </div>
+
+        <!-- DCS / ESD Systems -->
+        <div class="jt-report-card">
+          <div class="jt-report-header">
+            <i class="ph-fill ph-cpu" style="color: var(--typo-blue, #5794F2);"></i>
+            <h3 class="jt-report-title">DCS / ESD Systems</h3>
+          </div>
+          <div class="jt-report-body">
+            <div class="jt-report-item">
+              <div class="jt-report-tag-wrap">
+                <span class="jt-tag-pill color-blue">GENERAL</span>
+              </div>
+              <div class="jt-report-desc">
+                System diagnostic checks performed. No major anomalies found.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analyzers -->
+        <div class="jt-report-card">
+          <div class="jt-report-header">
+            <i class="ph-fill ph-chart-line-up" style="color: #A78BFA;"></i>
+            <h3 class="jt-report-title">Analyzers</h3>
+          </div>
+          <div class="jt-report-body" id="analyzers-list">
+            <!-- JS Injection -->
+          </div>
+        </div>
+
+        <!-- Preventive Maintenance -->
+        <div class="jt-report-card">
+          <div class="jt-report-header">
+            <i class="ph-fill ph-wrench" style="color: #FF9900;"></i>
+            <h3 class="jt-report-title">Preventive Maintenance (PM)</h3>
+          </div>
+          <div class="jt-report-body" id="pm-list">
+            <!-- JS Injection -->
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    /* Static Mock Data */
+    const analyzerData = [
+      { tag: 'QT113', desc: 'Zero-span checked and it is ok.' },
+      { tag: 'QT702', desc: 'Zero calibration found 0.78% Higher side so calibration done. Span calibration found 0.1% higher. Calibration done.' },
+      { tag: 'QT703', desc: 'Zero calibration found ok. Span calibration found 0.1% higher. Calibration done. Sample taken in line.' },
+      { tag: 'QT0207', desc: 'ABB analyzer engineer visited and checked. Installed spare SSI card but no result. Upgraded software version of AMC card.' },
+      { tag: 'LV1056', desc: 'Sample point in C/V D/S line found choked. Whole tube disconnected and found needle valve chocked. New valve provided.' },
+      { tag: 'QT606', desc: 'Zero calibration checked with N2 cylinder. Calibration found ok. Span calibration checked and it is ok.' },
+      { tag: 'QT114', desc: 'It was observed that indication is higher side (18%). Zero calibration checked and found 0.81% higher. Recalibrated.' }
+    ];
+
+    const pmData = [
+      { tag: 'DCS-FOXBORO', desc: 'Documentation related job is U/P.' },
+      { tag: 'DCS-YOKOGAWA', desc: 'FCS301, FCS302, FCS304 stand by (RIGHT) controller batteries are replaced. FCS703, FCS707 stand by (LEFT) batteries replaced.' },
+      { tag: 'MOLSIEVE', desc: 'A104A/B Molsieve adsorber condensate flushing was done.' },
+      { tag: 'ANA-A1', desc: 'Analyzer Sample/Bypass Flow and Pressure checked.' },
+      { tag: 'ANALYZER', desc: 'Analyzer round taken and no abnormality found.' },
+      { tag: 'ANA-A5', desc: 'Zero calibration checked and it is ok.' },
+      { tag: 'HV0207B', desc: 'HV0207B related booster checking setup done. Functionality checked and found working ok.' },
+      { tag: 'SPARE REPAIR', desc: 'Temperature Tx removed from TT111 connected on testbench for checking purpose. Job is U/P.' }
+    ];
+
+    /**
+     * Render a list of report items
+     * @param {string} elementId - Container ID
+     * @param {Array} data - Mock data array
+     * @param {string} colorClass - jt-tag-pill color class
+     */
+    function renderSection(elementId, data, colorClass) {
+      const container = document.getElementById(elementId);
+      if (!container) return;
+      
+      let html = '';
+      for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        html += '<div class="jt-report-item">' +
+                  '<div class="jt-report-tag-wrap">' +
+                    '<span class="jt-tag-pill ' + colorClass + '">' + item.tag + '</span>' +
+                  '</div>' +
+                  '<div class="jt-report-desc">' + item.desc + '</div>' +
+                '</div>';
+      }
+      container.innerHTML = html;
+    }
+
+    /* Initialize Rendering */
+    renderSection('analyzers-list', analyzerData, 'color-purple');
+    renderSection('pm-list', pmData, 'color-orange');
+
+    function generateReport() {
+      // Visual feedback
+      const content = document.getElementById('report-content');
+      content.style.opacity = '0.4';
+      setTimeout(() => {
+        content.style.opacity = '1';
+        // In a real app, this is where you'd trigger a reload with new filters
+      }, 400);
+    }
+  </script>
+</body>
+
+</html>

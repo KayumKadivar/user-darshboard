@@ -29,24 +29,24 @@ function renderPlantNav(activePageId) {
             icon: 'ph-chart-bar',
             activeIds: ['remark_reports', 'tagwise_filter', 'monthly_report', 'datewise_report', 'namewise_report'],
             items: [
-                { id: 'remark_reports', label: 'Remark Report', icon: 'ph-note', href: '#' },
-                { id: 'tagwise_filter', label: 'TagWise Filter', icon: 'ph-funnel', href: '#' },
-                { id: 'monthly_report', label: 'Monthly Report', icon: 'ph-calendar-blank', href: '#' },
-                { id: 'datewise_report', label: 'Date Wise Report', icon: 'ph-calendar-dots', href: '#' },
-                { id: 'namewise_report', label: 'Name Wise Report', icon: 'ph-user-list', href: '#' }
+                { id: 'remark_reports', label: 'Remark Report', icon: 'ph-note', href: 'remark_reports.html' },
+                { id: 'tagwise_filter', label: 'TagWise Filter', icon: 'ph-funnel', href: 'tagwise_filter.html' },
+                { id: 'monthly_report', label: 'Monthly Report', icon: 'ph-calendar-blank', href: 'monthly_report.html' },
+                { id: 'datewise_report', label: 'Date Wise Report', icon: 'ph-calendar-dots', href: 'datewise_report.html' },
+                { id: 'namewise_report', label: 'Name Wise Report', icon: 'ph-user-list', href: 'namewise_report.html' }
             ]
         },
         {
             items: [
                 { id: 'job_history', label: 'Job History', icon: 'ph-clock-counter-clockwise', href: 'job_history.html' },
-                { id: 'ot_hours', label: 'OT Hrs', icon: 'ph-timer', href: '#' },
-                { id: 'pending_log', label: 'Pending Log', icon: 'ph-hourglass-medium', href: '#' }
+                { id: 'ot_hours', label: 'OT Hrs', icon: 'ph-timer', href: 'ot_hours.html' },
+                // { id: 'pending_log', label: 'Pending Log', icon: 'ph-hourglass-medium', href: '#' }
             ]
         },
         {
             items: [
-                { id: 'modifications', label: 'Modifications', icon: 'ph-gear-fine', href: '#' },
-                { id: 'doc_change', label: 'Doc. Change', icon: 'ph-file-doc', href: '#' }
+                { id: 'modifications', label: 'Modifications', icon: 'ph-gear-fine', href: 'modifications.html' },
+                { id: 'doc_change', label: 'Doc. Change', icon: 'ph-file-doc', href: 'doc_change.html' }
             ]
         }
     ];

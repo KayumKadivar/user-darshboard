@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Type Analysis | GNFC</title>
+  <meta name="description" content="GNFC Job Type Analysis Report - Acetic Acid Logbook">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+  <script src="../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'job_types';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Acetic Acid Logbook" data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content plant-page__content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            Apply Filters
+          </h2>
+        </div>
+
+        <div class="jt-filter-body">
+
+          <!-- Time Range -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label" for="start-date">Time Range Selection</label>
+            <div class="jt-date-range">
+              <input type="date" id="start-date" class="jt-date-input" onchange="applyFilters()">
+              <span class="jt-date-sep">|</span>
+              <input type="date" id="end-date" class="jt-date-input" onchange="applyFilters()">
+            </div>
+          </div>
+
+          <!-- Job Type Select -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label" for="job-type-select">Select Type of Job</label>
+            <div class="jt-select-wrap">
+              <select id="job-type-select" class="jt-select" onchange="applyFilters()">
+                <option value="">All Job Types</option>
+                <option value="PM">PM</option>
+                <option value="DOCUMENTATION">DOCUMENTATION</option>
+                <option value="HOUSE KEEPING">HOUSE KEEPING</option>
+                <option value="ABNORMALITY">ABNORMALITY</option>
+                <option value="MODIFICATION">MODIFICATION</option>
+                <option value="ISO14001">ISO14001</option>
+                <option value="FIELD JOB">FIELD JOB</option>
+                <option value="REVAMP">REVAMP</option>
+                <option value="DEFECT MAINTENANCE">DEFECT MAINTENANCE</option>
+                <option value="CONFIGURATION">CONFIGURATION</option>
+                <option value="SPARE REPAIR">SPARE REPAIR</option>
+                <option value="SCRAP">SCRAP</option>
+                <option value="MATL RETURN">MATL RETURN</option>
+                <option value="RANGE CHANGE">RANGE CHANGE</option>
+                <option value="CARD FAILURE">CARD FAILURE</option>
+                <option value="INST FAILURE">INST FAILURE</option>
+                <option value="INSPECTION">INSPECTION</option>
+                <option value="CASH PURCHASE">CASH PURCHASE</option>
+                <option value="PROCESS REQMT">PROCESS REQMT</option>
+                <option value="N.A.">N.A.</option>
+              </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="jt-filter-actions">
+            <button type="button" class="jt-btn-apply" onclick="applyFilters()">APPLY</button>
+            <button type="button" class="jt-btn-reset" onclick="resetFilters()">RESET</button>
+          </div>
+
+        </div>
+      </div>
+      <!-- /FILTER CARD -->
+
+      <!-- ── TABLE CARD ── -->
+      <div class="jt-table-card">
+
+        <div class="jt-table-header">
+          <h3 class="jt-table-header-title">
+            <i class="ph-fill ph-table"></i>
+            Job Type Analysis Report
+          </h3>
+        </div>
+
+        <div class="jt-table-scroll">
+          <table class="jt-analysis-table" id="jt-main-table">
+
+            <thead class="jt-analysis-thead">
+              <tr>
+                <th rowspan="2" class="jt-col-sr text-center">Sr</th>
+                <th rowspan="2" class="jt-col-area">Area</th>
+                <th class="jt-col-loop">LoopNo</th>
+                <th class="jt-col-job">Job</th>
+                <th rowspan="2" class="jt-col-tech text-center">Tech</th>
+                <th rowspan="2" class="jt-col-desc">Description</th>
+                <th rowspan="2" class="jt-col-eng text-center">Eng</th>
+                <th rowspan="2" class="jt-col-status text-center">Status</th>
+                <th rowspan="2" class="jt-col-remark">Remarks</th>
+                <th rowspan="2" class="jt-col-add text-center">Add</th>
+              </tr>
+              <tr>
+                <th>Tag No</th>
+                <th>Type of Job</th>
+              </tr>
+            </thead>
+
+            <tbody id="jt-table-body">
+
+              <!-- ── DATE GROUP: 28/01/2026 ── -->
+              <tr class="jt-date-group-row" data-date-group="28/01/2026">
+                <td colspan="10">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  28/01/2026
+                </td>
+              </tr>
+
+              <!-- Row 1 -->
+              <tr class="jt-analysis-tr jt-data-row" data-date="28/01/2026" data-job-type="SPARE REPAIR">
+                <td class="jt-analysis-td text-center jt-mono fw-700">1</td>
+                <td class="jt-analysis-td fw-bold text-center">ASH</td>
+                <td class="jt-analysis-td">
+                  <div class="jt-cell-stack">
+                    <div class="jt-cell-top">N.A.</div>
+                    <hr class="jt-cell-divider">
+                    <div class="jt-cell-sub">Ac-1</div>
+                  </div>
+                </td>
+                <td class="jt-analysis-td">
+                  <div class="jt-cell-stack">
+                    <div class="jt-job-title">Removed Pneumatic switch to be repaired.(By:ARP : 28/01/2026)</div>
+                    <hr class="jt-cell-divider">
+                    <div class="jt-job-type">SPARE REPAIR</div>
+                  </div>
+                </td>
+                <td class="jt-analysis-td text-center fw-bold">BSU</td>
+                <td class="jt-analysis-td">Removed pneumatic switch repaired by seal kit replacement.</td>
+                <td class="jt-analysis-td text-center fw-bold">BSU</td>
+                <td class="jt-analysis-td text-center">
+                  <span class="jt-status jt-status--over">OVER</span>
+                </td>
+                <td class="jt-analysis-td">
+                  <span class="jt-remark-label">Tag No:- N.A. [written by: BSU Date: 28/01/2026]</span>
+                </td>
+                <td class="jt-analysis-td text-center">
+                  <a href="#" class="jt-link-action jt-link-action--bordered">H</a>
+                  <a href="#" class="jt-link-action">PM</a>
+                </td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr class="jt-analysis-tr jt-data-row" data-date="28/01/2026" data-job-type="SPARE REPAIR">
+                <td class="jt-analysis-td text-center jt-mono fw-700">2</td>
+                <td class="jt-analysis-td fw-bold text-center">ASH</td>
+                <td class="jt-analysis-td">
+                  <div class="jt-cell-stack">
+                    <div class="jt-cell-top">N.A.</div>
+                    <hr class="jt-cell-divider">
+                    <div class="jt-cell-sub">Ca-7</div>
+                  </div>
+                </td>
+                <td class="jt-analysis-td">
+                  <div class="jt-cell-stack">
+                    <div class="jt-job-title">Removed Power Cylinder to be repaired.(By:ARP : 28/01/2026)</div>
+                    <hr class="jt-cell-divider">
+                    <div class="jt-job-type">SPARE REPAIR</div>
+                  </div>
+                </td>
+                <td class="jt-analysis-td text-center fw-bold">BSU</td>
+                <td class="jt-analysis-td">Removed power cylinder repaired.</td>
+                <td class="jt-analysis-td text-center fw-bold">BSU</td>
+                <td class="jt-analysis-td text-center">
+                  <span class="jt-status jt-status--over">OVER</span>
+                </td>
+                <td class="jt-analysis-td">
+                  <span class="jt-remark-label">Tag No:- N.A. [written by: BSU Date: 28/01/2026]</span>
+                </td>
+                <td class="jt-analysis-td text-center">
+                  <a href="#" class="jt-link-action jt-link-action--bordered">H</a>
+                  <a href="#" class="jt-link-action">PM</a>
+                </td>
+              </tr>
+
+              <!-- ── DATE GROUP: 24/01/2026 ── -->
+              <tr class="jt-date-group-row" data-date-group="24/01/2026">
+                <td colspan="10">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  24/01/2026
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="jt-analysis-tr jt-data-row" data-date="24/01/2026" data-job-type="SPARE REPAIR">
+                <td class="jt-analysis-td text-center jt-mono fw-700">3</td>
+                <td class="jt-analysis-td fw-bold text-center">ASH</td>
+                <td class="jt-analysis-td">
+                  <div class="jt-cell-stack">
+                    <div class="jt-cell-top">N.A.</div>
+                    <hr class="jt-cell-divider">
+                    <div class="jt-cell-sub">KPUMP2</div>
+                  </div>
+                </td>
+                <td class="jt-analysis-td">
+                  <div class="jt-cell-stack">
+                    <div class="jt-job-title">Removed DV1 Power cylinder to be repaired. (By:ARP : 24/01/2026)</div>
+                    <hr class="jt-cell-divider">
+                    <div class="jt-job-type">SPARE REPAIR</div>
+                  </div>
+                </td>
+                <td class="jt-analysis-td text-center fw-bold">BDR</td>
+                <td class="jt-analysis-td">During checking found its piston seal rings are also damaged, same informed to IE, as spare seal kit is not available cylinder boxed up and kept in workshop.</td>
+                <td class="jt-analysis-td text-center fw-bold">BDR</td>
+                <td class="jt-analysis-td text-center">
+                  <span class="jt-status jt-status--over">OVER</span>
+                </td>
+                <td class="jt-analysis-td">
+                  <span class="jt-remark-label">Tag No:- N.A. [written by: BDR Date: 24/01/2026]</span>
+                </td>
+                <td class="jt-analysis-td text-center">
+                  <a href="#" class="jt-link-action jt-link-action--bordered">H</a>
+                  <a href="#" class="jt-link-action">PM</a>
+                </td>
+              </tr>
+
+              <!-- ── DATE GROUP: 19/01/2026 ── -->
+              <tr class="jt-date-group-row" data-date-group="19/01/2026">
+                <td colspan="10">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  19/01/2026
+                </td>
+              </tr>
+
+              <!-- Row 4 -->
+              <tr class="jt-analysis-tr jt-data-row" data-date="19/01/2026" data-job-type="SPARE REPAIR">
+                <td class="jt-analysis-td text-center jt-mono fw-700">4</td>
+                <td class="jt-analysis-td fw-bold text-center">ASH</td>
+                <td class="jt-analysis-td">
+                  <div class="jt-cell-stack">
+                    <div class="jt-cell-top">N.A.</div>
+                    <hr class="jt-cell-divider">
+                    <div class="jt-cell-sub">Ab-3</div>
+                  </div>
+                </td>
+                <td class="jt-analysis-td">
+                  <div class="jt-cell-stack">
+                    <div class="jt-job-title">Removed power cylinder to be repaired.(By:ARP : 19/01/2026)</div>
+                    <hr class="jt-cell-divider">
+                    <div class="jt-job-type">SPARE REPAIR</div>
+                  </div>
+                </td>
+                <td class="jt-analysis-td text-center fw-bold">JDB</td>
+                <td class="jt-analysis-td">Removed power cylinder repaired done.</td>
+                <td class="jt-analysis-td text-center fw-bold">JDB</td>
+                <td class="jt-analysis-td text-center">
+                  <span class="jt-status jt-status--over">OVER</span>
+                </td>
+                <td class="jt-analysis-td">
+                  <span class="jt-remark-label">Tag No:- N.A. [written by: JDB Date: 19/01/2026]</span>
+                </td>
+                <td class="jt-analysis-td text-center">
+                  <a href="#" class="jt-link-action jt-link-action--bordered">H</a>
+                  <a href="#" class="jt-link-action">PM</a>
+                </td>
+              </tr>
+
+              <!-- Empty state row (hidden by default) -->
+              <tr class="jt-empty-row" id="jt-empty-row" style="display: none;">
+                <td colspan="10">No entries match query criteria.</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /TABLE CARD -->
+
+    </section>
+  </main>
+
+  <!-- Filter Logic (plain JS, no map/forEach) -->
+  <script>
+    function applyFilters() {
+      var jobType  = document.getElementById('job-type-select').value;
+      var startVal = document.getElementById('start-date').value;
+      var endVal   = document.getElementById('end-date').value;
+
+      var dataRows   = document.querySelectorAll('.jt-data-row');
+      var groupRows  = document.querySelectorAll('.jt-date-group-row');
+      var emptyRow   = document.getElementById('jt-empty-row');
+
+      // Object to track which date groups still have visible rows
+      var visibleDates = {};
+
+      for (var i = 0; i < dataRows.length; i++) {
+        var row        = dataRows[i];
+        var rowType    = row.getAttribute('data-job-type');
+        var rowDateStr = row.getAttribute('data-date');
+        var show       = true;
+
+        // Filter by job type
+        if (jobType && rowType !== jobType) {
+          show = false;
+        }
+
+        // Filter by date range
+        if (show && (startVal || endVal)) {
+          var parts    = rowDateStr.split('/');
+          var rowDate  = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+
+          if (startVal) {
+            var start = new Date(startVal);
+            start.setHours(0, 0, 0, 0);
+            if (rowDate < start) show = false;
+          }
+
+          if (show && endVal) {
+            var end = new Date(endVal);
+            end.setHours(23, 59, 59, 999);
+            if (rowDate > end) show = false;
+          }
+        }
+
+        row.style.display = show ? '' : 'none';
+        if (show) {
+          visibleDates[rowDateStr] = true;
+        }
+      }
+
+      // Show/hide date group headers based on visible rows
+      for (var j = 0; j < groupRows.length; j++) {
+        var groupDate = groupRows[j].getAttribute('data-date-group');
+        groupRows[j].style.display = visibleDates[groupDate] ? '' : 'none';
+      }
+
+      // Show/hide empty state row
+      var anyVisible = false;
+      for (var k = 0; k < dataRows.length; k++) {
+        if (dataRows[k].style.display !== 'none') {
+          anyVisible = true;
+          break;
+        }
+      }
+      if (emptyRow) {
+        emptyRow.style.display = anyVisible ? 'none' : '';
+      }
+    }
+
+    function resetFilters() {
+      document.getElementById('start-date').value      = '';
+      document.getElementById('end-date').value        = '';
+      document.getElementById('job-type-select').value = '';
+      applyFilters();
+    }
+
+    // Run once on load to apply default state
+    document.addEventListener('DOMContentLoaded', function () {
+      applyFilters();
+    });
+  </script>
+
+</body>
+</html>

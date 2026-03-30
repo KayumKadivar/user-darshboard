@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remark Report | GNFC</title>
+  <meta name="description" content="GNFC Detailed Remark Report for Maintenance Activities">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+  <script src="../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'remark_reports';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Acetic Acid Logbook" data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── TABLE CARD ── -->
+      <div class="jt-table-card" style="margin-top: 16px;">
+        
+        <div class="jt-table-header">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h3 class="jt-table-header-title">
+              <i class="ph-bold ph-table"></i>
+              <span>Detailed Remark Report</span>
+            </h3>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <span class="jt-record-count">Year: <span style="color: var(--typo-orange);">2026</span></span>
+              <span id="current-date" class="jt-record-count" style="font-family: ui-monospace, monospace;"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="jt-table-scroll">
+          <table class="jt-analysis-table">
+            <thead class="jt-analysis-thead">
+              <tr>
+                <th rowspan="2" class="jt-col-sr" style="text-align: center;">Sr</th>
+                <th rowspan="2" class="jt-col-area" style="text-align: center;">Area</th>
+                <th class="jt-col-loop" style="border-bottom: 1px solid var(--app-border);">Loop No</th>
+                <th class="jt-col-job" style="border-bottom: 1px solid var(--app-border);">Job</th>
+                <th rowspan="2" class="jt-col-tech" style="text-align: center;">Tech</th>
+                <th rowspan="2" class="jt-col-desc">Description</th>
+                <th rowspan="2" class="jt-col-tech" style="text-align: center;">Tech</th>
+                <th rowspan="2" class="jt-col-status" style="text-align: center;">Status</th>
+                <th rowspan="2" style="min-width: 250px;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="jt-col-loop">Tag No</th>
+                <th class="jt-col-job">Type Of Job</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody" class="jt-mono">
+              <!-- Rows injected via JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    // Set Current Date
+    const dateEl = document.getElementById('current-date');
+    if (dateEl) {
+      const now = new Date();
+      dateEl.textContent = now.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      }).toUpperCase();
+    }
+
+    /* Mock Report Data */
+    const reportData = [
+      {
+        sr: 1, area: '300', loopNo: 'N.A', tagNo: 'PT310', job: 'To be checked as reported PT showing Zero value. (By:MAJ : 08/02/2026)', typeOfJob: 'DEFECT MAINTENANCE', tech1: 'NND',
+        description: 'Rosemount remote seal PT found defective so removed it. Its diaphragm is not working properly. New ABB 2600 series',
+        tech2: 'NND', status: 'OVER', remarks: 'An email has been sent to the Mechanical Team for the provision of a drain spool arrangement. The email reference has also been uploaded in the'
+      },
+      {
+        sr: 2, area: '500', loopNo: 'N.A', tagNo: 'PT501', job: 'DEFECT MAINTENANCE', typeOfJob: 'DEFECT MAINTENANCE', tech1: 'GAZ',
+        description: 'Leakage was found from its tapping so Ferrule camp was provided on it. As per process requirement Near by same ',
+        tech2: 'GAZ', status: 'OVER', remarks: 'Tag is PT501. [written by : DKV Date : 03/02/2026 ]'
+      },
+      {
+        sr: 3, area: 'N.A', loopNo: 'N.A', tagNo: 'DCS-FOXBORO IA', job: 'Associated with M/S SEBPL for Foxboro AMC visit. (By:MAJ : 30/01/2026)', typeOfJob: 'PM', tech1: 'PSG',
+        description: 'Associated with M/S SEBPL engr Mr. Shailesh Pateliya as part of Foxboro AMC visit. Backup of AW0001 Foxboro',
+        tech2: 'PSG', status: 'OVER', remarks: 'TRICON DIAGREAD kit and hex tool are not required as certified by M/s SFSIPL engineer. Other discrepancies are relayed further. [written by : NKP Date : 31/01/2026 ]'
+      },
+      {
+        sr: 4, area: 'N.A', loopNo: 'N.A', tagNo: 'QT1001', job: 'Procedure code-3. Function checking by applying actual measuring variable/medium. (By:MAJ : 20/01/2026)', typeOfJob: 'ISO14001', tech1: 'PJR',
+        description: 'Response checked with 500PPM NH3 and it is Responding.',
+        tech2: 'PJR', status: 'OVER', remarks: 'wrong job entry, ignore this entry. [written by : MAJ Date : 20/01/2026 ]'
+      },
+      {
+        sr: 5, area: 'N.A', loopNo: 'N.A', tagNo: 'QT0207/QT0208_3', job: 'DEFECT MAINTENANCE', typeOfJob: 'DEFECT MAINTENANCE', tech1: 'MRL',
+        description: 'During the analyzer round, an Error LED was observed on the analyzer. Upon investigation, the errors were',
+        tech2: 'MRL', status: 'OVER', remarks: 'replaced AMC(Analyzer module controller). [written by : MAJ Date : 19/01/2026 ]'
+      },
+      {
+        sr: 6, area: 'ABU REVAMP', loopNo: 'N.A', tagNo: 'XV20', job: 'PROCESS REQMT', typeOfJob: 'PROCESS REQMT', tech1: 'PSG',
+        description: 'CX20 startup related activities done. Reported that XV09 is not getting open. Found that K3 was in dropped condition. So, informed to make it on via FSOV64 RESET command from DCS panel. After that K3 relay',
+        tech2: 'PSG', status: 'OVER', remarks: 'Good job. [written by : VMP Date : 17/01/2026 ]'
+      },
+      {
+        sr: 7, area: 'ABU REVAMP', loopNo: 'N.A', tagNo: 'XV1010', job: 'PROCESS REQMT', typeOfJob: 'PROCESS REQMT', tech1: 'PSG',
+        description: 'X01010 related startup activities done. Reported that X01 TTD is not getting start. Checked found that pin on down engage lamp was ON. So checked in field and TTD SOV air is isolated and taken line.',
+        tech2: 'PSG', status: 'OVER', remarks: 'Good job. [written by : VMP Date : 17/01/2026 ]'
+      }
+    ];
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[m];
+      });
+    }
+
+    /**
+     * Render the remark report table
+     */
+    function renderTable(data) {
+      const tbody = document.getElementById('reportTableBody');
+      if (!tbody) return;
+      
+      let html = '';
+      for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        const statusClass = item.status === 'OVER' ? 'jt-status--over' : 'jt-status--pending';
+        
+        html += '<tr class="jt-analysis-tr">' +
+          '<td class="jt-analysis-td text-center" style="color: var(--typo-label);">' + item.sr + '</td>' +
+          '<td class="jt-analysis-td text-center" style="font-weight: 700; color: var(--typo-blue);">' + item.area + '</td>' +
+          
+          // Loop / Tag Stack
+          '<td class="jt-analysis-td">' +
+            '<div class="jt-cell-stack">' +
+              '<div class="jt-cell-top" style="color: var(--typo-label); font-weight: 400; font-size: 13px;">' + item.loopNo + '</div>' +
+              '<div class="jt-cell-divider"></div>' +
+              '<div class="jt-cell-sub color-blue">' + escapeHTML(item.tagNo) + '</div>' +
+            '</div>' +
+          '</td>' +
+
+          // Job / Type Stack
+          '<td class="jt-analysis-td">' +
+            '<div class="jt-cell-stack">' +
+              '<div class="jt-cell-top" style="font-size: 14px; line-height: 1.3;">' + escapeHTML(item.job) + '</div>' +
+              '<div class="jt-cell-divider"></div>' +
+              '<div class="jt-cell-sub color-orange" style="font-size: 11px;">' + item.typeOfJob + '</div>' +
+            '</div>' +
+          '</td>' +
+
+          '<td class="jt-analysis-td text-center" style="font-weight: 700;">' + item.tech1 + '</td>' +
+          '<td class="jt-analysis-td" style="font-size: 15px; line-height: 1.6;">' + escapeHTML(item.description) + '</td>' +
+          '<td class="jt-analysis-td text-center" style="font-weight: 700;">' + item.tech2 + '</td>' +
+          
+          // Status
+          '<td class="jt-analysis-td text-center">' +
+            '<span class="jt-status ' + statusClass + '">' + item.status + '</span>' +
+          '</td>' +
+          
+          // Remarks
+          '<td class="jt-analysis-td" style="font-size: 14px; line-height: 1.5; font-style: italic; color: var(--typo-secondary);">' + 
+            escapeHTML(item.remarks) + 
+          '</td>' +
+        '</tr>';
+      }
+      
+      tbody.innerHTML = html;
+    }
+
+    /* Initialize Rendering */
+    renderTable(reportData);
+  </script>
+</body>
+
+</html>

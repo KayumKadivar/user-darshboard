@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Change Required | GNFC</title>
+  <meta name="description" content="GNFC Document Change Request Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+  <script src="../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'doc_change';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Document Change Required" data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── TABLE CARD ── -->
+      <div class="jt-table-card">
+
+        <div class="jt-table-header">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h3 class="jt-table-header-title">
+              <i class="ph-duotone ph-file-doc"></i>
+              <span>Document Change Required</span>
+            </h3>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <span class="jt-record-count">PLANT: <span id="plant-id-display" style="color: var(--typo-orange);">BOILER</span></span>
+              <button class="jt-btn-apply" style="width: auto; padding: 0 16px;">
+                <i class="ph-bold ph-export"></i> Export PDF
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="jt-table-scroll">
+          <table class="jt-analysis-table">
+            <thead class="jt-analysis-thead">
+              <tr>
+                <th class="jt-col-sr">Sr</th>
+                <th class="jt-col-tag">Tag No</th>
+                <th style="width: 150px;">Job</th>
+                <th class="jt-col-tech">Tech</th>
+                <th style="min-width: 400px;">Description</th>
+                <th class="jt-col-tech">Tech</th>
+                <th class="jt-col-status">Status</th>
+                <th style="min-width: 250px;">Remarks</th>
+                <th class="jt-col-verify">Over</th>
+              </tr>
+            </thead>
+            <tbody id="doc-table-body" class="jt-mono">
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const docData = [
+      {
+        sr: 1,
+        tag: '2PV2543A_2',
+        job: '',
+        tech1: '',
+        desc: 'As per process report speed not increase or decrease from control room. Checked found that field instrument work local normal so doubt in DCS AO card(CJ04RM8) channel (observed output not generated from AO CH-1 as earlier). AO card(CJ04RM8)CH-8 used for this tag and operation checked found ok. During this activity found EFD soft document correction required, same show to IE.',
+        tech2: 'VVM',
+        status: 'OVER',
+        remarks: 'ok [written by: MMD Date: 20/04/2017]'
+      },
+      {
+        sr: 2,
+        tag: '1TG-1',
+        job: '',
+        tech1: '',
+        desc: 'After thrust bearing removed by CMG all RTD element checked and found as follow... RTD element No 5,6,7,8 removed with collapse from thrust pad as per CMG requirement. RTD element no 7 is found open. RTD element no.3 replaced with spare one because of found resistive. Document change required for RTD location in thrust bearing.',
+        tech2: 'VVM',
+        status: 'OVER',
+        remarks: 'Update doc [written by: NTD Date: 26/10/2017]'
+      },
+      {
+        sr: 3,
+        tag: '1AR2510',
+        job: 'For Testing(ByYMK_SD: 18/01/2024)',
+        tech1: 'CNJ_ISD',
+        desc: 'Job No for testing',
+        tech2: 'CNJ_ISD',
+        status: 'PEND',
+        remarks: 'OK [written by: RMP Date: 18/01/2024]'
+      },
+      {
+        sr: 4,
+        tag: 'PA_DHEL',
+        job: '',
+        tech1: '',
+        desc: 'As per process defect announcement not heard at control room and operator room speaker. Detail checked found both speaker input taken from station - 14 and its power supply(Station - 13 to 16) found OFF. Power supply taken in line and as general shift report station 15 and 15 isolated from station PCB. Its document required to updated in working file and TB wire ferrule required to change at RACK-2 TB-2 TB-35,36.',
+        tech2: 'VVM',
+        status: 'OVER',
+        remarks: 'Ok [written by: RMP Date: 15/03/2024]'
+      },
+      {
+        sr: 5,
+        tag: 'PA_DHEL',
+        job: '',
+        tech1: '',
+        desc: 'As per process defect announcement not heard at control room and operator room speaker. Detail checked found both speaker input taken from station - 14 and its power supply(Station - 13 to 16) found OFF. Power supply taken in line and as general shift report station 15 and 15 isolated from station PCB. Its document required to updated in working file and TB wire ferrule required to change at RACK-2 TB-2 TB-35,36.',
+        tech2: 'VVM',
+        status: 'OVER',
+        remarks: '[written by: MMD Date: 15/03/2024]'
+      },
+      {
+        sr: 6,
+        tag: '3BE2543_1',
+        job: 'TEST(ByENG_TESTER: 17/02/2026)',
+        tech1: 'TECH_TESTER',
+        desc: 'Tested',
+        tech2: 'TECH_TESTER',
+        status: 'OVER',
+        remarks: 'To be proper installed in shutdown [written by: ENG_TESTER Date: 17/02/2026] test3 [written by: ENG_TESTER Date: 17/02/2026]'
+      }
+    ];
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[m];
+      });
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('doc-table-body');
+      let html = '';
+      
+      for (let i = 0; i < docData.length; i++) {
+        const row = docData[i];
+        const statusClass = row.status === 'OVER' ? 'jt-status--over' : 'jt-status--pending';
+        
+        html += '<tr class="jt-analysis-tr">' +
+          '<td class="jt-analysis-td text-center">' + row.sr + '</td>' +
+          '<td class="jt-analysis-td jt-col-tag">' + escapeHTML(row.tag) + '</td>' +
+          '<td class="jt-analysis-td" style="font-size: 0.75rem; color: var(--typo-label);">' + escapeHTML(row.job) + '</td>' +
+          '<td class="jt-analysis-td jt-col-tech">' + escapeHTML(row.tech1) + '</td>' +
+          '<td class="jt-analysis-td" style="line-height: 1.5; font-size: 0.8125rem;">' + escapeHTML(row.desc) + '</td>' +
+          '<td class="jt-analysis-td jt-col-tech" style="background: rgba(255,255,255,0.02);">' + escapeHTML(row.tech2) + '</td>' +
+          '<td class="jt-analysis-td text-center">' +
+            '<span class="jt-status ' + statusClass + '" style="font-size: 10px;">' + row.status + '</span>' +
+          '</td>' +
+          '<td class="jt-analysis-td" style="font-style: italic; color: var(--typo-secondary); font-size: 0.75rem;">' + 
+            escapeHTML(row.remarks).replace(/\n/g, '<br>') + 
+          '</td>' +
+          '<td class="jt-analysis-td text-center">' +
+            '<input type="checkbox" class="jt-verify-check" />' +
+          '</td>' +
+        '</tr>';
+      }
+      
+      tbody.innerHTML = html;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const plant = urlParams.get('plant') || 'BOILER';
+    document.getElementById('plant-id-display').textContent = plant;
+    renderTable();
+  </script>
+</body>
+
+</html>

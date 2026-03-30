@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datewise Log Report | GNFC</title>
+  <meta name="description" content="GNFC Date Wise Logbook Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+  <script src="../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'datewise_report';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Date Wise Report" data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content" style="gap: 16px;">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            Report Filter
+          </h3>
+        </div>
+        <div class="jt-filter-body" style="grid-template-columns: 180px 1fr auto;">
+          
+          <!-- Tag Filter -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">Tag No</label>
+            <div class="jt-select-wrap">
+              <select id="tagNoFilter" class="jt-select">
+                <option value="">All Tags</option>
+                <option value="FVC0208A">FVC0208A</option>
+                <option value="LV412B">LV412B</option>
+              </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            </div>
+          </div>
+
+          <!-- Report Period -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">Report Period</label>
+            <div class="jt-date-range">
+              <input type="date" id="startDateFilter" class="jt-date-input">
+              <span class="jt-date-sep">to</span>
+              <input type="date" id="endDateFilter" class="jt-date-input">
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="jt-filter-group" style="flex-direction: row; gap: 10px; align-items: flex-end;">
+            <button onclick="generateReport()" class="jt-btn-apply" style="width: auto; padding: 0 20px;">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button onclick="location.reload()" class="jt-btn-reset" style="width: auto; padding: 0 16px; height: 36px; border: 1px solid var(--app-border); background: var(--app-bg); color: var(--typo-label); border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i> RESET
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── REPORT CARD ── -->
+      <div class="jt-table-card">
+        
+        <div class="jt-table-header">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h3 class="jt-table-header-title">
+              <i class="ph-bold ph-calendar-check"></i>
+              <span>Datewise Log Book: <span id="dateDisplay" style="color: var(--typo-blue, #5794F2); margin-left: 8px;">01/12/2023 to 31/12/2023</span></span>
+            </h3>
+          </div>
+        </div>
+
+        <div class="jt-table-scroll">
+          <table class="jt-analysis-table">
+            <thead class="jt-analysis-thead">
+              <tr>
+                <th rowspan="2" class="jt-col-sr" style="text-align: center;">Sr</th>
+                <th rowspan="2" class="jt-col-area" style="text-align: center;">Area</th>
+                <th class="jt-col-loop" style="border-bottom: 1px solid var(--app-border);">Loop No</th>
+                <th class="jt-col-job" style="border-bottom: 1px solid var(--app-border);">Job</th>
+                <th rowspan="2" class="jt-col-tech" style="text-align: center;">Tech</th>
+                <th rowspan="2" class="jt-col-desc">Description</th>
+                <th rowspan="2" class="jt-col-tech" style="text-align: center;">Tech</th>
+                <th rowspan="2" class="jt-col-status" style="text-align: center;">Status</th>
+                <th rowspan="2" style="min-width: 160px;">Remarks</th>
+                <th rowspan="2" class="jt-col-add" style="text-align: center;">Add</th>
+              </tr>
+              <tr>
+                <th class="jt-col-loop">Tag No</th>
+                <th class="jt-col-job">Type Of Job</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody" class="jt-mono">
+              <!-- Rows injected via JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    const sampleData = [
+      { 
+        date: '01/12/2023', sr: 1, area: 'N.A', 
+        loopNo: 'N.A', tagNo: 'NOTAG', 
+        job: '', typeOfJob: 'PM', 
+        tech1: '', 
+        desc: 'Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.',
+        tech2: 'PVS', status: 'OVER', remarks: '', 
+        addH: 'H', addPM: 'PM' 
+      },
+      { 
+        date: '01/12/2023', sr: 2, area: 'COMMON', 
+        loopNo: 'N.A.', tagNo: 'NOTAG', 
+        job: 'BHEL Boilers and CPSU Trend report to be prepared as per tags given by process dept.(By:ARP : 01/12/2025)', 
+        typeOfJob: 'PROCESS REQMT', 
+        tech1: 'JDB', 
+        desc: 'BHEL Boilers 1 and 2 prepared as per tags given by process dept. further job u/p.', 
+        tech2: 'JDB', status: 'U/P', remarks: '', 
+        addH: 'H', addPM: 'PM' 
+      },
+      { 
+        date: '01/12/2023', sr: 3, area: 'N.A.', 
+        loopNo: 'N.A.', tagNo: 'NOTAG', 
+        job: 'UV flame scanner detector tube to be checked for PO:6200022682(By:ARP : 01/12/2025)', 
+        typeOfJob: 'INSPECTION', 
+        tech1: 'BSU', 
+        desc: 'Four UV tube checked all found defective. Same shown to IE. Job u/p.', 
+        tech2: 'BSU', status: 'U/P', remarks: '', 
+        addH: 'H', addPM: 'PM' 
+      }
+    ];
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[m];
+      });
+    }
+
+    function generateReport() {
+      const tbody = document.getElementById('reportTableBody');
+      if (!tbody) return;
+      
+      let html = '';
+
+      // Group by date
+      const grouped = {};
+      for (let i = 0; i < sampleData.length; i++) {
+        const item = sampleData[i];
+        if (!grouped[item.date]) grouped[item.date] = [];
+        grouped[item.date].push(item);
+      }
+
+      const dates = Object.keys(grouped);
+      for (let i = 0; i < dates.length; i++) {
+        const date = dates[i];
+        const items = grouped[date];
+
+        // Date Grouping Row
+        html += '<tr class="jt-date-group-row">' +
+                  '<td colspan="10">' +
+                    '<i class="ph-fill ph-calendar-blank"></i> ' + date +
+                  '</td>' +
+                '</tr>';
+
+        for (let j = 0; j < items.length; j++) {
+          const item = items[j];
+          const statusClass = item.status === 'OVER' ? 'jt-status--over' : 'jt-status--pending';
+
+          html += '<tr class="jt-analysis-tr">' +
+            '<td class="jt-analysis-td text-center" style="color: var(--typo-label);">' + item.sr + '</td>' +
+            '<td class="jt-analysis-td text-center" style="font-weight: 700;">' + item.area + '</td>' +
+            
+            // Loop / Tag Stack
+            '<td class="jt-analysis-td">' +
+              '<div class="jt-cell-stack">' +
+                '<div class="jt-cell-top" style="color: var(--typo-label); font-weight: 400; font-size: 13px;">' + item.loopNo + '</div>' +
+                '<div class="jt-cell-divider"></div>' +
+                '<div class="jt-cell-sub color-blue">' + escapeHTML(item.tagNo) + '</div>' +
+              '</div>' +
+            '</td>' +
+
+            // Job / Type Stack
+            '<td class="jt-analysis-td">' +
+              '<div class="jt-cell-stack">' +
+                '<div class="jt-cell-top" style="font-size: 14px; line-height: 1.3;">' + escapeHTML(item.job || '-') + '</div>' +
+                '<div class="jt-cell-divider"></div>' +
+                '<div class="jt-cell-sub color-orange" style="font-size: 11px;">' + item.typeOfJob + '</div>' +
+              '</div>' +
+            '</td>' +
+
+            '<td class="jt-analysis-td text-center" style="font-weight: 700; color: var(--typo-label);">' + item.tech1 + '</td>' +
+            '<td class="jt-analysis-td" style="font-size: 15px; line-height: 1.6;">' + escapeHTML(item.desc) + '</td>' +
+            '<td class="jt-analysis-td text-center" style="font-weight: 700; color: var(--typo-label);">' + item.tech2 + '</td>' +
+            
+            '<td class="jt-analysis-td text-center">' +
+              '<span class="jt-status ' + statusClass + '">' + item.status + '</span>' +
+            '</td>' +
+            
+            '<td class="jt-analysis-td"></td>' +
+            
+            // Add column with H / PM links
+            '<td class="jt-analysis-td text-center">' +
+              '<a href="#" class="jt-link-action jt-link-action--bordered">H</a>' +
+              '<a href="#" class="jt-link-action">PM</a>' +
+            '</td>' +
+          '</tr>';
+        }
+      }
+      
+      tbody.innerHTML = html;
+    }
+
+    window.onload = () => {
+      document.getElementById('startDateFilter').value = "2023-12-01";
+      document.getElementById('endDateFilter').value = "2023-12-31";
+      generateReport();
+    };
+  </script>
+</body>
+
+</html>

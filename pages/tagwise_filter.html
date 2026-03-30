@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tag Filter Analysis | GNFC</title>
+  <meta name="description" content="GNFC Historical Job Records Filtered by Tag Number">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/phosphor.css">
+  <link rel="stylesheet" href="../css/theme-vars.css">
+  <link rel="stylesheet" href="../css/utilities.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/modal-ui.css">
+  <link rel="stylesheet" href="../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../js/theme-control.js"></script>
+  <script src="../js/sidebar.js" defer></script>
+  <script src="../js/header.js" defer></script>
+  <script src="../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'tagwise_filter';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Acetic Acid Logbook" data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card" style="margin: 16px 0;">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            Filter Query
+          </h3>
+        </div>
+        <div class="jt-filter-body" style="grid-template-columns: auto auto 1fr;">
+          
+          <!-- Tag Input -->
+          <div class="jt-filter-group" style="width: 300px;">
+            <label class="jt-filter-label">Enter Tag Number</label>
+            <div class="jt-input-icon-wrap" style="position: relative; width: 100%;">
+              <i class="ph-bold ph-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--typo-label); font-size: 14px; pointer-events: none; z-index: 2;"></i>
+              <input type="text" id="tagInput" value="A7801A" class="jt-input jt-mono" placeholder="e.g. PT-101" style="padding-left: 36px; background-color: var(--app-bg) !important;">
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="jt-filter-group" style="flex-direction: row; gap: 10px; align-items: flex-end;">
+            <button onclick="showReport()" class="jt-btn-primary" style="width: 140px;">
+              <i class="ph-bold ph-lightning"></i> APPLY FILTER
+            </button>
+            <button onclick="resetView()" class="jt-btn-secondary" style="width: 100px;">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i> RESET
+            </button>
+          </div>
+
+          <!-- Spacer -->
+          <div></div>
+        </div>
+      </div>
+
+      <!-- ── RESULTS SECTION ── -->
+      <div id="report-container" style="display: none; flex-direction: column; gap: 16px;">
+
+        <!-- Info Bar -->
+        <div class="jt-report-card" style="padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0;">
+          <div style="display: flex; gap: 16px; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px; background: var(--app-bg); border: 1px solid var(--app-border); padding: 4px 12px; border-radius: 4px;">
+              <span style="font-size: 10px; font-weight: 700; color: var(--typo-label); text-transform: uppercase;">Tag:</span>
+              <span id="displayTag" class="jt-mono" style="font-size: 14px; color: var(--typo-orange); font-weight: 700;"></span>
+            </div>
+            <span style="font-size: 12px; color: var(--typo-label);">Found <span id="recordCount" style="font-weight: 700; color: var(--typo-primary);">10</span> historical records</span>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="jt-table-card">
+          <div class="jt-table-scroll">
+            <table class="jt-analysis-table">
+              <thead class="jt-analysis-thead">
+                <tr>
+                  <th rowspan="2" class="jt-col-sr" style="text-align: center;">Sr</th>
+                  <th rowspan="2" class="jt-col-area" style="text-align: center;">Area</th>
+                  <th class="jt-col-loop" style="border-bottom: 1px solid var(--app-border);">Loop No</th>
+                  <th class="jt-col-job" style="border-bottom: 1px solid var(--app-border);">Job</th>
+                  <th rowspan="2" class="jt-col-tech" style="text-align: center;">Tech</th>
+                  <th rowspan="2" class="jt-col-desc">Description</th>
+                  <th rowspan="2" class="jt-col-status" style="text-align: center;">Status</th>
+                  <th rowspan="2" class="jt-col-remark">Remarks</th>
+                </tr>
+                <tr>
+                  <th class="jt-col-loop">Tag No</th>
+                  <th class="jt-col-job">Type Of Job</th>
+                </tr>
+              </thead>
+              <tbody id="reportTableBody" class="jt-mono">
+                <!-- Rows injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    /* Mock Historical Data */
+    const historyData = [
+      {
+        date: '30/01/2026',
+        items: [
+          { sr: 1, area: '7800', loop: 'N.A.', tag: 'A7801A', job: 'To be checked as reported Cable found full in hanging condition near 7800 sec.', type: 'HOUSE KEEPING', tech1: 'ALS', desc: 'Proper cable dressing done.', tech2: 'ALS', status: 'OVER' }
+        ]
+      },
+      {
+        date: '29/01/2026',
+        items: [
+          { sr: 2, area: 'N.A.', loop: 'N.A.', tag: 'A7801A', job: 'To be checked as reported Cable found full in hanging condition near 7800 sec.', type: 'HOUSE KEEPING', tech1: 'ALS', desc: 'Job is U/P.', tech2: 'ALS', status: 'U/P' }
+        ]
+      },
+      {
+        date: '24/01/2026',
+        items: [
+          { sr: 3, area: '7800', loop: 'N.A.', tag: 'A7801A', job: 'To be checked as reported Cable found full in hanging condition near 7800 sec.', type: 'HOUSE KEEPING', tech1: 'ALS', desc: 'Cable was detached from cable tray. So it is req to dressing it proper.', tech2: 'ALS', status: 'U/P' }
+        ]
+      },
+      {
+        date: '02/03/2022',
+        items: [
+          { sr: 4, area: '7800', loop: 'N.A.', tag: 'A7801A', job: '7800 all sequence valve oil level to be topped up.', type: 'PM', tech1: 'ALS', desc: 'KV7802, 7804, 7805, 7807 oil filling done.', tech2: 'ALS', status: 'OVER' }
+        ]
+      },
+      {
+        date: '10/07/2017',
+        items: [
+          { sr: 5, area: '7800', loop: 'N.A.', tag: 'A7801A', job: '', type: 'PROCESS REQMT', tech1: '', desc: 'TE449 -As per process requirement Element disconnected from its nipple union connections.', tech2: 'GAZ', status: 'OVER' }
+        ]
+      },
+      {
+        date: '12/11/2013',
+        items: [
+          { sr: 6, area: '7800', loop: 'N.A.', tag: 'A7801A', job: '', type: 'N.A.', tech1: '', desc: '-Visited to store and Metso metso make valve PV2303, PV2304, PV2325 valve spare part identified and its list prepared.', tech2: 'GAZ', status: 'OVER' }
+        ]
+      },
+      {
+        date: '21/05/2011',
+        items: [
+          { sr: 7, area: 'N.A.', loop: 'N.A.', tag: 'A7801A', job: '', type: 'PROCESS REQMT', tech1: '', desc: 'As per process req. Pressure measurement of N2 line after NRV done(5.8bar).', tech2: 'ALS', status: 'OVER' }
+        ]
+      },
+      {
+        date: '20/05/2011',
+        items: [
+          { sr: 8, area: 'N.A.', loop: 'N.A.', tag: 'A7801A', job: '', type: 'PROCESS REQMT', tech1: '', desc: 'As per process req. pressure measurement done(70bar) in Nitrogen line in A7801.', tech2: 'ALS', status: 'OVER' }
+        ]
+      },
+      {
+        date: '01/10/2009',
+        items: [
+          { sr: 9, area: '7800', loop: 'N.A.', tag: 'A7801A', job: 'SEC 7800 C/V pm to be done.', type: 'PM', tech1: 'JMD', desc: 'Permit not issued due to startup activity.', tech2: 'JMD', status: 'OVER' }
+        ]
+      },
+      {
+        date: '22/06/2007',
+        items: [
+          { sr: 10, area: 'N.A.', loop: 'N.A.', tag: 'A7801A', job: 'analyzer round to be taken', type: 'PM', tech1: 'JMD', desc: 'Routine analyzer round taken, except sec500/600. Also CO level was found high in sec700 ana. room.', tech2: 'JMD', status: 'OVER' }
+        ]
+      }
+    ];
+
+    function showReport() {
+      const tagValue = document.getElementById('tagInput').value;
+      if (!tagValue) return;
+
+      document.getElementById('displayTag').innerText = tagValue;
+      
+      // Ensure the section is visible
+      const reportContainer = document.getElementById('report-container');
+      reportContainer.style.display = 'flex';
+      
+      // Keep the search filter card visible (user request)
+      document.querySelector('.jt-filter-card').style.display = 'block';
+      
+      renderTable();
+    }
+
+    function resetView() {
+      document.getElementById('tagInput').value = '';
+      document.getElementById('report-container').style.display = 'none';
+      document.querySelector('.jt-filter-card').style.display = 'block';
+    }
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[m];
+      });
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('reportTableBody');
+      let html = '';
+      let totalRecords = 0;
+
+      for (let i = 0; i < historyData.length; i++) {
+        const group = historyData[i];
+        
+        // Date Header Row
+        html += '<tr class="jt-date-group-row">' +
+                  '<td colspan="8">' +
+                    '<i class="ph-bold ph-calendar-blank"></i> ' + group.date +
+                  '</td>' +
+                '</tr>';
+
+        // Data Rows
+        for (let j = 0; j < group.items.length; j++) {
+          totalRecords++;
+          const item = group.items[j];
+          const statusClass = item.status === 'OVER' ? 'jt-status--over' : 'jt-status--pending';
+
+          html += '<tr class="jt-analysis-tr">' +
+            '<td class="jt-analysis-td text-center" style="color: var(--typo-label);">' + item.sr + '</td>' +
+            '<td class="jt-analysis-td text-center" style="font-weight: 700;">' + item.area + '</td>' +
+            
+            // Loop / Tag Stack
+            '<td class="jt-analysis-td">' +
+              '<div class="jt-cell-stack">' +
+                '<div class="jt-cell-top" style="color: var(--typo-label); font-weight: 400; font-size: 13px;">' + item.loop + '</div>' +
+                '<div class="jt-cell-divider"></div>' +
+                '<div class="jt-cell-sub color-blue">' + escapeHTML(item.tag) + '</div>' +
+              '</div>' +
+            '</td>' +
+
+            // Job / Type Stack
+            '<td class="jt-analysis-td">' +
+              '<div class="jt-cell-stack">' +
+                '<div class="jt-cell-top" style="font-size: 14px; line-height: 1.3;">' + escapeHTML(item.job || '-') + '</div>' +
+                '<div class="jt-cell-divider"></div>' +
+                '<div class="jt-cell-sub color-orange" style="font-size: 11px;">' + item.type + '</div>' +
+              '</div>' +
+            '</td>' +
+
+            '<td class="jt-analysis-td text-center" style="font-weight: 700; color: var(--typo-label);">' + item.tech1 + '</td>' +
+            '<td class="jt-analysis-td" style="font-size: 15px; line-height: 1.6;">' + escapeHTML(item.desc) + '</td>' +
+            
+            '<td class="jt-analysis-td text-center">' +
+              '<span class="jt-status ' + statusClass + '">' + item.status + '</span>' +
+            '</td>' +
+            
+            '<td class="jt-analysis-td"></td>' +
+          '</tr>';
+        }
+      }
+
+      tbody.innerHTML = html;
+      document.getElementById('recordCount').innerText = totalRecords;
+    }
+  </script>
+</body>
+
+</html>
