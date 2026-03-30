@@ -1551,125 +1551,262 @@
       </div>
       <form id="job-modal-form">
         <div class="gnfc-modal-body gnfc-modal-body--tight plant-modal-body--scroll">
-          <div class="plant-form-grid plant-form-grid--three">
-            <div class="plant-field plant-field--full">
+          <div class="plant-form-grid--six">
+            <!-- Row 1: Date, Loop Name -->
+            <div class="plant-field grid-span-2">
               <label class="gnfc-modal-label" for="job-date">Date</label>
               <input id="job-date" type="text" readonly class="gnfc-modal-input">
             </div>
-            <div class="plant-field" style="grid-column: span 1;">
+            <div class="plant-field grid-span-4">
               <label class="gnfc-modal-label" for="job-loop">Loop Name</label>
               <div style="display: flex; gap: 4px;">
-                <input type="text" id="job-loop-input" class="gnfc-modal-input" placeholder="Search..." style="width: 80px;">
-                <select id="job-loop-select" class="gnfc-modal-input" style="flex: 1;">
-                   <option value="LIC101">LIC101</option>
-                   <option value="FIC204">FIC204</option>
-                   <option value="TIC310">TIC310</option>
-                </select>
+                <input type="text" id="job-loop-input" class="gnfc-modal-input" placeholder="Search by Loop Name..."
+                  style="width: 280px;">
+                <div class="plant-select-wrap" style="flex: 1;">
+                  <select id="job-loop-select" class="gnfc-modal-input">
+                    <option value="">Select Loop Name</option>
+                    <option value="B1_maxDNA">Boiler-1 maxDNA DCS</option>
+                    <option value="B2_maxDNA">Boiler-2 maxDNA DCS</option>
+                    <option value="B3_maxDNA">Boiler-3 maxDNA DCS</option>
+                    <option value="B4_maxDNA">Boiler-4 maxDNA DCS</option>
+                    <option value="COM_SEC">Common Section maxDNA DCS</option>
+                    <option value="CPSU">CPSU maxDNA DCS</option>
+                    <option value="TG1_maxDNA">TG1 maxDNA DCS</option>
+                    <option value="TG2_maxDNA">TG2 maxDNA DCS</option>
+                    <option value="DFA_PLC">DFA System PLC</option>
+                    <option value="NO TAG">NO TAG</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+                </div>
               </div>
             </div>
-            <div class="plant-field" style="grid-column: span 2;">
+
+            <!-- Row 2: InstTag, Type Of Job -->
+            <div class="plant-field grid-span-4">
               <label class="gnfc-modal-label" for="job-tag">InstTag</label>
               <div style="display: flex; gap: 4px;">
-                <input type="text" id="job-tag-input" class="gnfc-modal-input" placeholder="Search..." style="width: 80px;">
-                <select id="job-tag-select" class="gnfc-modal-input" style="flex: 1;">
-                   <option value="LT101A">LT101A</option>
-                   <option value="LT101B">LT101B</option>
-                   <option value="FT204A">FT204A</option>
-                   <option value="FV204">FV204</option>
-                   <option value="TT310A">TT310A</option>
-                   <option value="TV310">TV310</option>
-                </select>
+                <input type="text" id="job-tag-input" class="gnfc-modal-input" placeholder="Search by InstTag..."
+                  style="width: 280px;">
+                <div class="plant-select-wrap" style="flex: 1;">
+                  <select id="job-tag-select" class="gnfc-modal-input">
+                    <option value="">Select InstTag</option>
+                    <option value="DPT184212">DPT184212 (FILTER DP)</option>
+                    <option value="DPT191705">DPT191705 (DMW TRANSF PUMP A SUCT STRAINER)</option>
+                    <option value="DPT191706">DPT191706 (DMW TRANSF PUMP B SUCT STRAINER)</option>
+                    <option value="DPT191715">DPT191715 (MUH TRANSF PUMP A SUCT PRESS)</option>
+                    <option value="DPT191716">DPT191716 (MUH TRANSF PUMP B SUCT PRESS)</option>
+                    <option value="DPT191804A">DPT191804A (HP BFP A I/L FILTER DP)</option>
+                    <option value="DPT191804B">DPT191804B (HP BFP B I/L FILTER DP)</option>
+                    <option value="DPT191818A">DPT191818A (LP BFP A I/L FILTER DP)</option>
+                    <option value="DPT191818B">DPT191818B (LP BFP B I/L FILTER DP)</option>
+                    <option value="DPT192604A">DPT192604A (HP BFP-1 DP ACROSS LO FILTER)</option>
+                    <option value="DPT192604B">DPT192604B (HP BFP-2 DP ACROSS LO FILTER)</option>
+                    <option value="DPT195809">DPT195809 (GT IAF PRE SUCT FIL DP)</option>
+                    <option value="EMV105">EMV105 (MP to LP C/V)</option>
+                    <option value="ESD184222">ESD184222 (NG TO TURBINE)</option>
+                    <option value="LT101A">LT101A</option>
+                    <option value="LT101B">LT101B</option>
+                    <option value="FT204A">FT204A</option>
+                    <option value="FV204">FV204</option>
+                    <option value="TT310A">TT310A</option>
+                    <option value="TV310">TV310</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+                </div>
               </div>
             </div>
-            <div class="plant-field">
+            <div class="plant-field grid-span-2">
               <label class="gnfc-modal-label" for="job-type">Type Of Job</label>
-              <select id="job-type" class="gnfc-modal-input">
-                <option value="PROCESS REQMT">PROCESS REQMT</option>
-                <option value="CMS JOB">CMS JOB</option>
-                <option value="PM JOB">PM JOB</option>
-                <option value="BREAKDOWN">BREAKDOWN</option>
-                <option value="N.A.">N.A.</option>
-              </select>
+              <div class="plant-select-wrap">
+                <select id="job-type" class="gnfc-modal-input">
+                  <option value="">Select Type Of Job</option>
+                  <option value="PROCESS REQMT">PROCESS REQMT</option>
+                  <option value="CMS JOB">CMS JOB</option>
+                  <option value="PM JOB">PM JOB</option>
+                  <option value="BREAKDOWN">BREAKDOWN</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+                <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+              </div>
             </div>
-            <div class="plant-field">
+
+            <!-- Row 3: Type Of Inst, Job Status, Tech Name -->
+            <div class="plant-field grid-span-2">
               <label class="gnfc-modal-label" for="job-inst">Type Of Inst</label>
-              <select id="job-inst" class="gnfc-modal-input">
-                <option value="DCS">DCS</option>
-                <option value="TRANSMITTER">TRANSMITTER</option>
-                <option value="CONTROL VALVE">CONTROL VALVE</option>
-                <option value="SWITCH">SWITCH</option>
-                <option value="ANALYZER">ANALYZER</option>
-                <option value="OTHERS">OTHERS</option>
-              </select>
+              <div class="plant-select-wrap">
+                <select id="job-inst" class="gnfc-modal-input">
+                  <option value="">Select Type Of Inst</option>
+                  <option value="DCS">DCS</option>
+                  <option value="TRANSMITTER">TRANSMITTER</option>
+                  <option value="CONTROL VALVE">CONTROL VALVE</option>
+                  <option value="SWITCH">SWITCH</option>
+                  <option value="ANALYZER">ANALYZER</option>
+                  <option value="OTHERS">OTHERS</option>
+                </select>
+                <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+              </div>
             </div>
-            <div class="plant-field">
+            <div class="plant-field grid-span-2">
               <label class="gnfc-modal-label" for="job-status">Job Status</label>
-              <select id="job-status" class="gnfc-modal-input">
-                <option value="OVER">OVER</option>
-                <option value="HOLD">HOLD</option>
-                <option value="PENDING">PENDING</option>
-                <option value="N.A.">N.A.</option>
-              </select>
+              <div class="plant-select-wrap">
+                <select id="job-status" class="gnfc-modal-input">
+                  <option value="JOB Status">Job Status</option>
+                  <option value="OVER">OVER</option>
+                  <option value="PENDING">PENDING</option>
+                  <option value="U/P">U/P</option>
+                </select>
+                <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="plant-field grid-span-2">
+              <label class="gnfc-modal-label" for="job-tech">Tech Name</label>
+              <div class="plant-select-wrap">
+                <select id="job-tech" class="gnfc-modal-input">
+                  <option value="ENG_TESTER">ENG_TESTER</option>
+                </select>
+                <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+              </div>
             </div>
 
-
-            <div class="plant-field">
-              <label class="gnfc-modal-label" for="job-tech">Technician (Tech Name)</label>
-              <select id="job-tech" class="gnfc-modal-input">
-                <option value="ENG_TESTER">ENG_TESTER</option>
-                <option value="BPB">BPB</option>
-                <option value="PBS">PBS</option>
-                <option value="NRK">NRK</option>
-                <option value="SHC">SHC</option>
-                <option value="NHP">NHP</option>
-              </select>
+            <!-- Row 4: Engineer, Area -->
+            <div class="plant-field grid-span-3">
+              <label class="gnfc-modal-label" for="job-eng">Engineer</label>
+              <div class="plant-select-wrap">
+                <select id="job-eng" class="gnfc-modal-input">
+                  <option value="">Please Select ENG</option>
+                  <option value="TRC">TRC</option>
+                  <option value="ARP">ARP</option>
+                  <option value="YMG_ISD">YMG_ISD</option>
+                  <option value="ENF_TESTER">ENF_TESTER</option>
+                  <option value="NONE">NONE</option>
+                </select>
+                <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+              </div>
             </div>
-            <div class="plant-field">
-              <label class="gnfc-modal-label" for="job-eng">Eng (Engineer)</label>
-              <select id="job-eng" class="gnfc-modal-input">
-                <option value="">Please Select ENG</option>
-                <option value="SHC">SHC</option>
-                <option value="MAJ">MAJ</option>
-                <option value="CKV">CKV</option>
-                <option value="MDM">MDM</option>
-              </select>
-            </div>
-            <div class="plant-field">
+            <div class="plant-field grid-span-3">
               <label class="gnfc-modal-label" for="job-area">Area</label>
-              <select id="job-area" class="gnfc-modal-input">
-                <option value="METH">METH</option>
-                <option value="FA">FA</option>
-                <option value="AA">AA</option>
-                <option value="DCS">DCS</option>
-                <option value="UTIL">UTIL</option>
-                <option value="N.A.">N.A.</option>
-              </select>
+              <div class="plant-select-wrap">
+                <select id="job-area" class="gnfc-modal-input">
+                  <option value="ASP">ASP</option>
+                  <option value="BOILER-1">BOILER-1</option>
+                  <option value="BOILER-2">BOILER-2</option>
+                  <option value="BOILER-3">BOILER-3</option>
+                  <option value="BOILER-4">BOILER-4</option>
+                  <option value="CHP">CHP</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+                <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+              </div>
             </div>
 
-
-            <div class="plant-field plant-field--full">
+            <!-- Row 5: Job Description -->
+            <div class="plant-field grid-span-6">
               <label class="gnfc-modal-label" for="job-desc">Job Description</label>
               <textarea id="job-desc" rows="3" class="gnfc-modal-input" placeholder="Enter job description"></textarea>
             </div>
-            <div class="plant-field">
-              <label class="gnfc-modal-label">Extra Duty Hrs (HA-MN)</label>
+
+            <!-- Row 6: Extra Duty Hrs, Checkboxes -->
+            <div class="plant-field grid-span-3">
+              <label class="gnfc-modal-label">Extra Duty Hrs</label>
               <div style="display: flex; gap: 8px; align-items: center;">
-                <input type="number" id="job-hrs-ha" placeholder="HA" class="gnfc-modal-input" style="width: 60px;">
+                <div class="plant-select-wrap" style="width: 120px;">
+                  <select id="job-hrs-ha" class="gnfc-modal-input">
+                    <option value="0">00</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+                </div>
                 <span>:</span>
-                <input type="number" id="job-hrs-mn" placeholder="MN" class="gnfc-modal-input" style="width: 60px;">
+                <div class="plant-select-wrap" style="width: 120px;">
+                  <select id="job-hrs-mn" class="gnfc-modal-input">
+                    <option value="0">00</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                    <option value="54">54</option>
+                    <option value="55">55</option>
+                    <option value="56">56</option>
+                    <option value="57">57</option>
+                    <option value="58">58</option>
+                    <option value="59">59</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+                </div>
               </div>
             </div>
-
-            <div class="plant-field">
-              <label class="plant-checkbox-label">
-                <input type="checkbox" id="job-emergency" class="plant-checkbox"> Emergency
-              </label>
-              <label class="plant-checkbox-label">
-                <input type="checkbox" id="job-mod-req" class="plant-checkbox"> Mod. Reqrd
-              </label>
-              <label class="plant-checkbox-label">
-                <input type="checkbox" id="job-doc-chg" class="plant-checkbox"> Doc. Chg
-              </label>
+            <div class="plant-field grid-span-3">
+              <div class="plant-checkbox-stack">
+                <label class="plant-checkbox-label">
+                  <input type="checkbox" id="job-emergency" class="plant-checkbox"> Emergency Call
+                </label>
+                <label class="plant-checkbox-label">
+                  <input type="checkbox" id="job-mod-req" class="plant-checkbox"> Modificaton Required
+                </label>
+                <label class="plant-checkbox-label">
+                  <input type="checkbox" id="job-doc-chg" class="plant-checkbox"> Documentation Change Required
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -1863,17 +2000,20 @@
         <div class="gnfc-modal-body plant-modal-body">
           <div class="plant-field">
             <label class="gnfc-modal-label" for="priority-select">Job Priority</label>
-            <select id="priority-select" class="gnfc-modal-input">
-              <option value="0">0 (Undefined)</option>
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-            </select>
+            <div class="plant-select-wrap">
+              <select id="priority-select" class="gnfc-modal-input">
+                <option value="0">0 (Undefined)</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+              </select>
+              <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+            </div>
           </div>
         </div>
         <div class="gnfc-modal-footer">
@@ -1965,24 +2105,31 @@
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-insttag">InstTag</label>
-            <select id="hist-insttag" class="gnfc-modal-input">
-              <option value="DCS">DCS</option>
-              <option value="TRANSMITTER">TRANSMITTER</option>
-              <option value="CONTROL VALVE">CONTROL VALVE</option>
-              <option value="SWITCH">SWITCH</option>
-              <option value="ANALYZER">ANALYZER</option>
-              <option value="OTHERS">OTHERS</option>
-            </select>
+            <div class="plant-select-wrap">
+              <select id="hist-insttag" class="gnfc-modal-input">
+                <option value="Please Select InstTag"></option>
+                <option value="DCS">DCS</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="CONTROL VALVE">CONTROL VALVE</option>
+                <option value="SWITCH">SWITCH</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="OTHERS">OTHERS</option>
+              </select>
+              <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+            </div>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-jobtype">Type of Job</label>
-            <select id="hist-jobtype" class="gnfc-modal-input">
-              <option value="PROCESS REQMT">PROCESS REQMT</option>
-              <option value="CMS JOB">CMS JOB</option>
-              <option value="PM JOB">PM JOB</option>
-              <option value="BREAKDOWN">BREAKDOWN</option>
-              <option value="N.A.">N.A.</option>
-            </select>
+            <div class="plant-select-wrap">
+              <select id="hist-jobtype" class="gnfc-modal-input">
+                <option value="PROCESS REQMT">PROCESS REQMT</option>
+                <option value="CMS JOB">CMS JOB</option>
+                <option value="PM JOB">PM JOB</option>
+                <option value="BREAKDOWN">BREAKDOWN</option>
+                <option value="N.A.">N.A.</option>
+              </select>
+              <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+            </div>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-insttype">Type of Inst</label>
@@ -1996,40 +2143,52 @@
         <div class="plant-form-grid plant-form-grid--four">
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-status">Job Status</label>
-            <select id="hist-status" class="gnfc-modal-input">
-              <option value="OVER">OVER</option>
-              <option value="OVER">OVER</option>
-              <option value="HOLD">HOLD</option>
-            </select>
+            <div class="plant-select-wrap">
+              <select id="hist-status" class="gnfc-modal-input">
+                <option value="OVER">OVER</option>
+                <option value="OVER">OVER</option>
+                <option value="HOLD">HOLD</option>
+              </select>
+              <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+            </div>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-tech">Tech Name</label>
-            <select id="hist-tech" class="gnfc-modal-input">
-              <option value="BPB">BPB</option>
-              <option value="PBS">PBS</option>
-              <option value="NRK">NRK</option>
-              <option value="SHC">SHC</option>
-              <option value="NHP">NHP</option>
-            </select>
+            <div class="plant-select-wrap">
+              <select id="hist-tech" class="gnfc-modal-input">
+                <option value="BPB">BPB</option>
+                <option value="PBS">PBS</option>
+                <option value="NRK">NRK</option>
+                <option value="SHC">SHC</option>
+                <option value="NHP">NHP</option>
+              </select>
+              <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+            </div>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-eng">Eng</label>
-            <select id="hist-eng" class="gnfc-modal-input">
-              <option value="SHC">SHC</option>
-              <option value="MAJ">MAJ</option>
-              <option value="CKV">CKV</option>
-              <option value="MDM">MDM</option>
-            </select>
+            <div class="plant-select-wrap">
+              <select id="hist-eng" class="gnfc-modal-input">
+                <option value="SHC">SHC</option>
+                <option value="MAJ">MAJ</option>
+                <option value="CKV">CKV</option>
+                <option value="MDM">MDM</option>
+              </select>
+              <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+            </div>
           </div>
           <div class="plant-field">
             <label class="gnfc-modal-label" for="hist-area">Area</label>
-            <select id="hist-area" class="gnfc-modal-input">
-              <option value="METH">METH</option>
-              <option value="FA">FA</option>
-              <option value="AA">AA</option>
-              <option value="DCS">DCS</option>
-              <option value="UTIL">UTIL</option>
-            </select>
+            <div class="plant-select-wrap">
+              <select id="hist-area" class="gnfc-modal-input">
+                <option value="METH">METH</option>
+                <option value="FA">FA</option>
+                <option value="AA">AA</option>
+                <option value="DCS">DCS</option>
+                <option value="UTIL">UTIL</option>
+              </select>
+              <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -2273,6 +2432,71 @@
         }
       });
     });
+
+    // --- Search & Suggest Functionality for Modals ---
+    function initSelectSearch(inputId, selectId) {
+      const $input = $('#' + inputId);
+      const $select = $('#' + selectId);
+      const $options = $select.find('option');
+      let isDeleting = false;
+
+      $input.on('keydown', function (e) {
+        // Track if user is deleting so we don't auto-suggest
+        isDeleting = e.key === 'Backspace' || e.key === 'Delete';
+      });
+
+      $input.on('input', function () {
+        const val = $(this).val().toLowerCase();
+        const originalLen = $(this).val().length;
+        let firstMatch = null;
+        let firstMatchFullText = "";
+
+        $options.each(function () {
+          const $opt = $(this);
+          const text = $opt.text().toLowerCase();
+          const isMatch = text.includes(val);
+
+          if (isMatch) {
+            $opt.show();
+            if (!firstMatch && val.length > 0) {
+              firstMatch = $opt.val();
+              firstMatchFullText = $opt.text();
+            }
+          } else {
+            if ($opt.val() !== "") $opt.hide();
+          }
+        });
+
+        // 1. Suggest Next (Type-Ahead)
+        if (firstMatch && !isDeleting && val.length > 0) {
+          // Only autocomplete if it actually starts with the input for a more natural feel
+          if (firstMatchFullText.toLowerCase().startsWith(val)) {
+            $(this).val(firstMatchFullText);
+            this.setSelectionRange(originalLen, firstMatchFullText.length);
+          }
+        }
+
+        // 2. Sync Dropdown Selection (Highlight)
+        if (firstMatch) {
+          $select.val(firstMatch);
+        } else if (val.length === 0) {
+          $select.val("");
+        }
+      });
+
+      // Sync dropdown back to input when changed manually
+      $select.on('change', function () {
+        const selectedText = $(this).find('option:selected').text();
+        if ($(this).val() !== "") {
+          $input.val(selectedText);
+        } else {
+          $input.val("");
+        }
+      });
+    }
+
+    initSelectSearch('job-loop-input', 'job-loop-select');
+    initSelectSearch('job-tag-input', 'job-tag-select');
 
     // Initialize
     filterTable();
