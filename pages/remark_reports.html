@@ -45,18 +45,55 @@
       <div id="plant-nav-container"></div>
 
       <!-- ── TABLE CARD ── -->
-      <div class="jt-table-card" style="margin-top: 16px;">
+      <div class="jt-table-card">
         
-        <div class="user-table-toolbar">
-          <div class="user-table-toolbar-left">
-            <h3 class="user-table-title">
-              <i class="ph-bold ph-table"></i>
-              <span>Detailed Remark Report</span>
-            </h3>
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-notebook"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Detailed Remark Report</h3>
+            </div>
           </div>
-          <div class="user-table-toolbar-right">
-            <span class="user-table-info">Year: <span style="color: var(--brand-primary); font-weight: 700;">2026</span></span>
-            <span id="current-date" class="user-table-info" style="font-family: ui-monospace, monospace;"></span>
+          <div class="jt-report-actions">
+            <div class="flex gap-4 items-center">
+              <button class="jt-btn-primary">
+                <i class="ph-bold ph-export"></i> EXPORT PDF
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEARCH CRITERIA (Card Inside Page for this specific report if needed, but standard is a separate card) -->
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title"><i class="ph-bold ph-funnel"></i> SEARCH CRITERIA</h3>
+        </div>
+        <div class="jt-filter-body" style="grid-template-columns: 1fr 1fr auto;">
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">Report Year</label>
+            <div class="jt-select-wrap">
+              <select class="jt-select">
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+              </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            </div>
+          </div>
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">Plant Unit</label>
+            <div class="jt-select-wrap">
+              <select class="jt-select">
+                <option value="Acetic Acid">Acetic Acid</option>
+              </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            </div>
+          </div>
+          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 10px;">
+            <button class="jt-btn-primary" onclick="renderTable()">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button class="jt-btn-reset">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+            </button>
           </div>
         </div>
 
@@ -64,13 +101,13 @@
           <table class="user-table">
             <thead>
               <tr>
-                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 64px;">Sr</th>
                 <th rowspan="2" class="user-table-center" style="width: 80px;">Area</th>
-                <th class="user-table-left" style="width: 130px;">Loop No</th>
+                <th class="user-table-left" style="width: 140px;">Loop No</th>
                 <th class="user-table-left" style="width: 380px;">Job</th>
-                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
                 <th style="min-width: 400px;">Description</th>
-                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
                 <th rowspan="2" class="user-table-center" style="width: 100px;">Status</th>
                 <th rowspan="2" style="min-width: 250px;">Remarks</th>
               </tr>

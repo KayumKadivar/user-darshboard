@@ -50,25 +50,25 @@
         <div class="jt-filter-header">
           <h2 class="jt-filter-title">
             <i class="ph-bold ph-funnel"></i>
-            Apply Filters
+            SEARCH CRITERIA
           </h2>
         </div>
 
-        <div class="jt-filter-body">
+        <div class="jt-filter-body" style="grid-template-columns: 1fr 1fr auto;">
 
           <!-- Time Range -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label" for="start-date">Time Range Selection</label>
+            <label class="jt-filter-label" for="start-date">Report Period</label>
             <div class="jt-date-range">
               <input type="date" id="start-date" class="jt-date-input" onchange="applyFilters()">
-              <span class="jt-date-sep">|</span>
+              <span class="jt-date-sep">to</span>
               <input type="date" id="end-date" class="jt-date-input" onchange="applyFilters()">
             </div>
           </div>
 
           <!-- Job Type Select -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label" for="job-type-select">Select Type of Job</label>
+            <label class="jt-filter-label" for="job-type-select">Type of Job</label>
             <div class="jt-select-wrap">
               <select id="job-type-select" class="jt-select" onchange="applyFilters()">
                 <option value="">All Job Types</option>
@@ -98,9 +98,13 @@
           </div>
 
           <!-- Action Buttons -->
-          <div class="jt-filter-actions">
-            <button type="button" class="jt-btn-apply" onclick="applyFilters()">APPLY</button>
-            <button type="button" class="jt-btn-reset" onclick="resetFilters()">RESET</button>
+          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 12px;">
+            <button type="button" class="jt-btn-primary" onclick="applyFilters()">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button type="button" class="jt-btn-reset" onclick="resetFilters()">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+            </button>
           </div>
 
         </div>
@@ -110,11 +114,13 @@
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card">
 
-        <div class="jt-table-header">
-          <h3 class="jt-table-header-title">
+        <div class="jt-report-header">
+          <div class="jt-report-title">
             <i class="ph-fill ph-table"></i>
-            Job Type Analysis Report
-          </h3>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Job Type Analysis Report</h3>
+            </div>
+          </div>
         </div>
 
         <div class="user-table-wrapper">
@@ -122,15 +128,15 @@
 
             <thead>
               <tr>
-                <th rowspan="2" class="user-table-center" style="width: 45px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 64px;">Sr</th>
                 <th rowspan="2" class="user-table-center" style="width: 80px;">Area</th>
-                <th class="user-table-left" style="width: 130px;">LoopNo</th>
+                <th class="user-table-left" style="width: 140px;">Loop No</th>
                 <th class="user-table-left" style="width: 380px;">Job</th>
-                <th rowspan="2" class="user-table-center" style="width: 60px;">Tech</th>
-                <th rowspan="2" style="width: 400px;">Description</th>
-                <th rowspan="2" class="user-table-center" style="width: 60px;">Eng</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
+                <th style="min-width: 400px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Exec Tech</th>
                 <th rowspan="2" class="user-table-center" style="width: 100px;">Status</th>
-                <th rowspan="2" style="width: 160px;">Remarks</th>
+                <th rowspan="2" style="min-width: 160px;">Remarks</th>
                 <th rowspan="2" class="user-table-center" style="width: 70px;">Add</th>
               </tr>
               <tr>
@@ -142,8 +148,8 @@
             <tbody id="plant-table-body">
 
               <!-- ── DATE GROUP: 28/01/2026 ── -->
-              <tr class="user-table-row user-table-tfoot" data-date-group="28/01/2026">
-                <td colspan="10" class="user-table-bold" style="background: rgba(87, 148, 242, 0.05); color: var(--brand-primary);">
+              <tr class="user-table-date" data-date-group="28/01/2026">
+                <td colspan="10" class="user-table-bold">
                   <i class="ph-fill ph-calendar-blank"></i>
                   28/01/2026
                 </td>
@@ -156,28 +162,33 @@
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-primary">N.A.</div>
-                    <div class="user-table-secondary user-table-blue" style="font-size: 0.75rem;">Ac-1</div>
+                    <div class="user-table-secondary user-table-blue">Ac-1</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-primary">Removed Pneumatic switch to be repaired.(By:ARP : 28/01/2026)</div>
-                    <div class="user-table-secondary" style="font-size: 0.75rem; color: var(--brand-orange);">SPARE REPAIR</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">SPARE
+                      REPAIR</div>
                   </div>
                 </td>
                 <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                <td class="user-table-desc user-table-primary">Removed pneumatic switch repaired by seal kit replacement.</td>
+                <td class="user-table-desc user-table-primary">Removed pneumatic switch repaired by seal kit
+                  replacement.</td>
                 <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
                 <td class="user-table-center">
                   <span class="ui-badge ui-badge--success">OVER</span>
                 </td>
                 <td>
-                  <span class="user-table-secondary" style="font-size: 0.8125rem;">Tag No:- N.A. [written by: BSU Date: 28/01/2026]</span>
+                  <span class="user-table-secondary" style="font-size: 0.8125rem;">Tag No:- N.A. [written by: BSU Date:
+                    28/01/2026]</span>
                 </td>
                 <td class="user-table-center">
-                  <div class="flex gap-1 justify-center">
-                    <button type="button" class="plant-inline-button">H</button>
-                    <button type="button" class="plant-inline-button">PM</button>
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        data-open-modal="history-type-modal" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -189,13 +200,14 @@
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-primary">N.A.</div>
-                    <div class="user-table-secondary user-table-blue" style="font-size: 0.75rem;">Ca-7</div>
+                    <div class="user-table-secondary user-table-blue">Ca-7</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-primary">Removed Power Cylinder to be repaired.(By:ARP : 28/01/2026)</div>
-                    <div class="user-table-secondary" style="font-size: 0.75rem; color: var(--brand-orange);">SPARE REPAIR</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">SPARE
+                      REPAIR</div>
                   </div>
                 </td>
                 <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
@@ -205,101 +217,17 @@
                   <span class="ui-badge ui-badge--success">OVER</span>
                 </td>
                 <td>
-                  <span class="user-table-secondary" style="font-size: 0.8125rem;">Tag No:- N.A. [written by: BSU Date: 28/01/2026]</span>
+                  <span class="user-table-secondary" style="font-size: 0.8125rem;">Tag No:- N.A. [written by: BSU Date:
+                    28/01/2026]</span>
                 </td>
                 <td class="user-table-center">
-                  <div class="flex gap-1 justify-center">
-                    <button type="button" class="plant-inline-button">H</button>
-                    <button type="button" class="plant-inline-button">PM</button>
-                  </div>
-                </td>
-              </tr>
-
-              <!-- ── DATE GROUP: 24/01/2026 ── -->
-              <tr class="user-table-row user-table-tfoot" data-date-group="24/01/2026">
-                <td colspan="10" class="user-table-bold" style="background: rgba(87, 148, 242, 0.05);">
-                  <i class="ph-fill ph-calendar-blank"></i>
-                  24/01/2026
-                </td>
-              </tr>
-
-              <!-- Row 3 -->
-              <tr class="user-table-row jt-data-row" data-date="24/01/2026" data-job-type="SPARE REPAIR">
-                <td class="user-table-center user-table-secondary user-table-bold">3</td>
-                <td class="user-table-bold user-table-center user-table-primary">ASH</td>
-                <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">N.A.</div>
-                    <div class="user-table-secondary user-table-blue" style="font-size: 0.75rem;">KPUMP2</div>
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        data-open-modal="history-type-modal" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
                   </div>
                 </td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed DV1 Power cylinder to be repaired. (By:ARP : 24/01/2026)</div>
-                    <div class="user-table-secondary" style="font-size: 0.75rem; color: var(--brand-orange);">SPARE REPAIR</div>
-                  </div>
-                </td>
-                <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
-                <td class="user-table-desc user-table-primary">During checking found its piston seal rings are also damaged, same informed to IE, as spare seal kit is not available cylinder boxed up and kept in workshop.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
-                <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
-                </td>
-                <td>
-                  <span class="user-table-secondary" style="font-size: 0.8125rem;">Tag No:- N.A. [written by: BDR Date: 24/01/2026]</span>
-                </td>
-                <td class="user-table-center">
-                  <div class="flex gap-1 justify-center">
-                    <button type="button" class="plant-inline-button">H</button>
-                    <button type="button" class="plant-inline-button">PM</button>
-                  </div>
-                </td>
-              </tr>
-
-              <!-- ── DATE GROUP: 19/01/2026 ── -->
-              <tr class="user-table-row user-table-tfoot" data-date-group="19/01/2026">
-                <td colspan="10" class="user-table-bold" style="background: rgba(87, 148, 242, 0.05); color: var(--brand-primary);">
-                  <i class="ph-fill ph-calendar-blank"></i>
-                  19/01/2026
-                </td>
-              </tr>
-
-              <!-- Row 4 -->
-              <tr class="user-table-row jt-data-row" data-date="19/01/2026" data-job-type="SPARE REPAIR">
-                <td class="user-table-center user-table-secondary user-table-bold">4</td>
-                <td class="user-table-bold user-table-center user-table-primary">ASH</td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-primary">N.A.</div>
-                    <div class="user-table-secondary user-table-blue" style="font-size: 0.75rem;">Ab-3</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed power cylinder to be repaired.(By:ARP : 19/01/2026)</div>
-                    <div class="user-table-secondary" style="font-size: 0.75rem; color: var(--brand-orange);">SPARE REPAIR</div>
-                  </div>
-                </td>
-                <td class="user-table-center user-table-bold user-table-secondary">JDB</td>
-                <td class="user-table-desc user-table-primary">Removed power cylinder repaired done.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">JDB</td>
-                <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
-                </td>
-                <td>
-                  <span class="user-table-secondary" style="font-size: 0.8125rem;">Tag No:- N.A. [written by: JDB Date: 19/01/2026]</span>
-                </td>
-                <td class="user-table-center">
-                  <div class="flex gap-1 justify-center">
-                    <button type="button" class="plant-inline-button">H</button>
-                    <button type="button" class="plant-inline-button">PM</button>
-                  </div>
-                </td>
-              </tr>
-
-              <!-- Empty state row (hidden by default) -->
-              <tr class="user-table-row" id="jt-empty-row" style="display: none;">
-                <td colspan="10" class="user-table-center user-table-secondary">No entries match query criteria.</td>
               </tr>
 
             </tbody>
@@ -314,22 +242,22 @@
   <!-- Filter Logic (plain JS, no map/forEach) -->
   <script>
     function applyFilters() {
-      var jobType  = document.getElementById('job-type-select').value;
+      var jobType = document.getElementById('job-type-select').value;
       var startVal = document.getElementById('start-date').value;
-      var endVal   = document.getElementById('end-date').value;
+      var endVal = document.getElementById('end-date').value;
 
-      var dataRows   = document.querySelectorAll('.jt-data-row');
-      var groupRows  = document.querySelectorAll('.user-table-tfoot[data-date-group]');
-      var emptyRow   = document.getElementById('jt-empty-row');
+      var dataRows = document.querySelectorAll('.jt-data-row');
+      var groupRows = document.querySelectorAll('.user-table-tfoot[data-date-group]');
+      var emptyRow = document.getElementById('jt-empty-row');
 
       // Object to track which date groups still have visible rows
       var visibleDates = {};
 
       for (var i = 0; i < dataRows.length; i++) {
-        var row        = dataRows[i];
-        var rowType    = row.getAttribute('data-job-type');
+        var row = dataRows[i];
+        var rowType = row.getAttribute('data-job-type');
         var rowDateStr = row.getAttribute('data-date');
-        var show       = true;
+        var show = true;
 
         // Filter by job type
         if (jobType && rowType !== jobType) {
@@ -338,8 +266,8 @@
 
         // Filter by date range
         if (show && (startVal || endVal)) {
-          var parts    = rowDateStr.split('/');
-          var rowDate  = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+          var parts = rowDateStr.split('/');
+          var rowDate = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
 
           if (startVal) {
             var start = new Date(startVal);
@@ -380,8 +308,8 @@
     }
 
     function resetFilters() {
-      document.getElementById('start-date').value      = '';
-      document.getElementById('end-date').value        = '';
+      document.getElementById('start-date').value = '';
+      document.getElementById('end-date').value = '';
       document.getElementById('job-type-select').value = '';
       applyFilters();
     }
@@ -393,4 +321,5 @@
   </script>
 
 </body>
+
 </html>

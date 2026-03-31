@@ -95,7 +95,7 @@
   justify-content: center;
   padding: 4px 10px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -103,33 +103,33 @@
 }
 
 .ui-badge--success {
-  background: rgba(34, 197, 94, 0.14);
-  border-color: rgba(34, 197, 94, 0.25);
+  background: transparent;
+  border-color: transparent;
   color: #4ade80;
 }
 
 .ui-badge--info {
-  background: rgba(59, 130, 246, 0.14);
-  border-color: rgba(59, 130, 246, 0.25);
+  background: transparent;
+  border-color: transparent;
   color: #60a5fa;
 }
 
 .ui-badge--warning {
-  background: rgba(245, 158, 11, 0.14);
-  border-color: rgba(245, 158, 11, 0.25);
+  background: transparent;
+  border-color: transparent;
   color: #fbbf24;
 }
 
 .ui-badge--danger {
-  background: rgba(239, 68, 68, 0.14);
-  border-color: rgba(239, 68, 68, 0.25);
+  background: transparent;
+  border-color: transparent;
   color: #f87171;
 }
 
 /* ── 3a. PLAIN STATUS TEXT (Badge Alternative) ── */
 .status-text {
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
@@ -170,7 +170,7 @@
 
 .user-table th {
   padding: 12px 10px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 800;
   text-transform: uppercase;
   color: var(--typo-label);
@@ -216,9 +216,14 @@
 .user-table-right { text-align: right !important; }
 .user-table-bold { font-weight: 700 !important; }
 .user-table-blue { color: var(--typo-blue) !important; }
+.user-table-blue .plant-tag-link { color: var(--typo-blue) !important; text-decoration: none !important; }
 .user-table-primary { color: var(--typo-primary) !important; }
 .user-table-secondary { color: var(--typo-secondary) !important; font-size: 0.8125rem; }
 .user-table-desc { white-space: pre-wrap; line-height: 1.4; min-width: 250px; }
+
+.user-table-date {
+  
+}
 
 /* --- 5. SWITCHERS --- */
 .ui-switcher {
@@ -843,7 +848,7 @@
   display: inline-block;
   padding: 4px 12px;
   border-radius: 4px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -942,7 +947,7 @@
   color: var(--typo-blue);
   border: 1px solid rgba(87, 148, 242, 0.2);
   border-radius: 6px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   /* 12px */
   font-weight: 800;
   cursor: pointer;
@@ -966,7 +971,7 @@
   color: var(--red);
   border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: 6px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 800;
   cursor: pointer;
   transition: all 0.2s;
@@ -1278,7 +1283,7 @@
 }
 
 .alert-time {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: var(--label);
   font-weight: 500;
   opacity: 0.8;
@@ -1294,7 +1299,7 @@
   background: transparent;
   border: none;
   color: var(--label);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -1587,7 +1592,7 @@
   padding: 6px 12px;
   background: var(--app-panel);
   color: var(--typo-primary);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 700;
   border-radius: 4px;
   border: 1px solid var(--app-border);
@@ -1874,7 +1879,7 @@
 
 /* ===== TEXT ===== */
 .qa-label {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   color: var(--app-muted);
   margin-bottom: 4px;
@@ -2070,7 +2075,7 @@
 .plant-page__breadcrumb {
   margin: 0 0 4px;
   color: var(--typo-label);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2260,10 +2265,13 @@
 }
 
 .plant-table-card {
+  border: 1px solid var(--app-border);
+  border-radius: 10px;
+  background: var(--app-panel);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   min-height: 0;
-  overflow: hidden;
 }
 
 .plant-table-card__header {
@@ -2805,7 +2813,7 @@
   border-radius: 50%;
   background-color: rgba(87, 148, 242, 0.1);
   color: var(--typo-blue);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -2818,15 +2826,11 @@
   transform: scale(1.1);
 }
 
-.plant-date-row td {
-  background: var(--app-panel-alt);
+.user-table-date td {
   color: var(--typo-blue);
-  font-weight: 700;
   font-size: 0.875rem;
   padding: 10px 16px;
-  border-top: 1px solid var(--app-border);
-  border-bottom: 1px solid var(--app-border);
-  text-align: left;
+  font-weight: 700;
 }
 
 
@@ -3310,7 +3314,7 @@ select.gnfc-modal-input {
   display: block;
   font-size: 0.8125rem;
   font-weight: 700;
-  color: var(--typo-label);
+  color: var(--typo-primary);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -3384,7 +3388,7 @@ select.gnfc-modal-input {
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: var(--typo-label);
 }
 
@@ -3408,53 +3412,75 @@ select.gnfc-modal-input {
 
 /* --- BUTTONS --- */
 .jt-btn-apply, .jt-btn-primary {
-  height: 36px;
+  height: 34px;
   background: var(--typo-blue);
   color: white;
   font-size: 0.75rem;
   font-weight: 800;
   border: none;
-  border-radius: 6px;
+  border-radius: 20px; /* Pill shape */
   cursor: pointer;
   transition: all 0.2s ease;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0 16px;
+  padding: 0 20px;
+  text-transform: uppercase;
+}
+
+.jt-btn-primary:hover {
+  background: #4a86e8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(87, 148, 242, 0.3);
 }
 
 .jt-btn-secondary, .jt-btn-reset {
-  height: 36px;
-  padding: 0 16px;
-  background: var(--app-bg);
+  height: 34px;
+  width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--app-border);
   color: var(--typo-label);
   border-radius: 6px;
-  font-size: 0.8125rem;
-  font-weight: 700;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
   transition: all 0.2s ease;
 }
 
-.jt-btn-secondary:hover, .jt-btn-reset:hover {
-  background: var(--app-panel-alt);
+.jt-btn-reset:hover {
+  background: rgba(255, 255, 255, 0.1);
   color: var(--typo-primary);
 }
 
 /* --- JH SPECIFIC LAYOUTS --- */
-.jh-filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 16px;
+/* --- FILTER CARD ENHANCEMENTS --- */
+.jt-filter-header {
+  padding: 12px 16px;
   border-bottom: 1px solid var(--app-border);
-  background: var(--app-panel-alt);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.jt-filter-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--typo-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.jt-filter-title i {
+  color: var(--brand-orange);
+  font-size: 1rem;
 }
 
 .jh-filter-grid {
@@ -3484,3 +3510,76 @@ select.gnfc-modal-input {
 /* --- UTILITIES --- */
 .jt-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
+
+/* ── 9. REPORT & ANALYSIS HEADERS ── */
+.jt-table-card {
+  border: 1px solid var(--app-border);
+  border-radius: 10px;
+  background: var(--app-panel);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.jt-report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--app-panel-alt);
+  border-bottom: 1px solid var(--app-border);
+}
+
+.jt-report-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.jt-report-title i {
+  font-size: 1.25rem;
+  color: var(--typo-blue);
+  background: rgba(87, 148, 242, 0.1);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.jt-title-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.jt-main-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--typo-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.jt-record-count {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--secondary);
+  opacity: 0.8;
+}
+
+/* Ensure any table wrapper or scroll area inside card has no extra borders/radii */
+.jt-table-card .user-table-wrapper,
+.jt-table-card .user-table-scroll,
+.plant-table-card .user-table-wrapper,
+.plant-table-card .user-table-scroll {
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+/* Helper for 14px font size as requested */
+.font-14px {
+  font-size: 14px !important;
+}

@@ -52,26 +52,28 @@
 
         <div class="jt-filter-header">
           <h3 class="jt-filter-title">
-            <i class="ph-bold ph-sliders-horizontal"></i>
-            Search Criteria
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
           </h3>
 
           <div class="jh-filter-tools">
-            <button type="button" class="jh-add-btn" onclick="openAddJobModal()">
-              <i class="ph-bold ph-plus"></i> Add Job
+            <button type="button" class="jt-btn-primary" onclick="openAddJobModal()">
+              <i class="ph-bold ph-plus"></i> ADD JOB
             </button>
-            <button type="button" id="filter-btn-default" class="jh-date-btn" onclick="setDateFilter('default')">Default Date</button>
-            <button type="button" id="filter-btn-prev"    class="jh-date-btn" onclick="setDateFilter('prev')">Prev Year</button>
-            <button type="button" id="filter-btn-this"    class="jh-date-btn" onclick="setDateFilter('this')">This Year</button>
-            <button type="button" id="filter-btn-next"    class="jh-date-btn" onclick="setDateFilter('next')">Next Year</button>
+            <div class="flex gap-1 ml-4 items-center">
+              <button type="button" id="filter-btn-default" class="jh-date-btn" onclick="setDateFilter('default')">Default Date</button>
+              <button type="button" id="filter-btn-prev"    class="jh-date-btn" onclick="setDateFilter('prev')">Prev Year</button>
+              <button type="button" id="filter-btn-this"    class="jh-date-btn" onclick="setDateFilter('this')">This Year</button>
+              <button type="button" id="filter-btn-next"    class="jh-date-btn" onclick="setDateFilter('next')">Next Year</button>
+            </div>
           </div>
         </div>
 
-        <div class="jt-filter-body jt-filter-body--4col">
+        <div class="jt-filter-body" style="grid-template-columns: repeat(4, 1fr);">
 
           <!-- Loop -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label" for="filter-loop">Loop</label>
+            <label class="jt-filter-label" for="filter-loop">Loop Name</label>
             <div class="jt-select-wrap">
               <select id="filter-loop" class="jt-select">
                 <option value="">ALL</option>
@@ -84,7 +86,7 @@
 
           <!-- Tag -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label" for="tagSelect">Tag</label>
+            <label class="jt-filter-label" for="tagSelect">Tag Number</label>
             <div class="jt-select-wrap">
               <select id="tagSelect" class="jt-select">
                 <option value="">ALL</option>
@@ -127,27 +129,30 @@
             <input type="date" id="filter-end-date" class="jt-input jt-date-input" value="2026-02-09">
           </div>
 
-          <!-- Filter Options (Remark / Attach checkboxes) -->
-          <div class="jt-filter-group">
+          <!-- Options -->
+          <div class="jt-filter-group" style="grid-column: span 1;">
             <label class="jt-filter-label">Filter Options</label>
-            <div class="jh-checkbox-group">
-              <label class="jh-checkbox-item">
+            <div class="jh-checkbox-group" style="display: flex; gap: 16px; align-items: center; height: 34px;">
+              <label class="jh-checkbox-item" style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--typo-primary); font-size: 13px;">
                 <input type="checkbox" id="filter-remark">
-                <span>Remark</span>
+                <span>Remark Only</span>
               </label>
-              <label class="jh-checkbox-item">
+              <label class="jh-checkbox-item" style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--typo-primary); font-size: 13px;">
                 <input type="checkbox" id="filter-attach">
-                <span>Attach</span>
+                <span>Attachments</span>
               </label>
             </div>
           </div>
 
-          <!-- Apply Button -->
-          <div class="jt-filter-group" style="justify-content: flex-end;">
-            <button type="button" class="jt-btn-primary" onclick="renderTable()" style="width: 100%;">
-              <i class="ph-bold ph-magnifying-glass"></i> Search Records
+          <div class="jt-filter-group" style="grid-column: span 3; display: flex; justify-content: flex-end; align-items: flex-end; gap: 12px;">
+            <button class="jt-btn-primary" onclick="renderTable()">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button class="jt-btn-reset" onclick="resetFilters()">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i>
             </button>
           </div>
+
 
         </div>
       </div>
@@ -156,26 +161,27 @@
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card">
 
-        <div class="jt-table-header">
-          <h3 class="jt-table-header-title">
+        <div class="jt-report-header">
+          <div class="jt-report-title">
             <i class="ph-fill ph-table"></i>
-            Job Records
-          </h3>
-          <span class="jt-record-count" id="recordCount">0 Records Found</span>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Job History Report</h3>
+            </div>
+          </div>
         </div>
 
         <div class="user-table-wrapper">
           <table class="user-table" id="jh-main-table">
             <thead>
               <tr>
-                <th class="user-table-center" rowspan="2" style="width:48px; min-width:48px;">Sr</th>
-                <th class="user-table-center" rowspan="2" style="width:64px;">Area</th>
-                <th class="user-table-left" style="width:128px;">Loop</th>
-                <th class="user-table-left" style="min-width:140px;">Inst Type</th>
-                <th class="user-table-center" rowspan="2" style="width:112px;">Date</th>
+                <th class="user-table-center" rowspan="2" style="width:64px;">Sr</th>
+                <th class="user-table-center" rowspan="2" style="width:80px;">Area</th>
+                <th class="user-table-left" style="width:140px;">Loop</th>
+                <th class="user-table-left" style="min-width:160px;">Inst Type</th>
+                <th class="user-table-center" rowspan="2" style="width:120px;">Date</th>
                 <th rowspan="2" style="min-width:400px;">Description of Job</th>
-                <th class="user-table-center" style="width:80px;">Tech</th>
-                <th class="user-table-center" rowspan="2" style="width:48px;">Attch</th>
+                <th class="user-table-center" style="width:100px;">Tech</th>
+                <th class="user-table-center" rowspan="2" style="width:56px;">Attch</th>
                 <th style="min-width:200px;">Eng Remark</th>
               </tr>
               <tr>
@@ -624,32 +630,30 @@
       var tbody = document.getElementById('jobTableBody');
       tbody.innerHTML = '';
 
-      document.getElementById('recordCount').textContent = data.length + ' Records Found';
-
       for (var i = 0; i < data.length; i++) {
         var item = data[i];
         var descHtml = item.desc ? item.desc.replace(/\n/g, '<br>') : '--';
         var row = '<tr class="user-table-row">' +
-          '<td class="user-table-center user-table-secondary" onclick="openJobDetailModal(' + item.sr + ')">' + item.sr + '</td>' +
+          '<td class="user-table-center user-table-secondary user-table-bold" onclick="openJobDetailModal(' + item.sr + ')">' + item.sr + '</td>' +
           '<td class="user-table-center user-table-bold user-table-primary">' + (item.area || '--') + '</td>' +
           '<td>' +
             '<div class="user-table-cell-stack">' +
               '<div class="user-table-primary user-table-bold">' + (item.loop || '--') + '</div>' +
-              '<div class="user-table-blue user-table-secondary" style="font-size: 0.75rem;">' + (item.tag  || '--') + '</div>' +
+              '<div class="user-table-blue user-table-bold font-14px" >' + (item.tag  || '--') + '</div>' +
             '</div>' +
           '</td>' +
           '<td>' +
             '<div class="user-table-cell-stack">' +
               '<div class="user-table-primary">' + (item.instType || '--') + '</div>' +
-              '<div class="user-table-secondary" style="font-size: 0.75rem; color: var(--brand-orange);">' + (item.jobType  || '--') + '</div>' +
+              '<div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">' + (item.jobType  || '--') + '</div>' +
             '</div>' +
           '</td>' +
           '<td class="user-table-center user-table-secondary">' + formatDateDisplay(item.date) + '</td>' +
-          '<td class="user-table-primary" style="line-height:1.5;" onclick="openJobDetailModal(' + item.sr + ')">' + descHtml + '</td>' +
+          '<td class="user-table-primary font-14px" style="line-height:1.6;" onclick="openJobDetailModal(' + item.sr + ')">' + descHtml + '</td>' +
           '<td>' +
             '<div class="user-table-cell-stack user-table-center">' +
-              '<div class="user-table-bold">' + (item.tech || '-') + '</div>' +
-              '<div class="user-table-secondary" style="font-size: 0.75rem;">' + (item.eng  || '-') + '</div>' +
+              '<div class="user-table-bold user-table-secondary">' + (item.tech || '-') + '</div>' +
+              '<div class="user-table-secondary" >' + (item.eng  || '-') + '</div>' +
             '</div>' +
           '</td>' +
           '<td class="user-table-center">' +
@@ -659,7 +663,7 @@
           '</td>' +
           '<td>' +
             '<div class="user-table-cell-stack">' +
-              '<div class="user-table-secondary" style="font-size:0.75rem; color: var(--brand-primary);">'  + (item.remark     || '-') + '</div>' +
+              '<div class="user-table-secondary" style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">'  + (item.remark     || '-') + '</div>' +
               '<div class="user-table-secondary" style="font-size:0.75rem;">' + (item.execRemark || '-') + '</div>' +
             '</div>' +
           '</td>' +

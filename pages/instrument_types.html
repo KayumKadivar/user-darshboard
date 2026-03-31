@@ -50,25 +50,25 @@
         <div class="jt-filter-header">
           <h2 class="jt-filter-title">
             <i class="ph-bold ph-funnel"></i>
-            Apply Filters
+            SEARCH CRITERIA
           </h2>
         </div>
 
-        <div class="jt-filter-body">
+        <div class="jt-filter-body" style="grid-template-columns: 1fr 1fr auto;">
 
           <!-- Date Range -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label" for="start-date">Start Date | End Date</label>
+            <label class="jt-filter-label" for="start-date">Report Date Range</label>
             <div class="jt-date-range">
               <input type="date" id="start-date" class="jt-date-input" onchange="applyFilters()">
-              <span class="jt-date-sep">|</span>
+              <span class="jt-date-sep">to</span>
               <input type="date" id="end-date" class="jt-date-input" onchange="applyFilters()">
             </div>
           </div>
 
           <!-- Instrument Type Select -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label" for="inst-type-select">Select Type of Inst</label>
+            <label class="jt-filter-label" for="inst-type-select">Type of Instrument</label>
             <div class="jt-select-wrap">
               <select id="inst-type-select" class="jt-select" onchange="applyFilters()">
                 <option value="">All Instrument Types</option>
@@ -91,9 +91,13 @@
           </div>
 
           <!-- Action Buttons -->
-          <div class="jt-filter-actions">
-            <button type="button" class="jt-btn-apply" onclick="applyFilters()">APPLY</button>
-            <button type="button" class="jt-btn-reset" onclick="resetFilters()">RESET</button>
+          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 12px;">
+            <button type="button" class="jt-btn-primary" onclick="applyFilters()">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button type="button" class="jt-btn-reset" onclick="resetFilters()">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+            </button>
           </div>
 
         </div>
@@ -103,11 +107,13 @@
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card">
 
-        <div class="jt-table-header">
-          <h3 class="jt-table-header-title">
+        <div class="jt-report-header">
+          <div class="jt-report-title">
             <i class="ph-fill ph-table"></i>
-            Type Of Inst Report
-          </h3>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Type Of Instrument Report</h3>
+            </div>
+          </div>
         </div>
 
         <div class="user-table-wrapper">
@@ -115,28 +121,28 @@
 
             <thead>
               <tr>
-                <th rowspan="2" class="user-table-center" style="width: 45px;">Sr</th>
-                <th rowspan="2" style="width: 80px;">Area</th>
-                <th style="width: 130px;">Loop No</th>
-                <th style="width: 380px;">Job</th>
-                <th rowspan="2" class="user-table-center" style="width: 60px;">Tech</th>
-                <th rowspan="2" style="width: 400px;">Description</th>
-                <th rowspan="2" class="user-table-center" style="width: 60px;">Eng</th>
+                <th rowspan="2" class="user-table-center" style="width: 64px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Area</th>
+                <th class="user-table-left" style="width: 140px;">Loop No</th>
+                <th class="user-table-left" style="width: 380px;">Job</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
+                <th style="min-width: 400px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Exec Tech</th>
                 <th rowspan="2" class="user-table-center" style="width: 100px;">Status</th>
-                <th rowspan="2" style="width: 160px;">Remarks</th>
+                <th rowspan="2" style="min-width: 160px;">Remarks</th>
                 <th rowspan="2" class="user-table-center" style="width: 70px;">Add</th>
               </tr>
               <tr>
-                <th>Tag No</th>
-                <th>Type Of Inst</th>
+                <th class="user-table-left">Tag No</th>
+                <th class="user-table-left">Type of Inst</th>
               </tr>
             </thead>
 
             <tbody id="it-table-body">
 
               <!-- ── DATE GROUP: 28/01/2026 ── -->
-              <tr class="user-table-row user-table-tfoot" data-date-group="28/01/2026">
-                <td colspan="10" class="user-table-bold" style="background: rgba(87, 148, 242, 0.05);">
+              <tr class="user-table-date" data-date-group="28/01/2026">
+                <td colspan="10" class="user-table-bold" >
                   <i class="ph-fill ph-calendar-blank"></i>
                   28/01/2026
                 </td>
@@ -144,54 +150,56 @@
 
               <!-- Row 1 -->
               <tr class="user-table-row jt-data-row" data-date="28/01/2026" data-inst-type="N.A.">
-                <td class="user-table-center user-table-bold">1</td>
-                <td class="user-table-bold user-table-center">ASH</td>
+                <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                <td class="user-table-center user-table-bold user-table-primary">ASH</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <span class="user-table-bold">N.A.</span>
-                    <span class="user-table-blue">Ac-1</span>
+                    <div class="user-table-primary user-table-bold">N.A.</div>
+                    <div class="user-table-blue user-table-bold">Ac-1</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-primary">Removed Pneumatic switch to be repaired.(By:ARP : 28/01/2026)</div>
-                    <div class="color-orange">N.A.</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">N.A.</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold">BSU</td>
-                <td class="user-table-desc">Removed pneumatic switch repaired by seal kit replacement.</td>
-                <td class="user-table-center user-table-bold">BSU</td>
+                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                <td class="user-table-primary font-14px" style="line-height: 1.5;">Removed pneumatic switch repaired by seal kit replacement.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
                 <td class="user-table-center">
-                  <span class="status-text status-text--success">OVER</span>
+                  <span class="ui-badge ui-badge--success">OVER</span>
                 </td>
                 <td></td>
                 <td class="user-table-center">
-                  <button type="button" class="plant-inline-button" title="History">H</button>
-                  <button type="button" class="plant-inline-button">PM</button>
+                  <div class="user-table-cell-stack">
+                    <button type="button" class="plant-inline-button" title="History">H</button>
+                    <button type="button" class="plant-inline-button">PM</button>
+                  </div>
                 </td>
               </tr>
 
               <!-- Row 2 -->
               <tr class="user-table-row jt-data-row" data-date="28/01/2026" data-inst-type="N.A.">
-                <td class="user-table-center user-table-bold">2</td>
-                <td class="user-table-bold user-table-center">ASH</td>
+                <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                <td class="user-table-center user-table-bold user-table-primary">ASH</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <span class="user-table-bold">N.A.</span>
-                    <span class="user-table-blue">Ca-7</span>
+                    <div class="user-table-primary user-table-bold">N.A.</div>
+                    <div class="user-table-blue user-table-bold">Ca-7</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-primary">Removed Power Cylinder to be repaired.(By:ARP : 28/01/2026)</div>
-                    <div class="color-orange">N.A.</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">N.A.</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold">BSU</td>
-                <td class="user-table-desc">Removed power cylinder repaired.</td>
-                <td class="user-table-center user-table-bold">BSU</td>
+                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                <td class="user-table-primary font-14px" style="line-height: 1.5;">Removed power cylinder repaired.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
                 <td class="user-table-center">
-                  <span class="status-text status-text--success">OVER</span>
+                  <span class="ui-badge ui-badge--success">OVER</span>
                 </td>
                 <td></td>
                 <td class="user-table-center">
@@ -201,8 +209,8 @@
               </tr>
 
               <!-- ── DATE GROUP: 24/01/2026 ── -->
-              <tr class="user-table-row user-table-tfoot" data-date-group="24/01/2026">
-                <td colspan="10" class="user-table-bold" style="background: rgba(87, 148, 242, 0.05);">
+              <tr class="user-table-date" data-date-group="24/01/2026">
+                <td colspan="10" class="user-table-bold" >
                   <i class="ph-fill ph-calendar-blank"></i>
                   24/01/2026
                 </td>
@@ -238,8 +246,8 @@
               </tr>
 
               <!-- ── DATE GROUP: 19/01/2026 ── -->
-              <tr class="user-table-row user-table-tfoot" data-date-group="19/01/2026">
-                <td colspan="10" class="user-table-bold" style="background: rgba(87, 148, 242, 0.05);">
+              <tr class="user-table-date" data-date-group="19/01/2026">
+                <td colspan="10" class="user-table-bold" >
                   <i class="ph-fill ph-calendar-blank"></i>
                   19/01/2026
                 </td>
@@ -275,8 +283,8 @@
               </tr>
 
               <!-- ── DATE GROUP: 27/12/2025 ── -->
-              <tr class="user-table-row user-table-tfoot" data-date-group="27/12/2025">
-                <td colspan="10" class="user-table-bold" style="background: rgba(87, 148, 242, 0.05);">
+              <tr class="user-table-date" data-date-group="27/12/2025">
+                <td colspan="10" class="user-table-bold" >
                   <i class="ph-fill ph-calendar-blank"></i>
                   27/12/2025
                 </td>
@@ -312,8 +320,8 @@
               </tr>
 
               <!-- ── DATE GROUP: 22/12/2025 ── -->
-              <tr class="user-table-row user-table-tfoot" data-date-group="22/12/2025">
-                <td colspan="10" class="user-table-bold" style="background: rgba(87, 148, 242, 0.05);">
+              <tr class="user-table-date" data-date-group="22/12/2025">
+                <td colspan="10" class="user-table-bold" >
                   <i class="ph-fill ph-calendar-blank"></i>
                   22/12/2025
                 </td>

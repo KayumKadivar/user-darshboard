@@ -49,29 +49,29 @@
       <div class="jt-filter-card">
         <div class="jt-filter-header">
           <h3 class="jt-filter-title">
-            <i class="ph-bold ph-clock"></i>
-            OT Report Criteria
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
           </h3>
         </div>
 
-        <div class="jt-filter-body" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="jt-filter-body" style="grid-template-columns: repeat(3, 1fr) auto;">
           <!-- Start Date -->
           <div class="jt-filter-group">
             <label class="jt-filter-label" for="startDate">Start Date</label>
-            <input type="date" id="startDate" class="jt-input jt-date-input" value="2026-02-01" onchange="renderTable()">
+            <input type="date" id="startDate" class="jt-input jt-date-input" value="2026-02-01">
           </div>
 
           <!-- End Date -->
           <div class="jt-filter-group">
             <label class="jt-filter-label" for="endDate">End Date</label>
-            <input type="date" id="endDate" class="jt-input jt-date-input" value="2026-02-28" onchange="renderTable()">
+            <input type="date" id="endDate" class="jt-input jt-date-input" value="2026-02-28">
           </div>
 
           <!-- Select Name -->
           <div class="jt-filter-group">
             <label class="jt-filter-label" for="techSelect">Select Name</label>
             <div class="jt-select-wrap">
-              <select id="techSelect" class="jt-select" onchange="renderTable()">
+              <select id="techSelect" class="jt-select">
                 <option value="ALL">ALL</option>
                 <option value="DVP">DVP</option>
                 <option value="JKP">JKP</option>
@@ -83,9 +83,12 @@
           </div>
 
           <!-- Action -->
-          <div class="jt-filter-group" style="justify-content: flex-end;">
-            <button type="button" class="jt-btn-primary" onclick="renderTable()" style="width: 100%;">
-              <i class="ph-bold ph-lightning"></i> GENERATE REPORT
+          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 12px;">
+            <button type="button" class="jt-btn-primary" onclick="renderTable()">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button type="button" class="jt-btn-reset" onclick="location.reload()">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i>
             </button>
           </div>
         </div>
@@ -93,15 +96,18 @@
       <!-- /FILTER CARD -->
 
       <!-- ── TABLE CARD ── -->
-        <div class="user-table-toolbar">
-          <div class="user-table-toolbar-left">
-            <h3 class="user-table-title">
-              <i class="ph-fill ph-file-text"></i>
-              Report Data
-            </h3>
+      <div class="jt-table-card">
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-clock"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">O.T. Hours Report</h3>
+            </div>
           </div>
-          <div class="user-table-toolbar-right">
-            <span class="user-table-info" id="totalHoursIndicator">Total Hours: 0</span>
+          <div class="jt-report-actions">
+            <div class="flex gap-4 items-center">
+              <span class="user-table-info font-14px" id="totalHoursIndicator" style="background: rgba(255, 153, 0, 0.1); color: var(--brand-orange); padding: 6px 12px; border-radius: 6px; font-weight: 700;">Total Hours: 0</span>
+            </div>
           </div>
         </div>
 
@@ -109,10 +115,11 @@
           <table class="user-table" id="ot-main-table" style="min-width: 1000px;">
             <thead>
               <tr>
-                <th class="user-table-center" style="width: 120px;">Date</th>
-                <th class="user-table-center" style="width: 100px;">Tech</th>
-                <th class="user-table-center" style="width: 150px;">Tag No</th>
-                <th class="user-table-center" style="width: 150px;">Type Of Job</th>
+                <th class="user-table-center" style="width: 64px;">Sr</th>
+                <th class="user-table-center" style="width: 110px;">Date</th>
+                <th class="user-table-center" style="width: 80px;">Tech</th>
+                <th class="user-table-center" style="width: 140px;">Tag No</th>
+                <th class="user-table-center" style="width: 140px;">Type Of Job</th>
                 <th style="min-width: 400px;">Description</th>
                 <th class="user-table-center" style="width: 80px;">OT Hour</th>
               </tr>
@@ -121,6 +128,7 @@
             </tbody>
           </table>
         </div>
+      </div>
       <!-- /TABLE CARD -->
 
     </section>
@@ -145,6 +153,7 @@
 
       tbody.innerHTML = '';
       var total = 0;
+      var count = 0;
       var hasData = false;
 
       // Use standard for loop (no filter/map/forEach)
@@ -175,11 +184,12 @@
         if (show) {
           hasData = true;
           total += item.hours;
+          count++;
           var rowHtml = '<tr class="user-table-row">' +
             '<td class="user-table-center user-table-secondary">' + formatDateDisplay(item.date) + '</td>' +
             '<td class="user-table-center user-table-bold user-table-blue">' + item.tech + '</td>' +
             '<td class="user-table-center user-table-secondary">' + item.tag + '</td>' +
-            '<td class="user-table-center user-table-bold user-table-orange" style="font-size: 0.75rem;">' + item.jobType + '</td>' +
+            '<td class="user-table-center user-table-bold user-table-orange" >' + item.jobType + '</td>' +
             '<td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">' + item.desc + '</td>' +
             '<td class="user-table-center user-table-bold user-table-primary">' + item.hours.toFixed(1) + '</td>' +
             '</tr>';
@@ -188,7 +198,7 @@
       }
 
       if (!hasData) {
-        tbody.innerHTML = '<tr class="jt-empty-row"><td colspan="6">No records found for selected criteria</td></tr>';
+        tbody.innerHTML = '<tr class="jt-empty-row"><td colspan="6" class="user-table-center">No records found for selected criteria</td></tr>';
       }
 
       totalHoursEl.textContent = 'Total Hours: ' + total.toFixed(1);

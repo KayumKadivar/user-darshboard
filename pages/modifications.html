@@ -44,21 +44,54 @@
       <!-- Plant Navigation -->
       <div id="plant-nav-container"></div>
 
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card" style="margin-bottom: 24px;">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
+          </h3>
+        </div>
+        <div class="jt-filter-body" style="grid-template-columns: 320px auto;">
+          
+          <!-- Tag Input -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">Search Tag / Description</label>
+            <div class="jt-input-icon-wrap" style="position: relative; width: 100%;">
+              <i class="ph-bold ph-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--typo-label); font-size: 14px; pointer-events: none; z-index: 2;"></i>
+              <input type="text" id="modSearch" class="jt-input" placeholder="Enter Tag No..." style="padding-left: 36px;">
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 12px;">
+            <button onclick="renderModTable()" class="jt-btn-primary">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button onclick="location.reload()" class="jt-btn-reset">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card">
 
-        <div class="user-table-toolbar">
-          <div class="user-table-toolbar-left">
-            <h3 class="user-table-title">
-              <i class="ph-duotone ph-gear-six"></i>
-              <span>Modifications Suggested</span>
-            </h3>
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-gear-six"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Modifications Suggested</h3>
+              <p style="font-size: 13px; color: var(--brand-primary); font-weight: 600; margin-top: 2px;">Plant Unit: Acetic Acid</p>
+            </div>
           </div>
-          <div class="user-table-toolbar-right">
-            <span class="user-table-info">PLANT: <span id="plant-id-display" style="color: var(--brand-primary); font-weight: 700;">BOILER</span></span>
-            <button class="plant-inline-button" style="padding: 6px 16px;">
-              <i class="ph-bold ph-export"></i> Export PDF
-            </button>
+          <div class="jt-report-actions">
+            <div class="flex gap-4 items-center">
+              <button class="jt-btn-primary">
+                <i class="ph-bold ph-export"></i> EXPORT PDF
+              </button>
+            </div>
           </div>
         </div>
 
@@ -66,13 +99,13 @@
           <table class="user-table">
             <thead>
               <tr>
-                <th class="user-table-center" style="width: 50px;">Sr</th>
-                <th class="user-table-center" style="width: 120px;">Tag No</th>
+                <th class="user-table-center" style="width: 64px;">Sr</th>
+                <th class="user-table-center" style="width: 140px;">Tag No</th>
                 <th style="min-width: 450px;">Description</th>
                 <th class="user-table-center" style="width: 80px;">By</th>
                 <th class="user-table-center" style="width: 100px;">Status</th>
                 <th style="min-width: 300px;">Remarks</th>
-                <th class="user-table-center" style="width: 60px;">Verify</th>
+                <th class="user-table-center" style="width: 64px;">Verify</th>
               </tr>
             </thead>
             <tbody id="mod-table-body">
@@ -182,7 +215,7 @@
           '<td class="user-table-center">' +
             '<span class="ui-badge ' + badgeClass + '">' + row.status + '</span>' +
           '</td>' +
-          '<td class="user-table-secondary" style="font-style: italic; font-size: 0.75rem;">' + 
+          '<td class="user-table-secondary" style="font-style: italic; font-size: 0.85rem;">' + 
             escapeHTML(row.remarks).replace(/\n/g, '<br>') + 
           '</td>' +
           '<td class="user-table-center">' +

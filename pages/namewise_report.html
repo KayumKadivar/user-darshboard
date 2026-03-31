@@ -49,26 +49,26 @@
         <div class="jt-filter-header">
           <h3 class="jt-filter-title">
             <i class="ph-bold ph-funnel"></i>
-            Report Filter
+            SEARCH CRITERIA
           </h3>
         </div>
         <div class="jt-filter-body" style="grid-template-columns: repeat(3, 1fr) auto;">
           
           <!-- Start Date -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label">Start Date</label>
+            <label class="jt-filter-label">From Date</label>
             <input type="date" id="startDateFilter" class="jt-input jt-date-input">
           </div>
 
           <!-- End Date -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label">End Date</label>
+            <label class="jt-filter-label">To Date</label>
             <input type="date" id="endDateFilter" class="jt-input jt-date-input">
           </div>
 
           <!-- Select Name -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label">Select Name</label>
+            <label class="jt-filter-label">Technician Name</label>
             <div class="jt-select-wrap">
               <select id="nameFilter" class="jt-select">
                 <option value="">All Technicians</option>
@@ -84,12 +84,12 @@
           </div>
 
           <!-- Actions -->
-          <div class="jt-filter-group" style="flex-direction: row; gap: 10px; align-items: flex-end;">
-            <button onclick="generateReport()" class="jt-btn-apply" style="width: auto; padding: 0 20px;">
-              <i class="ph-bold ph-sparkle"></i> GENERATE
+          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 12px;">
+            <button onclick="generateReport()" class="jt-btn-primary">
+              <i class="ph-bold ph-lightning"></i> APPLY
             </button>
-            <button onclick="resetFilters()" class="jt-btn-reset" style="width: auto; padding: 0 16px; height: 36px; border: 1px solid var(--app-border); background: var(--app-bg); color: var(--typo-label); border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-              <i class="ph-bold ph-x"></i> RESET
+            <button onclick="resetFilters()" class="jt-btn-reset">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i>
             </button>
           </div>
 
@@ -97,17 +97,15 @@
       </div>
 
       <!-- ── REPORT RESULTS ── -->
-        <div id="reportResults" style="display: none; flex-direction: column; gap: 16px;">
+      <!-- ── REPORT RESULTS ── -->
+        <div id="reportResults" class="jt-table-card" style="display: none; flex-direction: column;">
         
-          <div class="user-table-toolbar">
-            <div class="user-table-toolbar-left">
-              <h3 class="user-table-title">
-                <i class="ph-fill ph-user-list"></i>
-                <span id="reportTitle">Name Wise Report</span>
-              </h3>
-            </div>
-            <div class="user-table-toolbar-right">
-              <span id="recordCount" class="user-table-info">0 Records</span>
+          <div class="jt-report-header">
+            <div class="jt-report-title">
+              <i class="ph-fill ph-user-list"></i>
+              <div class="jt-title-stack">
+                <h3 class="jt-main-title" id="reportTitle">Name Wise Report</h3>
+              </div>
             </div>
           </div>
 
@@ -115,15 +113,15 @@
             <table class="user-table">
               <thead>
                 <tr>
-                  <th class="user-table-center" style="width: 50px;">Sr</th>
-                  <th class="user-table-left" style="min-width: 150px;">Assign Job<br><span style="font-size: 9px; opacity: 0.7;">Assign To</span></th>
+                  <th class="user-table-center" style="width: 64px;">Sr</th>
+                  <th class="user-table-left" style="min-width: 150px;">Assign Job<br><span style="font-size: 10px; opacity: 0.7; font-weight: 400;">Assign To</span></th>
                   <th class="user-table-center" style="width: 100px;">Date</th>
-                  <th class="user-table-center" style="width: 70px;">Tech</th>
-                  <th class="user-table-center" style="width: 120px;">Tag No</th>
-                  <th class="user-table-left" style="width: 120px;">Type of Job</th>
+                  <th class="user-table-center" style="width: 80px;">Tech</th>
+                  <th class="user-table-center" style="width: 130px;">Tag No</th>
+                  <th class="user-table-left" style="width: 130px;">Type of Job</th>
                   <th style="min-width: 300px;">Description</th>
                   <th style="min-width: 150px;">Remarks</th>
-                  <th class="user-table-center" style="width: 70px;">OT Hr</th>
+                  <th class="user-table-center" style="width: 80px;">OT Hr</th>
                 </tr>
               </thead>
               <tbody id="reportTableBody">
@@ -250,7 +248,6 @@
       }
       
       tbody.innerHTML = html;
-      document.getElementById('recordCount').textContent = `${sampleData.length} Records`;
     }
 
   </script>
