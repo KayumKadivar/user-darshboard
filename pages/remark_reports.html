@@ -47,39 +47,39 @@
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card" style="margin-top: 16px;">
         
-        <div class="jt-table-header">
-          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-            <h3 class="jt-table-header-title">
+        <div class="user-table-toolbar">
+          <div class="user-table-toolbar-left">
+            <h3 class="user-table-title">
               <i class="ph-bold ph-table"></i>
               <span>Detailed Remark Report</span>
             </h3>
-            <div style="display: flex; gap: 12px; align-items: center;">
-              <span class="jt-record-count">Year: <span style="color: var(--typo-orange);">2026</span></span>
-              <span id="current-date" class="jt-record-count" style="font-family: ui-monospace, monospace;"></span>
-            </div>
+          </div>
+          <div class="user-table-toolbar-right">
+            <span class="user-table-info">Year: <span style="color: var(--brand-primary); font-weight: 700;">2026</span></span>
+            <span id="current-date" class="user-table-info" style="font-family: ui-monospace, monospace;"></span>
           </div>
         </div>
 
-        <div class="jt-table-scroll">
-          <table class="jt-analysis-table">
-            <thead class="jt-analysis-thead">
+        <div class="user-table-wrapper">
+          <table class="user-table">
+            <thead>
               <tr>
-                <th rowspan="2" class="jt-col-sr" style="text-align: center;">Sr</th>
-                <th rowspan="2" class="jt-col-area" style="text-align: center;">Area</th>
-                <th class="jt-col-loop" style="border-bottom: 1px solid var(--app-border);">Loop No</th>
-                <th class="jt-col-job" style="border-bottom: 1px solid var(--app-border);">Job</th>
-                <th rowspan="2" class="jt-col-tech" style="text-align: center;">Tech</th>
-                <th rowspan="2" class="jt-col-desc">Description</th>
-                <th rowspan="2" class="jt-col-tech" style="text-align: center;">Tech</th>
-                <th rowspan="2" class="jt-col-status" style="text-align: center;">Status</th>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Area</th>
+                <th class="user-table-left" style="width: 130px;">Loop No</th>
+                <th class="user-table-left" style="width: 380px;">Job</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th style="min-width: 400px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Status</th>
                 <th rowspan="2" style="min-width: 250px;">Remarks</th>
               </tr>
               <tr>
-                <th class="jt-col-loop">Tag No</th>
-                <th class="jt-col-job">Type Of Job</th>
+                <th class="user-table-left">Tag No</th>
+                <th class="user-table-left">Type Of Job</th>
               </tr>
             </thead>
-            <tbody id="reportTableBody" class="jt-mono">
+            <tbody id="reportTableBody">
               <!-- Rows injected via JS -->
             </tbody>
           </table>
@@ -164,41 +164,39 @@
       let html = '';
       for (let i = 0; i < data.length; i++) {
         const item = data[i];
-        const statusClass = item.status === 'OVER' ? 'jt-status--over' : 'jt-status--pending';
+        const badgeClass = item.status === 'OVER' ? 'ui-badge--success' : 'ui-badge--warning';
         
-        html += '<tr class="jt-analysis-tr">' +
-          '<td class="jt-analysis-td text-center" style="color: var(--typo-label);">' + item.sr + '</td>' +
-          '<td class="jt-analysis-td text-center" style="font-weight: 700; color: var(--typo-blue);">' + item.area + '</td>' +
+        html += '<tr class="user-table-row">' +
+          '<td class="user-table-center user-table-secondary user-table-bold">' + item.sr + '</td>' +
+          '<td class="user-table-center user-table-bold user-table-blue">' + item.area + '</td>' +
           
           // Loop / Tag Stack
-          '<td class="jt-analysis-td">' +
-            '<div class="jt-cell-stack">' +
-              '<div class="jt-cell-top" style="color: var(--typo-label); font-weight: 400; font-size: 13px;">' + item.loopNo + '</div>' +
-              '<div class="jt-cell-divider"></div>' +
-              '<div class="jt-cell-sub color-blue">' + escapeHTML(item.tagNo) + '</div>' +
+          '<td>' +
+            '<div class="user-table-cell-stack">' +
+              '<div class="user-table-primary" style="font-weight: 400; font-size: 13px;">' + item.loopNo + '</div>' +
+              '<div class="user-table-secondary user-table-blue">' + escapeHTML(item.tagNo) + '</div>' +
             '</div>' +
           '</td>' +
 
           // Job / Type Stack
-          '<td class="jt-analysis-td">' +
-            '<div class="jt-cell-stack">' +
-              '<div class="jt-cell-top" style="font-size: 14px; line-height: 1.3;">' + escapeHTML(item.job) + '</div>' +
-              '<div class="jt-cell-divider"></div>' +
-              '<div class="jt-cell-sub color-orange" style="font-size: 11px;">' + item.typeOfJob + '</div>' +
+          '<td>' +
+            '<div class="user-table-cell-stack">' +
+              '<div class="user-table-primary" style="font-size: 14px; line-height: 1.3;">' + escapeHTML(item.job) + '</div>' +
+              '<div class="user-table-secondary user-table-orange" style="font-size: 11px;">' + item.typeOfJob + '</div>' +
             '</div>' +
           '</td>' +
 
-          '<td class="jt-analysis-td text-center" style="font-weight: 700;">' + item.tech1 + '</td>' +
-          '<td class="jt-analysis-td" style="font-size: 15px; line-height: 1.6;">' + escapeHTML(item.description) + '</td>' +
-          '<td class="jt-analysis-td text-center" style="font-weight: 700;">' + item.tech2 + '</td>' +
+          '<td class="user-table-center user-table-bold user-table-secondary">' + item.tech1 + '</td>' +
+          '<td class="user-table-primary" style="font-size: 15px; line-height: 1.6;">' + escapeHTML(item.description) + '</td>' +
+          '<td class="user-table-center user-table-bold user-table-secondary">' + item.tech2 + '</td>' +
           
           // Status
-          '<td class="jt-analysis-td text-center">' +
-            '<span class="jt-status ' + statusClass + '">' + item.status + '</span>' +
+          '<td class="user-table-center">' +
+            '<span class="ui-badge ' + badgeClass + '">' + item.status + '</span>' +
           '</td>' +
           
           // Remarks
-          '<td class="jt-analysis-td" style="font-size: 14px; line-height: 1.5; font-style: italic; color: var(--typo-secondary);">' + 
+          '<td class="user-table-secondary" style="font-size: 14px; line-height: 1.5; font-style: italic;">' + 
             escapeHTML(item.remarks) + 
           '</td>' +
         '</tr>';

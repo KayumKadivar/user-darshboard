@@ -47,35 +47,35 @@
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card">
 
-        <div class="jt-table-header">
-          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-            <h3 class="jt-table-header-title">
+        <div class="user-table-toolbar">
+          <div class="user-table-toolbar-left">
+            <h3 class="user-table-title">
               <i class="ph-duotone ph-gear-six"></i>
               <span>Modifications Suggested</span>
             </h3>
-            <div style="display: flex; gap: 12px; align-items: center;">
-              <span class="jt-record-count">PLANT: <span id="plant-id-display" style="color: var(--typo-orange);">BOILER</span></span>
-              <button class="jt-btn-apply" style="width: auto; padding: 0 16px;">
-                <i class="ph-bold ph-export"></i> Export PDF
-              </button>
-            </div>
+          </div>
+          <div class="user-table-toolbar-right">
+            <span class="user-table-info">PLANT: <span id="plant-id-display" style="color: var(--brand-primary); font-weight: 700;">BOILER</span></span>
+            <button class="plant-inline-button" style="padding: 6px 16px;">
+              <i class="ph-bold ph-export"></i> Export PDF
+            </button>
           </div>
         </div>
 
-        <div class="jt-table-scroll">
-          <table class="jt-analysis-table">
-            <thead class="jt-analysis-thead">
+        <div class="user-table-wrapper">
+          <table class="user-table">
+            <thead>
               <tr>
-                <th class="jt-col-sr">Sr</th>
-                <th class="jt-col-tag">Tag No</th>
+                <th class="user-table-center" style="width: 50px;">Sr</th>
+                <th class="user-table-center" style="width: 120px;">Tag No</th>
                 <th style="min-width: 450px;">Description</th>
-                <th class="jt-col-tech">By</th>
-                <th class="jt-col-status">Status</th>
+                <th class="user-table-center" style="width: 80px;">By</th>
+                <th class="user-table-center" style="width: 100px;">Status</th>
                 <th style="min-width: 300px;">Remarks</th>
-                <th class="jt-col-verify">Verify</th>
+                <th class="user-table-center" style="width: 60px;">Verify</th>
               </tr>
             </thead>
-            <tbody id="mod-table-body" class="jt-mono">
+            <tbody id="mod-table-body">
             </tbody>
           </table>
         </div>
@@ -172,20 +172,20 @@
       
       for (let i = 0; i < modData.length; i++) {
         const row = modData[i];
-        const statusClass = row.status === 'OVER' ? 'jt-status--over' : 'jt-status--pending';
+        const badgeClass = row.status === 'OVER' ? 'ui-badge--success' : 'ui-badge--warning';
         
-        html += '<tr class="jt-analysis-tr">' +
-          '<td class="jt-analysis-td text-center">' + row.sr + '</td>' +
-          '<td class="jt-analysis-td jt-col-tag">' + escapeHTML(row.tag) + '</td>' +
-          '<td class="jt-analysis-td" style="line-height: 1.5; font-size: 0.8125rem;">' + escapeHTML(row.desc) + '</td>' +
-          '<td class="jt-analysis-td jt-col-tech" style="background: rgba(255,255,255,0.02);">' + escapeHTML(row.tech) + '</td>' +
-          '<td class="jt-analysis-td text-center">' +
-            '<span class="jt-status ' + statusClass + '" style="font-size: 10px;">' + row.status + '</span>' +
+        html += '<tr class="user-table-row">' +
+          '<td class="user-table-center user-table-secondary user-table-bold">' + row.sr + '</td>' +
+          '<td class="user-table-center user-table-bold user-table-blue">' + escapeHTML(row.tag) + '</td>' +
+          '<td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">' + escapeHTML(row.desc) + '</td>' +
+          '<td class="user-table-center user-table-bold user-table-secondary">' + escapeHTML(row.tech) + '</td>' +
+          '<td class="user-table-center">' +
+            '<span class="ui-badge ' + badgeClass + '">' + row.status + '</span>' +
           '</td>' +
-          '<td class="jt-analysis-td" style="font-style: italic; color: var(--typo-secondary); font-size: 0.75rem;">' + 
+          '<td class="user-table-secondary" style="font-style: italic; font-size: 0.75rem;">' + 
             escapeHTML(row.remarks).replace(/\n/g, '<br>') + 
           '</td>' +
-          '<td class="jt-analysis-td text-center">' +
+          '<td class="user-table-center">' +
             '<input type="checkbox" class="jt-verify-check" />' +
           '</td>' +
         '</tr>';

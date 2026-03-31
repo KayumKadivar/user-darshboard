@@ -164,28 +164,28 @@
           <span class="jt-record-count" id="recordCount">0 Records Found</span>
         </div>
 
-        <div class="jt-table-scroll">
-          <table class="jt-analysis-table" id="jh-main-table">
-            <thead class="jt-analysis-thead">
+        <div class="user-table-wrapper">
+          <table class="user-table" id="jh-main-table">
+            <thead>
               <tr>
-                <th rowspan="2" style="width:48px; min-width:48px;">Sr</th>
-                <th rowspan="2" style="width:64px;">Area</th>
-                <th style="width:128px;">Loop</th>
-                <th style="min-width:140px;">Inst Type</th>
-                <th rowspan="2" style="width:112px;">Date</th>
+                <th class="user-table-center" rowspan="2" style="width:48px; min-width:48px;">Sr</th>
+                <th class="user-table-center" rowspan="2" style="width:64px;">Area</th>
+                <th class="user-table-left" style="width:128px;">Loop</th>
+                <th class="user-table-left" style="min-width:140px;">Inst Type</th>
+                <th class="user-table-center" rowspan="2" style="width:112px;">Date</th>
                 <th rowspan="2" style="min-width:400px;">Description of Job</th>
-                <th style="width:80px;">Tech</th>
-                <th rowspan="2" style="width:48px; text-align:center;">Attch</th>
+                <th class="user-table-center" style="width:80px;">Tech</th>
+                <th class="user-table-center" rowspan="2" style="width:48px;">Attch</th>
                 <th style="min-width:200px;">Eng Remark</th>
               </tr>
               <tr>
-                <th>Tag</th>
-                <th>Job Type</th>
-                <th>Eng</th>
+                <th class="user-table-left">Tag</th>
+                <th class="user-table-left">Job Type</th>
+                <th class="user-table-center">Eng</th>
                 <th style="min-width:200px;">Exec Remark</th>
               </tr>
             </thead>
-            <tbody id="jobTableBody" class="jt-mono"></tbody>
+            <tbody id="jobTableBody"></tbody>
           </table>
         </div>
 
@@ -629,51 +629,38 @@
       for (var i = 0; i < data.length; i++) {
         var item = data[i];
         var descHtml = item.desc ? item.desc.replace(/\n/g, '<br>') : '--';
-        var rowClass = 'jt-analysis-tr' + (item.isExported ? ' is-exported' : '');
-
-        var row = '<tr class="' + rowClass + '">' +
-          '<td class="jt-analysis-td text-center" onclick="openJobDetailModal(' + item.sr + ')">' + item.sr + '</td>' +
-          '<td class="jt-analysis-td text-center fw-bold">' + (item.area || '--') + '</td>' +
-
-          '<td class="jt-analysis-td">' +
-            '<div class="jt-cell-stack">' +
-              '<div class="jt-cell-top">' + (item.loop || '--') + '</div>' +
-              '<hr class="jt-cell-divider">' +
-              '<div class="jt-cell-sub color-blue">' + (item.tag  || '--') + '</div>' +
+        var row = '<tr class="user-table-row">' +
+          '<td class="user-table-center user-table-secondary" onclick="openJobDetailModal(' + item.sr + ')">' + item.sr + '</td>' +
+          '<td class="user-table-center user-table-bold user-table-primary">' + (item.area || '--') + '</td>' +
+          '<td>' +
+            '<div class="user-table-cell-stack">' +
+              '<div class="user-table-primary user-table-bold">' + (item.loop || '--') + '</div>' +
+              '<div class="user-table-blue user-table-secondary" style="font-size: 0.75rem;">' + (item.tag  || '--') + '</div>' +
             '</div>' +
           '</td>' +
-
-          '<td class="jt-analysis-td">' +
-            '<div class="jt-cell-stack">' +
-              '<div class="jt-cell-top">' + (item.instType || '--') + '</div>' +
-              '<hr class="jt-cell-divider">' +
-              '<div class="jt-cell-sub color-orange">' + (item.jobType  || '--') + '</div>' +
+          '<td>' +
+            '<div class="user-table-cell-stack">' +
+              '<div class="user-table-primary">' + (item.instType || '--') + '</div>' +
+              '<div class="user-table-secondary" style="font-size: 0.75rem; color: var(--brand-orange);">' + (item.jobType  || '--') + '</div>' +
             '</div>' +
           '</td>' +
-
-          '<td class="jt-analysis-td text-center">' + formatDateDisplay(item.date) + '</td>' +
-
-          '<td class="jt-analysis-td" style="line-height:1.5;" onclick="openJobDetailModal(' + item.sr + ')">' + descHtml + '</td>' +
-
-          '<td class="jt-analysis-td">' +
-            '<div class="jt-cell-stack">' +
-              '<div class="jt-cell-top text-center">' + (item.tech || '-') + '</div>' +
-              '<hr class="jt-cell-divider">' +
-              '<div class="jt-cell-sub text-center">' + (item.eng  || '-') + '</div>' +
+          '<td class="user-table-center user-table-secondary">' + formatDateDisplay(item.date) + '</td>' +
+          '<td class="user-table-primary" style="line-height:1.5;" onclick="openJobDetailModal(' + item.sr + ')">' + descHtml + '</td>' +
+          '<td>' +
+            '<div class="user-table-cell-stack user-table-center">' +
+              '<div class="user-table-bold">' + (item.tech || '-') + '</div>' +
+              '<div class="user-table-secondary" style="font-size: 0.75rem;">' + (item.eng  || '-') + '</div>' +
             '</div>' +
           '</td>' +
-
-          '<td class="jt-analysis-td text-center">' +
+          '<td class="user-table-center">' +
             (item.attach
               ? '<i class="ph-bold ph-paperclip jh-attach-icon"></i>'
-              : '<span class="jh-attach-none">-</span>') +
+              : '<span class="user-table-secondary">-</span>') +
           '</td>' +
-
-          '<td class="jt-analysis-td">' +
-            '<div class="jt-cell-stack">' +
-              '<div class="jt-remark-label" style="font-size:0.75rem; color: #5794F2;">'  + (item.remark     || '-') + '</div>' +
-              '<hr class="jt-cell-divider">' +
-              '<div class="jt-remark-label" style="font-size:0.75rem;">' + (item.execRemark || '-') + '</div>' +
+          '<td>' +
+            '<div class="user-table-cell-stack">' +
+              '<div class="user-table-secondary" style="font-size:0.75rem; color: var(--brand-primary);">'  + (item.remark     || '-') + '</div>' +
+              '<div class="user-table-secondary" style="font-size:0.75rem;">' + (item.execRemark || '-') + '</div>' +
             '</div>' +
           '</td>' +
         '</tr>';

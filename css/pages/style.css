@@ -152,28 +152,73 @@
 
 /* (Unused - Migrated to .user-table from common.css) */
 
-/* ── 4a. TABLE HEADER CORRECTIONS (2-Row Layout) ── */
-.user-table-scroll {
+/* --- UNIFIED TABLE COMPONENT --- */
+.user-table-wrapper {
   overflow: auto;
-  border-radius: 0 0 8px 8px;
+  flex: 1;
+  width: 100%;
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
   background: var(--app-panel);
-
 }
 
-.plant-table .user-table-head-cell {
-  background: var(--app-panel) !important;
-  border-bottom: 1px solid var(--app-border) !important;
-  border-right: 1px solid var(--app-border) !important;
-  padding: 10px 14px !important;
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.user-table th {
+  padding: 12px 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--typo-label);
+  background: var(--app-panel-alt);
+  border-bottom: 1px solid var(--app-border);
+  border-right: 1px solid var(--app-border);
+  text-align: center;
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
-.plant-table thead tr:last-child .user-table-head-cell,
-.plant-table thead tr:first-child .user-table-head-cell[rowspan="2"] {
-  border-bottom: 2px solid var(--app-border) !important;
+.user-table td {
+  padding: 10px 10px;
+  color: var(--typo-primary);
+  border-bottom: 1px solid var(--app-border);
+  border-right: 1px solid var(--app-border);
+  vertical-align: top;
 }
+
+.user-table th:last-child,
+.user-table td:last-child {
+  border-right: none;
+}
+
+.user-table tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.user-table-tfoot {
+  background: var(--app-panel-alt);
+}
+
+.user-table-tfoot td {
+  border-top: 2px solid var(--app-border);
+  font-weight: 800;
+  color: var(--typo-blue);
+}
+
+/* Table Utilities */
+.user-table-center { text-align: center !important; }
+.user-table-left { text-align: left !important; }
+.user-table-right { text-align: right !important; }
+.user-table-bold { font-weight: 700 !important; }
+.user-table-blue { color: var(--typo-blue) !important; }
+.user-table-primary { color: var(--typo-primary) !important; }
+.user-table-secondary { color: var(--typo-secondary) !important; font-size: 0.8125rem; }
+.user-table-desc { white-space: pre-wrap; line-height: 1.4; min-width: 250px; }
 
 /* --- 5. SWITCHERS --- */
 .ui-switcher {
@@ -1061,125 +1106,6 @@
   margin-bottom: 0;
 }
 
-.ot-table-view {
-  overflow: auto;
-  flex: 1;
-}
-
-.ot-table {
-  width: 100%;
-  min-width: 1000px;
-  border-collapse: collapse;
-}
-
-.ot-table th {
-  padding: 10px 8px;
-  font-size: 0.75rem;
-  /* 12px */
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--typo-label);
-  background: var(--dark-panel);
-  border-bottom: 1px solid var(--dark-border);
-  border-right: 1px solid var(--dark-border);
-  text-align: center;
-}
-
-.ot-table td {
-  padding: 8px;
-  font-size: 0.875rem;
-  /* 14px */
-  color: var(--typo-primary);
-  border-bottom: 1px solid var(--dark-border);
-  border-right: 1px solid var(--dark-border);
-  vertical-align: top;
-}
-
-.ot-table-row {
-  transition: background-color 0.2s;
-}
-
-.ot-table-row:hover {
-  background-color: var(--btn-bg);
-}
-
-.ot-cell-center {
-  text-align: center;
-}
-
-.ot-bold-blue {
-  font-weight: 700;
-  color: var(--typo-blue);
-}
-
-.ot-bold-primary {
-  font-weight: 700;
-  color: var(--typo-primary);
-}
-
-.ot-mono {
-  color: var(--typo-secondary);
-}
-
-.ot-date {
-  color: var(--typo-secondary);
-}
-
-.ot-cell-primary {
-  color: var(--typo-primary);
-}
-
-.ot-cell-desc {
-  white-space: pre-wrap;
-  line-height: 1.4;
-}
-
-.ot-reason-pill {
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(59, 130, 246, 0.1);
-  color: var(--blue);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  font-size: 0.625rem;
-  /* 10px */
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  line-height: 1.2;
-}
-
-.ot-reason-empty {
-  color: var(--typo-hint);
-  font-size: 0.75rem;
-}
-
-.ot-tfoot {
-  background: var(--dark-panel);
-}
-
-.ot-tfoot th,
-.ot-tfoot td {
-  padding: 10px 8px;
-  border-top: 2px solid var(--dark-border);
-  border-right: 1px solid var(--dark-border);
-}
-
-.ot-tfoot-label {
-  text-align: right;
-  font-weight: 800;
-  color: var(--typo-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding-right: 16px !important;
-}
-
-.ot-tfoot-val {
-  text-align: center;
-  font-weight: 800;
-  color: var(--typo-blue);
-  font-size: 0.9375rem;
-}
 
 .ot-record-info {
   font-size: 0.8125rem;
@@ -1398,55 +1324,6 @@
 
 
 /* --- GNFC TABLE UI (MODALS) --- */
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  border: 1px solid var(--dark-border);
-  border-radius: 8px;
-}
-
-.gnfc-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.8125rem;
-  text-align: left;
-}
-
-.gnfc-table th {
-  background: rgba(87, 148, 242, 0.05);
-  padding: 12px 16px;
-  color: var(--blue);
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 1rem;
-  letter-spacing: 0.05em;
-  border-bottom: 2px solid var(--dark-border);
-  border-right: 1px solid var(--dark-border);
-}
-
-.gnfc-table th:last-child {
-  border-right: none;
-}
-
-.gnfc-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--dark-border);
-  color: var(--primary);
-  vertical-align: middle;
-  border-right: 1px solid var(--dark-border);
-}
-
-.gnfc-table td:last-child {
-  border-right: none;
-}
-
-.gnfc-table tr:last-child td {
-  border-bottom: none;
-}
-
-.gnfc-table tr:hover {
-  background: rgba(87, 148, 242, 0.02);
-}
 
 /* Status Badges */
 .status-badge {
@@ -2449,77 +2326,34 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-.plant-table-wrap,
-.user-table-scroll {
-  overflow-x: auto;
-  overflow-y: visible !important;
-  max-height: none !important;
-}
-
 .plant-table {
   min-width: 1280px;
   table-layout: fixed;
 }
 
-.plant-table th,
-.plant-table td {
-  line-height: 1.5;
-}
-
-.plant-table th {
-  cursor: default;
-}
-
-.plant-table th[data-sort] {
-  cursor: pointer;
-}
-
-.plant-table__cell-stack {
+.user-table-cell-stack {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
 }
 
-.plant-table__cell-stack>* {
+.user-table-cell-stack > * {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 38px;
-  /* Standardize height to ensure borders align across columns */
   width: 100%;
 }
 
-.plant-table__cell-stack>*:not(:last-child) {
+.user-table-cell-stack > *:not(:last-child) {
   border-bottom: 1px solid var(--app-border);
   padding: 0px 8px 6px 8px;
 }
 
-.plant-table__cell-stack>*:last-child {
+.user-table-cell-stack > *:last-child {
   padding: 6px 8px 0px 8px;
-}
-
-.user-table-row.last-child {
-  border-left: 0px solid var(--app-border);
-}
-
-.plant-table__cell-primary {
-  color: var(--typo-primary);
-}
-
-.plant-table__cell-secondary {
-  color: var(--typo-secondary);
-  font-size: 0.9125rem;
-}
-
-.plant-tag-link {
-  color: #5794F2;
-  text-decoration: none;
-}
-
-.plant-tag-link:hover {
-  text-decoration: underline;
 }
 
 .user-table-cell--nopadding {
@@ -3364,76 +3198,7 @@ select.gnfc-modal-input {
   border-color: rgba(245, 158, 11, 0.2);
 }
 
-/* --- Tables (Standardized) --- */
-.theme-table {
-  width: 100%;
-  border-collapse: collapse;
-}
 
-.theme-table th {
-  background: var(--app-panel-alt);
-  color: var(--typo-secondary);
-  border: 1px solid var(--app-border);
-  padding: 12px 16px;
-  font-weight: 700;
-  text-align: center;
-  white-space: nowrap;
-  font-size: 15px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  position: sticky;
-  top: 0;
-  z-index: 5;
-}
-
-.theme-table td {
-  border: 1px solid var(--app-border);
-  padding: 12px 16px;
-  color: var(--app-text);
-  vertical-align: middle;
-  font-size: 14px;
-}
-
-.theme-table tr:hover td {
-  background-color: rgba(255, 255, 255, 0.03);
-}
-
-.theme-table tbody tr:nth-child(even) td {
-  background-color: rgba(255, 255, 255, 0.015);
-}
-
-/* --- Status Colors --- */
-.status-pill {
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  border: 1px solid transparent;
-}
-
-.status-pending {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-  border-color: rgba(239, 68, 68, 0.2);
-}
-
-.status-progress {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  border-color: rgba(59, 130, 246, 0.2);
-}
-
-.status-hold {
-  background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
-  border-color: rgba(245, 158, 11, 0.2);
-}
-
-.status-completed {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-  border-color: rgba(16, 185, 129, 0.2);
-}
 
 /* --- HSO / ISO Report Special --- */
 .hso-report-container {
@@ -3475,35 +3240,6 @@ select.gnfc-modal-input {
   gap: 8px;
 }
 
-.hso-table-modern {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: 1px solid var(--app-border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.hso-table-modern th {
-  background: var(--app-panel-alt);
-  color: var(--app-text);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--app-border);
-  border-right: 1px solid var(--app-border);
-  text-align: left;
-}
-
-.hso-table-modern td {
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--app-border);
-  border-right: 1px solid var(--app-border);
-  vertical-align: top;
-  line-height: 1.4;
-  font-size: 13px;
-}
 
 /* ==========================================================================
    JOB TYPE ANALYSIS PAGE  (job_types.html)
@@ -3887,85 +3623,6 @@ html[data-theme="light"] .jt-date-input::-webkit-calendar-picker-indicator {
 }
 
 /* ── Analysis Table ── */
-.jt-analysis-table {
-  width: 100%;
-  min-width: 1400px;
-  border-collapse: collapse;
-  table-layout: fixed;
-  font-size: 0.875rem;
-  height: auto !important; /* Forces natural row height even in flex containers */
-}
-
-/* Table header cells */
-.jt-analysis-thead th {
-  background: var(--app-panel-alt);
-  padding: 10px;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: var(--typo-blue, #5794F2);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--app-border);
-  border-right: 1px solid var(--app-border);
-  text-align: left;
-  position: sticky;
-  top: 0;
-  z-index: 5;
-}
-
-.jt-analysis-thead th:last-child {
-  border-right: none;
-}
-
-/* ── Date group header row ── */
-.jt-date-group-row td {
-  padding: 8px 16px;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: var(--typo-blue, #5794F2);
-  background: rgba(87, 148, 242, 0.06);
-  border-bottom: 1px solid var(--app-border);
-  border-right: none;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.jt-date-group-row td i {
-  margin-right: 6px;
-}
-
-/* ── Data rows ── */
-.jt-analysis-tr {
-  border-bottom: 1px solid var(--app-border);
-  transition: background 0.15s ease;
-}
-
-.jt-analysis-tr:last-child {
-  border-bottom: none;
-}
-
-.jt-analysis-tr:hover {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-html[data-theme="light"] .jt-analysis-tr:hover {
-  background: rgba(0, 0, 0, 0.02);
-}
-
-/* ── Table cells ── */
-.jt-analysis-td {
-  padding: 10px;
-  color: var(--typo-primary);
-  vertical-align: top;
-  border-right: 1px solid var(--app-border);
-  border-bottom: 1px solid var(--app-border);
-  font-size: 0.875rem;
-  line-height: 1.45;
-}
-
-.jt-analysis-td:last-child {
-  border-right: none;
-}
 
 /* ── Stacked cell (Loop No / Tag No split) ── */
 .jt-cell-stack {

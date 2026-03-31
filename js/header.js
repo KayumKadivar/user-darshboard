@@ -1,15 +1,8 @@
-/**
- * header.js
- * Dynamically injects the header into the #header-container element.
- * Supports dynamic titles via data-title attribute or document title.
- */
 
 $(function () {
     const $headerContainer = $('#header-container');
     if (!$headerContainer.length) return;
 
-    // Determine the page title
-    // Priority: 1. data-title attribute, 2. document title (before |), 3. Default "Dashboard"
     const pageTitle = $headerContainer.data('title') || 
                       (document.title ? document.title.split('|')[0].trim() : 'Dashboard');
 

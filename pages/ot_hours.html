@@ -93,33 +93,34 @@
       <!-- /FILTER CARD -->
 
       <!-- ── TABLE CARD ── -->
-      <div class="jt-table-card">
-        <div class="jt-table-header" style="display: flex; justify-content: space-between; align-items: center;">
-          <h3 class="jt-table-header-title">
-            <i class="ph-fill ph-file-text"></i>
-            Report Data
-          </h3>
-          <span class="jt-record-count" id="totalHoursIndicator">Total Hours: 0</span>
+        <div class="user-table-toolbar">
+          <div class="user-table-toolbar-left">
+            <h3 class="user-table-title">
+              <i class="ph-fill ph-file-text"></i>
+              Report Data
+            </h3>
+          </div>
+          <div class="user-table-toolbar-right">
+            <span class="user-table-info" id="totalHoursIndicator">Total Hours: 0</span>
+          </div>
         </div>
 
-        <div class="jt-table-scroll">
-          <table class="jt-analysis-table" style="min-width: 1000px;">
-            <thead class="jt-analysis-thead">
+        <div class="user-table-wrapper">
+          <table class="user-table" id="ot-main-table" style="min-width: 1000px;">
+            <thead>
               <tr>
-                <th class="jt-col-ot-date text-center">Date</th>
-                <th class="jt-col-ot-tech text-center">Tech</th>
-                <th class="jt-col-ot-tag text-center">Tag No</th>
-                <th class="jt-col-ot-type text-center">Type Of Job</th>
-                <th class="jt-col-ot-desc">Description</th>
-                <th class="jt-col-ot-hour text-center">OT Hour</th>
+                <th class="user-table-center" style="width: 120px;">Date</th>
+                <th class="user-table-center" style="width: 100px;">Tech</th>
+                <th class="user-table-center" style="width: 150px;">Tag No</th>
+                <th class="user-table-center" style="width: 150px;">Type Of Job</th>
+                <th style="min-width: 400px;">Description</th>
+                <th class="user-table-center" style="width: 80px;">OT Hour</th>
               </tr>
             </thead>
-            <tbody id="reportTableBody" class="jt-mono">
-              <!-- Rows injected via JS -->
+            <tbody id="reportTableBody">
             </tbody>
           </table>
         </div>
-      </div>
       <!-- /TABLE CARD -->
 
     </section>
@@ -174,13 +175,13 @@
         if (show) {
           hasData = true;
           total += item.hours;
-          var rowHtml = '<tr class="jt-analysis-tr">' +
-            '<td class="jt-analysis-td text-center">' + formatDateDisplay(item.date) + '</td>' +
-            '<td class="jt-analysis-td text-center fw-bold color-blue">' + item.tech + '</td>' +
-            '<td class="jt-analysis-td text-center">' + item.tag + '</td>' +
-            '<td class="jt-analysis-td text-center fw-bold color-orange">' + item.jobType + '</td>' +
-            '<td class="jt-analysis-td color-secondary" style="line-height: 1.5;">' + item.desc + '</td>' +
-            '<td class="jt-analysis-td text-center fw-bold color-blue">' + item.hours.toFixed(1) + '</td>' +
+          var rowHtml = '<tr class="user-table-row">' +
+            '<td class="user-table-center user-table-secondary">' + formatDateDisplay(item.date) + '</td>' +
+            '<td class="user-table-center user-table-bold user-table-blue">' + item.tech + '</td>' +
+            '<td class="user-table-center user-table-secondary">' + item.tag + '</td>' +
+            '<td class="user-table-center user-table-bold user-table-orange" style="font-size: 0.75rem;">' + item.jobType + '</td>' +
+            '<td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">' + item.desc + '</td>' +
+            '<td class="user-table-center user-table-bold user-table-primary">' + item.hours.toFixed(1) + '</td>' +
             '</tr>';
           tbody.innerHTML += rowHtml;
         }

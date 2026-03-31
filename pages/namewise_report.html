@@ -97,42 +97,40 @@
       </div>
 
       <!-- ── REPORT RESULTS ── -->
-      <div id="reportResults" style="display: none; flex-direction: column; gap: 16px;">
+        <div id="reportResults" style="display: none; flex-direction: column; gap: 16px;">
         
-        <div class="jt-table-card">
-          <div class="jt-table-header">
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-              <h3 class="jt-table-header-title">
-                <i class="ph-fill ph-user-list" style="color: var(--typo-blue, #5794F2);"></i>
+          <div class="user-table-toolbar">
+            <div class="user-table-toolbar-left">
+              <h3 class="user-table-title">
+                <i class="ph-fill ph-user-list"></i>
                 <span id="reportTitle">Name Wise Report</span>
               </h3>
-              <span id="recordCount" class="jt-record-count">0 Records</span>
+            </div>
+            <div class="user-table-toolbar-right">
+              <span id="recordCount" class="user-table-info">0 Records</span>
             </div>
           </div>
 
-          <div class="jt-table-scroll">
-            <table class="jt-analysis-table">
-              <thead class="jt-analysis-thead">
+          <div class="user-table-wrapper">
+            <table class="user-table">
+              <thead>
                 <tr>
-                  <th class="jt-col-sr" style="text-align: center;">Sr</th>
-                  <th style="min-width: 150px;">Assign Job<br><span style="font-size: 9px; opacity: 0.7;">Assign To</span></th>
-                  <th style="width: 100px; text-align: center;">Date</th>
-                  <th style="width: 70px; text-align: center;">Tech</th>
-                  <th class="jt-col-tag" style="text-align: center;">Tag No</th>
-                  <th style="width: 120px;">Type of Job</th>
-                  <th class="jt-col-desc">Description</th>
+                  <th class="user-table-center" style="width: 50px;">Sr</th>
+                  <th class="user-table-left" style="min-width: 150px;">Assign Job<br><span style="font-size: 9px; opacity: 0.7;">Assign To</span></th>
+                  <th class="user-table-center" style="width: 100px;">Date</th>
+                  <th class="user-table-center" style="width: 70px;">Tech</th>
+                  <th class="user-table-center" style="width: 120px;">Tag No</th>
+                  <th class="user-table-left" style="width: 120px;">Type of Job</th>
+                  <th style="min-width: 300px;">Description</th>
                   <th style="min-width: 150px;">Remarks</th>
-                  <th style="width: 70px; text-align: center;">OT Hr</th>
+                  <th class="user-table-center" style="width: 70px;">OT Hr</th>
                 </tr>
               </thead>
-              <tbody id="reportTableBody" class="jt-mono">
-                <!-- Rows injected via JS -->
+              <tbody id="reportTableBody">
               </tbody>
             </table>
           </div>
         </div>
-
-      </div>
 
     </section>
   </main>
@@ -233,21 +231,21 @@
       let html = '';
       for (let i = 0; i < sampleData.length; i++) {
         const row = sampleData[i];
-        html += '<tr class="jt-analysis-tr">' +
-          '<td class="jt-analysis-td text-center" style="color: var(--typo-label);">' + row.sr + '</td>' +
-          '<td class="jt-analysis-td">' +
-            '<div class="jt-cell-stack">' +
-              '<div class="jt-cell-top" style="font-weight: 700; line-height: 1.3;">' + escapeHTML(row.assignJob || '-') + '</div>' +
-              (row.assignTo ? '<div class="jt-cell-divider"></div><div class="jt-cell-sub color-orange" style="font-size: 10px;">' + escapeHTML(row.assignTo) + '</div>' : '') +
+        html += '<tr class="user-table-row">' +
+          '<td class="user-table-center user-table-secondary user-table-bold">' + row.sr + '</td>' +
+          '<td>' +
+            '<div class="user-table-cell-stack">' +
+              '<div class="user-table-primary user-table-bold" style="line-height: 1.3;">' + escapeHTML(row.assignJob || '-') + '</div>' +
+              (row.assignTo ? '<div class="user-table-secondary user-table-orange" style="font-size: 10px;">' + escapeHTML(row.assignTo) + '</div>' : '') +
             '</div>' +
           '</td>' +
-          '<td class="jt-analysis-td text-center" style="font-size: 13px;">' + row.date + '</td>' +
-          '<td class="jt-analysis-td text-center" style="font-weight: 700; color: var(--typo-label);">' + row.tech + '</td>' +
-          '<td class="jt-analysis-td text-center jt-col-tag">' + escapeHTML(row.tagNo) + '</td>' +
-          '<td class="jt-analysis-td" style="font-size: 11px; text-transform: uppercase;">' + escapeHTML(row.typeOfJob) + '</td>' +
-          '<td class="jt-analysis-td" style="font-size: 14px; line-height: 1.5;">' + escapeHTML(row.desc) + '</td>' +
-          '<td class="jt-analysis-td" style="font-size: 11px; font-style: italic; color: var(--typo-secondary);">' + escapeHTML(row.remarks || '-') + '</td>' +
-          '<td class="jt-analysis-td text-center" style="font-weight: 700;">' + row.otHour + '</td>' +
+          '<td class="user-table-center user-table-secondary" style="font-size: 13px;">' + row.date + '</td>' +
+          '<td class="user-table-center user-table-bold user-table-secondary">' + row.tech + '</td>' +
+          '<td class="user-table-center user-table-blue user-table-bold">' + escapeHTML(row.tagNo) + '</td>' +
+          '<td class="user-table-secondary" style="font-size: 11px; text-transform: uppercase;">' + escapeHTML(row.typeOfJob) + '</td>' +
+          '<td class="user-table-primary" style="font-size: 14px; line-height: 1.5;">' + escapeHTML(row.desc) + '</td>' +
+          '<td class="user-table-secondary" style="font-size: 11px; font-style: italic;">' + escapeHTML(row.remarks || '-') + '</td>' +
+          '<td class="user-table-center user-table-bold user-table-primary">' + row.otHour + '</td>' +
         '</tr>';
       }
       
