@@ -1,6 +1,20 @@
 $(function () {
-    const isSubPage = window.location.pathname.includes('/pages/');
-    const basePath = isSubPage ? '../' : './';
+    // Determine the base path to the root directory dynamically
+    const getBasePath = () => {
+        const path = window.location.pathname;
+        const projectRoot = 'User Dashbord Hmtl Page'; // Or any other identifier
+        const levels = path.split('/').filter(p => p).length - 1; // Simplistic count
+        
+        // Better: count segments after the root folder or just count "pages"
+        const segments = path.split('/');
+        const pagesIndex = segments.indexOf('pages');
+        if (pagesIndex === -1) return './';
+        
+        const depth = segments.length - pagesIndex - 1;
+        return '../'.repeat(depth);
+    };
+    
+    const basePath = getBasePath();
 
     const sidebarHTML = `
     <aside class="app-sidebar w-60">
@@ -18,7 +32,7 @@ $(function () {
           <span class="sidebar-text">Dashboard</span>
         </a>
      
-        <a href="#" class="sidebar-link" data-id="plants">
+        <a href="${basePath}pages/plant/plant.html" class="sidebar-link" data-id="plants">
           <i class="ph ph-bold ph-buildings"></i>
           <span class="sidebar-text">Plants</span>
         </a>

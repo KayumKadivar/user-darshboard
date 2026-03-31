@@ -5,267 +5,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Loop Data | GNFC</title>
-  <link rel="stylesheet" href="/src/css/ios-fonts.css">
-  <link rel="stylesheet" href="/src/css/modal-ui.css">
-  <link rel="stylesheet" href="/src/css/typography.css">
-  <link rel="stylesheet" href="/src/css/table-style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="/src/js/tailwind_config.js"></script>
-  <script>window.activePage = 'plants';</script>
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/pages/plant.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
 
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>window.activePage = 'plants';</script>
+  <style>
+    .swal2-container {
+      z-index: 10005 !important;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 
-<body class="bg-dark-bg color-primary h-screen flex overflow-hidden font-sans">
+<body class="dashboard-body">
 
-  <script src="/src/js/theme_manager.js"></script>
-  <script src="/src/js/sidebar.js"></script>
-  <div id="sidebar-container"></div>
-  <script>renderSidebar('plants');</script>
+  <div class="sidebar-container"></div>
 
-  <main class="flex-1 flex flex-col h-screen overflow-hidden">
+  <main class="main-wrapper">
 
-    <div id="header-container"></div>
-    <script src="/src/js/header.js"></script>
-    <script>
-      renderHeader({
-        title: "Loop Data",
-        breadcrumbs: [
-          { label: "Plant", href: "/src/pages/plant_status.html" },
-          { label: "Boiler", href: "/src/pages/boiler_dashboard.html" },
-          { label: "Inst Data", href: "/src/pages/boiler_inst_data.html" },
-          { label: "Loop Data" }
-        ],
-        backLink: "/src/pages/boiler_inst_data.html"
-      });
-    </script>
+    <div id="header-container" data-title="Loop Data" data-back="boiler_dashboard.html"></div>
 
-    <div class="flex-1 overflow-y-auto p-4 md:p-6 bg-dark-bg">
-      <div class="max-w-6xl mx-auto">
+    <div class="dashboard-content dashboard-scroll">
 
-        <!-- ========== VIEW MODE ========== -->
-        <div id="view-mode">
+      <!-- ========== VIEW MODE ========== -->
+      <div id="view-mode">
 
-          <!-- Action Toolbar -->
-          <div
-            class="flex items-center gap-2 p-5 rounded-md flex-wrap mb-5 border border-dark-border bg-dark-panel shadow-md">
-            <!-- Find Loop Dropdown -->
-            <div class="relative flex-1 min-w-[260px]" id="loop-search-wrap">
-              <label class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1">Find
-                Loop</label>
-              <div class="relative flex items-center">
-                <i class="ph-bold ph-magnifying-glass absolute left-3 color-secondary"
-                  style="font-size:.9rem;pointer-events:none;"></i>
-                <input type="text" id="loop-search-input"
-                  class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)] pl-9 pr-9 font-bold"
-                  placeholder="Search loop ID or name..." autocomplete="off">
-                <button id="loop-dd-btn"
-                  class="absolute right-2 w-7 h-7 flex items-center justify-center rounded hover:bg-white/10 color-secondary transition-colors">
-                  <i class="ph-bold ph-caret-down" style="font-size:.875rem;"></i>
-                </button>
-              </div>
-            <div id="loop-dropdown-list"
-                class="hidden absolute top-[calc(100%+4px)] left-0 w-full bg-dark-panel border border-dark-border rounded-lg shadow-xl max-h-56 overflow-y-auto z-50">
-              </div>
-            </div>
-
-            <!-- Area Filter -->
-            <div style="min-width:130px;">
-              <label
-                class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1">Area</label>
-              <div class="relative">
-                <select id="view-area-select"
-                  class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)] pr-8 cursor-pointer"
-                  style="appearance:none;" onchange="filterByArea()">
-                  <option>ALL</option>
-                  <option>BOILER-1</option>
-                  <option>BOILER-2</option>
-                  <option>BOILER-3</option>
-                  <option>BOILER-4</option>
-                  <option>BOP</option>
-                  <option>COMMON</option>
-                  <option>ASH</option>
-                  <option>TG-1</option>
-                  <option>TG-2</option>
-                </select>
-                <i class="ph-bold ph-caret-down absolute right-2.5 top-1/2 -translate-y-1/2 color-secondary pointer-events-none"
-                  style="font-size:.8rem;"></i>
-              </div>
-            </div>
-
-            <span class="w-[1px] h-12 bg-dark-border mx-1 block"></span>
-
-            <!-- Add New Loop -->
-            <div>
-              <button
-                class="inline-flex items-center gap-1.5 h-9 px-3.5 bg-white/5 border border-white/10 rounded-md text-[13px] font-bold cursor-pointer transition-all duration-200 whitespace-nowrap hover:bg-white/10 hover:border-blue-400/50 hover:text-blue-400 bg-gradient-to-br from-emerald-600 to-emerald-500 !border-0 text-white shadow-[0_2px_8px_-2px_rgba(16,185,129,0.4)] px-5 hover:!from-emerald-500 hover:!to-emerald-400 hover:shadow-[0_4px_12px_-2px_rgba(16,185,129,0.5)]"
-                onclick="showAddMode()">
-                <i class="ph-bold ph-plus"></i> Add New Loop
+        <!-- Action Toolbar -->
+        <div class="action-toolbar">
+          <!-- Find Loop -->
+          <div class="search-field-group" id="loop-search-wrap">
+            <label class="input-label">Find Loop</label>
+            <div class="autocomplete-container">
+              <i class="ph-bold ph-magnifying-glass absolute-icon-left"></i>
+              <input type="text" id="loop-search-input" class="input-control pl-40px pr-40px"
+                placeholder="Search loop ID or name..." autocomplete="off">
+              <button id="loop-dd-btn" class="absolute-icon-right">
+                <i class="ph-bold ph-caret-down"></i>
               </button>
+              <div id="loop-dropdown-list" class="autocomplete-list hidden"></div>
             </div>
           </div>
-          <div
-            class="bg-dark-panel border border-dark-border rounded-md p-5 overflow-hidden flex flex-col items-center justify-center shadow-md">
-            <div id="loop-empty-state" class="w-full flex flex-col items-center justify-center">
-              <div
-                class="w-16 h-16 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-5">
-                <i class="ph-bold ph-arrows-clockwise" style="font-size:1.75rem;color:#5794f2;"></i>
-              </div>
-              <div class="text-center">
-                <p class="text-[0.9375rem] font-bold text-dark-text mb-1">
-                  No Loop Selected</p>
-                <p class="text-[0.8125rem] text-dark-muted">Search or select a Loop from
-                  the dropdown to view its data.</p>
-              </div>
-            </div>
 
-            <div id="loop-data-area" style="display:none;" class="w-full">
-
-              <!-- Name & Service -->
-              <div class="bg-dark-panel border border-dark-border rounded-md overflow-hidden mb-3 flex flex-col">
-                <div class="flex border-b border-dark-border">
-                  <div class="w-[160px] py-3 px-4 text-xs font-extrabold uppercase tracking-widest text-dark-text flex items-center border-r border-dark-border bg-dark-bg/50">LOOP NAME :</div>
-                  <div class="flex-1 py-3 px-4 text-sm font-semibold text-dark-text flex items-center bg-dark-panel">
-                    <span id="view-loop-name" class="font-bold text-[15px] text-blue-500"></span>
-                  </div>
-                </div>
-                <div class="flex">
-                  <div class="w-[160px] py-3 px-4 text-xs font-extrabold uppercase tracking-widest text-dark-text flex items-center border-r border-dark-border bg-dark-bg/50"> SERVICE :</div>
-                  <div class="flex-1 py-3 px-4 text-sm font-semibold text-dark-text flex items-center bg-dark-panel">
-                    <span id="view-loop-service" class="text-[14px]"></span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Schematic & Special Doc -->
-              <div class="bg-dark-panel border border-dark-border rounded-md overflow-hidden mb-3 flex flex-col">
-                <div class="grid grid-cols-1 md:grid-cols-2">
-                  <div class="border-b md:border-b-0 md:border-r border-dark-border bg-dark-panel">
-                    <div
-                      class="py-3 px-4 border-b border-dark-border text-xs font-extrabold uppercase tracking-widest text-dark-text text-center bg-dark-bg/50">
-                      LOOP SCHEMATIC</div>
-                    <div class="flex items-center justify-center p-4 min-h-[3rem]">
-                      <span id="view-loop-schematic" class="text-sm font-semibold text-dark-text">—</span>
-                    </div>
-                  </div>
-                  <div class="bg-dark-panel">
-                    <div
-                      class="py-3 px-4 border-b border-dark-border text-xs font-extrabold uppercase tracking-widest text-dark-text text-center bg-dark-bg/50">
-                      SPECIAL DOCUMENT</div>
-                    <div class="flex items-center justify-center p-4 min-h-[3rem]">
-                      <span id="view-loop-special-doc" class="text-sm font-semibold text-dark-text">—</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Hints & Instructions -->
-              <div class="bg-dark-panel border border-dark-border rounded-md overflow-hidden mb-5">
-                <div class="grid grid-cols-1 md:grid-cols-2">
-                  <div class="border-b md:border-b-0 md:border-r border-dark-border bg-dark-panel">
-                    <div
-                      class="py-3 px-4 border-b border-dark-border text-xs font-extrabold uppercase tracking-widest text-dark-text text-center bg-dark-bg/50">
-                      HELPFUL HINTS</div>
-                    <div class="p-3">
-                      <div id="view-loop-hints"
-                        class="text-sm font-semibold text-dark-text whitespace-pre-wrap min-h-[4rem]">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="bg-dark-panel">
-                    <div
-                      class="py-3 px-4 border-b border-dark-border text-xs font-extrabold uppercase tracking-widest text-dark-text text-center bg-dark-bg/50">
-                      SPECIAL INSTRUCTIONS</div>
-                    <div class="p-3">
-                      <div id="view-loop-instructions"
-                        class="text-sm font-semibold text-dark-text whitespace-pre-wrap min-h-[4rem]">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Components Table -->
-              <div class="bg-dark-panel border border-dark-border rounded-md overflow-hidden mb-5">
-                <div
-                  class="py-3 px-4 border-b border-dark-border text-xs font-extrabold uppercase tracking-widest text-dark-text text-center bg-dark-bg/50">
-                  LOOP COMPONENTS</div>
-                <div class="overflow-x-auto bg-dark-panel">
-                  <table class="w-full text-left border-collapse min-w-[600px]">
-                    <thead>
-                      <tr class="bg-dark-bg/50 border-b border-dark-border">
-                        <th
-                          class="px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-dark-muted border-r border-dark-border w-[5%]">
-                          #</th>
-                        <th
-                          class="px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-dark-muted border-r border-dark-border w-[18%]">
-                          Tag No</th>
-                        <th
-                          class="px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-dark-muted border-r border-dark-border w-[37%]">
-                          Description</th>
-                        <th
-                          class="px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-dark-muted border-r border-dark-border w-[20%]">
-                          Type</th>
-                        <th
-                          class="px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-dark-muted w-[20%]">
-                          Make / Model</th>
-                      </tr>
-                    </thead>
-                    <tbody id="components-body"></tbody>
-                  </table>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-
-
-      </div>
-    </div>
-  </main>
-
-  <!-- ========== ADD NEW LOOP MODAL ========== -->
-  <div id="add-loop-modal" class="gnfc-modal-overlay" onclick="if(event.target===this)hideAddMode()">
-    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
-
-      <!-- Header -->
-      <div class="gnfc-modal-header">
-        <div
-          class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center shrink-0">
-          <i class="ph-fill ph-arrows-clockwise text-[1.1rem] text-emerald-500"></i>
-        </div>
-        <div class="flex-1">
-          <p class="gnfc-modal-title">Add New Loop</p>
-          <p class="gnfc-modal-subtitle">Fill in the details below and save.</p>
-        </div>
-        <button onclick="hideAddMode()" class="gnfc-modal-close">
-          <i class="ph-bold ph-x text-base"></i>
-        </button>
-      </div>
-
-      <!-- Body -->
-      <div class="gnfc-modal-body">
-
-        <!-- Row 1: Loop ID, Area -->
-        <div class="flex items-center gap-2 p-4">
-          <div>
-            <label class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1.5">Loop
-              ID *</label>
-            <input type="text" id="add-loop-id"
-              class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)]"
-              placeholder="e.g. LS-B1-012">
-          </div>
-          <div>
-            <label
-              class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1.5">Area</label>
-            <div style="position:relative;">
-              <select id="add-area-select"
-                class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)]"
-                style="appearance:none;padding-right:2rem;cursor:pointer;">
+          <!-- Area Filter -->
+          <div style="min-width: 140px;">
+            <label class="input-label">Area</label>
+            <div class="select-wrapper">
+              <select id="view-area-select" class="input-control" onchange="filterByArea()">
+                <option>ALL</option>
                 <option>BOILER-1</option>
                 <option>BOILER-2</option>
                 <option>BOILER-3</option>
@@ -276,84 +76,169 @@
                 <option>TG-1</option>
                 <option>TG-2</option>
               </select>
-              <i class="ph-bold ph-caret-down"
-                style="position:absolute;right:0.625rem;top:50%;transform:translateY(-50%);font-size:0.75rem;color:var(--gnfc-modal-subtitle-color,#8e8e9e);pointer-events:none;"></i>
+            </div>
+          </div>
+
+          <div class="ui-divider-v"></div>
+
+          <!-- Add New Loop -->
+          <button class="toolbar-btn btn-emerald" onclick="showAddMode()">
+            <i class="ph-bold ph-plus"></i> Add New Loop
+          </button>
+        </div>
+
+        <!-- Empty State Card -->
+        <div id="loop-empty-state" class="empty-state-card">
+          <div class="empty-icon-circle">
+            <i class="ph-bold ph-arrows-clockwise"></i>
+          </div>
+          <div class="empty-text-group">
+            <h4 class="empty-title">No Loop Selected</h4>
+            <p class="empty-desc">Search or select a Loop from the dropdown to view its data.</p>
+          </div>
+        </div>
+
+        <div id="loop-data-area" class="hidden">
+          <!-- General Info -->
+          <div class="form-section">
+            <h3 class="section-title"><i class="ph-bold ph-info"></i> General Information</h3>
+            <div class="dashboard-grid grid-cols-2">
+              <div class="form-group mb-0">
+                <label class="input-label">Loop Name</label>
+                <input type="text" id="view-loop-name" class="input-control text-blue font-bold" readonly>
+              </div>
+              <div class="form-group mb-0">
+                <label class="input-label">Service</label>
+                <input type="text" id="view-loop-service" class="input-control" readonly>
+              </div>
+              <div class="form-group mb-0">
+                <label class="input-label">Loop Schematic</label>
+                <input type="text" id="view-loop-schematic" class="input-control" readonly>
+              </div>
+              <div class="form-group mb-0">
+                <label class="input-label">Special Document</label>
+                <input type="text" id="view-loop-special-doc" class="input-control" readonly>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hints & Instructions -->
+          <div class="dashboard-grid grid-cols-2">
+            <div class="form-section">
+              <h3 class="section-title"><i class="ph-bold ph-lightbulb"></i> Helpful Hints</h3>
+              <textarea id="view-loop-hints" class="input-control" readonly style="min-height: 120px;"></textarea>
+            </div>
+            <div class="form-section">
+              <h3 class="section-title"><i class="ph-bold ph-clipboard-text"></i> Special Instructions</h3>
+              <textarea id="view-loop-instructions" class="input-control" readonly
+                style="min-height: 120px;"></textarea>
+            </div>
+          </div>
+
+          <!-- Components Table -->
+          <div class="form-section">
+            <h3 class="section-title"><i class="ph-bold ph-stack"></i> Loop Components</h3>
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center" style="width: 64px;">Sr</th>
+                    <th class="user-table-left">Tag No</th>
+                    <th class="user-table-left">Description</th>
+                    <th class="user-table-center">Type</th>
+                    <th class="user-table-center">Make / Model</th>
+                  </tr>
+                </thead>
+                <tbody id="components-body">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-
-        <!-- Row 2: Loop Name -->
-        <div style="padding:0.75rem 1.25rem 0;">
-          <label class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1.5">Loop
-            Name *</label>
-          <input type="text" id="add-loop-name"
-            class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)]"
-            placeholder="e.g. MAIN STEAM PRESSURE LOOP">
-        </div>
-
-        <!-- Row 3: Service -->
-        <div style="padding:0.75rem 1.25rem 0;">
-          <label
-            class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1.5">Service</label>
-          <input type="text" id="add-loop-service"
-            class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)]"
-            placeholder="e.g. STEAM HEADER PRESSURE MONITORING">
-        </div>
-
-        <!-- Row 4: Schematic & Doc -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:0.75rem 1.25rem 0;">
-          <div>
-            <label class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1.5">Loop
-              Schematic</label>
-            <input type="text" id="add-loop-schematic"
-              class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)]"
-              placeholder="DWG-BLR-XXX-SCH">
-          </div>
-          <div>
-            <label class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1.5">Special
-              Document</label>
-            <input type="text" id="add-loop-special-doc"
-              class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)]"
-              placeholder="SP-DOC-XXX">
-          </div>
-        </div>
-
-        <!-- Row 5: Hints & Instructions -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:0.75rem 1.25rem 1.25rem;">
-          <div>
-            <label class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1.5">Helpful
-              Hints</label>
-            <textarea id="add-loop-hints"
-              class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)]"
-              style="height:7rem;padding-top:0.5rem;resize:vertical;"
-              placeholder="Enter helpful hints for maintenance..."></textarea>
-          </div>
-          <div>
-            <label class="block text-[0.7rem] font-extrabold uppercase tracking-[0.08em] text-dark-muted mb-1.5">Special
-              Instructions</label>
-            <textarea id="add-loop-instructions"
-              class="w-full h-9 bg-dark-bg/50 border border-dark-border rounded-md px-3.5 text-dark-text text-sm font-medium outline-none transition-all duration-200 focus:border-blue-500 focus:ring-[1px] focus:ring-blue-500/50 focus:shadow-[0_0_0_2px_rgba(59,130,246,0.1)]"
-              style="height:7rem;padding-top:0.5rem;resize:vertical;"
-              placeholder="Enter special instructions..."></textarea>
-          </div>
-        </div>
-
-      </div><!-- /modal-body -->
-
-      <!-- Footer -->
-      <div class="gnfc-modal-footer">
-        <button onclick="hideAddMode()"
-          class="gnfc-modal-btn gnfc-modal-btn-secondary hover:text-white hover:border-slate-500">
-          <i class="ph-bold ph-x"></i> Cancel
-        </button>
-        <button onclick="saveLoop()"
-          class="inline-flex items-center gap-1.5 h-9 px-5 bg-gradient-to-br from-emerald-600 to-emerald-500 border-none rounded-md text-[13px] font-bold text-white shadow-[0_2px_8px_-2px_rgba(16,185,129,0.4)] cursor-pointer transition-all duration-200 hover:from-emerald-500 hover:to-emerald-400">
-          <i class="ph-bold ph-floppy-disk"></i> Save Loop
-        </button>
       </div>
 
     </div>
-  </div><!-- /add-loop-modal -->
+    </div>
+  </main>
+
+  <!-- ========== ADD NEW LOOP MODAL ========== -->
+  <div id="add-loop-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title"><i class="ph-bold ph-plus-circle mr-8px"></i> Add New Loop</h3>
+          <p class="gnfc-modal-subtitle">Define a new loop and its associated metadata</p>
+        </div>
+        <button onclick="hideAddMode()" class="gnfc-modal-close">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <div class="dashboard-grid grid-cols-2">
+          
+          <div class="form-group mb-0">
+            <label class="input-label">Loop ID <span class="text-red">*</span></label>
+            <input type="text" id="add-loop-id" class="input-control" placeholder="e.g. LS-B1-012">
+          </div>
+          
+          <div class="form-group mb-0">
+            <label class="input-label">Area</label>
+            <select id="add-area-select" class="input-control">
+              <option>BOILER-1</option>
+              <option>BOILER-2</option>
+              <option>BOILER-3</option>
+              <option>BOILER-4</option>
+              <option>BOP</option>
+              <option>COMMON</option>
+              <option>ASH</option>
+              <option>TG-1</option>
+              <option>TG-2</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-0 col-span-2">
+            <label class="input-label">Loop Name <span class="text-red">*</span></label>
+            <input type="text" id="add-loop-name" class="input-control" placeholder="e.g. MAIN STEAM PRESSURE LOOP">
+          </div>
+
+          <div class="form-group mb-0 col-span-2">
+            <label class="input-label">Service</label>
+            <input type="text" id="add-loop-service" class="input-control" placeholder="e.g. STEAM HEADER PRESSURE MONITORING">
+          </div>
+
+          <div class="form-group mb-0">
+            <label class="input-label">Loop Schematic</label>
+            <input type="text" id="add-loop-schematic" class="input-control" placeholder="DWG-BLR-XXX-SCH">
+          </div>
+          
+          <div class="form-group mb-0">
+            <label class="input-label">Special Document</label>
+            <input type="text" id="add-loop-special-doc" class="input-control" placeholder="SP-DOC-XXX">
+          </div>
+
+          <div class="form-group mb-0">
+            <label class="input-label">Helpful Hints</label>
+            <textarea id="add-loop-hints" class="input-control" style="min-height: 80px;" placeholder="Maintenance tips..."></textarea>
+          </div>
+          
+          <div class="form-group mb-0">
+            <label class="input-label">Special Instructions</label>
+            <textarea id="add-loop-instructions" class="input-control" style="min-height: 80px;" placeholder="Specific instructions..."></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="hideAddMode()">Cancel</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" onclick="saveLoop()">
+          <i class="ph-bold ph-floppy-disk"></i> Save Loop
+        </button>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ── Loop Database ───────────────────────────────────────────────
@@ -416,240 +301,167 @@
           { tag: "XV177901", desc: "BOILER-1 MAIN STEAM STOP VALVE", type: "C/V", make: "SEVERN GLOCON / G5-ESD" },
           { tag: "ZSH177906", desc: "NG BURNER 4 BLOCK VALVE OPEN", type: "SWITCH", make: "MAGO / LS06200" },
         ]
-      },
-      "LS-B1-DRM": {
-        name: "BOILER-1 DRUM LEVEL PROTECTION LOOP", area: "BOILER-1",
-        service: "DRUM LEVEL LOW & HIGH PROTECTION",
-        schematic: "DWG-B1-DRM", specialDoc: "SP-B1-DRM",
-        hints: "Calibrate with drum at operating pressure and temperature.\nCompensate for density variation.",
-        instructions: "Low-Low trip: 2oo3 voting logic.\nTest function during planned shutdown only.",
-        components: [
-          { tag: "ZSL191801", desc: "DRUM LEVEL LOW SWITCH", type: "SWITCH ELEMENT", make: "MAGO / LT-S200" },
-          { tag: "ZSL191802", desc: "DRUM LEVEL LOW-LOW SWITCH", type: "SWITCH ELEMENT", make: "MAGO / LT-S200" },
-          { tag: "ZSL191803", desc: "DRUM LEVEL LOW SWITCH-3", type: "SWITCH ELEMENT", make: "MAGO / LT-S200" },
-        ]
-      },
-      "LS-B1-ECO": {
-        name: "ECONOMISER OUTLET TEMPERATURE LOOP", area: "BOILER-2",
-        service: "ECONOMISER TUBE OVERHEATING PROTECTION",
-        schematic: "DWG-B2-ECO-SCH", specialDoc: "",
-        hints: "Ensure thermowell is fully seated and sealed.\nClean thermowell periodically to avoid fouling.",
-        instructions: "High alarm at 380°C, trip at 400°C.\nCheck calibration every 6 months.",
-        components: [
-          { tag: "ZT1777146", desc: "ECONOMISER OUTLET TEMP TX-1", type: "TRANSMITTER", make: "ENDRESS+HAUSER / TMT182" },
-          { tag: "ZT1777147", desc: "ECONOMISER OUTLET TEMP TX-2", type: "TRANSMITTER", make: "ENDRESS+HAUSER / TMT182" },
-        ]
-      },
-      "LS-B1-APH": {
-        name: "AIR PREHEATER FLUE GAS TEMP LOOP", area: "BOILER-4",
-        service: "FLUE GAS OUTLET TEMPERATURE MONITORING",
-        schematic: "DWG-B4-APH", specialDoc: "",
-        hints: "High readings may indicate APH baskets fouled — coordinate with maintenance.",
-        instructions: "High alarm 450°C, trip 480°C.\nCheck for gas bypass leakage if readings are erratic.",
-        components: [
-          { tag: "ZT1777216", desc: "APH OUTLET FLUE GAS TEMP A", type: "TRANSMITTER", make: "ABB / TTF300" },
-          { tag: "ZT1777217", desc: "APH OUTLET FLUE GAS TEMP B", type: "TRANSMITTER", make: "ABB / TTF300" },
-        ]
       }
     };
 
-    // All loop IDs for dropdown
     let allLoopIds = Object.keys(loopDatabase);
 
-    // ── DOM refs ──────────────────────────────────────────────────
-    const searchInput = document.getElementById('loop-search-input');
-    const ddBtn = document.getElementById('loop-dd-btn');
-    const ddList = document.getElementById('loop-dropdown-list');
-    const emptyState = document.getElementById('loop-empty-state');
-    const dataArea = document.getElementById('loop-data-area');
+    // ── DOM Refs ──────────────────────────────────────────────────
+    const $searchInput = $('#loop-search-input');
+    const $ddList = $('#loop-dropdown-list');
+    const $emptyState = $('#loop-empty-state');
+    const $dataArea = $('#loop-data-area');
 
-    // ── Helpers ───────────────────────────────────────────────────
-    function showData() { emptyState.style.display = 'none'; dataArea.style.display = ''; }
-    function hideData() { emptyState.style.display = ''; dataArea.style.display = 'none'; }
-
+    // ── Autocomplete Logic ─────────────────────────────────────────
     function renderDropdown(filter, showAll = false) {
-      const area = document.getElementById('view-area-select').value;
+      const area = $('#view-area-select').val();
       const f = showAll ? '' : (filter || '').trim().toLowerCase();
 
-      const filtered = allLoopIds.filter(id => {
+      // Find matches using traditional loop
+      const filtered = [];
+      for (let i = 0; i < allLoopIds.length; i++) {
+        const id = allLoopIds[i];
         const d = loopDatabase[id];
         const areaOk = (area === 'ALL') || (d.area === area);
         const textOk = !f || id.toLowerCase().includes(f) || d.name.toLowerCase().includes(f);
-        return areaOk && textOk;
-      });
+        if (areaOk && textOk) filtered.push(id);
+      }
 
       if (filtered.length === 0) {
-        ddList.innerHTML = `<div class="px-4 py-2.5 text-[13px] font-semibold text-dark-text cursor-pointer flex flex-col gap-[2px] border-b border-dark-border last:border-b-0 transition-colors duration-150 hover:bg-blue-500/10" style="cursor:default;color:var(--app-muted,#9aa7b5);font-style:italic;">No loops found</div>`;
+        $ddList.html('<div class="autocomplete-item" style="opacity:0.5; cursor:default;">No loops found</div>');
       } else {
-        ddList.innerHTML = filtered.map(id => {
+        let html = '';
+        for (let i = 0; i < filtered.length; i++) {
+          const id = filtered[i];
           const d = loopDatabase[id];
-          const hi = f ? id.replace(new RegExp(`(${f})`, 'gi'), '<span style="color:#5794f2;font-weight:900;">$1</span>') : id;
-          return `<div class="px-4 py-2.5 text-[13px] font-semibold text-dark-text cursor-pointer flex flex-col gap-[2px] border-b border-dark-border last:border-b-0 transition-colors duration-150 hover:bg-blue-500/10" data-id="${id}">
-                        <span class="text-blue-400 text-xs font-extrabold">${hi}</span>
-                        <span class="text-[13px]">${d.name}</span>
-                    </div>`;
-        }).join('');
+          const hi = f ? id.replace(new RegExp(`(${f})`, 'gi'), '<b>$1</b>') : id;
+          html += `
+                        <div class="autocomplete-item" data-id="${id}">
+                            <div class="text-blue font-bold text-xs">${hi}</div>
+                            <div class="text-sm">${d.name}</div>
+                        </div>`;
+        }
+        $ddList.html(html);
 
-        ddList.querySelectorAll('div[data-id]').forEach(el => {
-          el.addEventListener('click', () => {
-            const id = el.getAttribute('data-id');
-            selectLoop(id);
-          });
+        $ddList.find('.autocomplete-item').on('click', function () {
+          selectLoop($(this).data('id'));
         });
       }
     }
 
-    function openDropdown(showAll = false) {
-      renderDropdown(searchInput.value, showAll);
-      ddList.classList.remove('hidden');
-    }
+    $searchInput.on('input focus', function (e) {
+      const isFocus = e.type === 'focus';
+      const isSelected = allLoopIds.includes($searchInput.val());
+      renderDropdown($searchInput.val(), isFocus && isSelected);
+      $ddList.removeClass('hidden');
+    });
 
-    function closeDropdown() {
-      ddList.classList.add('hidden');
-    }
+    $('#loop-dd-btn').on('click', function (e) {
+      e.stopPropagation();
+      $ddList.toggleClass('hidden');
+      if (!$ddList.hasClass('hidden')) renderDropdown($searchInput.val(), true);
+    });
+
+    $(document).on('click', function (e) {
+      if (!$(e.target).closest('#loop-search-wrap').length) $ddList.addClass('hidden');
+    });
 
     function selectLoop(id) {
-      searchInput.value = id;
-      closeDropdown();
-      loadLoop(id, loopDatabase[id]);
+      $searchInput.val(id);
+      $ddList.addClass('hidden');
+      loadLoop(id);
     }
 
     function filterByArea() {
-      if (ddList.classList.contains('hidden')) return;
-      renderDropdown(searchInput.value);
+      if (!$ddList.hasClass('hidden')) renderDropdown($searchInput.val());
     }
 
-    // ── Event Listeners ───────────────────────────────────────────
-    searchInput.addEventListener('input', () => {
-      openDropdown(false);
-    });
+    function loadLoop(id) {
+      const data = loopDatabase[id];
+      if (!data) return;
 
-    searchInput.addEventListener('focus', () => {
-      // If we already selected something, opening dropdown should show all
-      const isSelectedVal = allLoopIds.includes(searchInput.value);
-      openDropdown(isSelectedVal);
-    });
+      $('#view-loop-name').val(data.name);
+      $('#view-loop-service').val(data.service);
+      $('#view-loop-schematic').val(data.schematic || '—');
+      $('#view-loop-special-doc').val(data.specialDoc || '—');
+      $('#view-loop-hints').val(data.hints || '');
+      $('#view-loop-instructions').val(data.instructions || '');
 
-    searchInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        const id = allLoopIds.find(k => k.toLowerCase() === searchInput.value.trim().toLowerCase());
-        if (id) { selectLoop(id); }
-        else {
-          closeDropdown();
-          hideData();
-          if (searchInput.value.trim()) {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Loop Not Found',
-              html: `<span style="font-size:.875rem;">No loop found for <strong>${searchInput.value.trim()}</strong>.</span>`,
-              confirmButtonColor: '#2563eb'
-            });
-          }
-        }
-      }
-      if (e.key === 'Escape') closeDropdown();
-    });
-
-    ddBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      if (ddList.classList.contains('hidden')) {
-          const isSelectedVal = allLoopIds.includes(searchInput.value);
-          openDropdown(isSelectedVal);
-      } else {
-          closeDropdown();
-      }
-    });
-
-    document.addEventListener('click', e => {
-      if (!document.getElementById('loop-search-wrap').contains(e.target)) closeDropdown();
-    });
-
-    // ── Load Loop ─────────────────────────────────────────────────
-    function loadLoop(id, data) {
-      document.getElementById('view-loop-name').textContent = data.name;
-      document.getElementById('view-loop-service').textContent = data.service;
-      document.getElementById('view-loop-schematic').textContent = data.schematic || '—';
-      document.getElementById('view-loop-special-doc').textContent = data.specialDoc || '—';
-      document.getElementById('view-loop-hints').textContent = data.hints || '';
-      document.getElementById('view-loop-instructions').textContent = data.instructions || '';
-
-      const tbody = document.getElementById('components-body');
+      const $tbody = $('#components-body');
       if (!data.components || !data.components.length) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center italic text-sm text-dark-muted" >No components found</td></tr>`;
+        $tbody.html('<tr><td colspan="5" class="user-table-center font-italic py-6 opacity-50">No components found</td></tr>');
       } else {
-        tbody.innerHTML = data.components.map((c, i) => `
-                    <tr class="border-b border-dark-border hover:bg-dark-bg/50 transition-colors">
-                        <td class="px-4 py-3 text-center text-sm font-bold border-r border-dark-border text-dark-muted">${i + 1}</td>
-                        <td class="px-4 py-3 text-center text-sm font-bold border-r border-dark-border text-blue-500 hover:text-blue-600 cursor-pointer"
-                            onclick="window.location.href='/src/pages/boiler_inst_data.html?tag=${encodeURIComponent(c.tag)}'">${c.tag}</td>
-                        <td class="px-4 py-3 text-center text-sm font-semibold border-r border-dark-border text-dark-text">${c.desc}</td>
-                        <td class="px-4 py-3 text-center text-sm font-semibold border-r border-dark-border text-dark-text">${c.type}</td>
-                        <td class="px-4 py-3 text-center text-sm font-semibold text-dark-text">${c.make}</td>
-                    </tr>`).join('');
+        let rows = '';
+        for (let i = 0; i < data.components.length; i++) {
+          const c = data.components[i];
+          rows += `
+                    <tr>
+                        <td class="user-table-center user-table-secondary user-table-bold">${i + 1}</td>
+                        <td class="user-table-left user-table-blue user-table-bold cursor-pointer" 
+                            onclick="window.location.href='boiler_inst_data.html?tag=${encodeURIComponent(c.tag)}'">${c.tag}</td>
+                        <td class="user-table-left user-table-secondary">${c.desc}</td>
+                        <td class="user-table-center user-table-primary">${c.type}</td>
+                        <td class="user-table-center user-table-primary">${c.make}</td>
+                    </tr>`;
+        }
+        $tbody.html(rows);
       }
-      showData();
+
+      $emptyState.addClass('hidden');
+      $dataArea.removeClass('hidden');
+      $('.dashboard-scroll').scrollTop(0);
     }
 
-    // ── Add / Edit Mode ───────────────────────────────────────────
+    // ── Add/Edit Modal Logic ───────────────────────────────────────
     function showAddMode() {
-      ['add-loop-id', 'add-loop-name', 'add-loop-service', 'add-loop-schematic', 'add-loop-special-doc', 'add-loop-hints', 'add-loop-instructions'].forEach(id => {
-        document.getElementById(id).value = '';
-      });
-      document.getElementById('add-area-select').selectedIndex = 0;
-      // Open 
-      document.getElementById('add-loop-modal').classList.add('is-open');
-      // Focus first field
-      setTimeout(() => document.getElementById('add-loop-id').focus(), 100);
+      $('#add-loop-modal .input-control').val('');
+      $('#add-area-select').prop('selectedIndex', 0);
+      $('#add-loop-modal').addClass('is-open');
+      setTimeout(() => $('#add-loop-id').focus(), 150);
     }
 
     function hideAddMode() {
-      document.getElementById('add-loop-modal').classList.remove('is-open');
+      $('#add-loop-modal').removeClass('is-open');
     }
 
     function saveLoop() {
-      const loopId = document.getElementById('add-loop-id').value.trim();
-      const name = document.getElementById('add-loop-name').value.trim();
-      const service = document.getElementById('add-loop-service').value.trim();
-      const area = document.getElementById('add-area-select').value;
-      const sch = document.getElementById('add-loop-schematic').value.trim();
-      const doc = document.getElementById('add-loop-special-doc').value.trim();
-      const hints = document.getElementById('add-loop-hints').value.trim();
-      const inst = document.getElementById('add-loop-instructions').value.trim();
+      const loopId = $('#add-loop-id').val().trim();
+      const name = $('#add-loop-name').val().trim();
 
-      if (!loopId) {
-        Swal.fire({ icon: 'error', title: 'Required', text: 'Loop ID is required.', confirmButtonColor: '#2563eb' });
-        document.getElementById('add-loop-id').focus();
-        return;
-      }
-      if (!name) {
-        Swal.fire({ icon: 'error', title: 'Required', text: 'Loop Name is required.', confirmButtonColor: '#2563eb' });
-        document.getElementById('add-loop-name').focus();
+      if (!loopId || !name) {
+        Swal.fire({ icon: 'error', title: 'Required Fields', text: 'Loop ID and Name are required.', confirmButtonColor: '#ef4444' });
         return;
       }
 
-      loopDatabase[loopId] = { name, area, service, schematic: sch, specialDoc: doc, hints, instructions: inst, components: [] };
+      loopDatabase[loopId] = {
+        name: name,
+        area: $('#add-area-select').val(),
+        service: $('#add-loop-service').val(),
+        schematic: $('#add-loop-schematic').val(),
+        specialDoc: $('#add-loop-special-doc').val(),
+        hints: $('#add-loop-hints').val(),
+        instructions: $('#add-loop-instructions').val(),
+        components: []
+      };
       allLoopIds = Object.keys(loopDatabase);
 
       Swal.fire({
-        icon: 'success', title: 'Loop Saved!',
-        html: `Loop <strong>${loopId}</strong> — ${name} has been added.`,
-        confirmButtonColor: '#059669',
-        timer: 2500, timerProgressBar: true
+        icon: 'success', title: 'Loop Saved',
+        text: `Loop ${loopId} has been added to the database.`,
+        confirmButtonColor: '#10b981',
+        timer: 2000, timerProgressBar: true
       }).then(() => {
         hideAddMode();
-        searchInput.value = loopId;
-        loadLoop(loopId, loopDatabase[loopId]);
+        selectLoop(loopId);
       });
     }
 
     // ── Init ──────────────────────────────────────────────────────
-    window.addEventListener('DOMContentLoaded', () => {
-      hideData(); // blank state by default
+    $(function () {
       const p = new URLSearchParams(window.location.search);
       const loopId = p.get('loop');
       if (loopId && loopDatabase[loopId]) {
-        searchInput.value = loopId;
-        loadLoop(loopId, loopDatabase[loopId]);
+        selectLoop(loopId);
       }
     });
   </script>
