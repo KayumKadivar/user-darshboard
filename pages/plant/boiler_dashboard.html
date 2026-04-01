@@ -115,6 +115,17 @@
         </div>
     </main>
 
+    <script>
+        $(document).ready(function() {
+            const $areaDropdown = $('#boiler-area-dropdown');
+            const savedArea = localStorage.getItem('gnfc_selected_area');
+            if(savedArea) $areaDropdown.val(savedArea);
+
+            $areaDropdown.on('change', function() {
+                localStorage.setItem('gnfc_selected_area', $(this).val());
+            });
+        });
+    </script>
 </body>
 
 </html>

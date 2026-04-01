@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Instrument | GNFC</title>
+    <link rel="stylesheet" href="../../css/phosphor.css">
+    <link rel="stylesheet" href="../../css/theme-vars.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/style.css">
+    <link rel="stylesheet" href="../../css/pages/plant.css">
+    <link rel="stylesheet" href="../../css/modal-ui.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+
+    <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="../../js/theme-control.js"></script>
+    <script src="../../js/sidebar.js" defer></script>
+    <script src="../../js/header.js" defer></script>
+</head>
+
+<body class="dashboard-body">
+    <div class="sidebar-container"></div>
+
+    <main class="main-wrapper">
+        <div id="header-container" data-title="Edit Instrument" data-back="boiler_inst_data.html"></div>
+
+        <div class="dashboard-content dashboard-scroll">
+            <div class="plant-container">
+
+                <!-- Main Entry Form (Edit Mode) -->
+                <div class="inst-data-view-wrapper">
+
+                    <!-- General Information -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-tag"></i> General Information</div>
+                        <div class="form-grid grid-cols-5">
+                            <div>
+                                <label class="input-label">Area</label>
+                                <div class="gnfc-select-group">
+                                    <select id="ef-area" class="input-control">
+                                        <option>BOILER-1</option>
+                                        <option>BOILER-2</option>
+                                        <option>BOILER-3</option>
+                                        <option>BOILER-4</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="input-label">Tag No</label>
+                                <input type="text" id="ef-tag_no" class="input-control" value="10-PT-101A">
+                            </div>
+                            <div class="col-span-2">
+                                <label class="input-label">Description</label>
+                                <input type="text" id="ef-description" class="input-control"
+                                    value="MAIN STEAM PRESSURE">
+                            </div>
+                            <div>
+                                <label class="input-label">Host</label>
+                                <div class="gnfc-select-group">
+                                    <select id="ef-host" class="input-control">
+                                        <option>DCS</option>
+                                        <option>PLC</option>
+                                        <option>LOCAL</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Controller & IO Module -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-cpu"></i> Controller & IO Module</div>
+                        <div class="form-grid grid-cols-2">
+                            <div><label class="input-label">Controller Type</label><input type="text" id="ef-ctrl_type"
+                                    class="input-control" value="DPU 4F"></div>
+                            <div><label class="input-label">Controller No</label><input type="text" id="ef-ctrl_no"
+                                    class="input-control" value="GN01"></div>
+                        </div>
+                        <div class="form-grid grid-cols-3">
+                            <div><label class="input-label">IO Type</label><input type="text" id="ef-io_type"
+                                    class="input-control" value="IQF304"></div>
+                            <div><label class="input-label">SW ID</label><input type="text" id="ef-sw_id"
+                                    class="input-control" value="F2M5"></div>
+                            <div><label class="input-label">Location</label><input type="text" id="ef-io_loc"
+                                    class="input-control" value="R3M5"></div>
+                        </div>
+                    </div>
+                    <!-- Calibration & Range -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-sliders-horizontal"></i> Calibration & Range
+                        </div>
+                        <div class="form-grid grid-cols-2">
+                            <div><label class="input-label">CH</label><input type="text" id="ef-CH"
+                                    class="input-control" value="9"></div>
+                            <div><label class="input-label">ESD Sheet</label><input type="text" id="ef-esd"
+                                    class="input-control" value="ESD-04"></div>
+                            <div><label class="input-label">Eng Range</label><input type="text" id="ef-eng_range"
+                                    class="input-control"></div>
+                            <div><label class="input-label">Cal Range</label><input type="text" id="ef-cal_range"
+                                    class="input-control"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Trip Settings -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-warning-circle"></i> Trip Settings</div>
+                        <div class="form-grid grid-cols-2">
+                            <div><label class="input-label">Trip H/HH</label><input type="text" id="ef-trip_h"
+                                    class="input-control"></div>
+                            <div><label class="input-label">Function</label><input type="text" id="ef-func_h"
+                                    class="input-control"></div>
+                            <div><label class="input-label">Trip L/LL</label><input type="text" id="ef-trip_l"
+                                    class="input-control"></div>
+                            <div><label class="input-label">Function</label><input type="text" id="ef-func_l"
+                                    class="input-control"></div>
+                        </div>
+                    </div>
+                    <!-- Specifications -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-wrench"></i> Specifications</div>
+                        <div class="form-grid grid-cols-3">
+                            <div><label class="input-label">Loop Function</label><input type="text" id="ef-loop_func"
+                                    class="input-control" value="BLOCK VALVE POSITION"></div>
+                            <div><label class="input-label">Inst Type</label>
+                                <div class="gnfc-select-group">
+                                    <select id="ef-inst_type" class="input-control">
+                                        <option>SWITCH</option>
+                                        <option>ANALYZER</option>
+                                        <option>TRANSMITTER</option>
+                                        <option>CONTROL VALVE</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down"></i>
+                                </div>
+                            </div>
+                            <div><label class="input-label">Make</label><input type="text" id="ef-make"
+                                    class="input-control" value="MAGO"></div>
+                            <div><label class="input-label">Model</label><input type="text" id="ef-model"
+                                    class="input-control" value="LS06200"></div>
+                            <div><label class="input-label">SRNO</label><input type="text" id="ef-srno"
+                                    class="input-control" value="12345"></div>
+                            <div><label class="input-label">Location</label><input type="text" id="ef-location"
+                                    class="input-control" value="FIELD"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Primary Element -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-atom"></i> Primary Element</div>
+                        <div class="form-grid grid-cols-3">
+                            <div><label class="input-label">Data Sheet</label>
+                                <div class="input-icon-group"><input type="text" id="ef-pe_datasheet"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Calculation</label>
+                                <div class="input-icon-group"><input type="text" id="ef-pe_calc"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Drawing</label>
+                                <div class="input-icon-group"><input type="text" id="ef-pe_drawing"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Cal. Report</label>
+                                <div class="input-icon-group"><input type="text" id="ef-pe_calreport"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Insp. Report</label>
+                                <div class="input-icon-group"><input type="text" id="ef-pe_inspreport"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Other Links -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-link"></i> Other Links</div>
+                        <div class="form-grid grid-cols-2">
+                            <div><label class="input-label">Logic</label>
+                                <div class="input-icon-group"><input type="text" id="ef-logic"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Loop Sheet</label>
+                                <div class="input-icon-group"><input type="text" id="ef-loop_sheet"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Helping Hand</label>
+                                <div class="input-icon-group"><input type="text" id="ef-helping"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Secondary Element -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-stack"></i> Secondary Element</div>
+                        <div class="form-grid grid-cols-3">
+                            <div><label class="input-label">Calculations</label>
+                                <div class="input-icon-group"><input type="text" id="ef-se_calc"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Drawing</label>
+                                <div class="input-icon-group"><input type="text" id="ef-se_drawing"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Insp. Report</label>
+                                <div class="input-icon-group"><input type="text" id="ef-se_inspreport"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Data Sheet</label>
+                                <div class="input-icon-group"><input type="text" id="ef-se_datasheet"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                            <div><label class="input-label">Accessory</label>
+                                <div class="input-icon-group"><input type="text" id="ef-se_accessory"
+                                        class="input-control"><button class="append-icon btn-att-open" type="button"><i
+                                            class="ph-bold ph-link"></i></button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Damping -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-gauge"></i> Damping</div>
+                        <div class="form-grid grid-cols-3">
+                            <div><label class="input-label">TX</label><input type="text" id="ef-damp_tx"
+                                    class="input-control"></div>
+                            <div><label class="input-label">DCS</label><input type="text" id="ef-damp_dcs"
+                                    class="input-control"></div>
+                            <div><label class="input-label">AFRSet</label><input type="text" id="ef-afrset"
+                                    class="input-control"></div>
+                            <div><label class="input-label">Air Lock</label><input type="text" id="ef-airlock"
+                                    class="input-control"></div>
+                            <div><label class="input-label">Other</label><input type="text" id="ef-damp_other"
+                                    class="input-control"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title"><i class="ph-fill ph-files"></i> Additional Information</div>
+                    <div class="form-grid grid-cols-5 mb-3">
+                        <div>
+                            <label class="input-label">Bypass Module</label>
+                            <div class="gnfc-select-group">
+                                <select id="ef-bypass" class="input-control">
+                                    <option>NO</option>
+                                    <option>YES</option>
+                                </select>
+                                <i class="ph-bold ph-caret-down"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="input-label">Ref. No</label>
+                            <input type="text" id="ef-ref_no" class="input-control">
+                        </div>
+                        <div>
+                            <label class="input-label">Meas. Tech</label>
+                            <input type="text" id="ef-meas_tech" class="input-control">
+                        </div>
+                        <div>
+                            <label class="input-label">Ana. Working</label>
+                            <input type="text" id="ef-ana_working" class="input-control">
+                        </div>
+                        <div>
+                            <label class="input-label">CPCB</label>
+                            <div class="gnfc-select-group">
+                                <select id="ef-cpcb" class="input-control">
+                                    <option>NO</option>
+                                    <option>YES</option>
+                                </select>
+                                <i class="ph-bold ph-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-grid grid-cols-4 mb-4">
+                        <div>
+                            <label class="input-label">Card No</label>
+                            <input type="text" id="ef-card_no" class="input-control">
+                        </div>
+                        <div>
+                            <label class="input-label">Card Loc</label>
+                            <input type="text" id="ef-card_loc" class="input-control">
+                        </div>
+                        <div>
+                            <label class="input-label">Call Tag</label>
+                            <input type="text" id="ef-call_tag" class="input-control">
+                        </div>
+                        <div>
+                            <label class="input-label">Logbook</label>
+                            <div class="gnfc-select-group">
+                                <select id="ef-logbook" class="input-control">
+                                    <option>NO</option>
+                                    <option>YES</option>
+                                </select>
+                                <i class="ph-bold ph-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="input-label">Special Comment</label>
+                    <textarea id="ef-comment" class="input-control textarea-h-80"></textarea>
+                </div>
+
+                <div class="action-toolbar mt-20px mb-0px justify-end">
+                    <button class="toolbar-btn btn-emerald" id="btn-save-bottom">
+                        <i class="ph-bold ph-floppy-disk"></i> Update
+                    </button>
+                    <button class="toolbar-btn" onclick="window.location.href='boiler_inst_data.html'">
+                        <i class="ph-bold ph-x"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <!-- Attachment Modal -->
+        <div class="gnfc-modal-overlay attachment-modal" id="modal-attachment">
+            <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+                <div class="gnfc-modal-header">
+                    <div>
+                        <h3 class="gnfc-modal-title">Engineering Documents</h3>
+                        <p class="gnfc-modal-subtitle">Browse and attach files to this instrument</p>
+                    </div>
+                    <button type="button" class="gnfc-modal-close"
+                        onclick="$('#modal-attachment').removeClass('is-open')">
+                        <i class="ph-bold ph-x"></i>
+                    </button>
+                </div>
+
+                <div class="gnfc-modal-body gnfc-modal-body--flush">
+                    <!-- Hidden input to store selected file name before confirmation -->
+                    <input type="hidden" id="modal-selected-file-input">
+                    
+                    <!-- Categories View -->
+                    <div id="modal-view-categories">
+                        <div class="user-table-wrapper p-6px radius-0px modal-table-fixed-height">
+                            <table class="user-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px;">Sr</th>
+                                        <th>Category Name</th>
+                                        <th style="width: 80px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr style="cursor: pointer;" onclick="openCategory('ADDRESS')">
+                                        <td>1</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                ADDRESS
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openCategory('BASIC DESIGN DOCUMENTS')">
+                                        <td>2</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                BASIC DESIGN DOCUMENTS
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i  class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openCategory('BOILER_MOD')">
+                                        <td>3</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                BOILER_MOD
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openCategory('BUDGET')">
+                                        <td>4</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                BUDGET
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openCategory('CPCB_GNFC')">
+                                        <td>5</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                CPCB_GNFC
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openCategory('DATA')">
+                                        <td>6</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                DATA
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openCategory('ENG DOC IN TRANSIT')">
+                                        <td>7</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                ENG DOC IN TRANSIT
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openCategory('ENG DRAWING')">
+                                        <td>8</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                ENG DRAWING
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openCategory('INSTALLATION DOCUMENTS')">
+                                        <td>9</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                INSTALLATION DOCUMENTS
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" onclick="openCategory('INSTRUMENTS DOCUMENTS')">
+                                        <td>10</td>
+                                        <td class="text-left font-bold color-blue">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-folder modal-icon modal-icon-folder"></i>
+                                                INSTRUMENTS DOCUMENTS
+                                            </div>
+                                        </td>
+                                        <td><button class="toolbar-btn"><i class="ph-bold ph-folder-open"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Files View -->
+                    <div id="modal-view-files" class="hidden p-6px">
+                        <div class="modal-view-header">
+                            <div class="modal-header-left">
+                                <button type="button" onclick="showCategories()" class="modal-back-btn">
+                                    <i class="ph-bold ph-arrow-left"></i> Back
+                                </button>
+                                <h4 class="modal-view-title" id="current-category-name">Category Name</h4>
+                            </div>
+                        </div>
+                        <div class="user-table-wrapper p-6px modal-table-fixed-height-sm radius-0px">
+                            <table class="user-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px;">Sr</th>
+                                        <th>File Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center" id="file-list-body">
+                                    <!-- Static dummy files structure for easy backend binding integration -->
+                                    <tr style="cursor: pointer;" class="file-row"
+                                        onclick="selectModalFile(this, 'drawing_001.pdf')">
+                                        <td>1</td>
+                                        <td class="text-left font-bold ">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-file-pdf modal-icon modal-icon-pdf"></i>
+                                                drawing_001.pdf
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" class="file-row"
+                                        onclick="selectModalFile(this, 'specifications_002.pdf')">
+                                        <td>2</td>
+                                        <td class="text-left font-bold ">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-file-pdf modal-icon modal-icon-pdf"></i>
+                                                specifications_002.pdf
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" class="file-row"
+                                        onclick="selectModalFile(this, 'data_sheet_v1.xlsx')">
+                                        <td>3</td>
+                                        <td class="text-left font-bold ">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-file-xls modal-icon modal-icon-xls"></i>
+                                                data_sheet_v1.xlsx
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" class="file-row"
+                                        onclick="selectModalFile(this, 'maintenance_log.docx')">
+                                        <td>4</td>
+                                        <td class="text-left font-bold ">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-file-doc modal-icon modal-icon-doc"></i>
+                                                maintenance_log.docx
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="cursor: pointer;" class="file-row"
+                                        onclick="selectModalFile(this, 'budget_estimate.xlsx')">
+                                        <td>5</td>
+                                        <td class="text-left font-bold ">
+                                            <div class="modal-table-row-item">
+                                                <i class="ph-fill ph-file-xls modal-icon modal-icon-xls"></i>
+                                                budget_estimate.xlsx
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gnfc-modal-footer">
+                    <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+                        onclick="document.getElementById('modal-attachment').classList.remove('is-open')">Cancel</button>
+                    <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary"
+                        onclick="confirmFileSelection()">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                let currentTargetInput = null;
+
+                // Open Attachment Modal
+                $('.btn-att-open').on('click', function (e) {
+                    e.preventDefault();
+                    currentTargetInput = $(this).siblings('input');
+
+                    // Reset Modal state
+                    $('#modal-selected-file-input').val('');
+                    showCategories();
+
+                    $('#modal-attachment').addClass('is-open');
+                });
+
+
+                // Global functions for inline HTML handlers
+                window.showCategories = function () {
+                    $('#modal-view-files').addClass('hidden');
+                    $('#modal-view-categories').removeClass('hidden');
+                };
+
+                window.openCategory = function (categoryName) {
+                    $('#current-category-name').text(categoryName);
+                    $('#modal-view-categories').addClass('hidden');
+                    $('#modal-view-files').removeClass('hidden');
+                };
+
+                window.selectModalFile = function (rowElement, fileName) {
+                    // Highlight selected row visually
+                    $('.file-row').removeClass('is-selected');
+                    $(rowElement).addClass('is-selected');
+
+                    // Update the input showing selected file
+                    $('#modal-selected-file-input').val(fileName);
+                };
+
+                window.confirmFileSelection = function () {
+                    const selectedFile = $('#modal-selected-file-input').val();
+                    if (selectedFile && currentTargetInput) {
+                        currentTargetInput.val(selectedFile);
+                    }
+                    $('#modal-attachment').removeClass('is-open');
+                };
+            });
+        </script>
+</body>
+
+</html>

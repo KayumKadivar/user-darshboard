@@ -20,10 +20,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>window.activePage = 'plants';</script>
-    <style>
-        .swal2-container { z-index: 10005 !important; }
-        .hidden { display: none !important; }
-    </style>
 </head>
 
 <body class="dashboard-body">
@@ -39,31 +35,31 @@
 
                 <!-- ─── Action Toolbar ─── -->
                 <div class="action-toolbar">
-                    <button class="toolbar-btn" onclick="openJobHistoryModal()">
+                    <button class="toolbar-btn" id="btn-job-history">
                         <i class="ph-bold ph-clock-counter-clockwise"></i> Job History
                     </button>
-                    <button class="toolbar-btn" onclick="openJunctionBoxDetail()">
+                    <button class="toolbar-btn" id="btn-jb-detail">
                         <i class="ph-bold ph-list-dashes"></i> Junction Box Detail
                     </button>
                     
-                    <div class="vr-line mx-2" style="width:1px; height:24px; background:var(--app-border);"></div>
+                    <div class="toolbar-vr"></div>
                     
-                    <button class="toolbar-btn btn-emerald" onclick="showAddForm()">
+                    <button class="toolbar-btn btn-emerald" id="btn-add">
                         <i class="ph-bold ph-plus"></i> Add
                     </button>
-                    <button class="toolbar-btn btn-amber" onclick="showEditForm()">
+                    <button class="toolbar-btn btn-amber" id="btn-edit">
                         <i class="ph-bold ph-pencil-simple"></i> Edit
                     </button>
-                    <button class="toolbar-btn btn-red" onclick="deleteTag()">
+                    <button class="toolbar-btn btn-red" id="btn-delete">
                         <i class="ph-bold ph-trash"></i> Delete
                     </button>
                     
-                    <div class="vr-line mx-2" style="width:1px; height:24px; background:var(--app-border);"></div>
+                    <div class="toolbar-vr"></div>
                     
-                    <button class="toolbar-btn" onclick="window.location.href='boiler_loop_data.html'">
+                    <button class="toolbar-btn" id="btn-loop-data">
                         <i class="ph-bold ph-arrows-clockwise"></i> Loop Data
                     </button>
-                    <button class="toolbar-btn" onclick="window.location.href='boiler_search_tag.html'">
+                    <button class="toolbar-btn" id="btn-search-tag">
                         <i class="ph-bold ph-magnifying-glass"></i> Search Tag
                     </button>
                 </div>
@@ -73,64 +69,46 @@
                     <div class="search-field-group" id="tag-search-container">
                         <label class="input-label">Find Tag No</label>
                         <div class="autocomplete-container">
-                            <i class="ph-bold ph-magnifying-glass color-secondary" style="position:absolute; left:12px; font-size:16px;"></i>
-                            <input type="text" id="tag-search-input" class="input-control" style="padding-left:40px; padding-right:40px;" placeholder="Enter Tag No..." autocomplete="off">
-                            <button id="tag-dropdown-btn" style="position:absolute; right:8px; width:28px; height:28px; background:none; border:none; cursor:pointer; color:var(--app-muted);">
+                            <i class="ph-bold ph-magnifying-glass search-icon-inside"></i>
+                            <input type="text" id="tag-search-input" class="input-control search-input-px" placeholder="Enter Tag No..." autocomplete="off">
+                            <button id="tag-dropdown-btn" class="dropdown-trigger-btn">
                                 <i class="ph-bold ph-caret-down"></i>
                             </button>
                         </div>
                         <!-- Dropdown List -->
-                        <div id="tag-dropdown-list" class="autocomplete-list hidden"></div>
+                        <div id="tag-dropdown-list" class="autocomplete-list hidden">
+                            <div class="autocomplete-item" data-tag="10-PT-101A">10-PT-101A</div>
+                            <div class="autocomplete-item" data-tag="ZSH177906">ZSH177906</div>
+                            <div class="autocomplete-item" data-tag="XLGDFGV1D">XLGDFGV1D</div>
+                            <div class="autocomplete-item" data-tag="XV177901">XV177901</div>
+                            <div class="autocomplete-item" data-tag="ZT177707A">ZT177707A</div>
+                            <div class="autocomplete-item" data-tag="ZSL191801">ZSL191801</div>
+                        </div>
                     </div>
 
-                    <div style="width: 200px;">
-                        <label class="input-label">Area</label>
-                        <select id="area-select" class="input-control">
-                            <option>ALL</option>
-                            <option>BOILER-1</option>
-                            <option>BOILER-2</option>
-                            <option>BOILER-3</option>
-                            <option>BOILER-4</option>
-                        </select>
-                    </div>
-
-                    <button class="btn btn-blue" style="height:2.5rem; padding: 0 1.5rem;" onclick="triggerSearch()">
-                        <i class="ph-bold ph-magnifying-glass"></i> Search
-                    </button>
-                </div>
-
-                <!-- ─── Empty State Placeholder ─── -->
-                <div id="inst-empty-state" class="empty-state-card">
-                    <div class="empty-icon-circle">
-                        <i class="ph-bold ph-magnifying-glass"></i>
-                    </div>
-                    <div class="empty-text-group">
-                        <h3 class="empty-title">No Tag Selected</h3>
-                        <p class="empty-desc">Search or select a Tag No from the dropdown to view instrument data.</p>
+                    <div class="w-200px">
+                        <label class="input-label">Active Area</label>
+                        <div id="area-display" class="input-control flex align-anchor-center">ALL</div>
                     </div>
                 </div>
 
-                <!-- ─── Main Form Area (View Mode) ─── -->
+                <!-- ─── Main Form Area (Hidden by Default) ─── -->
                 <div id="view-mode-form" class="inst-data-view-wrapper hidden">
                     <!-- General Information -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-tag"></i> General Information</div>
                         <div class="form-grid grid-cols-5">
                             <div>
-                                <label class="input-label">Area</label>
-                                <input type="text" id="f-area" class="input-control" readonly style="background:rgba(255,255,255,0.03); cursor:default;">
-                            </div>
-                            <div>
                                 <label class="input-label">Tag No</label>
-                                <input type="text" id="f-tag_no" class="input-control" readonly style="background:rgba(255,255,255,0.03); cursor:default;">
+                                <input type="text" id="f-tag_no" class="input-control " value="" readonly>
                             </div>
                             <div class="col-span-2">
                                 <label class="input-label">Description</label>
-                                <input type="text" id="f-description" class="input-control" readonly style="background:rgba(255,255,255,0.03); cursor:default;">
+                                <input type="text" id="f-description" class="input-control " value="" readonly>
                             </div>
                             <div>
                                 <label class="input-label">Host</label>
-                                <input type="text" id="f-host" class="input-control" readonly style="background:rgba(255,255,255,0.03); cursor:default;">
+                                <input type="text" id="f-host" class="input-control " value="" readonly>
                             </div>
                         </div>
                     </div>
@@ -140,25 +118,23 @@
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-cpu"></i> Controller & IO Module</div>
                             <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Controller Type</label><input type="text" id="f-ctrl_type" class="input-control" readonly></div>
-                                <div><label class="input-label">Controller No</label><input type="text" id="f-ctrl_no" class="input-control" readonly></div>
+                                <div><label class="input-label">Controller Type</label><input type="text" id="f-ctrl_type" class="input-control " value="DPU 4F" readonly></div>
+                                <div><label class="input-label">Controller No</label><input type="text" id="f-ctrl_no" class="input-control" value="GN01" readonly></div>
                             </div>
                             <div class="form-grid grid-cols-3">
-                                <div><label class="input-label">IO Type</label><input type="text" id="f-io_type" class="input-control" readonly></div>
-                                <div><label class="input-label">SW ID</label><input type="text" id="f-sw_id" class="input-control" readonly></div>
-                                <div><label class="input-label">Location</label><input type="text" id="f-io_loc" class="input-control" readonly></div>
+                                <div><label class="input-label">IO Type</label><input type="text" id="f-io_type" class="input-control" value="IQF304 (CH:16)" readonly></div>
+                                <div><label class="input-label">SW ID</label><input type="text" id="f-sw_id" class="input-control" value="F2M5" readonly></div>
+                                <div><label class="input-label">Location</label><input type="text" id="f-io_loc" class="input-control" value="R3M5" readonly></div>
                             </div>
                         </div>
                         <!-- Calibration & Range -->
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-sliders-horizontal"></i> Calibration & Range</div>
                             <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Channel</label><input type="text" id="f-channel" class="input-control" readonly></div>
-                                <div><label class="input-label">ESD Sheet</label><input type="text" id="f-esd" class="input-control" readonly></div>
-                            </div>
-                            <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Eng Range</label><input type="text" id="f-eng_range" class="input-control" readonly></div>
-                                <div><label class="input-label">Cal Range</label><input type="text" id="f-cal_range" class="input-control" readonly></div>
+                                <div><label class="input-label">CH</label><input type="text" id="f-CH" class="input-control " value="9" readonly></div>
+                                <div><label class="input-label">ESD Sheet</label><input type="text" id="f-esd" class="input-control" value="ESD-04" readonly></div>
+                                <div><label class="input-label">Eng Range</label><input type="text" id="f-eng_range" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Cal Range</label><input type="text" id="f-cal_range" class="input-control" value="" readonly></div>
                             </div>
                         </div>
                     </div>
@@ -168,27 +144,23 @@
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-warning-circle"></i> Trip Settings</div>
                             <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Trip H/HH</label><input type="text" id="f-trip_h" class="input-control" readonly></div>
-                                <div><label class="input-label">Function</label><input type="text" id="f-func_h" class="input-control" readonly></div>
-                            </div>
-                            <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Trip L/LL</label><input type="text" id="f-trip_l" class="input-control" readonly></div>
-                                <div><label class="input-label">Function</label><input type="text" id="f-func_l" class="input-control" readonly></div>
+                                <div><label class="input-label">Trip H/HH</label><input type="text" id="f-trip_h" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Function</label><input type="text" id="f-func_h" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Trip L/LL</label><input type="text" id="f-trip_l" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Function</label><input type="text" id="f-func_l" class="input-control" value="" readonly></div>
                             </div>
                         </div>
                         <!-- Specifications -->
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-wrench"></i> Specifications</div>
                             <div class="form-grid grid-cols-3">
-                                <div class="col-span-2"><label class="input-label">Loop Function</label><input type="text" id="f-loop_func" class="input-control" readonly></div>
-                                <div><label class="input-label">Inst Type</label><input type="text" id="f-inst_type" class="input-control" readonly></div>
+                                <div><label class="input-label">Loop Function</label><input type="text" id="f-loop_func" class="input-control " value="BLOCK VALVE POSITION" readonly></div>
+                                <div><label class="input-label">Inst Type</label><input type="text" id="f-inst_type" class="input-control " value="SWITCH" readonly></div>
+                                <div><label class="input-label">Make</label><input type="text" id="f-make" class="input-control " value="MAGO" readonly></div>
+                                <div><label class="input-label">Model</label><input type="text" id="f-model" class="input-control " value="LS06200" readonly></div>
+                                <div><label class="input-label">SRNO</label><input type="text" id="f-srno" class="input-control " value="12345" readonly></div>
+                                <div><label class="input-label">Location</label><input type="text" id="f-location" class="input-control " value="FIELD" readonly></div>
                             </div>
-                            <div class="form-grid grid-cols-3">
-                                <div><label class="input-label">Make</label><input type="text" id="f-make" class="input-control" readonly></div>
-                                <div><label class="input-label">Model</label><input type="text" id="f-model" class="input-control" readonly></div>
-                                <div><label class="input-label">SRNO</label><input type="text" id="f-srno" class="input-control" readonly></div>
-                            </div>
-                            <div><label class="input-label">Location</label><input type="text" id="f-location" class="input-control" readonly></div>
                         </div>
                     </div>
 
@@ -197,20 +169,20 @@
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-atom"></i> Primary Element</div>
                             <div class="form-grid grid-cols-5">
-                                <div><label class="input-label">Data Sheet</label><input type="text" id="f-pe_datasheet" class="input-control" readonly></div>
-                                <div><label class="input-label">Calculation</label><input type="text" id="f-pe_calc" class="input-control" readonly></div>
-                                <div><label class="input-label">Drawing</label><input type="text" id="f-pe_drawing" class="input-control" readonly></div>
-                                <div><label class="input-label">Cal. Report</label><input type="text" id="f-pe_calreport" class="input-control" readonly></div>
-                                <div><label class="input-label">Insp. Report</label><input type="text" id="f-pe_inspreport" class="input-control" readonly></div>
+                                <div><label class="input-label">Data Sheet</label><input type="text" id="f-pe_datasheet" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Calculation</label><input type="text" id="f-pe_calc" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Drawing</label><input type="text" id="f-pe_drawing" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Cal. Report</label><input type="text" id="f-pe_calreport" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Insp. Report</label><input type="text" id="f-pe_inspreport" class="input-control" value="" readonly></div>
                             </div>
                         </div>
                         <!-- Other Links -->
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-link"></i> Other Links</div>
                             <div class="form-grid grid-cols-3">
-                                <div><label class="input-label">Logic</label><input type="text" id="f-logic" class="input-control" readonly></div>
-                                <div><label class="input-label">Loop Sheet</label><input type="text" id="f-loop_sheet" class="input-control" readonly></div>
-                                <div><label class="input-label">Helping Hand</label><input type="text" id="f-helping" class="input-control" readonly></div>
+                                <div><label class="input-label">Logic</label><input type="text" id="f-logic" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Loop Sheet</label><input type="text" id="f-loop_sheet" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Helping Hand</label><input type="text" id="f-helping" class="input-control" value="" readonly></div>
                             </div>
                         </div>
                     </div>
@@ -220,528 +192,340 @@
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-stack"></i> Secondary Element</div>
                             <div class="form-grid grid-cols-5">
-                                <div><label class="input-label">Calculations</label><input type="text" id="f-se_calc" class="input-control" readonly></div>
-                                <div><label class="input-label">Drawing</label><input type="text" id="f-se_drawing" class="input-control" readonly></div>
-                                <div><label class="input-label">Insp. Report</label><input type="text" id="f-se_inspreport" class="input-control" readonly></div>
-                                <div><label class="input-label">Data Sheet</label><input type="text" id="f-se_datasheet" class="input-control" readonly></div>
-                                <div><label class="input-label">Accessory</label><input type="text" id="f-se_accessory" class="input-control" readonly></div>
+                                <div><label class="input-label">Calculations</label><input type="text" id="f-se_calc" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Drawing</label><input type="text" id="f-se_drawing" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Insp. Report</label><input type="text" id="f-se_inspreport" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Data Sheet</label><input type="text" id="f-se_datasheet" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Accessory</label><input type="text" id="f-se_accessory" class="input-control" value="" readonly></div>
                             </div>
                         </div>
                         <!-- Damping -->
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-gauge"></i> Damping</div>
                             <div class="form-grid grid-cols-5">
-                                <div><label class="input-label">TX</label><input type="text" id="f-damp_tx" class="input-control" readonly></div>
-                                <div><label class="input-label">DCS</label><input type="text" id="f-damp_dcs" class="input-control" readonly></div>
-                                <div><label class="input-label">AFRSet</label><input type="text" id="f-afrset" class="input-control" readonly></div>
-                                <div><label class="input-label">Air Lock</label><input type="text" id="f-airlock" class="input-control" readonly></div>
-                                <div><label class="input-label">Other</label><input type="text" id="f-damp_other" class="input-control" readonly></div>
+                                <div><label class="input-label">TX</label><input type="text" id="f-damp_tx" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">DCS</label><input type="text" id="f-damp_dcs" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">AFRSet</label><input type="text" id="f-afrset" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Air Lock</label><input type="text" id="f-airlock" class="input-control" value="" readonly></div>
+                                <div><label class="input-label">Other</label><input type="text" id="f-damp_other" class="input-control" value="" readonly></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-files"></i> Additional Information</div>
-                        <div class="form-grid grid-cols-5 mb-4">
-                            <div>
-                                <label class="input-label">Bypass Module</label>
-                                <input type="text" id="f-bypass" class="input-control" readonly>
-                            </div>
-                            <div>
-                                <label class="input-label">Ref. No</label>
-                                <input type="text" id="f-ref_no" class="input-control" readonly>
-                            </div>
-                            <div>
-                                <label class="input-label">Meas. Tech</label>
-                                <input type="text" id="f-meas_tech" class="input-control" readonly>
-                            </div>
-                            <div>
-                                <label class="input-label">Ana. Working</label>
-                                <input type="text" id="f-ana_working" class="input-control" readonly>
-                            </div>
-                            <div>
-                                <label class="input-label">CPCB</label>
-                                <input type="text" id="f-cpcb" class="input-control" readonly>
-                            </div>
+                        <div class="form-grid grid-cols-5 mb-3">
+                            <div><label class="input-label">Bypass Module</label><input type="text" id="f-bypass" class="input-control " value="YES" readonly></div>
+                            <div><label class="input-label">Ref. No</label><input type="text" id="f-ref_no" class="input-control" readonly></div>
+                            <div><label class="input-label">Meas. Tech</label><input type="text" id="f-meas_tech" class="input-control" readonly></div>
+                            <div><label class="input-label">Ana. Working</label><input type="text" id="f-ana_working" class="input-control" readonly></div>
+                            <div><label class="input-label">CPCB</label><input type="text" id="f-cpcb" class="input-control " value="NO" readonly></div>
                         </div>
                         <label class="input-label">Special Comment</label>
-                        <textarea id="f-comment" class="input-control" readonly style="height: 5rem;"></textarea>
+                        <textarea id="f-comment" class="input-control textarea-h-80" readonly></textarea>
                     </div>
                 </div>
-
-                <!-- ─── Add/Edit Mode Form (Hidden) ─── -->
-                <div id="edit-mode-form" class="hidden">
-                    <!-- General Information (Edit) -->
-                    <div class="form-section" style="border-top: 3px solid var(--typo-blue, #5794F2);">
-                        <div class="section-title">
-                            <i class="ph-fill ph-note-pencil"></i> <span id="edit-form-title">Add New Instrument</span>
-                        </div>
-                        <div class="form-grid grid-cols-5">
-                            <div>
-                                <label class="input-label">Area</label>
-                                <select id="ef-area" class="input-control">
-                                    <option>BOILER-1</option>
-                                    <option>BOILER-2</option>
-                                    <option>BOILER-3</option>
-                                    <option>BOILER-4</option>
-                                    <option>ASH</option>
-                                    <option>BOP</option>
-                                    <option>COMMON</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="input-label">Tag No</label>
-                                <input type="text" id="ef-tag_no" class="input-control" placeholder="Enter Tag...">
-                            </div>
-                            <div class="col-span-2">
-                                <label class="input-label">Description</label>
-                                <input type="text" id="ef-description" class="input-control" placeholder="Enter Description...">
-                            </div>
-                            <div>
-                                <label class="input-label">Host</label>
-                                <select id="ef-host" class="input-control">
-                                    <option></option>
-                                    <option>DCS</option>
-                                    <option>PLC</option>
-                                    <option>ESD</option>
-                                    <option>LOCAL</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-grid">
-                        <!-- Controller & IO Module (Edit) -->
-                        <div class="form-section">
-                            <div class="section-title"><i class="ph-fill ph-cpu"></i> Controller & IO Module</div>
-                            <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Controller Type</label><input type="text" id="ef-ctrl_type" class="input-control"></div>
-                                <div><label class="input-label">Controller No</label><input type="text" id="ef-ctrl_no" class="input-control"></div>
-                            </div>
-                            <div class="form-grid grid-cols-3">
-                                <div><label class="input-label">IO Type</label><input type="text" id="ef-io_type" class="input-control"></div>
-                                <div><label class="input-label">SW ID</label><input type="text" id="ef-sw_id" class="input-control"></div>
-                                <div><label class="input-label">Location</label><input type="text" id="ef-io_loc" class="input-control"></div>
-                            </div>
-                        </div>
-                        <!-- Calibration & Range (Edit) -->
-                        <div class="form-section">
-                            <div class="section-title"><i class="ph-fill ph-sliders-horizontal"></i> Calibration & Range</div>
-                            <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Channel</label><input type="text" id="ef-channel" class="input-control"></div>
-                                <div><label class="input-label">ESD Sheet</label><input type="text" id="ef-esd" class="input-control"></div>
-                            </div>
-                            <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Eng Range</label><input type="text" id="ef-eng_range" class="input-control"></div>
-                                <div><label class="input-label">Cal Range</label><input type="text" id="ef-cal_range" class="input-control"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-grid">
-                        <!-- Trip Settings (Edit) -->
-                        <div class="form-section">
-                            <div class="section-title"><i class="ph-fill ph-warning-circle"></i> Trip Settings</div>
-                            <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Trip H/HH</label><input type="text" id="ef-trip_h" class="input-control"></div>
-                                <div><label class="input-label">Function</label><input type="text" id="ef-func_h" class="input-control"></div>
-                            </div>
-                            <div class="form-grid grid-cols-2">
-                                <div><label class="input-label">Trip L/LL</label><input type="text" id="ef-trip_l" class="input-control"></div>
-                                <div><label class="input-label">Function</label><input type="text" id="ef-func_l" class="input-control"></div>
-                            </div>
-                        </div>
-                        <!-- Specifications (Edit) -->
-                        <div class="form-section">
-                            <div class="section-title"><i class="ph-fill ph-wrench"></i> Specifications</div>
-                            <div class="form-grid grid-cols-3">
-                                <div class="col-span-2"><label class="input-label">Loop Function</label><input type="text" id="ef-loop_func" class="input-control"></div>
-                                <div><label class="input-label">Inst Type</label>
-                                    <select id="ef-inst_type" class="input-control">
-                                        <option></option>
-                                        <option>ANALYZER</option>
-                                        <option>SWITCH</option>
-                                        <option>TRANSMITTER</option>
-                                        <option>CONTROL VALVE</option>
-                                        <option>RDV</option>
-                                        <option>GUAGE</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-grid grid-cols-3">
-                                <div><label class="input-label">Make</label><input type="text" id="ef-make" class="input-control"></div>
-                                <div><label class="input-label">Model</label><input type="text" id="ef-model" class="input-control"></div>
-                                <div><label class="input-label">SRNO</label><input type="text" id="ef-srno" class="input-control"></div>
-                            </div>
-                            <div><label class="input-label">Location</label><input type="text" id="ef-location" class="input-control"></div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-grid">
-                        <!-- Primary Element (Edit) -->
-                        <div class="form-section">
-                            <div class="section-title"><i class="ph-fill ph-atom"></i> Primary Element</div>
-                            <div class="form-grid grid-cols-5">
-                                <div><label class="input-label">Data Sheet</label><input type="text" id="ef-pe_datasheet" class="input-control"></div>
-                                <div><label class="input-label">Calculation</label><input type="text" id="ef-pe_calc" class="input-control"></div>
-                                <div><label class="input-label">Drawing</label><input type="text" id="ef-pe_drawing" class="input-control"></div>
-                                <div><label class="input-label">Cal. Report</label><input type="text" id="ef-pe_calreport" class="input-control"></div>
-                                <div><label class="input-label">Insp. Report</label><input type="text" id="ef-pe_inspreport" class="input-control"></div>
-                            </div>
-                        </div>
-                        <!-- Other Links (Edit) -->
-                        <div class="form-section">
-                            <div class="section-title"><i class="ph-fill ph-link"></i> Other Links</div>
-                            <div class="form-grid grid-cols-3">
-                                <div><label class="input-label">Logic</label><input type="text" id="ef-logic" class="input-control"></div>
-                                <div><label class="input-label">Loop Sheet</label><input type="text" id="ef-loop_sheet" class="input-control"></div>
-                                <div><label class="input-label">Helping Hand</label><input type="text" id="ef-helping" class="input-control"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-grid">
-                        <!-- Secondary Element (Edit) -->
-                        <div class="form-section">
-                            <div class="section-title"><i class="ph-fill ph-stack"></i> Secondary Element</div>
-                            <div class="form-grid grid-cols-5">
-                                <div><label class="input-label">Calculations</label><input type="text" id="ef-se_calc" class="input-control"></div>
-                                <div><label class="input-label">Drawing</label><input type="text" id="ef-se_drawing" class="input-control"></div>
-                                <div><label class="input-label">Insp. Report</label><input type="text" id="ef-se_inspreport" class="input-control"></div>
-                                <div><label class="input-label">Data Sheet</label><input type="text" id="ef-se_datasheet" class="input-control"></div>
-                                <div><label class="input-label">Accessory</label><input type="text" id="ef-se_accessory" class="input-control"></div>
-                            </div>
-                        </div>
-                        <!-- Damping (Edit) -->
-                        <div class="form-section">
-                            <div class="section-title"><i class="ph-fill ph-gauge"></i> Damping</div>
-                            <div class="form-grid grid-cols-5">
-                                <div><label class="input-label">TX</label><input type="text" id="ef-damp_tx" class="input-control"></div>
-                                <div><label class="input-label">DCS</label><input type="text" id="ef-damp_dcs" class="input-control"></div>
-                                <div><label class="input-label">AFRSet</label><input type="text" id="ef-afrset" class="input-control"></div>
-                                <div><label class="input-label">Air Lock</label><input type="text" id="ef-airlock" class="input-control"></div>
-                                <div><label class="input-label">Other</label><input type="text" id="ef-damp_other" class="input-control"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="section-title"><i class="ph-fill ph-files"></i> Additional Information</div>
-                        <div class="form-grid grid-cols-5 mb-4">
-                            <div>
-                                <label class="input-label">Bypass Module</label>
-                                <select id="ef-bypass" class="input-control">
-                                    <option>NO</option>
-                                    <option>YES</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="input-label">Ref. No</label>
-                                <input type="text" id="ef-ref_no" class="input-control">
-                            </div>
-                            <div>
-                                <label class="input-label">Meas. Tech</label>
-                                <input type="text" id="ef-meas_tech" class="input-control">
-                            </div>
-                            <div>
-                                <label class="input-label">Ana. Working</label>
-                                <input type="text" id="ef-ana_working" class="input-control">
-                            </div>
-                            <div>
-                                <label class="input-label">CPCB</label>
-                                <select id="ef-cpcb" class="input-control">
-                                    <option>NO</option>
-                                    <option>YES</option>
-                                </select>
-                            </div>
-                        </div>
-                        <label class="input-label">Special Comment</label>
-                        <textarea id="ef-comment" class="input-control" style="height: 5rem;"></textarea>
-                    </div>
-
-                    <div class="action-toolbar" style="margin-top: 2rem; justify-content: flex-end;">
-                        <button class="toolbar-btn btn-emerald" onclick="saveForm()">
-                            <i class="ph-bold ph-floppy-disk"></i> Save Record
-                        </button>
-                        <button class="toolbar-btn text-red" onclick="cancelForm()" style="border-color: rgba(239, 68, 68, 0.5);">
-                            <i class="ph-bold ph-x"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-
             </div>
         </div>
     </main>
 
-    <!-- ─── Modals (Job History & Detail) ─── -->
-    <!-- These are handled dynamically by script -->
+    <!-- ─── Static Modals ─── -->
+    <div id="modal-jh-container" class="gnfc-modal-overlay">
+        <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title">Job History Report</h3>
+                    <p class="gnfc-modal-subtitle" id="jh-modal-subtitle">BOILER PLANT</p>
+                </div>
+                <button class="gnfc-modal-close j-close-modal" data-target="#modal-jh-container">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            </div>
+            <div class="gnfc-modal-body gnfc-modal-body--flush">
+                <div class="user-table-wrapper modal-table-reset">
+                    <table class="user-table w-min-1000px">
+                        <thead>
+                            <tr>
+                                <th class="user-table-center w-64px">Sr</th>
+                                <th class="user-table-center w-100px">Area</th>
+                                <th class="user-table-left">Loop / Tag</th>
+                                <th class="user-table-left">Job / Inst Type</th>
+                                <th class="user-table-center w-120px">Date</th>
+                                <th class="w-300-min">Description of Job</th>
+                                <th>Remarks / Eng Ref</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                                <td class="user-table-center user-table-bold">BOILER-1</td>
+                                <td>
+                                    <div class="user-table-cell-stack">
+                                        <div class="user-table-primary">N.A.</div>
+                                        <div class="user-table-blue user-table-bold">L_110VDCBF</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="user-table-cell-stack">
+                                        <div class="user-table-primary">N.A.</div>
+                                        <div class="user-table-secondary font-12px">DEFECT MAINTENANCE</div>
+                                    </div>
+                                </td>
+                                <td class="user-table-center user-table-secondary">08/06/2016</td>
+                                <td class="user-table-desc">Ground found in Ash Atomising valve, Wire broken.</td>
+                                <td class="user-table-secondary remark-text">v. Good job done. [ AND ]</td>
+                            </tr>
+                            <tr>
+                                <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                                <td class="user-table-center user-table-bold">BOILER-2</td>
+                                <td>
+                                    <div class="user-table-cell-stack">
+                                        <div class="user-table-primary">10-PT-101A</div>
+                                        <div class="user-table-blue user-table-bold">LS-10-101</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="user-table-cell-stack">
+                                        <div class="user-table-primary">TRANSMITTER</div>
+                                        <div class="user-table-secondary font-12px">PREVENTIVE MAINTENANCE</div>
+                                    </div>
+                                </td>
+                                <td class="user-table-center user-table-secondary">15/01/2024</td>
+                                <td class="user-table-desc">Annual calibration and impulse line flushing completed.</td>
+                                <td class="user-table-secondary remark-text">Calibration within limits. [ MNK ]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button class="gnfc-modal-btn gnfc-modal-btn-secondary j-close-modal" data-target="#modal-jh-container">Close Report</button>
+                <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-print-jh">
+                    <i class="ph-bold ph-printer"></i> Print
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Junction Box Detail Modal -->
+    <div id="modal-jb-container" class="gnfc-modal-overlay">
+        <div class="gnfc-modal-shell">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title">Junction Box Detail</h3>
+                    <p class="gnfc-modal-subtitle" id="jb-modal-subtitle">BOILER PLANT</p>
+                </div>
+                <button class="gnfc-modal-close j-close-modal" data-target="#modal-jb-container">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            </div>
+            <div class="gnfc-modal-body">
+                <div class="user-table-wrapper modal-table-reset">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>JB No</th>
+                                <th>Location</th>
+                                <th>Pairs</th>
+                                <th>Cable No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="user-table-bold">JB-B1-01</td>
+                                <td>BOILER-1 FRONT</td>
+                                <td class="user-table-center">24</td>
+                                <td class="user-table-blue">MC-B1-01</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button class="gnfc-modal-btn gnfc-modal-btn-secondary j-close-modal" data-target="#modal-jb-container">Close</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // --- Mock Data Dictionary based on screenshots ---
-        const tagsData = {
-          "ZSH177906":  { area: "BOILER-1", tag_no: "ZSH177906",  description: "NG BURNER 4 BLOCK VALVE OPEN",        host: "DCS",   ctrl_type: "DPU 4F",   ctrl_no: "GN01", io_type: "IQF304 (CH:16)", sw_id: "F2M5",  io_loc: "R3M5",  channel: "9",   esd: "ESD-04",   eng_range: "",               cal_range: "",      trip_h: "",        func_h: "",          trip_l: "",       func_l: "",          loop_func: "BLOCK VALVE POSITION",               inst_type: "SWITCH",        make: "MAGO",       model: "LS06200", srno: "12345", location: "FIELD",  pe_datasheet: "DS-04", pe_calc: "CALC-04", pe_drawing: "DWG-04", pe_calreport: "CR-04", pe_inspreport: "IR-04", logic: "L-101", accessory: "ACC-01", loop_sheet: "LS-101", spec: "1001B",  helping: "H-01",  se_calc: "SE-C1", se_drawing: "SE-D1", se_inspreport: "SE-I1", se_datasheet: "SE-DS1", se_accessory: "SE-A1", damp_tx: "0.5s", damp_dcs: "1.0s", afrset: "YES", airlock: "NO", damp_other: "N/A", bypass: "NO", ref_no: "REF-101", meas_tech: "MT-01", ana_working: "YES", cpcb: "YES", comment: "Checked during annual maintenance." },
-          "10-PT-101A": { area: "BOILER-2", tag_no: "10-PT-101A", description: "MAIN STEAM HEADER PRESSURE",          host: "DCS",   ctrl_type: "FCS01",    ctrl_no: "01",   io_type: "AAI141",        sw_id: "NODE1", io_loc: "SLOT1", channel: "CH1", esd: "ESD-101", eng_range: "0 - 160 KG/CM2",    cal_range: "4-20 mA",  trip_h: "115 / 120",  func_h: "ALARM / TRIP",  trip_l: "95 / 90", func_l: "ALARM / TRIP", loop_func: "PRESSURE INDICATION",  inst_type: "TRANSMITTER",   make: "YOKOGAWA",   model: "EJA530A", srno: "98765", location: "STEAM LINE", pe_datasheet: "DS-P101", pe_calc: "PC-101", pe_drawing: "DWG-P101", pe_calreport: "CR-P101", pe_inspreport: "IR-P101", logic: "P-101", accessory: "MANIFOLD",      loop_sheet: "LS-10-101",  spec: "SP-001", helping: "NONE", se_calc: "", se_drawing: "", se_inspreport: "", se_datasheet: "", se_accessory: "", damp_tx: "1.0s", damp_dcs: "2.0s", afrset: "NO", airlock: "NO", damp_other: "", bypass: "NO", ref_no: "REF-P101", meas_tech: "MT-02", ana_working: "YES", cpcb: "NO", comment: "Calibrated during 2024 turnaround." }
-        };
-
-        const allTags = ["10-PT-101A", "ZSH177906", "XLGDFGV1D", "XV177901", "ZT177707A", "ZSL191801"];
-
-        // List of all field keys for mapping
-        const ALL_FIELDS = [
-            'area', 'tag_no', 'description', 'host',
-            'ctrl_type', 'ctrl_no', 'io_type', 'sw_id', 'io_loc',
-            'channel', 'esd', 'eng_range', 'cal_range',
-            'trip_h', 'func_h', 'trip_l', 'func_l',
-            'loop_func', 'inst_type', 'make', 'model', 'srno', 'location',
-            'pe_datasheet', 'pe_calc', 'pe_drawing', 'pe_calreport', 'pe_inspreport',
-            'logic', 'loop_sheet', 'helping',
-            'se_calc', 'se_drawing', 'se_inspreport', 'se_datasheet', 'se_accessory',
-            'damp_tx', 'damp_dcs', 'afrset', 'airlock', 'damp_other',
-            'bypass', 'ref_no', 'meas_tech', 'ana_working', 'cpcb', 'comment'
-        ];
-
-        // --- Dropdown Autocomplete Logic ---
-        const searchInput = document.getElementById('tag-search-input');
-        const dropdownBtn = document.getElementById('tag-dropdown-btn');
-        const dropdownList = document.getElementById('tag-dropdown-list');
-
-        function renderDropdown(filter = "") {
-            const list = allTags.filter(t => t.toLowerCase().includes(filter.toLowerCase()));
-            if(list.length === 0) {
-                dropdownList.innerHTML = '<div class="autocomplete-item" style="opacity:0.5; cursor:default;">No tags found</div>';
-            } else {
-                dropdownList.innerHTML = list.map(t => `
-                    <div class="autocomplete-item" data-tag="${t}">
-                        ${t.replace(new RegExp(`(${filter})`, 'gi'), '<b>$1</b>')}
-                    </div>
-                `).join('');
-            }
+        $(document).ready(function() {
+            // --- Elements ---
+            const $searchInput = $('#tag-search-input');
+            const $dropdownBtn = $('#tag-dropdown-btn');
+            const $dropdownList = $('#tag-dropdown-list');
+            const $tagItems = $('.autocomplete-item');
             
-            document.querySelectorAll('.autocomplete-item[data-tag]').forEach(el => {
-                el.onclick = () => {
-                    const tag = el.dataset.tag;
-                    searchInput.value = tag;
-                    dropdownList.classList.add('hidden');
-                    loadTagData(tag);
-                };
-            });
-        }
+            const $viewForm = $('#view-mode-form');
+            const $editForm = $('#edit-mode-form');
+            const $scrollContainer = $('.dashboard-scroll');
+            const $areaDisplay = $('#area-display');
 
-        searchInput.oninput = (e) => { dropdownList.classList.remove('hidden'); renderDropdown(e.target.value); };
-        searchInput.onfocus = () => { dropdownList.classList.remove('hidden'); renderDropdown(searchInput.value); };
-        dropdownBtn.onclick = (e) => { e.stopPropagation(); dropdownList.classList.toggle('hidden'); if(!dropdownList.classList.contains('hidden')) renderDropdown(""); };
-        document.onclick = (e) => { if(!document.getElementById('tag-search-container').contains(e.target)) dropdownList.classList.add('hidden'); };
+            // --- Area Persistence Sync ---
+            const savedArea = localStorage.getItem('gnfc_selected_area');
+            if(savedArea) $areaDisplay.text(savedArea);
 
-        // --- Data Loading & Mode Toggling ---
-        function loadTagData(tagId) {
-            clearAllFields();
-            const data = tagsData[tagId];
-            if(data) {
-                ALL_FIELDS.forEach(k => { 
-                    const el = document.getElementById('f-' + k); 
-                    if(el) el.value = data[k] || ''; 
+
+            // --- Dropdown Logic ---
+            function syncDropdownIcon() {
+                const isHidden = $dropdownList.hasClass('hidden');
+                $dropdownBtn.find('i').toggleClass('ph-caret-down', isHidden).toggleClass('ph-caret-up', !isHidden);
+            }
+
+            function renderDropdown(filter) {
+                const f = (filter || "").toLowerCase();
+                let count = 0;
+                
+                $tagItems.each(function() {
+                    const tag = $(this).data('tag').toLowerCase();
+                    if (tag.includes(f)) {
+                        $(this).show();
+                        count++;
+                    } else {
+                        $(this).hide();
+                    }
                 });
-                document.getElementById('inst-empty-state').classList.add('hidden');
-                document.getElementById('view-mode-form').classList.remove('hidden');
-                document.getElementById('edit-mode-form').classList.add('hidden');
-                document.querySelector('.dashboard-scroll').scrollTop = 0;
-            } else {
-                // If tag exists in list but no mock data, just show the tag
-                if(allTags.includes(tagId)) {
-                    document.getElementById('f-tag_no').value = tagId;
-                    document.getElementById('inst-empty-state').classList.add('hidden');
-                    document.getElementById('view-mode-form').classList.remove('hidden');
-                    document.getElementById('edit-mode-form').classList.add('hidden');
-                } else {
-                    Swal.fire({ icon:'warning', title:'Tag Not Found', text:`Details for tag ${tagId} not found.`, confirmButtonColor:'#2563eb' });
-                }
+
+                if (count === 0) $dropdownList.addClass('hidden');
+                else $dropdownList.removeClass('hidden');
+
+                syncDropdownIcon();
             }
-        }
 
-        function triggerSearch() {
-            const val = searchInput.value.trim();
-            if(val) loadTagData(val);
-        }
+            $tagItems.on('click', function() {
+                const tag = $(this).data('tag');
+                $searchInput.val(tag);
+                $dropdownList.addClass('hidden');
+                syncDropdownIcon();
+                loadTagData(tag);
+            });
 
-        function clearAllFields() {
-            ALL_FIELDS.forEach(k => {
-                const fel = document.getElementById('f-' + k);
-                const efel = document.getElementById('ef-' + k);
-                if(fel) fel.value = '';
-                if(efel) {
-                    if(efel.tagName === 'SELECT') efel.selectedIndex = 0;
-                    else efel.value = '';
+            $searchInput.on('input', function() { 
+                $dropdownList.removeClass('hidden'); 
+                renderDropdown($(this).val()); 
+            }).on('focus', function() { 
+                $dropdownList.removeClass('hidden'); 
+                renderDropdown($(this).val()); 
+            });
+
+            $dropdownBtn.on('click', function(e) { 
+                e.stopPropagation(); 
+                $dropdownList.toggleClass('hidden'); 
+                if(!$dropdownList.hasClass('hidden')) renderDropdown(""); 
+                syncDropdownIcon();
+            });
+
+            $(document).on('click', function(e) { 
+                if(!$(e.target).closest('#tag-search-container').length) {
+                    $dropdownList.addClass('hidden'); 
+                    syncDropdownIcon();
                 }
             });
-        }
 
-        function showAddForm() {
-            document.getElementById('inst-empty-state').classList.add('hidden');
-            document.getElementById('view-mode-form').classList.add('hidden');
-            document.getElementById('edit-mode-form').classList.remove('hidden');
-            document.getElementById('edit-form-title').textContent = 'Add New Instrument Instrument';
-            
-            clearAllFields();
-            document.querySelector('.dashboard-scroll').scrollTop = 0;
-        }
-
-        function showEditForm() {
-            const tag = document.getElementById('f-tag_no').value;
-            if(!tag) {
-                 Swal.fire({ icon:'warning', title:'No Tag Selected', text:'Search for a tag first.', confirmButtonColor:'#2563eb' });
-                 return;
-            }
-            document.getElementById('edit-mode-form').classList.remove('hidden');
-            document.getElementById('view-mode-form').classList.add('hidden');
-            document.getElementById('edit-form-title').textContent = 'Edit Instrument — ' + tag;
-            
-            // Map all View fields to Edit fields
-            ALL_FIELDS.forEach(k => {
-                const srcEl = document.getElementById('f-' + k);
-                const destEl = document.getElementById('ef-' + k);
-                if(srcEl && destEl) {
-                    destEl.value = srcEl.value;
-                }
-            });
-            document.querySelector('.dashboard-scroll').scrollTop = 0;
-        }
-
-        function cancelForm() {
-            document.getElementById('edit-mode-form').classList.add('hidden');
-            if(document.getElementById('f-tag_no').value) {
-                document.getElementById('view-mode-form').classList.remove('hidden');
-            } else {
-                document.getElementById('inst-empty-state').classList.remove('hidden');
-            }
-            document.querySelector('.dashboard-scroll').scrollTop = 0;
-        }
-
-        function saveForm() {
-            const tag = document.getElementById('ef-tag_no').value.trim();
-            if(!tag) {
-                Swal.fire({ icon:'error', title:'Error', text:'Tag No is required.', confirmButtonColor:'#ef4444' });
-                return;
+            // --- Form Handlers ---
+            function loadTagData(tagId) {
+                $viewForm.removeClass('hidden');
+                $editForm.addClass('hidden');
+                $('#f-tag_no').val(tagId);
+                $scrollContainer.scrollTop(0);
             }
 
-            Swal.fire({ 
-                icon:'success', 
-                title:'Record Saved Successfully', 
-                text:`Instrument data for ${tag} has been updated.`, 
-                confirmButtonColor:'#10b981',
-                timer: 2000,
-                timerProgressBar: true
-            }).then(() => {
-                // Update view form with new values (simulating persist)
-                ALL_FIELDS.forEach(k => {
-                    const srcEl = document.getElementById('ef-' + k);
-                    const destEl = document.getElementById('f-' + k);
-                    if(srcEl && destEl) destEl.value = srcEl.value;
+            function clearAllFields() {
+                const mainFields = ['area', 'tag_no', 'description', 'host'];
+                $.each(mainFields, function(i, k) {
+                    $('#f-' + k + ', #ef-' + k).val('');
                 });
-                cancelForm();
-            });
-        }
+            }
 
-        function deleteTag() {
-            const tag = document.getElementById('f-tag_no').value;
-            if(!tag) return;
-            Swal.fire({
-                title: 'Delete Instrument?',
-                html: `Are you sure you want to delete tag <br><b style="color:#ef4444">${tag}</b>?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#ef4444',
-                confirmButtonText: 'Yes, Delete',
-                cancelButtonText: 'Cancel'
-            }).then(r => {
-                if(r.isConfirmed) {
-                    document.getElementById('f-tag_no').value = '';
-                    clearAllFields();
-                    cancelForm();
-                    Swal.fire({ icon:'success', title:'Deleted!', text:'Instrument has been removed.', timer:1500, showConfirmButton:false });
+            function showEditForm() {
+                const tag = $('#f-tag_no').val();
+                if(!tag) {
+                    Swal.fire({
+                        title: 'Tag Not Selected',
+                        text: 'First Search or Find a Tag No, then click Edit.',
+                        icon: 'warning',
+                        confirmButtonColor: '#2563eb',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+                window.location.href = 'boiler_inst_data_edit.html';
+            }
+
+
+            function cancelForm() {
+                $viewForm.addClass('hidden');
+                $searchInput.val('');
+                $scrollContainer.scrollTop(0);
+            }
+
+            function deleteTag() {
+                const tag = $('#f-tag_no').val();
+                if(!tag) {
+                    Swal.fire({
+                        title: 'Tag Not Selected',
+                        text: 'First Search or Find a Tag No, then click Delete.',
+                        icon: 'warning',
+                        confirmButtonColor: '#2563eb',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+                Swal.fire({
+                    title: 'Are you sure to delete this tag?',
+                    html: `Delete tag <b style="color:#ef4444">${tag}</b>?`,
+                    icon: 'warning', 
+                    showCancelButton: true, 
+                    confirmButtonColor: '#ef4444', 
+                    confirmButtonText: 'Yes, Delete',
+                    cancelButtonText: 'Cancel'
+                }).then(r => {
+                    if(r.isConfirmed) {
+                        $('#f-tag_no').val('');
+                        clearAllFields();
+                        cancelForm();
+                        Swal.fire({ 
+                            icon:'success', 
+                            title:'Deleted!', 
+                            text: `Tag ${tag} has been Deleted.`,
+                            timer:1500, 
+                            showConfirmButton:false 
+                        });
+                    }
+                });
+            }
+
+            // --- Modal Handlers ---
+            function openModal(id, tagSelector, subtitleId) {
+                const tag = $('#f-tag_no').val() || 'BOILER PLANT';
+                $(subtitleId).text(tag);
+                $(id).addClass('is-open');
+            }
+
+            // --- Event Bindings ---
+            $('#btn-job-history').on('click', () => openModal('#modal-jh-container', null, '#jh-modal-subtitle'));
+            $('#btn-jb-detail').on('click', () => openModal('#modal-jb-container', null, '#jb-modal-subtitle'));
+            $('#btn-add').on('click', () => {
+                window.location.href = 'boiler_inst_data_add.html';
+            });
+            $('#btn-edit').on('click', showEditForm);
+            $('#btn-delete').on('click', deleteTag);
+
+            $searchInput.on('keydown', function(e) {
+                if(e.key === 'Enter') {
+                    const val = $(this).val().trim();
+                    if(val) loadTagData(val);
                 }
             });
-        }
+            $('#btn-save-record').hide();
+            $('#btn-cancel-edit').hide();
+            
+            $('.j-close-modal').on('click', function() { $($(this).data('target')).removeClass('is-open'); });
+            $('#btn-print-jh').on('click', () => window.print());
 
-        // --- JOB HISTORY MODAL DYNAMIC SCRIPT ---
-        const openJobHistoryModal = (function() {
-            const ID = 'modal-jh-container';
-            const DATA = [
-                { sr: 1, area: 'BOILER-1', tag1: 'N.A.', tag2: 'L_110VDCBF', type1: 'N.A.', type2: 'DEFECT MAINTENANCE', date: '08/06/2016', desc: 'Ground found in Ash Atomising valve, Wire broken.', tech: 'VM / AND', engRef: 'v. Good job done. [ AND ]' }
-            ];
+            $('#btn-loop-data').on('click', () => window.location.href='boiler_loop_data.html');
+            $('#btn-search-tag').on('click', () => window.location.href='boiler_search_tag.html');
 
-            return function() {
-                let modal = document.getElementById(ID);
-                if(!modal) {
-                    modal = document.createElement('div');
-                    modal.id = ID;
-                    modal.className = 'gnfc-modal-overlay';
-                    modal.innerHTML = `
-                        <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
-                            <div class="gnfc-modal-header">
-                                <div>
-                                    <h3 class="gnfc-modal-title">Job History Report</h3>
-                                    <p class="gnfc-modal-subtitle">${document.getElementById('f-tag_no').value || 'BOILER PLANT'}</p>
-                                </div>
-                                <button class="gnfc-modal-close" onclick="document.getElementById('${ID}').classList.remove('is-open')">
-                                    <i class="ph-bold ph-x"></i>
-                                </button>
-                            </div>
-                            <div class="gnfc-modal-body gnfc-modal-body--flush">
-                                <div class="user-table-wrapper" style="border:none; border-radius:0;">
-                                    <table class="user-table" style="min-width:1000px;">
-                                        <thead>
-                                            <tr>
-                                                <th class="user-table-center" style="width:64px;">Sr</th>
-                                                <th class="user-table-center" style="width:100px;">Area</th>
-                                                <th class="user-table-left">Loop / Tag</th>
-                                                <th class="user-table-left">Job / Inst Type</th>
-                                                <th class="user-table-center" style="width:120px;">Date</th>
-                                                <th style="min-width:300px;">Description of Job</th>
-                                                <th>Remarks / Eng Ref</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${DATA.map(r => `
-                                                <tr>
-                                                    <td class="user-table-center user-table-secondary user-table-bold">${r.sr}</td>
-                                                    <td class="user-table-center user-table-bold">${r.area}</td>
-                                                    <td>
-                                                        <div class="user-table-cell-stack">
-                                                            <div class="user-table-primary">${r.tag1}</div>
-                                                            <div class="user-table-blue user-table-bold">${r.tag2}</div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="user-table-cell-stack">
-                                                            <div class="user-table-primary">${r.type1}</div>
-                                                            <div class="user-table-secondary" style="font-size:12px;">${r.type2}</div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="user-table-center user-table-secondary">${r.date}</td>
-                                                    <td class="user-table-desc">${r.desc}</td>
-                                                    <td class="user-table-secondary" style="font-style:italic;">${r.engRef}</td>
-                                                </tr>
-                                            `).join('')}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="gnfc-modal-footer">
-                                <button class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="document.getElementById('${ID}').classList.remove('is-open')">Close Report</button>
-                                <button class="gnfc-modal-btn gnfc-modal-btn-primary" onclick="window.print()">
-                                    <i class="ph-bold ph-printer"></i> Print
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    document.body.appendChild(modal);
-                } else {
-                    modal.querySelector('.gnfc-modal-subtitle').textContent = document.getElementById('f-tag_no').value || 'BOILER PLANT';
-                }
-                requestAnimationFrame(() => modal.classList.add('is-open'));
-            };
-        })();
+        });
     </script>
 </body>
-</html>
-
 </html>

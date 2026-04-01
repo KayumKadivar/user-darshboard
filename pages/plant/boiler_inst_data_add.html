@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Instrument | GNFC</title>
+    <link rel="stylesheet" href="../../css/phosphor.css">
+    <link rel="stylesheet" href="../../css/theme-vars.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/style.css">
+    <link rel="stylesheet" href="../../css/pages/plant.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+
+    <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="../../js/theme-control.js"></script>
+    <script src="../../js/sidebar.js" defer></script>
+    <script src="../../js/header.js" defer></script>
+
+    <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+
+    <div class="sidebar-container"></div>
+
+    <main class="main-wrapper">
+
+        <div id="header-container" data-title="Add New Instrument" data-back="boiler_inst_data.html"></div>
+
+        <div class="dashboard-content dashboard-scroll">
+            <div class="plant-container">
+
+                <!-- ─── Add Mode Toolbar ─── -->
+                <!-- <div class="user-toolbar mb-4">
+                    <div class="user-toolbar-left">
+                        <h2 class="section-title m-0"><i class="ph-bold ph-plus-circle color-emerald mr-2"></i> Create New Record</h2>
+                    </div>
+                    <div class="user-toolbar-right gap-3">
+                        <button class="btn btn-emerald h-40px px-24px" id="btn-save-new">
+                            <i class="ph-bold ph-floppy-disk"></i> Save Instrument
+                        </button>
+                        <button class="btn btn-secondary h-40px px-24px" onclick="window.location.href='boiler_inst_data.html'">
+                            <i class="ph-bold ph-x"></i> Cancel
+                        </button>
+                    </div>
+                </div> -->
+
+                <!-- ─── Main Entry Form ─── -->
+                <div class="inst-data-view-wrapper">
+                    
+                    <!-- General Information -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-tag"></i> General Information</div>
+                        <div class="form-grid grid-cols-5">
+                            <div>
+                                <label class="input-label">Area</label>
+                                <div class="gnfc-select-group">
+                                    <select id="nf-area" class="input-control">
+                                        <option>Select Area</option>
+                                        <option>BOILER-1</option>
+                                        <option>BOILER-2</option>
+                                        <option>BOILER-3</option>
+                                        <option>BOILER-4</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="input-label">Tag No</label>
+                                <input type="text" id="nf-tag_no" class="input-control" placeholder="Enter Tag No">
+                            </div>
+                            <div class="col-span-2">
+                                <label class="input-label">Description</label>
+                                <input type="text" id="nf-description" class="input-control" placeholder="Instrument Description">
+                            </div>
+                            <div>
+                                <label class="input-label">Host</label>
+                                <div class="gnfc-select-group">
+                                    <select id="nf-host" class="input-control">
+                                        <option>DCS</option>
+                                        <option>PLC</option>
+                                        <option>LOCAL</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Controller & IO Module -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-cpu"></i> Controller & IO Module</div>
+                            <div class="form-grid grid-cols-2">
+                                <div><label class="input-label">Controller Type</label><input type="text" id="nf-ctrl_type" class="input-control"></div>
+                                <div><label class="input-label">Controller No</label><input type="text" id="nf-ctrl_no" class="input-control"></div>
+                            </div>
+                            <div class="form-grid grid-cols-3">
+                                <div><label class="input-label">IO Type</label><input type="text" id="nf-io_type" class="input-control"></div>
+                                <div><label class="input-label">SW ID</label><input type="text" id="nf-sw_id" class="input-control"></div>
+                                <div><label class="input-label">Location</label><input type="text" id="nf-io_loc" class="input-control"></div>
+                            </div>
+                        </div>
+                        <!-- Calibration & Range -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-sliders-horizontal"></i> Calibration & Range</div>
+                        <div class="form-grid grid-cols-2">
+                            <div><label class="input-label">CH</label><input type="text" id="nf-CH" class="input-control"></div>
+                            <div><label class="input-label">ESD Sheet</label><input type="text" id="nf-esd" class="input-control"></div>
+                            <div><label class="input-label">Eng Range</label><input type="text" id="nf-eng_range" class="input-control"></div>
+                            <div><label class="input-label">Cal Range</label><input type="text" id="nf-cal_range" class="input-control"></div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Trip Settings -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-warning-circle"></i> Trip Settings</div>
+                        <div class="form-grid grid-cols-2">
+                            <div><label class="input-label">Trip H/HH</label><input type="text" id="nf-trip_h" class="input-control"></div>
+                            <div><label class="input-label">Function</label><input type="text" id="nf-func_h" class="input-control"></div>
+                            <div><label class="input-label">Trip L/LL</label><input type="text" id="nf-trip_l" class="input-control"></div>
+                            <div><label class="input-label">Function</label><input type="text" id="nf-func_l" class="input-control"></div>
+                        </div>
+                        </div>
+                        <!-- Specifications -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-wrench"></i> Specifications</div>
+                        <div class="form-grid grid-cols-3">
+                            <div><label class="input-label">Loop Function</label><input type="text" id="nf-loop_func" class="input-control"></div>
+                            <div><label class="input-label">Inst Type</label>
+                                <div class="gnfc-select-group">
+                                    <select id="nf-inst_type" class="input-control">
+                                        <option>Select Inst type</option>
+                                        <option>ANALYZER</option>
+                                        <option>SWITCH</option>
+                                        <option>TRANSMITTER</option>
+                                        <option>CONTROL VALVE</option>
+                                        <option>RDV</option>
+                                        <option>GUAGE</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down"></i>
+                                </div>
+                            </div>
+                            <div><label class="input-label">Make</label><input type="text" id="nf-make" class="input-control"></div>
+                            <div><label class="input-label">Model</label><input type="text" id="nf-model" class="input-control"></div>
+                            <div><label class="input-label">SRNO</label><input type="text" id="nf-srno" class="input-control"></div>
+                            <div><label class="input-label">Location</label><input type="text" id="nf-location" class="input-control"></div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Primary Element -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-atom"></i> Primary Element</div>
+                            <div class="form-grid grid-cols-5">
+                                <div><label class="input-label">Data Sheet</label><input type="text" id="nf-pe_datasheet" class="input-control"></div>
+                                <div><label class="input-label">Calculation</label><input type="text" id="nf-pe_calc" class="input-control"></div>
+                                <div><label class="input-label">Drawing</label><input type="text" id="nf-pe_drawing" class="input-control"></div>
+                                <div><label class="input-label">Cal. Report</label><input type="text" id="nf-pe_calreport" class="input-control"></div>
+                                <div><label class="input-label">Insp. Report</label><input type="text" id="nf-pe_inspreport" class="input-control"></div>
+                            </div>
+                        </div>
+                        <!-- Other Links -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-link"></i> Other Links</div>
+                        <div class="form-grid grid-cols-3">
+                            <div><label class="input-label">Logic</label><input type="text" id="nf-logic" class="input-control"></div>
+                            <div><label class="input-label">Loop Sheet</label><input type="text" id="nf-loop_sheet" class="input-control"></div>
+                            <div><label class="input-label">Helping Hand</label><input type="text" id="nf-helping" class="input-control"></div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Secondary Element -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-stack"></i> Secondary Element</div>
+                            <div class="form-grid grid-cols-5">
+                                <div><label class="input-label">Calculations</label><input type="text" id="nf-se_calc" class="input-control"></div>
+                                <div><label class="input-label">Drawing</label><input type="text" id="nf-se_drawing" class="input-control"></div>
+                                <div><label class="input-label">Insp. Report</label><input type="text" id="nf-se_inspreport" class="input-control"></div>
+                                <div><label class="input-label">Data Sheet</label><input type="text" id="nf-se_datasheet" class="input-control"></div>
+                                <div><label class="input-label">Accessory</label><input type="text" id="nf-se_accessory" class="input-control"></div>
+                            </div>
+                        </div>
+                        <!-- Damping -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-gauge"></i> Damping</div>
+                            <div class="form-grid grid-cols-5">
+                                <div><label class="input-label">TX</label><input type="text" id="nf-damp_tx" class="input-control"></div>
+                                <div><label class="input-label">DCS</label><input type="text" id="nf-damp_dcs" class="input-control"></div>
+                                <div><label class="input-label">AFRSet</label><input type="text" id="nf-afrset" class="input-control"></div>
+                                <div><label class="input-label">Air Lock</label><input type="text" id="nf-airlock" class="input-control"></div>
+                                <div><label class="input-label">Other</label><input type="text" id="nf-damp_other" class="input-control"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-files"></i> Additional Information</div>
+                        <div class="form-grid grid-cols-5 mb-3">
+                            <div>
+                                <label class="input-label">Bypass Module</label>
+                                <div class="gnfc-select-group">
+                                    <select id="nf-bypass" class="input-control">
+                                        <option>NO</option>
+                                        <option>YES</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="input-label">Ref. No</label>
+                                <input type="text" id="nf-ref_no" class="input-control">
+                            </div>
+                            <div>
+                                <label class="input-label">Meas. Tech</label>
+                                <input type="text" id="nf-meas_tech" class="input-control">
+                            </div>
+                            <div>
+                                <label class="input-label">Ana. Working</label>
+                                <input type="text" id="nf-ana_working" class="input-control">
+                            </div>
+                            <div>
+                                <label class="input-label">CPCB</label>
+                                <div class="gnfc-select-group">
+                                    <select id="nf-cpcb" class="input-control">
+                                        <option>NO</option>
+                                        <option>YES</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="input-label">Special Comment</label>
+                        <textarea id="nf-comment" class="input-control textarea-h-80"></textarea>
+                    </div>
+
+                    <div class="action-toolbar mt-20px justify-end mb-0px">
+                        <button class="toolbar-btn btn-emerald" id="btn-save-bottom">
+                            <i class="ph-bold ph-floppy-disk"></i> Save
+                        </button>
+                        <button class="toolbar-btn" onclick="window.location.href='boiler_inst_data.html'">
+                            <i class="ph-bold ph-x"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</body>
+</html>

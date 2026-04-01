@@ -23,19 +23,15 @@
 
   <!-- Sidebar Container -->
   <div class="sidebar-container">
-    <!-- Sidebar will be injected here by js/sidebar.js -->
   </div>
 
   <main class="main-wrapper">
     <!-- Header Placeholder -->
     <div id="header-container" data-title="Dashboard" data-back="login.html">
-      <!-- Header will be injected by js/header.js -->
     </div>
 
-    <!-- ═══════ SCROLLABLE CONTENT ═══════ -->
     <div class="dashboard-content dashboard-scroll">
 
-      <!-- ─── Top Bar: Welcome + Clock ─── -->
       <div class="welcome-section">
         <div class="welcome-text">
           <h2>Good <span id="greeting-time">Afternoon</span>, <span id="user-display-name">Admin</span></h2>
@@ -53,7 +49,6 @@
         </div>
       </div>
 
-      <!-- ─── Active Alerts & Notifications Column ─── -->
       <div class="alerts-container">
         <div class="noticeboard-header">
           <h2 class="noticeboard-title">
@@ -288,13 +283,13 @@
           <table class="gnfc-table">
             <thead>
               <tr>
-                <th>#</th>
-                <th style="width: 300px;">Equipment Item</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Serial No.</th>
-                <th>Last Cal</th>
-                <th>Due Date</th>
+                <th style="width: 50px;">#</th>
+                <th style="width: 280px;">Equipment Item</th>
+                <th style="width: 120px;">Make</th>
+                <th style="width: 100px;">Model</th>
+                <th style="width: 120px;">Serial No.</th>
+                <th style="width: 110px;">Last Cal</th>
+                <th style="width: 110px;">Due Date</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -302,53 +297,53 @@
               <tr>
                 <td>1</td>
                 <td>
-                  <div class="fw-bold font-14px">BLR-027 (mAmV Simulator)</div>
+                  <div class="fw-700  font-14px">BLR-027 (mAmV Simulator)</div>
                   <div class="font-12px color-secondary">ID: CAL-001</div>
                 </td>
                 <td class="font-16px">Fluke</td>
                 <td>715</td>
                 <td>-</td>
                 <td class="font-16px">20/02/2025</td>
-                <td class="fw-bold font-16px">20/02/2026</td>
+                <td class="fw-700  font-16px">20/02/2026</td>
                 <td><span class="status-badge badge-red">OVERDUE 33D</span></td>
               </tr>
               <tr>
                 <td>2</td>
                 <td>
-                  <div class="fw-bold font-14px">BLR-003 (Temp Simulator)</div>
+                  <div class="fw-700  font-14px">BLR-003 (Temp Simulator)</div>
                   <div class="font-12px color-secondary">ID: CAL-002</div>
                 </td>
                 <td class="font-16px">Fluke</td>
                 <td>724</td>
                 <td class="font-16px">3745297</td>
                 <td class="font-16px">17/02/2025</td>
-                <td class="fw-bold font-16px">17/02/2026</td>
+                <td class="fw-700  font-16px">17/02/2026</td>
                 <td><span class="status-badge badge-red">OVERDUE 36D</span></td>
               </tr>
               <tr>
                 <td>3</td>
                 <td>
-                  <div class="fw-bold font-14px">BLR-002 (Digital Multimeter)</div>
+                  <div class="fw-700  font-14px">BLR-002 (Digital Multimeter)</div>
                   <div class="font-12px color-secondary">ID: CAL-003</div>
                 </td>
                 <td class="font-16px">MOTWANE</td>
                 <td>M63</td>
                 <td class="font-16px">A04071D14</td>
                 <td class="font-16px">17/02/2025</td>
-                <td class="fw-bold font-16px">17/02/2026</td>
+                <td class="fw-700  font-16px">17/02/2026</td>
                 <td><span class="status-badge badge-red">OVERDUE 36D</span></td>
               </tr>
               <tr>
                 <td>4</td>
                 <td>
-                  <div class="fw-bold font-14px">FT-101 (Flow Transmitter)</div>
+                  <div class="fw-700  font-14px">FT-101 (Flow Transmitter)</div>
                   <div class="font-12px color-secondary">ID: CAL-004</div>
                 </td>
                 <td class="font-16px">Rosemount</td>
                 <td class="font-16px">3051</td>
                 <td class="font-16px">SN12345</td>
                 <td class="font-16px">01/01/2025</td>
-                <td class="fw-bold font-16px">01/01/2026</td>
+                <td class="fw-700  font-16px">01/01/2026</td>
                 <td><span class="status-badge badge-red">OVERDUE 83D</span></td>
               </tr>
             </tbody>
@@ -373,14 +368,12 @@
   <script>
     $(function () {
 
-      // --- Sidebar & Profile Logic moved to js/sidebar.js ---
-
-      // --- Live Data (Clock, Date, Greeting) ---
       const $greetingEl = $('#greeting-time');
       const $dateEl = $('#live-date');
       const $clockEl = $('#live-clock');
       const $displayNameEl = $('#user-display-name');
 
+      const currentUserName = localStorage.getItem('currentUserName') || 'Admin User';
       if ($displayNameEl.length) $displayNameEl.text(currentUserName);
 
       const updateGreeting = () => {
