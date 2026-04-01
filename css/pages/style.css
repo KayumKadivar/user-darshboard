@@ -145,12 +145,62 @@
   color: #f87171;
 }
 
-/* (Unused - Migrated to .user-table from common.css) */
+
+.user-table-head-cell {
+    padding: 8px 10px;
+    font-size: 0.8375rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--typo-blue);
+    background: var(--app-panel-alt);
+    border-bottom: 2px solid var(--app-border);
+    border-right: 1px solid var(--app-border);
+    text-align: left;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+
+.user-table- {
+    background: transparent;
+}
+
+.user-table-cell {
+    padding: 8px 10px;
+    color: var(--typo-primary, #ffffff);
+    border-right: 1px solid var(--app-border, #23272e);
+}
+
+
+.user-table-row {
+    border-bottom: 1px solid var(--app-border, #23272e);
+    transition: background 0.15s;
+    background: var(--app-panel, #181b1f);
+    cursor: pointer;
+}
+
+.user-table-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.user-table-row:last-child {
+    border-bottom: none;
+}
+
+/* ── Table Row Actions ── */
+.user-table-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+
 
 /* --- UNIFIED TABLE COMPONENT --- */
 .user-table-wrapper {
   overflow: auto;
-  flex: 1;
+  /* flex: 1; */
   width: 100%;
   border: 1px solid var(--app-border);
   border-radius: 8px;
@@ -179,7 +229,7 @@
 }
 
 .user-table td {
-  padding: 10px 10px;
+  padding: 7px 7px;
   color: var(--typo-primary);
   border-bottom: 1px solid var(--app-border);
   border-right: 1px solid var(--app-border);
@@ -279,7 +329,6 @@
 }
 
 /* ── Login Page Styles ── */
-
 .login-wrapper {
   min-height: 100vh;
   display: flex;
@@ -877,15 +926,9 @@
   margin-bottom: 16px;
 }
 
-
-/* ==========================================================================
-   REUSABLE PLANT NAVIGATION
-   ========================================================================== */
+/* Reusable Plant Navigation */
 .plant-nav-wrapper {
   position: relative;
-  /* was sticky, but sticky to top won't work easily if there's a header */
-  /* top: 0; */
-  /* z-index: 30; */
   background: var(--app-panel);
   border: 1px solid var(--app-border);
   padding: 8px 16px;
@@ -914,7 +957,6 @@
   gap: 6px;
   padding: 6px 12px;
   font-size: 0.9375rem;
-  /* 15px */
   font-weight: 700;
   border-radius: 6px;
   transition: all 0.15s ease;
@@ -971,7 +1013,6 @@
   border: 1px solid rgba(87, 148, 242, 0.2);
   border-radius: 6px;
   font-size: 0.85rem;
-  /* 12px */
   font-weight: 800;
   cursor: pointer;
   transition: all 0.2s;
@@ -1085,9 +1126,7 @@
   opacity: 0.7;
 }
 
-/* ==========================================================================
-   OT MODAL SPECIALS
-   ========================================================================== */
+/* OT Modal Specials */
 .ot-modal-title-layout {
   display: flex;
   align-items: center;
@@ -1133,7 +1172,6 @@
 .ot-btn-go {
   margin-bottom: 0;
 }
-
 
 .ot-record-info {
   font-size: 0.8125rem;
@@ -1215,8 +1253,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
-  margin-top: 32px;
-  padding-top: 24px;
+  margin-top: 10px;
+  padding-top: 10px;
   border-top: 1px solid var(--dark-border);
 }
 
@@ -1350,9 +1388,7 @@
   color: var(--blue);
 }
 
-
 /* --- GNFC TABLE UI (MODALS) --- */
-
 .gnfc-table {
   width: 100%;
   border-collapse: collapse;
@@ -1418,7 +1454,6 @@
   color: var(--label);
   margin: 0;
 }
-
 
 /* Status Badges */
 .status-badge {
@@ -1542,7 +1577,6 @@
   width: auto;
   object-fit: contain;
 }
-
 
 /* --- Navigation --- */
 .sidebar-nav {
@@ -1789,8 +1823,6 @@
   font-weight: 600;
 }
 
-/* (Replaced by .ui-switcher) */
-
 /* ===== CHIP ===== */
 .total-count-chip {
   display: flex;
@@ -1986,7 +2018,6 @@
 }
 
 /* ===== COLOR VARIANTS ===== */
-/* Blue */
 .qa-blue .qa-icon-box {
   background: rgba(87, 148, 242, 0.15);
   color: #5794F2;
@@ -2005,7 +2036,6 @@
   color: white;
 }
 
-/* Teal */
 .qa-teal .qa-icon-box {
   background: rgba(20, 184, 166, 0.15);
   color: #14b8a6;
@@ -2107,8 +2137,6 @@
   gap: 16px;
 }
 
-/* (Handled by .ui-card) */
-
 .plant-page__nav-card {
   display: flex;
   align-items: center;
@@ -2200,7 +2228,6 @@
   flex-wrap: wrap;
 }
 
-/* (Replaced by .ui-switcher in HTML) */
 .plant-period-switcher__button.is-active {
   color: var(--typo-orange);
 }
@@ -2417,7 +2444,6 @@
   color: var(--typo-blue);
   font-size: 0.975rem;
   font-weight: 700;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 .plant-table {
@@ -2526,7 +2552,6 @@
 .plant-form-grid--two {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-
 
 .plant-section-card,
 .plant-subpanel,
@@ -2887,7 +2912,6 @@
     width: 100%;
     flex-wrap: wrap;
   }
-
 }
 
 .plant-priority-chip {
@@ -2919,7 +2943,6 @@
   font-weight: 700;
 }
 
-
 .delete-row-btn {
   background: transparent;
   border: none;
@@ -2940,7 +2963,6 @@
   font-size: 1.125rem;
   color: #ef4444;
 }
-
 
 /* ── Checkbox Styling ─────────────────────────────────────── */
 .plant-checkbox-stack {
@@ -2992,12 +3014,7 @@
   border-color: #3b82f6;
 }
 
-
-/* ==========================================================================
-   ASSIGN TODAY PAGE STYLES
-   ========================================================================== */
-
-/* --- Page Layout --- */
+/* Assign Today Page Styles */
 .assign-split-layout {
   display: grid;
   gap: 20px;
@@ -3079,7 +3096,6 @@
   padding: 8px 18px;
   border-radius: 6px;
   background-color: #059669;
-  /* emerald-600 */
   color: white;
   display: flex;
   align-items: center;
@@ -3093,7 +3109,6 @@
 
 .btn-assign-iso:hover {
   background-color: #10b981;
-  /* emerald-500 */
 }
 
 /* --- Assignment Form --- */
@@ -3194,8 +3209,6 @@ select.gnfc-modal-input {
   gap: 12px;
 }
 
-
-
 .assign-tabs {
   display: flex;
   background-color: var(--app-panel-alt);
@@ -3246,12 +3259,9 @@ select.gnfc-modal-input {
 
 .tab-panel {
   background-color: var(--app-panel);
-  /* border: 1px solid var(--app-border); */
   border-top: none;
-  /* border-radius: 0 0 8px 8px; */
   display: flex;
   flex-direction: column;
-  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); */
   overflow: hidden;
   flex: 1;
 }
@@ -3287,8 +3297,6 @@ select.gnfc-modal-input {
   color: #f59e0b;
   border-color: rgba(245, 158, 11, 0.2);
 }
-
-
 
 /* --- HSO / ISO Report Special --- */
 .hso-report-container {
@@ -3330,11 +3338,7 @@ select.gnfc-modal-input {
   gap: 8px;
 }
 
-
-/* ==========================================================================
-   GNFC REPORT & ANALYSIS PAGE LAYOUTS
-   ========================================================================== */
-
+/* GNFC REPORT & ANALYSIS PAGE LAYOUTS */
 .jt-page-content {
   flex: 1;
   overflow-y: auto;
@@ -3524,7 +3528,6 @@ select.gnfc-modal-input {
   font-weight: 800;
   border: none;
   border-radius: 20px;
-  /* Pill shape */
   cursor: pointer;
   transition: all 0.2s ease;
   letter-spacing: 0.08em;
@@ -3563,7 +3566,6 @@ select.gnfc-modal-input {
 }
 
 /* --- JH SPECIFIC LAYOUTS --- */
-/* --- FILTER CARD ENHANCEMENTS --- */
 .jt-filter-header {
   padding: 12px 16px;
   border-bottom: 1px solid var(--app-border);
@@ -3632,12 +3634,6 @@ select.gnfc-modal-input {
   }
 }
 
-/* --- UTILITIES --- */
-.jt-mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-
 /* ── 9. REPORT & ANALYSIS HEADERS ── */
 .jt-table-card {
   border: 1px solid var(--app-border);
@@ -3696,7 +3692,6 @@ select.gnfc-modal-input {
   opacity: 0.8;
 }
 
-/* Ensure any table wrapper or scroll area inside card has no extra borders/radii */
 .jt-table-card .user-table-wrapper,
 .jt-table-card .user-table-scroll,
 .plant-table-card .user-table-wrapper,
@@ -3706,18 +3701,12 @@ select.gnfc-modal-input {
   margin: 0 !important;
 }
 
-/* Helper for 14px font size as requested */
-.font-14px {
-  font-size: 14px !important;
-}
-
-
 
 /* Plant Module Section */
 
 /* 1. Scaffolding */
 .dashboard-content.dashboard-scroll {
-  padding: 1.25rem;
+  padding: 1rem;
   overflow-y: auto;
   flex: 1;
 }
@@ -3731,7 +3720,6 @@ select.gnfc-modal-input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .boiler-user-info {
@@ -3884,14 +3872,14 @@ select.gnfc-modal-input {
   border: 1px solid var(--app-border);
   border-radius: 0.65rem;
   padding: 1rem 1.25rem;
-  background: rgba(15, 23, 42, 0.24);
+  background: var(--app-panel);
   text-decoration: none;
   transition: all 0.2s;
 }
 
 .unit-card:hover {
-  border-color: var(--typo-blue, #5794F2);
-  background: rgba(15, 23, 42, 0.36);
+  border-color: var(--typo-blue);
+  background: var(--app-panel);
   transform: translateY(-2px);
 }
 
@@ -3925,7 +3913,6 @@ select.gnfc-modal-input {
   letter-spacing: 0.05em;
 }
 
-
 /* Responsive Plant Grid */
 @media (min-width: 768px) {
   .unit-grid {
@@ -3938,7 +3925,6 @@ select.gnfc-modal-input {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-
 
 .form-section {
   background: var(--app-panel);
@@ -3999,7 +3985,8 @@ select.gnfc-modal-input {
   transition: all 0.2s ease;
 }
 
-select.input-control {
+select.input-control,
+select.gnfc-modal-input {
   appearance: none;
   -webkit-appearance: none;
   padding-right: 2.5rem !important;
@@ -4071,7 +4058,6 @@ textarea.input-control {
 
 .dashboard-grid>.form-section {
   margin-bottom: 0;
-  /* Remove margin when inside a grid */
   height: 100%;
 }
 
@@ -4119,7 +4105,6 @@ textarea.input-control {
   grid-column: span 4;
 }
 
-
 /* 8. Action Toolbar & Buttons */
 .action-toolbar {
   display: flex;
@@ -4128,7 +4113,7 @@ textarea.input-control {
   padding: 0.5rem 0.75rem;
   background: var(--app-panel);
   border: 1px solid var(--app-border);
-  border-radius: 10px;
+  border-radius: 8px;
   margin-bottom: 1rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
@@ -4241,7 +4226,6 @@ textarea.input-control {
   color: var(--typo-blue, #5794F2);
 }
 
-
 .autocomplete-list {
   position: absolute;
   top: 100%;
@@ -4317,10 +4301,6 @@ textarea.input-control {
   color: var(--app-muted);
 }
 
-
-/* 12. Page-Specific Refinements (Boiler Inst Data) */
-
-/* 12. Page-Specific Refinements (Boiler Inst Data) */
 .inst-data-view-wrapper .dashboard-grid {
   gap: 1.5rem;
 }
@@ -4329,8 +4309,6 @@ textarea.input-control {
   position: relative;
   overflow: hidden;
 }
-
-/* Section title overrides removed as they are now standardized above */
 
 .swal2-container {
   z-index: 10005 !important;
@@ -4388,19 +4366,15 @@ textarea.input-control {
   border-top: 3px solid var(--typo-blue, #5794F2) !important;
 }
 
-/* 13. Attachment Modal Specific Styling */
 .attachment-modal .gnfc-modal-shell {
   padding: 0;
   border: none;
   width: min(800px, 96vw);
-  /* Match the implementation plan size */
   background: #fff;
-  /* Ensure white background for the list */
 }
 
 .att-header-top {
   background: #8b0000;
-  /* Dark Red/Brown from image */
   color: #fff;
   text-align: center;
   padding: 10px;
@@ -4411,7 +4385,6 @@ textarea.input-control {
 
 .att-header-mid {
   background: #000080;
-  /* Navy Blue from image */
   color: #fff;
   text-align: center;
   padding: 8px;
@@ -4422,7 +4395,6 @@ textarea.input-control {
 
 .att-header-sub {
   background: #0000ff;
-  /* Bright Blue from image */
   color: #fff;
   text-align: center;
   padding: 6px;
@@ -4432,7 +4404,6 @@ textarea.input-control {
 
 .att-browse-bar {
   background: #ffdce0;
-  /* Pink background from image */
   display: flex;
   align-items: center;
   justify-content: space-between;

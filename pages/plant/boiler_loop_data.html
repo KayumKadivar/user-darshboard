@@ -20,15 +20,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>window.activePage = 'plants';</script>
-  <style>
-    .swal2-container {
-      z-index: 10005 !important;
-    }
 
-    .hidden {
-      display: none !important;
-    }
-  </style>
 </head>
 
 <body class="dashboard-body">
@@ -56,27 +48,35 @@
               <button id="loop-dd-btn" class="absolute-icon-right">
                 <i class="ph-bold ph-caret-down"></i>
               </button>
-              <div id="loop-dropdown-list" class="autocomplete-list hidden"></div>
+              <div id="loop-dropdown-list" class="autocomplete-list hidden">
+                <div class="autocomplete-item" data-id="LS-10-101" data-area="BOILER-1">
+                  <div class="text-blue font-bold font-14px">LS-10-101</div>
+                  <div class="font-14px">MAIN STEAM PRESSURE LOOP</div>
+                </div>
+                <div class="autocomplete-item" data-id="LS-FG-101" data-area="BOILER-2">
+                  <div class="text-blue font-bold font-14px">LS-FG-101</div>
+                  <div class="font-14px">FUEL GAS CONTROL LOOP</div>
+                </div>
+                <div class="autocomplete-item" data-id="LS-C1-008" data-area="COMMON">
+                  <div class="text-blue font-bold font-14px">LS-C1-008</div>
+                  <div class="font-14px">COMPRESSOR BEARING TEMP LOOP</div>
+                </div>
+                <div class="autocomplete-item" data-id="LS-B1-007" data-area="BOILER-1">
+                  <div class="text-blue font-bold font-14px">LS-B1-007</div>
+                  <div class="font-14px">BOILER-1 FURNACE TEMPERATURE LOOP</div>
+                </div>
+                <div class="autocomplete-item" data-id="LS-B1-MSV" data-area="BOILER-1">
+                  <div class="text-blue font-bold font-14px">LS-B1-MSV</div>
+                  <div class="font-14px">BOILER-1 MAIN STEAM STOP VALVE LOOP</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Area Filter -->
-          <div style="min-width: 140px;">
+          <!-- Area Display (Synced with Global Area) -->
+          <div style="min-width: 160px;">
             <label class="input-label">Area</label>
-            <div class="select-wrapper">
-              <select id="view-area-select" class="input-control" onchange="filterByArea()">
-                <option>ALL</option>
-                <option>BOILER-1</option>
-                <option>BOILER-2</option>
-                <option>BOILER-3</option>
-                <option>BOILER-4</option>
-                <option>BOP</option>
-                <option>COMMON</option>
-                <option>ASH</option>
-                <option>TG-1</option>
-                <option>TG-2</option>
-              </select>
-            </div>
+            <div id="area-display" class="input-control flex align-anchor-center">ALL</div>
           </div>
 
           <div class="ui-divider-v"></div>
@@ -98,66 +98,378 @@
           </div>
         </div>
 
+        <!-- Loop Data Areas (Static) -->
         <div id="loop-data-area" class="hidden">
-          <!-- General Info -->
-          <div class="form-section">
-            <h3 class="section-title"><i class="ph-bold ph-info"></i> General Information</h3>
-            <div class="dashboard-grid grid-cols-2">
-              <div class="form-group mb-0">
-                <label class="input-label">Loop Name</label>
-                <input type="text" id="view-loop-name" class="input-control text-blue font-bold" readonly>
+          
+          <!-- LS-10-101: MAIN STEAM PRESSURE LOOP -->
+          <div class="loop-content-block hidden" id="block-LS-10-101" data-area="BOILER-1">
+            <div class="form-section">
+              <h3 class="section-title mb-16px"><i class="ph-bold ph-info"></i> General Information</h3>
+              <div class="form-grid grid-cols-2 ">
+                <div>
+                  <label class="input-label">Loop Name</label>
+                  <input type="text" class="input-control text-blue font-bold" value="MAIN STEAM PRESSURE LOOP" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Service</label>
+                  <input type="text" class="input-control" value="STEAM HEADER PRESSURE MONITORING & CONTROL" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Loop Schematic</label>
+                  <input type="text" class="input-control" value="DWG-BLR-101-SCH" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Special Document</label>
+                  <input type="text" class="input-control" value="SP-DOC-101" readonly>
+                </div>
               </div>
-              <div class="form-group mb-0">
-                <label class="input-label">Service</label>
-                <input type="text" id="view-loop-service" class="input-control" readonly>
+            </div>
+
+            <div class="form-grid grid-cols-2 ">
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-lightbulb"></i> Helpful Hints</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">Check impulse tubing for blockage before calibration. Ensure manifold valve positions are correct.</textarea>
               </div>
-              <div class="form-group mb-0">
-                <label class="input-label">Loop Schematic</label>
-                <input type="text" id="view-loop-schematic" class="input-control" readonly>
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-clipboard-text"></i> Special Instructions</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">Use 2oo3 voting for trip functions. Calibrate at 0%, 25%, 50%, 75%, 100% of range.</textarea>
               </div>
-              <div class="form-group mb-0">
-                <label class="input-label">Special Document</label>
-                <input type="text" id="view-loop-special-doc" class="input-control" readonly>
+            </div>
+            <div class="form-section">
+              <h3 class="section-title"><i class="ph-bold ph-stack"></i> Loop Components</h3>
+              <div class="user-table-wrapper">
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <th class="user-table-center" style="width: 64px;">Sr</th>
+                      <th class="user-table-left">Tag No</th>
+                      <th class="user-table-left">Description</th>
+                      <th class="user-table-center">Type</th>
+                      <th class="user-table-center">Make / Model</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=10-PT-101A'">10-PT-101A</td>
+                      <td class="user-table-left user-table-secondary">MAIN STEAM HEADER PRESSURE TX-A</td>
+                      <td class="user-table-center user-table-primary">TRANSMITTER</td>
+                      <td class="user-table-center user-table-primary">YOKOGAWA / EJA530A</td>
+                    </tr>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=10-PT-101B'">10-PT-101B</td>
+                      <td class="user-table-left user-table-secondary">MAIN STEAM HEADER PRESSURE TX-B</td>
+                      <td class="user-table-center user-table-primary">TRANSMITTER</td>
+                      <td class="user-table-center user-table-primary">YOKOGAWA / EJA530A</td>
+                    </tr>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=10-PT-101C'">10-PT-101C</td>
+                      <td class="user-table-left user-table-secondary">MAIN STEAM HEADER PRESSURE TX-C</td>
+                      <td class="user-table-center user-table-primary">TRANSMITTER</td>
+                      <td class="user-table-center user-table-primary">YOKOGAWA / EJA530A</td>
+                    </tr>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">4</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=10-PI-101'">10-PI-101</td>
+                      <td class="user-table-left user-table-secondary">MAIN STEAM PRESSURE INDICATOR</td>
+                      <td class="user-table-center user-table-primary">GAUGE</td>
+                      <td class="user-table-center user-table-primary">WIKA / 232.50</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
 
-          <!-- Hints & Instructions -->
-          <div class="dashboard-grid grid-cols-2">
+          <!-- LS-FG-101: FUEL GAS CONTROL LOOP -->
+          <div class="loop-content-block hidden" id="block-LS-FG-101" data-area="BOILER-2">
             <div class="form-section">
-              <h3 class="section-title"><i class="ph-bold ph-lightbulb"></i> Helpful Hints</h3>
-              <textarea id="view-loop-hints" class="input-control" readonly style="min-height: 120px;"></textarea>
+              <h3 class="section-title mb-16px"><i class="ph-bold ph-info"></i> General Information</h3>
+              <div class="form-grid grid-cols-2 ">
+                <div>
+                  <label class="input-label">Loop Name</label>
+                  <input type="text" class="input-control text-blue font-bold" value="FUEL GAS CONTROL LOOP" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Service</label>
+                  <input type="text" class="input-control" value="NATURAL GAS FLOW CONTROL TO BURNERS" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Loop Schematic</label>
+                  <input type="text" class="input-control" value="DWG-BLR-FG-101" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Special Document</label>
+                  <input type="text" class="input-control" value="—" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-grid grid-cols-2 ">
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-lightbulb"></i> Helpful Hints</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">Verify gas pressure upstream of CV before testing. Check positioner feedback signal.</textarea>
+              </div>
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-clipboard-text"></i> Special Instructions</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">Stroke test CV quarterly. Verify tight shut-off during annual shutdown.</textarea>
+              </div>
             </div>
             <div class="form-section">
-              <h3 class="section-title"><i class="ph-bold ph-clipboard-text"></i> Special Instructions</h3>
-              <textarea id="view-loop-instructions" class="input-control" readonly
-                style="min-height: 120px;"></textarea>
+              <h3 class="section-title"><i class="ph-bold ph-stack"></i> Loop Components</h3>
+              <div class="user-table-wrapper">
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <th class="user-table-center" style="width: 64px;">Sr</th>
+                      <th class="user-table-left">Tag No</th>
+                      <th class="user-table-left">Description</th>
+                      <th class="user-table-center">Type</th>
+                      <th class="user-table-center">Make / Model</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=XLGDFGV1D'">XLGDFGV1D</td>
+                      <td class="user-table-left user-table-secondary">FUEL GAS CV 1D</td>
+                      <td class="user-table-center user-table-primary">CONTROL VALVE</td>
+                      <td class="user-table-center user-table-primary">FISHER / DVC6200</td>
+                    </tr>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=XLGDFGV1E'">XLGDFGV1E</td>
+                      <td class="user-table-left user-table-secondary">FUEL GAS CV 1E</td>
+                      <td class="user-table-center user-table-primary">CONTROL VALVE</td>
+                      <td class="user-table-center user-table-primary">FISHER / DVC6200</td>
+                    </tr>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=XLGDFGV1F'">XLGDFGV1F</td>
+                      <td class="user-table-left user-table-secondary">FUEL GAS CV 1F</td>
+                      <td class="user-table-center user-table-primary">CONTROL VALVE</td>
+                      <td class="user-table-center user-table-primary">FISHER / DVC6200</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
-          <!-- Components Table -->
-          <div class="form-section">
-            <h3 class="section-title"><i class="ph-bold ph-stack"></i> Loop Components</h3>
-            <div class="user-table-wrapper">
-              <table class="user-table">
-                <thead>
-                  <tr>
-                    <th class="user-table-center" style="width: 64px;">Sr</th>
-                    <th class="user-table-left">Tag No</th>
-                    <th class="user-table-left">Description</th>
-                    <th class="user-table-center">Type</th>
-                    <th class="user-table-center">Make / Model</th>
-                  </tr>
-                </thead>
-                <tbody id="components-body">
-                  <!-- Dynamic rows -->
-                </tbody>
-              </table>
+          <!-- LS-C1-008: COMPRESSOR BEARING TEMP LOOP -->
+          <div class="loop-content-block hidden" id="block-LS-C1-008" data-area="COMMON">
+            <div class="form-section">
+              <h3 class="section-title mb-16px"><i class="ph-bold ph-info"></i> General Information</h3>
+              <div class="form-grid grid-cols-2 ">
+                <div>
+                  <label class="input-label">Loop Name</label>
+                  <input type="text" class="input-control text-blue font-bold" value="COMPRESSOR BEARING TEMP LOOP" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Service</label>
+                  <input type="text" class="input-control" value="BEARING TEMPERATURE MONITORING" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Loop Schematic</label>
+                  <input type="text" class="input-control" value="DWG-COMP-008" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Special Document</label>
+                  <input type="text" class="input-control" value="SP-COMP-MAINT-008" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-grid grid-cols-2 ">
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-lightbulb"></i> Helpful Hints</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">RTD wiring: 3-wire configuration. Check for ambient temperature drift.</textarea>
+              </div>
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-clipboard-text"></i> Special Instructions</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">High alarm: 110°C, Trip: 125°C. Verify thermowell integrity annually.</textarea>
+              </div>
+            </div>
+            <div class="form-section">
+              <h3 class="section-title"><i class="ph-bold ph-stack"></i> Loop Components</h3>
+              <div class="user-table-wrapper">
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <th class="user-table-center" style="width: 64px;">Sr</th>
+                      <th class="user-table-left">Tag No</th>
+                      <th class="user-table-left">Description</th>
+                      <th class="user-table-center">Type</th>
+                      <th class="user-table-center">Make / Model</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=ZT1777385'">ZT1777385</td>
+                      <td class="user-table-left user-table-secondary">COMPRESSOR BEARING TEMP</td>
+                      <td class="user-table-center user-table-primary">RTD PT100</td>
+                      <td class="user-table-center user-table-primary">EMERSON / 3144P</td>
+                    </tr>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=ZT1777393'">ZT1777393</td>
+                      <td class="user-table-left user-table-secondary">COMPRESSOR BEARING TEMP BACKUP</td>
+                      <td class="user-table-center user-table-primary">RTD PT100</td>
+                      <td class="user-table-center user-table-primary">EMERSON / 3144P</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- LS-B1-007: BOILER-1 FURNACE TEMPERATURE LOOP -->
+          <div class="loop-content-block hidden" id="block-LS-B1-007" data-area="BOILER-1">
+            <div class="form-section">
+              <h3 class="section-title mb-16px"><i class="ph-bold ph-info"></i> General Information</h3>
+              <div class="form-grid grid-cols-2 ">
+                <div>
+                  <label class="input-label">Loop Name</label>
+                  <input type="text" class="input-control text-blue font-bold" value="BOILER-1 FURNACE TEMPERATURE LOOP" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Service</label>
+                  <input type="text" class="input-control" value="FURNACE TEMPERATURE MONITORING & PROTECTION" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Loop Schematic</label>
+                  <input type="text" class="input-control" value="DWG-B1-007-SCH" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Special Document</label>
+                  <input type="text" class="input-control" value="SP-B1-007" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-grid grid-cols-2 ">
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-lightbulb"></i> Helpful Hints</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">Thermocouple type K — compensating cable must be same type. Check junction box for moisture ingress.</textarea>
+              </div>
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-clipboard-text"></i> Special Instructions</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">Trip setpoints: High 980°C Alarm, 1050°C Trip. Low setpoints: 500°C Alarm, 400°C Trip.</textarea>
+              </div>
+            </div>
+            <div class="form-section">
+              <h3 class="section-title"><i class="ph-bold ph-stack"></i> Loop Components</h3>
+              <div class="user-table-wrapper">
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <th class="user-table-center" style="width: 64px;">Sr</th>
+                      <th class="user-table-left">Tag No</th>
+                      <th class="user-table-left">Description</th>
+                      <th class="user-table-center">Type</th>
+                      <th class="user-table-center">Make / Model</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=ZT177707A'">ZT177707A</td>
+                      <td class="user-table-left user-table-secondary">BOILER-1 FURNACE TEMP A</td>
+                      <td class="user-table-center user-table-primary">TRANSMITTER</td>
+                      <td class="user-table-center user-table-primary">YOKOGAWA / YTA510A</td>
+                    </tr>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=ZT177707B'">ZT177707B</td>
+                      <td class="user-table-left user-table-secondary">BOILER-1 FURNACE TEMP B</td>
+                      <td class="user-table-center user-table-primary">TRANSMITTER</td>
+                      <td class="user-table-center user-table-primary">YOKOGAWA / YTA510A</td>
+                    </tr>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=ZT177707C'">ZT177707C</td>
+                      <td class="user-table-left user-table-secondary">BOILER-1 FURNACE TEMP C</td>
+                      <td class="user-table-center user-table-primary">TRANSMITTER</td>
+                      <td class="user-table-center user-table-primary">YOKOGAWA / YTA510A</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- LS-B1-MSV: BOILER-1 MAIN STEAM STOP VALVE LOOP -->
+          <div class="loop-content-block hidden" id="block-LS-B1-MSV" data-area="BOILER-1">
+            <div class="form-section">
+              <h3 class="section-title mb-16px"><i class="ph-bold ph-info"></i> General Information</h3>
+              <div class="form-grid grid-cols-2 ">
+                <div>
+                  <label class="input-label">Loop Name</label>
+                  <input type="text" class="input-control text-blue font-bold" value="BOILER-1 MAIN STEAM STOP VALVE LOOP" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Service</label>
+                  <input type="text" class="input-control" value="EMERGENCY SHUTDOWN OF MAIN STEAM" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Loop Schematic</label>
+                  <input type="text" class="input-control" value="DWG-B1-MSV" readonly>
+                </div>
+                <div>
+                  <label class="input-label">Special Document</label>
+                  <input type="text" class="input-control" value="SP-ESD-MSV" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-grid grid-cols-2 ">
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-lightbulb"></i> Helpful Hints</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">ESD function — always test in simulation mode first. SOV must be energised to open.</textarea>
+              </div>
+              <div class="form-section mb-0">
+                <h3 class="section-title mb-12px"><i class="ph-bold ph-clipboard-text"></i> Special Instructions</h3>
+                <textarea class="input-control" readonly style="min-height: 100px;">Valve must close within 2 seconds on ESD signal. Full stroke test required every 6 months.</textarea>
+              </div>
+            </div>
+            <div class="form-section">
+              <h3 class="section-title"><i class="ph-bold ph-stack"></i> Loop Components</h3>
+              <div class="user-table-wrapper">
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <th class="user-table-center" style="width: 64px;">Sr</th>
+                      <th class="user-table-left">Tag No</th>
+                      <th class="user-table-left">Description</th>
+                      <th class="user-table-center">Type</th>
+                      <th class="user-table-center">Make / Model</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=XV177901'">XV177901</td>
+                      <td class="user-table-left user-table-secondary">BOILER-1 MAIN STEAM STOP VALVE</td>
+                      <td class="user-table-center user-table-primary">C/V</td>
+                      <td class="user-table-center user-table-primary">SEVERN GLOCON / G5-ESD</td>
+                    </tr>
+                    <tr>
+                      <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                      <td class="user-table-left user-table-blue user-table-bold cursor-pointer" onclick="window.location.href='boiler_inst_data.html?tag=ZSH177906'">ZSH177906</td>
+                      <td class="user-table-left user-table-secondary">NG BURNER 4 BLOCK VALVE OPEN</td>
+                      <td class="user-table-center user-table-primary">SWITCH</td>
+                      <td class="user-table-center user-table-primary">MAGO / LS06200</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
     </div>
   </main>
@@ -167,7 +479,7 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--xl">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title"><i class="ph-bold ph-plus-circle mr-8px"></i> Add New Loop</h3>
+          <h3 class="gnfc-modal-title">Add New Loop</h3>
           <p class="gnfc-modal-subtitle">Define a new loop and its associated metadata</p>
         </div>
         <button onclick="hideAddMode()" class="gnfc-modal-close">
@@ -176,14 +488,14 @@
       </div>
 
       <div class="gnfc-modal-body">
-        <div class="dashboard-grid grid-cols-2">
+        <div class="dashboard-grid grid-cols-2 mb-0px">
           
-          <div class="form-group mb-0">
+          <div>
             <label class="input-label">Loop ID <span class="text-red">*</span></label>
             <input type="text" id="add-loop-id" class="input-control" placeholder="e.g. LS-B1-012">
           </div>
           
-          <div class="form-group mb-0">
+          <div>
             <label class="input-label">Area</label>
             <select id="add-area-select" class="input-control">
               <option>BOILER-1</option>
@@ -198,34 +510,34 @@
             </select>
           </div>
 
-          <div class="form-group mb-0 col-span-2">
+          <div>
             <label class="input-label">Loop Name <span class="text-red">*</span></label>
             <input type="text" id="add-loop-name" class="input-control" placeholder="e.g. MAIN STEAM PRESSURE LOOP">
           </div>
 
-          <div class="form-group mb-0 col-span-2">
+          <div>
             <label class="input-label">Service</label>
             <input type="text" id="add-loop-service" class="input-control" placeholder="e.g. STEAM HEADER PRESSURE MONITORING">
           </div>
 
-          <div class="form-group mb-0">
+          <div>
             <label class="input-label">Loop Schematic</label>
             <input type="text" id="add-loop-schematic" class="input-control" placeholder="DWG-BLR-XXX-SCH">
           </div>
           
-          <div class="form-group mb-0">
+          <div>
             <label class="input-label">Special Document</label>
             <input type="text" id="add-loop-special-doc" class="input-control" placeholder="SP-DOC-XXX">
           </div>
 
-          <div class="form-group mb-0">
+          <div>
             <label class="input-label">Helpful Hints</label>
-            <textarea id="add-loop-hints" class="input-control" style="min-height: 80px;" placeholder="Maintenance tips..."></textarea>
+            <textarea id="add-loop-hints" class="input-control" style="min-height: 100px;" placeholder="Maintenance tips..."></textarea>
           </div>
           
-          <div class="form-group mb-0">
+          <div>
             <label class="input-label">Special Instructions</label>
-            <textarea id="add-loop-instructions" class="input-control" style="min-height: 80px;" placeholder="Specific instructions..."></textarea>
+            <textarea id="add-loop-instructions" class="input-control" style="min-height: 100px;" placeholder="Specific instructions..."></textarea>
           </div>
 
         </div>
@@ -241,70 +553,8 @@
   </div>
 
   <script>
-    // ── Loop Database ───────────────────────────────────────────────
-    const loopDatabase = {
-      "LS-10-101": {
-        name: "MAIN STEAM PRESSURE LOOP", area: "BOILER-1",
-        service: "STEAM HEADER PRESSURE MONITORING & CONTROL",
-        schematic: "DWG-BLR-101-SCH", specialDoc: "SP-DOC-101",
-        hints: "Check impulse tubing for blockage before calibration.\nEnsure manifold valve positions are correct.",
-        instructions: "Use 2oo3 voting for trip functions.\nCalibrate at 0%, 25%, 50%, 75%, 100% of range.",
-        components: [
-          { tag: "10-PT-101A", desc: "MAIN STEAM HEADER PRESSURE TX-A", type: "TRANSMITTER", make: "YOKOGAWA / EJA530A" },
-          { tag: "10-PT-101B", desc: "MAIN STEAM HEADER PRESSURE TX-B", type: "TRANSMITTER", make: "YOKOGAWA / EJA530A" },
-          { tag: "10-PT-101C", desc: "MAIN STEAM HEADER PRESSURE TX-C", type: "TRANSMITTER", make: "YOKOGAWA / EJA530A" },
-          { tag: "10-PI-101", desc: "MAIN STEAM PRESSURE INDICATOR", type: "GAUGE", make: "WIKA / 232.50" },
-        ]
-      },
-      "LS-FG-101": {
-        name: "FUEL GAS CONTROL LOOP", area: "BOILER-2",
-        service: "NATURAL GAS FLOW CONTROL TO BURNERS",
-        schematic: "DWG-BLR-FG-101", specialDoc: "",
-        hints: "Verify gas pressure upstream of CV before testing.\nCheck positioner feedback signal.",
-        instructions: "Stroke test CV quarterly.\nVerify tight shut-off during annual shutdown.",
-        components: [
-          { tag: "XLGDFGV1D", desc: "FUEL GAS CV 1D", type: "CONTROL VALVE", make: "FISHER / DVC6200" },
-          { tag: "XLGDFGV1E", desc: "FUEL GAS CV 1E", type: "CONTROL VALVE", make: "FISHER / DVC6200" },
-          { tag: "XLGDFGV1F", desc: "FUEL GAS CV 1F", type: "CONTROL VALVE", make: "FISHER / DVC6200" },
-        ]
-      },
-      "LS-C1-008": {
-        name: "COMPRESSOR BEARING TEMP LOOP", area: "COMMON",
-        service: "BEARING TEMPERATURE MONITORING",
-        schematic: "DWG-COMP-008", specialDoc: "SP-COMP-MAINT-008",
-        hints: "RTD wiring: 3-wire configuration.\nCheck for ambient temperature drift.",
-        instructions: "High alarm: 110°C, Trip: 125°C.\nVerify thermowell integrity annually.",
-        components: [
-          { tag: "ZT1777385", desc: "COMPRESSOR BEARING TEMP", type: "RTD PT100", make: "EMERSON / 3144P" },
-          { tag: "ZT1777393", desc: "COMPRESSOR BEARING TEMP BACKUP", type: "RTD PT100", make: "EMERSON / 3144P" },
-        ]
-      },
-      "LS-B1-007": {
-        name: "BOILER-1 FURNACE TEMPERATURE LOOP", area: "BOILER-1",
-        service: "FURNACE TEMPERATURE MONITORING & PROTECTION",
-        schematic: "DWG-B1-007-SCH", specialDoc: "SP-B1-007",
-        hints: "Thermocouple type K — compensating cable must be same type.\nCheck junction box for moisture ingress.",
-        instructions: "Trip setpoints: High 980°C Alarm, 1050°C Trip.\nLow setpoints: 500°C Alarm, 400°C Trip.",
-        components: [
-          { tag: "ZT177707A", desc: "BOILER-1 FURNACE TEMP A", type: "TRANSMITTER", make: "YOKOGAWA / YTA510A" },
-          { tag: "ZT177707B", desc: "BOILER-1 FURNACE TEMP B", type: "TRANSMITTER", make: "YOKOGAWA / YTA510A" },
-          { tag: "ZT177707C", desc: "BOILER-1 FURNACE TEMP C", type: "TRANSMITTER", make: "YOKOGAWA / YTA510A" },
-        ]
-      },
-      "LS-B1-MSV": {
-        name: "BOILER-1 MAIN STEAM STOP VALVE LOOP", area: "BOILER-1",
-        service: "EMERGENCY SHUTDOWN OF MAIN STEAM",
-        schematic: "DWG-B1-MSV", specialDoc: "SP-ESD-MSV",
-        hints: "ESD function — always test in simulation mode first.\nSOV must be energised to open.",
-        instructions: "Valve must close within 2 seconds on ESD signal.\nFull stroke test required every 6 months.",
-        components: [
-          { tag: "XV177901", desc: "BOILER-1 MAIN STEAM STOP VALVE", type: "C/V", make: "SEVERN GLOCON / G5-ESD" },
-          { tag: "ZSH177906", desc: "NG BURNER 4 BLOCK VALVE OPEN", type: "SWITCH", make: "MAGO / LS06200" },
-        ]
-      }
-    };
-
-    let allLoopIds = Object.keys(loopDatabase);
+    // ── Pre-populated IDs for Search ───────────────────────────────
+    const allLoopIds = ["LS-10-101", "LS-FG-101", "LS-C1-008", "LS-B1-007", "LS-B1-MSV"];
 
     // ── DOM Refs ──────────────────────────────────────────────────
     const $searchInput = $('#loop-search-input');
@@ -312,107 +562,99 @@
     const $emptyState = $('#loop-empty-state');
     const $dataArea = $('#loop-data-area');
 
-    // ── Autocomplete Logic ─────────────────────────────────────────
-    function renderDropdown(filter, showAll = false) {
-      const area = $('#view-area-select').val();
-      const f = showAll ? '' : (filter || '').trim().toLowerCase();
+    // ── Area Sync & Searching ────────────────────────────────────
+    const savedArea = localStorage.getItem('gnfc_selected_area') || 'ALL';
+    $('#area-display').text(savedArea);
 
-      // Find matches using traditional loop
-      const filtered = [];
-      for (let i = 0; i < allLoopIds.length; i++) {
-        const id = allLoopIds[i];
-        const d = loopDatabase[id];
-        const areaOk = (area === 'ALL') || (d.area === area);
-        const textOk = !f || id.toLowerCase().includes(f) || d.name.toLowerCase().includes(f);
-        if (areaOk && textOk) filtered.push(id);
-      }
-
-      if (filtered.length === 0) {
-        $ddList.html('<div class="autocomplete-item" style="opacity:0.5; cursor:default;">No loops found</div>');
-      } else {
-        let html = '';
-        for (let i = 0; i < filtered.length; i++) {
-          const id = filtered[i];
-          const d = loopDatabase[id];
-          const hi = f ? id.replace(new RegExp(`(${f})`, 'gi'), '<b>$1</b>') : id;
-          html += `
-                        <div class="autocomplete-item" data-id="${id}">
-                            <div class="text-blue font-bold font-12px">${hi}</div>
-                            <div class="text-sm">${d.name}</div>
-                        </div>`;
-        }
-        $ddList.html(html);
-
-        $ddList.find('.autocomplete-item').on('click', function () {
-          selectLoop($(this).data('id'));
-        });
-      }
+    function syncDropdownIcon() {
+      const isHidden = $ddList.hasClass('hidden');
+      $('#loop-dd-btn i').toggleClass('ph-caret-down', isHidden).toggleClass('ph-caret-up', !isHidden);
     }
 
-    $searchInput.on('input focus', function (e) {
-      const isFocus = e.type === 'focus';
-      const isSelected = allLoopIds.includes($searchInput.val());
-      renderDropdown($searchInput.val(), isFocus && isSelected);
+    function filterDropdown() {
+      const val = $searchInput.val().trim().toLowerCase();
+      let hasMatch = false;
+
+      $ddList.find('.autocomplete-item').each(function() {
+        const itemId = $(this).data('id').toLowerCase();
+        const itemName = $(this).find('.font-14px').text().toLowerCase();
+        const textOk = !val || itemId.includes(val) || itemName.includes(val);
+
+        if (textOk) {
+          $(this).removeClass('hidden');
+          hasMatch = true;
+        } else {
+          $(this).addClass('hidden');
+        }
+      });
+
+      if (!hasMatch) {
+         if (!$ddList.find('.no-result').length) {
+           $ddList.append('<div class="autocomplete-item no-result" style="opacity:0.5; cursor:default;">No loops found</div>');
+         }
+      } else {
+         $ddList.find('.no-result').remove();
+      }
+      syncDropdownIcon();
+    }
+
+    $searchInput.on('input focus', function() {
+      filterDropdown();
       $ddList.removeClass('hidden');
+      syncDropdownIcon();
     });
 
-    $('#loop-dd-btn').on('click', function (e) {
+    $('#loop-dd-btn').on('click', function(e) {
       e.stopPropagation();
       $ddList.toggleClass('hidden');
-      if (!$ddList.hasClass('hidden')) renderDropdown($searchInput.val(), true);
+      if (!$ddList.hasClass('hidden')) filterDropdown();
+      syncDropdownIcon();
     });
 
-    $(document).on('click', function (e) {
-      if (!$(e.target).closest('#loop-search-wrap').length) $ddList.addClass('hidden');
+    $(document).on('click', function(e) {
+      if (!$(e.target).closest('#loop-search-wrap').length) {
+        $ddList.addClass('hidden');
+        syncDropdownIcon();
+      }
+    });
+
+    $ddList.on('click', '.autocomplete-item:not(.no-result)', function() {
+      const id = $(this).data('id');
+      selectLoop(id);
+      syncDropdownIcon();
     });
 
     function selectLoop(id) {
       $searchInput.val(id);
       $ddList.addClass('hidden');
-      loadLoop(id);
-    }
-
-    function filterByArea() {
-      if (!$ddList.hasClass('hidden')) renderDropdown($searchInput.val());
-    }
-
-    function loadLoop(id) {
-      const data = loopDatabase[id];
-      if (!data) return;
-
-      $('#view-loop-name').val(data.name);
-      $('#view-loop-service').val(data.service);
-      $('#view-loop-schematic').val(data.schematic || '—');
-      $('#view-loop-special-doc').val(data.specialDoc || '—');
-      $('#view-loop-hints').val(data.hints || '');
-      $('#view-loop-instructions').val(data.instructions || '');
-
-      const $tbody = $('#components-body');
-      if (!data.components || !data.components.length) {
-        $tbody.html('<tr><td colspan="5" class="user-table-center font-italic py-6 opacity-50">No components found</td></tr>');
-      } else {
-        let rows = '';
-        for (let i = 0; i < data.components.length; i++) {
-          const c = data.components[i];
-          rows += `
-                    <tr>
-                        <td class="user-table-center user-table-secondary user-table-bold">${i + 1}</td>
-                        <td class="user-table-left user-table-blue user-table-bold cursor-pointer" 
-                            onclick="window.location.href='boiler_inst_data.html?tag=${encodeURIComponent(c.tag)}'">${c.tag}</td>
-                        <td class="user-table-left user-table-secondary">${c.desc}</td>
-                        <td class="user-table-center user-table-primary">${c.type}</td>
-                        <td class="user-table-center user-table-primary">${c.make}</td>
-                    </tr>`;
-        }
-        $tbody.html(rows);
-      }
-
+      
+      // Hide all blocks and empty state
+      $('.loop-content-block').addClass('hidden');
       $emptyState.addClass('hidden');
       $dataArea.removeClass('hidden');
+
+      // Show specific block
+      const $target = $('#block-' + id);
+      if ($target.length) {
+        $target.removeClass('hidden');
+      }
+      
       $('.dashboard-scroll').scrollTop(0);
     }
 
-    // ── Add/Edit Modal Logic ───────────────────────────────────────
+    function filterByArea() {
+      filterDropdown();
+      
+      // If a loop is already selected, compare if it matches the current area display
+      const currentId = $searchInput.val();
+      if (currentId) {
+        const $currentBlock = $('#block-' + currentId);
+        const area = $('#area-display').text().trim();
+        // (Optional: We don't hide the selected loop if it doesn't match area, just like in tag data)
+      }
+    }
+
+    // ── Modal Logic (Template Only) ──────────────────────────────
     function showAddMode() {
       $('#add-loop-modal .input-control').val('');
       $('#add-area-select').prop('selectedIndex', 0);
@@ -426,44 +668,24 @@
 
     function saveLoop() {
       const loopId = $('#add-loop-id').val().trim();
-      const name = $('#add-loop-name').val().trim();
-
-      if (!loopId || !name) {
-        Swal.fire({ icon: 'error', title: 'Required Fields', text: 'Loop ID and Name are required.', confirmButtonColor: '#ef4444' });
-        return;
-      }
-
-      loopDatabase[loopId] = {
-        name: name,
-        area: $('#add-area-select').val(),
-        service: $('#add-loop-service').val(),
-        schematic: $('#add-loop-schematic').val(),
-        specialDoc: $('#add-loop-special-doc').val(),
-        hints: $('#add-loop-hints').val(),
-        instructions: $('#add-loop-instructions').val(),
-        components: []
-      };
-      allLoopIds = Object.keys(loopDatabase);
+      if (!loopId) return;
 
       Swal.fire({
-        icon: 'success', title: 'Loop Saved',
-        text: `Loop ${loopId} has been added to the database.`,
-        confirmButtonColor: '#10b981',
-        timer: 2000, timerProgressBar: true
-      }).then(() => {
-        hideAddMode();
-        selectLoop(loopId);
-      });
+        icon: 'info',
+        title: 'Static Mode',
+        text: 'This page is in Static HTML mode. New loops must be added manually to the HTML file.',
+        confirmButtonColor: '#10b981'
+      }).then(() => hideAddMode());
     }
 
     // ── Init ──────────────────────────────────────────────────────
-    $(function () {
+    $(function() {
+      filterByArea(); // Initial filter based on synced area
       const p = new URLSearchParams(window.location.search);
       const loopId = p.get('loop');
-      if (loopId && loopDatabase[loopId]) {
-        selectLoop(loopId);
-      }
+      if (loopId) selectLoop(loopId);
     });
+
   </script>
 </body>
 

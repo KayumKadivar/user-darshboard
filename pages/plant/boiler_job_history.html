@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job History | GNFC</title>
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/pages/plant.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <div id="header-container" data-title="Job History Report" data-back="boiler_inst_data.html"></div>
+
+    <div class="dashboard-content dashboard-scroll">
+      <!-- Main Log Table -->
+      <div class="user-table-wrapper">
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th rowspan="2" class="user-table-head-cell user-table-center" style="width: 50px;">SR</th>
+              <th rowspan="2" class="user-table-head-cell user-table-center" style="width: 80px;">AREA</th>
+              <th class="user-table-head-cell" style="width: 160px;">LOOP NO</th>
+              <th class="user-table-head-cell" style="width: 180px;">JOB</th>
+              <th rowspan="2" class="user-table-head-cell user-table-center" style="width: 110px;">DATE</th>
+              <th rowspan="2" class="user-table-head-cell">DESCRIPTION OF JOB DONE</th>
+              <th class="user-table-head-cell user-table-center" style="width: 100px;">TECH</th>
+              <th rowspan="2" class="user-table-head-cell user-table-center" style="width: 60px;">ATTACH</th>
+              <th rowspan="2" class="user-table-head-cell" style="width: 200px;">ENG REMARK / EXEC REMARK</th>
+            </tr>
+            <tr>
+              <th class="user-table-head-cell">TAG NO</th>
+              <th class="user-table-head-cell">TYPE OF JOB</th>
+              <th class="user-table-head-cell user-table-center">ENG</th>
+            </tr>
+          </thead>
+          <tbody id="jh-table-body">
+            <!-- Record 1 -->
+              <tr class="user-table-row">
+                <td rowspan="2" class="user-table-center user-table-secondary user-table-bold jh-sr-link color-blue" data-id="1" title="open Job History Details">1</td>
+                <td rowspan="2" class="user-table-center user-table-bold">ASH</td>
+                <td class="user-table-secondary">N.A.</td>
+                <td class="user-table-primary">ENVIRON MONITORING</td>
+                <td rowspan="2" class="user-table-center user-table-secondary">14/07/2020</td>
+                <td rowspan="2" class="desc-cell">
+                  Bag filter SOVs checked found ok. Its 1st SOV hose thumb pin hole punctured so it is replaced by newly
+                  procured hose, PO 5500057065, dated 11.08.2023. SOV connection tightness check found ok. Its timer JB
+                  and Radar LT cleaning done.
+                </td>
+                <td class="user-table-center user-table-bold">JDB</td>
+                <td rowspan="2" class="user-table-center"></td>
+                <td class="user-table-secondary">--</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-blue user-table-bold">SILO_150_BAG</td>
+                <td class="user-table-secondary font-12px">PM</td>
+                <td class="user-table-center user-table-secondary font-12px">AMU</td>
+                <td class="user-table-secondary">--</td>
+              </tr>
+
+              <!-- Record 2 -->
+              <tr class="user-table-row">
+                <td rowspan="2" class="user-table-center user-table-secondary user-table-bold jh-sr-link color-blue" data-id="2" title="open Job History Details">2</td>
+                <td rowspan="2" class="user-table-center user-table-bold">ASH</td>
+                <td class="user-table-secondary">N.A.</td>
+                <td class="user-table-primary">C/Y</td>
+                <td rowspan="2" class="user-table-center user-table-secondary">04/03/2020</td>
+                <td rowspan="2" class="desc-cell">
+                  4th no SOV hose replaced. Operation checked found ok. Route valve operation checking and greasing done.
+                </td>
+                <td class="user-table-center user-table-bold">NSA</td>
+                <td rowspan="2" class="user-table-center"></td>
+                <td class="user-table-secondary">--</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-blue user-table-bold">SILO_150_BAG</td>
+                <td class="user-table-secondary font-12px">PM</td>
+                <td class="user-table-center user-table-secondary font-12px">AMU</td>
+                <td class="user-table-secondary">--</td>
+              </tr>
+
+              <!-- Record 3 -->
+              <tr class="user-table-row">
+                <td rowspan="2" class="user-table-center user-table-secondary user-table-bold jh-sr-link color-blue" data-id="3" title="open Job History Details">3</td>
+                <td rowspan="2" class="user-table-center user-table-bold">ASH</td>
+                <td class="user-table-secondary">N.A.</td>
+                <td class="user-table-primary">ENVIRON MONITORING</td>
+                <td rowspan="2" class="user-table-center user-table-secondary">03/03/2020</td>
+                <td rowspan="2" class="desc-cell">
+                  Bag filter SOVs checked and found one SOV not working so checked and found its Plunger and spring
+                  damage. New SOV installed.
+                </td>
+                <td class="user-table-center user-table-bold">NSA</td>
+                <td rowspan="2" class="user-table-center"></td>
+                <td class="user-table-secondary">--</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-blue user-table-bold">SILO_150_BAG</td>
+                <td class="user-table-secondary font-12px">PM</td>
+                <td class="user-table-center user-table-secondary font-12px">AMD</td>
+                <td class="user-table-secondary">--</td>
+              </tr>
+
+              <!-- Record 4 -->
+              <tr class="user-table-row">
+                <td rowspan="2" class="user-table-center user-table-secondary user-table-bold jh-sr-link color-blue" data-id="4" title="open Job History Details">4</td>
+                <td rowspan="2" class="user-table-center user-table-bold">ASH</td>
+                <td class="user-table-secondary">N.A.</td>
+                <td class="user-table-primary">C/Y</td>
+                <td rowspan="2" class="user-table-center user-table-secondary">07/05/2019</td>
+                <td rowspan="2" class="desc-cell">
+                  Silo Level Transmitter was max shows. Its sensor cleaning done and observed its indication found its
+                  hunting. Replaced with spare and check operation found ok.
+                </td>
+                <td class="user-table-center user-table-bold">JDB</td>
+                <td rowspan="2" class="user-table-center"></td>
+                <td class="user-table-secondary">--</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-blue user-table-bold">SILO_150_BAG</td>
+                <td class="user-table-secondary font-12px">DEFECT MAINTENANCE</td>
+                <td class="user-table-center user-table-secondary font-12px">AMU</td>
+                <td class="user-table-secondary">--</td>
+              </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Job History Edit Modal -->
+  <div class="gnfc-modal-overlay" id="modal-jh-edit">
+    <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+      <div class="gnfc-modal-header">
+        <div class="gnfc-modal-title-box">
+          <h2 class="gnfc-modal-title">Job History Details</h2>
+          <span class="gnfc-modal-subtitle" id="jh-modal-subtitle">Record #1</span>
+        </div>
+        <button class="gnfc-modal-close j-close-modal" data-target="#modal-jh-edit">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <!-- Row 1: Key Metadata (Standard form-grid) -->
+        <div class="form-grid grid-cols-5 ">
+          <div>
+            <label class="gnfc-modal-label">Area</label>
+            <div class="gnfc-select-group">
+              <select class="gnfc-modal-input" id="m-area">
+                <option value="ASH">ASH</option>
+                <option value="BOILER-2">BOILER-2</option>
+              </select>
+              <i class="ph-bold ph-caret-down"></i>
+            </div>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Loop No</label>
+            <div class="gnfc-select-group">
+              <select class="gnfc-modal-input" id="m-loop">
+                <option value="N.A.">N.A.</option>
+              </select>
+              <i class="ph-bold ph-caret-down"></i>
+            </div>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Tag No</label>
+            <div class="gnfc-select-group">
+              <select class="gnfc-modal-input" id="m-tag">
+                <option value="SILO_150_BAG">SILO_150_BAG</option>
+                <option value="10-PT-101A">10-PT-101A</option>
+              </select>
+              <i class="ph-bold ph-caret-down"></i>
+            </div>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Type of Job</label>
+            <div class="gnfc-select-group">
+              <select class="gnfc-modal-input" id="m-job-type">
+                <option value="PM">PM</option>
+                <option value="DEFECT MAINTENANCE">DEFECT MAINTENANCE</option>
+              </select>
+              <i class="ph-bold ph-caret-down"></i>
+            </div>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Type of Inst</label>
+            <div class="gnfc-select-group">
+              <select class="gnfc-modal-input" id="m-inst-type">
+                <option value="ENVIRON MONITORING">ENVIRON MONITORING</option>
+                <option value="FIELD">FIELD</option>
+              </select>
+              <i class="ph-bold ph-caret-down"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Job Description (Full Width) -->
+        <div class="form-grid grid-cols-1 ">
+          <div>
+            <label class="gnfc-modal-label">Job Description</label>
+            <textarea class="gnfc-modal-input" id="m-description" style="height: 100px;"></textarea>
+          </div>
+        </div>
+
+        <!-- Row 3: Maintenance Context -->
+        <div class="form-grid grid-cols-3 ">
+          <div>
+            <label class="gnfc-modal-label">Date</label>
+            <input type="text" class="gnfc-modal-input" id="m-date">
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Tech</label>
+            <div class="gnfc-select-group">
+              <select class="gnfc-modal-input" id="m-tech">
+                <option value="JDB">JDB</option>
+                <option value="NSA">NSA</option>
+              </select>
+              <i class="ph-bold ph-caret-down"></i>
+            </div>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Eng</label>
+            <div class="gnfc-select-group">
+              <select class="gnfc-modal-input" id="m-eng">
+                <option value="AMU">AMU</option>
+                <option value="AMD">AMD</option>
+              </select>
+              <i class="ph-bold ph-caret-down"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4: Attachments (Standard Icon Trigger) -->
+        <div class="form-grid grid-cols-2 ">
+          <div>
+            <label class="gnfc-modal-label">Attach 1</label>
+            <div class="gnfc-modal-input flex align-items-center justify-content-between cursor-pointer btn-open-att gap-4px" data-id="1">
+              <span class="font-14px opacity-60" id="att-name-1">No file attached</span>
+              <i class="ph ph-folder font-20px color-blue"></i>
+            </div>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Attach 2</label>
+            <div class="gnfc-modal-input flex align-items-center justify-content-between cursor-pointer btn-open-att gap-4px" data-id="2">
+              <span class="font-14px opacity-60" id="att-name-2">No file attached</span>
+              <i class="ph ph-folder font-20px color-blue"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 5: Remarks -->
+        <div class="form-grid grid-cols-2">
+          <div>
+            <label class="gnfc-modal-label">Engineer's Remark</label>
+            <textarea class="gnfc-modal-input" id="m-eng-remark" style="height: 80px;"></textarea>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Executive Remark</label>
+            <textarea class="gnfc-modal-input" id="m-exec-remark" style="height: 80px;"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-danger gnfc-modal-btn-left">
+          <i class="ph-bold ph-trash"></i> Delete
+        </button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary j-close-modal" data-target="#modal-jh-edit">
+          Cancel
+        </button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary">
+          <i class="ph-bold ph-floppy-disk"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  <!-- History Attachments Modal (Modern Cloud-Upload Implementation) -->
+  <div class="gnfc-modal-overlay" id="modal-jh-attachment">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div class="gnfc-modal-title-box">
+          <h3 class="gnfc-modal-title"><i class="ph-bold ph-paperclip"></i> History Attachments</h3>
+        </div>
+        <button onclick="closeHistoryAttachModal()" class="gnfc-modal-close">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="gnfc-modal-body px-24px py-20px">
+
+        <!-- Upload Zone -->
+        <div class="history-upload-wrapper">
+          <input type="file" id="history-file-input" class="history-file-overlay" onchange="handleHistoryFile(this)">
+          <div id="history-upload-zone" class="history-upload-zone">
+            <div class="history-icon-circle">
+              <i class="ph-duotone ph-cloud-arrow-up"></i>
+            </div>
+            <p class="font-14px font-bold mb-4px" style="color: var(--app-text);">Click to browse or drag file</p>
+            <p class="font-14px color-secondary">Maximum file size: 10 MB</p>
+          </div>
+        </div>
+
+        <!-- Selected File Display (Preview) -->
+        <div id="history-file-preview" class="history-file-preview hidden">
+          <div class="history-preview-info">
+            <i class="ph-fill ph-file-text font-20px color-blue"></i>
+            <div class="history-preview-details">
+              <span id="history-preview-name" class="font-14px font-bold truncate">filename.pdf</span>
+              <span id="history-preview-size" class="font-13px color-secondary">0 KB</span>
+            </div>
+          </div>
+          <button type="button" onclick="clearHistoryFile()" class="history-trash-btn">
+            <i class="ph-bold ph-trash"></i>
+          </button>
+        </div>
+
+        <p class="font-13px color-secondary text-center italic mt-12px">Note : Max size 10Mb at a time !!</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer">
+        <button type="button" onclick="saveHistoryAttach()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+          <i class="ph-bold ph-floppy-disk"></i> Save
+        </button>
+        <button type="button" onclick="closeHistoryAttachModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Attachment Modal Global Functions ---
+    window.closeHistoryAttachModal = function () {
+      $('#modal-jh-attachment').removeClass('is-open');
+    };
+
+    window.handleHistoryFile = function (input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const sizeValue = file.size >= 1024 * 1024 
+          ? (file.size / (1024 * 1024)).toFixed(1) + ' MB'
+          : (file.size / 1024).toFixed(1) + ' KB';
+        
+        $('#history-preview-name').text(file.name);
+        $('#history-preview-size').text(sizeValue);
+        $('#history-upload-zone').addClass('hidden');
+        $('#history-file-preview').removeClass('hidden');
+      }
+    };
+
+    window.clearHistoryFile = function () {
+      $('#history-file-input').val('');
+      $('#history-file-preview').addClass('hidden');
+      $('#history-upload-zone').removeClass('hidden');
+    };
+
+    window.saveHistoryAttach = function () {
+      const fileInput = document.getElementById('history-file-input');
+      if (fileInput.files && fileInput.files[0]) {
+        const fileName = fileInput.files[0].name;
+        $('#att-name-' + currentAttId).text(fileName).removeClass('opacity-60').addClass('font-bold color-blue');
+        $(`.btn-open-att[data-id="${currentAttId}"] i`).removeClass('ph-folder').addClass('ph-file-pdf');
+      } else {
+        // If no file, clear the attachment display
+        $('#att-name-' + currentAttId).text('No file attached').addClass('opacity-60').removeClass('font-bold color-blue');
+        $(`.btn-open-att[data-id="${currentAttId}"] i`).removeClass('ph-file-pdf').addClass('ph-folder');
+      }
+      closeHistoryAttachModal();
+    };
+
+    let currentAttId = null;
+
+    $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tag = urlParams.get('tag');
+      if (tag) {
+        $('#active-tag-pill').text(tag);
+        $('#tag-search-input').val(tag);
+      }
+
+      // --- Search & Filter Logic ---
+      const $searchInput = $('#tag-search-input');
+      const $dropdownList = $('#tag-dropdown-list');
+      const $dropdownBtn = $('#tag-dropdown-btn');
+      const $tagItems = $('.autocomplete-item');
+
+      function syncDropdownIcon() {
+        const isHidden = $dropdownList.hasClass('hidden');
+        $dropdownBtn.find('i').toggleClass('ph-caret-down', isHidden).toggleClass('ph-caret-up', !isHidden);
+      }
+
+      function renderDropdown(filter) {
+        const f = (filter || "").toLowerCase();
+        let count = 0;
+        $tagItems.each(function () {
+          if ($(this).data('tag').toLowerCase().includes(f)) {
+            $(this).show();
+            count++;
+          } else $(this).hide();
+        });
+        if (count === 0) $dropdownList.addClass('hidden');
+        else $dropdownList.removeClass('hidden');
+        syncDropdownIcon();
+      }
+
+      $searchInput.on('input focus', function () { renderDropdown($(this).val()); });
+      $dropdownBtn.on('click', function (e) {
+        e.stopPropagation();
+        $dropdownList.toggleClass('hidden');
+        if (!$dropdownList.hasClass('hidden')) renderDropdown("");
+        syncDropdownIcon();
+      });
+
+      $tagItems.on('click', function () {
+        const val = $(this).data('tag');
+        $searchInput.val(val);
+        $('#active-tag-pill').text(val);
+        $dropdownList.addClass('hidden');
+        syncDropdownIcon();
+      });
+
+      $(document).on('click', function (e) {
+        if (!$(e.target).closest('#tag-search-container').length) {
+          $dropdownList.addClass('hidden');
+          syncDropdownIcon();
+        }
+      });
+
+      // --- Modal Handlers ---
+      let currentAttId = null;
+
+      function openModal(id, srNum) {
+        if (srNum) $('#jh-modal-subtitle').text('Record #' + srNum);
+        $(id).addClass('is-open');
+      }
+
+      $('.j-close-modal').on('click', function () {
+        $($(this).data('target')).removeClass('is-open');
+      });
+
+      // --- SR Number Click Trigger ---
+      $('.jh-sr-link').on('click', function () {
+        const srId = $(this).data('id');
+        const $row1 = $(this).closest('tr');
+        if (srId === 1) {
+          $('#m-area').val('ASH');
+          $('#m-description').val($row1.find('.desc-cell').text().trim());
+          $('#m-date').val($row1.find('.user-table-center').last().prev().prev().text().trim());
+        }
+        openModal('#modal-jh-edit', srId);
+      });
+
+      $('.btn-open-att').on('click', function () {
+        currentAttId = $(this).data('id');
+        clearHistoryFile();
+        openModal('#modal-jh-attachment');
+      });
+    });
+  </script>
+
+</body>
+
+</html>

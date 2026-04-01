@@ -381,16 +381,6 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
     transition: border-color 0.2s;
 }
 
-/* ── Buttons ── */
-.ui-control-set {
-    display: inline-flex;
-    align-items: center;
-    background: var(--app-panel);
-    border: 1px solid var(--app-border);
-    border-radius: 8px;
-    gap: 0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
 
 :root[data-theme="light"] .ui-control-set {
     background: #ffffff;
@@ -476,47 +466,6 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
     border-collapse: collapse;
 } */
 
-.user-table-head-cell {
-    padding: 8px 10px;
-    font-size: 0.8375rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--typo-blue);
-    background: var(--app-panel-alt);
-    border-bottom: 2px solid var(--app-border);
-    border-right: 1px solid var(--app-border);
-    text-align: left;
-    position: sticky;
-    top: 0;
-    z-index: 5;
-}
-
-
-.user-table- {
-    background: transparent;
-}
-
-.user-table-cell {
-    padding: 8px 10px;
-    color: var(--typo-primary, #ffffff);
-    border-right: 1px solid var(--app-border, #23272e);
-}
-
-
-.user-table-row {
-    border-bottom: 1px solid var(--app-border, #23272e);
-    transition: background 0.15s;
-    background: var(--app-panel, #181b1f);
-    cursor: pointer;
-}
-
-.user-table-row:hover {
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.user-table-row:last-child {
-    border-bottom: none;
-}
 
 /* ── Active/Updated Row Highlights ── */
 .updated-row-highlight {
@@ -640,7 +589,7 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
     height: 20px;
     background: var(--app-border);
     opacity: 0.8;
-    margin: 0 2px 10px 2px;
+
 }
 
 /* ── Content View Utils ── */
@@ -728,13 +677,6 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
 .checkbox-input:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(87, 148, 242, 0.15);
-}
-
-/* ── Table Row Actions ── */
-.user-table-actions {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
 }
 
 .admin-action-btn {
@@ -895,4 +837,33 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
 
 .flex-wrap {
     flex-wrap: wrap !important;
+}
+
+.ui-control-set {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 2px 6px;
+    gap: 4px;
+    transition: all 0.3s ease;
+}
+
+.ui-control-set:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.ui-btn-icon:hover {
+    background: rgba(87, 148, 242, 0.15);
+    color: var(--typo-blue, #5794F2);
+}
+
+.ui-btn-icon:active {
+    background: rgba(87, 148, 242, 0.25);
+}
+
+:root[data-theme="dark"] .themeToggleBtn {
+    color: #5794f2;
 }

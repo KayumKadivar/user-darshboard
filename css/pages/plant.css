@@ -1,0 +1,210 @@
+/* --- Job History Page Styles --- */
+.jh-table-container {
+    background: var(--app-panel);
+    border: 1px solid var(--app-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.jh-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--app-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.jh-title-box {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.jh-title {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--typo-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.jh-subtitle {
+    font-size: 0.75rem;
+    color: var(--typo-secondary);
+    font-weight: 600;
+}
+
+.stack-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stack-primary {
+    font-weight: 700;
+    color: var(--typo-primary);
+    font-size: 0.8125rem;
+}
+
+.stack-secondary {
+    font-size: 0.75rem;
+    color: var(--typo-secondary);
+    font-weight: 500;
+}
+
+.stack-blue {
+    color: var(--typo-blue);
+    font-weight: 700;
+    font-size: 0.8125rem;
+}
+
+.desc-cell {
+    max-width: 450px;
+    white-space: normal !important;
+    line-height: 1.5;
+    font-size: 0.8125rem;
+    color: var(--typo-secondary);
+    padding: 12px 10px !important;
+    vertical-align: middle !important;
+}
+
+.jh-tag-pill {
+    background: rgba(87, 148, 242, 0.15);
+    color: var(--typo-blue);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.875rem;
+    border: 1px solid rgba(87, 148, 242, 0.3);
+}
+
+/* ── Final Table Grid Alignment Fixes ── */
+.user-table {
+    border-collapse: collapse !important;
+}
+
+
+/* Specialized fix for the middle border in two-row records */
+/* This ensures the 'Loop No' etc. have a distinct separator from 'Tag No' */
+.user-table thead th:not([rowspan]),
+.user-table tbody td:not([rowspan]) {
+    border-bottom: 1px solid var(--app-border) !important;
+}
+
+/* Header Specific: Blue theme consistency */
+.user-table-head-cell {
+    background: var(--app-panel-alt) !important;
+    color: var(--typo-blue) !important;
+    text-transform: uppercase;
+    font-weight: 700;
+    vertical-align: middle !important;
+}
+
+/* Last child cleanup */
+.user-table th:last-child,
+.user-table td:last-child {
+    border-right: none !important;
+}
+
+/* --- History Attachment Modal Enhancements --- */
+.history-upload-wrapper {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.history-file-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.history-upload-zone {
+    border: 2px dashed var(--app-border);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.history-upload-wrapper:hover .history-upload-zone {
+    border-color: var(--typo-blue);
+    background: rgba(87, 148, 242, 0.05);
+}
+
+.history-icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(87, 148, 242, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.history-icon-circle i {
+    font-size: 24px;
+    color: var(--typo-blue);
+}
+
+.history-file-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--app-border);
+    background: var(--app-panel-alt);
+    margin-bottom: 1rem;
+}
+
+.history-preview-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.history-preview-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.history-trash-btn {
+    background: none;
+    border: none;
+    color: var(--typo-secondary);
+    padding: 6px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.history-trash-btn:hover {
+    color: #ef4444;
+}
+
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.d-none, .hidden {
+    display: none !important;
+}

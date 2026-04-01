@@ -21,7 +21,7 @@ $(function () {
               </button>
               <div class="ui-divider-v"></div>
               <button class="fontIncreaseBtn ui-btn-icon" title="Increase Font">
-                <i class="ph ph-text-aa font-12px"></i>
+                <i class="ph ph-text-aa font-18px"></i>
               </button>
               <div class="ui-divider-v"></div>
               <button class="themeToggleBtn ui-btn-icon" title="Toggle Theme">

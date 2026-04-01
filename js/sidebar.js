@@ -193,7 +193,7 @@ $(function () {
         localStorage.removeItem('sidebarCollapsed');
         localStorage.removeItem("userRole");
         localStorage.removeItem("currentUserName");
-        window.location.href = "${basePath}Login.html";
+        window.location.href = "Login.html";
     };
 
     $('.sign-out-btn, .ph-sign-out').on('click', logout);
