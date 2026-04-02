@@ -39,54 +39,50 @@
     <div id="header-container" data-title="Acetic Acid Logbook" data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
-    <section class="jt-page-content">
+    <section class="dashboard-content plant-page__content">
 
       <!-- Plant Navigation -->
       <div id="plant-nav-container"></div>
 
       <!-- ── FILTER CARD ── -->
-      <div class="jt-filter-card" style="margin-bottom: 24px;">
+      <div class="jt-filter-card">
         <div class="jt-filter-header">
-          <h3 class="jt-filter-title">
+          <h2 class="jt-filter-title">
             <i class="ph-bold ph-funnel"></i>
             SEARCH CRITERIA
-          </h3>
+          </h2>
         </div>
-        <div class="jt-filter-body" style="grid-template-columns: 320px auto;">
-          
-          <!-- Tag Input -->
+        <div class="jt-filter-body">
+
+          <!-- Tag Input (Standardized to job_types structure) -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label">Tag Number</label>
-            <div class="jt-input-icon-wrap" style="position: relative; width: 100%;">
-              <i class="ph-bold ph-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--typo-label); font-size: 14px; pointer-events: none; z-index: 2;"></i>
-              <input type="text" id="tagInput" value="A7801A" class="jt-input jt-mono" placeholder="Enter Tag (e.g. PT-101)" style="padding-left: 36px;">
+            <label class="jt-filter-label" for="tagInput">Tag Number</label>
+            <div class="jt-input-wrap">
+              <input type="text" id="tagInput" value="2BOILER-2" class="jt-input"
+                placeholder="Enter Tag (e.g. 2BOILER-2)">
             </div>
           </div>
 
-          <!-- Actions -->
-          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 12px;">
-            <button onclick="showReport()" class="jt-btn-primary">
+          <!-- Action Buttons (Standardized to jt-filter-btn) -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" onclick="showReport()">
               <i class="ph-bold ph-lightning"></i> APPLY
             </button>
-            <button onclick="resetView()" class="jt-btn-reset">
-              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+            <button type="button" class="jt-btn-reset" onclick="resetView()">
+              Reset
             </button>
           </div>
 
         </div>
       </div>
 
-      <!-- ── RESULTS SECTION ── -->
-      <div id="report-container" style="display: none; flex-direction: column; gap: 16px;">
+      <div id="report-container">
 
         <div class="jt-report-header">
           <div class="jt-report-title">
             <i class="ph-fill ph-tag"></i>
             <div class="jt-title-stack">
               <h3 class="jt-main-title">Tag-wise History Report</h3>
-              <p style="font-size: 13px; color: var(--brand-orange); margin-top: 2px;">
-                Searching for Tag: <span id="displayTag" class="jt-mono" style="font-weight: 700;"></span>
-              </p>
             </div>
           </div>
         </div>
@@ -97,186 +93,377 @@
             <table class="user-table">
               <thead>
                 <tr>
-                  <th rowspan="2" class="user-table-center" style="width: 64px;">Sr</th>
-                  <th rowspan="2" class="user-table-center" style="width: 80px;">Area</th>
-                  <th class="user-table-left" style="width: 140px;">Loop No</th>
-                  <th class="user-table-left" style="width: 380px;">Job</th>
-                  <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
-                  <th style="min-width: 400px;">Description</th>
-                  <th rowspan="2" class="user-table-center" style="width: 100px;">Status</th>
-                  <th rowspan="2" style="min-width: 160px;">Remarks</th>
+                  <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                  <th rowspan="2" class="user-table-center" style="width: 100px;">Area</th>
+                  <th class="user-table-center" style="width: 130px;">Loop No</th>
+                  <th class="user-table-center" style="width: 280px;">Job</th>
+                  <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                  <th rowspan="2" style="min-width: 400px;">Description</th>
+                  <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                  <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                  <th class="user-table-center" style="min-width: 300px;">ENG Remarks</th>
                 </tr>
                 <tr>
-                  <th class="user-table-left">Tag No</th>
-                  <th class="user-table-left">Type of Job</th>
+                  <th class="user-table-center">Tag No</th>
+                  <th class="user-table-center user-table-border-right">Type of Inst</th>
+                  <th class="user-table-center" style="min-width: 300px;">EXE Remarks</th>
                 </tr>
               </thead>
               <tbody id="reportTableBody">
-                <!-- Rows injected via JS -->
+                <!-- ── DATE GROUP: 02/04/2026 ── -->
+                <tr class="user-table-date">
+                  <td colspan="9" class="user-table-bold">
+                    <i class="ph-fill ph-calendar-blank"></i> 02/04/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">Boiler 2 start up activity done...</div>
+                      <div class="user-table-secondary user-table-orange">DEFECT MAINTENANCE</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
+                  <td class="user-table-primary">Boiler 2 start up activity done lit up 4:10 and boiler 6:15 parallel 2AB1 Ignitor is not coming so clean spark trial done found ok.JOB done with BSU</td>
+                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
+
+                <!-- ── DATE GROUP: 24/03/2026 ── -->
+                <tr class="user-table-date">
+                  <td colspan="9" class="user-table-bold">
+                    <i class="ph-fill ph-calendar-blank"></i> 24/03/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">#2 IL Section DCB Card Status Error Appear in R2...</div>
+                      <div class="user-table-secondary user-table-orange">DEFECT MAINTENANCE</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
+                  <td class="user-table-primary">#2 IL Section DCB Card Status Error Appear in R2-M6, R2-M7, R3-M6, R3-M7, R5-M. during checking its ribbon cable (right side) connecting rack 1 and rack 2 was found faulty same replaced and given in line. Job was done on 20/03/2026 kept under observation till 24/03/2026 working normal</td>
+                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
+
+                <!-- ── DATE GROUP: 15/03/2026 ── -->
+                <tr class="user-table-date">
+                  <td colspan="9" class="user-table-bold">
+                    <i class="ph-fill ph-calendar-blank"></i> 15/03/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">Boiler purge started at 8:24 Hrs...</div>
+                      <div class="user-table-secondary user-table-orange">PROCESS REQMT</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">JCO</td>
+                  <td class="user-table-primary">Boiler purge started at 8:24 Hrs. Boiler Lit up at 9:35 Hrs. Boiler parallel at 14:23 hrs. During the startup activity CD2 ignitor not coming so check and found its flame not stable so its IFM card replace with spare and check its operation found ok, CD4 ignitor not coming so its inst. side check found ok, Inform to process. All visible flame scanner not gating power on so check in detail found its main incoming supply 2A fuse blown so its replace with spare. Startup activity done with BSU and JMD</td>
+                  <td class="user-table-center user-table-bold user-table-secondary">JCO</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
+
+                <!-- ── DATE GROUP: 10/12/2025 ── -->
+                <tr class="user-table-date">
+                  <td colspan="9" class="user-table-bold">
+                    <i class="ph-fill ph-calendar-blank"></i> 10/12/2025
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">4</td>
+                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">Associated with process department...</div>
+                      <div class="user-table-secondary user-table-orange">PROCESS REQMT</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">WM</td>
+                  <td class="user-table-primary">Associated with process department for all four mill DP and suction and discharge pressure transmitter impulse line flushing job.</td>
+                  <td class="user-table-center user-table-bold user-table-secondary">WM</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
+
+                <!-- ── DATE GROUP: 23/11/2025 ── -->
+                <tr class="user-table-date">
+                  <td colspan="9" class="user-table-bold">
+                    <i class="ph-fill ph-calendar-blank"></i> 23/11/2025
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">5</td>
+                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">Boiler-2 Trip on MFT2 DPV fault...</div>
+                      <div class="user-table-secondary user-table-orange">ABNORMALITY</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">WM</td>
+                  <td class="user-table-primary">
+                    <div class="user-table-desc--abnormality">
+                      Boiler-2 Trip on MFT2 DPJ fault at 20:21 hrs. DPU card removed cleaned and try to reboot but not successful. Spare CPU card with old DPU memory card and taken in line. Clearance given to process. Purge started at 21:08 hrs. Boiler parallel at 21:52 Hrs.
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">WM</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
+
+                <!-- ── DATE GROUP: 13/11/2025 ── -->
+                <tr class="user-table-date">
+                  <td colspan="9" class="user-table-bold">
+                    <i class="ph-fill ph-calendar-blank"></i> 13/11/2025
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">6</td>
+                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">Boiler 2 trip at 1:42 on man trip...</div>
+                      <div class="user-table-secondary user-table-orange">N.A.</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
+                  <td class="user-table-primary">Boiler 2 trip at 1:42 on man trip PB and fuse leakage found as per process.</td>
+                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
+
+                <!-- ── DATE GROUP: 01/10/2025 ── -->
+                <tr class="user-table-date">
+                  <td colspan="9" class="user-table-bold">
+                    <i class="ph-fill ph-calendar-blank"></i> 01/10/2025
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">7</td>
+                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">Startup activities done with JDE...</div>
+                      <div class="user-table-secondary user-table-orange">N.A.</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
+                  <td class="user-table-primary">Startup activities done with JDE, Corner-2 AB2 and CD2 ignitor was not coming, during checking found both IFM rod was heating up.</td>
+                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">8</td>
+                  <td class="user-table-center user-table-bold user-table-primary">N/A</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">Boiler was lit up at 1:45 hrs...</div>
+                      <div class="user-table-secondary user-table-orange">N.A.</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
+                  <td class="user-table-primary">Boiler was lit up at 1:45 hrs and paralleled at morning 6:32 hrs.</td>
+                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
+
+                <!-- ── DATE GROUP: 24/09/2025 ── -->
+                <tr class="user-table-date">
+                  <td colspan="9" class="user-table-bold">
+                    <i class="ph-fill ph-calendar-blank"></i> 24/09/2025
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">9</td>
+                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">Boiler tripped on furnace draft high...</div>
+                      <div class="user-table-secondary user-table-orange">ABNORMALITY</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                  <td class="user-table-primary">
+                    <div class="user-table-desc--abnormality">
+                      Boiler tripped on furnace draft high at 11:26. Also boiler is punctured. Decided to start Boiler-4.
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
+
+                <!-- ── DATE GROUP: 22/09/2025 ── -->
+                <tr class="user-table-date">
+                  <td colspan="9" class="user-table-bold">
+                    <i class="ph-fill ph-calendar-blank"></i> 22/09/2025
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary user-table-bold">10</td>
+                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">N.A.</div>
+                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-primary">Boiler 2 trip at 23:00 on Furnace pressure...</div>
+                      <div class="user-table-secondary user-table-orange">N.A.</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
+                  <td class="user-table-primary">Boiler 2 trip at 23:00 on Furnace pressure High purge start 23:08 and boiler parallel 23:45.</td>
+                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
+                  <td class="user-table-center">OVER</td>
+                    <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
-
       </div>
 
     </section>
   </main>
 
   <script>
-    /* Mock Historical Data */
-    const historyData = [
-      {
-        date: '30/01/2026',
-        items: [
-          { sr: 1, area: '7800', loop: 'N.A.', tag: 'A7801A', job: 'To be checked as reported Cable found full in hanging condition near 7800 sec.', type: 'HOUSE KEEPING', tech1: 'ALS', desc: 'Proper cable dressing done.', tech2: 'ALS', status: 'OVER' }
-        ]
-      },
-      {
-        date: '29/01/2026',
-        items: [
-          { sr: 2, area: 'N.A.', loop: 'N.A.', tag: 'A7801A', job: 'To be checked as reported Cable found full in hanging condition near 7800 sec.', type: 'HOUSE KEEPING', tech1: 'ALS', desc: 'Job is U/P.', tech2: 'ALS', status: 'U/P' }
-        ]
-      },
-      {
-        date: '24/01/2026',
-        items: [
-          { sr: 3, area: '7800', loop: 'N.A.', tag: 'A7801A', job: 'To be checked as reported Cable found full in hanging condition near 7800 sec.', type: 'HOUSE KEEPING', tech1: 'ALS', desc: 'Cable was detached from cable tray. So it is req to dressing it proper.', tech2: 'ALS', status: 'U/P' }
-        ]
-      },
-      {
-        date: '02/03/2022',
-        items: [
-          { sr: 4, area: '7800', loop: 'N.A.', tag: 'A7801A', job: '7800 all sequence valve oil level to be topped up.', type: 'PM', tech1: 'ALS', desc: 'KV7802, 7804, 7805, 7807 oil filling done.', tech2: 'ALS', status: 'OVER' }
-        ]
-      },
-      {
-        date: '10/07/2017',
-        items: [
-          { sr: 5, area: '7800', loop: 'N.A.', tag: 'A7801A', job: '', type: 'PROCESS REQMT', tech1: '', desc: 'TE449 -As per process requirement Element disconnected from its nipple union connections.', tech2: 'GAZ', status: 'OVER' }
-        ]
-      },
-      {
-        date: '12/11/2013',
-        items: [
-          { sr: 6, area: '7800', loop: 'N.A.', tag: 'A7801A', job: '', type: 'N.A.', tech1: '', desc: '-Visited to store and Metso metso make valve PV2303, PV2304, PV2325 valve spare part identified and its list prepared.', tech2: 'GAZ', status: 'OVER' }
-        ]
-      },
-      {
-        date: '21/05/2011',
-        items: [
-          { sr: 7, area: 'N.A.', loop: 'N.A.', tag: 'A7801A', job: '', type: 'PROCESS REQMT', tech1: '', desc: 'As per process req. Pressure measurement of N2 line after NRV done(5.8bar).', tech2: 'ALS', status: 'OVER' }
-        ]
-      },
-      {
-        date: '20/05/2011',
-        items: [
-          { sr: 8, area: 'N.A.', loop: 'N.A.', tag: 'A7801A', job: '', type: 'PROCESS REQMT', tech1: '', desc: 'As per process req. pressure measurement done(70bar) in Nitrogen line in A7801.', tech2: 'ALS', status: 'OVER' }
-        ]
-      },
-      {
-        date: '01/10/2009',
-        items: [
-          { sr: 9, area: '7800', loop: 'N.A.', tag: 'A7801A', job: 'SEC 7800 C/V pm to be done.', type: 'PM', tech1: 'JMD', desc: 'Permit not issued due to startup activity.', tech2: 'JMD', status: 'OVER' }
-        ]
-      },
-      {
-        date: '22/06/2007',
-        items: [
-          { sr: 10, area: 'N.A.', loop: 'N.A.', tag: 'A7801A', job: 'analyzer round to be taken', type: 'PM', tech1: 'JMD', desc: 'Routine analyzer round taken, except sec500/600. Also CO level was found high in sec700 ana. room.', tech2: 'JMD', status: 'OVER' }
-        ]
-      }
-    ];
-
     function showReport() {
       const tagValue = document.getElementById('tagInput').value;
       if (!tagValue) return;
 
-      document.getElementById('displayTag').innerText = tagValue;
-      
-      // Ensure the section is visible
+      document.getElementById('displayTag').innerText = tagValue.toUpperCase();
+
+      // Show the results section
       const reportContainer = document.getElementById('report-container');
-      reportContainer.style.display = 'flex';
-      
-      // Keep the search filter card visible (user request)
-      document.querySelector('.jt-filter-card').style.display = 'block';
-      
-      renderTable();
+      reportContainer.style.display = 'block';
     }
 
     function resetView() {
       document.getElementById('tagInput').value = '';
       document.getElementById('report-container').style.display = 'none';
-      document.querySelector('.jt-filter-card').style.display = 'block';
-    }
-
-    function escapeHTML(str) {
-      if (!str) return '';
-      return str.replace(/[&<>"']/g, function(m) {
-        return {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#39;'
-        }[m];
-      });
-    }
-
-    function renderTable() {
-      const tbody = document.getElementById('reportTableBody');
-      let html = '';
-      let totalRecords = 0;
-
-      for (let i = 0; i < historyData.length; i++) {
-        const group = historyData[i];
-        
-        // Date Header Row
-        html += '<tr class="user-table-date">' +
-                  '<td colspan="8" class="user-table-bold" style="background: rgba(87, 148, 242, 0.05); color: var(--brand-primary);">' +
-                    '<i class="ph-bold ph-calendar-blank"></i> ' + group.date +
-                  '</td>' +
-                '</tr>';
-
-        // Data Rows
-        for (let j = 0; j < group.items.length; j++) {
-          totalRecords++;
-          const item = group.items[j];
-          const badgeClass = item.status === 'OVER' ? 'ui-badge--success' : 'ui-badge--warning';
-
-          html += '<tr class="user-table-row">' +
-            '<td class="user-table-center user-table-secondary user-table-bold">' + item.sr + '</td>' +
-            '<td class="user-table-center user-table-bold user-table-primary">' + item.area + '</td>' +
-            
-            // Loop / Tag Stack
-            '<td>' +
-              '<div class="user-table-cell-stack">' +
-                '<div class="user-table-primary" style="font-weight: 400; font-size: 13px;">' + item.loop + '</div>' +
-                '<div class="user-table-secondary user-table-blue">' + escapeHTML(item.tag) + '</div>' +
-              '</div>' +
-            '</td>' +
-
-            // Job / Type Stack
-            '<td>' +
-              '<div class="user-table-cell-stack">' +
-                '<div class="user-table-primary" style="font-size: 14px; line-height: 1.3;">' + escapeHTML(item.job || '-') + '</div>' +
-                '<div class="user-table-secondary user-table-orange" style="font-size: 11px;">' + item.type + '</div>' +
-              '</div>' +
-            '</td>' +
-
-            '<td class="user-table-center user-table-bold user-table-secondary">' + item.tech1 + '</td>' +
-            '<td class="user-table-primary" style="font-size: 15px; line-height: 1.6;">' + escapeHTML(item.desc) + '</td>' +
-            
-            '<td class="user-table-center">' +
-              '<span class="ui-badge ' + badgeClass + '">' + item.status + '</span>' +
-            '</td>' +
-            
-            '<td></td>' +
-          '</tr>';
-        }
-      }
-
-      tbody.innerHTML = html;
     }
   </script>
 </body>

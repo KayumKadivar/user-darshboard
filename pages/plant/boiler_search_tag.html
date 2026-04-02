@@ -35,10 +35,11 @@
                         <label class="input-label">Search Tag / Description</label>
                         <div class="autocomplete-container">
                             <i class="ph-bold ph-magnifying-glass absolute-icon-left"></i>
-                            <input type="text" id="search-input" class="input-control pl-40px" placeholder="Enter tag name or description..." autofocus>
+                            <input type="text" id="search-input" class="input-control pl-40px"
+                                placeholder="Enter tag name or description..." autofocus>
                         </div>
                     </div>
-                    
+
                     <div class="ui-divider-v"></div>
 
                     <button class="toolbar-btn btn-red" onclick="window.location.href='boiler_inst_data.html'">
@@ -46,28 +47,65 @@
                     </button>
                 </div>
 
-                <!-- Results Table -->
-                <!-- <div class="form-section"> -->
-                    <!-- <div id="result-count" >
-                        Showing 0 record(s)
-                    </div> -->
-                    <div class="user-table-wrapper" >
-                        <table class="user-table" id="results-table">
-                            <thead>
-                                <tr>
-                                    <th class="user-table-center" style="width: 64px;">Sr</th>
-                                    <th class="user-table-left" style="width: 15%;">Tag</th>
-                                    <th class="user-table-left">Description</th>
-                                    <th class="user-table-center" style="width: 15%;">Inst Type</th>
-                                    <th class="user-table-left" style="width: 20%;">Function</th>
-                                    <th class="user-table-center" style="width: 10%;">History</th>
-                                </tr>
-                            </thead>
-                            <tbody id="results-body">
-                                <!-- Dynamic rows -->
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="user-table-wrapper">
+                    <table class="user-table" id="results-table">
+                        <thead>
+                            <tr>
+                                <th class="user-table-center" style="width: 64px;">Sr</th>
+                                <th class="user-table-left" style="width: 15%;">Tag</th>
+                                <th class="user-table-left">Description</th>
+                                <th class="user-table-center" style="width: 15%;">Inst Type</th>
+                                <th class="user-table-left" style="width: 20%;">Function</th>
+                                <th class="user-table-center" style="width: 10%;">History</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-body">
+                            <tr class="cursor-pointer" onclick="selectTag('ZSH177906')">
+                                <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                                <td class="user-table-left user-table-blue user-table-bold">ZSH177906</td>
+                                <td class="user-table-left user-table-secondary font-medium">NG BURNER 4 BLOCK VALVE
+                                    OPEN</td>
+                                <td class="user-table-center user-table-primary">SWITCH</td>
+                                <td class="user-table-left user-table-secondary">—</td>
+                                <td class="user-table-center font-bold" style="color:var(--typo-blue);">—</td>
+                            </tr>
+                            <tr class="cursor-pointer" onclick="selectTag('10-PT-101A')">
+                                <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                                <td class="user-table-left user-table-blue user-table-bold">10-PT-101A</td>
+                                <td class="user-table-left user-table-secondary font-medium">MAIN STEAM HEADER PRESSURE
+                                </td>
+                                <td class="user-table-center user-table-primary">TRANSMITTER</td>
+                                <td class="user-table-left user-table-secondary">PRESSURE INDICATION</td>
+                                <td class="user-table-center font-bold" style="color:var(--typo-blue);">3 jobs</td>
+                            </tr>
+                            <tr class="cursor-pointer" onclick="selectTag('XLGDFGV1D')">
+                                <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                                <td class="user-table-left user-table-blue user-table-bold">XLGDFGV1D</td>
+                                <td class="user-table-left user-table-secondary font-medium">FUEL GAS CV</td>
+                                <td class="user-table-center user-table-primary">CONTROL VALVE</td>
+                                <td class="user-table-left user-table-secondary">VALVE POSITION</td>
+                                <td class="user-table-center font-bold" style="color:var(--typo-blue);">1 job</td>
+                            </tr>
+                            <tr class="cursor-pointer" onclick="selectTag('ZT1777385')">
+                                <td class="user-table-center user-table-secondary user-table-bold">4</td>
+                                <td class="user-table-left user-table-blue user-table-bold">ZT1777385</td>
+                                <td class="user-table-left user-table-secondary font-medium">COMPRESSOR BEARING TEMP
+                                </td>
+                                <td class="user-table-center user-table-primary">RTD PT100</td>
+                                <td class="user-table-left user-table-secondary">TEMPERATURE INDICATION</td>
+                                <td class="user-table-center font-bold" style="color:var(--typo-blue);">2 jobs</td>
+                            </tr>
+                            <tr class="cursor-pointer" onclick="selectTag('XLGDFSAF1M')">
+                                <td class="user-table-center user-table-secondary user-table-bold">5</td>
+                                <td class="user-table-left user-table-blue user-table-bold">XLGDFSAF1M</td>
+                                <td class="user-table-left user-table-secondary font-medium">SAFETY AIR FAN 1 MOTOR</td>
+                                <td class="user-table-center user-table-primary">SWITCH</td>
+                                <td class="user-table-left user-table-secondary">MOTOR STATUS</td>
+                                <td class="user-table-center font-bold" style="color:var(--typo-blue);">—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <!-- </div> -->
 
             </div>
@@ -75,105 +113,9 @@
     </main>
 
     <script>
-        const tagDatabase = [
-            { tag: "ZSH177906", description: "NG BURNER 4 BLOCK VALVE OPEN", inst_type: "SWITCH", func: "", history: "" },
-            { tag: "10-PT-101A", description: "MAIN STEAM HEADER PRESSURE", inst_type: "TRANSMITTER", func: "PRESSURE INDICATION", history: "3 jobs" },
-            { tag: "XLGDFGV1D", description: "FUEL GAS CV", inst_type: "CONTROL VALVE", func: "VALVE POSITION", history: "1 job" },
-            { tag: "ZT1777385", description: "COMPRESSOR BEARING TEMP", inst_type: "RTD PT100", func: "TEMPERATURE INDICATION", history: "2 jobs" },
-            { tag: "XLGDFSAF1M", description: "SAFETY AIR FAN 1 MOTOR", inst_type: "SWITCH", func: "MOTOR STATUS", history: "" },
-            { tag: "XLGDFSAF2ARTS", description: "SAFETY AIR FAN 2 AUTO/RTS", inst_type: "SWITCH", func: "AUTO REMOTE", history: "" },
-            { tag: "XLGDFSAF2B", description: "SAFETY AIR FAN 2 BREAKER", inst_type: "SWITCH", func: "BREAKER STATUS", history: "" },
-            { tag: "XLGDFSAF2M", description: "SAFETY AIR FAN 2 MOTOR", inst_type: "SWITCH", func: "MOTOR STATUS", history: "" },
-            { tag: "XLGFDBFVD", description: "FUEL OIL BFV D", inst_type: "CV", func: "VALVE CONTROL", history: "1 job" },
-            { tag: "XLGFDBFVE", description: "FUEL OIL BFV E", inst_type: "CV", func: "VALVE CONTROL", history: "" },
-            { tag: "XLGFDBFVF", description: "FUEL OIL BFV F", inst_type: "CV", func: "VALVE CONTROL", history: "" },
-            { tag: "XLGDFGV1E", description: "FUEL GAS CV 1E", inst_type: "CONTROL VALVE", func: "VALVE POSITION", history: "" },
-            { tag: "XLGDFGV1F", description: "FUEL GAS CV 1F", inst_type: "CONTROL VALVE", func: "VALVE POSITION", history: "" },
-            { tag: "XLGDFGV2D", description: "FUEL GAS CV 2D", inst_type: "CONTROL VALVE", func: "GAS FLOW CONTROL", history: "2 jobs" },
-            { tag: "XLGDFGV2E", description: "FUEL GAS CV 2E", inst_type: "CONTROL VALVE", func: "GAS FLOW CONTROL", history: "" },
-            { tag: "XLGDFGV2F", description: "FUEL GAS CV 2F", inst_type: "CONTROL VALVE", func: "GAS FLOW CONTROL", history: "" },
-            { tag: "XV177707", description: "MAIN STEAM XV", inst_type: "CV", func: "STEAM ISOLATION", history: "4 jobs" },
-            { tag: "XV177901", description: "NG HEADER ISOLATION VALVE", inst_type: "CV", func: "GAS ISOLATION", history: "" },
-            { tag: "XV177902", description: "NG BURNER 1 ISOLATION", inst_type: "CV", func: "BURNER ISOLATION", history: "" },
-            { tag: "XV177903", description: "NG BURNER 2 ISOLATION", inst_type: "CV", func: "BURNER ISOLATION", history: "" },
-            { tag: "XV177904", description: "NG BURNER 3 ISOLATION", inst_type: "CV", func: "BURNER ISOLATION", history: "" },
-            { tag: "XV177905", description: "NG BURNER 4 ISOLATION", inst_type: "CV", func: "BURNER ISOLATION", history: "" },
-            { tag: "XV177906", description: "NG BURNER 5 ISOLATION", inst_type: "CV", func: "BURNER ISOLATION", history: "" },
-            { tag: "XV177907", description: "NG BURNER 6 ISOLATION", inst_type: "CV", func: "BURNER ISOLATION", history: "" },
-            { tag: "ZSL191801", description: "FD FAN DAMPER LOW", inst_type: "SWITCH", func: "DAMPER POSITION", history: "" },
-            { tag: "ZT177707A", description: "MAIN STEAM TEMP A", inst_type: "RTD PT100", func: "TEMPERATURE", history: "1 job" },
-            { tag: "ZT177707B", description: "MAIN STEAM TEMP B", inst_type: "RTD PT100", func: "TEMPERATURE", history: "" },
-            { tag: "ZT1777137", description: "SH OUTLET TEMP 137", inst_type: "TRANSMITTER", func: "TEMPERATURE", history: "" },
-            { tag: "ZT1777146", description: "SH OUTLET TEMP 146", inst_type: "TRANSMITTER", func: "TEMPERATURE", history: "" },
-            { tag: "ZT1777216", description: "RH INLET TEMP 216", inst_type: "TRANSMITTER", func: "TEMPERATURE", history: "1 job" },
-            { tag: "ZT1777268", description: "RH OUTLET TEMP 268", inst_type: "TRANSMITTER", func: "TEMPERATURE", history: "" },
-            { tag: "ZT1777356", description: "ECONOMISER OUTLET TEMP", inst_type: "RTD PT100", func: "TEMPERATURE", history: "" },
-            { tag: "ZT1777366", description: "APH GAS INLET TEMP", inst_type: "RTD PT100", func: "TEMPERATURE", history: "" },
-            { tag: "ZT1777393", description: "APH GAS OUTLET TEMP", inst_type: "RTD PT100", func: "TEMPERATURE", history: "2 jobs" },
-            { tag: "ZT177903A", description: "BURNER ZONE TEMP A", inst_type: "RTD PT100", func: "TEMPERATURE", history: "" },
-            { tag: "ZT177903B", description: "BURNER ZONE TEMP B", inst_type: "RTD PT100", func: "TEMPERATURE", history: "" },
-            { tag: "ZT184203A", description: "DRUM WATER LEVEL A", inst_type: "TRANSMITTER", func: "LEVEL INDICATION", history: "3 jobs" },
-            { tag: "ZT184203B", description: "DRUM WATER LEVEL B", inst_type: "TRANSMITTER", func: "LEVEL INDICATION", history: "" },
-            { tag: "ZT184203C", description: "DRUM WATER LEVEL C", inst_type: "TRANSMITTER", func: "LEVEL INDICATION", history: "" },
-            { tag: "ZT191105", description: "FD FAN BEARING TEMP", inst_type: "RTD PT100", func: "TEMPERATURE", history: "" },
-            { tag: "ZT191107", description: "ID FAN BEARING TEMP", inst_type: "RTD PT100", func: "TEMPERATURE", history: "1 job" },
-        ];
-
-        function renderTable(data) {
-            const $body = $('#results-body');
-            const $count = $('#result-count');
-
-            if (data.length === 0) {
-                if ($count.length) $count.text('No results found');
-                $body.html('<tr><td colspan="6" class="user-table-center py-12 opacity-50 font-italic">No tags found for your search criteria</td></tr>');
-                return;
-            }
-
-            if ($count.length) $count.text(`Showing ${data.length} record(s)`);
-            
-            let html = '';
-            for (let i = 0; i < data.length; i++) {
-                const r = data[i];
-                html += `
-                <tr class="cursor-pointer" onclick="selectTag('${r.tag}')">
-                    <td class="user-table-center user-table-secondary user-table-bold">${i + 1}</td>
-                    <td class="user-table-left user-table-blue user-table-bold">${r.tag}</td>
-                    <td class="user-table-left user-table-secondary font-medium">${r.description}</td>
-                    <td class="user-table-center user-table-primary">${r.inst_type}</td>
-                    <td class="user-table-left user-table-secondary">${r.func || '—'}</td>
-                    <td class="user-table-center font-bold" style="color:var(--typo-blue);">${r.history ? r.history : '—'}</td>
-                </tr>`;
-            }
-            $body.html(html);
-        }
-
-        function performSearch() {
-            const query = $('#search-input').val().trim().toLowerCase();
-            if (!query) {
-                renderTable(tagDatabase);
-                return;
-            }
-            
-            const results = [];
-            for (let i = 0; i < tagDatabase.length; i++) {
-                const t = tagDatabase[i];
-                if (t.tag.toLowerCase().indexOf(query) !== -1 || 
-                    t.description.toLowerCase().indexOf(query) !== -1 || 
-                    t.inst_type.toLowerCase().indexOf(query) !== -1) {
-                    results.push(t);
-                }
-            }
-            renderTable(results);
-        }
-
         function selectTag(tagNo) {
             window.location.href = 'boiler_inst_data.html?tag=' + encodeURIComponent(tagNo);
         }
-
-        $(function() {
-            $('#search-input').on('keyup', performSearch);
-            renderTable(tagDatabase);
-        });
     </script>
 </body>
 

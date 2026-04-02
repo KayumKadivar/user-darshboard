@@ -145,54 +145,61 @@
   color: #f87171;
 }
 
+/* ── Final Table Grid Alignment Fixes ── */
+.user-table {
+  border-collapse: collapse !important;
+  min-width: 1400px;
+}
+
 
 .user-table-head-cell {
-    padding: 8px 10px;
-    font-size: 0.8375rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--typo-blue);
-    background: var(--app-panel-alt);
-    border-bottom: 2px solid var(--app-border);
-    border-right: 1px solid var(--app-border);
-    text-align: left;
-    position: sticky;
-    top: 0;
-    z-index: 5;
+  padding: 8px 10px;
+  font-size: 0.8375rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--typo-blue);
+  background: var(--app-panel-alt);
+  border-bottom: 2px solid var(--app-border);
+  border-right: 1px solid var(--app-border);
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  vertical-align: middle !important;
 }
 
 
 .user-table- {
-    background: transparent;
+  background: transparent;
 }
 
 .user-table-cell {
-    padding: 8px 10px;
-    color: var(--typo-primary, #ffffff);
-    border-right: 1px solid var(--app-border, #23272e);
+  padding: 8px 10px;
+  color: var(--typo-primary, #ffffff);
+  border-right: 1px solid var(--app-border, #23272e);
 }
 
 
 .user-table-row {
-    border-bottom: 1px solid var(--app-border, #23272e);
-    transition: background 0.15s;
-    background: var(--app-panel, #181b1f);
-    cursor: pointer;
+  border-bottom: 1px solid var(--app-border, #23272e);
+  transition: background 0.15s;
+  background: var(--app-panel, #181b1f);
+  cursor: pointer;
 }
 
 .user-table-row:hover {
-    background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .user-table-row:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 /* ── Table Row Actions ── */
 .user-table-actions {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
 
 
@@ -218,27 +225,29 @@
   font-size: 0.85rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: var(--typo-label);
+  color: var(--typo-blue);
   background: var(--app-panel-alt);
   border-bottom: 1px solid var(--app-border);
   border-right: 1px solid var(--app-border);
   text-align: center;
-  position: sticky;
   top: 0;
   z-index: 10;
 }
 
 .user-table td {
-  padding: 7px 7px;
+  padding: 4px;
   color: var(--typo-primary);
   border-bottom: 1px solid var(--app-border);
   border-right: 1px solid var(--app-border);
-  vertical-align: top;
 }
 
 .user-table th:last-child,
 .user-table td:last-child {
   border-right: none;
+}
+
+.user-table tr:last-child td {
+  border-bottom: none;
 }
 
 .user-table tr:hover {
@@ -253,6 +262,10 @@
   border-top: 2px solid var(--app-border);
   font-weight: 800;
   color: var(--typo-blue);
+}
+
+.user-table-border-right {
+  border-right: 1px solid var(--app-border) !important;
 }
 
 /* Table Utilities */
@@ -287,7 +300,6 @@
 
 .user-table-secondary {
   color: var(--typo-secondary) !important;
-  font-size: 0.8125rem;
 }
 
 .user-table-desc {
@@ -296,7 +308,15 @@
   min-width: 250px;
 }
 
-.user-table-date {}
+.user-table-remarks-purple {
+  color: #a29bfe !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.user-table-date {
+  background-color: var(--app-panel-alt);
+}
 
 /* --- 5. SWITCHERS --- */
 .ui-switcher {
@@ -964,18 +984,15 @@
   user-select: none;
   cursor: pointer;
   color: var(--typo-primary);
-  border: none;
-  background: transparent;
+  border: 1px solid var(--app-border);
+  background: var(--app-panel-alt);
   text-decoration: none;
 }
 
 .plant-nav-pill:hover {
   color: var(--typo-primary);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-:root[data-theme="light"] .plant-nav-pill:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--typo-blue);
+  color: #fff;
 }
 
 .plant-nav-pill.is-active {
@@ -3038,6 +3055,7 @@
 
 .assign-content {
   padding: 1rem;
+  overflow-y: auto;
 }
 
 /* --- Top Bar / Stats --- */
@@ -3166,13 +3184,6 @@
   appearance: none;
 }
 
-select.gnfc-modal-input {
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
-  padding-right: 36px !important;
-  cursor: pointer;
-}
 
 .assign-select-wrap {
   position: relative;
@@ -3192,7 +3203,7 @@ select.gnfc-modal-input {
   transition: transform 0.2s ease;
 }
 
-.assign-select-wrap:focus-within .ph-caret-down {
+.assign-select-wrap.is-open .ph-caret-down {
   transform: translateY(-50%) rotate(180deg);
 }
 
@@ -3354,7 +3365,6 @@ select.gnfc-modal-input {
   border: 1px solid var(--app-border);
   border-radius: 6px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
 }
 
 .jt-filter-header {
@@ -3414,6 +3424,12 @@ select.gnfc-modal-input {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.jt-filter-btn {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
 }
 
 .jt-filter-label {
@@ -3521,13 +3537,13 @@ select.gnfc-modal-input {
 /* --- BUTTONS --- */
 .jt-btn-apply,
 .jt-btn-primary {
-  height: 34px;
+  height: 36px;
   background: var(--typo-blue);
   color: white;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 800;
   border: none;
-  border-radius: 20px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
   letter-spacing: 0.08em;
@@ -3541,23 +3557,23 @@ select.gnfc-modal-input {
 
 .jt-btn-primary:hover {
   background: #4a86e8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(87, 148, 242, 0.3);
 }
 
 .jt-btn-secondary,
 .jt-btn-reset {
-  height: 34px;
-  width: 34px;
+  height: 37px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--app-panel-alt);
   border: 1px solid var(--app-border);
-  color: var(--typo-label);
+  color: var(--typo-primary);
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
+  padding: 0 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .jt-btn-reset:hover {
@@ -3637,9 +3653,7 @@ select.gnfc-modal-input {
 /* ── 9. REPORT & ANALYSIS HEADERS ── */
 .jt-table-card {
   border: 1px solid var(--app-border);
-  border-radius: 10px;
   background: var(--app-panel);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -3648,7 +3662,7 @@ select.gnfc-modal-input {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  padding: 8px 16px;
   background: var(--app-panel-alt);
   border-bottom: 1px solid var(--app-border);
 }
@@ -3985,8 +3999,7 @@ select.gnfc-modal-input {
   transition: all 0.2s ease;
 }
 
-select.input-control,
-select.gnfc-modal-input {
+select.input-control {
   appearance: none;
   -webkit-appearance: none;
   padding-right: 2.5rem !important;
@@ -4454,3 +4467,35 @@ textarea.input-control {
 .btn-cancel-border {
   border-color: rgba(239, 68, 68, 0.4) !important;
 }
+/* --- 5. REMARK REPORT STYLES --- */
+.color-engineer { color: #a349a4 !important; }
+.color-executive { color: #22c55e !important; }
+.remark-legend { display: flex; gap: 20px; margin-top: 10px; font-size: 0.85rem; font-weight: 500; }
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-box { width: 12px; height: 12px; border-radius: 2px; }
+.bg-engineer { background-color: #a349a4; }
+.bg-executive { background-color: #22c55e; }
+
+/* --- 6. EMERGENCY JOB STYLES --- */
+.user-table-row--emergency { 
+  background-color: rgba(255, 153, 0, 0.1) !important; 
+}
+
+:root[data-theme='light'] .user-table-row--emergency {
+  background-color: #ffffd9 !important;
+}
+
+:root[data-theme='light'] .user-table-row--emergency * {
+  color: #000000 !important;
+}
+
+
+/* --- 8. ABNORMALITY JOB STYLES --- */
+.user-table-desc--abnormality { border: 2px solid var(--typo-red) !important; border-radius: 4px; padding: 6px !important; background-color: rgba(242, 73, 92, 0.05); }
+
+.jt-report-header--flex { display: flex; justify-content: space-between; align-items: center;}
+.jt-year-selector { display: flex; align-items: center; gap: 4px; background: var(--app-panel-alt); border: 1px solid var(--app-border); border-radius: 20px; padding: 2px 4px; }
+.jt-year-nav-btn { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; color: var(--typo-label); cursor: pointer; transition: all 0.2s ease; border: none; background: transparent; }
+.jt-year-nav-btn:hover { background: var(--app-panel-hover); color: var(--brand-primary); }
+.jt-year-display { font-weight: 700; font-size: 0.85rem; padding: 0 8px; user-select: none; }
+.jt-year-display span { color: var(--typo-primary); }

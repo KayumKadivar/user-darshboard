@@ -46,53 +46,24 @@
 
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card">
-        
-        <div class="jt-report-header">
+
+        <div class="jt-report-header jt-report-header--flex">
           <div class="jt-report-title">
             <i class="ph-fill ph-notebook"></i>
             <div class="jt-title-stack">
               <h3 class="jt-main-title">Detailed Remark Report</h3>
             </div>
           </div>
-          <div class="jt-report-actions">
-            <div class="flex gap-4 items-center">
-              <button class="jt-btn-primary">
-                <i class="ph-bold ph-export"></i> EXPORT PDF
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- SEARCH CRITERIA (Card Inside Page for this specific report if needed, but standard is a separate card) -->
-        <div class="jt-filter-header">
-          <h3 class="jt-filter-title"><i class="ph-bold ph-funnel"></i> SEARCH CRITERIA</h3>
-        </div>
-        <div class="jt-filter-body" style="grid-template-columns: 1fr 1fr auto;">
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">Report Year</label>
-            <div class="jt-select-wrap">
-              <select class="jt-select">
-                <option value="2026">2026</option>
-                <option value="2025">2025</option>
-              </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
-            </div>
-          </div>
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">Plant Unit</label>
-            <div class="jt-select-wrap">
-              <select class="jt-select">
-                <option value="Acetic Acid">Acetic Acid</option>
-              </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
-            </div>
-          </div>
-          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 10px;">
-            <button class="jt-btn-primary" onclick="renderTable()">
-              <i class="ph-bold ph-lightning"></i> APPLY
+          <!-- Year Selector with Change Icons -->
+          <div class="jt-year-selector">
+            <button type="button" class="jt-year-nav-btn" title="Previous Year" onclick="changeYear(-1)">
+              <i class="ph-bold ph-caret-left"></i>
             </button>
-            <button class="jt-btn-reset">
-              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+            <div class="jt-year-display">
+              Year: <span id="active-year">2025</span>
+            </div>
+            <button type="button" class="jt-year-nav-btn" title="Next Year" onclick="changeYear(1)">
+              <i class="ph-bold ph-caret-right"></i>
             </button>
           </div>
         </div>
@@ -101,23 +72,198 @@
           <table class="user-table">
             <thead>
               <tr>
-                <th rowspan="2" class="user-table-center" style="width: 64px;">Sr</th>
-                <th rowspan="2" class="user-table-center" style="width: 80px;">Area</th>
-                <th class="user-table-left" style="width: 140px;">Loop No</th>
-                <th class="user-table-left" style="width: 380px;">Job</th>
-                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
-                <th style="min-width: 400px;">Description</th>
-                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
-                <th rowspan="2" class="user-table-center" style="width: 100px;">Status</th>
-                <th rowspan="2" style="min-width: 250px;">Remarks</th>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Area</th>
+                <th class="user-table-center" style="width: 130px;">Loop No</th>
+                <th class="user-table-center" style="width: 280px;">Job</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                <th class="user-table-center" style="min-width: 300px;">ENG Remarks</th>
               </tr>
               <tr>
-                <th class="user-table-left">Tag No</th>
-                <th class="user-table-left">Type Of Job</th>
+                <th class="user-table-center">Tag No</th>
+                <th class="user-table-center">Type of Inst</th>
+                <th class="user-table-center" style="min-width: 300px;">EXE Remarks</th>
               </tr>
             </thead>
             <tbody id="reportTableBody">
-              <!-- Rows injected via JS -->
+         
+              <!-- Sr 1 -->
+              <tr class="user-table-row year-group-2025">
+                <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-secondary user-table-blue">2PV1379B</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">PROCESS REQMT</div>
+                    <div class="user-table-secondary user-table-orange">PROCESS REQMT</div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-bold user-table-secondary">JMD</td>
+                <td class="user-table-primary">Reported valve not operates, as operation checked from d/w with process
+                  and found its operation is ok.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">JMD</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive">Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
+                    </p>
+                  </div>
+                </td>
+              </tr>
+              <!-- Sr 2 (Emergency Example) -->
+              <tr class="user-table-row user-table-row--emergency year-group-2025">
+                <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                <td class="user-table-center">ASH</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-secondary user-table-blue">CD-2</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Actuator was passing...</div>
+                    <div class="user-table-secondary user-table-orange">DEFECT MAINTENANCE</div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                <td class="user-table-primary">Actuator was heavily passing. Spare actuator not available. So drawn and
+                  replaced. New seal pressure is ok.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive">Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]</p>
+                  </div>
+                </td>
+              </tr>
+
+          
+              <tr class="user-table-row year-group-2024" style="display: none;">
+                <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                <td class="user-table-center">BOILER-1</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-secondary user-table-blue">1FSH_ACCHORN</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-secondary user-table-orange">DEFECT MAINTENANCE</div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
+                <td class="user-table-primary">Its sov is passing air, need to be replaced.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer">Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
+                    </p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+
+              </tr>
+              <tr class="user-table-row year-group-2024" style="display: none;">
+                <td class="user-table-center user-table-secondary user-table-bold">4</td>
+                <td class="user-table-center">7800</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A.</div>
+                    <div class="user-table-secondary user-table-blue">A7801A</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Cable full in hanging condition...</div>
+                    <div class="user-table-secondary user-table-orange">HOUSE KEEPING</div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-bold user-table-secondary">ALS</td>
+                <td class="user-table-primary">Proper cable dressing done.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">ALS</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive">Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]</p>
+                  </div>
+                </td>
+
+              </tr>
+
+              <!-- ── YEAR: 2023 ── -->
+              <tr class="user-table-date year-group-2023" style="display: none;">
+              
+              <tr class="user-table-row year-group-2023" style="display: none;">
+                <td class="user-table-center user-table-secondary user-table-bold">5</td>
+                <td class="user-table-center">N.A.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A.</div>
+                    <div class="user-table-secondary user-table-blue">PT-501A</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Pulse line flushing...</div>
+                    <div class="user-table-secondary user-table-orange">PM</div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-bold user-table-secondary">WM</td>
+                <td class="user-table-primary">Impulse line flushing job completed.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">WM</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer">Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
+                    </p>
+                    <p class="user-table-secondary color-executive"></p>
+                  </div>
+                </td>
+
+              </tr>
+              <tr class="user-table-row year-group-2023" style="display: none;">
+                <td class="user-table-center user-table-secondary user-table-bold">6</td>
+                <td class="user-table-center">BOILER-4</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A.</div>
+                    <div class="user-table-secondary user-table-blue">DCS_E4</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">DPU_136_P controller change over...</div>
+                    <div class="user-table-secondary user-table-orange">DEFECT MAINTENANCE</div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-bold user-table-secondary">JDE</td>
+                <td class="user-table-primary">DPU_136_P controller change over at 23:50 and DPU_136_S controller
+                  takeover the charge. Its Reset and now primary controller take in line.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">JDE</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary color-engineer"></p>
+                    <p class="user-table-secondary color-executive">Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]</p>
+                  </div>
+                </td>
+
+              </tr>
             </tbody>
           </table>
         </div>
@@ -128,122 +274,32 @@
   </main>
 
   <script>
-    // Set Current Date
-    const dateEl = document.getElementById('current-date');
-    if (dateEl) {
-      const now = new Date();
-      dateEl.textContent = now.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
-      }).toUpperCase();
+    let currentYear = 2025;
+    const years = [2025, 2024, 2023];
+
+    function changeYear(delta) {
+      // Find current index
+      let index = years.indexOf(currentYear);
+      index = index + delta;
+
+      // Boundary check
+      if (index < 0) index = years.length - 1;
+      if (index >= years.length) index = 0;
+
+      currentYear = years[index];
+
+      // Update UI
+      document.getElementById('active-year').innerText = currentYear;
+
+      // Filter rows
+      $('.year-group-2025, .year-group-2024, .year-group-2023').hide();
+      $(`.year-group-${currentYear}`).fadeIn(200);
     }
 
-    /* Mock Report Data */
-    const reportData = [
-      {
-        sr: 1, area: '300', loopNo: 'N.A', tagNo: 'PT310', job: 'To be checked as reported PT showing Zero value. (By:MAJ : 08/02/2026)', typeOfJob: 'DEFECT MAINTENANCE', tech1: 'NND',
-        description: 'Rosemount remote seal PT found defective so removed it. Its diaphragm is not working properly. New ABB 2600 series',
-        tech2: 'NND', status: 'OVER', remarks: 'An email has been sent to the Mechanical Team for the provision of a drain spool arrangement. The email reference has also been uploaded in the'
-      },
-      {
-        sr: 2, area: '500', loopNo: 'N.A', tagNo: 'PT501', job: 'DEFECT MAINTENANCE', typeOfJob: 'DEFECT MAINTENANCE', tech1: 'GAZ',
-        description: 'Leakage was found from its tapping so Ferrule camp was provided on it. As per process requirement Near by same ',
-        tech2: 'GAZ', status: 'OVER', remarks: 'Tag is PT501. [written by : DKV Date : 03/02/2026 ]'
-      },
-      {
-        sr: 3, area: 'N.A', loopNo: 'N.A', tagNo: 'DCS-FOXBORO IA', job: 'Associated with M/S SEBPL for Foxboro AMC visit. (By:MAJ : 30/01/2026)', typeOfJob: 'PM', tech1: 'PSG',
-        description: 'Associated with M/S SEBPL engr Mr. Shailesh Pateliya as part of Foxboro AMC visit. Backup of AW0001 Foxboro',
-        tech2: 'PSG', status: 'OVER', remarks: 'TRICON DIAGREAD kit and hex tool are not required as certified by M/s SFSIPL engineer. Other discrepancies are relayed further. [written by : NKP Date : 31/01/2026 ]'
-      },
-      {
-        sr: 4, area: 'N.A', loopNo: 'N.A', tagNo: 'QT1001', job: 'Procedure code-3. Function checking by applying actual measuring variable/medium. (By:MAJ : 20/01/2026)', typeOfJob: 'ISO14001', tech1: 'PJR',
-        description: 'Response checked with 500PPM NH3 and it is Responding.',
-        tech2: 'PJR', status: 'OVER', remarks: 'wrong job entry, ignore this entry. [written by : MAJ Date : 20/01/2026 ]'
-      },
-      {
-        sr: 5, area: 'N.A', loopNo: 'N.A', tagNo: 'QT0207/QT0208_3', job: 'DEFECT MAINTENANCE', typeOfJob: 'DEFECT MAINTENANCE', tech1: 'MRL',
-        description: 'During the analyzer round, an Error LED was observed on the analyzer. Upon investigation, the errors were',
-        tech2: 'MRL', status: 'OVER', remarks: 'replaced AMC(Analyzer module controller). [written by : MAJ Date : 19/01/2026 ]'
-      },
-      {
-        sr: 6, area: 'ABU REVAMP', loopNo: 'N.A', tagNo: 'XV20', job: 'PROCESS REQMT', typeOfJob: 'PROCESS REQMT', tech1: 'PSG',
-        description: 'CX20 startup related activities done. Reported that XV09 is not getting open. Found that K3 was in dropped condition. So, informed to make it on via FSOV64 RESET command from DCS panel. After that K3 relay',
-        tech2: 'PSG', status: 'OVER', remarks: 'Good job. [written by : VMP Date : 17/01/2026 ]'
-      },
-      {
-        sr: 7, area: 'ABU REVAMP', loopNo: 'N.A', tagNo: 'XV1010', job: 'PROCESS REQMT', typeOfJob: 'PROCESS REQMT', tech1: 'PSG',
-        description: 'X01010 related startup activities done. Reported that X01 TTD is not getting start. Checked found that pin on down engage lamp was ON. So checked in field and TTD SOV air is isolated and taken line.',
-        tech2: 'PSG', status: 'OVER', remarks: 'Good job. [written by : VMP Date : 17/01/2026 ]'
-      }
-    ];
-
-    function escapeHTML(str) {
-      if (!str) return '';
-      return str.replace(/[&<>"']/g, function(m) {
-        return {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#39;'
-        }[m];
-      });
-    }
-
-    /**
-     * Render the remark report table
-     */
-    function renderTable(data) {
-      const tbody = document.getElementById('reportTableBody');
-      if (!tbody) return;
-      
-      let html = '';
-      for (let i = 0; i < data.length; i++) {
-        const item = data[i];
-        const badgeClass = item.status === 'OVER' ? 'ui-badge--success' : 'ui-badge--warning';
-        
-        html += '<tr class="user-table-row">' +
-          '<td class="user-table-center user-table-secondary user-table-bold">' + item.sr + '</td>' +
-          '<td class="user-table-center user-table-bold user-table-blue">' + item.area + '</td>' +
-          
-          // Loop / Tag Stack
-          '<td>' +
-            '<div class="user-table-cell-stack">' +
-              '<div class="user-table-primary" style="font-weight: 400; font-size: 13px;">' + item.loopNo + '</div>' +
-              '<div class="user-table-secondary user-table-blue">' + escapeHTML(item.tagNo) + '</div>' +
-            '</div>' +
-          '</td>' +
-
-          // Job / Type Stack
-          '<td>' +
-            '<div class="user-table-cell-stack">' +
-              '<div class="user-table-primary" style="font-size: 14px; line-height: 1.3;">' + escapeHTML(item.job) + '</div>' +
-              '<div class="user-table-secondary user-table-orange" style="font-size: 11px;">' + item.typeOfJob + '</div>' +
-            '</div>' +
-          '</td>' +
-
-          '<td class="user-table-center user-table-bold user-table-secondary">' + item.tech1 + '</td>' +
-          '<td class="user-table-primary" style="font-size: 15px; line-height: 1.6;">' + escapeHTML(item.description) + '</td>' +
-          '<td class="user-table-center user-table-bold user-table-secondary">' + item.tech2 + '</td>' +
-          
-          // Status
-          '<td class="user-table-center">' +
-            '<span class="ui-badge ' + badgeClass + '">' + item.status + '</span>' +
-          '</td>' +
-          
-          // Remarks
-          '<td class="user-table-secondary" style="font-size: 14px; line-height: 1.5; font-style: italic;">' + 
-            escapeHTML(item.remarks) + 
-          '</td>' +
-        '</tr>';
-      }
-      
-      tbody.innerHTML = html;
-    }
-
-    /* Initialize Rendering */
-    renderTable(reportData);
+    $(document).ready(function () {
+      // Initially show only current year
+      changeYear(0);
+    });
   </script>
 </body>
 
