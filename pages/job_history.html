@@ -911,24 +911,25 @@
     }
 
     /* ── Click-outside-to-close ── */
-    document.addEventListener('DOMContentLoaded', function () {
-      var jobOverlay  = document.getElementById('job-detail-overlay');
-      var attachModal = document.getElementById('attachment-modal');
-      if (jobOverlay) {
-        jobOverlay.addEventListener('click', function (e) {
-          if (e.target === jobOverlay) closeJobDetailModal();
-        });
-      }
-      if (attachModal) {
-        attachModal.addEventListener('click', function (e) {
-          if (e.target === attachModal) closeAttachmentModal();
-        });
-      }
-    });
+    $(document).ready(function () {
+      populateDropdowns();
+      renderTable();
 
-    /* ── Init ── */
-    populateDropdowns();
-    renderTable();
+      $('#job-detail-overlay').on('click', function (e) {
+        if (e.target === this) closeJobDetailModal();
+      });
+
+      $('#attachment-modal').on('click', function (e) {
+        if (e.target === this) closeAttachmentModal();
+      });
+
+      // Open date picker on click/focus
+      $('.jt-date-input').on('click focus', function () {
+        if (typeof this.showPicker === 'function') {
+          try { this.showPicker(); } catch (e) { }
+        }
+      });
+    });
   </script>
 
 </body>

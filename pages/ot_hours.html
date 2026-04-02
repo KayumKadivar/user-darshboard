@@ -145,13 +145,13 @@
     ];
 
     function renderTable() {
-      const tbody = document.getElementById('reportTableBody');
-      const techFilter = document.getElementById('techSelect').value;
-      const startVal = document.getElementById('startDate').value;
-      const endVal = document.getElementById('endDate').value;
-      const totalHoursEl = document.getElementById('totalHoursIndicator');
+      const $tbody = $('#reportTableBody');
+      const techFilter = $('#techSelect').val();
+      const startVal = $('#startDate').val();
+      const endVal = $('#endDate').val();
+      const $totalHoursEl = $('#totalHoursIndicator');
 
-      tbody.innerHTML = '';
+      $tbody.empty();
       let total = 0;
       let count = 0;
       let hasData = false;
@@ -193,15 +193,15 @@
             '<td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">' + item.desc + '</td>' +
             '<td class="user-table-center user-table-bold user-table-primary">' + item.hours.toFixed(1) + '</td>' +
             '</tr>';
-          tbody.innerHTML += rowHtml;
+          $tbody.append(rowHtml);
         }
       }
 
       if (!hasData) {
-        tbody.innerHTML = '<tr class="jt-empty-row"><td colspan="6" class="user-table-center">No records found for selected criteria</td></tr>';
+        $tbody.html('<tr class="jt-empty-row"><td colspan="6" class="user-table-center">No records found for selected criteria</td></tr>');
       }
 
-      totalHoursEl.textContent = 'Total Hours: ' + total.toFixed(1);
+      $totalHoursEl.text('Total Hours: ' + total.toFixed(1));
     }
 
     function formatDateDisplay(isoDate) {
@@ -214,8 +214,15 @@
     }
 
     // Initial load
-    document.addEventListener('DOMContentLoaded', function() {
+    $(document).ready(function () {
       renderTable();
+
+      // Open date picker on click/focus
+      $('.jt-date-input').on('click focus', function () {
+        if (typeof this.showPicker === 'function') {
+          try { this.showPicker(); } catch (e) { }
+        }
+      });
     });
   </script>
 

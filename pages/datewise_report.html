@@ -21,6 +21,7 @@
   <script src="../js/sidebar.js" defer></script>
   <script src="../js/header.js" defer></script>
   <script src="../js/plant-nav.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
     window.activePage = 'datewise_report';
@@ -52,8 +53,8 @@
             SEARCH CRITERIA
           </h3>
         </div>
-        <div class="jt-filter-body" style="grid-template-columns: 200px 1fr auto;">
-          
+        <div class="jt-filter-body">
+
           <!-- Tag Filter -->
           <div class="jt-filter-group">
             <label class="jt-filter-label">Tag Number</label>
@@ -67,23 +68,25 @@
             </div>
           </div>
 
-          <!-- Report Period -->
+          <!-- Start Date -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label">Report Date Range</label>
-            <div class="jt-date-range">
-              <input type="date" id="startDateFilter" class="jt-date-input">
-              <span class="jt-date-sep">to</span>
-              <input type="date" id="endDateFilter" class="jt-date-input">
-            </div>
+            <label class="jt-filter-label">Satrt Date</label>
+            <input type="date" id="startDateFilter" class="jt-input jt-date-input">
+          </div>
+
+          <!-- End Date -->
+          <div class="jt-filter-group">
+            <label class="jt-filter-label">End Date</label>
+            <input type="date" id="endDateFilter" class="jt-input jt-date-input">
           </div>
 
           <!-- Actions -->
-          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 12px;">
+          <div class="jt-filter-btn">
             <button onclick="generateReport()" class="jt-btn-primary">
               <i class="ph-bold ph-lightning"></i> APPLY
             </button>
-            <button onclick="location.reload()" class="jt-btn-reset">
-              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+            <button onclick="resetReport()" class="jt-btn-reset">
+              Reset
             </button>
           </div>
 
@@ -91,14 +94,14 @@
       </div>
 
       <!-- ── REPORT CARD ── -->
-      <div class="jt-table-card">
-        
+      <div class="jt-table-card" style="display: none;">
+
         <div class="jt-report-header">
           <div class="jt-report-title">
             <i class="ph-fill ph-calendar-check"></i>
             <div class="jt-title-stack">
               <h3 class="jt-main-title">Datewise Log Book Report</h3>
-              <p style="font-size: 13px; color: var(--brand-primary); margin-top: 2px;">
+              <p class="font-12px fw-500">
                 Period: <span id="dateDisplay">01/12/2023 to 31/12/2023</span>
               </p>
             </div>
@@ -109,24 +112,145 @@
           <table class="user-table">
             <thead>
               <tr>
-                <th rowspan="2" class="user-table-center" style="width: 64px;">Sr</th>
-                <th rowspan="2" class="user-table-center" style="width: 80px;">Area</th>
-                <th class="user-table-left" style="width: 140px;">Loop No</th>
-                <th class="user-table-left" style="width: 380px;">Job</th>
-                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
-                <th style="min-width: 400px;">Description</th>
-                <th rowspan="2" class="user-table-center" style="width: 80px;">Exec Tech</th>
-                <th rowspan="2" class="user-table-center" style="width: 100px;">Status</th>
-                <th rowspan="2" style="min-width: 160px;">Remarks</th>
-                <th rowspan="2" class="user-table-center" style="width: 70px;">Add</th>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Area</th>
+                <th class="user-table-center" style="width: 130px;">Loop No</th>
+                <th class="user-table-center" style="width: 280px;">Job</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                <th class="user-table-center" style="min-width: 300px;">ENG REMARKS</th>
+                <th rowspan="2" class="user-table-center" style="width: 60px;">ADD</th>
               </tr>
               <tr>
-                <th class="user-table-left">Tag No</th>
-                <th class="user-table-left">Type Of Job</th>
+                <th class="user-table-center">Tag No</th>
+                <th class="user-table-center">Type of Inst</th>
+                <th class="user-table-center user-table-border-right">EXE REMARKS</th>
               </tr>
             </thead>
             <tbody id="reportTableBody">
-              
+              <!-- Date Grouping Row -->
+              <tr class="user-table-date">
+                <td colspan="10" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 01/12/2023
+                </td>
+              </tr>
+
+              <!-- Row 1 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                <td class="user-table-center user-table-bold user-table-primary">N.A</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">N.A</div>
+                    <div class="user-table-blue user-table-bold">NOTAG</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">-</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">PM</div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-bold user-table-secondary">-</td>
+                <td class="user-table-primary font-14px" style="line-height: 1.6;">Boiler CPP CPSU system round taken
+                  found OK. All visible and UV flame scanner checked found OK.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">PVS</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary" style="min-height: 1.2rem;"></p>
+                    <p class="user-table-remarks-purple">
+                      Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
+                    </p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" title="PM Job">PM</button></div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                <td class="user-table-center user-table-bold user-table-primary">COMMON</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">N.A.</div>
+                    <div class="user-table-blue user-table-bold">NOTAG</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">BHEL Boilers and CPSU Trend report to be prepared as per tags given
+                      by process dept.(By:ARP : 01/12/2025)</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">PROCESS
+                      REQMT</div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-bold user-table-secondary">JDB</td>
+                <td class="user-table-primary font-14px" style="line-height: 1.6;">BHEL Boilers 1 and 2 prepared as per
+                  tags given by process dept. further job u/p.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">JDB</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary" style="min-height: 1.2rem;"></p>
+                    <p class="user-table-remarks-purple">
+                      Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
+                    </p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" title="PM Job">PM</button></div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                <td class="user-table-center user-table-bold user-table-primary">N.A.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">N.A.</div>
+                    <div class="user-table-blue user-table-bold">NOTAG</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">UV flame scanner detector tube to be checked for
+                      PO:6200022682(By:ARP : 01/12/2025)</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">INSPECTION
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                <td class="user-table-primary font-14px" style="line-height: 1.6;">Four UV tube checked all found
+                  defective. Same shown to IE. Job u/p.</td>
+                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary" style="min-height: 1.2rem;"></p>
+                    <p class="user-table-remarks-purple">
+                      Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
+                    </p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" title="PM Job">PM</button></div>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -137,130 +261,49 @@
   </main>
 
   <script>
-    const sampleData = [
-      { 
-        date: '01/12/2023', sr: 1, area: 'N.A', 
-        loopNo: 'N.A', tagNo: 'NOTAG', 
-        job: '', typeOfJob: 'PM', 
-        tech1: '', 
-        desc: 'Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.',
-        tech2: 'PVS', status: 'OVER', remarks: '', 
-        addH: 'H', addPM: 'PM' 
-      },
-      { 
-        date: '01/12/2023', sr: 2, area: 'COMMON', 
-        loopNo: 'N.A.', tagNo: 'NOTAG', 
-        job: 'BHEL Boilers and CPSU Trend report to be prepared as per tags given by process dept.(By:ARP : 01/12/2025)', 
-        typeOfJob: 'PROCESS REQMT', 
-        tech1: 'JDB', 
-        desc: 'BHEL Boilers 1 and 2 prepared as per tags given by process dept. further job u/p.', 
-        tech2: 'JDB', status: 'U/P', remarks: '', 
-        addH: 'H', addPM: 'PM' 
-      },
-      { 
-        date: '01/12/2023', sr: 3, area: 'N.A.', 
-        loopNo: 'N.A.', tagNo: 'NOTAG', 
-        job: 'UV flame scanner detector tube to be checked for PO:6200022682(By:ARP : 01/12/2025)', 
-        typeOfJob: 'INSPECTION', 
-        tech1: 'BSU', 
-        desc: 'Four UV tube checked all found defective. Same shown to IE. Job u/p.', 
-        tech2: 'BSU', status: 'U/P', remarks: '', 
-        addH: 'H', addPM: 'PM' 
-      }
-    ];
+    $(document).ready(function () {
+      $('#startDateFilter');
+      $('#endDateFilter');
 
-    function escapeHTML(str) {
-      if (!str) return '';
-      return str.replace(/[&<>"']/g, function(m) {
-        return {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#39;'
-        }[m];
+      // Open date picker on click/focus
+      $('.jt-date-input').on('click focus', function () {
+        if (typeof this.showPicker === 'function') {
+          try { this.showPicker(); } catch (e) { }
+        }
       });
-    }
+    });
 
     function generateReport() {
-      const tbody = document.getElementById('reportTableBody');
-      if (!tbody) return;
-      
-      let html = '';
+      const start = $('#startDateFilter').val();
+      const end = $('#endDateFilter').val();
 
-        // Group by date
-        const grouped = {};
-        for (let i = 0; i < sampleData.length; i++) {
-          const item = sampleData[i];
-          if (!grouped[item.date]) grouped[item.date] = [];
-          grouped[item.date].push(item);
-        }
+      if (!start || !end) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Date Required',
+          text: 'Please select both start and end dates to generate the report.',
+          confirmButtonColor: 'var(--brand-primary)'
+        });
+        return;
+      }
 
-        const dates = Object.keys(grouped);
-        for (let i = 0; i < dates.length; i++) {
-          const date = dates[i];
-          const items = grouped[date];
+      // Format for display (DD/MM/YYYY)
+      const formatDate = (dateStr) => {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-GB');
+      };
 
-          // Date Grouping Row
-          html += '<tr class="user-table-date">' +
-                    '<td colspan="10" class="user-table-bold" >' +
-                      '<i class="ph-fill ph-calendar-blank"></i> ' + date +
-                    '</td>' +
-                  '</tr>';
+      $('#dateDisplay').text(`${formatDate(start)} to ${formatDate(end)}`);
 
-          for (let j = 0; j < items.length; j++) {
-            const item = items[j];
-            const badgeClass = item.status === 'OVER' ? 'ui-badge--success' : 'ui-badge--warning';
-
-            html += '<tr class="user-table-row">' +
-              '<td class="user-table-center user-table-secondary user-table-bold">' + item.sr + '</td>' +
-              '<td class="user-table-center user-table-bold user-table-primary">' + item.area + '</td>' +
-              
-              // Loop / Tag Stack
-              '<td>' +
-                '<div class="user-table-cell-stack">' +
-                  '<div class="user-table-primary user-table-bold">' + item.loopNo + '</div>' +
-                  '<div class="user-table-blue user-table-bold">' + escapeHTML(item.tagNo) + '</div>' +
-                '</div>' +
-              '</td>' +
-
-              // Job / Type Stack
-              '<td>' +
-                '<div class="user-table-cell-stack">' +
-                  '<div class="user-table-primary">' + escapeHTML(item.job || '-') + '</div>' +
-                  '<div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">' + item.typeOfJob + '</div>' +
-                '</div>' +
-              '</td>' +
-
-              '<td class="user-table-center user-table-bold user-table-secondary">' + (item.tech1 || '-') + '</td>' +
-              '<td class="user-table-primary font-14px" style="line-height: 1.6;">' + escapeHTML(item.desc) + '</td>' +
-              '<td class="user-table-center user-table-bold user-table-secondary">' + (item.tech2 || '-') + '</td>' +
-              
-              '<td class="user-table-center">' +
-                '<span class="ui-badge ' + badgeClass + '">' + item.status + '</span>' +
-              '</td>' +
-              
-              '<td></td>' +
-              
-              // Add column with H / PM links
-              '<td class="user-table-center">' +
-                '<div class="user-table-cell-stack">' +
-                  '<div><button type="button" class="plant-inline-button" title="History">H</button></div>' +
-                  '<div><button type="button" class="plant-inline-button" title="PM Job">PM</button></div>' +
-                '</div>' +
-              '</td>' +
-            '</tr>';
-          }
-        }
-      
-      tbody.innerHTML = html;
+      // Show with animation
+      $('.jt-table-card').stop().hide().fadeIn(400);
     }
 
-    window.onload = () => {
-      document.getElementById('startDateFilter').value = "2023-12-01";
-      document.getElementById('endDateFilter').value = "2023-12-31";
-      generateReport();
-    };
+    function resetReport() {
+      $('#startDateFilter').val("");
+      $('#endDateFilter').val("");
+      $('.jt-table-card').fadeOut(200);
+    }
   </script>
 </body>
 
