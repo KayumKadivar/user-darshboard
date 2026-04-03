@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Junction Box Detail | GNFC</title>
+    <link rel="stylesheet" href="../../css/phosphor.css">
+    <link rel="stylesheet" href="../../css/theme-vars.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/style.css">
+    <link rel="stylesheet" href="../../css/modal-ui.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+
+    <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="../../js/theme-control.js"></script>
+    <script src="../../js/sidebar.js" defer></script>
+    <script src="../../js/header.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+
+    <div class="sidebar-container"></div>
+
+    <main class="main-wrapper">
+
+        <div id="header-container" data-title="Junction Box Detail" data-back="boiler_inst_data.html"></div>
+
+        <div class="dashboard-content dashboard-scroll jbd-page-container">
+            <div class="space-y-3">
+
+                <!-- TOOLBAR CARD -->
+                <div class="jbd-card">
+                    <div class="jbd-toolbar">
+
+                        <!-- TAG Search Group -->
+                        <div class="jbd-filter-group">
+                            <label class="input-label">Tag</label>
+                            <div class="jbd-filter-row">
+                                <input type="text" id="jb-tag-input" class="jbd-input jbd-w-144px"
+                                    placeholder="Tag No…">
+                                <div class="jbd-select-wrap">
+                                    <select id="jb-tag-select" class="jbd-input jbd-select w-full">
+                                        <option>Select Tag No</option>
+                                        <option>L_110VDCBF</option>
+                                        <option>ZSH177906</option>
+                                        <option>10-PT-101A</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down jbd-caret"></i>
+                                </div>
+                                <button class="jbd-btn jbd-btn-blue" id="btn-tag-go">
+                                    Go
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="jbd-divider"></div>
+
+                        <!-- Junction Box Find Group -->
+                        <div class="jbd-filter-group">
+                            <label class="input-label">Find Junction Box</label>
+                            <div class="jbd-filter-row">
+                                <input type="text" id="jb-find-input" class="jbd-input jbd-w-128px"
+                                    placeholder="Search…">
+                                <div class="jbd-select-wrap">
+                                    <select id="jb-select" class="jbd-input jbd-select w-full">
+                                        <option>Select Junction Box</option>
+                                        <option>ACJB-1</option>
+                                        <option selected>ACJB-2</option>
+                                        <option>ACJB-3</option>
+                                        <option>ACJB-4</option>
+                                        <option>AUB-1</option>
+                                        <option>AUB-11</option>
+                                        <option>AUB-7</option>
+                                        <option>EJB-11</option>
+                                        <option>EJB-7</option>
+                                        <option>KSB TB-3</option>
+                                        <option>KSB TB-4</option>
+                                        <option>RJB-04</option>
+                                        <option>TEST</option>
+                                        <option>TJB-01</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down jbd-caret"></i>
+                                </div>
+                                <button class="jbd-btn jbd-btn-blue" id="btn-jb-go">Go</button>
+                            </div>
+                        </div>
+
+                        <div class="jbd-divider"></div>
+
+                        <!-- Secondary Actions -->
+                        <div class="jbd-toolbar-actions">
+                            <button class="jbd-btn jbd-btn-ghost" id="btn-update-insbl">
+                                <i class="ph-bold ph-arrows-clockwise"></i> Update From Inst Bd
+                            </button>
+                            <button class="jbd-btn jbd-btn-ghost" id="btn-jb-index">
+                                <i class="ph-bold ph-list-numbers"></i> JB Index
+                            </button>
+                        </div>
+
+                        <!-- Right-side Actions -->
+                        <div class="jbd-toolbar-actions jbd-toolbar-end">
+                            <button class="jbd-btn jbd-btn-ghost btn-report">
+                                <i class="ph-bold ph-file-text"></i> Report
+                            </button>
+                            <button class="jbd-btn jbd-btn-red" id="btn-delete-jb">
+                                <i class="ph-bold ph-trash"></i> Delete JB
+                            </button>
+                            <button class="jbd-btn jbd-btn-green" id="btn-add-jb">
+                                <i class="ph-bold ph-plus"></i> Add JB
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTROL COPY CARD -->
+                <div id="control-copy-section">
+                    <div class="jbd-card">
+                        <div class="jbd-card-header">
+                            <div class="jbd-card-header-left">
+                                <span class="jbd-badge jbd-badge-success" id="cc-status-badge">
+                                    <i class="ph-fill ph-seal-check"></i> Control Copy
+                                </span>
+                                <span class="color-secondary font-12px">—</span>
+                                <span class="font-12px fw-700">
+                                    J B NO :&nbsp;<span id="cc-jb-no" class="fw-extrabold">ACJB-2</span>
+                                </span>
+                            </div>
+                            <button class="jbd-btn jbd-btn-ghost jbd-h-28px font-12px px-10px" id="btn-mark-cc">
+                                <i class="ph-bold ph-check-square-offset"></i> Mark As Control Copy
+                            </button>
+                        </div>
+                        <div class="jbd-card-body">
+                            <div class="jbd-info-grid">
+
+                                <div class="jbd-info-item" id="cc-location">
+                                    <div class="jbd-info-item-label">Location</div>
+                                    <div class="jbd-info-item-value">
+                                        <span id="cc-location-val">MTR FLOOR</span>
+                                        <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
+                                    </div>
+                                </div>
+
+                                <div class="jbd-info-item" id="btn-edit-cableNo">
+                                    <div class="jbd-info-item-label">Cable No</div>
+                                    <div class="jbd-info-item-value">
+                                        <span id="cc-cable-no">ACJB2-CCAbl</span>
+                                        <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
+                                    </div>
+                                </div>
+
+                                <div class="jbd-info-item" id="btn-edit-cableType">
+                                    <div class="jbd-info-item-label">Cable Type</div>
+                                    <div class="jbd-info-item-value">
+                                        <span id="cc-cable-type">SIGNAL 12 PAIR</span>
+                                        <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
+                                    </div>
+                                </div>
+
+                                <div class="jbd-info-item" id="btn-edit-cabinet">
+                                    <div class="jbd-info-item-label">Cabinet</div>
+                                    <div class="jbd-info-item-value">
+                                        <span id="cc-cabinet">C C Ab1</span>
+                                        <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
+                                    </div>
+                                </div>
+
+                                <div class="jbd-info-item" id="btn-edit-docNo">
+                                    <div class="jbd-info-item-label">Document No</div>
+                                    <div class="jbd-info-item-value">
+                                        <span id="cc-doc-no">—</span>
+                                        <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
+                                    </div>
+                                </div>
+
+                                <div class="jbd-info-item" id="btn-edit-drawingNo">
+                                    <div class="jbd-info-item-label">Drawing No</div>
+                                    <div class="jbd-info-item-value">
+                                        <span id="cc-drawing-no">—</span>
+                                        <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
+                                    </div>
+                                </div>
+
+                                <div class="jbd-info-item" id="btn-edit-drawingName">
+                                    <div class="jbd-info-item-label">Drawing Name</div>
+                                    <div class="jbd-info-item-value">
+                                        <span id="cc-drawing-name">—</span>
+                                        <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
+                                    </div>
+                                </div>
+
+                                <div class="jbd-info-item" id="btn-edit-excl">
+                                    <div class="jbd-info-item-label">Excl</div>
+                                    <div class="jbd-info-item-value">
+                                        <span id="cc-excl">—</span>
+                                        <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHANNEL RECORDS TABLE CARD -->
+                <div id="channel-table-section">
+                    <div class="jt-table-card">
+                        <div class="jbd-card-header">
+                            <div class="jbd-card-header-left">
+                                <i class="ph-fill ph-table jbd-color-orange jbd-fs-13px"></i>
+                                <span class="jbd-card-header-title">Channel Records</span>
+                            </div>
+                            <span id="ch-record-count" class="jbd-badge-count">6 Channels</span>
+                        </div>
+
+                        <div class="user-table-wrapper radius-0px">
+                            <table class="user-table" id="ch-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:60px;" rowspan="2">Ch</th>
+                                        <th style="width:150px;" rowspan="2" class="jbd-clickable-th">Tag Number</th>
+                                        <th style="min-width:200px;" rowspan="2">Location / Description / Function</th>
+                                        <th style="width:100px;" rowspan="2">J B TERM</th>
+                                        <th colspan="2" style="width:200px;">Cabinet Term Strip</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:100px;">Terminal</th>
+                                        <th style="width:100px;">Strip</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ch-table-body">
+                                    <!-- Channel 1 -->
+                                    <tr>
+                                        <td rowspan="3" class="jbd-ch-num">
+                                            <input type="text" class="jbd-tbl-input" value="1">
+                                        </td>
+                                        <td rowspan="3">
+                                            <input type="text" class="jbd-tbl-input" value="1LT302">
+                                        </td>
+                                        <td><input type="text" class="jbd-tbl-input" value="HEATER FLOOR"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="1"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="B3"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="jbd-tbl-input" value="HPH-1 LEVEL"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="2"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="1AITB-2"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="B4"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="jbd-tbl-input" value="CLOSE LOOP"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="3"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                    </tr>
+                                    <!-- Channel 2 -->
+                                    <tr>
+                                        <td rowspan="3" class="jbd-ch-num">
+                                            <input type="text" class="jbd-tbl-input" value="1">
+                                        </td>
+                                        <td rowspan="3">
+                                            <input type="text" class="jbd-tbl-input" value="1LT301">
+                                        </td>
+                                        <td><input type="text" class="jbd-tbl-input" value="HEATER FLOOR"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="4"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="A2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="jbd-tbl-input" value="HPH-1 LEVEL"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="5"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="1AITB-2"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="A4"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="jbd-tbl-input" value="CLOSE LOOP"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="6"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                    </tr>
+                                    <!-- Channel 3 -->
+                                    <tr>
+                                        <td rowspan="3" class="jbd-ch-num">
+                                            <input type="text" class="jbd-tbl-input" value="1">
+                                        </td>
+                                        <td rowspan="3">
+                                            <input type="text" class="jbd-tbl-input" value="1FT301">
+                                        </td>
+                                        <td><input type="text" class="jbd-tbl-input" value="HEATER FLOOR"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="7"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="jbd-tbl-input" value="BFW FLOW"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="8"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="1AITB-2"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="F2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="jbd-tbl-input" value="OPEN LOOP"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value="9"></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                        <td><input type="text" class="jbd-tbl-input" value=""></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOOTER ACTIONS  -->
+                <div class="jbd-footer-bar">
+                    <button class="jbd-btn jbd-btn-blue btn-report">
+                        <i class="ph-bold ph-file-text"></i> Report
+                    </button>
+                    <button class="jbd-btn jbd-btn-green" id="btn-footer-add">
+                        <i class="ph-bold ph-plus"></i> Add
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- MODALS -->
+
+    <!-- Generic Edit Field Modal -->
+    <div id="modal-edit-field" class="gnfc-modal-overlay" style="z-index: 10005;" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell gnfc-modal-shell--narrow" style="max-width: 420px; padding: 0;">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title" id="ef-title">Edit Location</h3>
+                </div>
+                <button onclick="closeEditFieldModal()" class="gnfc-modal-close">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            <div class="gnfc-modal-body">
+                <p id="ef-subtitle" class="gnfc-modal-subtitle mb-2">J B No : <span id="ef-jb-no"></span></p>
+                <div class="flex items-center gap-16px">
+                    <label class="gnfc-modal-label flex-shrink-0" id="ef-label">Location :</label>
+                    <input type="text" id="ef-input" class="gnfc-modal-input flex-1" placeholder="Enter value...">
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button type="button" onclick="updateField()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+                    Update
+                </button>
+                <button type="button" onclick="closeEditFieldModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Junction Box Schedule Modal -->
+    <div id="modal-jb-schedule" class="gnfc-modal-overlay" style="z-index: 10005;" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell gnfc-modal-shell--narrow" style="max-width: 520px; padding: 0;">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title"> Junction Box Schedule</h3>
+                    <p class="gnfc-modal-subtitle">Generate channel report</p>
+                </div>
+                <button onclick="closeJBScheduleModal()" class="gnfc-modal-close">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            <div class="gnfc-modal-body">
+                <div class="grid grid-cols-2 gap-4 mb-5">
+                    <div>
+                        <label class="gnfc-modal-label">Ch No From :</label>
+                        <select id="jbs-ch-from" class="gnfc-modal-input">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="gnfc-modal-label">Ch No To :</label>
+                        <select id="jbs-ch-to" class="gnfc-modal-input">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12" selected>12</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="gnfc-modal-label">Select In Report :</label>
+                    <select id="jbs-report-type" class="gnfc-modal-input">
+                        <option>DESCRIPTION</option>
+                        <option>TAG NO</option>
+                        <option>LOOP NO</option>
+                        <option>ALL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button type="button" onclick="runJBScheduleReport()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+                    Go
+                </button>
+                <button type="button" onclick="closeJBScheduleModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Add JB Modal -->
+    <div id="modal-add-jb" class="gnfc-modal-overlay z-1000" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell p-0px">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title">Add New JB</h3>
+                    <p class="gnfc-modal-subtitle">JB Detail</p>
+                </div>
+                <button class="gnfc-modal-close btn-close-modal"><i class="ph-bold ph-x text-lg"></i></button>
+            </div>
+            <div class="gnfc-modal-body">
+                <div class="jbd-grid-add-jb">
+
+                    <!-- Row 1 -->
+                    <div class="flex flex-col gap-8px">
+                        <label class="gnfc-modal-label">New J B No</label>
+                        <input type="text" id="add-jb-no" class="gnfc-modal-input" placeholder="e.g. ACJB-3">
+                    </div>
+                    <div class="flex flex-col gap-8px">
+                        <label class="gnfc-modal-label">Cable Type</label>
+                        <div class="jbd-select-wrap w-full">
+                            <select id="add-jb-type" class="gnfc-modal-input jbd-select w-full">
+                                <option>Select Type</option>
+                                <option>SIGNAL 12 PAIR</option>
+                                <option>RTD 8 TRIAD</option>
+                                <option>DIGITAL 6 PAIR</option>
+                            </select>
+                            <i class="ph-bold ph-caret-down jbd-caret jbd-right-12px"></i>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="flex flex-col gap-8px">
+                        <label class="gnfc-modal-label">Number of Node</label>
+                        <input type="text" id="add-jb-node" class="gnfc-modal-input" placeholder="0">
+                    </div>
+                    <div class="flex flex-col gap-8px">
+                        <label class="gnfc-modal-label">Cable Number</label>
+                        <input type="text" id="add-jb-cable" class="gnfc-modal-input" placeholder="">
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="flex flex-col gap-8px">
+                        <label class="gnfc-modal-label">Cabinet Number</label>
+                        <input type="text" id="add-jb-cabinet" class="gnfc-modal-input" placeholder="">
+                    </div>
+                    <div></div>
+
+                    <!-- Row 4 -->
+                    <div class="col-span-2 flex flex-col gap-8px">
+                        <label class="gnfc-modal-label">Location</label>
+                        <input type="text" id="add-jb-loc" class="gnfc-modal-input" placeholder="">
+                    </div>
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button id="btn-submit-add-jb" class="gnfc-modal-btn gnfc-modal-btn-primary">
+                    <i class="ph-bold ph-check mr-1"></i> Submit
+                </button>
+                <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JObIndex Modal -->
+    <div id="modal-jb-index" class="gnfc-modal-overlay" style="z-index: 1005;" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell gnfc-modal-shell--wide" style="max-width: 1100px; padding: 0;">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title">J B Index</h3>
+                    <p class="gnfc-modal-subtitle">BOILER — Click <span style="color:#5794f2;">Location</span>, <span
+                            style="color:#fb923c;">Cable Type</span> or <span style="color:#34d399;">Cabinet</span>
+                        cells to edit</p>
+                </div>
+                <button onclick="closeJBIndexModal()" class="gnfc-modal-close">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            <div class="gnfc-modal-body" style="padding: 0; max-height: 70vh; overflow: auto;">
+                <table class="jbd-table" id="jb-index-table" style="font-size:0.8125rem;">
+                    <thead>
+                        <tr>
+                            <th style="width:48px;">Sr</th>
+                            <th style="width:110px;">J B No</th>
+                            <th style="min-width:280px; text-align:left; padding-left:12px;">Location</th>
+                            <th style="width:160px;">Cable Type</th>
+                            <th style="width:110px;">Cabinet</th>
+                            <th style="width:100px;">Print</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jb-index-body">
+                        <!-- JB 1 -->
+                        <tr>
+                            <td>1</td>
+                            <td class="fw-bold color-blue">ACJB-1</td>
+                            <td class="cursor-pointer hover-bg-light" onclick="editIdxLoc('ACJB-1', this)">BOILER FLOOR 1</td>
+                            <td class="cursor-pointer hover-bg-light color-orange fw-600" onclick="editIdxCable('ACJB-1', this)">SIGNAL 12 PAIR</td>
+                            <td class="cursor-pointer hover-bg-light color-green fw-600" onclick="editIdxCabinet('ACJB-1', this)">LCP-1</td>
+                            <td><button class="icon-btn color-primary"><i class="ph-bold ph-printer"></i></button></td>
+                        </tr>
+                        <!-- JB 2 -->
+                        <tr>
+                            <td>2</td>
+                            <td class="fw-bold color-blue">ACJB-2</td>
+                            <td class="cursor-pointer hover-bg-light" onclick="editIdxLoc('ACJB-2', this)">BOILER FLOOR 2</td>
+                            <td class="cursor-pointer hover-bg-light color-orange fw-600" onclick="editIdxCable('ACJB-2', this)">RTD 8 TRIAD</td>
+                            <td class="cursor-pointer hover-bg-light color-green fw-600" onclick="editIdxCabinet('ACJB-2', this)">LCP-2</td>
+                            <td><button class="icon-btn color-primary"><i class="ph-bold ph-printer"></i></button></td>
+                        </tr>
+                        <!-- JB 3 -->
+                        <tr>
+                            <td>3</td>
+                            <td class="fw-bold color-blue">ACJB-3</td>
+                            <td class="cursor-pointer hover-bg-light" onclick="editIdxLoc('ACJB-3', this)">BOILER FLOOR 3</td>
+                            <td class="cursor-pointer hover-bg-light color-orange fw-600" onclick="editIdxCable('ACJB-3', this)">DIGITAL 6 PAIR</td>
+                            <td class="cursor-pointer hover-bg-light color-green fw-600" onclick="editIdxCabinet('ACJB-3', this)">LCP-1</td>
+                            <td><button class="icon-btn color-primary"><i class="ph-bold ph-printer"></i></button></td>
+                        </tr>
+                        <!-- JB 4 -->
+                        <tr>
+                            <td>4</td>
+                            <td class="fw-bold color-blue">ACJB-4</td>
+                            <td class="cursor-pointer hover-bg-light" onclick="editIdxLoc('ACJB-4', this)">PUMP HOUSE</td>
+                            <td class="cursor-pointer hover-bg-light color-orange fw-600" onclick="editIdxCable('ACJB-4', this)">COAXIAL</td>
+                            <td class="cursor-pointer hover-bg-light color-green fw-600" onclick="editIdxCabinet('ACJB-4', this)">LCP-3</td>
+                            <td><button class="icon-btn color-primary"><i class="ph-bold ph-printer"></i></button></td>
+                        </tr>
+                        <!-- JB 5 -->
+                        <tr>
+                            <td>5</td>
+                            <td class="fw-bold color-blue">ACJB-5</td>
+                            <td class="cursor-pointer hover-bg-light" onclick="editIdxLoc('ACJB-5', this)">CONTROL ROOM</td>
+                            <td class="cursor-pointer hover-bg-light color-orange fw-600" onclick="editIdxCable('ACJB-5', this)">SIGNAL 12 PAIR</td>
+                            <td class="cursor-pointer hover-bg-light color-green fw-600" onclick="editIdxCabinet('ACJB-5', this)">LCP-1</td>
+                            <td><button class="icon-btn color-primary"><i class="ph-bold ph-printer"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button type="button" onclick="closeJBIndexModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JObIndex — Edit Location Modal -->
+    <div id="modal-idx-location" class="gnfc-modal-overlay" style="z-index: 1010;" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell gnfc-modal-shell--narrow" style="max-width: 400px; padding: 0;">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title"> Edit Location</h3>
+                    <p class="gnfc-modal-subtitle">J B No : <span id="idx-loc-jbno">—</span></p>
+                </div>
+                <button onclick="closeIdxLocationModal()" class="gnfc-modal-close"><i
+                        class="ph-bold ph-x text-lg"></i></button>
+            </div>
+            <div class="gnfc-modal-body">
+                <div class="mb-3">
+                    <label class="gnfc-modal-label mb-1">Location</label>
+                    <input type="text" id="idx-loc-input" class="gnfc-modal-input" placeholder="Enter location...">
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button type="button" onclick="saveIdxLocation()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+                    <i class="ph-bold ph-check mr-1"></i> Update
+                </button>
+                <button type="button" onclick="closeIdxLocationModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JObIndex — Edit Cable Type Modal -->
+    <div id="modal-idx-cable" class="gnfc-modal-overlay" style="z-index: 10010;" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell gnfc-modal-shell--narrow" style="max-width: 400px; padding: 0;">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title"> Edit Cable Type</h3>
+                    <p class="gnfc-modal-subtitle">J B No : <span id="idx-cable-jbno">—</span></p>
+                </div>
+                <button onclick="closeIdxCableModal()" class="gnfc-modal-close"><i
+                        class="ph-bold ph-x text-lg"></i></button>
+            </div>
+            <div class="gnfc-modal-body">
+                <div class="mb-3">
+                    <label class="gnfc-modal-label mb-1">Cable Type</label>
+                    <select id="idx-cable-select" class="gnfc-modal-input">
+                        <option>SIGNAL 12 PAIR</option>
+                        <option>RTD 8 TRIAD</option>
+                        <option>DIGITAL 6 PAIR</option>
+                        <option>THERMOCOUPLE 6 PAIR</option>
+                        <option>COAXIAL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button type="button" onclick="saveIdxCable()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+                    <i class="ph-bold ph-check mr-1"></i> Update
+                </button>
+                <button type="button" onclick="closeIdxCableModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JObIndex — Edit Cabinet Modal -->
+    <div id="modal-idx-cabinet" class="gnfc-modal-overlay" style="z-index: 10010;" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell gnfc-modal-shell--narrow" style="max-width: 400px; padding: 0;">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title"> Edit Cabinet</h3>
+                    <p class="gnfc-modal-subtitle">J B No : <span id="idx-cab-jbno">—</span></p>
+                </div>
+                <button onclick="closeIdxCabinetModal()" class="gnfc-modal-close"><i
+                        class="ph-bold ph-x text-lg"></i></button>
+            </div>
+            <div class="gnfc-modal-body">
+                <div class="mb-3">
+                    <label class="gnfc-modal-label mb-1">Cabinet No</label>
+                    <input type="text" id="idx-cab-input" class="gnfc-modal-input" placeholder="Enter cabinet no...">
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button type="button" onclick="saveIdxCabinet()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+                    <i class="ph-bold ph-check mr-1"></i> Update
+                </button>
+                <button type="button" onclick="closeIdxCabinetModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Tag Modal -->
+    <div id="modal-edit-tag" class="gnfc-modal-overlay" style="z-index: 10010;" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell gnfc-modal-shell--narrow" style="max-width: 440px; padding: 0;">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title"> Edit Tag</h3>
+                    <p id="et-subtitle" class="gnfc-modal-subtitle">J B No : ACJB-2</p>
+                </div>
+                <button onclick="closeEditTagModal()" class="gnfc-modal-close">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            <div class="gnfc-modal-body">
+                <div class="mb-3">
+                    <label class="gnfc-modal-label mb-1">Inst Type</label>
+                    <div class="flex items-center gap-16px">
+                        <select id="et-inst-type" class="gnfc-modal-input flex-1">
+                            <option value="AI">AI - Analog Input</option>
+                            <option value="AO">AO - Analog Output</option>
+                            <option value="DI">DI - Digital Input</option>
+                            <option value="DO">DO - Digital Output</option>
+                            <option value="RTD">RTD</option>
+                            <option value="TC">TC - Thermocouple</option>
+                        </select>
+                        <button onclick="filterTagsByType()" class="gnfc-modal-btn gnfc-modal-btn-primary flex-shrink-0"
+                            style="height:2.25rem; padding:0 0.75rem;">
+                            Go
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="gnfc-modal-label">Tag Filter</label>
+                    <input type="text" id="et-tag-filter" class="gnfc-modal-input" placeholder="Search tag...">
+                </div>
+                <div class="mb-3">
+                    <label class="gnfc-modal-label">Tag</label>
+                    <select id="et-tag-select" class="gnfc-modal-input">
+                        <option>1LT302</option>
+                        <option>1LT301</option>
+                        <option>1FT301</option>
+                        <option>1PT706</option>
+                        <option>1PT78B</option>
+                        <option>1TT101</option>
+                        <option>1TT102</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-16px mb-8px">
+                    <input type="checkbox" id="et-update-revision" class="w-4 h-4 rounded border-gray-400 cursor-pointer">
+                    <label for="et-update-revision" class="font-12px fw-bold color-primary cursor-pointer">Update
+                        Revision</label>
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button type="button" onclick="updateTag()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+                    <i class="ph-bold ph-check mr-1"></i> Update
+                </button>
+                <button type="button" onclick="closeEditTagModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-control-copy" class="gnfc-modal-overlay" style="z-index: 10005;" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell gnfc-modal-shell--narrow" style="max-width: 440px; padding: 0;">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title"> Mark As Control Copy</h3>
+                    <p class="gnfc-modal-subtitle">JObDetail</p>
+                </div>
+                <button onclick="closeControlCopyModal()" class="gnfc-modal-close"><i class="ph-bold ph-x text-lg"></i></button>
+            </div>
+            <div class="gnfc-modal-body">
+                <div class="font-13px fw-600 color-primary mb-16px">
+                    Please check data validity for the JOb before marking it as a Control Copy.
+                </div>
+                <div class="flex items-center gap-8px py-8px px-10px radius-6px icon-theme-gray">
+                    <span class="font-12px fw-600 color-secondary">J B No :</span>
+                    <span class="font-13px fw-extrabold color-red" id="cc-modal-jb-no">—</span>
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button onclick="confirmControlCopy()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+                    Go
+                </button>
+                <button onclick="closeControlCopyModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JBDB Update Modal -->
+    <div id="modal-insbl-update" class="gnfc-modal-overlay" style="z-index: 10005;" role="dialog" aria-modal="true">
+        <div class="gnfc-modal-shell gnfc-modal-shell--narrow" style="max-width: 440px; padding: 0;">
+            <div class="gnfc-modal-header">
+                <div>
+                    <h3 class="gnfc-modal-title">JBDB Update</h3>
+                    <p class="gnfc-modal-subtitle">Sync description &amp; function from InsBl</p>
+                </div>
+                <button onclick="closeInsBlModal()" class="gnfc-modal-close">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            <div class="gnfc-modal-body">
+                <!-- J B No row -->
+                <div class="flex items-center gap-8px mb-16px py-8px px-10px radius-6px border-1px-solid icon-theme-gray">
+                    <span class="font-12px fw-600 color-secondary text-uppercase tracking-wider">J B NO :</span>
+                    <span class="font-14px fw-800 color-blue" id="insbl-jb-no">—</span>
+                </div>
+
+                <!-- Info block -->
+                <div class="p-12px radius-6px mb-16px icon-theme-amber">
+                    <p class="font-14px color-primary m-0px lh-16px">
+                        <i class="ph-bold ph-info mr-1"></i>
+                        This tool will update descriptionand function from InsBl.
+                    </p>
+                    <p class="font-14px color-red mt-6px m-0px lh-16px">
+                        <i class="ph-bold ph-warning mr-1"></i>
+                        This will take several seconds. Please wait after executing command!
+                    </p>
+                </div>
+
+                <!-- Update For All Job checkbox -->
+                <div class="flex items-center gap-8px">
+                    <input type="checkbox" id="insbl-all-jb" class="w-16px h-16px cursor-pointer" style="accent-color:var(--app-blue,#2563eb);">
+                    <label for="insbl-all-jb" class="font-12px fw-600 color-primary cursor-pointer text-uppercase tracking-wider">Update For All J B</label>
+                </div>
+            </div>
+            <div class="gnfc-modal-footer">
+                <button type="button" onclick="runInsBlUpdate()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+                   Update
+                </button>
+                <button type="button" onclick="closeInsBlModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global Modal Controls
+        function openModal(id) { $(id).addClass('is-open'); }
+        function closeModal(id) { $(id).removeClass('is-open'); }
+
+        $(document).ready(function () {
+
+            // --- Tag Search Autocomplete ---
+            const $tagInput = $('#jb-tag-input');
+            const $tagSelect = $('#jb-tag-select');
+            const originalTagOptions = $tagSelect.find('option').clone();
+
+            $tagInput.on('input', function () {
+                const searchText = $(this).val().toLowerCase();
+                
+                // Find matches (excluding the first placeholder option)
+                const matches = originalTagOptions.filter(function(index) {
+                    if (index === 0) return false;
+                    return $(this).text().toLowerCase().includes(searchText);
+                });
+
+                $tagSelect.empty();
+                $tagSelect.append(originalTagOptions.eq(0).clone());
+
+                if (searchText.length > 0 && matches.length > 0) {
+                    // Show only matching options
+                    matches.each(function() {
+                        $tagSelect.append($(this).clone());
+                    });
+                    $tagSelect.prop('selectedIndex', 1); // Auto-select first match
+                } else {
+                    // If search is empty or word not available, show all list
+                    originalTagOptions.each(function(index) {
+                        if (index === 0) return;
+                        $tagSelect.append($(this).clone());
+                    });
+                    $tagSelect.prop('selectedIndex', 0);
+                }
+            });
+
+            // Sync from Select back to Input
+            $tagSelect.on('change', function() {
+                const val = $(this).val();
+                if (val !== 'Select Tag No') {
+                    $tagInput.val(val);
+                }
+            });
+
+            // --- Junction Box Search Autocomplete ---
+            const $jbInput = $('#jb-find-input');
+            const $jbSelect = $('#jb-select');
+            const originalJBOptions = $jbSelect.find('option').clone();
+
+            $jbInput.on('input', function () {
+                const searchText = $(this).val().toLowerCase();
+                
+                // Find matches (excluding the first placeholder option)
+                const matches = originalJBOptions.filter(function(index) {
+                    if (index === 0) return false;
+                    return $(this).text().toLowerCase().includes(searchText);
+                });
+
+                $jbSelect.empty();
+                $jbSelect.append(originalJBOptions.eq(0).clone());
+
+                if (searchText.length > 0 && matches.length > 0) {
+                    // Show only matching options
+                    matches.each(function() {
+                        $jbSelect.append($(this).clone());
+                    });
+                    $jbSelect.prop('selectedIndex', 1); // Auto-select first match
+                } else {
+                    // If search is empty or word not available, show all list
+                    originalJBOptions.each(function(index) {
+                        if (index === 0) return;
+                        $jbSelect.append($(this).clone());
+                    });
+                    $jbSelect.prop('selectedIndex', 0);
+                }
+            });
+
+            // Sync from Select back to Input
+            $jbSelect.on('change', function() {
+                const val = $(this).val();
+                if (val !== 'Select Junction Box') {
+                    $jbInput.val(val);
+                }
+            });
+
+            // Toolbar Actions
+            $('#btn-tag-go').on('click', function () {
+                const val = $('#jb-tag-input').val() || $('#jb-tag-select').val();
+                if (!val || val === 'Select Tag No') return;
+                Swal.fire({ icon: 'info', title: 'Search', text: 'Searching for Tag: ' + val, confirmButtonColor: '#2563eb' });
+            });
+
+            $('#btn-jb-go').on('click', function () {
+                const val = $('#jb-select').val();
+                // Since it's static now, we just acknowledge the search
+                Swal.fire({ icon: 'success', title: 'Found', text: 'Displaying details for: ' + val, confirmButtonColor: '#2563eb' });
+            });
+
+            $('#btn-update-insbl').on('click', function () { 
+                const jbNo = $('#cc-jb-no').text();
+                $('#insbl-jb-no').text(jbNo);
+                $('#insbl-all-jb').prop('checked', false);
+                openModal('#modal-insbl-update'); 
+            });
+            $('#btn-jb-index').on('click', function () { openJBIndex(); });
+            $('.btn-report').on('click', function () { openModal('#modal-jb-schedule'); });
+            $('#btn-add-jb, #btn-footer-add').on('click', function () { openModal('#modal-add-jb'); });
+
+            $('#btn-delete-jb').on('click', function () {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#64748b',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({ icon: 'success', title: 'Deleted!', text: 'Junction Box has been deleted.', confirmButtonColor: '#2563eb' });
+                    }
+                });
+            });
+
+            // Control Copy Section
+            $('#btn-mark-cc').on('click', function () { 
+                const jbNo = $('#cc-jb-no').text().trim() || '—';
+                $('#cc-modal-jb-no').text(jbNo);
+                openModal('#modal-control-copy'); 
+            });
+
+
+
+
+            $('#cc-location').on('click', function () { spawnEdit('Location', $('#cc-location-val').text(), '#cc-location-val'); });
+            $('#btn-edit-cableNo').on('click', function () { spawnEdit('Cable No', $('#cc-cable-no').text(), '#cc-cable-no'); });
+            $('#btn-edit-cableType').on('click', function () { spawnEdit('Cable Type', $('#cc-cable-type').text(), '#cc-cable-type'); });
+            $('#btn-edit-cabinet').on('click', function () { spawnEdit('Cabinet', $('#cc-cabinet').text(), '#cc-cabinet'); });
+            $('#btn-edit-docNo').on('click', function () { spawnEdit('Document No', $('#cc-doc-no').text(), '#cc-doc-no'); });
+            $('#btn-edit-drawingNo').on('click', function () { spawnEdit('Drawing No', $('#cc-drawing-no').text(), '#cc-drawing-no'); });
+            $('#btn-edit-drawingName').on('click', function () { spawnEdit('Drawing Name', $('#cc-drawing-name').text(), '#cc-drawing-name'); });
+            $('#btn-edit-excl').on('click', function () { spawnEdit('Excl', $('#cc-excl').text(), '#cc-excl'); });
+
+            // Tag Editing Trigger
+            $('.jbd-ch-num').next('td').on('click', function () {
+                const tag = $(this).text().trim();
+                const jbNo = $('#cc-jb-no').text().trim() || '—';
+                $('#et-subtitle').text('J B No : ' + jbNo);
+                $('#et-tag-select').val(tag);
+                openModal('#modal-edit-tag');
+            });
+        });
+
+        // Global Edit Field Logic
+        let editingFieldId = null;
+        function spawnEdit(title, val, targetId) {
+            const jbNo = $('#cc-jb-no').text().trim() || '—';
+            $('#ef-title').text('Edit ' + title);
+            $('#ef-label').text(title + ' :');
+            $('#ef-input').val(val);
+            $('#ef-jb-no').text(jbNo);
+            editingFieldId = targetId;
+            openModal('#modal-edit-field');
+        }
+
+        function closeEditFieldModal() { closeModal('#modal-edit-field'); }
+        function updateField() {
+            const newVal = $('#ef-input').val().trim();
+            $(editingFieldId).text(newVal || '—');
+            closeEditFieldModal();
+            Swal.fire({ icon: 'success', title: 'Updated!', timer: 1500, showConfirmButton: false });
+        }
+
+        // Schedule Logic
+        function closeJBScheduleModal() { closeModal('#modal-jb-schedule'); }
+        function runJBScheduleReport() {
+            closeJBScheduleModal();
+            Swal.fire({ icon: 'success', title: 'Report Generated', text: 'Channel report is ready for download.', confirmButtonColor: '#2563eb' });
+        }
+
+        // JB Index Modal Logic
+        function openJBIndex() { openModal('#modal-jb-index'); }
+        function closeJBIndexModal() { closeModal('#modal-jb-index'); }
+
+        // JB Index Sub-modals
+        let activeIdxJB = null;
+        let activeIdxCell = null;
+
+        function editIdxLoc(jb, cell) {
+            activeIdxJB = jb;
+            activeIdxCell = cell;
+            $('#idx-loc-jbno').text(jb);
+            $('#idx-loc-input').val($(cell).text());
+            openModal('#modal-idx-location');
+        }
+        function closeIdxLocationModal() { closeModal('#modal-idx-location'); }
+        function saveIdxLocation() {
+            const newLoc = $('#idx-loc-input').val();
+            if (activeIdxCell) $(activeIdxCell).text(newLoc);
+            closeIdxLocationModal();
+            Swal.fire({ icon: 'success', title: 'Location Updated', timer: 1000, showConfirmButton: false });
+        }
+
+        function editIdxCable(jb, cell) {
+            activeIdxJB = jb;
+            activeIdxCell = cell;
+            $('#idx-cable-jbno').text(jb);
+            $('#idx-cable-select').val($(cell).text());
+            openModal('#modal-idx-cable');
+        }
+        function closeIdxCableModal() { closeModal('#modal-idx-cable'); }
+        function saveIdxCable() {
+            const newCable = $('#idx-cable-select').val();
+            if (activeIdxCell) $(activeIdxCell).text(newCable);
+            closeIdxCableModal();
+            Swal.fire({ icon: 'success', title: 'Cable Updated', timer: 1000, showConfirmButton: false });
+        }
+
+        function editIdxCabinet(jb, cell) {
+            activeIdxJB = jb;
+            activeIdxCell = cell;
+            $('#idx-cab-jbno').text(jb);
+            $('#idx-cab-input').val($(cell).text());
+            openModal('#modal-idx-cabinet');
+        }
+        function closeIdxCabinetModal() { closeModal('#modal-idx-cabinet'); }
+        function saveIdxCabinet() {
+            const newCab = $('#idx-cab-input').val();
+            if (activeIdxCell) $(activeIdxCell).text(newCab);
+            closeIdxCabinetModal();
+            Swal.fire({ icon: 'success', title: 'Cabinet Updated', timer: 1000, showConfirmButton: false });
+        }
+
+        // Tag Edit Logic
+        function closeEditTagModal() { closeModal('#modal-edit-tag'); }
+        function filterTagsByType() {
+            const type = $('#et-inst-type').val();
+            Swal.fire({ title: 'Filtering...', timer: 800, didOpen: () => Swal.showLoading() }).then(() => {
+                // Mock filter logic
+                $('#et-tag-select').html(`
+                    <option>${type}T-101</option>
+                    <option>${type}T-102</option>
+                    <option>${type}T-201</option>
+                `);
+            });
+        }
+        function updateTag() {
+            closeEditTagModal();
+            Swal.fire({ icon: 'success', title: 'Tag Updated', text: 'Channel record has been updated successfully.', confirmButtonColor: '#2563eb' });
+        }
+
+        // JBDB Update Modal Functions
+        function closeInsBlModal() {
+            $('#modal-insbl-update').removeClass('is-open');
+        }
+
+        function runInsBlUpdate() {
+            const jbNo = $('#insbl-jb-no').text();
+            const isBulk = $('#insbl-all-jb').is(':checked');
+            
+            closeInsBlModal();
+
+            Swal.fire({
+                title: 'Syncing Data...',
+                text: 'Fetching values from InsBl. Please wait.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                timer: 2500, // Simulate the "several seconds" delay
+                timerProgressBar: true
+            }).then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sync Complete',
+                    text: isBulk 
+                        ? 'Successfully updated description and function for ALL Junction Boxes.'
+                        : `Successfully updated description and function for JB: ${jbNo}.`,
+                    confirmButtonColor: '#2563eb'
+                });
+            });
+        }
+
+        // Control Copy Modal Functions
+        function closeControlCopyModal() {
+            $('#modal-control-copy').removeClass('is-open');
+        }
+
+        function confirmControlCopy() {
+            closeControlCopyModal();
+            Swal.fire({ 
+                icon: 'success', 
+                title: 'Success', 
+                text: 'Marked as Control Copy.', 
+                confirmButtonColor: '#2563eb' 
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
