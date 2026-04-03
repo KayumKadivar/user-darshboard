@@ -24,6 +24,7 @@
   <script src="../js/plant-nav.js" defer></script>
 
   <script>
+    window.activeSidebar = 'technician_logbook';
     window.activePage = 'job_types';
   </script>
 </head>
@@ -60,14 +61,20 @@
           <!-- Time Range -->
           <!-- Start Date -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label">Satrt Date</label>
-            <input type="date" id="startDateFilter" class="jt-input jt-date-input">
+            <label class="jt-filter-label">Start Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="startDateFilter" class="jt-input">
+              <i class="ph-bold ph-calendar-blank jt-input-icon"></i>
+            </div>
           </div>
 
           <!-- End Date -->
           <div class="jt-filter-group">
             <label class="jt-filter-label">End Date</label>
-            <input type="date" id="endDateFilter" class="jt-input jt-date-input">
+            <div class="jt-input-wrap">
+              <input type="date" id="endDateFilter" class="jt-input">
+              <i class="ph-bold ph-calendar-blank jt-input-icon"></i>
+            </div>
           </div>
 
           <!-- Job Type Select -->
@@ -180,7 +187,7 @@
                 <td class="user-table-center">OVER</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary" style="min-height: 1.2rem;"></p>
+                    <p class="user-table-secondary"></p>
                     <p class="user-table-remarks-purple">
                       Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
                     </p>
@@ -221,10 +228,10 @@
                 <td class="user-table-center">OVER</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary" style="min-height: 1.2rem;"></p>
                     <p class="user-table-remarks-purple">
                       Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
                     </p>
+                    <p class="user-table-remarks-green">2PV1579A</p>
                   </div>
                 </td>
                 <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
@@ -256,109 +263,87 @@
   <script>
     $(document).ready(function () {
       const $jobTypeSelect = $('#job-type-select');
-      const $startDateInput = $('#start-date');
-      const $endDateInput = $('#end-date');
+      const $startDateInput = $('#startDateFilter');
+      const $endDateInput = $('#endDateFilter');
       const $dataRows = $('.jt-data-row');
       const $groupRows = $('.user-table-date[data-date-group]');
       const $emptyRow = $('#jt-empty-row');
 
       function parseRowDate(dateStr) {
-        if (!dateStr) return null;
-        const [day, month, year] = dateStr.split('/');
-        return new Date(year, month - 1, day);
+        if (!dateStr || typeof dateStr !== 'string') return null;
+        const parts = dateStr.trim().split('/');
+        if (parts.length !== 3) return null;
+        const date = new Date(parts[2], parts[1] - 1, parts[0]);
+        return isNaN(date.getTime()) ? null : date;
       }
 
       function parseInputDate(dateStr, isEndOfDay) {
-        if (!dateStr) return null;
-        const [year, month, day] = dateStr.split('-');
-        const date = new Date(year, month - 1, day);
-        if (isEndOfDay) {
-          date.setHours(23, 59, 59, 999);
-        } else {
-          date.setHours(0, 0, 0, 0);
-        }
+        if (!dateStr || typeof dateStr !== 'string') return null;
+        const parts = dateStr.trim().split('-');
+        if (parts.length !== 3) return null;
+        const date = new Date(parts[0], parts[1] - 1, parts[2]);
+        if (isNaN(date.getTime())) return null;
+        if (isEndOfDay) date.setHours(23, 59, 59, 999);
+        else date.setHours(0, 0, 0, 0);
         return date;
       }
 
       function applyFilters() {
-        const jobType = $jobTypeSelect.val();
-        const startVal = $startDateInput.val();
-        const endVal = $endDateInput.val();
-        
-        // Pre-parse the start/end filter dates
+        const jobType = ($jobTypeSelect.val() || "").trim();
+        const startVal = ($startDateInput.val() || "").trim();
+        const endVal = ($endDateInput.val() || "").trim();
+
         const startDate = parseInputDate(startVal, false);
         const endDate = parseInputDate(endVal, true);
 
-        // Check if ANY filter is active
+        // Data shows UNLESS a filter explicitly hides it
         const isFilterActive = !!jobType || !!startDate || !!endDate;
 
-        // Object to track which date groups still have visible rows
         const visibleDates = {};
         let anyVisible = false;
 
         $dataRows.each(function () {
           const $row = $(this);
-          
-          // If no filters are selected, hide everything
-          if (!isFilterActive) {
-            $row.hide();
-            return;
-          }
-
-          const rowType = $row.attr('data-job-type');
-          const rowDateStr = $row.attr('data-date');
           let show = true;
 
-          // Filter by job type
-          if (jobType && rowType !== jobType) {
-            show = false;
-          }
+          if (isFilterActive) {
+            const rowType = ($row.attr('data-job-type') || "").trim();
+            const rowDateStr = $row.attr('data-date');
 
-          // Filter by date range
-          if (show && (startDate || endDate)) {
-            const rowDate = parseRowDate(rowDateStr);
-            if (rowDate) {
-              if (startDate && rowDate < startDate) show = false;
-              if (show && endDate && rowDate > endDate) show = false;
+            if (jobType && rowType !== jobType) {
+              show = false;
+            }
+
+            if (show && (startDate || endDate)) {
+              const rowDate = parseRowDate(rowDateStr);
+              if (rowDate) {
+                const rowTime = rowDate.getTime();
+                if (startDate && rowTime < startDate.getTime()) show = false;
+                if (show && endDate && rowTime > endDate.getTime()) show = false;
+              }
             }
           }
 
-          // Toggle visibility and update state
           $row.toggle(show);
           if (show) {
-            visibleDates[rowDateStr] = true;
+            const rowDateStr = $row.attr('data-date');
+            if (rowDateStr) visibleDates[rowDateStr] = true;
             anyVisible = true;
           }
         });
 
-        // Show/hide date group headers based on visible rows
         $groupRows.each(function () {
           const $groupRow = $(this);
           const groupDate = $groupRow.attr('data-date-group');
           $groupRow.toggle(!!visibleDates[groupDate]);
         });
 
-        // Show empty state row only if a filter is active and NO matches found
         if ($emptyRow.length) {
           $emptyRow.toggle(isFilterActive && !anyVisible);
         }
       }
 
       function handleApplyFilters() {
-        const jobType = $jobTypeSelect.val();
-        const startVal = $startDateInput.val();
-        const endVal = $endDateInput.val();
-
-        // Show warning if NO criteria selected
-        if (!startVal && !endVal) {
-          Swal.fire({
-            icon: 'info',
-            title: 'No Selection',
-            text: 'Please select a Job Type or Date range before applying filters.'
-          });
-          return;
-        }
-
         applyFilters();
       }
 
@@ -373,10 +358,11 @@
       $('#btn-apply-filters').on('click', handleApplyFilters);
       $('#btn-reset-filters').on('click', resetFilters);
 
-      // Open date picker on click/focus
-      $startDateInput.add($endDateInput).on('click focus', function() {
-        if (typeof this.showPicker === 'function') {
-          try { this.showPicker(); } catch(e) {}
+      // Trigger picker on icon click
+      $('.jt-input-icon').on('click', function () {
+        const $input = $(this).siblings('input');
+        if ($input.length && typeof $input[0].showPicker === 'function') {
+          $input[0].showPicker();
         }
       });
 

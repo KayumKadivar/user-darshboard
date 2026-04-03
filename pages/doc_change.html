@@ -21,8 +21,10 @@
   <script src="../js/sidebar.js" defer></script>
   <script src="../js/header.js" defer></script>
   <script src="../js/plant-nav.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
+    window.activeSidebar = 'technician_logbook';
     window.activePage = 'doc_change';
   </script>
 </head>
@@ -44,37 +46,6 @@
       <!-- Plant Navigation -->
       <div id="plant-nav-container"></div>
 
-      <!-- ── FILTER CARD ── -->
-      <div class="jt-filter-card" style="margin-bottom: 24px;">
-        <div class="jt-filter-header">
-          <h3 class="jt-filter-title">
-            <i class="ph-bold ph-funnel"></i>
-            SEARCH CRITERIA
-          </h3>
-        </div>
-        <div class="jt-filter-body" style="grid-template-columns: 320px auto;">
-          
-          <!-- Search Input -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">Search Tag / description</label>
-            <div class="jt-input-icon-wrap" style="position: relative; width: 100%;">
-              <i class="ph-bold ph-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--typo-label); font-size: 14px; pointer-events: none; z-index: 2;"></i>
-              <input type="text" id="docSearch" class="jt-input" placeholder="Enter Tag No..." style="padding-left: 36px;">
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div class="jt-filter-group" style="display: flex; align-items: flex-end; gap: 12px;">
-            <button onclick="renderDocTable()" class="jt-btn-primary">
-              <i class="ph-bold ph-lightning"></i> APPLY
-            </button>
-            <button onclick="location.reload()" class="jt-btn-reset">
-              <i class="ph-bold ph-arrow-counter-clockwise"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card">
 
@@ -82,15 +53,10 @@
           <div class="jt-report-title">
             <i class="ph-fill ph-file-doc"></i>
             <div class="jt-title-stack">
-              <h3 class="jt-main-title">Document Change Required</h3>
-              <p style="font-size: 13px; color: var(--brand-primary); font-weight: 600; margin-top: 2px;">Plant Unit: Acetic Acid</p>
-            </div>
-          </div>
-          <div class="jt-report-actions">
-            <div class="flex gap-4 items-center">
-              <button class="jt-btn-primary">
-                <i class="ph-bold ph-export"></i> EXPORT PDF
-              </button>
+              <h3 class="jt-main-title">DOCUMENT CHANGE REQUIRED</h3>
+              <p style="font-size: 13px; color: var(--brand-primary); font-weight: 600; margin-top: 2px;">PLANT UNIT:
+                <span id="plant-id-display">ACETIC ACID</span>
+              </p>
             </div>
           </div>
         </div>
@@ -99,18 +65,119 @@
           <table class="user-table">
             <thead>
               <tr>
-                <th class="user-table-center" style="width: 64px;">Sr</th>
-                <th class="user-table-center" style="width: 140px;">Tag No</th>
-                <th class="user-table-left" style="width: 150px;">Job No</th>
-                <th class="user-table-center" style="width: 80px;">Tech</th>
-                <th style="min-width: 400px;">Description</th>
-                <th class="user-table-center" style="width: 80px;">Exec Tech</th>
-                <th class="user-table-center" style="width: 100px;">Status</th>
-                <th style="min-width: 250px;">Remarks</th>
-                <th class="user-table-center" style="width: 64px;">Over</th>
+                <th class="user-table-center" style="width: 64px;">SR</th>
+                <th class="user-table-center" style="width: 120px;">TAG NO</th>
+                <th class="user-table-center" style="width: 180px;">JOB</th>
+                <th class="user-table-center" style="width: 90px;">TECH</th>
+                <th style="min-width: 250px;">DESCRIPTION</th>
+                <th class="user-table-center" style="width: 90px;">TECH</th>
+                <th class="user-table-center" style="width: 100px;">STATUS</th>
+                <th style="min-width: 280px;">REMARKS</th>
+                <th class="user-table-center" style="width: 64px;">OVER</th>
               </tr>
             </thead>
             <tbody id="doc-table-body">
+              <!-- Row 1 -->
+              <tr class="user-table-row" data-plant-row="AA">
+                <td class="user-table-center user-table-secondary">1</td>
+                <td class="user-table-center user-table-bold user-table-blue">2PV2543A_2</td>
+                <td class="user-table-secondary"></td>
+                <td class="user-table-center user-table-bold user-table-secondary"></td>
+                <td class="user-table-primary">As per process defect announcement not heard at control room and operator
+                  room speaker. Detail checked found both speaker</td>
+                <td class="user-table-center user-table-bold user-table-secondary">VVM</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
+                    <p class="user-table-remarks-purple"></p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <input type="checkbox" class="jt-verify-check" />
+                </td>
+              </tr>
+              <!-- Row 2 -->
+              <tr class="user-table-row" data-plant-row="AA">
+                <td class="user-table-center user-table-secondary">2</td>
+                <td class="user-table-center user-table-bold user-table-blue">1TG-1</td>
+                <td class="user-table-secondary"></td>
+                <td class="user-table-center user-table-bold user-table-secondary"></td>
+                <td class="user-table-primary">As per process defect announcement not heard at control room and operator
+                  room speaker. Detail checked found both speaker</td>
+                <td class="user-table-center user-table-bold user-table-secondary">VVM</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
+                    <p class="user-table-remarks-purple"></p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <input type="checkbox" class="jt-verify-check" />
+                </td>
+              </tr>
+              <!-- Row 3 -->
+              <tr class="user-table-row" data-plant-row="AA">
+                <td class="user-table-center user-table-secondary">3</td>
+                <td class="user-table-center user-table-bold user-table-blue">1AR2510</td>
+                <td class="user-table-secondary">For Testing(ByYMK_SD: 18/01/2024)</td>
+                <td class="user-table-center user-table-bold user-table-secondary">CNJ_ISD</td>
+                <td class="user-table-primary">Job No for testing</td>
+                <td class="user-table-center user-table-bold user-table-secondary">CNJ_ISD</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
+                    <p class="user-table-remarks-purple"></p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <input type="checkbox" class="jt-verify-check" />
+                </td>
+              </tr>
+              <!-- Row 4 -->
+              <tr class="user-table-row" data-plant-row="AA">
+                <td class="user-table-center user-table-secondary">4</td>
+                <td class="user-table-center user-table-bold user-table-blue">PA_DHEL</td>
+                <td class="user-table-secondary"></td>
+                <td class="user-table-center user-table-bold user-table-secondary"></td>
+                <td class="user-table-primary">As per process defect announcement not heard at control room and operator
+                  room speaker. Detail checked found both speaker</td>
+                <td class="user-table-center user-table-bold user-table-secondary">VVM</td>
+                <td class="user-table-center">OVER</td>
+
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
+                    <p class="user-table-remarks-purple"></p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <input type="checkbox" class="jt-verify-check" />
+                </td>
+              </tr>
+              <!-- Row 5 -->
+              <tr class="user-table-row" data-plant-row="AA">
+                <td class="user-table-center user-table-secondary">5</td>
+                <td class="user-table-center user-table-bold user-table-blue">PA_DHEL</td>
+                <td class="user-table-secondary"></td>
+                <td class="user-table-center user-table-bold user-table-secondary"></td>
+                <td class="user-table-primary">As per process defect announcement not heard at control room and operator
+                  room speaker. Detail checked found both speaker</td>
+                <td class="user-table-center user-table-bold user-table-secondary">VVM</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
+                    <p class="user-table-remarks-purple"></p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <input type="checkbox" class="jt-verify-check" />
+                </td>
+              </tr>
+
             </tbody>
           </table>
         </div>
@@ -121,116 +188,71 @@
   </main>
 
   <script>
-    const docData = [
-      {
-        sr: 1,
-        tag: '2PV2543A_2',
-        job: '',
-        tech1: '',
-        desc: 'As per process report speed not increase or decrease from control room. Checked found that field instrument work local normal so doubt in DCS AO card(CJ04RM8) channel (observed output not generated from AO CH-1 as earlier). AO card(CJ04RM8)CH-8 used for this tag and operation checked found ok. During this activity found EFD soft document correction required, same show to IE.',
-        tech2: 'VVM',
-        status: 'OVER',
-        remarks: 'ok [written by: MMD Date: 20/04/2017]'
-      },
-      {
-        sr: 2,
-        tag: '1TG-1',
-        job: '',
-        tech1: '',
-        desc: 'After thrust bearing removed by CMG all RTD element checked and found as follow... RTD element No 5,6,7,8 removed with collapse from thrust pad as per CMG requirement. RTD element no 7 is found open. RTD element no.3 replaced with spare one because of found resistive. Document change required for RTD location in thrust bearing.',
-        tech2: 'VVM',
-        status: 'OVER',
-        remarks: 'Update doc [written by: NTD Date: 26/10/2017]'
-      },
-      {
-        sr: 3,
-        tag: '1AR2510',
-        job: 'For Testing(ByYMK_SD: 18/01/2024)',
-        tech1: 'CNJ_ISD',
-        desc: 'Job No for testing',
-        tech2: 'CNJ_ISD',
-        status: 'PEND',
-        remarks: 'OK [written by: RMP Date: 18/01/2024]'
-      },
-      {
-        sr: 4,
-        tag: 'PA_DHEL',
-        job: '',
-        tech1: '',
-        desc: 'As per process defect announcement not heard at control room and operator room speaker. Detail checked found both speaker input taken from station - 14 and its power supply(Station - 13 to 16) found OFF. Power supply taken in line and as general shift report station 15 and 15 isolated from station PCB. Its document required to updated in working file and TB wire ferrule required to change at RACK-2 TB-2 TB-35,36.',
-        tech2: 'VVM',
-        status: 'OVER',
-        remarks: 'Ok [written by: RMP Date: 15/03/2024]'
-      },
-      {
-        sr: 5,
-        tag: 'PA_DHEL',
-        job: '',
-        tech1: '',
-        desc: 'As per process defect announcement not heard at control room and operator room speaker. Detail checked found both speaker input taken from station - 14 and its power supply(Station - 13 to 16) found OFF. Power supply taken in line and as general shift report station 15 and 15 isolated from station PCB. Its document required to updated in working file and TB wire ferrule required to change at RACK-2 TB-2 TB-35,36.',
-        tech2: 'VVM',
-        status: 'OVER',
-        remarks: '[written by: MMD Date: 15/03/2024]'
-      },
-      {
-        sr: 6,
-        tag: '3BE2543_1',
-        job: 'TEST(ByENG_TESTER: 17/02/2026)',
-        tech1: 'TECH_TESTER',
-        desc: 'Tested',
-        tech2: 'TECH_TESTER',
-        status: 'OVER',
-        remarks: 'To be proper installed in shutdown [written by: ENG_TESTER Date: 17/02/2026] test3 [written by: ENG_TESTER Date: 17/02/2026]'
-      }
-    ];
+    $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const storagePlant = localStorage.getItem('selectedPlant');
+      const rawPlant = (urlParams.get('plant') || storagePlant || 'BOILER');
+      const plant = rawPlant.toUpperCase();
 
-    function escapeHTML(str) {
-      if (!str) return '';
-      return str.replace(/[&<>"']/g, function(m) {
-        return {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#39;'
-        }[m];
+      // Determine the target plant code for filtering (e.g. "AA" for "ACETIC ACID")
+      const targetPlantCode = plant === 'ACETIC ACID' ? 'AA' : (plant === 'BOILER' ? 'BOILER' : plant);
+
+      // Update Plant Unit Display
+      $('#plant-id-display').text(plant);
+
+      // Update Header Title to follow the pattern
+      const dynamicHeader = `${plant} LOGBOOK`;
+      $('.header-title').text(dynamicHeader);
+
+      let visibleRows = 0;
+      $('[data-plant-row]').each(function () {
+        if ($(this).data('plant-row').toUpperCase() === targetPlantCode) {
+          $(this).show();
+          visibleRows++;
+        } else {
+          $(this).hide();
+        }
       });
-    }
 
-    function renderTable() {
-      const tbody = document.getElementById('doc-table-body');
-      let html = '';
-      
-      for (let i = 0; i < docData.length; i++) {
-        const row = docData[i];
-        const badgeClass = row.status === 'OVER' ? 'ui-badge--success' : 'ui-badge--warning';
+      // Show empty state if no records match
+      $('#empty-state-row').toggle(visibleRows === 0);
+
+      // --- SweetAlert Confirmation ---
+      $('.jt-verify-check').on('change', function () {
+        const $checkbox = $(this);
         
-        html += '<tr class="user-table-row">' +
-          '<td class="user-table-center user-table-secondary">' + row.sr + '</td>' +
-          '<td class="user-table-center user-table-bold user-table-blue">' + escapeHTML(row.tag) + '</td>' +
-          '<td class="user-table-secondary" >' + escapeHTML(row.job) + '</td>' +
-          '<td class="user-table-center user-table-bold user-table-secondary">' + escapeHTML(row.tech1) + '</td>' +
-          '<td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">' + escapeHTML(row.desc) + '</td>' +
-          '<td class="user-table-center user-table-bold user-table-secondary">' + escapeHTML(row.tech2) + '</td>' +
-          '<td class="user-table-center">' +
-            '<span class="ui-badge ' + badgeClass + '">' + row.status + '</span>' +
-          '</td>' +
-          '<td class="user-table-secondary" style="font-size: 13px; font-style: italic;">' + 
-            escapeHTML(row.remarks).replace(/\n/g, '<br>') + 
-          '</td>' +
-          '<td class="user-table-center">' +
-            '<input type="checkbox" class="jt-verify-check" />' +
-          '</td>' +
-        '</tr>';
-      }
-      
-      tbody.innerHTML = html;
-    }
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const plant = urlParams.get('plant') || 'BOILER';
-    document.getElementById('plant-id-display').textContent = plant;
-    renderTable();
+        if ($checkbox.is(':checked')) {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "Are you confirm to over this document change?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'var(--brand-primary)',
+            cancelButtonColor: 'var(--brand-danger)',
+            confirmButtonText: 'Yes, confirm it!',
+            cancelButtonText: 'Cancel',
+            background: 'var(--bg-secondary)',
+            color: 'var(--typo-primary)'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: 'Confirmed!',
+                text: 'The document change has been marked as OVER.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                background: 'var(--bg-secondary)',
+                color: 'var(--typo-primary)'
+              });
+              // Keep checkbox checked
+            } else {
+              // Revert checkbox
+              $checkbox.prop('checked', false);
+            }
+          });
+        }
+      });
+    });
   </script>
 </body>
 

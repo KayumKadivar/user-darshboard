@@ -207,8 +207,9 @@ $(function () {
     const currentPage = window.location.pathname.split("/").pop() || "dashboard.html";
     $(".sidebar-link").removeClass("active");
 
-    if (window.activePage) {
-        $(`.sidebar-link[data-id="${window.activePage}"]`).addClass("active");
+    const sidebarActive = window.activeSidebar || window.activePage;
+    if (sidebarActive) {
+        $(`.sidebar-link[data-id="${sidebarActive}"]`).addClass("active");
     } else {
         // Fallback: match by filename
         $(`.sidebar-link`).each(function() {

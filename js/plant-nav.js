@@ -83,8 +83,10 @@ function renderPlantNav(activePageId) {
         html += group.items.map(item => {
             const active = isItemActive(item);
             const pillCls = `plant-nav-pill ${active ? 'is-active' : ''}`;
+            const plantPart = currentPlant ? `?plant=${encodeURIComponent(currentPlant)}` : '';
+            const href = item.href === '#' ? '#' : `${item.href}${plantPart}`;
             return `
-                <a href="${item.href}" class="${pillCls}">
+                <a href="${href}" class="${pillCls}">
                     <i class="ph-bold ${item.icon} filter-icon"></i>
                     ${item.label}
                 </a>
@@ -119,8 +121,10 @@ function renderPlantNav(activePageId) {
         let panelHtml = `<div id="${ddId}" class="pn-dropdown-portal">`;
         panelHtml += (group.items || []).map(child => {
             const childActive = isItemActive(child);
+            const plantPart = currentPlant ? `?plant=${encodeURIComponent(currentPlant)}` : '';
+            const href = child.href === '#' ? '#' : `${child.href}${plantPart}`;
             return `
-                <a href="${child.href}" class="pn-dropdown-item ${childActive ? 'is-active' : ''}">
+                <a href="${href}" class="pn-dropdown-item ${childActive ? 'is-active' : ''}">
                     <i class="ph-bold ${child.icon}"></i>
                     ${child.label}
                 </a>
