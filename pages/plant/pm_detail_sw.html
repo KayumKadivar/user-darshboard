@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GNFC | Switch PM Detail</title>
+  
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+  
+  <div class="sidebar-container"></div>
+  
+  <main class="main-wrapper">
+    <div id="header-container" 
+      data-title="Switch PM Detail" 
+      data-back="pm_master.html"
+      data-breadcrumbs='[{"label": "Plant", "href": "plant_status.html"}, {"label": "Boiler Dashboard", "href": "boiler_dashboard.html"}, {"label": "PM Master", "href": "pm_master.html"}, {"label": "PM Detail (S/W)"}]'>
+    </div>
+
+    <div class="dashboard-content dashboard-scroll">
+      <div class="flex flex-col gap-16px">
+
+        <!-- Top Filter Card -->
+        <div class="jbd-card">
+          <div class="jbd-card-header">
+            <div class="flex items-center gap-8px">
+              <i class="ph-bold ph-toggle-left color-blue font-16px"></i>
+              <span class="jbd-card-header-title">Switch PM Detail Filter</span>
+            </div>
+          </div>
+          <div class="p-16px">
+            <div class="grid grid-cols-4 gap-16px items-end">
+              <!-- View Selection -->
+              <div class="flex flex-col gap-6px">
+                <label class="font-11px fw-700 color-orange text-uppercase">Select Tag To View</label>
+                <div class="relative">
+                  <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer" style="background-image: none !important;">
+                    <option value="">-- All Tags --</option>
+                    <option value="LS_1401">LS_1401</option>
+                    <option value="PS_1402">PS_1402</option>
+                    <option value="TS_3433">TS_3433</option>
+                    <option value="LS_1406">LS_1406</option>
+                    <option value="PS_3447">PS_3447</option>
+                    <option value="TS_3449">TS_3449</option>
+                    <option value="LS_3464">LS_3464</option>
+                    <option value="PS_3465">PS_3465</option>
+                    <option value="TS_1412">TS_1412</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
+                </div>
+              </div>
+
+              <!-- Add Selection -->
+              <div class="flex flex-col gap-6px">
+                <label class="font-11px fw-700 color-orange text-uppercase">Select Tag To Add PM</label>
+                <div class="relative">
+                  <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer" style="background-image: none !important;">
+                    <option value="">-- Select Tag --</option>
+                    <option value="LS_1401">LS_1401</option>
+                    <option value="PS_1402">PS_1402</option>
+                    <option value="TS_3433">TS_3433</option>
+                    <option value="LS_1406">LS_1406</option>
+                    <option value="PS_3447">PS_3447</option>
+                    <option value="TS_3449">TS_3449</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
+                </div>
+              </div>
+
+              <!-- Filter Actions -->
+              <div class="flex items-center gap-12px col-span-2">
+                <button id="btn-pending-filter" class="pm-btn pm-btn--edit px-16px font-11px">
+                  <i class="ph-bold ph-clock-countdown"></i> Pending for Eng Sign
+                  <span class="pm-btn-badge">Go</span>
+                </button>
+                <button id="btn-open-reports" class="pm-btn pm-btn--update px-16px font-11px">
+                  <i class="ph-bold ph-file-text"></i> PM Reports
+                  <span class="pm-btn-badge">Go</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Details Table Card -->
+        <div class="jbd-card">
+          <div class="jbd-card-header">
+            <div class="flex items-center gap-8px">
+              <i class="ph-bold ph-table color-blue font-16px"></i>
+              <span class="jbd-card-header-title" id="pm-details-title">PM Details Tag : ALL</span>
+            </div>
+          </div>
+          <div class="p-16px">
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th style="width: 60px;">Sr</th>
+                    <th style="width: 180px;">Tag No</th>
+                    <th style="width: 140px;">Job Date</th>
+                    <th>Tech Name</th>
+                    <th>Checked By</th>
+                    <th style="width: 140px;">Checked Date</th>
+                    <th style="width: 180px;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="pm-details-tbody">
+                  <tr class="user-table-row" data-tag="LS_1401" data-checked="true">
+                    <td class="text-center fw-600">1</td>
+                    <td class="text-center font-13px fw-800 color-blue">LS_1401</td>
+                    <td class="text-center font-13px fw-700 color-green">01/01/2005</td>
+                    <td class="text-center font-13px">PBS</td>
+                    <td class="text-center font-13px">SHC</td>
+                    <td class="text-center font-13px color-green">01/01/2005</td>
+                    <td class="text-center">
+                      <div class="flex justify-center gap-8px">
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-view" data-tag="LS_1401"><i class="ph ph-eye"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-edit" data-tag="LS_1401"><i class="ph ph-pencil"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--danger h-28px w-28px btn-delete" data-tag="LS_1401"><i class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="user-table-row" data-tag="TS_3449" data-checked="false">
+                    <td class="text-center fw-600">2</td>
+                    <td class="text-center font-13px fw-800 color-blue">TS_3449</td>
+                    <td class="text-center font-13px fw-700 color-red">10/01/2005</td>
+                    <td class="text-center font-13px">BPB</td>
+                    <td class="text-center font-13px">-</td>
+                    <td class="text-center font-13px">-</td>
+                    <td class="text-center">
+                      <div class="flex justify-center gap-8px">
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-view" data-tag="TS_3449"><i class="ph ph-eye"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-edit" data-tag="TS_3449"><i class="ph ph-pencil"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--danger h-28px w-28px btn-delete" data-tag="TS_3449"><i class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- More rows... -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table Legend -->
+            <div class="flex items-center gap-16px mt-12px">
+              <div class="flex items-center gap-6px">
+                <div class="w-8px h-8px radius-50" style="background-color: #4ade80;"></div>
+                <span class="font-11px color-secondary fw-600 text-uppercase">Checked by Engineer</span>
+              </div>
+              <div class="flex items-center gap-6px">
+                <div class="w-8px h-8px radius-50" style="background-color: #f87171;"></div>
+                <span class="font-11px color-secondary fw-600 text-uppercase">Not Checked by Engineer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Switch PM Detail (View Only) Modal -->
+  <div id="pm-view-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Switch PM Detail</h3>
+          <p class="gnfc-modal-subtitle">Tag Number: <span id="view-tag-no-label" class="color-blue fw-700"></span></p>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
+        <div class="flex flex-col gap-16px">
+          
+          <!-- Tag Info Section -->
+          <!-- Same pattern as AT/TX/CV -->
+
+          <!-- Checklist Section -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px flex justify-between items-center">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Inspection Checklist</span>
+            </div>
+            <div class="user-table-wrapper radius-0px border-none">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th style="width: 120px;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="view-checklist-tbody">
+                  <tr><td class="font-13px">Switch operation checked?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                  <tr><td class="font-13px">Glanding / Cable Support OK?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                  <tr><td class="font-13px">Tag Stamping OK?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                  <tr><td class="font-13px">Monsoon Protection OK?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Calibration Table Section (Setpoint) -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Setpoint Data</span>
+            </div>
+            <div class="user-table-wrapper radius-0px border-none">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50%;">Setpoint</th>
+                    <th style="width: 50%;">Resetpoint</th>
+                  </tr>
+                </thead>
+                <tbody id="view-cal-tbody">
+                  <tr>
+                    <td class="text-center font-13px color-primary fw-700">10.5 Kg/cm2</td>
+                    <td class="text-center font-13px color-primary fw-700">9.8 Kg/cm2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="pm-btn pm-btn--update font-11px px-24px btn-close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit PM Form Modal -->
+  <div id="pm-add-edit-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title" id="form-modal-title">Switch PM Form</h3>
+          <p class="gnfc-modal-subtitle" id="form-modal-subtitle">Tag Number: <span class="color-blue fw-700"></span></p>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
+        <div class="flex flex-col gap-16px">
+          
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Inspection Checklist</span>
+            </div>
+            <div class="user-table-wrapper radius-0px border-none">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th style="width: 80px;">YES</th>
+                  </tr>
+                </thead>
+                <tbody id="edit-checklist-tbody">
+                  <tr><td class="font-13px">Switch operation checked?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                  <tr><td class="font-13px">Glanding / Cable Support OK?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                  <tr><td class="font-13px">Tag Stamping OK?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                  <tr><td class="font-13px">Monsoon Protection OK?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Setpoint Entry</span>
+            </div>
+            <div class="p-16px flex gap-16px">
+              <div class="flex flex-col gap-6px flex-1">
+                <label class="font-11px fw-700 color-label text-uppercase">Setpoint</label>
+                <input type="text" class="gnfc-modal-input">
+              </div>
+              <div class="flex flex-col gap-6px flex-1">
+                <label class="font-11px fw-700 color-label text-uppercase">Resetpoint</label>
+                <input type="text" class="gnfc-modal-input">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="pm-btn pm-btn--add font-11px px-32px">Save PM Detail</button>
+        <button class="pm-btn pm-btn--update font-11px px-24px btn-close-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    $(document).ready(function() {
+      let showPendingOnly = false;
+
+      function openModal(id) { $(id).addClass('is-open'); }
+      function closeModal(id) { $(id).removeClass('is-open'); }
+
+      $('#view-tag-select').on('change', function() {
+        const tag = $(this).val();
+        showPendingOnly = false;
+        $('#pm-details-title').text('PM Details Tag : ' + (tag || 'ALL'));
+        $('.user-table-row').each(function() {
+          if (!tag || $(this).data('tag') === tag) $(this).show();
+          else $(this).hide();
+        });
+      });
+
+      $('#btn-pending-filter').on('click', function() {
+        showPendingOnly = !showPendingOnly;
+        $(this).toggleClass('pm-btn--add pm-btn--edit'); 
+        if (showPendingOnly) {
+          $('#pm-details-title').text('PM Details Tag : Pending for Eng Sign');
+          $('.user-table-row').each(function() {
+            if ($(this).data('checked') === true) $(this).hide();
+            else $(this).show();
+          });
+        } else {
+          $('#view-tag-select').trigger('change');
+        }
+      });
+
+      $('#add-tag-select').on('change', function() {
+        const tag = $(this).val();
+        if (!tag) return;
+        $('#edit-tag-no').val(tag);
+        $('#form-modal-subtitle span').text(tag);
+        openModal('#pm-add-edit-modal');
+        $(this).val('');
+      });
+
+      $(document).on('click', '.btn-view', function() {
+        const tag = $(this).data('tag');
+        const row = $(this).closest('tr');
+        $('#view-tag-no-label').text(tag);
+        openModal('#pm-view-modal');
+      });
+
+      $('.btn-close-modal').on('click', function() { closeModal($(this).closest('.gnfc-modal-overlay')); });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GNFC | Transmitter PM Detail</title>
+  
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+  
+  <div class="sidebar-container"></div>
+  
+  <main class="main-wrapper">
+    <div id="header-container" 
+      data-title="Transmitter PM Detail" 
+      data-back="pm_master.html"
+      data-breadcrumbs='[{"label": "Plant", "href": "plant_status.html"}, {"label": "Boiler Dashboard", "href": "boiler_dashboard.html"}, {"label": "PM Master", "href": "pm_master.html"}, {"label": "PM Detail (T/X)"}]'>
+    </div>
+
+    <div class="dashboard-content dashboard-scroll">
+      <div class="flex flex-col gap-16px">
+
+        <!-- Top Filter Card -->
+        <div class="jbd-card">
+          <div class="jbd-card-header">
+            <div class="flex items-center gap-8px">
+              <i class="ph-bold ph-broadcast color-blue font-16px"></i>
+              <span class="jbd-card-header-title">Transmitter PM Detail Filter</span>
+            </div>
+          </div>
+          <div class="p-16px">
+            <div class="grid grid-cols-4 gap-16px items-end">
+              <!-- View Selection -->
+              <div class="flex flex-col gap-6px">
+                <label class="font-11px fw-700 color-orange text-uppercase">Select Tag To View</label>
+                <div class="relative">
+                  <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer" style="background-image: none !important;">
+                    <option value="">-- All Tags --</option>
+                    <option value="FIL_1412">FIL_1412</option>
+                    <option value="FT_1401">FT_1401</option>
+                    <option value="LIH_3447A">LIH_3447A</option>
+                    <option value="LIH_3447B">LIH_3447B</option>
+                    <option value="LIH_3447R">LIH_3447R</option>
+                    <option value="LIH_3449A">LIH_3449A</option>
+                    <option value="LIH_3449B">LIH_3449B</option>
+                    <option value="LIH_3449R">LIH_3449R</option>
+                    <option value="LIHL_1442_04">LIHL_1442_04</option>
+                    <option value="LIHL_1442_06">LIHL_1442_06</option>
+                    <option value="LT_3464">LT_3464</option>
+                    <option value="PT_3433">PT_3433</option>
+                    <option value="PT_3465">PT_3465</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
+                </div>
+              </div>
+
+              <!-- Add Selection -->
+              <div class="flex flex-col gap-6px">
+                <label class="font-11px fw-700 color-orange text-uppercase">Select Tag To Add PM</label>
+                <div class="relative">
+                  <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer" style="background-image: none !important;">
+                    <option value="">-- Select Tag --</option>
+                    <option value="FIL_1412">FIL_1412</option>
+                    <option value="FT_1401">FT_1401</option>
+                    <option value="LIH_3447A">LIH_3447A</option>
+                    <option value="LIH_3447B">LIH_3447B</option>
+                    <option value="LIH_3447R">LIH_3447R</option>
+                    <option value="LIH_3449A">LIH_3449A</option>
+                    <option value="LIHL_1442_04">LIHL_1442_04</option>
+                    <option value="LIHL_1442_06">LIHL_1442_06</option>
+                  </select>
+                  <i class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
+                </div>
+              </div>
+
+              <!-- Filter Actions -->
+              <div class="flex items-center gap-12px col-span-2">
+                <button id="btn-pending-filter" class="pm-btn pm-btn--edit px-16px font-11px">
+                  <i class="ph-bold ph-clock-countdown"></i> Pending for Eng Sign
+                  <span class="pm-btn-badge">Go</span>
+                </button>
+                <button id="btn-open-reports" class="pm-btn pm-btn--update px-16px font-11px">
+                  <i class="ph-bold ph-file-text"></i> PM Reports
+                  <span class="pm-btn-badge">Go</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Details Table Card -->
+        <div class="jbd-card">
+          <div class="jbd-card-header">
+            <div class="flex items-center gap-8px">
+              <i class="ph-bold ph-table color-blue font-16px"></i>
+              <span class="jbd-card-header-title" id="pm-details-title">PM Details Tag : ALL</span>
+            </div>
+          </div>
+          <div class="p-16px">
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th style="width: 60px;">Sr</th>
+                    <th style="width: 180px;">Tag No</th>
+                    <th style="width: 140px;">Job Date</th>
+                    <th>Tech Name</th>
+                    <th>Checked By</th>
+                    <th style="width: 140px;">Checked Date</th>
+                    <th style="width: 180px;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="pm-details-tbody">
+                  <!-- Static Rows -->
+                  <tr class="user-table-row" data-tag="LIHL_1442_04" data-checked="true">
+                    <td class="text-center fw-600">1</td>
+                    <td class="text-center font-13px fw-800 color-blue">LIHL_1442_04</td>
+                    <td class="text-center font-13px fw-700 color-green">01/01/2005</td>
+                    <td class="text-center font-13px">PBS</td>
+                    <td class="text-center font-13px">SHC</td>
+                    <td class="text-center font-13px color-green">01/01/2005</td>
+                    <td class="text-center">
+                      <div class="flex justify-center gap-8px">
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-view" data-tag="LIHL_1442_04"><i class="ph ph-eye"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-edit" data-tag="LIHL_1442_04"><i class="ph ph-pencil"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--danger h-28px w-28px btn-delete" data-tag="LIHL_1442_04"><i class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="user-table-row" data-tag="LIHL_1442_06" data-checked="true">
+                    <td class="text-center fw-600">2</td>
+                    <td class="text-center font-13px fw-800 color-blue">LIHL_1442_06</td>
+                    <td class="text-center font-13px fw-700 color-green">03/01/2005</td>
+                    <td class="text-center font-13px">PBS</td>
+                    <td class="text-center font-13px">SHC</td>
+                    <td class="text-center font-13px color-green">03/01/2005</td>
+                    <td class="text-center">
+                      <div class="flex justify-center gap-8px">
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-view" data-tag="LIHL_1442_06"><i class="ph ph-eye"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-edit" data-tag="LIHL_1442_06"><i class="ph ph-pencil"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--danger h-28px w-28px btn-delete" data-tag="LIHL_1442_06"><i class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="user-table-row" data-tag="FT_1401" data-checked="false">
+                    <td class="text-center fw-600">3</td>
+                    <td class="text-center font-13px fw-800 color-blue">FT_1401</td>
+                    <td class="text-center font-13px fw-700 color-red">15/08/2005</td>
+                    <td class="text-center font-13px">BPB</td>
+                    <td class="text-center font-13px">-</td>
+                    <td class="text-center font-13px">-</td>
+                    <td class="text-center">
+                      <div class="flex justify-center gap-8px">
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-view" data-tag="FT_1401"><i class="ph ph-eye"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px btn-edit" data-tag="FT_1401"><i class="ph ph-pencil"></i></button>
+                        <button class="ui-btn ui-btn--icon ui-btn--danger h-28px w-28px btn-delete" data-tag="FT_1401"><i class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- More rows can be added here -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Table Legend -->
+            <div class="flex items-center gap-16px mt-12px">
+              <div class="flex items-center gap-6px">
+                <div class="w-8px h-8px radius-50" style="background-color: #4ade80;"></div>
+                <span class="font-11px color-secondary fw-600 text-uppercase">Checked by Engineer</span>
+              </div>
+              <div class="flex items-center gap-6px">
+                <div class="w-8px h-8px radius-50" style="background-color: #f87171;"></div>
+                <span class="font-11px color-secondary fw-600 text-uppercase">Not Checked by Engineer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Transmitter PM Detail (View Only) Modal -->
+  <div id="pm-view-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Transmitter PM Detail</h3>
+          <p class="gnfc-modal-subtitle">Tag Number: <span id="view-tag-no-label" class="color-blue fw-700"></span></p>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
+        <div class="flex flex-col gap-16px">
+          
+          <!-- Tag Info Section -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Tag Information</span>
+            </div>
+            <div class="user-table-wrapper radius-0px border-none">
+              <table class="user-table">
+                <tbody>
+                  <tr>
+                    <td class="font-11px fw-700 color-label text-uppercase bg-dark-bg" style="width: 240px;">Tag Number</td>
+                    <td id="info-tag-no" class="fw-700 color-primary"></td>
+                  </tr>
+                  <tr>
+                    <td class="font-11px fw-700 color-label text-uppercase bg-dark-bg">Make</td>
+                    <td id="info-make">MAGNETROL</td>
+                  </tr>
+                  <tr>
+                    <td class="font-11px fw-700 color-label text-uppercase bg-dark-bg">Calibration Range</td>
+                    <td id="info-cal-range">0-400 MMWC</td>
+                  </tr>
+                  <tr>
+                    <td class="font-11px fw-700 color-label text-uppercase bg-dark-bg">Engineering Range</td>
+                    <td id="info-eng-range">0 - 100 %</td>
+                  </tr>
+                  <tr>
+                    <td class="font-11px fw-700 color-label text-uppercase bg-dark-bg">Location</td>
+                    <td id="info-location">SYN. GAS COMP AREA</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Checklist Section -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px flex justify-between items-center">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Inspection Checklist</span>
+            </div>
+            <div class="user-table-wrapper radius-0px border-none">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th style="width: 120px;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="view-checklist-tbody">
+                  <tr><td class="font-13px">Range Checked By HHT?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                  <tr><td class="font-13px">Mounting Zero Checked Before Calibration?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                  <tr><td class="font-13px">Glanding / Cable Support OK?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                  <tr><td class="font-13px">Tag Stamping OK?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                  <tr><td class="font-13px">Canopy required?</td><td class="text-center font-13px fw-800 color-red">NO</td></tr>
+                  <tr><td class="font-13px">Manifold Condition OK?</td><td class="text-center font-13px fw-800 color-red">NO</td></tr>
+                  <tr><td class="font-13px">Any Leakage At Drain Valve/Plug/Tubing ?</td><td class="text-center font-13px fw-800 color-red">NO</td></tr>
+                  <tr><td class="font-13px">Tapping Flushed?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                  <tr><td class="font-13px">Monsoon Protection OK?</td><td class="text-center font-13px fw-800 color-green">YES</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Calibration Table Section -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Calibration Data</span>
+            </div>
+            <div class="user-table-wrapper radius-0px border-none">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th style="width: 25%;">% Before</th>
+                    <th style="width: 25%;">Value</th>
+                    <th style="width: 25%;">% After</th>
+                    <th style="width: 25%;">Value</th>
+                  </tr>
+                </thead>
+                <tbody id="view-cal-tbody">
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">0% Before</td><td class="text-center font-13px">-</td><td class="bg-dark-bg font-11px fw-800 color-label text-center">0% After</td><td class="text-center font-13px">-</td></tr>
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">25% Before</td><td class="text-center font-13px">-</td><td class="bg-dark-bg font-11px fw-800 color-label text-center">25% After</td><td class="text-center font-13px">-</td></tr>
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">50% Before</td><td class="text-center font-13px">-</td><td class="bg-dark-bg font-11px fw-800 color-label text-center">50% After</td><td class="text-center font-13px">-</td></tr>
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">75% Before</td><td class="text-center font-13px">-</td><td class="bg-dark-bg font-11px fw-800 color-label text-center">75% After</td><td class="text-center font-13px">-</td></tr>
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">100% Before</td><td class="text-center font-13px">-</td><td class="bg-dark-bg font-11px fw-800 color-label text-center">100% After</td><td class="text-center font-13px">-</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Sign-off Section -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Engineer Sign-off</span>
+            </div>
+            <div class="user-table-wrapper radius-0px border-none">
+              <table class="user-table">
+                <tbody>
+                  <tr>
+                    <td class="font-11px fw-700 color-label text-uppercase bg-dark-bg" style="width: 240px;">Job Date</td>
+                    <td id="info-job-date"></td>
+                  </tr>
+                  <tr>
+                    <td class="font-11px fw-700 color-label text-uppercase bg-dark-bg">Checked By Engineer</td>
+                    <td id="info-checked-by"></td>
+                  </tr>
+                  <tr>
+                    <td class="font-11px fw-700 color-label text-uppercase bg-dark-bg">Sign Date</td>
+                    <td id="info-sign-date"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="pm-btn pm-btn--update font-11px px-24px btn-close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit PM Form Modal -->
+  <div id="pm-add-edit-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title" id="form-modal-title">Transmitter PM Form</h3>
+          <p class="gnfc-modal-subtitle" id="form-modal-subtitle">Tag Number: <span class="color-blue fw-700"></span></p>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
+        <div class="flex flex-col gap-16px">
+          
+          <!-- Special Instructions -->
+          <div class="flex flex-col gap-6px">
+            <label class="font-11px fw-700 color-label text-uppercase">Special Instruction</label>
+            <input type="text" id="add-special-inst" class="gnfc-modal-input" placeholder="Enter special instruction...">
+          </div>
+
+          <!-- Tag Info Form -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Tag Information</span>
+            </div>
+            <div class="p-16px">
+              <div class="grid grid-cols-3 gap-16px">
+                <div class="flex flex-col gap-4px">
+                  <label class="font-11px fw-700 color-label text-uppercase">Tag Number</label>
+                  <input type="text" id="edit-tag-no" class="gnfc-modal-input" readonly>
+                </div>
+                <div class="flex flex-col gap-4px">
+                  <label class="font-11px fw-700 color-label text-uppercase">Make</label>
+                  <input type="text" id="edit-make" class="gnfc-modal-input" value="MAGNETROL">
+                </div>
+                <div class="flex flex-col gap-4px">
+                  <label class="font-11px fw-700 color-label text-uppercase">Location</label>
+                  <input type="text" id="edit-location" class="gnfc-modal-input" value="SYN. GAS COMP AREA">
+                </div>
+                <div class="flex flex-col gap-4px">
+                  <label class="font-11px fw-700 color-label text-uppercase">Cal Range</label>
+                  <input type="text" id="edit-cal-range" class="gnfc-modal-input" value="0-400 MMWC">
+                </div>
+                <div class="flex flex-col gap-4px">
+                  <label class="font-11px fw-700 color-label text-uppercase">Eng Range</label>
+                  <input type="text" id="edit-eng-range" class="gnfc-modal-input" value="0-100%">
+                </div>
+                <div class="flex flex-col gap-4px">
+                  <label class="font-11px fw-700 color-label text-uppercase">Job Mode</label>
+                  <input type="text" id="edit-job-mode" class="gnfc-modal-input" value="NORMAL">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Checklist Form -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Inspection Checklist</span>
+            </div>
+            <div class="user-table-wrapper radius-0px border-none">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th style="width: 80px;">YES</th>
+                  </tr>
+                </thead>
+                <tbody id="edit-checklist-tbody">
+                  <tr><td class="font-13px">Range Checked By HHT?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                  <tr><td class="font-13px">Mounting Zero Checked Before Calibration?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                  <tr><td class="font-13px">Glanding / Cable Support OK?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                  <tr><td class="font-13px">Tag Stamping OK?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                  <tr><td class="font-13px">Canopy required?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer"></td></tr>
+                  <tr><td class="font-13px">Manifold Condition OK?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer"></td></tr>
+                  <tr><td class="font-13px">Any Leakage At Drain Valve/Plug/Tubing ?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer"></td></tr>
+                  <tr><td class="font-13px">Tapping Flushed?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                  <tr><td class="font-13px">Monsoon Protection OK?</td><td class="text-center"><input type="checkbox" class="w-16px h-16px cursor-pointer" checked></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Calibration Form -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Calibration Data Entry</span>
+            </div>
+            <div class="user-table-wrapper radius-0px border-none">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th>% Before</th>
+                    <th>Value</th>
+                    <th>% After</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody id="edit-cal-tbody">
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">0% Before</td><td><input type="text" class="gnfc-modal-input h-32px"></td><td class="bg-dark-bg font-11px fw-800 color-label text-center">0% After</td><td><input type="text" class="gnfc-modal-input h-32px"></td></tr>
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">25% Before</td><td><input type="text" class="gnfc-modal-input h-32px"></td><td class="bg-dark-bg font-11px fw-800 color-label text-center">25% After</td><td><input type="text" class="gnfc-modal-input h-32px"></td></tr>
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">50% Before</td><td><input type="text" class="gnfc-modal-input h-32px"></td><td class="bg-dark-bg font-11px fw-800 color-label text-center">50% After</td><td><input type="text" class="gnfc-modal-input h-32px"></td></tr>
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">75% Before</td><td><input type="text" class="gnfc-modal-input h-32px"></td><td class="bg-dark-bg font-11px fw-800 color-label text-center">75% After</td><td><input type="text" class="gnfc-modal-input h-32px"></td></tr>
+                  <tr><td class="bg-dark-bg font-11px fw-800 color-label text-center">100% Before</td><td><input type="text" class="gnfc-modal-input h-32px"></td><td class="bg-dark-bg font-11px fw-800 color-label text-center">100% After</td><td><input type="text" class="gnfc-modal-input h-32px"></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tech Info Form -->
+          <div class="grid grid-cols-2 gap-16px">
+            <div class="flex flex-col gap-6px">
+              <label class="font-11px fw-700 color-label text-uppercase">Technician Name</label>
+              <input type="text" id="edit-tech-name" class="gnfc-modal-input">
+            </div>
+            <div class="flex flex-col gap-6px">
+              <label class="font-11px fw-700 color-label text-uppercase">Job Date</label>
+              <input type="text" id="edit-job-date" class="gnfc-modal-input" readonly>
+            </div>
+            <div class="flex flex-col gap-6px col-span-2">
+              <label class="font-11px fw-700 color-label text-uppercase">Tech Remark</label>
+              <textarea id="edit-tech-remark" class="gnfc-modal-input" style="height: 60px; padding: 10px;"></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="pm-btn pm-btn--add font-11px px-32px" id="btn-save-pm">
+          <i class="ph-bold ph-floppy-disk"></i> Save PM Detail
+        </button>
+        <button class="pm-btn pm-btn--update font-11px px-24px btn-close-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PM Reports Modal -->
+  <div id="pm-reports-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Transmitter PM Reports</h3>
+          <p class="gnfc-modal-subtitle">Filter data and generate reports</p>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 75vh;">
+        <div class="flex flex-col gap-24px">
+          <!-- Main Action -->
+          <div class="flex justify-center pt-8px">
+            <button id="btn-remark-report" class="pm-btn pm-btn--update px-32px">
+              <i class="ph-bold ph-note-pencil"></i> Remark Report
+            </button>
+          </div>
+
+          <hr class="border-dark-border opacity-50">
+
+          <!-- Yes/No Filter -->
+          <div class="jbd-card">
+            <div class="jbd-card-header py-8px">
+              <span class="font-11px fw-800 text-uppercase ls-widest color-primary">Report by Checklist Parameter</span>
+            </div>
+            <div class="p-16px flex flex-col gap-16px">
+              <div class="grid grid-cols-2 gap-16px">
+                <div class="flex flex-col gap-6px">
+                  <label class="font-11px fw-700 color-label text-uppercase">Select Parameter</label>
+                  <select id="report-param-select" class="gnfc-modal-input">
+                    <option value="">-- Choose Parameter --</option>
+                    <option>Range Checked By HHT?</option>
+                    <option>Mounting Zero Checked Before Calibration?</option>
+                    <option>Glanding / Cable Support OK?</option>
+                    <option>Tag Stamping OK?</option>
+                    <option>Canopy required?</option>
+                    <option>Manifold Condition OK?</option>
+                    <option>Any Leakage At Drain Valve/Plug/Tubing ?</option>
+                    <option>Tapping Flushed?</option>
+                    <option>Monsoon Protection OK?</option>
+                  </select>
+                </div>
+                <div class="flex flex-col gap-6px">
+                  <label class="font-11px fw-700 color-label text-uppercase">Status</label>
+                  <div class="flex items-center gap-16px h-40px">
+                    <label class="flex items-center gap-8px cursor-pointer">
+                      <input type="radio" name="report-val" value="yes" checked class="w-16px h-16px">
+                      <span class="font-13px fw-600 color-primary uppercase">YES</span>
+                    </label>
+                    <label class="flex items-center gap-8px cursor-pointer">
+                      <input type="radio" name="report-val" value="no" class="w-16px h-16px">
+                      <span class="font-13px fw-600 color-primary uppercase">NO</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report Result Container -->
+          <div id="report-result-container" class="hidden animate-fade-in">
+             <div class="jbd-card">
+               <div class="jbd-card-header flex justify-between items-center py-10px">
+                 <span class="font-11px fw-800 text-uppercase ls-widest color-blue" id="report-result-title">Filtered Report</span>
+                 <button class="ui-btn ui-btn--icon ui-btn--secondary h-28px w-28px" onclick="window.print()">
+                   <i class="ph ph-printer"></i>
+                 </button>
+               </div>
+               <div class="user-table-wrapper radius-0px border-none">
+                 <table class="user-table">
+                   <thead>
+                     <tr>
+                        <th style="width: 50px;">Sr</th>
+                       <th style="width: 140px;">Tag No</th>
+                       <th>Date</th>
+                       <th>Tech</th>
+                       <th>Eng</th>
+                       <th>Date</th>
+                       <th style="min-width: 200px;">Tech Remark</th>
+                       <th style="min-width: 150px;">Eng Remark</th>
+                     </tr>
+                   </thead>
+                   <tbody id="report-tbody">
+                     <!-- Populated via Interaction -->
+                   </tbody>
+                 </table>
+               </div>
+             </div>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="pm-btn pm-btn--update font-11px px-24px btn-close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    $(document).ready(function() {
+      let showPendingOnly = false;
+
+      // --- Utilities ---
+      function openModal(id) { $(id).addClass('is-open'); }
+      function closeModal(id) { $(id).removeClass('is-open'); }
+
+      // --- Interaction Handlers ---
+      $('#view-tag-select').on('change', function() {
+        const tag = $(this).val();
+        showPendingOnly = false;
+        $('#pm-details-title').text('PM Details Tag : ' + (tag || 'ALL'));
+        
+        $('.user-table-row').each(function() {
+          const rowTag = $(this).data('tag');
+          if (!tag || rowTag === tag) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+
+      $('#btn-pending-filter').on('click', function() {
+        showPendingOnly = !showPendingOnly;
+        $(this).toggleClass('pm-btn--add pm-btn--edit'); 
+        
+        if (showPendingOnly) {
+          $('#pm-details-title').text('PM Details Tag : Pending for Eng Sign');
+          $('.user-table-row').each(function() {
+            if ($(this).data('checked') === true) $(this).hide();
+            else $(this).show();
+          });
+        } else {
+          $('#view-tag-select').trigger('change');
+        }
+      });
+
+      $('#add-tag-select').on('change', function() {
+        const tag = $(this).val();
+        if (!tag) return;
+        $('#edit-tag-no').val(tag);
+        $('#form-modal-subtitle span').text(tag);
+        $('#edit-job-date').val(new Date().toLocaleDateString('en-GB'));
+        openModal('#pm-add-edit-modal');
+        $(this).val('');
+      });
+
+      $('#btn-open-reports').on('click', () => openModal('#pm-reports-modal'));
+
+      $(document).on('click', '.btn-view', function() {
+        const tag = $(this).data('tag');
+        const row = $(this).closest('tr');
+        $('#view-tag-no-label').text(tag);
+        $('#info-tag-no').text(tag);
+        $('#info-job-date').text(row.find('td:eq(2)').text());
+        $('#info-checked-by').text(row.find('td:eq(4)').text());
+        $('#info-sign-date').text(row.find('td:eq(5)').text());
+        openModal('#pm-view-modal');
+      });
+
+      $(document).on('click', '.btn-edit', function() {
+        const tag = $(this).data('tag');
+        const row = $(this).closest('tr');
+        $('#edit-tag-no').val(tag);
+        $('#edit-tech-name').val(row.find('td:eq(3)').text());
+        $('#edit-job-date').val(row.find('td:eq(2)').text());
+        openModal('#pm-add-edit-modal');
+      });
+
+      $(document).on('click', '.btn-delete', function() {
+        Swal.fire({
+          title: 'Delete PM Record?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#fe4a49',
+          confirmButtonText: 'Yes, Delete'
+        }).then((result) => { if (result.isConfirmed) Swal.fire('Deleted!', 'Record removed.', 'success'); });
+      });
+
+      $('#btn-remark-report').on('click', function() {
+        const title = 'Remark Report – All Tags with Remarks';
+        $('#report-result-title').text(title);
+        
+        const rows = [
+          { tag: 'LIH_3447A', date: '19/02/2004', tech: 'BPB', eng: 'SHC', sdate: '19/02/2004', remark: 'As smart Tx so only mounting ZERO checked found OK.', eremark: '' },
+          { tag: 'LIH_3447B', date: '20/02/2004', tech: 'BPB', eng: 'SHC', sdate: '20/02/2004', remark: 'As smart Tx so only mounting ZERO checked found OK.', eremark: '' },
+          { tag: 'LIH_3447R', date: '21/02/2004', tech: 'PBS', eng: 'SHC', sdate: '21/02/2004', remark: 'As Tx is smart so only mounting ZERO checked found OK.', eremark: '' },
+          { tag: 'LIH_3449A', date: '22/03/2004', tech: 'BPB', eng: 'SHC', sdate: '22/03/2004', remark: 'As Tx is smart so only mounting ZERO checked found OK.', eremark: '' },
+          { tag: 'LIH_3449B', date: '23/03/2004', tech: 'BPB', eng: '', sdate: '', remark: 'As Tx is smart so only ZERO checked found OK.', eremark: '', dateColor: 'color-red' },
+          { tag: 'LIH_3449R', date: '24/03/2004', tech: 'PBS', eng: 'SHC', sdate: '24/03/2004', remark: 'As Tx is msart so only ZERO checked found OK.', eremark: '' }
+        ];
+
+        let html = '';
+        rows.forEach((r, i) => {
+          const dColor = r.dateColor || 'color-green';
+          html += `<tr class="user-table-row">
+            <td class="text-center fw-600">${i + 1}</td>
+            <td class="text-center font-13px fw-800 color-blue">${r.tag}</td>
+            <td class="text-center font-13px fw-700 ${dColor}">${r.date}</td>
+            <td class="text-center font-13px">${r.tech}</td>
+            <td class="text-center font-13px">${r.eng || '-'}</td>
+            <td class="text-center font-13px ${r.sdate ? 'color-green' : ''}">${r.sdate || '-'}</td>
+            <td class="font-13px">${r.remark}</td>
+            <td class="font-13px">${r.eremark}</td>
+          </tr>`;
+        });
+
+        $('#report-tbody').html(html);
+        $('#report-result-container').removeClass('hidden');
+      });
+
+      $('.btn-close-modal').on('click', function() { closeModal($(this).closest('.gnfc-modal-overlay')); });
+    });
+  </script>
+</body>
+
+</html>

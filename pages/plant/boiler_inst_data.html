@@ -86,9 +86,18 @@
                         </div>
                     </div>
 
-                    <div class="w-200px">
+                    <div class="w-180px">
                         <label class="input-label">Area</label>
-                        <div id="area-display" class="input-control flex align-anchor-center">ALL</div>
+                        <div class="gnfc-select-group">
+                            <select class="input-control" id="boiler-area-dropdown">
+                                <option value="ALL">ALL</option>
+                                <option value="BOILER-1">BOILER-1</option>
+                                <option value="BOILER-2">BOILER-2</option>
+                                <option value="BOILER-3">BOILER-3</option>
+                                <option value="BOILER-4">BOILER-4</option>
+                            </select>
+                            <i class="ph-bold ph-caret-down"></i>
+                        </div>
                     </div>
                 </div>
 
@@ -239,11 +248,14 @@
             const $viewForm = $('#view-mode-form');
             const $editForm = $('#edit-mode-form');
             const $scrollContainer = $('.dashboard-scroll');
-            const $areaDisplay = $('#area-display');
-
             // --- Area Persistence Sync ---
+            const $areaDropdown = $('#boiler-area-dropdown');
             const savedArea = localStorage.getItem('gnfc_selected_area');
-            if(savedArea) $areaDisplay.text(savedArea);
+            if(savedArea) $areaDropdown.val(savedArea);
+
+            $areaDropdown.on('change', function() {
+                localStorage.setItem('gnfc_selected_area', $(this).val());
+            });
 
 
             // --- Dropdown Logic ---

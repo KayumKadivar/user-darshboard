@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GNFC | PM Master</title>
+  
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js"></script>
+  <script src="../../js/header.js"></script>
+  
+  <div class="sidebar-container"></div>
+  <script>renderSidebar('plants');</script>
+
+  <main class="main-wrapper">
+    <div id="header-container"></div>
+    <script>
+      renderHeader({
+        title: "PM Master",
+        breadcrumbs: [
+          { label: "Plant", href: "/pages/plant/plant_status.html" },
+          { label: "Boiler Dashboard", href: "/pages/plant/boiler_dashboard.html" },
+          { label: "PM Master" }
+        ],
+        backLink: "/pages/plant/boiler_dashboard.html"
+      });
+    </script>
+
+    <div class="dashboard-content dashboard-scroll">
+      <div class="mx-auto flex flex-col gap-16px" style="width: 100%;">
+
+        <!-- Navigation Sections -->
+        <div class="jbd-card">
+          <div class="jbd-card-header">
+            <h3 class="font-14px fw-700 color-blue text-uppercase  flex items-center gap-8px">
+              <i class="ph-bold ph-navigation-arrow"></i> PM Reports & Status
+            </h3>
+          </div>
+          <div class="p-16px flex flex-wrap gap-8px">
+            <button id="btn-pm-report" class="ui-btn ui-btn--secondary ">ALL</button>
+            <button id="btn-pm-pending" class="ui-btn ui-btn--secondary ">PM PENDING REPORT</button>
+            <button id="btn-pm-monthly" class="ui-btn ui-btn--secondary ">PM MONTHLY STATUS</button>
+            <button id="btn-pm-overdue" class="ui-btn ui-btn--secondary ">PM OVER DUE REPORT</button>
+            <button id="btn-pm-from-log" class="ui-btn ui-btn--secondary ">PM FROM LOG</button>
+          </div>
+        </div>
+
+        <!-- Detail Categories -->
+        <div class="jbd-card">
+          <div class="jbd-card-header">
+            <h3 class="font-14px fw-700 color-blue text-uppercase  flex items-center gap-8px">
+              <i class="ph-bold ph-list-bullets"></i> PM Details Categories
+            </h3>
+          </div>
+          <div class="p-16px flex flex-wrap gap-8px">
+            <button class="detail-tab ui-btn ui-btn--secondary " data-url="pm_detail_tx.html">PM Detail (T/X)</button>
+            <button class="detail-tab ui-btn ui-btn--secondary " data-url="pm_detail_cv.html">PM Detail (C/V)</button>
+            <button class="detail-tab ui-btn ui-btn--secondary " data-url="pm_detail_sw.html">PM Detail (SW)</button>
+            <button class="detail-tab ui-btn ui-btn--secondary " data-url="pm_detail_at.html">PM Detail (AT)</button>
+            <button class="detail-tab ui-btn ui-btn--secondary " data-url="pm_detail_vib.html">PM Detail (VIB)</button>
+            <button class="detail-tab ui-btn ui-btn--secondary " data-url="pm_detail_other.html">PM Detail (Other)</button>
+          </div>
+        </div>
+
+        <!-- Search & PM Form Section -->
+        <div class="jbd-card overflow-hidden">
+          <div class="jbd-card-header">
+            <h3 class="font-14px fw-700 color-blue text-uppercase  flex items-center gap-8px">
+              <i class="ph-bold ph-magnifying-glass"></i> Tag Information
+            </h3>
+          </div>
+
+          <div class="p-16px flex flex-col gap-16px">
+            <!-- Identify/Search Section (Aligned Row Layout) -->
+            <div class="flex flex-col gap-12px">
+              <!-- Inline row for Search and Tag Detail -->
+              <div class="flex items-center gap-16px">
+                <label class="font-11px fw-700 color-label text-uppercase text-nowrap" style="width: 180px;">SEARCH / SELECT TAG :</label>
+                
+                <div class="flex items-center gap-12px flex-1">
+                  <!-- Search Input -->
+                  <input id="pm-search-input" type="text" placeholder="Tag No..."
+                    class="gnfc-modal-input flex-1 font-14px">
+                  
+                  <!-- Tag Select Dropdown -->
+                  <select id="pm-tag-select" class="gnfc-modal-input flex-1 cursor-pointer font-14px">
+                    <option value="">-- Select Tag --</option>
+                    <option value="LPT205">LPT205</option>
+                    <option value="LV_1401">LV_1401</option>
+                    <option value="FT_1401">FT_1401</option>
+                  </select>
+
+                  <!-- Go Button -->
+                  <button type="button" id="btn-search-go" class="gnfc-modal-btn gnfc-modal-btn-primary px-24px font-11px text-uppercase">
+                    GO
+                  </button>
+                </div>
+
+                <span class="font-11px fw-700 color-secondary text-uppercase opacity-60 text-nowrap">
+                  SELECT TAG TO EDIT / DELETE
+                </span>
+              </div>
+            </div>
+
+            <!-- Form Grid (4-Column Layout) -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+              <div class="flex flex-col gap-4px">
+                <label class="font-11px fw-700 color-label text-uppercase">TAG NO</label>
+                <input id="pm-tag-no" type="text" class="gnfc-modal-input" readonly>
+              </div>
+
+              <div class="flex flex-col gap-4px">
+                <label class="font-11px fw-700 color-label text-uppercase">CRITICALITY</label>
+                <input id="pm-criticality" type="text" class="gnfc-modal-input">
+              </div>
+
+              <div class="flex flex-col gap-4px">
+                <label class="font-11px fw-700 color-label text-uppercase">INST TYPE</label>
+                <input id="pm-inst-type" type="text" class="gnfc-modal-input">
+              </div>
+
+              <div class="flex flex-col gap-4px">
+                <label class="font-11px fw-700 color-label text-uppercase">MODE</label>
+                <input id="pm-mode" type="text" class="gnfc-modal-input">
+              </div>
+
+              <div class="flex flex-col gap-4px">
+                <label class="font-11px fw-700 color-label text-uppercase">PM MONTH</label>
+                <input id="pm-month" type="text" class="gnfc-modal-input">
+              </div>
+
+              <div class="flex flex-col gap-4px">
+                <label class="font-11px fw-700 color-label text-uppercase">PM DATE</label>
+                <input id="pm-date" type="date" class="gnfc-modal-input">
+              </div>
+
+              <div class="flex flex-col gap-4px">
+                <label class="font-11px fw-700 color-label text-uppercase">TECH NAME</label>
+                <input id="pm-tech-name" type="text" class="gnfc-modal-input">
+              </div>
+
+              <div class="flex flex-col gap-4px">
+                <label class="font-11px fw-700 color-label text-uppercase">STATUS</label>
+                <select id="pm-status" class="gnfc-modal-input cursor-pointer">
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-4px" style="grid-column: span 4;">
+                <label class="font-11px fw-700 color-label text-uppercase">CAUTION / SPECIAL INSTRUCTIONS</label>
+                <textarea id="pm-caution" rows="3" class="gnfc-modal-input resize-none"></textarea>
+              </div>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="flex justify-center pt-16px border-top-1px border-dark-border gap-12px">
+              <button type="button" id="btn-add-pm" class="pm-btn pm-btn--add">
+                <i class="ph-bold ph-plus"></i> ADD
+              </button>
+              <button type="button" id="btn-edit-pm" class="pm-btn pm-btn--edit">
+                <i class="ph-bold ph-pencil-simple"></i> EDIT
+              </button>
+              <button type="button" id="btn-delete-pm" class="pm-btn pm-btn--delete">
+                <i class="ph-bold ph-trash"></i> DELETE
+              </button>
+              <button type="button" id="btn-update-status" class="pm-btn pm-btn--update">
+                <i class="ph-bold ph-floppy-disk"></i> UPDATE PM STATUS
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Add/Edit Modal (PM Data) -->
+  <div id="pm-add-edit-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title" id="pm-modal-title">PM FORM</h3>
+          <p class="gnfc-modal-subtitle" id="pm-modal-subtitle">Add or edit PM details</p>
+        </div>
+        <button type="button" class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+          <div class="flex flex-col gap-4px" style="grid-column: span 1.5;">
+            <label class="gnfc-modal-label">TAG_NO</label>
+            <input id="modal-pm-tag-no" type="text" class="gnfc-modal-input" placeholder="Enter Tag No">
+          </div>
+
+          <div class="flex flex-col gap-4px" style="grid-column: span 1.5;">
+            <label class="gnfc-modal-label">CRITICALITY</label>
+            <input id="modal-pm-criticality" type="text" class="gnfc-modal-input" placeholder="Enter criticality">
+          </div>
+
+          <div class="flex flex-col gap-4px">
+            <label class="gnfc-modal-label">INSTTYPE</label>
+            <select id="modal-pm-inst-type" class="gnfc-modal-input">
+              <option value="ANALYZER">ANALYZER</option>
+              <option value="TX">TX</option>
+              <option value="C/V">C/V</option>
+              <option value="SWITCH">SWITCH</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-4px">
+            <label class="gnfc-modal-label">MODE</label>
+            <select id="modal-pm-mode" class="gnfc-modal-input">
+              <option value="RUNNING">RUNNING</option>
+              <option value="STANDBY">S/D</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-4px">
+            <label class="gnfc-modal-label">PM_MONTH</label>
+            <select id="modal-pm-month" class="gnfc-modal-input">
+              <option value="">Select Month</option>
+              <option value="Jan">Jan</option>
+              <option value="Feb">Feb</option>
+              <option value="Mar">Mar</option>
+              <option value="Apr">Apr</option>
+              <option value="May">May</option>
+              <option value="Jun">Jun</option>
+              <option value="Jul">Jul</option>
+              <option value="Aug">Aug</option>
+              <option value="Sep">Sep</option>
+              <option value="Oct">Oct</option>
+              <option value="Nov">Nov</option>
+              <option value="Dec">Dec</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" id="btn-modal-save" class="gnfc-modal-btn gnfc-modal-btn-primary">
+          <i class="ph-bold ph-check font-16px"></i> Save
+        </button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PM Report Modal -->
+  <div id="pm-report-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Instrument Data - PM Report</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body gnfc-modal-body--flush">
+        <div class="p-16px flex flex-col gap-16px">
+          <div class="bg-dark-panel p-16px radius-4px" style="border-left: 4px solid var(--blue);">
+            <h4 class="color-primary fw-700 text-center text-uppercase ls-20px font-14px">Overall PM Report</h4>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table">
+              <thead>
+                <tr>
+                  <th class="user-table-head-cell text-center">PM MONTH</th>
+                  <th class="user-table-head-cell text-center">TAG_NO</th>
+                  <th class="user-table-head-cell text-center">Type Of Inst</th>
+                  <th class="user-table-head-cell text-center">CRITICALITY</th>
+                  <th class="user-table-head-cell text-center">MODE</th>
+                  <th class="user-table-head-cell text-center">PM DATE</th>
+                  <th class="user-table-head-cell text-center">TECH</th>
+                </tr>
+              </thead>
+              <tbody id="pm-report-tbody">
+                <!-- Static data matched with the original logic -->
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center fw-700 color-red font-15px">APR</td>
+                  <td class="user-table-cell text-center">HV_1402</td>
+                  <td class="user-table-cell text-center">CONTROL VALVE</td>
+                  <td class="user-table-cell text-center">CONTROL</td>
+                  <td class="user-table-cell text-center">-</td>
+                  <td class="user-table-cell text-center">-</td>
+                  <td class="user-table-cell text-center">-</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell"></td>
+                  <td class="user-table-cell text-center">HV_3484</td>
+                  <td class="user-table-cell text-center">CONTROL VALVE</td>
+                  <td class="user-table-cell text-center">CONTROL</td>
+                  <td class="user-table-cell text-center">-</td>
+                  <td class="user-table-cell text-center">-</td>
+                  <td class="user-table-cell text-center">-</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center fw-700 color-blue font-15px">JAN</td>
+                  <td class="user-table-cell text-center">FT_1401</td>
+                  <td class="user-table-cell text-center">TX</td>
+                  <td class="user-table-cell text-center">-</td>
+                  <td class="user-table-cell text-center">OPEN LOOP</td>
+                  <td class="user-table-cell text-center">08/02/2005</td>
+                  <td class="user-table-cell text-center">BPB</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Close Report</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PM Pending Report Modal -->
+  <div id="pm-pending-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Instrument Data - PM Pending Report</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <div class="flex flex-col gap-24px">
+          <!-- Filters Grid -->
+          <div class="flex flex-wrap items-center justify-center gap-24px mx-auto" style="width: 100%; max-width: 700px;">
+            <div class="flex items-center gap-12px flex-1 min-w-250px">
+              <label class="font-14px fw-700 color-label text-uppercase text-nowrap">PM For Month</label>
+              <select id="pending-month-select" class="gnfc-modal-input cursor-pointer">
+                <option value="ALL">ALL</option>
+                <option value="JAN">January</option>
+                <option value="FEB">February</option>
+                <option value="MAR">March</option>
+                <option value="APR">April</option>
+                <option value="MAY">May</option>
+                <option value="JUN">June</option>
+                <option value="JUL">July</option>
+                <option value="AUG">August</option>
+                <option value="SEP">September</option>
+                <option value="OCT">October</option>
+                <option value="NOV">November</option>
+                <option value="DEC">December</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-12px flex-1 min-w-250px">
+              <label class="font-14px fw-700 color-label text-uppercase text-nowrap">Inst Type</label>
+              <select id="pending-type-select" class="gnfc-modal-input cursor-pointer">
+                <option value="ALL">ALL</option>
+                <option value="C/V">C/V</option>
+                <option value="TX">TX</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="SWITCH">SWITCH</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Report Table -->
+          <div class="user-table-wrapper">
+            <table class="user-table">
+              <thead>
+                <tr>
+                  <th class="user-table-head-cell text-center">TAG_NO</th>
+                  <th class="user-table-head-cell text-center">Type Of Inst</th>
+                  <th class="user-table-head-cell text-center">CRITICALITY</th>
+                  <th class="user-table-head-cell text-center">MODE</th>
+                  <th class="user-table-head-cell text-center">PM MONTH</th>
+                </tr>
+              </thead>
+              <tbody id="pending-report-tbody">
+                <tr class="user-table-row" data-month="OCT" data-type="TX">
+                  <td class="user-table-cell text-center">101-FI-005</td>
+                  <td class="user-table-cell text-center">TX</td>
+                  <td class="user-table-cell text-center">HIGH</td>
+                  <td class="user-table-cell text-center">RUNNING</td>
+                  <td class="user-table-cell text-center">OCT-25</td>
+                </tr>
+                <tr class="user-table-row" data-month="NOV" data-type="C/V">
+                  <td class="user-table-cell text-center">102-PV-202</td>
+                  <td class="user-table-cell text-center">C/V</td>
+                  <td class="user-table-cell text-center">MEDIUM</td>
+                  <td class="user-table-cell text-center">STANDBY</td>
+                  <td class="user-table-cell text-center">NOV-25</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Close Report</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PM Monthly Status Modal -->
+  <div id="pm-monthly-status-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Instrument Data - PM Monthly Status</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="flex flex-col gap-16px">
+          <div class="flex items-center justify-between gap-16px border-bottom-1px border-dark-border pb-12px">
+            <div class="flex items-center gap-12px">
+              <label class="font-14px fw-700 color-label text-uppercase">Select Month:</label>
+              <select id="monthly-status-select" class="gnfc-modal-input w-200px cursor-pointer">
+                <option value="ALL">ALL</option>
+                <option value="JAN">January</option>
+                <option value="FEB">February</option>
+                <option value="MAR">March</option>
+                <option value="APR">April</option>
+                <option value="MAY">May</option>
+                <option value="JUN">June</option>
+                <option value="JUL">July</option>
+                <option value="AUG">August</option>
+                <option value="SEP">September</option>
+                <option value="OCT">October</option>
+                <option value="NOV">November</option>
+                <option value="DEC">December</option>
+              </select>
+            </div>
+            <div class="bg-dark-panel border-1px border-dark-border px-24px py-8px">
+              <h4 id="monthly-report-title" class="font-14px fw-700 color-blue text-uppercase ">PM Report</h4>
+            </div>
+          </div>
+          <div class="user-table-wrapper">
+            <table class="user-table">
+              <thead>
+                <tr>
+                  <th class="user-table-head-cell">TAG_NO</th>
+                  <th class="user-table-head-cell">Type Of Inst</th>
+                  <th class="user-table-head-cell">PM DATE</th>
+                  <th class="user-table-head-cell">TECH</th>
+                  <th class="user-table-head-cell">CRITICALITY</th>
+                  <th class="user-table-head-cell">MODE</th>
+                </tr>
+              </thead>
+              <tbody id="monthly-status-tbody">
+                <!-- Group: FLOW TX. -->
+                <tr class="user-table-row">
+                  <td colspan="6" class="user-table-cell text-left pl-16px fw-700 color-blue bg-dark-panel-alt/10">FLOW TX.</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center">FT_1422</td>
+                  <td class="user-table-cell text-center">FLOW TRANSMITTER</td>
+                  <td class="user-table-cell text-center">25/03/2004</td>
+                  <td class="user-table-cell text-center">BPB</td>
+                  <td class="user-table-cell text-center">OPEN LOOP</td>
+                  <td class="user-table-cell text-center">-</td>
+                </tr>
+                <!-- Group: LEVEL SW -->
+                <tr class="user-table-row">
+                  <td colspan="6" class="user-table-cell text-left pl-16px fw-700 color-blue bg-dark-panel-alt/10">LEVEL SW</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center">LSH_1442_05</td>
+                  <td class="user-table-cell text-center">LEVEL SWITCH</td>
+                  <td class="user-table-cell text-center">03/01/2005</td>
+                  <td class="user-table-cell text-center">PBS</td>
+                  <td class="user-table-cell text-center">LOGIC</td>
+                  <td class="user-table-cell text-center">RUNNING</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PM Overdue Report Modal -->
+  <div id="pm-overdue-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Instrument Data - PM Overdue Report</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="user-table-wrapper">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th class="user-table-head-cell">Type Of Inst</th>
+                <th class="user-table-head-cell">TAG_NO</th>
+                <th class="user-table-head-cell">PM DATE</th>
+                <th class="user-table-head-cell">TECHNICIAN</th>
+                <th class="user-table-head-cell">CRITICALITY</th>
+                <th class="user-table-head-cell">PM MONTH</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="user-table-row">
+                <td class="user-table-cell text-center color-blue fw-700">DPT</td>
+                <td class="user-table-cell text-center">LIHL_1442_04</td>
+                <td class="user-table-cell text-center">01/01/2005</td>
+                <td class="user-table-cell text-center">PBS</td>
+                <td class="user-table-cell text-center">LOGIC</td>
+                <td class="user-table-cell text-center">Jan</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-cell"></td>
+                <td class="user-table-cell text-center">LIHL_1442_06</td>
+                <td class="user-table-cell text-center">05/02/2005</td>
+                <td class="user-table-cell text-center">BPB</td>
+                <td class="user-table-cell text-center">LOGIC</td>
+                <td class="user-table-cell text-center">Jan</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Close Report</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PM From Log Modal -->
+  <div id="pm-from-log-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Instrument Data - PM Report FROM LogBook</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="user-table-wrapper">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th class="user-table-head-cell">Type Of Inst</th>
+                <th class="user-table-head-cell">DATE</th>
+                <th class="user-table-head-cell">TAG NO.</th>
+                <th class="user-table-head-cell">DESCRIPTION</th>
+                <th class="user-table-head-cell">JOB STATUS</th>
+                <th class="user-table-head-cell">TECH NAME</th>
+                <th class="user-table-head-cell">ENG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="user-table-row">
+                <td class="user-table-cell text-center color-red fw-700">N.A.</td>
+                <td class="user-table-cell text-center">04/03/2026</td>
+                <td class="user-table-cell text-center">NOTAG</td>
+                <td class="user-table-cell font-11px">Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.</td>
+                <td class="user-table-cell text-center color-blue">OVER</td>
+                <td class="user-table-cell text-center">JMD</td>
+                <td class="user-table-cell text-center">ARP</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PM Update Status Modal -->
+  <div id="pm-update-status-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header border-bottom-1px border-dark-border py-12px">
+        <h3 class="font-18px fw-700 color-red text-uppercase ">Update PM Status</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body p-24px">
+        <div class="flex flex-col gap-16px">
+          <div class="flex items-center gap-12px">
+            <label class="font-14px fw-700 color-primary" style="width: 80px; text-align: right;">Tag No:</label>
+            <input id="status-update-tag-input" type="text" class="gnfc-modal-input flex-1" placeholder="Tag No">
+            <select id="status-update-tag-select" class="gnfc-modal-input w-120px cursor-pointer">
+              <option value="">--</option>
+              <option value="LPT205">LPT205</option>
+              <option value="LV_1401">LV_1401</option>
+              <option value="FT_1401">FT_1401</option>
+            </select>
+          </div>
+          
+          <div class="flex items-center gap-12px">
+            <label class="font-14px fw-700 color-primary" style="width: 80px; text-align: right;">Tech:</label>
+            <select id="status-update-tech" class="gnfc-modal-input flex-1">
+              <option value="Tech">Tech</option>
+              <option value="JMD">JMD</option>
+              <option value="PRP">PRP</option>
+              <option value="ARP">ARP</option>
+              <option value="BPB">BPB</option>
+            </select>
+            <label class="font-14px fw-700 color-primary">Date:</label>
+            <input id="status-update-date" type="date" class="gnfc-modal-input w-min-content">
+          </div>
+          
+          <div class="flex justify-center pt-12px">
+            <button type="button" id="btn-submit-status-update" class="ui-btn ui-btn--primary px-40px" style="background-color: #6b7280;">
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    $(document).ready(function() {
+      // Mock Database
+      const PM_TAG_DB = [
+        { tagNo: 'LPT205', criticality: 'HQ', instType: 'TX', mode: 'RUNNING', pmMonth: 'Apr', pmDate: '2005-03-25', techName: 'BPB', status: 'Pending', caution: '' },
+        { tagNo: 'LV_1401', criticality: '-', instType: 'ANALYZER', mode: '-', pmMonth: 'Select Month', pmDate: '', techName: '', status: 'Pending', caution: '' },
+        { tagNo: 'FT_1401', criticality: '-', instType: 'TX', mode: 'OPEN LOOP', pmMonth: 'JAN', pmDate: '2005-02-08', techName: 'BPB', status: 'Completed', caution: '' },
+      ];
+
+      let _selectedTagNo = '';
+      let _pmModalMode = 'add';
+
+
+      function populateForm(tagNo) {
+        const tag = PM_TAG_DB.find(t => t.tagNo === tagNo);
+        if (tag) {
+          $('#pm-tag-no').val(tag.tagNo);
+          $('#pm-criticality').val(tag.criticality);
+          $('#pm-inst-type').val(tag.instType);
+          $('#pm-mode').val(tag.mode);
+          $('#pm-month').val(tag.pmMonth);
+          $('#pm-date').val(tag.pmDate);
+          $('#pm-tech-name').val(tag.techName);
+          $('#pm-status').val(tag.status);
+          $('#pm-caution').val(tag.caution);
+        }
+      }
+
+      function clearForm() {
+        $('#pm-tag-no, #pm-criticality, #pm-inst-type, #pm-mode, #pm-month, #pm-date, #pm-tech-name, #pm-caution').val('');
+        $('#pm-status').val('Pending');
+      }
+
+      // --- Tag Search Autocomplete Logic ---
+      const $pmInput = $('#pm-search-input');
+      const $pmSelect = $('#pm-tag-select');
+      const originalTagOptions = $pmSelect.find('option').clone();
+
+      $pmInput.on('input', function () {
+        const searchText = $(this).val().toLowerCase();
+        
+        // Find matches (excluding the first placeholder option)
+        const matches = originalTagOptions.filter(function(index) {
+          if (index === 0) return false;
+          return $(this).text().toLowerCase().includes(searchText);
+        });
+
+        $pmSelect.empty();
+        $pmSelect.append(originalTagOptions.eq(0).clone());
+
+        if (searchText.length > 0 && matches.length > 0) {
+          // Show only matching options
+          matches.each(function() {
+            $pmSelect.append($(this).clone());
+          });
+        } else {
+          // If search is empty OR no matches found, show all options
+          originalTagOptions.each(function(index) {
+            if (index === 0) return;
+            $pmSelect.append($(this).clone());
+          });
+        }
+      });
+
+      // Event Listeners
+      $pmSelect.on('change', function() {
+        const val = $(this).val();
+        _selectedTagNo = val;
+        
+        // Sync back to input if selected via dropdown
+        if (val && $pmInput.val() !== val) {
+          $pmInput.val(val);
+        }
+
+        if (val) populateForm(val);
+        else clearForm();
+      });
+
+      $('#status-update-tag-select').on('change', function() {
+        $('#status-update-tag-input').val($(this).val());
+      });
+
+      $('#btn-search-go').on('click', function() {
+        const q = $('#pm-search-input').val().trim();
+        if (!q) return;
+        const match = PM_TAG_DB.find(t => t.tagNo.toLowerCase() === q.toLowerCase());
+        if (match) {
+          $('#pm-tag-select').val(match.tagNo).trigger('change');
+        } else {
+          Swal.fire({ icon: 'error', title: 'Not Found', text: `Tag "${q}" not found.` });
+        }
+      });
+
+      // Modal Triggers
+      $('#btn-pm-report').on('click', () => $('#pm-report-modal').addClass('is-open'));
+      $('#btn-pm-pending').on('click', () => $('#pm-pending-modal').addClass('is-open'));
+      $('#btn-pm-monthly').on('click', () => $('#pm-monthly-status-modal').addClass('is-open'));
+      $('#btn-pm-overdue').on('click', () => $('#pm-overdue-modal').addClass('is-open'));
+      $('#btn-pm-from-log').on('click', () => $('#pm-from-log-modal').addClass('is-open'));
+      $('#btn-update-status').on('click', () => $('#pm-update-status-modal').addClass('is-open'));
+
+      $('.btn-close-modal').on('click', function() {
+        $(this).closest('.gnfc-modal-overlay').removeClass('is-open');
+      });
+
+      // Form Actions
+      $('#btn-add-pm').on('click', () => {
+        _pmModalMode = 'add';
+        $('#pm-modal-title').text('ADD PM FORM');
+        $('#modal-pm-tag-no').val('');
+        // Other clearing...
+        $('#pm-add-edit-modal').addClass('is-open');
+      });
+
+      $('#btn-edit-pm').on('click', () => {
+        if (!_selectedTagNo) return Swal.fire('Error', 'Please select a tag first', 'error');
+        const tag = PM_TAG_DB.find(t => t.tagNo === _selectedTagNo);
+        if(!tag) return;
+        _pmModalMode = 'edit';
+        $('#pm-modal-title').text('EDIT PM FORM');
+        $('#modal-pm-tag-no').val(tag.tagNo);
+        $('#modal-pm-criticality').val(tag.criticality);
+        $('#modal-pm-inst-type').val(tag.instType);
+        $('#modal-pm-mode').val(tag.mode);
+        $('#modal-pm-month').val(tag.pmMonth);
+        $('#pm-add-edit-modal').addClass('is-open');
+      });
+
+      $('#btn-delete-pm').on('click', () => {
+        if (!_selectedTagNo) return Swal.fire('Error', 'Please select a tag first', 'error');
+        Swal.fire({
+          title: 'Delete Tag?',
+          text: `Are you sure you want to delete ${_selectedTagNo}?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire('Deleted', 'Tag deleted (mock).', 'success');
+          }
+        });
+      });
+
+      $('#btn-submit-status-update').on('click', () => {
+        const tag = $('#status-update-tag-input').val();
+        if (!tag) return Swal.fire('Error', 'Tag No is required', 'error');
+        Swal.fire('Updated', `PM status updated for ${tag}.`, 'success');
+        $('#pm-update-status-modal').removeClass('is-open');
+      });
+
+      // Filter Logic for Pending Modal
+      $('#pending-month-select, #pending-type-select').on('change', function() {
+        const month = $('#pending-month-select').val();
+        const type = $('#pending-type-select').val();
+        
+        $('#pending-report-tbody tr').each(function() {
+          const rowMonth = $(this).data('month');
+          const rowType = $(this).data('type');
+          const monthMatch = (month === 'ALL' || rowMonth.startsWith(month));
+          const typeMatch = (type === 'ALL' || rowType === type);
+          $(this).toggle(monthMatch && typeMatch);
+        });
+      });
+
+      // Filter Logic for Monthly Modal
+      $('#monthly-status-select').on('change', function() {
+        const month = $(this).val();
+        const text = $(this).find('option:selected').text();
+        $('#monthly-report-title').text(month === 'ALL' ? 'PM Report' : `PM Report Of ${text}`);
+      });
+
+      // Global click to close modal
+      $(document).on('click', '.gnfc-modal-overlay', function(e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          $(this).removeClass('is-open');
+        }
+      });
+      
+      // Detail Tab redirection
+      $('.detail-tab').on('click', function() {
+        const url = $(this).data('url');
+        if (url) window.location.href = url;
+      });
+    });
+  </script>
+</body>
+
+</html>

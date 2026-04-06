@@ -137,7 +137,7 @@
     border-radius: 8px;
     border: 1px solid var(--app-border);
     background: var(--app-panel-alt);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .history-preview-info {
@@ -171,6 +171,7 @@
 }
 
 
+
 .truncate {
     white-space: nowrap;
     overflow: hidden;
@@ -179,4 +180,110 @@
 
 .d-none, .hidden {
     display: none !important;
+}
+
+/* --- Tag Edit Component --- */
+.tag-edit-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--app-border);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.tag-edit-wrapper:hover {
+    border-color: var(--typo-blue);
+    background: rgba(87, 148, 242, 0.05);
+}
+
+.tag-edit-icon {
+    font-size: 16px;
+    color: var(--typo-blue);
+    opacity: 0.8;
+}
+
+/* --- JB Detail Footer Styles --- */
+.jbd-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.jbd-empty-text {
+    color: var(--typo-secondary);
+    font-size: 0.8125rem;
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.jbd-badge-muted {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--typo-secondary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--app-border);
+}
+
+.jbd-badge-muted i {
+    font-size: 14px;
+    color: var(--typo-blue);
+}
+
+.jbd-badge-label {
+    opacity: 0.6;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.jbd-badge-value {
+    color: var(--typo-primary);
+    font-weight: 700;
+}
+
+@media (max-width: 992px) {
+    .jbd-footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- JB Detail Action Footer --- */
+.jbd-action-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 30px;
+    padding-bottom: 50px;
+    width: 100%;
+}
+
+.jbd-action-footer .jbd-btn {
+    height: 44px;
+    padding: 0 32px;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.jbd-action-footer .jbd-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.jbd-action-footer .jbd-btn i {
+    font-size: 18px;
 }
