@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GNFC | Vibration PM Detail</title>
+
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <div id="header-container" data-title="Vibration PM Detail" data-back="pm_master.html"
+      data-breadcrumbs='[{"label": "Plant", "href": "plant_status.html"}, {"label": "Boiler Dashboard", "href": "boiler_dashboard.html"}, {"label": "PM Master", "href": "pm_master.html"}, {"label": "PM Detail (VIB)"}]'>
+    </div>
+
+    <div class="dashboard-content dashboard-scroll">
+      <div class="flex flex-col gap-16px">
+
+        <!-- Top Filter Card -->
+        <div class="jbd-card">
+          <div class="jbd-card-header">
+            <div class="flex items-center gap-8px">
+              <i class="ph-bold ph-activity color-blue font-16px"></i>
+              <span class="jbd-card-header-title">Vibration PM Detail Filter</span>
+            </div>
+          </div>
+          <div class="p-16px">
+            <div class="flex flex-wrap items-end gap-16px">
+              <!-- View Selection -->
+              <div class="flex flex-col gap-8px flex-1" style="min-width: 320px; flex-basis: 40%">
+                <label class="font-11px fw-700 color-label text-uppercase">Select Tag To View</label>
+                <div class="flex items-center gap-8px">
+                  <input type="text" id="view-tag-input" class="gnfc-modal-input flex-1" placeholder="Search…">
+                  <div class="relative flex-1">
+                    <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer"
+                      style="background-image: none !important;">
+                      <option value="">-- All Tags --</option>
+                      <option value="1ZT2301">1ZT2301</option>
+                      <option value="1ZT2302">1ZT2302</option>
+                      <option value="1ZT2303">1ZT2303</option>
+                      <option value="1XT2301">1XT2301</option>
+                      <option value="1YT2301">1YT2301</option>
+                    </select>
+                    <i
+                      class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
+                  </div>
+                  <button class="pm-btn pm-btn--update px-20px h-40px" id="btn-view-tag-go">Go</button>
+                </div>
+              </div>
+
+              <!-- Add Selection -->
+              <div class="flex flex-col gap-8px flex-1" style="min-width: 200px; flex-basis: 20%; max-width: 300px;">
+                <label class="font-11px fw-700 color-label text-uppercase">Select Tag To Add PM</label>
+                <div class="relative">
+                  <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer"
+                    style="background-image: none !important;">
+                    <option value="">-- Select Tag --</option>
+                    <option value="1ZT2301">1ZT2301</option>
+                    <option value="1ZT2302">1ZT2302</option>
+                    <option value="1ZT2303">1ZT2303</option>
+                    <option value="1XT2301">1XT2301</option>
+                    <option value="1YT2301">1YT2301</option>
+                  </select>
+                  <i
+                    class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
+                </div>
+              </div>
+
+              <!-- Filter Actions -->
+              <div class="flex items-center gap-8px flex-wrap flex-1" style="min-width: 280px; flex-basis: 30%">
+                <p>
+                  <i class="ph-bold ph-clock"></i> PENDING SIGN
+                  <button class="pm-btn pm-btn--edit" id="btn-pending-filter">GO</button>
+                </p>
+                <button id="btn-open-reports" class="pm-btn pm-btn--update" style="white-space: nowrap;">
+                  <i class="ph-bold ph-file-text"></i> PM Reports
+                  <span
+                    class="bg-white color-dark px-6px py-2px radius-4px ml-4px fw-700 inline-block text-center flex-none">GO</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Details Table Card -->
+        <div class="jbd-card">
+          <div class="jbd-card-header">
+            <div class="flex items-center gap-8px">
+              <i class="ph-bold ph-table color-blue font-16px"></i>
+              <span class="jbd-card-header-title" id="pm-details-title">PM Details Tag : ALL</span>
+            </div>
+          </div>
+          <div class="p-16px">
+            <div class="user-table-wrapper">
+              <table class="user-table" style="min-width: auto;">
+                <thead>
+                  <tr>
+                    <th style="width: 60px;">Sr</th>
+                    <th style="width: 180px;">Tag No</th>
+                    <th style="width: 140px;">Job Date</th>
+                    <th>Tech Name</th>
+                    <th>Checked By</th>
+                    <th style="width: 140px;">Checked Date</th>
+                    <th style="width: 180px;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="pm-details-tbody">
+                  <!-- Static Rows -->
+                  <tr class="user-table-row" data-tag="1ZT2301" data-checked="true">
+                    <td class="text-center fw-600">1</td>
+                    <td class="text-center">1ZT2301</td>
+                    <td class="text-center color-green">20/03/2026</td>
+                    <td class="text-center">Ramesh Patel</td>
+                    <td class="text-center">SHC</td>
+                    <td class="text-center color-green">20/03/2026</td>
+                    <td class="text-center">
+                      <div class="action-btn-group">
+                        <button class="action-btn action-btn--view btn-view" data-tag="1ZT2301" title="View"><i
+                            class="ph ph-eye"></i></button>
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="1ZT2301" title="Edit"><i
+                            class="ph ph-pencil"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="1ZT2301" title="Delete"><i
+                            class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="user-table-row" data-tag="1ZT2302" data-checked="false">
+                    <td class="text-center fw-600">2</td>
+                    <td class="text-center">1ZT2302</td>
+                    <td class="text-center color-red">21/03/2026</td>
+                    <td class="text-center">Suresh Kumar</td>
+                    <td class="text-center">-</td>
+                    <td class="text-center">-</td>
+                    <td class="text-center">
+                      <div class="action-btn-group">
+                        <button class="action-btn action-btn--view btn-view" data-tag="1ZT2302" title="View"><i
+                            class="ph ph-eye"></i></button>
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="1ZT2302" title="Edit"><i
+                            class="ph ph-pencil"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="1ZT2302" title="Delete"><i
+                            class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="user-table-row" data-tag="1XT2301" data-checked="true">
+                    <td class="text-center fw-600">3</td>
+                    <td class="text-center">1XT2301</td>
+                    <td class="text-center color-green">22/03/2026</td>
+                    <td class="text-center">Amit Shah</td>
+                    <td class="text-center">M.A. Patel</td>
+                    <td class="text-center color-green">22/03/2026</td>
+                    <td class="text-center">
+                      <div class="action-btn-group">
+                        <button class="action-btn action-btn--view btn-view" data-tag="1XT2301" title="View"><i
+                            class="ph ph-eye"></i></button>
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="1XT2301" title="Edit"><i
+                            class="ph ph-pencil"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="1XT2301" title="Delete"><i
+                            class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Transmitter PM Detail (View Only) Modal -->
+  <div id="pm-view-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">TRANSMITTER PM FORM : <span id="view-modal-tag-display"
+              class="color-blue ml-4px"></span></h3>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll">
+        <div class="flex flex-col gap-16px">
+          <!-- Printable Table -->
+          <div id="printable-report" class="user-table-wrapper">
+            <table class="user-table" style="min-width: auto;">
+              <tbody>
+                <tr>
+                  <td colspan="2" style="width: 260px;">Tag No:</td>
+                  <td colspan="2" id="print-tag-no"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Job Mode:</td>
+                  <td colspan="2" id="print-job-mode">NORMAL</td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase text-center">
+                  <td>Item</td>
+                  <td>Before S/D</td>
+                  <td>Date</td>
+                  <td>After S/D</td>
+                </tr>
+                <tr>
+                  <td>Gap Voltage</td>
+                  <td id="print-gap-before" class="text-center"></td>
+                  <td id="print-gap-date" class="text-center"></td>
+                  <td id="print-gap-after" class="text-center"></td>
+                </tr>
+                <tr>
+                  <td>Measurement</td>
+                  <td id="print-meas-before" class="text-center"></td>
+                  <td id="print-meas-date" class="text-center"></td>
+                  <td id="print-meas-after" class="text-center"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="2">Hardware Inventory</td>
+                  <td colspan="2">Details</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Proximeter Model No</td>
+                  <td colspan="2" id="print-prox-model"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Proximeter S/N</td>
+                  <td colspan="2" id="print-prox-sn"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Probe Model No</td>
+                  <td colspan="2" id="print-probe-model"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Probe S/N</td>
+                  <td colspan="2" id="print-probe-sn"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ext Cable Model No</td>
+                  <td colspan="2" id="print-ext-model"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ext Cable S/N</td>
+                  <td colspan="2" id="print-ext-sn"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Monitor Model No</td>
+                  <td colspan="2" id="print-mon-model"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Card Model No</td>
+                  <td colspan="2" id="print-card-model"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Card S/N</td>
+                  <td colspan="2" id="print-card-sn"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="2">Gap Voltage Measurement</td>
+                  <td colspan="2">Readings</td>
+                </tr>
+                <tr>
+                  <td colspan="2">0</td>
+                  <td colspan="2" id="print-gap-val-0"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">0.5</td>
+                  <td colspan="2" id="print-gap-val-05"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">1</td>
+                  <td colspan="2" id="print-gap-val-1"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">1.5</td>
+                  <td colspan="2" id="print-gap-val-15"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">2</td>
+                  <td colspan="2" id="print-gap-val-2"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">2.5</td>
+                  <td colspan="2" id="print-gap-val-25"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">3</td>
+                  <td colspan="2" id="print-gap-val-3"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase text-center">
+                  <td rowspan="2">Calibration Setting</td>
+                  <td colspan="2">Before</td>
+                  <td>After</td>
+                </tr>
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase text-center">
+                  <td>Panel</td>
+                  <td>DCS</td>
+                  <td>Panel</td>
+                </tr>
+                <!-- 8 Calib Rows -->
+                <tr>
+                  <td id="print-cal-set-1"></td>
+                  <td id="print-cal-bp-1" class="text-center"></td>
+                  <td id="print-cal-bd-1" class="text-center"></td>
+                  <td id="print-cal-ap-1" class="text-center"></td>
+                </tr>
+                <tr>
+                  <td id="print-cal-set-2"></td>
+                  <td id="print-cal-bp-2" class="text-center"></td>
+                  <td id="print-cal-bd-2" class="text-center"></td>
+                  <td id="print-cal-ap-2" class="text-center"></td>
+                </tr>
+                <tr>
+                  <td id="print-cal-set-3"></td>
+                  <td id="print-cal-bp-3" class="text-center"></td>
+                  <td id="print-cal-bd-3" class="text-center"></td>
+                  <td id="print-cal-ap-3" class="text-center"></td>
+                </tr>
+                <tr>
+                  <td id="print-cal-set-4"></td>
+                  <td id="print-cal-bp-4" class="text-center"></td>
+                  <td id="print-cal-bd-4" class="text-center"></td>
+                  <td id="print-cal-ap-4" class="text-center"></td>
+                </tr>
+                <tr>
+                  <td id="print-cal-set-5"></td>
+                  <td id="print-cal-bp-5" class="text-center"></td>
+                  <td id="print-cal-bd-5" class="text-center"></td>
+                  <td id="print-cal-ap-5" class="text-center"></td>
+                </tr>
+                <tr>
+                  <td id="print-cal-set-6"></td>
+                  <td id="print-cal-bp-6" class="text-center"></td>
+                  <td id="print-cal-bd-6" class="text-center"></td>
+                  <td id="print-cal-ap-6" class="text-center"></td>
+                </tr>
+                <tr>
+                  <td id="print-cal-set-7"></td>
+                  <td id="print-cal-bp-7" class="text-center"></td>
+                  <td id="print-cal-bd-7" class="text-center"></td>
+                  <td id="print-cal-ap-7" class="text-center"></td>
+                </tr>
+                <tr>
+                  <td id="print-cal-set-8"></td>
+                  <td id="print-cal-bp-8" class="text-center"></td>
+                  <td id="print-cal-bd-8" class="text-center"></td>
+                  <td id="print-cal-ap-8" class="text-center"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="2">Physical Condition</td>
+                  <td colspan="2">Status</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Probe Physical Condition</td>
+                  <td colspan="2" id="print-probe-cond"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ext Cable Physical Condition</td>
+                  <td colspan="2" id="print-ext-cond"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Proximeter Physical Condition</td>
+                  <td colspan="2" id="print-prox-cond"></td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">Tech Remark</td>
+                  <td colspan="2" id="print-tech-remark"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Tech Name</td>
+                  <td colspan="2" id="print-tech-name"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Job Date</td>
+                  <td colspan="2" id="print-job-date"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Checked By Eng</td>
+                  <td colspan="2" id="print-eng-name">ENG_TESTER</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Eng Remark</td>
+                  <td colspan="2" id="print-eng-remark"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="pm-btn pm-btn--update font-11px px-24px btn-close-modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Edit Vibration PM Form Modal -->
+  <div id="pm-edit-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">VIBRATION PM FORM : <span id="edit-modal-tag-display"
+              class="color-blue ml-4px"></span></h3>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 75vh;">
+        <div class="flex flex-col gap-16px">
+          <div class="jbd-alert jbd-alert--warning">
+            <div class="flex items-start gap-12px">
+              <i class="ph-bold ph-warning-circle font-20px mt-2px"></i>
+              <div>
+                <div class="fw-800 font-11px uppercase mb-4px opacity-80">Special Instruction :</div>
+                <div class="font-14px fw-700 ls-wide">TRIP COMMAND WILL BE GENERATED DIRECTLY FROM BN 3500 SYSTEM DURING
+                  TESTING AND CALIBRATION.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table" style="min-width: auto;">
+              <tbody>
+                <tr>
+                  <td colspan="2" style="width: 260px;">Tag No:</td>
+                  <td colspan="2"><input type="text" id="edit-tag-no" class="pm-form-input" readonly></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Job Mode:</td>
+                  <td colspan="2"><input type="text" id="edit-job-mode" class="pm-form-input"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase text-center">
+                  <td>Item</td>
+                  <td>Before S/D</td>
+                  <td>Date</td>
+                  <td>After S/D</td>
+                </tr>
+                <tr>
+                  <td>Gap Voltage</td>
+                  <td><input type="text" id="edit-gap-before" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-gap-date" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-gap-after" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td>Measurement</td>
+                  <td><input type="text" id="edit-meas-before" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-meas-date" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-meas-after" class="pm-form-input"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="4">Hardware Inventory</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Proximeter Model No</td>
+                  <td colspan="2"><input type="text" id="edit-prox-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Proximeter S/N</td>
+                  <td colspan="2"><input type="text" id="edit-prox-sn" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Probe Model No</td>
+                  <td colspan="2"><input type="text" id="edit-probe-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Probe S/N</td>
+                  <td colspan="2"><input type="text" id="edit-probe-sn" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ext Cable Model No</td>
+                  <td colspan="2"><input type="text" id="edit-ext-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ext Cable S/N</td>
+                  <td colspan="2"><input type="text" id="edit-ext-sn" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Monitor Model No</td>
+                  <td colspan="2"><input type="text" id="edit-mon-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Card Model No</td>
+                  <td colspan="2"><input type="text" id="edit-card-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Card S/N</td>
+                  <td colspan="2"><input type="text" id="edit-card-sn" class="pm-form-input"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="4">Gap Voltage Measurement Scale</td>
+                </tr>
+                <tr>
+                  <td colspan="2">0</td>
+                  <td colspan="2"><input type="text" id="edit-gap-val-0" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">0.5</td>
+                  <td colspan="2"><input type="text" id="edit-gap-val-05" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">1</td>
+                  <td colspan="2"><input type="text" id="edit-gap-val-1" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">1.5</td>
+                  <td colspan="2"><input type="text" id="edit-gap-val-15" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">2</td>
+                  <td colspan="2"><input type="text" id="edit-gap-val-2" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">2.5</td>
+                  <td colspan="2"><input type="text" id="edit-gap-val-25" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">3</td>
+                  <td colspan="2"><input type="text" id="edit-gap-val-3" class="pm-form-input"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase text-center">
+                  <td rowspan="2">Calibration Setting</td>
+                  <td colspan="2">Before</td>
+                  <td>After</td>
+                </tr>
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase text-center">
+                  <td>Panel</td>
+                  <td>DCS</td>
+                  <td>Panel</td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="edit-cal-set-1" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bp-1" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bd-1" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-ap-1" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="edit-cal-set-2" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bp-2" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bd-2" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-ap-2" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="edit-cal-set-3" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bp-3" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bd-3" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-ap-3" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="edit-cal-set-4" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bp-4" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bd-4" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-ap-4" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="edit-cal-set-5" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bp-5" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bd-5" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-ap-5" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="edit-cal-set-6" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bp-6" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bd-6" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-ap-6" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="edit-cal-set-7" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bp-7" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bd-7" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-ap-7" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="edit-cal-set-8" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bp-8" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-bd-8" class="pm-form-input"></td>
+                  <td><input type="text" id="edit-cal-ap-8" class="pm-form-input"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="4">Physical Condition</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Probe Physical Condition</td>
+                  <td colspan="2"><input type="text" id="edit-probe-cond" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ext Cable Physical Condition</td>
+                  <td colspan="2"><input type="text" id="edit-ext-cond" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Proximeter Physical Condition</td>
+                  <td colspan="2"><input type="text" id="edit-prox-cond" class="pm-form-input"></td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">Tech Remark</td>
+                  <td colspan="2"><input type="text" id="edit-tech-remark" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Tech Name</td>
+                  <td colspan="2"><input type="text" id="edit-tech-name" class="pm-form-input" readonly></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Job Date</td>
+                  <td colspan="2"><input type="text" id="edit-job-date" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Checked By Eng</td>
+                  <td colspan="2"><input type="text" id="edit-eng-name" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Eng Remark</td>
+                  <td colspan="2"><input type="text" id="edit-eng-remark" class="pm-form-input"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-save-pm">SAVE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Vibration PM Form Modal -->
+  <div id="pm-add-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">VIBRATION PM FORM : <span id="add-modal-tag-display"
+              class="color-blue ml-4px"></span></h3>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 75vh;">
+        <div class="flex flex-col gap-16px">
+          <div class="jbd-alert jbd-alert--warning">
+            <div class="flex items-start gap-12px">
+              <i class="ph-bold ph-warning-circle font-20px mt-2px"></i>
+              <div>
+                <div class="fw-800 font-11px uppercase mb-4px opacity-80">Special Instruction :</div>
+                <div class="font-14px fw-700 ls-wide">TRIP COMMAND WILL BE GENERATED DIRECTLY FROM BN 3500 SYSTEM DURING
+                  TESTING AND CALIBRATION.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table" style="min-width: auto;">
+              <tbody>
+                <tr>
+                  <td colspan="2" style="width: 260px;">Tag No:</td>
+                  <td colspan="2"><input type="text" id="add-tag-no" class="pm-form-input" readonly></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Job Mode:</td>
+                  <td colspan="2"><input type="text" id="add-job-mode" class="pm-form-input" value="NORMAL"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase text-center">
+                  <td>Item</td>
+                  <td>Before S/D</td>
+                  <td>Date</td>
+                  <td>After S/D</td>
+                </tr>
+                <tr>
+                  <td>Gap Voltage</td>
+                  <td><input type="text" id="add-gap-before" class="pm-form-input"></td>
+                  <td><input type="text" id="add-gap-date" class="pm-form-input"></td>
+                  <td><input type="text" id="add-gap-after" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td>Measurement</td>
+                  <td><input type="text" id="add-meas-before" class="pm-form-input"></td>
+                  <td></td>
+                  <td><input type="text" id="add-meas-after" class="pm-form-input"></td>
+                </tr>
+
+                <!-- <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="4">Hardware Inventory</td>
+                </tr> -->
+                <tr>
+                  <td colspan="2">Proximeter Model No</td>
+                  <td colspan="2"><input type="text" id="add-prox-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Proximeter S/N</td>
+                  <td colspan="2"><input type="text" id="add-prox-sn" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Probe Model No</td>
+                  <td colspan="2"><input type="text" id="add-probe-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Probe S/N</td>
+                  <td colspan="2"><input type="text" id="add-probe-sn" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ext Cable Model No</td>
+                  <td colspan="2"><input type="text" id="add-ext-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ext Cable S/N</td>
+                  <td colspan="2"><input type="text" id="add-ext-sn" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Monitor Model No</td>
+                  <td colspan="2"><input type="text" id="add-mon-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Card Model No</td>
+                  <td colspan="2"><input type="text" id="add-card-model" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Card S/N</td>
+                  <td colspan="2"><input type="text" id="add-card-sn" class="pm-form-input"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="4">Gap Voltage Measurement Scale</td>
+                </tr>
+                <tr>
+                  <td colspan="2">0</td>
+                  <td colspan="2"><input type="text" id="add-gap-val-0" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">0.5</td>
+                  <td colspan="2"><input type="text" id="add-gap-val-05" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">1</td>
+                  <td colspan="2"><input type="text" id="add-gap-val-1" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">1.5</td>
+                  <td colspan="2"><input type="text" id="add-gap-val-15" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">2</td>
+                  <td colspan="2"><input type="text" id="add-gap-val-2" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">2.5</td>
+                  <td colspan="2"><input type="text" id="add-gap-val-25" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">3</td>
+                  <td colspan="2"><input type="text" id="add-gap-val-3" class="pm-form-input"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="4">Calibration</td>
+                </tr>
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase text-center">
+                  <td rowspan="2">Calibration Setting</td>
+                  <td colspan="2">Before</td>
+                  <td>After</td>
+                </tr>
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase text-center">
+                  <td>Panel</td>
+                  <td>DCS</td>
+                  <td>Panel</td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="add-cal-set-1" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bp-1" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bd-1" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-ap-1" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="add-cal-set-2" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bp-2" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bd-2" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-ap-2" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="add-cal-set-3" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bp-3" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bd-3" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-ap-3" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="add-cal-set-4" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bp-4" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bd-4" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-ap-4" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="add-cal-set-5" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bp-5" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bd-5" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-ap-5" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="add-cal-set-6" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bp-6" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bd-6" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-ap-6" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="add-cal-set-7" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bp-7" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bd-7" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-ap-7" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="add-cal-set-8" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bp-8" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-bd-8" class="pm-form-input"></td>
+                  <td><input type="text" id="add-cal-ap-8" class="pm-form-input"></td>
+                </tr>
+
+                <tr class="bg-dark-bg fw-800 color-primary font-11px uppercase">
+                  <td colspan="4">Physical Condition</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Probe Physical Condition</td>
+                  <td colspan="2"><input type="text" id="add-probe-cond" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ext Cable Physical Condition</td>
+                  <td colspan="2"><input type="text" id="add-ext-cond" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Proximeter Physical Condition</td>
+                  <td colspan="2"><input type="text" id="add-prox-cond" class="pm-form-input"></td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">Tech Remark</td>
+                  <td colspan="2"><input type="text" id="add-tech-remark" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Tech Name</td>
+                  <td colspan="2"><input type="text" id="add-tech-name" class="pm-form-input" value="ENG_TESTER"></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Job Date</td>
+                  <td colspan="2"><input type="text" id="add-job-date" class="pm-form-input"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-save-pm-add">SAVE</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="pm-reports-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header py-12px">
+        <h3 class="gnfc-modal-title uppercase">VIBRATION PM REPORT</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll" style="min-height: 480px;">
+        <!-- Filter Actions -->
+        <div class="flex justify-between gap-12px border-b border-dashed border-dark pb-16px">
+
+          <!-- Report by Yes/No -->
+          <div class="flex items-center gap-16px">
+            <label class="font-14px color-label uppercase">Report by Yes/No</label>
+            <div class="jbd-select-wrap">
+              <select id="report-param-select" class="jbd-input jbd-select w-280px h-32px">
+                <option value="">-- Choose Parameter --</option>
+                <option>Probe Physical Condition OK?</option>
+                <option>Ext Cable Physical Condition OK?</option>
+                <option>Proximeter Physical Condition OK?</option>
+                <option>Gap Voltage Within Limits?</option>
+                <option>Calibration Found OK?</option>
+              </select>
+              <i class="ph-bold ph-caret-down jbd-caret"></i>
+            </div>
+            <div class="flex items-center gap-12px">
+              <label class="flex items-center gap-4px cursor-pointer font-14px color-primary">
+                Yes: <input type="radio" name="report-val" value="yes" checked class="w-14px h-14px">
+              </label>
+              <label class="flex items-center gap-4px cursor-pointer font-14px color-primary">
+                No: <input type="radio" name="report-val" value="no" class="w-14px h-14px">
+              </label>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-16px">
+            <button id="btn-remark-report" class="ui-btn ui-btn--primary">
+              Remark Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Report Result Container -->
+        <div id="report-result-container" class="animate-fade-in">
+          <div class="jbd-card border-none radius-0px">
+            <div class="p-0">
+              <div class="text-center py-12px bg-dark-bg border-b-2 border-primary mb-8px">
+                <h4 class="font-18px uppercase ls-wide color-secondary m-0" id="report-result-title">Filtered Report
+                </h4>
+              </div>
+
+              <div class="user-table-wrapper radius-0px border-dark">
+                <table class="user-table" id="pm-report-final-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 50px;">Sr</th>
+                      <th style="width: 140px;">Tagno</th>
+                      <th>Date</th>
+                      <th>Tech Name</th>
+                      <th>Checked by</th>
+                      <th>Date</th>
+                      <th style="min-width: 200px;">Tech Remark</th>
+                      <th style="min-width: 150px;">Eng Remark</th>
+                    </tr>
+                  </thead>
+                  <tbody id="report-tbody">
+                    <!-- Static Rows for Remark Report -->
+                    <tr class="user-table-row">
+                      <td class="text-center fw-600">1</td>
+                      <td class="text-center fw-800">1ZT2301</td>
+                      <td class="text-center fw-700 color-green">19/03/2026</td>
+                      <td class="text-center">PBS</td>
+                      <td class="text-center">SHC</td>
+                      <td class="text-center color-green">19/03/2026</td>
+                      <td class="">Gap voltage adjusted to -9.0V DC. Found OK.</td>
+                      <td class=""></td>
+                    </tr>
+                    <tr class="user-table-row">
+                      <td class="text-center fw-600">2</td>
+                      <td class="text-center fw-800">1ZT2302</td>
+                      <td class="text-center fw-700 color-green">20/03/2026</td>
+                      <td class="text-center">BPB</td>
+                      <td class="text-center">SHC</td>
+                      <td class="text-center color-green">20/03/2026</td>
+                      <td class="">Calibration checked at panel and DCS. No devation found.</td>
+                      <td class=""></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="pm-btn pm-btn--update font-11px px-24px btn-close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Scripts -->
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    $(document).ready(function () {
+      // Mock Data
+      const pmData = {
+        "1ZT2301": {
+          tag_no: "1ZT2301",
+          job_mode: "NORMAL",
+          gap_before: "-9.12", gap_date: "20/03/2026", gap_after: "-9.05",
+          meas_before: "123.5", meas_date: "20/03/2026", meas_after: "123.8",
+          prox_model: "3300 XL 8mm", prox_sn: "PX-112233",
+          probe_model: "3300 XL 8mm", probe_sn: "PB-445566",
+          ext_model: "3300 XL", ext_sn: "EX-778899",
+          mon_model: "3500/42M", card_model: "Prox/Seismic", card_sn: "CD-990011",
+          gap_val_0: "0.0", gap_val_05: "0.51", gap_val_1: "1.02", gap_val_15: "1.53", gap_val_2: "2.04", gap_val_25: "2.55", gap_val_3: "3.06",
+          cal_set_1: "0.0", cal_bp_1: "0.01", cal_bd_1: "0.0", cal_ap_1: "0.0",
+          cal_set_2: "2.5", cal_bp_2: "2.52", cal_bd_2: "2.51", cal_ap_2: "2.5",
+          cal_set_3: "5.0", cal_bp_3: "5.03", cal_bd_3: "5.02", cal_ap_3: "5.0",
+          cal_set_4: "7.5", cal_bp_4: "7.54", cal_bd_4: "7.53", cal_ap_4: "7.5",
+          cal_set_5: "10.0", cal_bp_5: "10.05", cal_bd_5: "10.04", cal_ap_5: "10.0",
+          probe_cond: "GOOD", ext_cond: "GOOD", prox_cond: "GOOD",
+          tech_remark: "Found OK after adjustment", tech_name: "Ramesh Patel", job_date: "20/03/2026",
+          eng_name: "ENG_TESTER", eng_remark: "Verified"
+        }
+      };
+
+      // Handle Tag Search & Select
+      const $tagInput = $('#view-tag-input');
+      const $tagSelect = $('#view-tag-select');
+      const originalTagOptions = $tagSelect.find('option').clone();
+
+      $tagInput.on('input', function () {
+        const searchText = $(this).val().toLowerCase();
+        const matches = originalTagOptions.filter(function (index) {
+          if (index === 0) return false;
+          return $(this).text().toLowerCase().includes(searchText);
+        });
+        $tagSelect.empty().append(originalTagOptions.eq(0).clone());
+        if (searchText.length > 0 && matches.length > 0) {
+          matches.each(function () { $tagSelect.append($(this).clone()); });
+          $tagSelect.prop('selectedIndex', 1);
+        } else {
+          originalTagOptions.each(function (index) { if (index > 0) $tagSelect.append($(this).clone()); });
+          $tagSelect.prop('selectedIndex', 0);
+        }
+      });
+
+      // Synchronize Select back to Input
+      $tagSelect.on('change', function () {
+        const val = $(this).val();
+        if (val) $tagInput.val(val);
+        else $tagInput.val('');
+      });
+
+      // Tag Filter Logic (Go Button)
+      $('#btn-view-tag-go').on('click', function () {
+        const selectedTag = $tagSelect.val();
+
+        if (!selectedTag) {
+          $('#pm-details-tbody tr').show();
+        } else {
+          $('#pm-details-tbody tr').hide();
+          $(`#pm-details-tbody tr[data-tag="${selectedTag}"]`).show();
+        }
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Filtered',
+          text: 'Displaying details for: ' + (selectedTag || 'All Tags'),
+          timer: 1500,
+          showConfirmButton: false,
+          confirmButtonColor: 'var(--color-primary)'
+        });
+      });
+
+      // Modal Controls
+      function openModal(selector) { $(selector).addClass('is-open'); }
+      function closeModal(selector) { $(selector).removeClass('is-open'); }
+
+      // View Modal
+      $(document).on('click', '.btn-view', function () {
+        const tag = $(this).data('tag');
+        const data = pmData[tag] || pmData["1ZT2301"];
+
+        // Basic Info
+        $('#print-tag-no').text(tag);
+        $('#print-job-mode').text(data.job_mode);
+
+        // Status & Hardware & Scale & Calib & Condition
+        Object.keys(data).forEach(key => {
+          const elementId = `#print-${key.replace(/_/g, '-')}`;
+          if ($(elementId).length) $(elementId).text(data[key]);
+        });
+
+        openModal('#pm-view-modal');
+      });
+
+      // Edit Modal
+      $(document).on('click', '.btn-edit', function () {
+        const tag = $(this).data('tag');
+        const data = pmData[tag] || pmData["1ZT2301"];
+
+        $('#edit-modal-tag-display').text(tag);
+        $('#edit-tag-no').val(tag);
+        $('#edit-job-mode').val(data.job_mode);
+
+        Object.keys(data).forEach(key => {
+          const elementId = `#edit-${key.replace(/_/g, '-')}`;
+          if ($(elementId).length) $(elementId).val(data[key]);
+        });
+
+        openModal('#pm-edit-modal');
+      });
+
+      // Add Modal
+      $('#add-tag-select').on('change', function () {
+        const tag = $(this).val();
+        if (tag) {
+          $('#add-modal-tag-display').text(tag);
+          $('#add-tag-no').val(tag);
+          $('#add-job-date').val(new Date().toLocaleDateString('en-GB'));
+          openModal('#pm-add-modal');
+          $(this).val('');
+        }
+      });
+
+      // Close Button / Overlay Click
+      $('.btn-close-modal, .gnfc-modal-overlay').on('click', function (e) {
+        if (e.target === this || $(this).hasClass('btn-close-modal')) {
+          closeModal('.gnfc-modal-overlay');
+        }
+      });
+
+      // Save Actions
+      $('#btn-save-pm, #btn-save-pm-add').on('click', function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Vibration PM record has been saved.',
+          icon: 'success',
+          confirmButtonColor: 'var(--color-primary)'
+        }).then(() => {
+          closeModal('.gnfc-modal-overlay');
+        });
+      });
+
+      // Delete Action
+      $(document).on('click', '.btn-delete', function () {
+        const tag = $(this).data('tag');
+        Swal.fire({
+          title: 'Delete Record?',
+          text: `Are you sure you want to delete ${tag}?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#ef4444'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $(this).closest('tr').fadeOut();
+            Swal.fire('Deleted!', '', 'success');
+          }
+        });
+      });
+
+      // Reports
+      $('#btn-open-reports').on('click', () => openModal('#pm-reports-modal'));
+    });
+  </script>
+</body>
+
+</html>
