@@ -46,54 +46,6 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* --- 2. BUTTONS --- */
-.ui-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid transparent;
-}
-
-.ui-btn--primary {
-  background: var(--typo-blue);
-  color: white;
-}
-
-.ui-btn--secondary {
-  background: var(--app-bg);
-  border-color: var(--app-border);
-  color: var(--typo-primary);
-}
-
-.ui-btn--danger {
-  background: #f2495c;
-  color: white;
-}
-
-.ui-btn--icon {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-}
-
-.ui-btn:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-}
-
-.ui-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
 /* --- 3. BADGES & STATUS CHIPS --- */
 .ui-badge {
   display: inline-flex;
@@ -200,10 +152,11 @@
 
 
 .user-table-head-cell {
-  padding: 8px 10px;
-  font-size: 0.8375rem;
-  font-weight: 700;
+  padding: 10px 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--typo-blue);
   background: var(--app-panel-alt);
   border-bottom: 2px solid var(--app-border);
@@ -265,27 +218,31 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.875rem;
+  background-color: var(--app-panel);
 }
 
 .user-table th {
-  padding: 12px 10px;
-  font-size: 0.85rem;
+  padding: 10px 12px;
+  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--typo-blue);
   background: var(--app-panel-alt);
-  border-bottom: 1px solid var(--app-border);
+  border-bottom: 2px solid var(--app-border);
   border-right: 1px solid var(--app-border);
   text-align: center;
+  position: sticky;
   top: 0;
   z-index: 10;
 }
 
 .user-table td {
-  padding: 4px;
+  padding: 10px 12px;
   color: var(--typo-primary);
   border-bottom: 1px solid var(--app-border);
   border-right: 1px solid var(--app-border);
+  vertical-align: middle;
 }
 
 .user-table th:last-child,
@@ -2077,10 +2034,21 @@
   filter: brightness(0.9);
 }
 
-.pm-btn--add { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
-.pm-btn--edit { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
-.pm-btn--delete { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
-.pm-btn--update { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+.pm-btn--add {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.pm-btn--edit {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.pm-btn--delete {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.pm-btn--update {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
 
 /* PM Button Badge (the 'Go' part) */
 .pm-btn-badge {
@@ -2098,7 +2066,7 @@
 .pm-btn--edit .pm-btn-badge {
   background-color: #ffffff;
   color: #d97706;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .pm-btn--update .pm-btn-badge {
@@ -2110,18 +2078,26 @@
   font-size: 1.25rem;
 }
 
-/* PM Master — Layout Utilities */
-.gap-8px { gap: 8px !important; }
-.gap-12px { gap: 12px !important; }
-.gap-16px { gap: 16px !important; }
-.gap-24px { gap: 24px !important; }
-.gap-w-full { width: 100% !important; }
+.gap-w-full {
+  width: 100% !important;
+}
 
 /* Status Colors Transition */
-.color-green { color: #4ade80 !important; }
-.color-red { color: #f87171 !important; }
-.color-orange { color: #fbbf24 !important; }
-.color-blue { color: #3b82f6 !important; }
+.color-green {
+  color: #4ade80 !important;
+}
+
+.color-red {
+  color: #f87171 !important;
+}
+
+.color-orange {
+  color: #fbbf24 !important;
+}
+
+.color-blue {
+  color: #3b82f6 !important;
+}
 
 
 /* ==============================================================================
@@ -5549,9 +5525,43 @@ html[data-theme-mode="light"] .jbd-ch-num {
   color: #fb923c !important;
 }
 
-.jbd-color-red {
-  color: #ef4444 !important;
+/* ----------------------------- */
+
+/* ==============================================================================
+ * PRINT STYLES: PROFESSIONAL PM REPORT
+ * ============================================================================== */
+@media print {
+
+  /* Hide everything except the report content */
+  body * {
+    visibility: hidden;
+  }
+
+  #printable-report,
+  #printable-report * {
+    visibility: visible;
+  }
+
+  #printable-report {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white !important;
+    color: black !important;
+    padding: 20px !important;
+  }
 }
 
-
-/* ----------------------------- */
+.pm-form-input {
+  height: 32px;
+  padding: 0 12px;
+  background: transparent;
+  border: 2px solid var(--app-border);
+  color: var(--app-text);
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.15s;
+  border-radius: 4px;
+}
