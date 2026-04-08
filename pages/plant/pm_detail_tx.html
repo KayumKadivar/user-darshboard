@@ -31,6 +31,7 @@
       data-breadcrumbs='[{"label": "Plant", "href": "plant_status.html"}, {"label": "Boiler Dashboard", "href": "boiler_dashboard.html"}, {"label": "PM Master", "href": "pm_master.html"}, {"label": "PM Detail (T/X)"}]'>
     </div>
 
+    <!-- Transmitter PM Detail Filter  -->
     <div class="dashboard-content dashboard-scroll">
       <div class="flex flex-col gap-16px">
 
@@ -70,7 +71,6 @@
                     <i
                       class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
                   </div>
-                  <button class="pm-btn pm-btn--update px-20px h-40px" id="btn-view-tag-go">Go</button>
                 </div>
               </div>
 
@@ -103,7 +103,8 @@
                 </p>
                 <button id="btn-open-reports" class="pm-btn pm-btn--update" style="white-space: nowrap;">
                   <i class="ph-bold ph-file-text"></i> PM Reports
-                  <span class="bg-white color-dark px-6px py-2px radius-4px ml-4px fw-700 inline-block text-center flex-none">GO</span>
+                  <span
+                    class="bg-white color-dark px-6px py-2px radius-4px ml-4px fw-700 inline-block text-center flex-none">GO</span>
                 </button>
               </div>
             </div>
@@ -143,8 +144,8 @@
                     <td class="text-center color-green">01/01/2005</td>
                     <td class="text-center">
                       <div class="action-btn-group">
-                        <button class="action-btn action-btn--view btn-view" data-tag="LIHL_1442_04" title="View"><i
-                            class="ph ph-eye"></i></button>
+                        <button class="action-btn action-btn--view btn-view" data-tag="LIHL_1442_04"
+                          title="Print Preview"><i class="ph ph-eye"></i></button>
                         <button class="action-btn action-btn--edit btn-edit" data-tag="LIHL_1442_04" title="Edit"><i
                             class="ph ph-pencil"></i></button>
                         <button class="action-btn action-btn--delete btn-delete" data-tag="LIHL_1442_04"
@@ -203,7 +204,8 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">TRANSMITTER PM FORM : <span id="view-modal-tag-display" class="color-blue ml-4px"></span></h3>
+          <h3 class="gnfc-modal-title">TRANSMITTER PM FORM : <span id="view-modal-tag-display"
+              class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x text-lg"></i>
@@ -211,13 +213,6 @@
       </div>
       <div class="gnfc-modal-body dashboard-scroll">
         <div class="flex flex-col gap-16px">
-          <!-- Special Instruction Section -->
-          <div class="user-table-wrapper">
-            <div class="p-12px bg-dark-bg border-b border-dark ">
-              <div class="fw-800 color-primary font-11px uppercase mb-4px">Special Instruction :</div>
-              <div class="font-14px color-text ls-wide fw-600">DAMP TX: DAMP DCS:</div>
-            </div>
-          </div>
           <!-- Printable Report Section (Primary View) -->
           <div id="printable-report" class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
@@ -225,27 +220,27 @@
                 <!-- Basic Information -->
                 <tr>
                   <td colspan="2" style="width: 260px;">Tag_no</td>
-                  <td colspan="2" id="print-tag-no"></td>
+                  <td colspan="2"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Make</td>
-                  <td colspan="2" id="print-make">EMERSON</td>
+                  <td colspan="2">EMERSON</td>
                 </tr>
                 <tr>
                   <td colspan="2">Cal Range</td>
-                  <td colspan="2" id="print-cal-range">0-2170 MMWC</td>
+                  <td colspan="2">0-2170 MMWC</td>
                 </tr>
                 <tr>
                   <td colspan="2">Engineering Range</td>
-                  <td colspan="2" id="print-eng-range">0-25002 SM3/HR</td>
+                  <td colspan="2">0-25002 SM3/HR</td>
                 </tr>
                 <tr>
                   <td colspan="2">Location</td>
-                  <td colspan="2" id="print-location">NG STATION.</td>
+                  <td colspan="2">NG STATION.</td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Mode</td>
-                  <td colspan="2" id="print-job-mode">NORMAL</td>
+                  <td colspan="2">NORMAL</td>
                 </tr>
 
                 <!-- Checklist -->
@@ -321,27 +316,27 @@
                 <!-- Remarks & Signs -->
                 <tr>
                   <td colspan="2">Tech Remark</td>
-                  <td colspan="2" id="print-tech-remark">ok</td>
+                  <td colspan="2">ok</td>
                 </tr>
                 <tr>
                   <td colspan="2">Tech Name</td>
-                  <td colspan="2" id="print-tech-name">PRP</td>
+                  <td colspan="2">PRP</td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Date</td>
-                  <td colspan="2" id="print-job-date">30/07/2019</td>
+                  <td colspan="2">30/07/2019</td>
                 </tr>
                 <tr>
                   <td colspan="2">Checked By Eng</td>
-                  <td colspan="2" id="print-checked-by">ENG_TESTER</td>
+                  <td colspan="2">ENG_TESTER</td>
                 </tr>
                 <tr>
                   <td colspan="2">Date</td>
-                  <td colspan="2" id="print-sign-date">30/07/2019</td>
+                  <td colspan="2">30/07/2019</td>
                 </tr>
                 <tr>
                   <td colspan="2">Eng Remark</td>
-                  <td colspan="2" id="print-eng-remark">Zero drifting of -56 mmwc so zero
+                  <td colspan="2">Zero drifting of -56 mmwc so zero
                     triming done.</td>
                 </tr>
               </tbody>
@@ -350,7 +345,7 @@
         </div>
       </div>
       <div class="gnfc-modal-footer">
-        <button class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Close</button>
       </div>
 
     </div>
@@ -362,7 +357,8 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">Transmitter PM Form : <span id="edit-modal-tag-display" class="color-blue ml-4px"></span></h3>
+          <h3 class="gnfc-modal-title">Transmitter PM Form : <span id="edit-modal-tag-display"
+              class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x text-lg"></i>
@@ -370,14 +366,6 @@
       </div>
       <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
         <div class="flex flex-col gap-16px">
-          <!-- Special Instruction Section -->
-          <div class="user-table-wrapper">
-            <div class="p-12px bg-dark-bg border-b border-dark">
-              <div class="fw-800 color-primary font-11px uppercase mb-4px">Special Instruction :</div>
-              <div class="font-14px color-text ls-wide fw-600">DAMP TX: DAMP DCS:</div>
-            </div>
-          </div>
-
           <!-- Tabular Form Structure -->
           <div class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
@@ -386,49 +374,43 @@
                 <tr>
                   <td colspan="2" style="width: 260px;">Tag_no</td>
                   <td colspan="2">
-                    <input type="text" id="edit-tag-no" class="pm-form-input"
-                      readonly>
+                    <input type="text" id="edit-tag-no" class="pm-form-input" readonly>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Make</td>
                   <td colspan="2">
-                    <input type="text" id="edit-make" class="pm-form-input"
-                      value="EMERSON">
+                    <input type="text" id="edit-make" class="pm-form-input" value="EMERSON">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Cal Range</td>
                   <td colspan="2">
-                    <input type="text" id="edit-cal-range" class="pm-form-input"
-                      value="0-2170 MMWC">
+                    <input type="text" id="edit-cal-range" class="pm-form-input" value="0-2170 MMWC">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Engineering Range</td>
                   <td colspan="2">
-                    <input type="text" id="edit-eng-range" class="pm-form-input"
-                      value="0-25002 SM3/HR">
+                    <input type="text" id="edit-eng-range" class="pm-form-input" value="0-25002 SM3/HR">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Location</td>
                   <td colspan="2">
-                    <input type="text" id="edit-location" class="pm-form-input"
-                      value="NG STATION.">
+                    <input type="text" id="edit-location" class="pm-form-input" value="NG STATION.">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Mode</td>
                   <td colspan="2">
-                    <input type="text" id="edit-job-mode" class="pm-form-input"
-                      value="NORMAL">
+                    <input type="text" id="edit-job-mode" class="pm-form-input" value="NORMAL">
                   </td>
                 </tr>
 
                 <!-- Instructional Header -->
                 <tr>
-                  <td colspan="4" class="bg-dark-bg fw-800 color-primary font-11px py-8px uppercase">
+                  <td colspan="4">
                     Select check box If Answer is Yes otherwise keep blank.
                   </td>
                 </tr>
@@ -547,43 +529,37 @@
                 <tr>
                   <td colspan="2">Tech Remark</td>
                   <td colspan="2">
-                    <input type="text" id="edit-tech-remark" class="pm-form-input"
-                      value="ok">
+                    <input type="text" id="edit-tech-remark" class="pm-form-input" value="ok">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Tech Name</td>
                   <td colspan="2">
-                    <input type="text" id="edit-tech-name" class="pm-form-input"
-                      value="PRP">
+                    <input type="text" id="edit-tech-name" class="pm-form-input" value="PRP">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Date</td>
                   <td colspan="2">
-                    <input type="text" id="edit-job-date" class="pm-form-input"
-                      value="30/07/2019">
+                    <input type="text" id="edit-job-date" class="pm-form-input" value="30/07/2019">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Checked By Eng</td>
                   <td colspan="2">
-                    <input type="text" id="edit-eng-name" class="pm-form-input"
-                      value="ENG_TESTER">
+                    <input type="text" id="edit-eng-name" class="pm-form-input" value="ENG_TESTER">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Date</td>
                   <td colspan="2">
-                    <input type="text" id="edit-sign-date" class="pm-form-input"
-                      value="30/07/2019">
+                    <input type="text" id="edit-sign-date" class="pm-form-input" value="30/07/2019">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Eng Remark</td>
                   <td colspan="2">
-                    <input type="text" id="edit-eng-remark" class="pm-form-input"
-                      value="Zero drifting of -56 mmw">
+                    <input type="text" id="edit-eng-remark" class="pm-form-input" value="Zero drifting of -56 mmw">
                   </td>
                 </tr>
               </tbody>
@@ -593,7 +569,7 @@
         </div>
       </div>
       <div class="gnfc-modal-footer">
-        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-save-pm">
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-edit-save-pm">
           SAVE
         </button>
       </div>
@@ -605,13 +581,14 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">Transmitter PM Form : <span id="add-modal-tag-display" class="color-blue ml-4px"></span></h3>
+          <h3 class="gnfc-modal-title">Transmitter PM Form : <span id="add-modal-tag-display"
+              class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x text-lg"></i>
         </button>
       </div>
-      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
+      <div class="gnfc-modal-body dashboard-scroll">
         <div class="flex flex-col gap-16px">
           <!-- Special Instruction Section -->
           <div class="user-table-wrapper">
@@ -625,53 +602,46 @@
           <div class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
               <tbody>
-                <!-- Basic Information -->
                 <tr>
                   <td colspan="2" style="width: 260px;">Tag_no</td>
                   <td colspan="2">
-                    <input type="text" id="add-tag-no" class="pm-form-input"
-                      readonly>
+                    <input type="text" class="pm-form-input" readonly>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Make</td>
                   <td colspan="2">
-                    <input type="text" id="add-make" class="pm-form-input"
-                      value="EMERSON">
+                    <input type="text" class="pm-form-input" value="EMERSON">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Cal Range</td>
                   <td colspan="2">
-                    <input type="text" id="add-cal-range" class="pm-form-input"
-                      value="0-2170 MMWC">
+                    <input type="text" class="pm-form-input" value="0-2170 MMWC">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Engineering Range</td>
                   <td colspan="2">
-                    <input type="text" id="add-eng-range" class="pm-form-input"
-                      value="0-25002 SM3/HR">
+                    <input type="text" class="pm-form-input" value="0-25002 SM3/HR">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Location</td>
                   <td colspan="2">
-                    <input type="text" id="add-location" class="pm-form-input"
-                      value="NG STATION.">
+                    <input type="text" class="pm-form-input" value="NG STATION.">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Mode</td>
                   <td colspan="2">
-                    <input type="text" id="add-job-mode" class="pm-form-input"
-                      value="NORMAL">
+                    <input type="text" class="pm-form-input" value="NORMAL">
                   </td>
                 </tr>
 
                 <!-- Instructional Header -->
                 <tr>
-                  <td colspan="4" class="bg-dark-bg fw-800 color-primary font-11px py-8px uppercase">
+                  <td colspan="4">
                     Select check box If Answer is Yes otherwise keep blank.
                   </td>
                 </tr>
@@ -790,22 +760,19 @@
                 <tr>
                   <td colspan="2">Tech Remark</td>
                   <td colspan="2">
-                    <input type="text" id="add-tech-remark" class="pm-form-input"
-                      value="ok">
+                    <input type="text" class="pm-form-input" value="ok">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Tech Name</td>
                   <td colspan="2">
-                    <input type="text" id="add-tech-name" class="pm-form-input"
-                      value="PRP">
+                    <input type="text" class="pm-form-input" value="PRP">
                   </td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Date</td>
                   <td colspan="2">
-                    <input type="text" id="add-job-date" class="pm-form-input"
-                      value="30/07/2019">
+                    <input type="text" class="pm-form-input" value="30/07/2019">
                   </td>
                 </tr>
               </tbody>
@@ -815,14 +782,14 @@
         </div>
       </div>
       <div class="gnfc-modal-footer">
-        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-save-pm">
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-add-save-pm">
           SAVE
         </button>
       </div>
     </div>
   </div>
 
-
+  <!-- Transmitter PM Report Modal -->
   <div id="pm-reports-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header py-12px">
@@ -832,67 +799,68 @@
         </button>
       </div>
       <div class="gnfc-modal-body dashboard-scroll" style="min-height: 480px;">
-          <!-- Filter Actions -->
-          <div class="flex justify-between gap-12px border-b border-dashed border-dark pb-16px">
-            
-            <!-- Report by Yes/No -->
-            <div class="flex items-center gap-16px">
-              <label class="font-14px color-label uppercase">Report by Yes/No</label>
-              <div class="jbd-select-wrap">
-                <select id="report-param-select" class="jbd-input jbd-select w-280px h-32px">
-                  <option value="">-- Choose Parameter --</option>
-                  <option>Range Checked By HHT?</option>
-                  <option>Mounting Zero Checked Before Calibration?</option>
-                  <option>Glanding / Cable Support OK?</option>
-                  <option>Tag Stamping OK?</option>
-                  <option>Canopy required?</option>
-                  <option>Manifold Condition OK?</option>
-                  <option>Any Leakage At Drain Valve/Plug/Tubing ?</option>
-                  <option>Tapping Flushed?</option>
-                  <option>Monsoon Protection OK?</option>
-                </select>
-                <i class="ph-bold ph-caret-down jbd-caret"></i>
-              </div>
-              <div class="flex items-center gap-12px">
-                <label class="flex items-center gap-4px cursor-pointer font-14px color-primary">
-                  Yes: <input type="radio" name="report-val" value="yes" checked class="w-14px h-14px">
-                </label>
-                <label class="flex items-center gap-4px cursor-pointer font-14px color-primary">
-                  No: <input type="radio" name="report-val" value="no" class="w-14px h-14px">
-                </label>
-              </div>
-            </div>
+        <!-- Filter Actions -->
+        <div class="flex justify-between gap-12px border-b border-dashed border-dark pb-16px">
 
-            <div class="flex items-center gap-16px">
-                 <button id="btn-remark-report" class="ui-btn ui-btn--primary">
-              Remark Report
-            </button>
+          <!-- Report by Yes/No -->
+          <div class="flex items-center gap-16px">
+            <label class="font-14px color-label uppercase">Report by Yes/No</label>
+            <div class="jbd-select-wrap">
+              <select id="report-param-select" class="jbd-input jbd-select w-280px h-32px">
+                <option value="">Choose Parameter</option>
+                <option>Range Checked By HHT?</option>
+                <option>Mounting Zero Checked Before Calibration?</option>
+                <option>Glanding / Cable Support OK?</option>
+                <option>Tag Stamping OK?</option>
+                <option>Canopy required?</option>
+                <option>Manifold Condition OK?</option>
+                <option>Any Leakage At Drain Valve/Plug/Tubing ?</option>
+                <option>Tapping Flushed?</option>
+                <option>Monsoon Protection OK?</option>
+              </select>
+              <i class="ph-bold ph-caret-down jbd-caret"></i>
+            </div>
+            <div class="flex items-center gap-12px">
+              <label class="flex items-center gap-4px cursor-pointer font-14px color-primary">
+                Yes: <input type="radio" name="report-val" value="yes" checked class="w-14px h-14px">
+              </label>
+              <label class="flex items-center gap-4px cursor-pointer font-14px color-primary">
+                No: <input type="radio" name="report-val" value="no" class="w-14px h-14px">
+              </label>
             </div>
           </div>
 
-          <!-- Report Result Container -->
-          <div id="report-result-container" class="animate-fade-in">
-            <div class="jbd-card border-none radius-0px">
-              <div class="p-0">
-                <div class="text-center py-12px bg-dark-bg border-b-2 border-primary mb-8px">
-                  <h4 class="font-18px uppercase ls-wide color-secondary m-0" id="report-result-title">Filtered Report</h4>
-                </div>
-                
-                <div class="user-table-wrapper radius-0px border-dark">
-                  <table class="user-table" id="pm-report-final-table">
-                    <thead>
-                      <tr>
-                        <th style="width: 50px;">Sr</th>
-                        <th style="width: 140px;">Tagno</th>
-                        <th>Date</th>
-                        <th>Tech Name</th>
-                        <th>Checked by</th>
-                        <th>Date</th>
-                        <th style="min-width: 200px;">Tech Remark</th>
-                        <th style="min-width: 150px;">Eng Remark</th>
-                      </tr>
-                    </thead>
-                    <tbody id="report-tbody">
+          <div class="flex items-center gap-16px">
+            <button id="btn-remark-report" class="ui-btn ui-btn--primary">
+              Remark Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Report Result Container -->
+        <div id="report-result-container" class="animate-fade-in">
+          <div class="jbd-card border-none radius-0px">
+            <div class="p-0">
+              <div class="text-center py-12px bg-dark-bg border-b-2 border-primary mb-8px">
+                <h4 class="font-18px uppercase ls-wide color-secondary m-0" id="report-result-title">Filtered Report
+                </h4>
+              </div>
+
+              <div class="user-table-wrapper radius-0px border-dark">
+                <table class="user-table" id="pm-report-final-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 50px;">Sr</th>
+                      <th style="width: 140px;">Tagno</th>
+                      <th>Date</th>
+                      <th>Tech Name</th>
+                      <th>Checked by</th>
+                      <th>Date</th>
+                      <th style="min-width: 200px;">Tech Remark</th>
+                      <th style="min-width: 150px;">Eng Remark</th>
+                    </tr>
+                  </thead>
+                  <tbody id="report-tbody">
                     <!-- Static Rows for Remark Report -->
                     <tr class="user-table-row">
                       <td class="text-center fw-600">1</td>
@@ -971,77 +939,110 @@
   <script src="../../js/header.js" defer></script>
 
   <script>
+
     $(document).ready(function () {
       let showPendingOnly = false;
 
-      // --- Tag Search Autocomplete ---
-      const $tagInput = $('#view-tag-input');
-      const $tagSelect = $('#view-tag-select');
-      const $addTagNoSelect = $('#add-tag-no');
-      const originalTagOptions = $tagSelect.find('option').clone();
+      // Smart Tag Autocomplete Helper
+      function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let validationTimeout = null;
 
-      // Populate Add Modal Select
-      $addTagNoSelect.empty().append(originalTagOptions.clone());
+        // Get Available Tags
+        function getAvailableTags() {
+          let tags = [];
+          $select.find('option').each(function () {
+            if ($(this).val()) tags.push($(this).val());
+          });
+          return tags;
+        }
 
-      $tagInput.on('input', function () {
-        const searchText = $(this).val().toLowerCase();
+        const tags = getAvailableTags();
 
-        // Find matches (excluding the first placeholder option)
-        const matches = originalTagOptions.filter(function (index) {
-          if (index === 0) return false;
-          return $(this).text().toLowerCase().includes(searchText);
+        // Input Event
+        $input.on('input', function (e, extraParam) {
+          clearTimeout(validationTimeout);
+          $(this).removeClass('is-invalid-tag');
+
+          let inputVal = $(this).val().toUpperCase();
+
+          // 1. Find Longest Valid Prefix
+          let longestValidPrefix = "";
+          for (let i = inputVal.length; i >= 0; i--) {
+            let sub = inputVal.substring(0, i);
+            if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          // 2. Constraint: Allow max 2 extra "wrong" characters
+          if (inputVal.length > longestValidPrefix.length + 2) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 2);
+            $(this).val(inputVal);
+          }
+
+          // 3. Rejection Logic if wrong
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            validationTimeout = setTimeout(() => {
+              $(this).val(longestValidPrefix);
+              $(this).removeClass('is-invalid-tag');
+              $(this).trigger('input', ['is-manual']);
+            }, 600);
+            return;
+          }
+
+          // 4. Suggestion Logic (Only if not deleting)
+          const inputType = e.originalEvent ? e.originalEvent.inputType : (extraParam || '');
+          if (inputType && inputType.startsWith('delete')) {
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          // Suggestion Logic (Only if not deleting)
+          if (inputVal.length > 0) {
+            let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(inputVal));
+            if (firstMatch) {
+              $(this).val(firstMatch);
+              this.setSelectionRange(inputVal.length, firstMatch.length);
+              $select.val(firstMatch);
+              if (onMatch) onMatch(firstMatch);
+            }
+          } else {
+            $select.val('');
+            if (onMatch) onMatch('');
+          }
         });
 
-        $tagSelect.empty();
-        $tagSelect.append(originalTagOptions.eq(0).clone());
+        // Keydown Event
+        $input.on('keydown', function (e) {
+          if (e.key === 'Enter') {
+            const currentVal = $(this).val();
+            if (currentVal && !$(this).hasClass('is-invalid-tag')) {
+              e.preventDefault();
+              $(this).val(currentVal);
+              this.setSelectionRange(currentVal.length, currentVal.length);
 
-        if (searchText.length > 0 && matches.length > 0) {
-          // Show only matching options
-          matches.each(function () {
-            $tagSelect.append($(this).clone());
-          });
-          $tagSelect.prop('selectedIndex', 1); // Auto-select first match
-        } else {
-          // If search is empty or word not available, show all list
-          originalTagOptions.each(function (index) {
-            if (index === 0) return;
-            $tagSelect.append($(this).clone());
-          });
-          $tagSelect.prop('selectedIndex', 0);
-        }
-        $tagSelect.trigger('change');
-      });
-
-      // Sync from Select back to Input
-      $tagSelect.on('change', function () {
-        const val = $(this).val();
-        if (val !== '') {
-          $tagInput.val(val);
-        } else {
-          $tagInput.val('');
-        }
-      });
-
-      $('#btn-view-tag-go').on('click', function () {
-        const val = $tagSelect.val();
-        $tagSelect.trigger('change');
-        Swal.fire({
-          icon: 'success',
-          title: 'Filtered',
-          text: 'Displaying details for: ' + (val || 'All Tags'),
-          timer: 1500,
-          showConfirmButton: false,
-          confirmButtonColor: '#2563eb'
+              // Success Visual Feedback
+              $(this).addClass('tag-confirmed');
+              setTimeout(() => $(this).removeClass('tag-confirmed'), 500);
+            }
+          }
         });
-      });
 
-      // --- Utilities ---
-      function openModal(id) { $(id).addClass('is-open'); }
-      function closeModal(id) { $(id).removeClass('is-open'); }
+        $select.on('change', function () {
+          let val = $(this).val();
+          $input.val(val);
+          if (onMatch) onMatch(val);
+        });
+      }
 
-      // --- Interaction Handlers ---
-      $('#view-tag-select').on('change', function () {
-        const tag = $(this).val();
+      // Initialize Autocomplete for TX View Filter
+      initTagAutocomplete('#view-tag-input', '#view-tag-select', function (tag) {
         showPendingOnly = false;
         $('#pm-details-title').text('PM Details Tag : ' + (tag || 'ALL'));
 
@@ -1054,6 +1055,10 @@
           }
         });
       });
+
+      // --- Utilities ---
+      function openModal(id) { $(id).addClass('is-open'); }
+      function closeModal(id) { $(id).removeClass('is-open'); }
 
       $('#btn-pending-filter').on('click', function () {
         showPendingOnly = !showPendingOnly;
@@ -1074,17 +1079,8 @@
         const tag = $(this).val();
         if (!tag) return;
 
-        // Populate Add Modal fields
-        $('#add-tag-no').val(tag);
+        // Just show selected tag in header and open modal
         $('#add-modal-tag-display').text(tag);
-        $('#add-job-date').val(new Date().toLocaleDateString('en-GB'));
-        
-        // Mock data population based on tag
-        if(tag.includes('LIH')) {
-          $('#add-make').val('FISHER');
-          $('#add-cal-range').val('0-100%');
-        }
-
         openModal('#pm-add-modal');
         $(this).val('');
       });
@@ -1095,23 +1091,8 @@
         const tag = $(this).data('tag');
         const row = $(this).closest('tr');
 
-        // Update Print/Report Section
-        $('#print-tag-no').text(tag);
+        // Update View Modal Section
         $('#view-modal-tag-display').text(tag);
-        $('#print-job-date').text(row.find('td:eq(2)').text());
-        $('#print-tech-name').text(row.find('td:eq(3)').text());
-        $('#print-checked-by').text(row.find('td:eq(4)').text());
-        $('#print-sign-date').text(row.find('td:eq(5)').text());
-
-        // Mocking additional report fields
-        $('#print-make').text('EMERSON');
-        $('#print-cal-range').text('0-2170 MMWC');
-        $('#print-eng-range').text('0-25002 SM3/HR');
-        $('#print-location').text('NG STATION.');
-        $('#print-job-mode').text('NORMAL');
-        $('#print-tech-remark').text('ok');
-        $('#print-eng-remark').text('Zero drifting of -56 mmwc so zero triming done.');
-
         openModal('#pm-view-modal');
       });
 
@@ -1135,22 +1116,44 @@
         }).then((result) => { if (result.isConfirmed) Swal.fire('Deleted!', 'Record removed.', 'success'); });
       });
 
+      $('#btn-edit-save-pm').on('click', function () {
+        Swal.fire({
+          icon: 'success',
+          title: 'Record Updated',
+          text: 'PM record has been successfully updated.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        closeModal('#pm-edit-modal');
+      });
+
+      $('#btn-add-save-pm').on('click', function () {
+        Swal.fire({
+          icon: 'success',
+          title: 'New Record Added',
+          text: 'New PM record has been successfully added to the database.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        closeModal('#pm-add-modal');
+      });
+
       $('#btn-remark-report').on('click', function () {
         $('#report-result-title').text('Remark Report – All Tags with Remarks');
         // Filter rows (Mock: showing specific remark rows)
-        $('#report-tbody tr').show(); 
+        $('#report-tbody tr').show();
       });
 
       function updateReportFilter() {
         const param = $('#report-param-select').val();
         const status = $('input[name="report-val"]:checked').val().toUpperCase();
-        
+
         if (param) {
           $('#report-result-title').text(`${param} / ${status}`);
           // Mock filtering logic
           if (status === 'NO') {
             $('#report-tbody tr').hide();
-            $('#report-tbody tr:eq(4)').show(); // Just show one row for NO mock
+            $('#report-tbody tr:eq(4)').show();
           } else {
             $('#report-tbody tr').show();
           }
