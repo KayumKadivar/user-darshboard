@@ -42,16 +42,16 @@
               <span class="jbd-card-header-title">Switch PM Detail Filter</span>
             </div>
           </div>
-          <div class="p-16px">
-            <div class="flex flex-wrap items-end gap-16px">
+          <div class="p-16px flex flex-col gap-16px">
+            <div class="flex flex-wrap items-center gap-24px">
               <!-- View Selection -->
-              <div class="flex flex-col gap-8px flex-1" style="min-width: 320px; flex-basis: 40%">
-                <label class="font-11px fw-700 color-label text-uppercase">Select Tag To View</label>
-                <div class="flex items-center gap-8px">
-                  <input type="text" id="view-tag-input" class="gnfc-modal-input flex-1" placeholder="Search…">
+              <div class="flex items-center gap-12px flex-1" style="min-width: 400px;">
+                <label class="font-11px fw-700 color-label text-uppercase text-nowrap">Search / Select Tag :</label>
+                <div class="flex items-center gap-8px flex-1">
+                  <input type="text" id="view-tag-input" class="gnfc-modal-input flex-1 font-14px uppercase"
+                    placeholder="Tag No...">
                   <div class="relative flex-1">
-                    <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer"
-                      style="background-image: none !important;">
+                    <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer font-14px">
                       <option value="">-- All Tags --</option>
                       <option value="1_2BLRTRP_EHTC">1_2BLRTRP_EHTC</option>
                       <option value="1_2BLRPS_821">1_2BLRPS_821</option>
@@ -62,18 +62,16 @@
                       <option value="1_2BLRPS_106">1_2BLRPS_106</option>
                       <option value="1_2BLRPS_107">1_2BLRPS_107</option>
                     </select>
-                    <i
-                      class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
                   </div>
+                  <button class="pm-btn pm-btn--update px-20px h-40px" id="btn-view-tag-go">View</button>
                 </div>
               </div>
 
               <!-- Add Selection -->
-              <div class="flex flex-col gap-8px flex-1" style="min-width: 200px; flex-basis: 20%; max-width: 300px;">
-                <label class="font-11px fw-700 color-label text-uppercase">Select Tag To Add PM</label>
-                <div class="relative">
-                  <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer"
-                    style="background-image: none !important;">
+              <div class="flex items-center gap-12px" style="min-width: 280px;">
+                <label class="font-11px fw-700 color-label text-uppercase text-nowrap">Add PM For :</label>
+                <div class="relative flex-1">
+                  <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer font-14px">
                     <option value="">-- Select Tag --</option>
                     <option value="1_2BLRTRP_EHTC">1_2BLRTRP_EHTC</option>
                     <option value="1_2BLRPS_821">1_2BLRPS_821</option>
@@ -84,21 +82,19 @@
                     <option value="1_2BLRPS_106">1_2BLRPS_106</option>
                     <option value="1_2BLRPS_107">1_2BLRPS_107</option>
                   </select>
-                  <i
-                    class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
                 </div>
               </div>
 
               <!-- Filter Actions -->
-              <div class="flex items-center gap-8px flex-wrap flex-1" style="min-width: 280px; flex-basis: 30%">
-                <p>
-                  <i class="ph-bold ph-clock"></i> PENDING SIGN
-                  <button class="pm-btn pm-btn--edit" id="btn-pending-filter">GO</button>
-                </p>
-                <button id="btn-open-reports" class="pm-btn pm-btn--update" style="white-space: nowrap;">
+              <div class="flex items-center gap-12px ml-auto">
+                <div class="flex items-center gap-8px bg-dark-bg px-12px py-6px radius-6px border border-dark">
+                  <i class="ph-bold ph-clock color-orange font-14px"></i>
+                  <span class="font-11px fw-700 uppercase color-label">Pending Sign</span>
+                  <button class="pm-btn pm-btn--edit h-28px px-8px font-10px" id="btn-pending-filter">GO</button>
+                </div>
+
+                <button id="btn-open-reports" class="pm-btn pm-btn--update h-40px px-16px">
                   <i class="ph-bold ph-file-text"></i> PM Reports
-                  <span
-                    class="bg-white color-dark px-6px py-2px radius-4px ml-4px fw-700 inline-block text-center flex-none">GO</span>
                 </button>
               </div>
             </div>
@@ -338,117 +334,93 @@
                 <!-- Basic Information -->
                 <tr>
                   <td colspan="2" style="width: 260px;">Tag_no</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-tag-no" class="pm-form-input" readonly>
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input" readonly></td>
                 </tr>
                 <tr>
                   <td colspan="2">Make</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-make" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Setting (H)</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-setting-h" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Setting (L)</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-setting-l" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Location</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-location" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Mode</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-job-mode" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
 
                 <!-- Inspection Checklist -->
                 <tr>
                   <td colspan="2">Glanding OK?</td>
-                  <td colspan="2"><input type="checkbox" id="edit-check-1"></td>
+                  <td colspan="2"><input type="checkbox"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Tag stamping OK?</td>
-                  <td colspan="2"><input type="checkbox" id="edit-check-2"></td>
+                  <td colspan="2"><input type="checkbox"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Manifold condition ok?</td>
-                  <td colspan="2"><input type="checkbox" id="edit-check-3"></td>
+                  <td colspan="2"><input type="checkbox"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Leakage At Drain Valve/Plug/Tubing</td>
-                  <td colspan="2"><input type="checkbox" id="edit-check-4"></td>
+                  <td colspan="2"><input type="checkbox"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Canopy Required ?</td>
-                  <td colspan="2"><input type="checkbox" id="edit-check-5"></td>
+                  <td colspan="2"><input type="checkbox"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Monsoon Protection ok?</td>
-                  <td colspan="2"><input type="checkbox" id="edit-check-6"></td>
+                  <td colspan="2"><input type="checkbox"></td>
                 </tr>
 
                 <!-- Calibration Data (2x2 Grid) -->
                 <tr>
                   <td class="w-200px">SET Before Calibration</td>
                   <td class="w-200px">RESET Before Calibration</td>
-                  <td><input type="text" id="edit-set-before" class="pm-form-input"></td>
-                  <td><input type="text" id="edit-reset-before" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td class="w-200px">SET After Calibration</td>
                   <td class="w-200px">RESET After Calibration</td>
-                  <td><input type="text" id="edit-set-after" class="pm-form-input"></td>
-                  <td><input type="text" id="edit-reset-after" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
                 </tr>
 
                 <!-- Technical Footer Information -->
                 <tr>
                   <td colspan="2">Tech Remark</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-tech-remark" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Tech Name</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-tech-name" class="pm-form-input" readonly>
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input" readonly></td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Date</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-job-date" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Checked By Eng</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-eng-name" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Date</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-sign-date" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Eng Remark</td>
-                  <td colspan="2">
-                    <input type="text" id="edit-eng-remark" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
               </tbody>
             </table>
