@@ -408,13 +408,6 @@
                   </td>
                 </tr>
 
-                <!-- Instructional Header -->
-                <tr>
-                  <td colspan="4">
-                    Select check box If Answer is Yes otherwise keep blank.
-                  </td>
-                </tr>
-
                 <!-- Inspection Checklist -->
                 <tr>
                   <td colspan="2">Range Checked By HHT?</td>
@@ -772,7 +765,7 @@
                 <tr>
                   <td colspan="2">Job Date</td>
                   <td colspan="2">
-                    <input type="text" class="pm-form-input" value="30/07/2019">
+                    <input type="text" id="add-job-date" class="pm-form-input">
                   </td>
                 </tr>
               </tbody>
@@ -977,13 +970,13 @@
             }
           }
 
-          // 2. Constraint: Allow max 2 extra "wrong" characters
-          if (inputVal.length > longestValidPrefix.length + 2) {
-            inputVal = inputVal.substring(0, longestValidPrefix.length + 2);
+          // 2. Tolerance: Allow max 3 extra "wrong" characters
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
             $(this).val(inputVal);
           }
 
-          // 3. Rejection Logic if wrong
+          // 3. Rejection Logic - 0.6s delay before snap-back
           if (inputVal.length > longestValidPrefix.length) {
             $(this).addClass('is-invalid-tag');
             validationTimeout = setTimeout(() => {
@@ -1079,8 +1072,9 @@
         const tag = $(this).val();
         if (!tag) return;
 
-        // Just show selected tag in header and open modal
+        // Populate selected tag and default date
         $('#add-modal-tag-display').text(tag);
+        $('#add-job-date').val(new Date().toLocaleDateString('en-GB'));
         openModal('#pm-add-modal');
         $(this).val('');
       });

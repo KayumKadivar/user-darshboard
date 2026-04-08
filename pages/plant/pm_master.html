@@ -86,7 +86,7 @@
                 <div class="flex items-center gap-12px flex-1">
                   <!-- Search Input -->
                   <input id="pm-search-input" type="text" placeholder="Tag No..."
-                    class="gnfc-modal-input flex-1 font-14px">
+                    class="gnfc-modal-input flex-1 font-14px" style="text-transform: uppercase;">
 
                   <!-- Tag Select Dropdown -->
                   <select id="pm-tag-select" class="gnfc-modal-input flex-1 cursor-pointer font-14px">
@@ -702,7 +702,9 @@
       function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
         const $input = $(inputSelector);
         const $select = $(selectSelector);
-        let validationTimeout = null;
+        let snapBackTimeout = null;
+        let snapBackInterval = null;
+        let isAutoRemoving = false;
 
         function getAvailableTags() {
           let tags = [];
@@ -712,13 +714,52 @@
           return tags;
         }
 
+        function stopAutoRemove() {
+          clearTimeout(snapBackTimeout);
+          clearInterval(snapBackInterval);
+          isAutoRemoving = false;
+        }
+
         const tags = getAvailableTags();
 
-        $input.on('input', function (e, extraParam) {
-          clearTimeout(validationTimeout);
-          $(this).removeClass('is-invalid-tag');
+        $input.on('input', function (e) {
+          // Immediately convert to uppercase so it never shows lowercase
+          const cursorStart = this.selectionStart;
+          const cursorEnd = this.selectionEnd;
+          const rawVal = $(this).val();
+          const upperVal = rawVal.toUpperCase();
+          if (rawVal !== upperVal) {
+            $(this).val(upperVal);
+            this.setSelectionRange(cursorStart, cursorEnd);
+          }
+
+          const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+          const isDeleting = inputType && inputType.startsWith('delete');
+
+          // If user manually pressed backspace, stop any running auto-remove
+          if (isDeleting) {
+            stopAutoRemove();
+          }
 
           let inputVal = $(this).val().toUpperCase();
+
+          // --- DELETION (manual backspace): just sync dropdown ---
+          if (isDeleting) {
+            // Check if remaining text is a valid prefix
+            let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+            if (hasMatch) {
+              $(this).removeClass('is-invalid-tag');
+            } else {
+              $(this).addClass('is-invalid-tag');
+            }
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          // --- TYPING FORWARD ---
 
           // 1. Find Longest Valid Prefix
           let longestValidPrefix = "";
@@ -730,32 +771,64 @@
             }
           }
 
-          // 2. Constraint: Allow max 2 extra "wrong" characters
-          if (inputVal.length > longestValidPrefix.length + 2) {
-            inputVal = inputVal.substring(0, longestValidPrefix.length + 2);
+          // 2. Tolerance: Allow max 3 extra "wrong" characters
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
             $(this).val(inputVal);
           }
 
-          // 3. Rejection Logic if wrong
+          // 3. Invalid chars detected → show red border, then auto-remove one-by-one
           if (inputVal.length > longestValidPrefix.length) {
             $(this).addClass('is-invalid-tag');
-            validationTimeout = setTimeout(() => {
-              $(this).val(longestValidPrefix);
-              $(this).removeClass('is-invalid-tag');
-              $(this).trigger('input', ['is-manual']);
-            }, 400);
+            $select.val('');
+            if (onMatch) onMatch('');
+
+            // Stop any previous auto-remove
+            stopAutoRemove();
+
+            // After 800ms pause, start removing 1 char at a time (every 150ms)
+            const self = this;
+            const targetPrefix = longestValidPrefix;
+            snapBackTimeout = setTimeout(() => {
+              isAutoRemoving = true;
+              snapBackInterval = setInterval(() => {
+                let currentVal = $input.val();
+                if (currentVal.length > targetPrefix.length) {
+                  // Remove last character
+                  currentVal = currentVal.substring(0, currentVal.length - 1);
+                  $input.val(currentVal);
+                } else {
+                  // Done removing — stop interval and trigger autocomplete
+                  clearInterval(snapBackInterval);
+                  isAutoRemoving = false;
+                  $input.removeClass('is-invalid-tag');
+
+                  // Now trigger suggestion for the valid prefix
+                  let val = $input.val().toUpperCase();
+                  if (val.length > 0) {
+                    let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(val));
+                    if (firstMatch) {
+                      $input.val(firstMatch);
+                      self.setSelectionRange(val.length, firstMatch.length);
+                      $select.val(firstMatch);
+                      if (onMatch) onMatch(firstMatch);
+                    }
+                  } else {
+                    $select.val('');
+                    if (onMatch) onMatch('');
+                  }
+                }
+              }, 150);
+            }, 800);
+
             return;
           }
 
-          // 4. Suggestion Logic (Only if not deleting)
-          const inputType = e.originalEvent ? e.originalEvent.inputType : (extraParam || '');
-          if (inputType && inputType.startsWith('delete')) {
-            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
-            $select.val(exactMatch || '');
-            if (onMatch) onMatch(exactMatch || '');
-            return;
-          }
+          // 4. Valid prefix: remove invalid state
+          stopAutoRemove();
+          $(this).removeClass('is-invalid-tag');
 
+          // 5. Suggestion / Autocomplete logic
           if (inputVal.length > 0) {
             let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(inputVal));
             if (firstMatch) {
@@ -771,14 +844,19 @@
         });
 
         $input.on('keydown', function (e) {
+          // If user presses any key during auto-remove, stop it
+          if (isAutoRemoving && e.key !== 'Enter') {
+            stopAutoRemove();
+          }
+
           if (e.key === 'Enter') {
+            stopAutoRemove();
             const currentVal = $(this).val();
             if (currentVal && !$(this).hasClass('is-invalid-tag')) {
               e.preventDefault();
-              $(this).val(currentVal); // Commits the suggestion
+              $(this).val(currentVal);
               this.setSelectionRange(currentVal.length, currentVal.length);
 
-              // Success Visual Feedback
               $(this).addClass('tag-confirmed');
               setTimeout(() => $(this).removeClass('tag-confirmed'), 500);
             }
@@ -786,6 +864,7 @@
         });
 
         $select.on('change', function () {
+          stopAutoRemove();
           let val = $(this).val();
           $input.val(val);
           if (onMatch) onMatch(val);
