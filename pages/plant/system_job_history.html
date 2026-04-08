@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GNFC | System Job History</title>
+  
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
+
+  <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <div id="header-container" data-title="System Job History" data-back="boiler_dashboard.html"></div>
+
+    <div class="dashboard-content plant-page__content flex flex-col gap-16px">
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-sliders-horizontal"></i>
+            SEARCH CRITERIA
+          </h3>
+
+          <div class="flex gap-12px items-center">
+            <button class="pm-btn pm-btn--primary px-24px h-32px font-11px" id="btn-add-job">
+              <i class="ph-bold ph-plus"></i> ADD JOB
+            </button>
+            <div class="flex gap-4px items-center">
+              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter active" data-type="default">Default Date</button>
+              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="prev">Prev Year</button>
+              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="this">This Year</button>
+              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="next">Next Year</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-16px">
+          <div class="grid grid-cols-2 lg-grid-cols-4 gap-16px">
+            
+            <div class="flex flex-col gap-8px">
+              <label class="font-11px fw-700 color-label text-uppercase">System</label>
+              <select class="gnfc-modal-input w-full cursor-pointer" id="filter-system">
+                <option value="">ALL</option>
+                <option>MAX DCS</option>
+                <option>MIL DCS</option>
+                <option>DSC</option>
+                <option>ESD</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-8px">
+              <label class="font-11px fw-700 color-label text-uppercase">Category</label>
+              <select class="gnfc-modal-input w-full cursor-pointer" id="filter-category">
+                <option value="">ALL</option>
+                <option>HARDWARE FAILURE</option>
+                <option>SOFTWARE PROBLEM</option>
+                <option>MAINTENANCE</option>
+                <option>MAJOR UPGRADE</option>
+                <option>MODIFICATION</option>
+                <option>SYSTEM BACKUP</option>
+                <option>CONTINUOUS COST OF OWNERSHIP</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-8px">
+              <label class="font-11px fw-700 color-label text-uppercase">HW Type</label>
+              <select class="gnfc-modal-input w-full cursor-pointer" id="filter-hwtype">
+                <option value="">ALL</option>
+                <option>STATIONS</option>
+                <option>CONTROL MODULES</option>
+                <option>IO MODULES</option>
+                <option>COM MODULES</option>
+                <option>CRT MODULES</option>
+                <option>POWER SUPPLY</option>
+                <option>PERIPHERALS</option>
+                <option>CABLES/CONNECTORS</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-8px">
+              <label class="font-11px fw-700 color-label text-uppercase">Start Date</label>
+              <input type="date" id="start-date" class="gnfc-modal-input" value="2025-02-09">
+            </div>
+
+            <div class="flex flex-col gap-8px">
+              <label class="font-11px fw-700 color-label text-uppercase">End Date</label>
+              <input type="date" id="end-date" class="gnfc-modal-input" value="2026-02-09">
+            </div>
+
+            <div class="flex flex-col gap-8px">
+              <label class="font-11px fw-700 color-label text-uppercase">Filter Options</label>
+              <div class="flex gap-4px">
+                <label class="flex items-center gap-6px cursor-pointer font-10px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                  <input type="checkbox" id="filter-remark" class="accent-gnfc-blue"> Remark
+                </label>
+                <label class="flex items-center gap-6px cursor-pointer font-10px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                  <input type="checkbox" id="filter-attach" class="accent-gnfc-blue"> Attach
+                </label>
+              </div>
+            </div>
+
+            <div class="flex items-end col-span-1 lg-col-span-2">
+              <button class="pm-btn pm-btn--update w-full h-40px font-13px text-uppercase ls-wide" id="btn-apply-filters">
+                <i class="ph-bold ph-lightning"></i> Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TABLE CARD ── -->
+      <div class="jt-table-card flex flex-col flex-1 overflow-hidden">
+        <div class="jbd-card-header flex justify-between items-center px-16px py-10px shrink-0">
+          <div class="flex items-center gap-8px">
+            <i class="ph-fill ph-table color-orange font-16px"></i>
+            <span class="jbd-card-header-title">Job Records</span>
+          </div>
+          <span class="font-12px color-label bg-dark-bg px-8px py-4px radius-4px border border-dark" id="record-count">0 Records Found</span>
+        </div>
+        
+        <div class="user-table-wrapper radius-0px border-none">
+          <table class="user-table" id="system-job-table">
+            <thead>
+              <tr>
+                <th rowspan="2" style="width: 50px;" class="sticky left-0 z-20">Sr</th>
+                <th rowspan="2" style="width: 100px;">System</th>
+                <th style="width: 180px;" class="border-b-dark">HW Type</th>
+                <th rowspan="2" style="width: 110px;">Date</th>
+                <th rowspan="2" class="text-left" style="min-width: 400px;">Description</th>
+                <th style="width: 100px;" class="border-b-dark">Tech</th>
+                <th rowspan="2" style="width: 60px;">Attch</th>
+                <th rowspan="1" style="min-width: 250px;" class="border-b-dark">Eng Remark</th>
+                <th rowspan="2" style="width: 100px;">Status</th>
+              </tr>
+              <tr>
+                <th class="font-11px py-4px">Category</th>
+                <th class="font-11px py-4px">Eng</th>
+                <th class="font-11px py-4px">Exec Remark</th>
+              </tr>
+            </thead>
+            <tbody id="job-table-body">
+              <!-- JS Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Job Detail Modal -->
+  <div id="job-detail-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title" id="modal-title">Job History Detail</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
+        <div class="flex flex-col gap-16px">
+          
+          <div class="grid grid-cols-3 gap-16px">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">System</label>
+              <select id="modal-system" class="gnfc-modal-input">
+                <option value="">ALL</option>
+                <option>MAX DCS</option>
+                <option>MIL DCS</option>
+                <option>DSC</option>
+                <option>ESD</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Category</label>
+              <select id="modal-category" class="gnfc-modal-input">
+                <option value="">ALL</option>
+                <option>HARDWARE FAILURE</option>
+                <option>SOFTWARE PROBLEM</option>
+                <option>MAINTENANCE</option>
+                <option>MAJOR UPGRADE</option>
+                <option>MODIFICATION</option>
+                <option>SYSTEM BACKUP</option>
+                <option>CONTINUOUS COST OF OWNERSHIP</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">HW Type</label>
+              <select id="modal-hwtype" class="gnfc-modal-input">
+                <option value="">ALL</option>
+                <option>STATIONS</option>
+                <option>CONTROL MODULES</option>
+                <option>IO MODULES</option>
+                <option>COM MODULES</option>
+                <option>CRT MODULES</option>
+                <option>POWER SUPPLY</option>
+                <option>PERIPHERALS</option>
+                <option>CABLES/CONNECTORS</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label">Job Description</label>
+            <textarea id="modal-desc" class="gnfc-modal-input" style="height: 120px; resize: vertical;"></textarea>
+          </div>
+
+          <div class="grid grid-cols-4 gap-16px">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Date</label>
+              <input type="date" id="modal-date" class="gnfc-modal-input">
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Tech</label>
+              <select id="modal-tech" class="gnfc-modal-input">
+                <option value=""></option>
+                <option>BSU</option>
+                <option>PYS</option>
+                <option>V+M</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Eng</label>
+              <input type="text" id="modal-eng" class="gnfc-modal-input">
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Status</label>
+              <select id="modal-status" class="gnfc-modal-input">
+                <option value=""></option>
+                <option>Completed</option>
+                <option>Pending</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label">Attachments</label>
+            <div class="grid grid-cols-2 gap-16px">
+              <!-- Slot 1 -->
+              <div class="attach-slot-wrapper">
+                <div class="attach-slot is-enabled" data-slot="1" id="slot-1">
+                  <div class="flex items-center gap-12px overflow-hidden">
+                    <div class="attach-icon-box">
+                      <i class="ph-fill ph-file-pdf"></i>
+                    </div>
+                    <div class="flex flex-col overflow-hidden">
+                      <span class="attach-label">ATTACH 1</span>
+                      <span class="attach-name truncate" id="display-attach-1">-</span>
+                    </div>
+                  </div>
+                  <i class="ph-bold ph-upload-simple attach-upload-icon"></i>
+                </div>
+                <!-- Mock upload message when disabled -->
+                <div class="attach-slot is-disabled hidden" id="slot-1-disabled">
+                   <div class="flex flex-col items-center justify-center h-full">
+                      <span class="attach-label">ATTACH 1</span>
+                      <span class="font-10px color-label italic mt-2px">Can be attached in edit mode</span>
+                   </div>
+                </div>
+              </div>
+
+              <!-- Slot 2 -->
+              <div class="attach-slot-wrapper">
+                <div class="attach-slot is-enabled" data-slot="2" id="slot-2">
+                  <div class="flex items-center gap-12px overflow-hidden">
+                    <div class="attach-icon-box">
+                      <i class="ph-fill ph-file-pdf"></i>
+                    </div>
+                    <div class="flex flex-col overflow-hidden">
+                      <span class="attach-label">ATTACH 2</span>
+                      <span class="attach-name truncate" id="display-attach-2">-</span>
+                    </div>
+                  </div>
+                  <i class="ph-bold ph-upload-simple attach-upload-icon"></i>
+                </div>
+                <div class="attach-slot is-disabled hidden" id="slot-2-disabled">
+                   <div class="flex flex-col items-center justify-center h-full">
+                      <span class="attach-label">ATTACH 2</span>
+                      <span class="font-10px color-label italic mt-2px">Can be attached in edit mode</span>
+                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-16px">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Engineer's Remark</label>
+              <textarea id="modal-eng-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Executive Remark</label>
+              <textarea id="modal-exec-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer flex justify-between items-center px-16px py-12px">
+        <button class="pm-btn pm-btn--delete px-24px h-40px font-13px" id="btn-delete-job">Delete Entry</button>
+        <div class="flex gap-12px">
+          <button class="pm-btn pm-btn--secondary px-24px h-40px font-13px btn-close-modal">Cancel</button>
+          <button class="pm-btn pm-btn--primary px-32px h-40px font-13px" id="btn-save-job">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attachment Modal -->
+  <div id="attachment-modal" class="gnfc-modal-overlay" style="z-index: 1060;">
+    <div class="gnfc-modal-shell" style="width: 400px;">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Upload Attachment</h3>
+          <p class="font-11px color-label mt-2px">Add supporting documents (PDF only, max 10MB)</p>
+        </div>
+        <button class="gnfc-modal-close btn-close-attach">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body p-20px">
+          <div class="jh-upload-zone flex flex-col items-center justify-center border-2 border-dashed border-dark-border radius-12px p-24px cursor-pointer hover-bg-dark-header transition-colors" id="upload-zone">
+             <div class="bg-dark-bg p-12px radius-full color-blue mb-16px shadow-sm">
+                <i class="ph-duotone ph-cloud-arrow-up text-2xl"></i>
+             </div>
+             <div class="text-center">
+               <p class="font-13px fw-700 color-primary">Click to upload or drag and drop</p>
+               <p class="font-11px color-label mt-4px">Supporting files...</p>
+             </div>
+             <input type="file" class="hidden" id="file-input" accept="application/pdf">
+          </div>
+
+          <div class="hidden flex items-center justify-between p-12px bg-panel radius-8px border border-dark" id="file-preview">
+            <div class="flex items-center gap-12px">
+              <i class="ph-fill ph-file-pdf text-xl color-red"></i>
+              <div class="flex flex-col">
+                <span class="font-12px fw-700 color-primary truncate w-200px" id="preview-filename">report.pdf</span>
+                <span class="font-10px color-label mt-2px" id="preview-filesize">1.2 MB</span>
+              </div>
+            </div>
+            <button class="icon-btn color-red hover-bg-red-soft p-8px radius-4px" id="btn-clear-file">
+              <i class="ph-bold ph-trash"></i>
+            </button>
+          </div>
+      </div>
+      <div class="gnfc-modal-footer flex justify-end gap-12px px-16px py-12px">
+        <button class="pm-btn pm-btn--secondary px-20px h-32px font-11px btn-close-attach">Cancel</button>
+        <button class="pm-btn pm-btn--primary px-24px h-32px font-11px" id="btn-confirm-upload">Save File</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    $(document).ready(function () {
+      
+      // --- Constants ---
+      const INITIAL_JOB_DATA = [
+        { sr: 1, system: "MAX DCS", hwType: "IO MODULES", category: "HARDWARE FAILURE", date: "2025-12-19", desc: "AUX: C2PCI RJMH A2B card was failed.\nNew card arranged from store.\nIts jumpers and address settings done.\nReplaced card.\nWorking ok.\nRemoved card kept with tag.\nSame checked with M(MND),ID(TRC),IE(ARP).", tech: "PYS", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Completed" },
+        { sr: 2, system: "MAX DCS", hwType: "IO MODULES", category: "HARDWARE FAILURE", date: "2025-12-16", desc: "All input of 2CJH01RLM4 were indicating faulty values.\nDetail checked found card in fault, Analog Input card removed, clean and fixed back.\nValue indicating normal.", tech: "V+M", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Completed" },
+        { sr: 3, system: "MAX DCS", hwType: "STATIONS", category: "HARDWARE FAILURE", date: "2025-12-16", desc: "Operator station HMI display replaced with spare one.", tech: "V+M", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Completed" },
+        { sr: 4, system: "MAX DCS", hwType: "STATIONS", category: "HARDWARE FAILURE", date: "2025-12-15", desc: "Engineering station HMI does not power on so replaced with spare one.\nDefective HMI kept at CPU room with tag.", tech: "V+M", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Completed" },
+        { sr: 5, system: "ESD", hwType: "CONTROL MODULES", category: "MAJOR UPGRADE", date: "2025-10-02", desc: "Cable laying job taken...\nLoop simulation taken with electrical.", tech: "BSU", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Pending" },
+        { sr: 6, system: "ESD", hwType: "IO MODULES", category: "HARDWARE FAILURE", date: "2025-08-29", desc: "TK fan and mass flow indication to DCS related logics.\nVarious exercises done.", tech: "PYS", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Pending" }
+      ];
+
+      let jobData = [...INITIAL_JOB_DATA];
+      let dataTable = null;
+
+      // --- Utilities ---
+      function openModal(id) { $(id).addClass('is-open'); }
+      function closeModal(id) { $(id).removeClass('is-open'); }
+
+      function formatDateDisplay(iso) {
+        if (!iso) return '-';
+        const d = new Date(iso);
+        return d.toLocaleDateString('en-GB'); // dd/mm/yyyy
+      }
+
+      function renderTable() {
+        if (dataTable) { dataTable.destroy(); }
+        const tbody = $('#job-table-body');
+        tbody.empty();
+
+        jobData.forEach((item, index) => {
+          const formattedDesc = item.desc.replace(/\n/g, '<br>');
+          const row = `
+            <tr class="user-table-row" data-sr="${item.sr}">
+              <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">${item.sr}</td>
+              <td class="text-center fw-700">${item.system}</td>
+              <td class="p-0">
+                <div class="py-6px px-10px border-b border-dark">${item.hwType}</div>
+                <div class="py-6px px-10px color-label font-11px">${item.category}</div>
+              </td>
+              <td class="text-center color-green">${formatDateDisplay(item.date)}</td>
+              <td class="text-left leading-relaxed font-13px">${formattedDesc}</td>
+              <td class="p-0">
+                <div class="py-6px px-10px border-b border-dark">${item.tech}</div>
+                <div class="py-6px px-10px fw-800">${item.eng}</div>
+              </td>
+              <td class="text-center">${item.attach ? '<i class="ph-bold ph-paperclip color-blue"></i>' : '<span class="opacity-30">-</span>'}</td>
+              <td class="p-0">
+                <div class="py-6px px-10px border-b border-dark italic color-red">${item.remark || '-'}</div>
+                <div class="py-6px px-10px color-blue">${item.execRemark || '-'}</div>
+              </td>
+              <td class="text-center">
+                 <span class="font-11px px-8px py-2px radius-4px border ${item.status === 'Completed' ? 'border-green-500/30 color-green bg-green-500/10' : 'border-orange-500/30 color-orange bg-orange-500/10'}">${item.status || 'N.A.'}</span>
+              </td>
+            </tr>
+          `;
+          tbody.append(row);
+        });
+
+        $('#record-count').text(jobData.length + ' Records Found');
+
+        if (jobData.length > 0) {
+          dataTable = new simpleDatatables.DataTable("#system-job-table", {
+            perPage: 10,
+            searchable: false,
+            fixedHeight: false
+          });
+        }
+      }
+
+      // --- Initialization ---
+      renderTable();
+
+      // --- Event Handlers ---
+
+      // Date Filters
+      $('.date-filter').on('click', function() {
+        $('.date-filter').removeClass('pm-btn--primary').addClass('pm-btn--secondary');
+        $(this).addClass('pm-btn--primary').removeClass('pm-btn--secondary');
+        
+        const type = $(this).data('type');
+        const now = new Date();
+        let start, end;
+
+        if (type === 'prev') {
+          start = '2024-01-01'; end = '2024-12-31';
+        } else if (type === 'this') {
+          start = '2025-01-01'; end = '2025-12-31';
+        } else if (type === 'next') {
+          start = '2026-01-01'; end = '2026-12-31';
+        } else {
+          start = '2025-02-09'; end = '2026-02-09';
+        }
+
+        $('#start-date').val(start);
+        $('#end-date').val(end);
+      });
+
+      // Add Job Modal
+      $('#btn-add-job').on('click', function() {
+        $('#modal-title').text('Add New Job');
+        $('#btn-delete-job').hide();
+        $('#btn-save-job').text('Add Job');
+        
+        // Reset inputs
+        $('#job-detail-modal input, #job-detail-modal textarea').val('');
+        $('#job-detail-modal select').prop('selectedIndex', 0);
+        $('#modal-date').val(new Date().toISOString().split('T')[0]);
+        $('#display-attach-1, #display-attach-2').text('-');
+
+        // In Add mode, disable attach slots (mock behavior)
+        $('#slot-1, #slot-2').addClass('hidden');
+        $('#slot-1-disabled, #slot-2-disabled').removeClass('hidden');
+
+        openModal('#job-detail-modal');
+      });
+
+      // Row Click -> Edit Modal
+      $(document).on('click', '.user-table-row', function() {
+        const sr = $(this).data('sr');
+        const item = jobData.find(j => j.sr == sr);
+        if (!item) return;
+
+        $('#modal-title').text('Job History Detail');
+        $('#btn-delete-job').show();
+        $('#btn-save-job').text('Save Changes');
+
+        $('#modal-system').val(item.system);
+        $('#modal-category').val(item.category);
+        $('#modal-hwtype').val(item.hwType);
+        $('#modal-desc').val(item.desc);
+        $('#modal-date').val(item.date);
+        $('#modal-tech').val(item.tech);
+        $('#modal-eng').val(item.eng);
+        $('#modal-status').val(item.status);
+        $('#modal-eng-remark').val(item.remark);
+        $('#modal-exec-remark').val(item.execRemark);
+
+        $('#display-attach-1').text(item.attach ? 'Report.pdf' : '-');
+        $('#display-attach-2').text('-');
+
+        // In Edit mode, enable attach slots
+        $('#slot-1, #slot-2').removeClass('hidden');
+        $('#slot-1-disabled, #slot-2-disabled').addClass('hidden');
+
+        openModal('#job-detail-modal');
+      });
+
+      $('.btn-close-modal').on('click', function() {
+        closeModal('#job-detail-modal');
+      });
+
+      // Attachment logic
+      let currentSlot = 1;
+      $('.attach-slot').on('click', function() {
+        currentSlot = $(this).data('slot');
+        openModal('#attachment-modal');
+      });
+
+      $('#upload-zone').on('click', function() {
+        $('#file-input').click();
+      });
+
+      $('#file-input').on('change', function(e) {
+        if(e.target.files.length > 0) {
+          const file = e.target.files[0];
+          $('#preview-filename').text(file.name);
+          $('#preview-filesize').text((file.size / 1024).toFixed(1) + ' KB');
+          $('#upload-zone').hide();
+          $('#file-preview').show().css('display', 'flex');
+        }
+      });
+
+      $('#btn-clear-file').on('click', function() {
+        $('#file-input').val('');
+        $('#file-preview').hide();
+        $('#upload-zone').show().css('display', 'flex');
+      });
+
+      $('#btn-confirm-upload').on('click', function() {
+        const fileName = $('#preview-filename').text();
+        if($('#file-input').val()) {
+          $(`#display-attach-${currentSlot}`).text(fileName).addClass('color-blue');
+          closeModal('#attachment-modal');
+          $('#btn-clear-file').click();
+        }
+      });
+
+      $('.btn-close-attach').on('click', function() {
+        closeModal('#attachment-modal');
+      });
+
+    });
+  </script>
+</body>
+
+</html>

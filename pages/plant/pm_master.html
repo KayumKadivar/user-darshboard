@@ -555,16 +555,16 @@
             </thead>
             <tbody>
               <tr class="user-table-row">
-                <td class="user-table-cell text-center color-blue fw-700">DPT</td>
-                <td class="user-table-cell text-center">LIHL_1442_04</td>
+                <td class="user-table-cell text-center">ANALYZER</td>
+                <td class="user-table-cell text-center">1AR2510</td>
                 <td class="user-table-cell text-center">01/01/2005</td>
                 <td class="user-table-cell text-center">PBS</td>
                 <td class="user-table-cell text-center">LOGIC</td>
                 <td class="user-table-cell text-center">Jan</td>
               </tr>
               <tr class="user-table-row">
-                <td class="user-table-cell"></td>
-                <td class="user-table-cell text-center">LIHL_1442_06</td>
+                <td class="user-table-cell text-center">TX</td>
+                <td class="user-table-cell text-center">1DPT2591</td>
                 <td class="user-table-cell text-center">05/02/2005</td>
                 <td class="user-table-cell text-center">BPB</td>
                 <td class="user-table-cell text-center">LOGIC</td>
@@ -699,7 +699,72 @@
         $(this).closest('.gnfc-modal-overlay').removeClass('is-open');
       });
 
-      // Sync Tag Selection
+      // --- Smart Auto-Suggestion for Tag Search ---
+      let availableTags = [];
+      function refreshAvailableTags() {
+        availableTags = [];
+        $('#pm-tag-select option').each(function() {
+          if ($(this).val()) availableTags.push($(this).val());
+        });
+      }
+      refreshAvailableTags();
+
+      let validationTimeout = null;
+      $('#pm-search-input').on('input', function(e) {
+        clearTimeout(validationTimeout);
+        $(this).removeClass('is-invalid-tag');
+
+        let inputVal = $(this).val().toUpperCase();
+        
+        // 1. Validation: check if the input is a valid prefix
+        let isValidPrefix = availableTags.some(tag => tag.toUpperCase().startsWith(inputVal));
+
+        if (!isValidPrefix && inputVal.length > 0) {
+          // Apply error class immediately so the character and error state are visible
+          $(this).addClass('is-invalid-tag');
+          
+          validationTimeout = setTimeout(() => {
+            let currentVal = $(this).val().toUpperCase();
+            // Re-verify if it's still invalid
+            if (!availableTags.some(tag => tag.toUpperCase().startsWith(currentVal)) && currentVal.length > 0) {
+              $(this).val(currentVal.slice(0, -1));
+              $(this).removeClass('is-invalid-tag');
+              // Trigger input logic internally to handle any needed updates for the new valid state
+              $(this).trigger('input');
+            } else {
+              $(this).removeClass('is-invalid-tag');
+            }
+          }, 400); 
+          return;
+        }
+
+        // 2. Suggestion Logic (Only if not deleting)
+        const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+        if (inputType && (inputType.startsWith('delete') || inputType === 'is-manual')) {
+          // If deleting, just sync dropdown to empty if no exact match
+          let exactMatch = availableTags.find(tag => tag.toUpperCase() === inputVal);
+          $('#pm-tag-select').val(exactMatch || '');
+          _selectedTagNo = exactMatch || '';
+          return;
+        }
+
+        if (inputVal.length > 0) {
+          let firstMatch = availableTags.find(tag => tag.toUpperCase().startsWith(inputVal));
+          if (firstMatch) {
+            $(this).val(firstMatch);
+            // Select the suggested part
+            this.setSelectionRange(inputVal.length, firstMatch.length);
+            // Sync dropdown
+            $('#pm-tag-select').val(firstMatch);
+            _selectedTagNo = firstMatch;
+          }
+        } else {
+           $('#pm-tag-select').val('');
+           _selectedTagNo = '';
+        }
+      });
+
+      // Sync Tag Selection from Dropdown back to Input
       $('#pm-tag-select').on('change', function () {
         _selectedTagNo = $(this).val();
         $('#pm-search-input').val(_selectedTagNo);
