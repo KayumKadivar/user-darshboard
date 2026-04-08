@@ -637,8 +637,8 @@
   <!-- PM Update Status Modal -->
   <div id="pm-update-status-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
-      <div class="gnfc-modal-header border-bottom-1px border-dark-border py-12px">
-        <h3 class="font-18px fw-700 color-red text-uppercase ">Update PM Status</h3>
+      <div class="gnfc-modal-header">
+        <h3 class="">Update PM Status</h3>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x font-18px"></i>
         </button>
@@ -647,10 +647,10 @@
       <div class="gnfc-modal-body p-24px">
         <div class="flex flex-col gap-16px">
           <div class="flex items-center gap-12px">
-            <label class="font-14px fw-700 color-primary" style="width: 80px; text-align: right;">Tag No:</label>
-            <input id="status-update-tag-input" type="text" class="gnfc-modal-input flex-1" placeholder="Tag No">
-            <select id="status-update-tag-select" class="gnfc-modal-input w-120px cursor-pointer">
-              <option value="">--</option>
+            <label class="gnfc-modal-label">Tag No:</label>
+            <input id="status-update-tag-input" type="text" class="gnfc-modal-input" placeholder="Tag No">
+            <select id="status-update-tag-select" class="gnfc-modal-input cursor-pointer">
+              <option value="">Select Tag</option>
               <option value="LPT205">LPT205</option>
               <option value="LV_1401">LV_1401</option>
               <option value="FT_1401">FT_1401</option>
@@ -658,25 +658,24 @@
           </div>
 
           <div class="flex items-center gap-12px">
-            <label class="font-14px fw-700 color-primary" style="width: 80px; text-align: right;">Tech:</label>
-            <select id="status-update-tech" class="gnfc-modal-input flex-1">
+            <label class="gnfc-modal-label">Tech:</label>
+            <select id="status-update-tech" class="gnfc-modal-input">
               <option value="Tech">Tech</option>
               <option value="JMD">JMD</option>
               <option value="PRP">PRP</option>
               <option value="ARP">ARP</option>
               <option value="BPB">BPB</option>
             </select>
-            <label class="font-14px fw-700 color-primary">Date:</label>
-            <input id="status-update-date" type="date" class="gnfc-modal-input w-min-content">
-          </div>
-
-          <div class="flex justify-center pt-12px">
-            <button type="button" id="btn-submit-status-update" class="ui-btn ui-btn--primary px-40px"
-              style="background-color: #6b7280;">
-              Update
-            </button>
+            <label class="gnfc-modal-label">Date:</label>
+            <input id="status-update-date" type="date" class="gnfc-modal-input">
           </div>
         </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="button" id="btn-submit-status-update" class="ui-btn ui-btn--primary">
+          Update
+        </button>
       </div>
     </div>
   </div>
@@ -685,7 +684,7 @@
   <script>
     $(document).ready(function () {
       let _selectedTagNo = '';
-      let _pmModalMode = 'add';
+      const _pmModalMode = 'add';
 
       // Modal Triggers
       $('#btn-pm-report').on('click', () => $('#pm-report-modal').addClass('is-open'));
@@ -699,81 +698,107 @@
         $(this).closest('.gnfc-modal-overlay').removeClass('is-open');
       });
 
-      // --- Smart Auto-Suggestion for Tag Search ---
-      let availableTags = [];
-      function refreshAvailableTags() {
-        availableTags = [];
-        $('#pm-tag-select option').each(function() {
-          if ($(this).val()) availableTags.push($(this).val());
+      // --- Smart Tag Autocomplete Helper ---
+      function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let validationTimeout = null;
+
+        function getAvailableTags() {
+          let tags = [];
+          $select.find('option').each(function () {
+            if ($(this).val()) tags.push($(this).val());
+          });
+          return tags;
+        }
+
+        const tags = getAvailableTags();
+
+        $input.on('input', function (e, extraParam) {
+          clearTimeout(validationTimeout);
+          $(this).removeClass('is-invalid-tag');
+
+          let inputVal = $(this).val().toUpperCase();
+
+          // 1. Find Longest Valid Prefix
+          let longestValidPrefix = "";
+          for (let i = inputVal.length; i >= 0; i--) {
+            let sub = inputVal.substring(0, i);
+            if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          // 2. Constraint: Allow max 2 extra "wrong" characters
+          if (inputVal.length > longestValidPrefix.length + 2) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+            $(this).val(inputVal);
+          }
+
+          // 3. Rejection Logic if wrong
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            validationTimeout = setTimeout(() => {
+              $(this).val(longestValidPrefix);
+              $(this).removeClass('is-invalid-tag');
+              $(this).trigger('input', ['is-manual']);
+            }, 400);
+            return;
+          }
+
+          // 4. Suggestion Logic (Only if not deleting)
+          const inputType = e.originalEvent ? e.originalEvent.inputType : (extraParam || '');
+          if (inputType && inputType.startsWith('delete')) {
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          if (inputVal.length > 0) {
+            let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(inputVal));
+            if (firstMatch) {
+              $(this).val(firstMatch);
+              this.setSelectionRange(inputVal.length, firstMatch.length);
+              $select.val(firstMatch);
+              if (onMatch) onMatch(firstMatch);
+            }
+          } else {
+            $select.val('');
+            if (onMatch) onMatch('');
+          }
+        });
+
+        $input.on('keydown', function (e) {
+          if (e.key === 'Enter') {
+            const currentVal = $(this).val();
+            if (currentVal && !$(this).hasClass('is-invalid-tag')) {
+              e.preventDefault();
+              $(this).val(currentVal); // Commits the suggestion
+              this.setSelectionRange(currentVal.length, currentVal.length);
+
+              // Success Visual Feedback
+              $(this).addClass('tag-confirmed');
+              setTimeout(() => $(this).removeClass('tag-confirmed'), 500);
+            }
+          }
+        });
+
+        $select.on('change', function () {
+          let val = $(this).val();
+          $input.val(val);
+          if (onMatch) onMatch(val);
         });
       }
-      refreshAvailableTags();
 
-      let validationTimeout = null;
-      $('#pm-search-input').on('input', function(e) {
-        clearTimeout(validationTimeout);
-        $(this).removeClass('is-invalid-tag');
-
-        let inputVal = $(this).val().toUpperCase();
-        
-        // 1. Validation: check if the input is a valid prefix
-        let isValidPrefix = availableTags.some(tag => tag.toUpperCase().startsWith(inputVal));
-
-        if (!isValidPrefix && inputVal.length > 0) {
-          // Apply error class immediately so the character and error state are visible
-          $(this).addClass('is-invalid-tag');
-          
-          validationTimeout = setTimeout(() => {
-            let currentVal = $(this).val().toUpperCase();
-            // Re-verify if it's still invalid
-            if (!availableTags.some(tag => tag.toUpperCase().startsWith(currentVal)) && currentVal.length > 0) {
-              $(this).val(currentVal.slice(0, -1));
-              $(this).removeClass('is-invalid-tag');
-              // Trigger input logic internally to handle any needed updates for the new valid state
-              $(this).trigger('input');
-            } else {
-              $(this).removeClass('is-invalid-tag');
-            }
-          }, 400); 
-          return;
-        }
-
-        // 2. Suggestion Logic (Only if not deleting)
-        const inputType = e.originalEvent ? e.originalEvent.inputType : '';
-        if (inputType && (inputType.startsWith('delete') || inputType === 'is-manual')) {
-          // If deleting, just sync dropdown to empty if no exact match
-          let exactMatch = availableTags.find(tag => tag.toUpperCase() === inputVal);
-          $('#pm-tag-select').val(exactMatch || '');
-          _selectedTagNo = exactMatch || '';
-          return;
-        }
-
-        if (inputVal.length > 0) {
-          let firstMatch = availableTags.find(tag => tag.toUpperCase().startsWith(inputVal));
-          if (firstMatch) {
-            $(this).val(firstMatch);
-            // Select the suggested part
-            this.setSelectionRange(inputVal.length, firstMatch.length);
-            // Sync dropdown
-            $('#pm-tag-select').val(firstMatch);
-            _selectedTagNo = firstMatch;
-          }
-        } else {
-           $('#pm-tag-select').val('');
-           _selectedTagNo = '';
-        }
+      // Initialize Search Section
+      initTagAutocomplete('#pm-search-input', '#pm-tag-select', (val) => {
+        _selectedTagNo = val;
       });
 
-      // Sync Tag Selection from Dropdown back to Input
-      $('#pm-tag-select').on('change', function () {
-        _selectedTagNo = $(this).val();
-        $('#pm-search-input').val(_selectedTagNo);
-      });
-
-      // Form Actions
-      $('#status-update-tag-select').on('change', function () {
-        $('#status-update-tag-input').val($(this).val());
-      });
+      // Initialize Update Status Section
+      initTagAutocomplete('#status-update-tag-input', '#status-update-tag-select');
 
       $('#btn-add-pm').on('click', () => {
         $('#pm-add-modal').addClass('is-open');
