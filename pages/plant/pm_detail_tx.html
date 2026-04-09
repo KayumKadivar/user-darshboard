@@ -215,7 +215,7 @@
               <tbody>
                 <!-- Basic Information -->
                 <tr>
-                  <td colspan="2" style="width: 260px;">Tag_no</td>
+                  <td colspan="2" style="width: 260px;">Tag No</td>
                   <td colspan="2"></td>
                 </tr>
                 <tr>
@@ -368,7 +368,7 @@
               <tbody>
                 <!-- Basic Information -->
                 <tr>
-                  <td colspan="2" style="width: 260px;">Tag_no</td>
+                  <td colspan="2" style="width: 260px;">Tag No</td>
                   <td colspan="2"><input type="text" class="pm-form-input" readonly></td>
                 </tr>
                 <tr>
@@ -568,7 +568,7 @@
             <table class="user-table" style="min-width: auto;">
               <tbody>
                 <tr>
-                  <td colspan="2" style="width: 260px;">Tag_no</td>
+                  <td colspan="2" style="width: 260px;">Tag No</td>
                   <td colspan="2">
                     <input type="text" class="pm-form-input" readonly>
                   </td>
@@ -901,7 +901,7 @@
     $(document).ready(function () {
       let showPendingOnly = false;
 
-      // --- Tag Search Autocomplete Helper ---
+      // --- Tag Search Autocomplete Helper (Refined Standard) ---
       function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
         const $input = $(inputSelector);
         const $select = $(selectSelector);
@@ -1000,10 +1000,13 @@
                     if (onMatch) onMatch('');
                   }
                 }
-              }, 40);
-            }, 600);
+              }, 150);
+            }, 800);
             return;
           }
+
+          stopAutoRemove();
+          $(this).removeClass('is-invalid-tag');
 
           if (inputVal.length > 0) {
             let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(inputVal));
@@ -1019,10 +1022,25 @@
           }
         });
 
+        $input.on('keydown', function (e) {
+          if (isAutoRemoving && e.key !== 'Enter') stopAutoRemove();
+          if (e.key === 'Enter') {
+            stopAutoRemove();
+            const currentVal = $(this).val();
+            if (currentVal && !$(this).hasClass('is-invalid-tag')) {
+              e.preventDefault();
+              $(this).val(currentVal);
+              this.setSelectionRange(currentVal.length, currentVal.length);
+              $(this).addClass('tag-confirmed');
+              setTimeout(() => $(this).removeClass('tag-confirmed'), 500);
+            }
+          }
+        });
+
         $select.on('change', function () {
+          stopAutoRemove();
           let val = $(this).val();
           $input.val(val).removeClass('is-invalid-tag');
-          stopAutoRemove();
           if (onMatch) onMatch(val);
         });
       }
@@ -1048,6 +1066,7 @@
           Swal.fire('Invalid Tag', 'Please select a valid tag from the list.', 'warning');
         }
       });
+
 
       // --- Utilities ---
       function openModal(id) { $(id).addClass('is-open'); }

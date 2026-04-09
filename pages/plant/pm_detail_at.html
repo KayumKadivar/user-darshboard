@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GNFC | Transmitter PM Detail</title>
+  <title>GNFC | Analyzer PM Detail</title>
 
   <!-- Project CSS -->
   <link rel="stylesheet" href="../../css/phosphor.css">
@@ -183,7 +183,7 @@
     </div>
   </main>
 
-  <!-- Transmitter PM Detail (View Only) Modal -->
+  <!-- Analyzer PM Detail (View Only) Modal -->
   <div id="pm-view-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
@@ -203,7 +203,7 @@
               <tbody>
                 <!-- Basic Information -->
                 <tr>
-                  <td colspan="2" style="width: 260px;">Tag_no</td>
+                  <td colspan="2" style="width: 260px;">Tag No</td>
                   <td colspan="2"></td>
                 </tr>
                 <tr>
@@ -304,7 +304,7 @@
 
     </div>
   </div>
-  </div>
+</div>
 
   <!-- Edit PM Form Modal -->
   <div id="pm-edit-modal" class="gnfc-modal-overlay">
@@ -325,7 +325,7 @@
               <tbody>
                 <!-- Basic -->
                 <tr>
-                  <td colspan="2" style="width: 260px;">Tag_no</td>
+                  <td colspan="2" style="width: 260px;">Tag No</td>
                   <td colspan="2"><input type="text" class="pm-form-input" readonly></td>
                 </tr>
                 <tr>
@@ -449,7 +449,7 @@
                   <td colspan="4"><p>SPECIAL INSTRUCTION : </p></td>
                  </tr>
                 <tr>
-                  <td colspan="2" style="width: 260px;">Tag_no</td>
+                  <td colspan="2" style="width: 260px;">Tag No</td>
                   <td colspan="2"><input type="text" class="pm-form-input" readonly></td>
                 </tr>
                 <tr>
@@ -699,7 +699,7 @@
         closeModal($(this).closest('.gnfc-modal-overlay'));
       });
 
-      // --- Tag Search Autocomplete Helper ---
+      // --- Tag Search Autocomplete Helper (Refined Standard) ---
       function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
         const $input = $(inputSelector);
         const $select = $(selectSelector);
@@ -838,16 +838,15 @@
         $select.on('change', function () {
           stopAutoRemove();
           let val = $(this).val();
-          $input.val(val);
+          $input.val(val).removeClass('is-invalid-tag');
           if (onMatch) onMatch(val);
         });
       }
 
-      // Initialize Autocomplete
+      // Initialize Autocomplete for AT View Filter
       initTagAutocomplete('#view-tag-input', '#view-tag-select', function (tag) {
         showPendingOnly = false;
         $('#pm-details-title').text('PM Details Tag : ' + (tag || 'ALL'));
-
         $('.user-table-row').each(function () {
           const rowTag = $(this).data('tag');
           if (!tag || rowTag === tag) $(this).show();
@@ -857,14 +856,18 @@
 
       $('#btn-view-tag-go').on('click', function () {
         const val = $('#view-tag-select').val();
-        Swal.fire({
-          icon: 'success',
-          title: 'Filtered',
-          text: 'Displaying details for: ' + (val || 'All Tags'),
-          timer: 1500,
-          showConfirmButton: false,
-          confirmButtonColor: '#2563eb'
-        });
+        if (!val && $('#view-tag-input').val()) {
+          Swal.fire('Invalid Tag', 'Please select a valid tag from the list.', 'warning');
+        } else {
+          Swal.fire({
+            icon: 'success',
+            title: 'Filtered',
+            text: 'Displaying details for: ' + (val || 'All Tags'),
+            timer: 1500,
+            showConfirmButton: false,
+            confirmButtonColor: '#2563eb'
+          });
+        }
       });
 
       $('#btn-pending-filter').on('click', function () {
