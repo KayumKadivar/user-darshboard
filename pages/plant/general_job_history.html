@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GNFC | General Job History</title>
-  
+
   <!-- Project CSS -->
   <link rel="stylesheet" href="../../css/phosphor.css">
   <link rel="stylesheet" href="../../css/theme-vars.css">
@@ -45,15 +45,19 @@
               <button class="pm-btn pm-btn--add px-16px h-32px font-11px" id="btn-add-job">
                 <i class="ph-bold ph-plus-circle"></i> Add Job
               </button>
-              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="default">Default Date</button>
-              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="prev">Prev Year</button>
-              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="this">This Year</button>
-              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="next">Next Year</button>
+              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="default">Default
+                Date</button>
+              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="prev">Prev
+                Year</button>
+              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="this">This
+                Year</button>
+              <button class="pm-btn pm-btn--secondary px-12px h-32px font-11px date-filter" data-type="next">Next
+                Year</button>
             </div>
           </div>
           <div class="p-16px">
             <div class="grid grid-cols-2 lg-grid-cols-4 gap-16px">
-              
+
               <div class="flex flex-col gap-8px">
                 <label class="font-11px fw-700 color-label text-uppercase">Loop</label>
                 <select class="gnfc-modal-input w-full cursor-pointer" id="filter-loop">
@@ -64,18 +68,22 @@
               </div>
 
               <div class="flex flex-col gap-8px">
-                <label class="font-11px fw-700 color-label text-uppercase">Tag</label>
-                <select class="gnfc-modal-input w-full cursor-pointer" id="filter-tag">
-                  <option value="">ALL</option>
-                  <option>FV0208B</option>
-                  <option>FV0216A</option>
-                  <option>FV301A</option>
-                  <option>FV3101A</option>
-                  <option>FV606</option>
-                  <option>HV710</option>
-                  <option>HV7508</option>
-                  <option>FV0203BA</option>
-                </select>
+                <label class="font-11px fw-700 color-label text-uppercase">Search / Select Tag</label>
+                <div class="flex gap-8px">
+                  <input type="text" id="filter-tag-input" class="gnfc-modal-input flex-1 font-14px uppercase"
+                    placeholder="Tag No...">
+                  <select class="gnfc-modal-input flex-1 cursor-pointer font-14px" id="filter-tag">
+                    <option value="">ALL</option>
+                    <option>FV0208B</option>
+                    <option>FV0216A</option>
+                    <option>FV301A</option>
+                    <option>FV3101A</option>
+                    <option>FV606</option>
+                    <option>HV710</option>
+                    <option>HV7508</option>
+                    <option>FV0203BA</option>
+                  </select>
+                </div>
               </div>
 
               <div class="flex flex-col gap-8px">
@@ -139,11 +147,11 @@
                 <label class="font-11px fw-700 color-label text-uppercase">Filter Options</label>
                 <div class="flex gap-4px">
                   <label
-                    class="flex items-center gap-6px cursor-pointer font-10px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                    class="flex items-center gap-6px cursor-pointer font-16px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
                     <input type="checkbox" class="accent-gnfc-blue"> Remark
                   </label>
                   <label
-                    class="flex items-center gap-6px cursor-pointer font-10px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                    class="flex items-center gap-6px cursor-pointer font-16px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
                     <input type="checkbox" class="accent-gnfc-blue"> Attach
                   </label>
                 </div>
@@ -166,9 +174,9 @@
               <i class="ph-fill ph-table color-orange font-16px"></i>
               <span class="jbd-card-header-title">Job Records</span>
             </div>
-            <span class="font-12px color-label bg-dark-bg px-8px py-4px radius-4px border border-dark" id="record-count">10 Records Found</span>
+            <span class="jbd-badge-count" id="record-count">10 Records Found</span>
           </div>
-          
+
           <div class="user-table-wrapper radius-0px border-none">
             <table class="user-table" id="job-history-table">
               <thead>
@@ -176,16 +184,16 @@
                   <th rowspan="2" style="width: 50px;" class="sticky left-0 z-20">Sr</th>
                   <th rowspan="2" style="width: 70px;">Area</th>
                   <th style="width: 140px;" class="border-b-dark">Loop</th>
-                  <th style="width: 140px;" class="border-b-dark">Inst Type</th>
+                  <th style="width: 140px;" class="border-b-dark">Type Of Inst</th>
                   <th rowspan="2" style="width: 110px;">Date</th>
-                  <th rowspan="2" class="text-left" style="min-width: 400px;">Description of Job</th>
-                  <th style="width: 80px;" class="border-b-dark">Tech</th>
-                  <th rowspan="2" style="width: 60px;">Attch</th>
+                  <th rowspan="2" style="min-width: 400px;">Description</th>
+                  <th style="width: 90px;" class="border-b-dark">Tech</th>
+                  <th rowspan="2" style="width: 90px;">Attch</th>
                   <th rowspan="1" style="min-width: 250px;" class="border-b-dark">Eng Remark</th>
                 </tr>
                 <tr>
                   <th class="font-11px py-4px">Tag</th>
-                  <th class="font-11px py-4px">Job Type</th>
+                  <th class="font-11px py-4px">Type Of Job</th>
                   <th class="font-11px py-4px">Eng</th>
                   <th class="font-11px py-4px">Exec Remark</th>
                 </tr>
@@ -196,231 +204,380 @@
                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">1</td>
                   <td class="text-center fw-700">400</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">0208</div>
-                    <div class="py-6px px-10px fw-800 color-blue">FV0208B</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">0208</span>
+                      <span>FV0208B</span>
+                    </div>
                   </td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">C/V</div>
-                    <div class="py-6px px-10px color-orange">CMS JOB</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
                   </td>
-                  <td class="text-center color-green">13/01/2026</td>
-                  <td class="text-left leading-relaxed font-13px">Defect: C/V is not closing during pressurized (in line condition).<br>Job Done: ignore this entry. (CMS Incharge: MAJ)</td>
+                  <td class="text-center font-14px">13/01/2026</td>
+                  <td class="text-left leading-relaxed font-13px">Defect: C/V is not closing during pressurized (in line
+                    condition).<br>Job Done: ignore this entry. (CMS Incharge: MAJ)</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">-</div>
-                    <div class="py-6px px-10px fw-800">MAJ</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
                   </td>
-                  <td class="text-center"><span class="opacity-30">-</span></td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark italic color-red">-</div>
-                    <div class="py-6px px-10px color-blue">-</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span class="opacity-30">-</span>
+                      <span class="font-11px color-label">No File</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">-</span>
+                      <span class="color-blue">-</span>
+                    </div>
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="2">
                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">2</td>
                   <td class="text-center fw-700">400</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">0208</div>
-                    <div class="py-6px px-10px fw-800 color-blue">FV0208B</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">0208</span>
+                      <span>FV0208B</span>
+                    </div>
                   </td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">C/V</div>
-                    <div class="py-6px px-10px color-orange">CMS JOB</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
                   </td>
-                  <td class="text-center color-green">09/01/2026</td>
-                  <td class="text-left leading-relaxed font-13px">Defect: C/V is not closing during pressurized (in line condition).<br>Job Done: (CMS Incharge: MAJ)</td>
+                  <td class="text-center font-14px">09/01/2026</td>
+                  <td class="text-left leading-relaxed font-13px">Defect: C/V is not closing during pressurized (in line
+                    condition).<br>Job Done: (CMS Incharge: MAJ)</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">-</div>
-                    <div class="py-6px px-10px fw-800">MAJ</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
                   </td>
-                  <td class="text-center"><span class="opacity-30">-</span></td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark italic color-red">-</div>
-                    <div class="py-6px px-10px color-blue">-</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span class="opacity-30">-</span>
+                      <span class="font-11px color-label">No File</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">-</span>
+                      <span class="color-blue">-</span>
+                    </div>
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="3">
-                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">3</td>
-                   <td class="text-center fw-700">200</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">0216</div>
-                     <div class="py-6px px-10px fw-800 color-blue">FV0216A</div>
-                   </td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">C/V</div>
-                     <div class="py-6px px-10px color-orange">CMS JOB</div>
-                   </td>
-                   <td class="text-center color-green">13/12/2025</td>
-                   <td class="text-left leading-relaxed font-13px">Defect: LV0203AA control sent to micron for its body to be used in FV0216A.<br>Job Done: (CMS Incharge: MAJ)</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">-</div>
-                     <div class="py-6px px-10px fw-800">MAJ</div>
-                   </td>
-                   <td class="text-center"><span class="opacity-30">-</span></td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark italic color-red">-</div>
-                     <div class="py-6px px-10px color-blue">-</div>
-                   </td>
+                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">3</td>
+                  <td class="text-center fw-700">200</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">0216</span>
+                      <span>FV0216A</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
+                  </td>
+                  <td class="text-center font-14px">13/12/2025</td>
+                  <td class="text-left leading-relaxed font-13px">Defect: LV0203AA control sent to micron for its body
+                    to be used in FV0216A.<br>Job Done: (CMS Incharge: MAJ)</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span class="opacity-30">-</span>
+                      <span class="font-11px color-label">No File</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">-</span>
+                      <span class="color-blue">-</span>
+                    </div>
+                  </td>
                 </tr>
                 <tr class="user-table-row" data-sr="4">
                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">4</td>
                   <td class="text-center fw-700">200</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">0216</div>
-                    <div class="py-6px px-10px fw-800 color-blue">FV0216A</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">0216</span>
+                      <span>FV0216A</span>
+                    </div>
                   </td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">C/V</div>
-                    <div class="py-6px px-10px color-orange">CMS JOB</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
                   </td>
-                  <td class="text-center color-green">13/12/2025</td>
-                  <td class="text-left leading-relaxed font-13px">Defect: LV0203AA control sent to micron for its body to be used in FV0216A.<br>Job Done: Wrong entry. ignore this entry. (CMS Incharge: MAJ)</td>
+                  <td class="text-center font-14px">13/12/2025</td>
+                  <td class="text-left leading-relaxed font-13px">Defect: LV0203AA control sent to micron for its body
+                    to be used in FV0216A.<br>Job Done: Wrong entry. ignore this entry. (CMS Incharge: MAJ)</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">-</div>
-                    <div class="py-6px px-10px fw-800">MAJ</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
                   </td>
-                  <td class="text-center"><span class="opacity-30">-</span></td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark italic color-red">-</div>
-                    <div class="py-6px px-10px color-blue">-</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span class="opacity-30">-</span>
+                      <span class="font-11px color-label">No File</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">-</span>
+                      <span class="color-blue">-</span>
+                    </div>
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="5">
                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">5</td>
                   <td class="text-center fw-700">300</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">0301</div>
-                    <div class="py-6px px-10px fw-800 color-blue">FV301A</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">0301</span>
+                      <span>FV301A</span>
+                    </div>
                   </td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">C/V</div>
-                    <div class="py-6px px-10px color-orange">CMS JOB</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
                   </td>
-                  <td class="text-center color-green">15/11/2025</td>
-                  <td class="text-left leading-relaxed font-13px">Defect: DROPPED FOR HEAVY VIBRATION IN VALVE. PLUG+STEM IS BROKEN. NEW STEM TO BE MFG. PLUG TO BE REPAIRED.<br>Job Done: Valve was sent to Micron due to heavy vibration and plug broken issues. After dismantling and inspection, it was found that the body, bonnet were damaged and required repairs...</td>
+                  <td class="text-center font-14px">15/11/2025</td>
+                  <td class="text-left leading-relaxed font-13px">Defect: DROPPED FOR HEAVY VIBRATION IN VALVE.
+                    PLUG+STEM IS BROKEN. NEW STEM TO BE MFG. PLUG TO BE REPAIRED.<br>Job Done: Valve was sent to Micron
+                    due to heavy vibration and plug broken issues. After dismantling and inspection, it was found that
+                    the body, bonnet were damaged and required repairs...</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">-</div>
-                    <div class="py-6px px-10px fw-800">MAJ</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
                   </td>
-                  <td class="text-center"><i class="ph-bold ph-paperclip color-blue"></i></td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark italic color-red">URGENT REQUIREMENT</div>
-                    <div class="py-6px px-10px color-blue">-</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span><i class="ph-bold ph-paperclip color-blue"></i></span>
+                      <span class="font-11px color-blue">Attached</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">URGENT REQUIREMENT</span>
+                      <span class="color-blue">-</span>
+                    </div>
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="6">
                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">6</td>
                   <td class="text-center fw-700">300</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">3101</div>
-                    <div class="py-6px px-10px fw-800 color-blue">FV3101A</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">3101</span>
+                      <span>FV3101A</span>
+                    </div>
                   </td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">C/V</div>
-                    <div class="py-6px px-10px color-orange">CMS JOB</div>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
                   </td>
-                  <td class="text-center color-green">15/11/2025</td>
-                  <td class="text-left leading-relaxed font-13px">Defect: C/V Passing and jerky operation.<br>Job Done: *Late job entry* Valve sent to Micron due to passing and jerking. Metal seat ring and Soft seat provided by micron (PTFE) replaced in control valve. valve was tested and found ok.</td>
+                  <td class="text-center font-14px">15/11/2025</td>
+                  <td class="text-left leading-relaxed font-13px">Defect: C/V Passing and jerky operation.<br>Job Done:
+                    *Late job entry* Valve sent to Micron due to passing and jerking. Metal seat ring and Soft seat
+                    provided by micron (PTFE) replaced in control valve. valve was tested and found ok.</td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark">-</div>
-                    <div class="py-6px px-10px fw-800">MAJ</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
                   </td>
-                  <td class="text-center"><span class="opacity-30">-</span></td>
                   <td class="p-0">
-                    <div class="py-6px px-10px border-b border-dark italic color-red">-</div>
-                    <div class="py-6px px-10px color-blue">-</div>
+                    <div class="user-table-cell-stack text-center">
+                      <span class="opacity-30">-</span>
+                      <span class="font-11px color-label">No File</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">-</span>
+                      <span class="color-blue">-</span>
+                    </div>
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="7">
-                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">7</td>
-                   <td class="text-center fw-700">600</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">0606</div>
-                     <div class="py-6px px-10px fw-800 color-blue">FV606</div>
-                   </td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">C/V</div>
-                     <div class="py-6px px-10px color-orange">CMS JOB</div>
-                   </td>
-                   <td class="text-center color-green">13/11/2025</td>
-                   <td class="text-left leading-relaxed font-13px">Defect: FV606 act dropped for overhauling.<br>Job Done: Actuator was sent to Micron due to a passing issue. After dismantling and inspecting the valve, Replaced seal kit (By micron), rework of stem, actuator casing bolt SS M6 size 18 nos., Rework of body by Drilling, tapping.</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">-</div>
-                     <div class="py-6px px-10px fw-800">MAJ</div>
-                   </td>
-                   <td class="text-center"><span class="opacity-30">-</span></td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark italic color-red">-</div>
-                     <div class="py-6px px-10px color-blue">-</div>
-                   </td>
+                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">7</td>
+                  <td class="text-center fw-700">600</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">0606</span>
+                      <span>FV606</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
+                  </td>
+                  <td class="text-center font-14px">13/11/2025</td>
+                  <td class="text-left leading-relaxed font-13px">Defect: FV606 act dropped for overhauling.<br>Job
+                    Done: Actuator was sent to Micron due to a passing issue. After dismantling and inspecting the
+                    valve, Replaced seal kit (By micron), rework of stem, actuator casing bolt SS M6 size 18 nos.,
+                    Rework of body by Drilling, tapping.</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span class="opacity-30">-</span>
+                      <span class="font-11px color-label">No File</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">-</span>
+                      <span class="color-blue">-</span>
+                    </div>
+                  </td>
                 </tr>
                 <tr class="user-table-row" data-sr="8">
-                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">8</td>
-                   <td class="text-center fw-700">700</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">0710</div>
-                     <div class="py-6px px-10px fw-800 color-blue">HV710</div>
-                   </td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">C/V</div>
-                     <div class="py-6px px-10px color-orange">CMS JOB</div>
-                   </td>
-                   <td class="text-center color-green">13/11/2025</td>
-                   <td class="text-left leading-relaxed font-13px">Control valve Passing 1X2500<br>Valve was sent to Micron due to a passing issue in the control valve. After dismantling and inspecting the valve, it was found that body, bonnet, stem, plug and metal seat ring were damaged and required repair.</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">-</div>
-                     <div class="py-6px px-10px fw-800">MAJ</div>
-                   </td>
-                   <td class="text-center"><span class="opacity-30">-</span></td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark italic color-red">-</div>
-                     <div class="py-6px px-10px color-blue">-</div>
-                   </td>
+                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">8</td>
+                  <td class="text-center fw-700">700</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">0710</span>
+                      <span>HV710</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
+                  </td>
+                  <td class="text-center font-14px">13/11/2025</td>
+                  <td class="text-left leading-relaxed font-13px">Control valve Passing 1X2500<br>Valve was sent to
+                    Micron due to a passing issue in the control valve. After dismantling and inspecting the valve, it
+                    was found that body, bonnet, stem, plug and metal seat ring were damaged and required repair.</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span class="opacity-30">-</span>
+                      <span class="font-11px color-label">No File</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">-</span>
+                      <span class="color-blue">-</span>
+                    </div>
+                  </td>
                 </tr>
                 <tr class="user-table-row" data-sr="9">
-                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">9</td>
-                   <td class="text-center fw-700">700</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">7508</div>
-                     <div class="py-6px px-10px fw-800 color-blue">HV7508</div>
-                   </td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">C/V</div>
-                     <div class="py-6px px-10px color-orange">CMS JOB</div>
-                   </td>
-                   <td class="text-center color-green">13/11/2025</td>
-                   <td class="text-left leading-relaxed font-13px">Control valve passing 2X600<br>Valve was sent to Micron due to a passing issue in the control valve. After dismantling and inspecting the valve, it was found that body, bonnet, plug and metal seat ring were damaged and required repair.</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">-</div>
-                     <div class="py-6px px-10px fw-800">MAJ</div>
-                   </td>
-                   <td class="text-center"><span class="opacity-30">-</span></td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark italic color-red">-</div>
-                     <div class="py-6px px-10px color-blue">-</div>
-                   </td>
+                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">9</td>
+                  <td class="text-center fw-700">700</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">7508</span>
+                      <span>HV7508</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
+                  </td>
+                  <td class="text-center font-14px">13/11/2025</td>
+                  <td class="text-left leading-relaxed font-13px">Control valve passing 2X600<br>Valve was sent to
+                    Micron due to a passing issue in the control valve. After dismantling and inspecting the valve, it
+                    was found that body, bonnet, plug and metal seat ring were damaged and required repair.</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span class="opacity-30">-</span>
+                      <span class="font-11px color-label">No File</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">-</span>
+                      <span class="color-blue">-</span>
+                    </div>
+                  </td>
                 </tr>
                 <tr class="user-table-row" data-sr="10">
-                   <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">10</td>
-                   <td class="text-center fw-700">200</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">0203</div>
-                     <div class="py-6px px-10px fw-800 color-blue">FV0203BA</div>
-                   </td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">C/V</div>
-                     <div class="py-6px px-10px color-orange">CMS JOB</div>
-                   </td>
-                   <td class="text-center color-green">13/11/2025</td>
-                   <td class="text-left leading-relaxed font-13px">Defect: C/V having noise below 70% MV.<br>Job Done: Valve was sent to Micron due to a passing issue in the control valve. After dismantling and inspecting the valve, it was found that plug was damaged and required repair. Machining of the plug along with lapping...</td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark">-</div>
-                     <div class="py-6px px-10px fw-800">MAJ</div>
-                   </td>
-                   <td class="text-center"><span class="opacity-30">-</span></td>
-                   <td class="p-0">
-                     <div class="py-6px px-10px border-b border-dark italic color-red">-</div>
-                     <div class="py-6px px-10px color-blue">-</div>
-                   </td>
+                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">10</td>
+                  <td class="text-center fw-700">200</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">0203</span>
+                      <span>FV0203BA</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold">C/V</span>
+                      <span>CMS JOB</span>
+                    </div>
+                  </td>
+                  <td class="text-center font-14px">13/11/2025</td>
+                  <td class="text-left leading-relaxed font-13px">Defect: C/V having noise below 70% MV.<br>Job Done:
+                    Valve was sent to Micron due to a passing issue in the control valve. After dismantling and
+                    inspecting the valve, it was found that plug was damaged and required repair. Machining of the plug
+                    along with lapping...</td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span>-</span>
+                      <span class="user-table-bold">MAJ</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack text-center">
+                      <span class="opacity-30">-</span>
+                      <span class="font-11px color-label">No File</span>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="user-table-cell-stack">
+                      <span class="italic color-red">-</span>
+                      <span class="color-blue">-</span>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -431,11 +588,11 @@
     </div>
   </main>
 
-  <!-- Job Detail Modal -->
-  <div id="job-detail-modal" class="gnfc-modal-overlay">
+  <!-- Add Job Modal -->
+  <div id="add-job-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
-        <h3 class="gnfc-modal-title" id="modal-title">Job History Detail</h3>
+        <h3 class="gnfc-modal-title">Add New Job</h3>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x text-lg"></i>
         </button>
@@ -443,11 +600,12 @@
 
       <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
         <div class="flex flex-col gap-16px">
-          
+
           <div class="grid grid-cols-4 gap-16px">
             <div class="flex flex-col gap-8px">
               <label class="gnfc-modal-label">Area</label>
-              <select id="modal-area" class="gnfc-modal-input">
+              <select id="add-modal-area" class="gnfc-modal-input">
+                <option value="">Select Area</option>
                 <option>400</option>
                 <option>200</option>
                 <option>300</option>
@@ -456,8 +614,71 @@
               </select>
             </div>
             <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Loop No</label>
+              <select id="add-modal-loop" class="gnfc-modal-input">
+                <option value="">Select Loop</option>
+                <option>0208</option>
+                <option>0216</option>
+                <option>0301</option>
+                <option>3101</option>
+                <option>0606</option>
+                <option>0710</option>
+                <option>7508</option>
+                <option>0203</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Tag No</label>
+              <select id="add-modal-tag" class="gnfc-modal-input">
+                <option value="">Select Tag</option>
+                <option>FV0208B</option>
+                <option>FV0216A</option>
+                <option>FV301A</option>
+                <option>FV3101A</option>
+                <option>FV606</option>
+                <option>HV710</option>
+                <option>HV7508</option>
+                <option>FV0203BA</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Type of Job</label>
+              <select id="add-modal-job-type" class="gnfc-modal-input">
+                <option value="">Select Job Type</option>
+                <option>PM</option>
+                <option>DOCUMENTATION</option>
+                <option>HOUSE KEEPING</option>
+                <option>ABNORMALITY</option>
+                <option>MODIFICATION</option>
+                <option>ISO14001</option>
+                <option>FIELD JOB</option>
+                <option>REVAMP</option>
+                <option>DEFECT MAINTENANCE</option>
+                <option>CONFIGURATION</option>
+                <option>SPARE REPAIR</option>
+                <option>SCRAP</option>
+                <option>MATL RETURN</option>
+                <option>RANGE CHANGE</option>
+                <option>CARD FAILURE</option>
+                <option>INST FAILURE</option>
+                <option>INSPECTION</option>
+                <option>CASH PURCHASE</option>
+                <option>PROCESS REQMT</option>
+                <option>N.A.</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label">Description of Job</label>
+            <textarea id="add-modal-desc" class="gnfc-modal-input" style="height: 120px; resize: vertical;"></textarea>
+          </div>
+
+          <div class="grid grid-cols-4 gap-16px">
+            <div class="flex flex-col gap-8px">
               <label class="gnfc-modal-label">Type of Inst</label>
-              <select id="modal-inst-type" class="gnfc-modal-input">
+              <select id="add-modal-inst-type" class="gnfc-modal-input">
+                <option value="">Select Instrument Type</option>
                 <option>ANALYZER</option>
                 <option>C/V</option>
                 <option>TX</option>
@@ -474,28 +695,142 @@
               </select>
             </div>
             <div class="flex flex-col gap-8px">
-              <label class="gnfc-modal-label">Loop No</label>
-              <input type="text" id="modal-loop" class="gnfc-modal-input">
+              <label class="gnfc-modal-label">Date</label>
+              <input type="date" id="add-modal-date" class="gnfc-modal-input">
             </div>
             <div class="flex flex-col gap-8px">
-              <label class="gnfc-modal-label">Tag No</label>
-              <input type="text" id="modal-tag" class="gnfc-modal-input">
+              <label class="gnfc-modal-label">Tech</label>
+              <select id="add-modal-tech" class="gnfc-modal-input">
+                <option value="">Select Technician</option>
+                <option>PVC</option>
+                <option>BDR</option>
+                <option>PRP</option>
+                <option>JBD</option>
+                <option>JMD</option>
+                <option>MAJ</option>
+                <option>N.A.</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Eng</label>
+              <select id="add-modal-eng" class="gnfc-modal-input">
+                <option value="">Select Engineer</option>
+                <option>MAJ</option>
+                <option>CKV</option>
+                <option>MDM</option>
+              </select>
             </div>
           </div>
 
           <div class="flex flex-col gap-8px">
-            <label class="gnfc-modal-label">Description of Job</label>
-            <textarea id="modal-desc" class="gnfc-modal-input" style="height: 120px; resize: vertical;"></textarea>
+            <label class="gnfc-modal-label">Attachments</label>
+            <div class="gjh-create-attach-grid">
+              <div class="gjh-create-attach-card">
+                <div class="gjh-create-attach-top">
+                  <div class="gjh-create-attach-icon">
+                    <i class="ph-fill ph-paperclip color-blue text-lg"></i>
+                  </div>
+                  <span class="gjh-create-attach-badge">
+                    <i class="ph-bold ph-lock"></i> Edit Only
+                  </span>
+                </div>
+                <div class="gjh-create-attach-meta">
+                  <span class="gjh-create-attach-title">Attach 1</span>
+                  <p class="gjh-create-attach-text">Attachments are supported only in Edit mode, not in Create mode.</p>
+                </div>
+              </div>
+
+              <div class="gjh-create-attach-card">
+                <div class="gjh-create-attach-top">
+                  <div class="gjh-create-attach-icon">
+                    <i class="ph-fill ph-paperclip color-blue text-lg"></i>
+                  </div>
+                  <span class="gjh-create-attach-badge">
+                    <i class="ph-bold ph-lock"></i> Edit Only
+                  </span>
+                </div>
+                <div class="gjh-create-attach-meta">
+                  <span class="gjh-create-attach-title">Attach 2</span>
+                  <p class="gjh-create-attach-text">Attachments are supported only in Edit mode, not in Create mode.</p>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <div class="grid grid-cols-2 gap-16px">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Engineer's Remark</label>
+              <textarea id="add-modal-eng-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Executive Remark</label>
+              <textarea id="add-modal-exec-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer flex justify-end items-center px-16px py-12px">
+        <div class="flex gap-12px">
+          <button class="pm-btn pm-btn--primary px-32px h-40px font-13px" id="btn-create-job">Add Job</button>
+          <button class="pm-btn pm-btn--secondary px-24px h-40px font-13px btn-close-modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Job Detail Modal -->
+  <div id="job-detail-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title" id="modal-title">Job History Detail</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body dashboard-scroll">
+        <div class="flex flex-col gap-16px">
 
           <div class="grid grid-cols-4 gap-16px">
             <div class="flex flex-col gap-8px">
-              <label class="gnfc-modal-label">Date</label>
-              <input type="date" id="modal-date" class="gnfc-modal-input">
+              <label class="gnfc-modal-label">Area</label>
+              <select id="modal-area" class="gnfc-modal-input">
+                <option>N.A.</option>
+                <option>400</option>
+                <option>200</option>
+                <option>300</option>
+                <option>600</option>
+                <option>700</option>
+              </select>
             </div>
             <div class="flex flex-col gap-8px">
-              <label class="gnfc-modal-label">Tech</label>
-              <input type="text" id="modal-tech" class="gnfc-modal-input">
+              <label class="gnfc-modal-label">Loop No</label>
+              <select id="modal-loop" class="gnfc-modal-input">
+                <option>N.A.</option>
+                <option>0208</option>
+                <option>0216</option>
+                <option>0301</option>
+                <option>3101</option>
+                <option>0606</option>
+                <option>0710</option>
+                <option>7508</option>
+                <option>0203</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Tag No</label>
+              <select id="modal-tag" class="gnfc-modal-input">
+                <option>NOTAG</option>
+                <option>FV0208B</option>
+                <option>FV0216A</option>
+                <option>FV301A</option>
+                <option>FV3101A</option>
+                <option>FV606</option>
+                <option>HV710</option>
+                <option>HV7508</option>
+                <option>FV0203BA</option>
+              </select>
             </div>
             <div class="flex flex-col gap-8px">
               <label class="gnfc-modal-label">Type of Job</label>
@@ -522,44 +857,92 @@
                 <option>N.A.</option>
               </select>
             </div>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label">Description of Job</label>
+            <textarea id="modal-desc" class="gnfc-modal-input" style="height: 120px; resize: vertical;"></textarea>
+          </div>
+
+          <div class="grid grid-cols-4 gap-16px">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Type of Inst</label>
+              <select id="modal-inst-type" class="gnfc-modal-input">
+                <option>ANALYZER</option>
+                <option>C/V</option>
+                <option>TX</option>
+                <option>SWITCH</option>
+                <option>PRIMARY ELEMENT</option>
+                <option>SCANNER</option>
+                <option>PCV</option>
+                <option>ROTAMETER</option>
+                <option>ENVIRON MONITORING</option>
+                <option>MACHINE MONITORING</option>
+                <option>PA SYSTEM</option>
+                <option>PC</option>
+                <option>N.A.</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Date</label>
+              <input type="date" id="modal-date" class="gnfc-modal-input">
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Tech</label>
+              <select id="modal-tech" class="gnfc-modal-input">
+                <option>PVC</option>
+                <option>BDR</option>
+                <option>PRP</option>
+                <option>JBD</option>
+                <option>JMD</option>
+                <option>MAJ</option>
+                <option>N.A.</option>
+              </select>
+            </div>
             <div class="flex flex-col gap-8px">
               <label class="gnfc-modal-label">Eng</label>
               <select id="modal-eng" class="gnfc-modal-input">
-                 <option>MAJ</option>
-                 <option>CKV</option>
-                 <option>MDM</option>
+                <option>MAJ</option>
+                <option>CKV</option>
+                <option>MDM</option>
               </select>
             </div>
           </div>
 
           <div class="flex flex-col gap-8px">
             <label class="gnfc-modal-label">Attachments</label>
-            <div class="grid grid-cols-2 gap-12px">
-              
-              <div class="attach-slot p-12px bg-dark-bg border border-dark rounded-small flex items-center justify-between cursor-pointer hover-border-blue transition-all" data-slot="1">
-                <div class="flex items-center gap-12px">
-                  <div class="p-8px radius-4px" style="background: rgba(87, 148, 242, 0.1);">
-                    <i class="ph-fill ph-file-text color-blue text-lg"></i>
+            <div class="gjh-detail-attach-grid">
+
+              <div class="attach-slot gjh-detail-attach-card" data-slot="1">
+                <div class="gjh-detail-attach-top">
+                  <div class="gjh-detail-attach-icon">
+                    <i class="ph-fill ph-file-arrow-up color-blue text-lg"></i>
                   </div>
-                  <div class="flex flex-col">
-                    <span class="font-10px color-label text-uppercase ls-wide">Attach 1</span>
-                    <span class="font-12px fw-700 color-primary" id="display-attach-1">-</span>
-                  </div>
+                  <span class="gjh-detail-attach-chip">
+                    <i class="ph-bold ph-upload-simple"></i> Upload
+                  </span>
                 </div>
-                <i class="ph-bold ph-upload-simple color-label"></i>
+                <div class="gjh-detail-attach-body">
+                  <span class="gjh-detail-attach-title">Attach 1</span>
+                  <p id="display-attach-1" class="gjh-detail-attach-file">No file selected</p>
+                  <span class="gjh-detail-attach-help">Click to upload or replace the supporting PDF file.</span>
+                </div>
               </div>
 
-              <div class="attach-slot p-12px bg-dark-bg border border-dark rounded-small flex items-center justify-between cursor-pointer hover-border-blue transition-all" data-slot="2">
-                <div class="flex items-center gap-12px">
-                  <div class="p-8px radius-4px" style="background: rgba(87, 148, 242, 0.1);">
-                    <i class="ph-fill ph-file-text color-blue text-lg"></i>
+              <div class="attach-slot gjh-detail-attach-card" data-slot="2">
+                <div class="gjh-detail-attach-top">
+                  <div class="gjh-detail-attach-icon">
+                    <i class="ph-fill ph-file-arrow-up color-blue text-lg"></i>
                   </div>
-                  <div class="flex flex-col">
-                    <span class="font-10px color-label text-uppercase ls-wide">Attach 2</span>
-                    <span class="font-12px fw-700 color-primary" id="display-attach-2">-</span>
-                  </div>
+                  <span class="gjh-detail-attach-chip">
+                    <i class="ph-bold ph-upload-simple"></i> Upload
+                  </span>
                 </div>
-                <i class="ph-bold ph-upload-simple color-label"></i>
+                <div class="gjh-detail-attach-body">
+                  <span class="gjh-detail-attach-title">Attach 2</span>
+                  <p id="display-attach-2" class="gjh-detail-attach-file">No file selected</p>
+                  <span class="gjh-detail-attach-help">Click to upload or replace the supporting PDF file.</span>
+                </div>
               </div>
 
             </div>
@@ -575,7 +958,6 @@
               <textarea id="modal-exec-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -583,7 +965,7 @@
         <button class="pm-btn pm-btn--delete px-24px h-40px font-13px" id="btn-delete-job">Delete Entry</button>
         <div class="flex gap-12px">
           <button class="pm-btn pm-btn--secondary px-24px h-40px font-13px btn-close-modal">Cancel</button>
-          <button class="pm-btn pm-btn--primary px-32px h-40px font-13px" id="btn-save-job">Save Changes</button>
+          <button class="pm-btn pm-btn--primary px-32px h-40px font-13px" id="btn-save-job">Save</button>
         </div>
       </div>
     </div>
@@ -603,18 +985,22 @@
       </div>
       <div class="gnfc-modal-body">
         <div class="flex flex-col gap-16px">
-          <div class="p-32px border-2 border-dashed border-dark items-center justify-center flex flex-col gap-12px radius-8px hover-border-blue transition-all cursor-pointer bg-dark-bg" id="upload-zone">
-             <div class="p-12px radius-full" style="background: rgba(87, 148, 242, 0.1);">
-                <i class="ph-duotone ph-cloud-arrow-up text-2xl color-blue"></i>
-             </div>
-             <div class="text-center">
-               <p class="font-13px fw-700 color-primary">Click to upload or drag and drop</p>
-               <p class="font-11px color-label mt-4px">Supporting files...</p>
-             </div>
-             <input type="file" class="hidden" id="file-input" accept="application/pdf">
+          <div
+            class="p-32px border-2 border-dashed border-dark items-center justify-center flex flex-col gap-12px radius-8px hover-border-blue transition-all cursor-pointer bg-dark-bg relative"
+            id="upload-zone">
+            <div class="p-12px radius-full" style="background: rgba(87, 148, 242, 0.1);">
+              <i class="ph-duotone ph-cloud-arrow-up text-2xl color-blue"></i>
+            </div>
+            <div class="text-center">
+              <p class="font-13px fw-700 color-primary">Click to upload or drag and drop</p>
+              <p class="font-11px color-label mt-4px">Supporting files...</p>
+            </div>
+            <input type="file" id="file-input" accept="application/pdf"
+              style="position:absolute; inset:0; opacity:0; cursor:pointer;">
           </div>
 
-          <div class="hidden flex items-center justify-between p-12px bg-panel radius-8px border border-dark" id="file-preview">
+          <div class="hidden flex items-center justify-between p-12px bg-panel radius-8px border border-dark"
+            id="file-preview">
             <div class="flex items-center gap-12px">
               <i class="ph-fill ph-file-pdf text-xl color-red"></i>
               <div class="flex flex-col">
@@ -637,19 +1023,172 @@
 
   <script src="../../js/sidebar.js" defer></script>
   <script src="../../js/header.js" defer></script>
-
   <script>
     $(document).ready(function () {
-
-
       // --- Utilities ---
       function openModal(id) { $(id).addClass('is-open'); }
       function closeModal(id) { $(id).removeClass('is-open'); }
+      function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let snapBackTimeout = null;
+        let snapBackInterval = null;
+        let isAutoRemoving = false;
+
+        function getAvailableTags() {
+          const tags = [];
+          $select.find('option').each(function () {
+            const val = $(this).val() || $(this).text();
+            if (val && !val.includes('ALL') && !val.includes('Select')) tags.push(val);
+          });
+          return tags;
+        }
+
+        function stopAutoRemove() {
+          clearTimeout(snapBackTimeout);
+          clearInterval(snapBackInterval);
+          isAutoRemoving = false;
+        }
+
+        $input.on('input', function (e) {
+          const cursorStart = this.selectionStart;
+          const cursorEnd = this.selectionEnd;
+          const rawVal = $(this).val();
+          const upperVal = rawVal.toUpperCase();
+          if (rawVal !== upperVal) {
+            $(this).val(upperVal);
+            this.setSelectionRange(cursorStart, cursorEnd);
+          }
+
+          const tags = getAvailableTags();
+          const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+          const isDeleting = inputType && inputType.startsWith('delete');
+
+          if (isDeleting) stopAutoRemove();
+
+          let inputVal = $(this).val().toUpperCase();
+
+          if (isDeleting) {
+            const hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+            $(this).toggleClass('is-invalid-tag', !hasMatch);
+
+            const exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          let longestValidPrefix = '';
+          for (let i = inputVal.length; i >= 0; i--) {
+            const sub = inputVal.substring(0, i);
+            if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+            $(this).val(inputVal);
+          }
+
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            $select.val('');
+            if (onMatch) onMatch('');
+
+            stopAutoRemove();
+
+            const self = this;
+            const targetPrefix = longestValidPrefix;
+            snapBackTimeout = setTimeout(() => {
+              isAutoRemoving = true;
+              snapBackInterval = setInterval(() => {
+                let currentVal = $input.val();
+                if (currentVal.length > targetPrefix.length) {
+                  currentVal = currentVal.substring(0, currentVal.length - 1);
+                  $input.val(currentVal);
+                } else {
+                  clearInterval(snapBackInterval);
+                  isAutoRemoving = false;
+                  $input.removeClass('is-invalid-tag');
+
+                  const val = $input.val().toUpperCase();
+                  if (val.length > 0) {
+                    const firstMatch = tags.find(tag => tag.toUpperCase().startsWith(val));
+                    if (firstMatch) {
+                      $input.val(firstMatch);
+                      self.setSelectionRange(val.length, firstMatch.length);
+                      $select.val(firstMatch);
+                      if (onMatch) onMatch(firstMatch);
+                    }
+                  } else {
+                    $select.val('');
+                    if (onMatch) onMatch('');
+                  }
+                }
+              }, 150);
+            }, 800);
+
+            return;
+          }
+
+          stopAutoRemove();
+          $(this).removeClass('is-invalid-tag');
+
+          if (inputVal.length > 0) {
+            const firstMatch = tags.find(tag => tag.toUpperCase().startsWith(inputVal));
+            if (firstMatch) {
+              $(this).val(firstMatch);
+              this.setSelectionRange(inputVal.length, firstMatch.length);
+              $select.val(firstMatch);
+              if (onMatch) onMatch(firstMatch);
+            }
+          } else {
+            $select.val('');
+            if (onMatch) onMatch('');
+          }
+        });
+
+        $input.on('keydown', function (e) {
+          if (isAutoRemoving && e.key !== 'Enter') stopAutoRemove();
+
+          if (e.key === 'Enter') {
+            stopAutoRemove();
+            const currentVal = $(this).val();
+            if (currentVal && !$(this).hasClass('is-invalid-tag')) {
+              e.preventDefault();
+              $(this).addClass('tag-confirmed');
+              setTimeout(() => $(this).removeClass('tag-confirmed'), 500);
+            }
+          }
+        });
+
+        $select.on('change', function () {
+          stopAutoRemove();
+          const val = $(this).val();
+          $input.val(val);
+          $input.removeClass('is-invalid-tag');
+          if (onMatch) onMatch(val);
+        });
+      }
+
+      function syncJobTableMeta() {
+        $('#job-table-body tr').each(function (index) {
+          const serialNo = index + 1;
+          $(this).attr('data-sr', serialNo);
+          $(this).find('td').first().text(serialNo);
+        });
+        $('#record-count').text($('#job-table-body tr').length + ' Records Found');
+      }
+
+      let $activeJobRow = $();
 
       // --- Event Handlers ---
+      initTagAutocomplete('#filter-tag-input', '#filter-tag');
 
       // Date Filters
-      $('.date-filter').on('click', function() {
+      $('.date-filter').on('click', function () {
         const type = $(this).data('type');
         const today = new Date();
         let start, end;
@@ -673,53 +1212,78 @@
       });
 
       // Add Job Modal
-      $('#btn-add-job').on('click', function() {
-        $('#modal-title').text('Add New Job');
-        $('#btn-delete-job').hide();
-        $('#btn-save-job').text('Add Job');
-        
-        // Reset inputs
-        $('#job-detail-modal input, #job-detail-modal textarea').val('');
-        $('#job-detail-modal select').prop('selectedIndex', 0);
-        $('#modal-date').val(new Date().toISOString().split('T')[0]);
-        $('#display-attach-1, #display-attach-2').text('-');
-
-        openModal('#job-detail-modal');
+      $('#btn-add-job').on('click', function () {
+        $('#add-job-modal input, #add-job-modal textarea').val('');
+        $('#add-job-modal select').prop('selectedIndex', 0);
+        openModal('#add-job-modal');
       });
 
       // Row Click -> Edit Modal
-      $(document).on('click', '.user-table-row', function() {
-        const sr = $(this).data('sr');
-        $('#modal-title').text('Job History Detail');
-        $('#btn-delete-job').show();
-        $('#btn-save-job').text('Save Changes');
+      $(document).on('click', '.user-table-row', function () {
+        $activeJobRow = $(this);
 
         // Mock populate based on row data
         $('#modal-loop').val($(this).find('.fw-800').text());
         $('#modal-tag').val($(this).find('.fw-800').text()); // In this specific table, they overlap in data
         $('#modal-desc').val($(this).find('.text-left').text().trim());
-        
+
         openModal('#job-detail-modal');
       });
 
-      // Close Modals
-      $('.btn-close-modal').on('click', function() {
+      $('#btn-save-job').on('click', function () {
         closeModal('#job-detail-modal');
+        Swal.fire({
+          icon: 'success',
+          title: 'Updated Successfully',
+          text: 'Job history details have been updated.',
+          confirmButtonColor: '#2563eb'
+        });
+      });
+
+      $('#btn-delete-job').on('click', function () {
+        Swal.fire({
+          title: 'Delete this entry?',
+          text: 'This job history record will be removed from the table.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#ef4444',
+          cancelButtonColor: '#64748b',
+          confirmButtonText: 'Yes, delete it'
+        }).then((result) => {
+          if (!result.isConfirmed) return;
+
+          if ($activeJobRow.length) {
+            $activeJobRow.remove();
+            $activeJobRow = $();
+            syncJobTableMeta();
+          }
+
+          closeModal('#job-detail-modal');
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted',
+            text: 'Job history entry has been deleted.',
+            confirmButtonColor: '#2563eb'
+          });
+        });
+      });
+
+      // Close Modals
+      $('.btn-close-modal').on('click', function () {
+        $(this).closest('.gnfc-modal-overlay').removeClass('is-open');
       });
 
       // Attachment logic
       let currentSlot = 1;
-      $('.attach-slot').on('click', function() {
+      let $currentAttachSlot = $();
+      $('#job-detail-modal .attach-slot').on('click', function () {
         currentSlot = $(this).data('slot');
+        $currentAttachSlot = $(this);
         openModal('#attachment-modal');
       });
 
-      $('#upload-zone').on('click', function() {
-        $('#file-input').click();
-      });
-
-      $('#file-input').on('change', function(e) {
-        if(e.target.files.length > 0) {
+      $('#file-input').on('change', function (e) {
+        if (e.target.files.length > 0) {
           const file = e.target.files[0];
           $('#preview-filename').text(file.name);
           $('#preview-filesize').text((file.size / 1024).toFixed(1) + ' KB');
@@ -728,31 +1292,31 @@
         }
       });
 
-      $('#btn-clear-file').on('click', function() {
+      $('#btn-clear-file').on('click', function () {
         $('#file-input').val('');
         $('#file-preview').hide();
         $('#upload-zone').show().css('display', 'flex');
       });
 
-      $('#btn-confirm-upload').on('click', function() {
+      $('#btn-confirm-upload').on('click', function () {
         const fileName = $('#preview-filename').text();
-        if($('#file-input').val()) {
+        if ($('#file-input').val()) {
           $(`#display-attach-${currentSlot}`).text(fileName).addClass('color-blue');
+          $currentAttachSlot.addClass('has-file');
           closeModal('#attachment-modal');
           // Reset for next
           $('#btn-clear-file').click();
         }
       });
 
-      $('.btn-close-attach').on('click', function() {
+      $('.btn-close-attach').on('click', function () {
         closeModal('#attachment-modal');
       });
 
       // Final UI check: set first date filter active
       $('.date-filter[data-type="default"]').addClass('pm-btn--primary').removeClass('pm-btn--secondary');
 
-      // Sync count (Mock)
-      $('#record-count').text($('#job-table-body tr').length + ' Records Found');
+      syncJobTableMeta();
 
     });
   </script>

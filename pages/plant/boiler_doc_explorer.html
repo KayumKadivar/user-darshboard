@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Explorer | GNFC</title>
+
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <script>window.activePage = 'plants';</script>
+
+
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper explorer-main">
+    <div id="header-container" data-title="Document Explorer" data-back="boiler_doc_management.html"></div>
+
+    <div class="explorer-content dashboard-scroll">
+      
+      <!-- Main Data Table Container -->
+      <div class="explorer-table-card">
+
+        <!-- Top Information/Breadcrumb Strip -->
+        <div class="explorer-stats-strip">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-8px">
+              <i class="ph-fill ph-folder text-amber-500 font-20px"></i>
+              <h3 id="current-folder-display" class="font-14px fw-800 text-uppercase">BOILER_INST</h3>
+            </div>
+            <div id="path-breadcrumb" class="font-10px fw-700 text-uppercase color-hint">/BOILER_INST/</div>
+          </div>
+
+          <div class="stats-group">
+            <div class="stat-item"><b>Total Content:</b> <span id="stat-total-cnt">5</span> (<span id="stat-total-kb">36,155</span> Kb)</div>
+            <div class="stat-item"><b>Folders:</b> <span id="stat-folder-cnt">5</span> (<span id="stat-folder-kb">36,155</span> Kb)</div>
+            <div class="stat-item"><b>Files:</b> <span id="stat-file-cnt">0</span> (0 Kb)</div>
+          </div>
+        </div>
+
+        <!-- Toolbar Strip -->
+        <div class="explorer-toolbar">
+          <button id="btn-up-level" class="action-icon" title="Up One Level">
+            <i class="ph-bold ph-arrow-bend-left-up font-18px"></i>
+          </button>
+          <div class="toolbar-divider"></div>
+          
+          <button id="btn-new-folder" class="explorer-btn btn-action-green">
+            <i class="ph-fill ph-folder-plus font-18px"></i>
+            <span>New Folder</span>
+          </button>
+          
+          <button id="btn-upload" class="explorer-btn btn-action-blue">
+            <i class="ph-bold ph-upload-simple font-18px"></i>
+            <span>Upload</span>
+          </button>
+          
+          <button id="btn-send-mail" class="explorer-btn btn-action-amber">
+            <i class="ph-bold ph-envelope-simple font-18px"></i>
+            <span>Send Mail</span>
+          </button>
+
+          <button id="btn-paste" class="explorer-btn btn-action-blue hidden animate-pulse">
+            <i class="ph-bold ph-clipboard-text font-18px"></i>
+            <span>Paste Here</span>
+          </button>
+
+          <div class="flex-1"></div>
+
+          <button id="btn-recycle-bin" class="explorer-btn btn-action-red relative">
+            <i class="ph-bold ph-recycle font-18px"></i>
+            <span>Recycle Bin</span>
+            <span id="recycle-cnt" class="absolute top--6px right--6px w-18px h-18px bg-red icon-theme-danger flex items-center justify-center font-10px fw-900 radius-20px hidden">0</span>
+          </button>
+        </div>
+
+        <!-- Scrollable Table Body -->
+        <div class="explorer-table-scroll">
+          <table id="explorer-table" class="explorer-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;" class="text-center"><i class="ph-bold ph-file"></i></th>
+                <th id="th-rev" style="width: 50px;" class="text-center color-red hidden">R</th>
+                <th style="width: auto; min-width: 250px;">Name <i class="ph-bold ph-caret-down ml-8px"></i></th>
+                <th style="width: 140px;">Type</th>
+                <th style="width: 120px;">Size</th>
+                <th style="width: 180px;">Last Modified</th>
+                <th style="width: 100px;" class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="explorer-tbody">
+              <tr data-type="Folder" data-name="APPROVAL" data-size="12148" data-date="27/06/2020">
+                <td class="text-center"><div class="item-icon-box"><i class="ph-fill ph-folder text-amber-500"></i></div></td>
+                <td class="hidden"></td>
+                <td><span class="item-name">APPROVAL</span></td>
+                <td><span class="color-hint">&lt;Folder&gt;</span></td>
+                <td><span class="font-mono">12148 Kb</span></td>
+                <td><span class="color-hint">27/06/2020</span></td>
+                <td class="text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr data-type="Folder" data-name="CORRESPONDANCE" data-size="8680" data-date="25/08/2021">
+                <td class="text-center"><div class="item-icon-box"><i class="ph-fill ph-folder text-amber-500"></i></div></td>
+                <td class="hidden"></td>
+                <td><span class="item-name">CORRESPONDANCE</span></td>
+                <td><span class="color-hint">&lt;Folder&gt;</span></td>
+                <td><span class="font-mono">8680 Kb</span></td>
+                <td><span class="color-hint">25/08/2021</span></td>
+                <td class="text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr data-type="Folder" data-name="REPORTS" data-size="8040" data-date="04/11/2024">
+                <td class="text-center"><div class="item-icon-box"><i class="ph-fill ph-folder text-amber-500"></i></div></td>
+                <td class="hidden"></td>
+                <td><span class="item-name">REPORTS</span></td>
+                <td><span class="color-hint">&lt;Folder&gt;</span></td>
+                <td><span class="font-mono">8040 Kb</span></td>
+                <td><span class="color-hint">04/11/2024</span></td>
+                <td class="text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr data-type="Folder" data-name="MDM" data-size="7033" data-date="15/07/2018">
+                <td class="text-center"><div class="item-icon-box"><i class="ph-fill ph-folder text-amber-500"></i></div></td>
+                <td class="hidden"></td>
+                <td><span class="item-name">MDM</span></td>
+                <td><span class="color-hint">&lt;Folder&gt;</span></td>
+                <td><span class="font-mono">7033 Kb</span></td>
+                <td><span class="color-hint">15/07/2018</span></td>
+                <td class="text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr data-type="Folder" data-name="PAYMENT" data-size="254" data-date="14/06/2019">
+                <td class="text-center"><div class="item-icon-box"><i class="ph-fill ph-folder text-amber-500"></i></div></td>
+                <td class="hidden"></td>
+                <td><span class="item-name">PAYMENT</span></td>
+                <td><span class="color-hint">&lt;Folder&gt;</span></td>
+                <td><span class="font-mono">254 Kb</span></td>
+                <td><span class="color-hint">14/06/2019</span></td>
+                <td class="text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modals -->
+  
+  <!-- New Folder Modal -->
+  <div id="modal-new-folder" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Create New Folder</h3>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="mb-16px">
+          <label class="gnfc-modal-label">Parent Path</label>
+          <div id="modal-parent-display" class="p-10px bg-secondary radius-4px color-blue fw-700 font-12px">/BOILER_INST/</div>
+        </div>
+        <div>
+          <label class="gnfc-modal-label">Folder Name</label>
+          <input type="text" id="input-folder-name" class="gnfc-modal-input" placeholder="Enter folder name...">
+          <p id="folder-error" class="color-red font-10px mt-4px hidden italic">Invalid characters detected.</p>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="$('#modal-new-folder').removeClass('is-open')">Cancel</button>
+        <button id="btn-confirm-new-folder" class="gnfc-modal-btn gnfc-modal-btn-primary">Create Folder</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Modal -->
+  <div id="modal-upload" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <div class="flex flex-col">
+          <h3 class="gnfc-modal-title">Upload Documents</h3>
+          <p class="gnfc-modal-subtitle">Path: <span id="upload-path-display" class="color-blue">/BOILER_INST/</span></p>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="p-20px border-dark-border radius-8px flex flex-direction-column items-center justify-center gap-12px mb-20px">
+          <i class="ph-fill ph-cloud-arrow-up font-48px color-hint"></i>
+          <p class="font-14px color-hint fw-600">Select Files to Server</p>
+          <input type="file" id="upload-input" multiple class="hidden">
+          <button class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="$('#upload-input').click()">Browse Files</button>
+          <p class="font-10px color-hint italic">Max 10 GB / Transfer</p>
+        </div>
+        <div id="upload-queue" class="max-h-200px overflow-auto border-top-dark-border">
+          <!-- Queue items injected here -->
+        </div>
+      </div>
+      <div class="gnfc-modal-footer justify-between">
+        <p class="font-10px color-orange fw-800 text-uppercase">Comment compulsory for Engineering files.</p>
+        <div class="flex gap-12px">
+          <button class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="$('#modal-upload').removeClass('is-open')">Cancel</button>
+          <button id="btn-confirm-upload" class="gnfc-modal-btn gnfc-modal-btn-primary">Start Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recycle Bin Modal -->
+  <div id="modal-recycle-bin" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div class="flex items-center gap-12px">
+          <i class="ph-fill ph-recycle color-red font-24px"></i>
+          <h3 class="gnfc-modal-title">Recycle Bin</h3>
+          <span class="p-4px px-12px icon-theme-danger font-10px fw-900 radius-20px">BOILER</span>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body gnfc-modal-body--flush">
+        <table class="explorer-table">
+          <thead>
+            <tr class="bg-secondary">
+              <th class="w-40px text-center">R</th>
+              <th>Document Name</th>
+              <th>Comment</th>
+              <th class="w-100px text-center">Date</th>
+              <th class="w-80px text-center">By</th>
+              <th class="w-100px text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="recycle-tbody">
+            <tr>
+              <td class="text-center fw-800 color-blue">1</td>
+              <td class="fw-600">Old_Audit_Report.pdf</td>
+              <td class="color-hint font-10px">Replaced by newer version</td>
+              <td class="text-center font-10px">12/03/2026</td>
+              <td class="text-center fw-800 color-blue">ADMIN</td>
+              <td class="text-center">
+                <div class="flex justify-center gap-12px">
+                  <i class="ph-bold ph-arrow-counter-clockwise action-icon color-green" title="Restore (Mock)"></i>
+                  <i class="ph-bold ph-x-circle action-icon color-red btn-perm-delete" title="Delete Permanently"></i>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-center fw-800 color-blue">-</td>
+              <td class="fw-600">Legacy_Drawings</td>
+              <td class="color-hint font-10px">Cleanup project</td>
+              <td class="text-center font-10px">10/03/2026</td>
+              <td class="text-center fw-800 color-blue">ADMIN</td>
+              <td class="text-center">
+                <div class="flex justify-center gap-12px">
+                  <i class="ph-bold ph-arrow-counter-clockwise action-icon color-green" title="Restore (Mock)"></i>
+                  <i class="ph-bold ph-x-circle action-icon color-red btn-perm-delete" title="Delete Permanently"></i>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="gnfc-modal-footer justify-between">
+        <p class="font-11px color-hint italic">Historical records are permanent and cannot be deleted.</p>
+        <div class="flex gap-12px">
+          <button id="btn-empty-recycle" class="gnfc-modal-btn gnfc-modal-btn-danger">Empty All</button>
+          <button class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="$('#modal-recycle-bin').removeClass('is-open')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Scripts -->
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    const RECYCLE_BIN = [];
+    let CURRENT_PATH = ["BOILER_INST"];
+    let CLIPBOARD = null;
+
+    $(document).ready(function() {
+      // Initialize Header
+      const urlParams = new URLSearchParams(window.location.search);
+      const docType = urlParams.get('type') || 'eng';
+      const title = docType === 'eng' ? "Engineering Documentation" : "Communication And Other Records";
+      
+      if (typeof renderHeader === 'function') {
+        renderHeader({
+          title: title,
+          breadcrumbs: [
+            { label: "Plant", href: "../plant_status.html" },
+            { label: "Boiler Dashboard", href: "boiler_dashboard.html" },
+            { label: "Documents", href: "boiler_doc_management.html" },
+            { label: "Explorer" }
+          ],
+          backLink: "boiler_doc_management.html"
+        });
+      }
+
+      // --- Navigation Events ---
+
+      // Folder Click (Placeholder for static logic)
+      $(document).on('click', '.item-name', function() {
+        const tr = $(this).closest('tr');
+        const type = tr.data('type');
+        const name = tr.data('name');
+
+        if (type === 'Folder') {
+          Swal.fire({
+            title: name,
+            text: "Navigating to subfolders would require separate HTML pages in a static setup.",
+            icon: 'info',
+            confirmButtonColor: 'var(--typo-blue)'
+          });
+        } else {
+          Swal.fire({
+            title: name,
+            text: "Previewing document functionality (mocked).",
+            icon: 'info',
+            confirmButtonColor: 'var(--typo-blue)'
+          });
+        }
+      });
+
+      // --- Toolbar Events ---
+
+      $('#btn-new-folder').click(function() {
+        $('#modal-parent-display').text('/' + CURRENT_PATH.join('/') + '/');
+        $('#input-folder-name').val('').removeClass('border-red');
+        $('#folder-error').addClass('hidden');
+        $('#modal-new-folder').addClass('is-open');
+      });
+
+      $('#btn-upload').click(function() {
+        $('#upload-path-display').text('/' + CURRENT_PATH.join('/') + '/');
+        $('#upload-queue').empty();
+        $('#modal-upload').addClass('is-open');
+      });
+
+      $('#btn-recycle-bin').click(function() {
+        $('#modal-recycle-bin').addClass('is-open');
+      });
+
+      // --- Action Events ---
+
+      $(document).on('click', '.btn-delete', function(e) {
+        e.stopPropagation();
+        const tr = $(this).closest('tr');
+        const name = tr.data('name');
+
+        Swal.fire({
+          title: 'Confirm Delete?',
+          text: `Are you sure you want to delete "${name}"?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: 'var(--typo-red)',
+          cancelButtonColor: 'var(--app-muted)',
+          confirmButtonText: 'Yes, Delete'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire('Deleted!', 'Item "deleted" (Static Mock - No DOM change).', 'success');
+          }
+        });
+      });
+
+      $(document).on('click', '.btn-cut', function(e) {
+        e.stopPropagation();
+        const tr = $(this).closest('tr');
+        CLIPBOARD = {
+          name: tr.data('name'),
+        };
+        $('.explorer-table tbody tr').css('opacity', 1);
+        tr.css('opacity', 0.5);
+        $('#btn-paste').removeClass('hidden').addClass('flex');
+        Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Item cut to clipboard', showConfirmButton: false, timer: 1500 });
+      });
+
+      $('#btn-paste').click(function() {
+        if (!CLIPBOARD) return;
+        
+        Swal.fire('Mock Paste', `Item "${CLIPBOARD.name}" would be moved here in a dynamic system.`, 'info');
+        CLIPBOARD = null;
+        $(this).addClass('hidden').removeClass('flex');
+        $('.explorer-table tbody tr').css('opacity', 1);
+      });
+
+      // --- Modal Logic ---
+
+      $('.gnfc-modal-close').click(function() {
+        $(this).closest('.gnfc-modal-overlay').removeClass('is-open');
+      });
+
+      $('#btn-confirm-new-folder').click(function() {
+        const name = $('#input-folder-name').val().trim();
+        if (!name) return;
+
+        $('#modal-new-folder').removeClass('is-open');
+        Swal.fire('Success', 'Folder "created" (Static Mock - No DOM change).', 'success');
+      });
+
+      // --- View Helpers ---
+
+
+      $(document).on('click', '.btn-perm-delete', function() {
+        Swal.fire({
+          title: 'Permanent Delete?',
+          text: "This action cannot be undone.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Permanently Delete'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire('Deleted!', 'Item "removed permanently" (Static Mock - No DOM change).', 'success');
+          }
+        });
+      });
+
+      $('#btn-empty-recycle').click(function() {
+        Swal.fire('Empty!', 'Recycle bin "cleared" (Static Mock - No DOM change).', 'success');
+      });
+
+    });
+
+  </script>
+</body>
+
+</html>

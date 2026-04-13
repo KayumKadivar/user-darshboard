@@ -55,7 +55,7 @@
         </div>
 
         <div class="p-16px">
-          <div class="grid grid-cols-2 lg-grid-cols-4 gap-16px">
+          <div class="grid grid-cols-2 lg-grid-cols-3 gap-16px">
             
             <div class="flex flex-col gap-8px">
               <label class="font-11px fw-700 color-label text-uppercase">System</label>
@@ -96,7 +96,9 @@
                 <option>CABLES/CONNECTORS</option>
               </select>
             </div>
+          </div>
 
+          <div class="grid grid-cols-2 lg-grid-cols-4 gap-16px" style="margin-top: 16px;">
             <div class="flex flex-col gap-8px">
               <label class="font-11px fw-700 color-label text-uppercase">Start Date</label>
               <input type="date" id="start-date" class="gnfc-modal-input" value="2025-02-09">
@@ -110,16 +112,16 @@
             <div class="flex flex-col gap-8px">
               <label class="font-11px fw-700 color-label text-uppercase">Filter Options</label>
               <div class="flex gap-4px">
-                <label class="flex items-center gap-6px cursor-pointer font-10px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                <label class="flex items-center gap-6px cursor-pointer font-16px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
                   <input type="checkbox" id="filter-remark" class="accent-gnfc-blue"> Remark
                 </label>
-                <label class="flex items-center gap-6px cursor-pointer font-10px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                <label class="flex items-center gap-6px cursor-pointer font-16px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
                   <input type="checkbox" id="filter-attach" class="accent-gnfc-blue"> Attach
                 </label>
               </div>
             </div>
 
-            <div class="flex items-end col-span-1 lg-col-span-2">
+            <div class="flex items-end">
               <button class="pm-btn pm-btn--update w-full h-40px font-13px text-uppercase ls-wide" id="btn-apply-filters">
                 <i class="ph-bold ph-lightning"></i> Apply
               </button>
@@ -135,31 +137,228 @@
             <i class="ph-fill ph-table color-orange font-16px"></i>
             <span class="jbd-card-header-title">Job Records</span>
           </div>
-          <span class="font-12px color-label bg-dark-bg px-8px py-4px radius-4px border border-dark" id="record-count">0 Records Found</span>
+          <span class="font-12px color-label bg-dark-bg px-8px py-4px radius-4px border border-dark" id="record-count">6 Records Found</span>
         </div>
         
         <div class="user-table-wrapper radius-0px border-none">
           <table class="user-table" id="system-job-table">
             <thead>
               <tr>
-                <th rowspan="2" style="width: 50px;" class="sticky left-0 z-20">Sr</th>
+                <th rowspan="2" style="width: 50px;" class="left-0 z-20">Sr</th>
                 <th rowspan="2" style="width: 100px;">System</th>
                 <th style="width: 180px;" class="border-b-dark">HW Type</th>
                 <th rowspan="2" style="width: 110px;">Date</th>
-                <th rowspan="2" class="text-left" style="min-width: 400px;">Description</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
                 <th style="width: 100px;" class="border-b-dark">Tech</th>
-                <th rowspan="2" style="width: 60px;">Attch</th>
+                <th rowspan="2" style="width: 90px;">Attch</th>
                 <th rowspan="1" style="min-width: 250px;" class="border-b-dark">Eng Remark</th>
                 <th rowspan="2" style="width: 100px;">Status</th>
               </tr>
               <tr>
-                <th class="font-11px py-4px">Category</th>
-                <th class="font-11px py-4px">Eng</th>
-                <th class="font-11px py-4px">Exec Remark</th>
+                <th>Category</th> 
+                <th>Eng</th>
+                <th class="user-table-border-right">Exec Remark</th>
               </tr>
             </thead>
             <tbody id="job-table-body">
-              <!-- JS Populated -->
+              <tr class="user-table-row" data-sr="1">
+                <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">1</td>
+                <td class="text-center fw-700">MAX DCS</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-bold">IO MODULES</span>
+                    <span>HARDWARE FAILURE</span>
+                  </div>
+                </td>
+                <td class="text-center">19/12/2025</td>
+                <td class="text-left leading-relaxed font-13px">AUX: C2PCI RJMH A2B card was failed.<br>New card arranged from store.<br>Its jumpers and address settings done.<br>Replaced card.<br>Working ok.<br>Removed card kept with tag.<br>Same checked with M(MND),ID(TRC),IE(ARP).</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span>PYS</span>
+                    <span class="user-table-bold">PMP</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span class="opacity-30">-</span>
+                    <span class="font-11px color-label">No File</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="italic color-red">-</span>
+                    <span class="color-blue">-</span>
+                  </div>
+                </td>
+                <td class="text-center">
+                   <span class="font-11px px-8px py-2px radius-4px border border-green-500/30 bg-green-500/10">Completed</span>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-sr="2">
+                <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">2</td>
+                <td class="text-center fw-700">MAX DCS</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-bold">IO MODULES</span>
+                    <span>HARDWARE FAILURE</span>
+                  </div>
+                </td>
+                <td class="text-center">16/12/2025</td>
+                <td class="text-left leading-relaxed font-13px">All input of 2CJH01RLM4 were indicating faulty values.<br>Detail checked found card in fault, Analog Input card removed, clean and fixed back.<br>Value indicating normal.</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span>V+M</span>
+                    <span class="user-table-bold">PMP</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span class="opacity-30">-</span>
+                    <span class="font-11px color-label">No File</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="italic color-red">-</span>
+                    <span class="color-blue">-</span>
+                  </div>
+                </td>
+                <td class="text-center">
+                   <span class="font-11px px-8px py-2px radius-4px border border-green-500/30 bg-green-500/10">Completed</span>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-sr="3">
+                <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">3</td>
+                <td class="text-center fw-700">MAX DCS</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-bold">STATIONS</span>
+                    <span>HARDWARE FAILURE</span>
+                  </div>
+                </td>
+                <td class="text-center">16/12/2025</td>
+                <td class="text-left leading-relaxed font-13px">Operator station HMI display replaced with spare one.</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span>V+M</span>
+                    <span class="user-table-bold">PMP</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span class="opacity-30">-</span>
+                    <span class="font-11px color-label">No File</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="italic color-red">-</span>
+                    <span class="color-blue">-</span>
+                  </div>
+                </td>
+                <td class="text-center">
+                   <span class="font-11px px-8px py-2px radius-4px border border-green-500/30 bg-green-500/10">Completed</span>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-sr="4">
+                <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">4</td>
+                <td class="text-center fw-700">MAX DCS</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-bold">STATIONS</span>
+                    <span>HARDWARE FAILURE</span>
+                  </div>
+                </td>
+                <td class="text-center">15/12/2025</td>
+                <td class="text-left leading-relaxed font-13px">Engineering station HMI does not power on so replaced with spare one.<br>Defective HMI kept at CPU room with tag.</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span>V+M</span>
+                    <span class="user-table-bold">PMP</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span class="opacity-30">-</span>
+                    <span class="font-11px color-label">No File</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="italic color-red">-</span>
+                    <span class="color-blue">-</span>
+                  </div>
+                </td>
+                <td class="text-center">
+                   <span class="font-11px px-8px py-2px radius-4px border border-green-500/30 bg-green-500/10">Completed</span>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-sr="5">
+                <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">5</td>
+                <td class="text-center fw-700">ESD</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-bold">CONTROL MODULES</span>
+                    <span>MAJOR UPGRADE</span>
+                  </div>
+                </td>
+                <td class="text-center">02/10/2025</td>
+                <td class="text-left leading-relaxed font-13px">Cable laying job taken...<br>Loop simulation taken with electrical.</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span>BSU</span>
+                    <span class="user-table-bold">PMP</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span class="opacity-30">-</span>
+                    <span class="font-11px color-label">No File</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="italic color-red">-</span>
+                    <span class="color-blue">-</span>
+                  </div>
+                </td>
+                <td class="text-center">
+                   <span class="font-11px px-8px py-2px radius-4px border border-orange-500/30 color-orange bg-orange-500/10">Pending</span>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-sr="6">
+                <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">6</td>
+                <td class="text-center fw-700">ESD</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-bold">IO MODULES</span>
+                    <span>HARDWARE FAILURE</span>
+                  </div>
+                </td>
+                <td class="text-center">29/08/2025</td>
+                <td class="text-left leading-relaxed font-13px">TK fan and mass flow indication to DCS related logics.<br>Various exercises done.</td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span>PYS</span>
+                    <span class="user-table-bold">PMP</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack text-center">
+                    <span class="opacity-30">-</span>
+                    <span class="font-11px color-label">No File</span>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="user-table-cell-stack">
+                    <span class="italic color-red">-</span>
+                    <span class="color-blue">-</span>
+                  </div>
+                </td>
+                <td class="text-center">
+                   <span class="font-11px px-8px py-2px radius-4px border border-orange-500/30 color-orange bg-orange-500/10">Pending</span>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -167,6 +366,150 @@
 
     </div>
   </main>
+
+  <!-- Add Job Modal -->
+  <div id="add-job-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add New System Job</h3>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
+        <div class="flex flex-col gap-16px">
+
+          <div class="grid grid-cols-3 gap-16px">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">System</label>
+              <select id="add-modal-system" class="gnfc-modal-input">
+                <option value="">Select System</option>
+                <option>MAX DCS</option>
+                <option>MIL DCS</option>
+                <option>DSC</option>
+                <option>ESD</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Category</label>
+              <select id="add-modal-category" class="gnfc-modal-input">
+                <option value="">Select Category</option>
+                <option>HARDWARE FAILURE</option>
+                <option>SOFTWARE PROBLEM</option>
+                <option>MAINTENANCE</option>
+                <option>MAJOR UPGRADE</option>
+                <option>MODIFICATION</option>
+                <option>SYSTEM BACKUP</option>
+                <option>CONTINUOUS COST OF OWNERSHIP</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">HW Type</label>
+              <select id="add-modal-hwtype" class="gnfc-modal-input">
+                <option value="">Select HW Type</option>
+                <option>STATIONS</option>
+                <option>CONTROL MODULES</option>
+                <option>IO MODULES</option>
+                <option>COM MODULES</option>
+                <option>CRT MODULES</option>
+                <option>POWER SUPPLY</option>
+                <option>PERIPHERALS</option>
+                <option>CABLES/CONNECTORS</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label">Job Description</label>
+            <textarea id="add-modal-desc" class="gnfc-modal-input" style="height: 120px; resize: vertical;"></textarea>
+          </div>
+
+          <div class="grid grid-cols-4 gap-16px">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Date</label>
+              <input type="date" id="add-modal-date" class="gnfc-modal-input">
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Tech</label>
+              <select id="add-modal-tech" class="gnfc-modal-input">
+                <option value="">Select Tech</option>
+                <option>BSU</option>
+                <option>PYS</option>
+                <option>V+M</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Eng</label>
+              <input type="text" id="add-modal-eng" class="gnfc-modal-input">
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Status</label>
+              <select id="add-modal-status" class="gnfc-modal-input">
+                <option value="">Select Status</option>
+                <option>Completed</option>
+                <option>Pending</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label">Attachments</label>
+            <div class="gjh-create-attach-grid">
+              <div class="gjh-create-attach-card">
+                <div class="gjh-create-attach-top">
+                  <div class="gjh-create-attach-icon">
+                    <i class="ph-fill ph-paperclip color-blue text-lg"></i>
+                  </div>
+                  <span class="gjh-create-attach-badge">
+                    <i class="ph-bold ph-lock"></i> Edit Only
+                  </span>
+                </div>
+                <div class="gjh-create-attach-meta">
+                  <span class="gjh-create-attach-title">Attach 1</span>
+                  <p class="gjh-create-attach-text">Attachments are supported only in Edit mode, not in Create mode.</p>
+                </div>
+              </div>
+
+              <div class="gjh-create-attach-card">
+                <div class="gjh-create-attach-top">
+                  <div class="gjh-create-attach-icon">
+                    <i class="ph-fill ph-paperclip color-blue text-lg"></i>
+                  </div>
+                  <span class="gjh-create-attach-badge">
+                    <i class="ph-bold ph-lock"></i> Edit Only
+                  </span>
+                </div>
+                <div class="gjh-create-attach-meta">
+                  <span class="gjh-create-attach-title">Attach 2</span>
+                  <p class="gjh-create-attach-text">Attachments are supported only in Edit mode, not in Create mode.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-16px">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Engineer's Remark</label>
+              <textarea id="add-modal-eng-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Executive Remark</label>
+              <textarea id="add-modal-exec-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer flex justify-end items-center px-16px py-12px">
+        <div class="flex gap-12px">
+          <button class="pm-btn pm-btn--primary px-32px h-40px font-13px" id="btn-create-job">Add Job</button>
+          <button class="pm-btn pm-btn--secondary px-24px h-40px font-13px btn-close-modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Job Detail Modal -->
   <div id="job-detail-modal" class="gnfc-modal-overlay">
@@ -378,159 +721,53 @@
   <script>
     $(document).ready(function () {
       
-      // --- Constants ---
-      const INITIAL_JOB_DATA = [
-        { sr: 1, system: "MAX DCS", hwType: "IO MODULES", category: "HARDWARE FAILURE", date: "2025-12-19", desc: "AUX: C2PCI RJMH A2B card was failed.\nNew card arranged from store.\nIts jumpers and address settings done.\nReplaced card.\nWorking ok.\nRemoved card kept with tag.\nSame checked with M(MND),ID(TRC),IE(ARP).", tech: "PYS", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Completed" },
-        { sr: 2, system: "MAX DCS", hwType: "IO MODULES", category: "HARDWARE FAILURE", date: "2025-12-16", desc: "All input of 2CJH01RLM4 were indicating faulty values.\nDetail checked found card in fault, Analog Input card removed, clean and fixed back.\nValue indicating normal.", tech: "V+M", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Completed" },
-        { sr: 3, system: "MAX DCS", hwType: "STATIONS", category: "HARDWARE FAILURE", date: "2025-12-16", desc: "Operator station HMI display replaced with spare one.", tech: "V+M", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Completed" },
-        { sr: 4, system: "MAX DCS", hwType: "STATIONS", category: "HARDWARE FAILURE", date: "2025-12-15", desc: "Engineering station HMI does not power on so replaced with spare one.\nDefective HMI kept at CPU room with tag.", tech: "V+M", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Completed" },
-        { sr: 5, system: "ESD", hwType: "CONTROL MODULES", category: "MAJOR UPGRADE", date: "2025-10-02", desc: "Cable laying job taken...\nLoop simulation taken with electrical.", tech: "BSU", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Pending" },
-        { sr: 6, system: "ESD", hwType: "IO MODULES", category: "HARDWARE FAILURE", date: "2025-08-29", desc: "TK fan and mass flow indication to DCS related logics.\nVarious exercises done.", tech: "PYS", eng: "PMP", attach: false, remark: "", execRemark: "", status: "Pending" }
-      ];
+      const INITIAL_JOB_DATA = []; // Static data placeholder
 
-      let jobData = [...INITIAL_JOB_DATA];
       let dataTable = null;
 
       // --- Utilities ---
       function openModal(id) { $(id).addClass('is-open'); }
       function closeModal(id) { $(id).removeClass('is-open'); }
 
-      function formatDateDisplay(iso) {
-        if (!iso) return '-';
-        const d = new Date(iso);
-        return d.toLocaleDateString('en-GB'); // dd/mm/yyyy
-      }
-
-      function renderTable() {
-        if (dataTable) { dataTable.destroy(); }
-        const tbody = $('#job-table-body');
-        tbody.empty();
-
-        jobData.forEach((item, index) => {
-          const formattedDesc = item.desc.replace(/\n/g, '<br>');
-          const row = `
-            <tr class="user-table-row" data-sr="${item.sr}">
-              <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">${item.sr}</td>
-              <td class="text-center fw-700">${item.system}</td>
-              <td class="p-0">
-                <div class="py-6px px-10px border-b border-dark">${item.hwType}</div>
-                <div class="py-6px px-10px color-label font-11px">${item.category}</div>
-              </td>
-              <td class="text-center color-green">${formatDateDisplay(item.date)}</td>
-              <td class="text-left leading-relaxed font-13px">${formattedDesc}</td>
-              <td class="p-0">
-                <div class="py-6px px-10px border-b border-dark">${item.tech}</div>
-                <div class="py-6px px-10px fw-800">${item.eng}</div>
-              </td>
-              <td class="text-center">${item.attach ? '<i class="ph-bold ph-paperclip color-blue"></i>' : '<span class="opacity-30">-</span>'}</td>
-              <td class="p-0">
-                <div class="py-6px px-10px border-b border-dark italic color-red">${item.remark || '-'}</div>
-                <div class="py-6px px-10px color-blue">${item.execRemark || '-'}</div>
-              </td>
-              <td class="text-center">
-                 <span class="font-11px px-8px py-2px radius-4px border ${item.status === 'Completed' ? 'border-green-500/30 color-green bg-green-500/10' : 'border-orange-500/30 color-orange bg-orange-500/10'}">${item.status || 'N.A.'}</span>
-              </td>
-            </tr>
-          `;
-          tbody.append(row);
-        });
-
-        $('#record-count').text(jobData.length + ' Records Found');
-
-        if (jobData.length > 0) {
-          dataTable = new simpleDatatables.DataTable("#system-job-table", {
-            perPage: 10,
-            searchable: false,
-            fixedHeight: false
-          });
-        }
-      }
-
       // --- Initialization ---
-      renderTable();
+      dataTable = new simpleDatatables.DataTable("#system-job-table", {
+        perPage: 10,
+        searchable: false,
+        fixedHeight: false
+      });
 
       // --- Event Handlers ---
 
-      // Date Filters
-      $('.date-filter').on('click', function() {
-        $('.date-filter').removeClass('pm-btn--primary').addClass('pm-btn--secondary');
-        $(this).addClass('pm-btn--primary').removeClass('pm-btn--secondary');
-        
-        const type = $(this).data('type');
-        const now = new Date();
-        let start, end;
-
-        if (type === 'prev') {
-          start = '2024-01-01'; end = '2024-12-31';
-        } else if (type === 'this') {
-          start = '2025-01-01'; end = '2025-12-31';
-        } else if (type === 'next') {
-          start = '2026-01-01'; end = '2026-12-31';
-        } else {
-          start = '2025-02-09'; end = '2026-02-09';
-        }
-
-        $('#start-date').val(start);
-        $('#end-date').val(end);
-      });
-
       // Add Job Modal
       $('#btn-add-job').on('click', function() {
-        $('#modal-title').text('Add New Job');
-        $('#btn-delete-job').hide();
-        $('#btn-save-job').text('Add Job');
-        
-        // Reset inputs
-        $('#job-detail-modal input, #job-detail-modal textarea').val('');
-        $('#job-detail-modal select').prop('selectedIndex', 0);
-        $('#modal-date').val(new Date().toISOString().split('T')[0]);
-        $('#display-attach-1, #display-attach-2').text('-');
+        $('#add-job-modal input, #add-job-modal textarea').val('');
+        $('#add-job-modal select').prop('selectedIndex', 0);
+        $('#add-modal-date').val(new Date().toISOString().split('T')[0]);
+        openModal('#add-job-modal');
+      });
 
-        // In Add mode, disable attach slots (mock behavior)
-        $('#slot-1, #slot-2').addClass('hidden');
-        $('#slot-1-disabled, #slot-2-disabled').removeClass('hidden');
-
+      // Row Click -> View/Edit Modal (Static/Manual Mode)
+      $(document).on('click', '.user-table-row', function() {
         openModal('#job-detail-modal');
       });
 
-      // Row Click -> Edit Modal
-      $(document).on('click', '.user-table-row', function() {
-        const sr = $(this).data('sr');
-        const item = jobData.find(j => j.sr == sr);
-        if (!item) return;
-
-        $('#modal-title').text('Job History Detail');
-        $('#btn-delete-job').show();
-        $('#btn-save-job').text('Save Changes');
-
-        $('#modal-system').val(item.system);
-        $('#modal-category').val(item.category);
-        $('#modal-hwtype').val(item.hwType);
-        $('#modal-desc').val(item.desc);
-        $('#modal-date').val(item.date);
-        $('#modal-tech').val(item.tech);
-        $('#modal-eng').val(item.eng);
-        $('#modal-status').val(item.status);
-        $('#modal-eng-remark').val(item.remark);
-        $('#modal-exec-remark').val(item.execRemark);
-
-        $('#display-attach-1').text(item.attach ? 'Report.pdf' : '-');
-        $('#display-attach-2').text('-');
-
-        // In Edit mode, enable attach slots
-        $('#slot-1, #slot-2').removeClass('hidden');
-        $('#slot-1-disabled, #slot-2-disabled').addClass('hidden');
-
-        openModal('#job-detail-modal');
+      $('#btn-create-job').on('click', function() {
+        closeModal('#add-job-modal');
+        Swal.fire({
+          icon: 'success',
+          title: 'Job Added',
+          text: 'New system job entry has been created.',
+          confirmButtonColor: '#2563eb'
+        });
       });
 
       $('.btn-close-modal').on('click', function() {
-        closeModal('#job-detail-modal');
+        $(this).closest('.gnfc-modal-overlay').removeClass('is-open');
       });
 
       // Attachment logic
       let currentSlot = 1;
-      $('.attach-slot').on('click', function() {
+      $('#job-detail-modal .attach-slot').on('click', function() {
         currentSlot = $(this).data('slot');
         openModal('#attachment-modal');
       });
