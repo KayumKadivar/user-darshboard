@@ -31,16 +31,18 @@
     <div class="explorer-content dashboard-scroll px-24px py-24px">
       
       <!-- Premium Glass Toolbar -->
-      <div class="recycle-toolbar-premium">
-         <div id="btn-empty-all" class="btn-premium-danger">
-            <i class="ph-bold ph-trash font-20px"></i>
-            <span>EMPTY RECYCLE BIN</span>
-         </div>
-         <div class="flex-1"></div>
-         <div class="flex flex-col items-end">
-            <div class="font-11px fw-800 text-uppercase color-hint mb-4px" style="letter-spacing: 0.1em;">Safety Protocols</div>
-         </div>
+      <div class="explorer-toolbar-glass">
+        <button id="btn-empty-all" class="explorer-btn btn-action-red">
+          <i class="ph-fill ph-trash-simple font-18px"></i>
+          <span>Empty Recycle Bin</span>
+        </button>
+        <div class="flex-1"></div>
+        <div class="flex items-center gap-12px">
+          <span class="font-12px fw-800 text-uppercase color-muted ls-1">Security: Encrypted Recovery</span>
+          <div class="w-8px h-8px bg-green radius-pill animate-pulse"></div>
+        </div>
       </div>
+
 
       <!-- Deleted Documents Section (Premium Card) -->
       <div class="recycle-glass-card border-red">
@@ -73,51 +75,46 @@
             <tbody id="deleted-tbody">
               <tr class="user-table-row">
                 <td class="user-table-cell text-center fw-800 color-blue">1</td>
-                <td class="user-table-cell">
+                <td class="user-table-cell text-left">
                   <div class="flex items-center gap-12px">
-                    <div class="w-32px h-32px radius-6px bg-green-dim flex items-center justify-center cursor-pointer hover-scale" title="Download XLS">
-                       <i class="ph-fill ph-file-xls color-green font-18px"></i>
-                    </div>
-                    <a href="#" class="item-name">prob report.xlsx</a>
+                    <i class="ph-fill ph-file-xls color-green font-20px action-icon" title="Download XLS"></i>
+                    <span class="item-name">prob report.xlsx</span>
                   </div>
                 </td>
-                <td class="user-table-cell">probe report</td>
+                <td class="user-table-cell text-left">probe report</td>
                 <td class="user-table-cell text-center">10/04/2026</td>
                 <td class="user-table-cell text-center">16:21:30</td>
+                <td class="user-table-cell text-center"><span class="color-blue fw-700">ARP</span></td>
                 <td class="user-table-cell text-center">
-                   <span class="">ARP</span>
-                </td>
-                <td class="user-table-cell text-center">
-                  <div class="flex justify-center gap-16px">
-                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-green btn-restore" title="Restore back to original location"></i>
-                    <i class="ph-bold ph-x-circle action-icon color-red btn-delete" title="Permanently erase document"></i>
+                  <div class="row-actions">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-green btn-restore" title="Restore to original location"></i>
+                    <i class="ph-bold ph-download-simple action-icon color-primary btn-download" title="Download file"></i>
+                    <i class="ph-bold ph-trash action-icon color-red btn-delete" title="Permanently Delete"></i>
                   </div>
                 </td>
               </tr>
               <tr class="user-table-row">
                 <td class="user-table-cell text-center fw-800 color-blue">0</td>
-                <td class="user-table-cell">
+                <td class="user-table-cell text-left">
                   <div class="flex items-center gap-12px">
-                    <div class="w-32px h-32px radius-6px bg-red-dim flex items-center justify-center cursor-pointer hover-scale" title="Download PDF">
-                       <i class="ph-fill ph-file-pdf color-red font-18px"></i>
-                    </div>
-                    <a href="#" class="item-name">mace 4bt.pdf</a>
+                    <i class="ph-fill ph-file-pdf color-red font-20px action-icon" title="Download PDF"></i>
+                    <span class="item-name">mace 4bt.pdf</span>
                   </div>
                 </td>
-                <td class="user-table-cell">upload</td>
+                <td class="user-table-cell text-left">Initial upload for review</td>
                 <td class="user-table-cell text-center">27/09/2025</td>
                 <td class="user-table-cell text-center">10:53:17</td>
+                <td class="user-table-cell text-center"><span class="color-blue fw-700">MMC</span></td>
                 <td class="user-table-cell text-center">
-                   <span class="">MMC</span>
-                </td>
-                <td class="user-table-cell text-center">
-                  <div class="flex justify-center gap-16px">
-                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-green btn-restore" title="Restore back to original location"></i>
-                    <i class="ph-bold ph-x-circle action-icon color-red btn-delete" title="Permanently erase document"></i>
+                  <div class="row-actions">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-green btn-restore" title="Restore to original location"></i>
+                    <i class="ph-bold ph-download-simple action-icon color-primary btn-download" title="Download file"></i>
+                    <i class="ph-bold ph-trash action-icon color-red btn-delete" title="Permanently Delete"></i>
                   </div>
                 </td>
               </tr>
             </tbody>
+
           </table>
         </div>
       </div>
@@ -165,7 +162,7 @@
                    <span class="">KSP</span>
                 </td>
                 <td class="user-table-cell text-center">
-                  <i class="ph-bold ph-x color-red cursor-pointer hover-scale" title="Discard"></i>
+                    <i class="ph-bold ph-trash action-icon color-red btn-delete" title="Permanently Delete"></i>
                 </td>
               </tr>
               <tr class="user-table-row">
@@ -183,7 +180,7 @@
                    <span class="">RBL</span>
                 </td>
                 <td class="user-table-cell text-center">
-                  <i class="ph-bold ph-x color-red cursor-pointer hover-scale" title="Discard"></i>
+                    <i class="ph-bold ph-trash action-icon color-red btn-delete" title="Permanently Delete"></i>
                 </td>
               </tr>
             </tbody>
@@ -265,17 +262,18 @@
       });
 
       // Click icon container to download
-      $(document).on('click', '.ph-file-xls, .ph-file-pdf', function() {
-         const name = $(this).closest('.flex').find('.item-name').text();
+      $(document).on('click', '.ph-file-xls, .ph-file-pdf, .btn-download', function() {
+         const name = $(this).closest('tr').find('.item-name').text();
          if (name) {
             Swal.fire({
                title: 'Download Initiated',
-               text: 'Downloading "' + name + '"...',
+               text: 'Downloading "' + name + '" for viewing...',
                icon: 'success',
                confirmButtonColor: 'var(--typo-blue)'
             });
          }
       });
+
 
       // Restore action
       $(document).on('click', '.btn-restore', function() {
