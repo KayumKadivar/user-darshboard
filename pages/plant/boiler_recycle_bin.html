@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recycle Bin | GNFC</title>
+
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper explorer-main">
+    <div id="header-container" data-title="Recycle Bin"></div>
+
+    <div class="explorer-content dashboard-scroll px-24px py-24px">
+      
+      <!-- Premium Glass Toolbar -->
+      <div class="recycle-toolbar-premium">
+         <div id="btn-empty-all" class="btn-premium-danger">
+            <i class="ph-bold ph-trash font-20px"></i>
+            <span>EMPTY RECYCLE BIN</span>
+         </div>
+         <div class="flex-1"></div>
+         <div class="flex flex-col items-end">
+            <div class="font-11px fw-800 text-uppercase color-hint mb-4px" style="letter-spacing: 0.1em;">Safety Protocols</div>
+         </div>
+      </div>
+
+      <!-- Deleted Documents Section (Premium Card) -->
+      <div class="recycle-glass-card border-red">
+        <div class="recycle-hero-header">
+          <div class="recycle-hero-title">
+            <div class="w-40px h-40px radius-8px flex items-center justify-center bg-red-dim shadow-red">
+               <i class="ph-fill ph-recycle color-red font-24px"></i>
+            </div>
+            <div>
+               <h3 class="mb-2px">Deleted Documents !!!</h3>
+               <div class="">RECOVERY PROTECTION ENABLED</div>
+            </div>
+          </div>
+          <div class="recycle-project-tag p-4px px-12px bg-red-dim radius-20px color-red border-red-dim">BOILER</div>
+        </div>
+
+        <div class="user-table-wrapper border-0 radius-0px">
+          <table class="user-table" style="width: 100%; min-width: auto;">
+            <thead>
+              <tr>
+                <th class="user-table-head-cell text-center" style="width: 60px;">Rev</th>
+                <th class="user-table-head-cell text-left">Document</th>
+                <th class="user-table-head-cell text-left">Comment</th>
+                <th class="user-table-head-cell text-center" style="width: 110px;">Date</th>
+                <th class="user-table-head-cell text-center" style="width: 90px;">Time</th>
+                <th class="user-table-head-cell text-center" style="width: 100px;">By</th>
+                <th class="user-table-head-cell text-center" style="width: 120px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="deleted-tbody">
+              <tr class="user-table-row">
+                <td class="user-table-cell text-center fw-800 color-blue">1</td>
+                <td class="user-table-cell">
+                  <div class="flex items-center gap-12px">
+                    <div class="w-32px h-32px radius-6px bg-green-dim flex items-center justify-center cursor-pointer hover-scale" title="Download XLS">
+                       <i class="ph-fill ph-file-xls color-green font-18px"></i>
+                    </div>
+                    <a href="#" class="item-name">prob report.xlsx</a>
+                  </div>
+                </td>
+                <td class="user-table-cell">probe report</td>
+                <td class="user-table-cell text-center">10/04/2026</td>
+                <td class="user-table-cell text-center">16:21:30</td>
+                <td class="user-table-cell text-center">
+                   <span class="">ARP</span>
+                </td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-16px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-green btn-restore" title="Restore back to original location"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red btn-delete" title="Permanently erase document"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-cell text-center fw-800 color-blue">0</td>
+                <td class="user-table-cell">
+                  <div class="flex items-center gap-12px">
+                    <div class="w-32px h-32px radius-6px bg-red-dim flex items-center justify-center cursor-pointer hover-scale" title="Download PDF">
+                       <i class="ph-fill ph-file-pdf color-red font-18px"></i>
+                    </div>
+                    <a href="#" class="item-name">mace 4bt.pdf</a>
+                  </div>
+                </td>
+                <td class="user-table-cell">upload</td>
+                <td class="user-table-cell text-center">27/09/2025</td>
+                <td class="user-table-cell text-center">10:53:17</td>
+                <td class="user-table-cell text-center">
+                   <span class="">MMC</span>
+                </td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-16px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-green btn-restore" title="Restore back to original location"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red btn-delete" title="Permanently erase document"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Unlocked Documents Section (Premium Card) -->
+      <div class="recycle-glass-card border-blue">
+        <div class="recycle-hero-header unlocked-hero-header">
+          <div class="recycle-hero-title">
+            <div class="w-40px h-40px radius-8px flex items-center justify-center bg-blue-dim shadow-blue">
+               <i class="ph-fill ph-lock-key-open color-blue font-24px"></i>
+            </div>
+            <div>
+               <h3 class="mb-2px">Unlocked Documents</h3>
+               <div class="">SYSTEM INTEGRITY READY</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper border-0 radius-0px">
+          <table class="user-table" style="width: 100%; min-width: auto;">
+            <thead>
+              <tr>
+                <th class="user-table-head-cell text-center" style="width: 60px;">Rev</th>
+                <th class="user-table-head-cell text-left">Document</th>
+                <th class="user-table-head-cell text-left">Comment</th>
+                <th class="user-table-head-cell text-center" style="width: 110px;">Date</th>
+                <th class="user-table-head-cell text-center" style="width: 90px;">Time</th>
+                <th class="user-table-head-cell text-center" style="width: 100px;">By</th>
+                <th class="user-table-head-cell text-center" style="width: 60px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="user-table-row">
+                <td class="user-table-cell text-center fw-800 color-blue">0</td>
+                <td class="user-table-cell">
+                  <div class="flex items-center gap-12px">
+                    <i class="ph-fill ph-file-xls font-18px"></i>
+                    <a href="#" class="item-name">crrc2-3.xls</a>
+                  </div>
+                </td>
+                <td class="user-table-cell">Registered for tracking</td>
+                <td class="user-table-cell text-center">27/09/2025</td>
+                <td class="user-table-cell text-center">10:45:57</td>
+                <td class="user-table-cell text-center">
+                   <span class="">KSP</span>
+                </td>
+                <td class="user-table-cell text-center">
+                  <i class="ph-bold ph-x color-red cursor-pointer hover-scale" title="Discard"></i>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-cell text-center fw-800 color-blue">1</td>
+                <td class="user-table-cell">
+                  <div class="flex items-center gap-12px">
+                    <i class="ph-fill ph-file-xls  font-18px"></i>
+                    <a href="#" class="item-name">crrc2-3.xls</a>
+                  </div>
+                </td>
+                <td class="user-table-cell">Upload</td>
+                <td class="user-table-cell text-center">27/09/2025</td>
+                <td class="user-table-cell text-center">10:30:33</td>
+                <td class="user-table-cell text-center">
+                   <span class="">RBL</span>
+                </td>
+                <td class="user-table-cell text-center">
+                  <i class="ph-bold ph-x color-red cursor-pointer hover-scale" title="Discard"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Vendor Scripts -->
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    $(document).ready(function () {
+      const RECYCLE_BIN_MAX_MB = 25;
+      const RECYCLE_BIN_ALERT_MB = 20;
+
+      if (typeof renderHeader === 'function') {
+        renderHeader({
+          title: "Recycle Bin",
+          breadcrumbs: [
+            { label: 'Plant', href: '../plant_status.html' },
+            { label: 'Boiler Dashboard', href: 'boiler_dashboard.html' },
+            { label: 'Documents', href: 'boiler_doc_management.html' },
+            { label: 'Explorer', href: 'boiler_doc_explorer.html' },
+            { label: 'Recycle Bin' }
+          ],
+          backLink: 'boiler_doc_explorer.html'
+        });
+      }
+
+      function checkSizeThresholds() {
+        // Simulated size for demo (in KB)
+        const sizeKb = 11000; 
+        const sizeMb = sizeKb / 1024;
+
+        if (sizeMb > RECYCLE_BIN_MAX_MB) {
+          $('#deleted-tbody').empty().append('<tr><td colspan="7" class="user-table-cell text-center p-48px color-red fw-700 italic opacity-60">RECYCLE BIN AUTO-DELETED (EXCEEDED 25MB)</td></tr>');
+          
+          Swal.fire({
+            title: 'Auto-Cleanup Triggered',
+            text: 'The recycle bin exceeded 25MB and has been automatically cleared.',
+            icon: 'warning',
+            confirmButtonColor: 'var(--typo-red)'
+          });
+        
+          return;
+        }
+
+        if (sizeMb > RECYCLE_BIN_ALERT_MB) {
+        
+          Swal.fire({
+            title: 'Recycle Bin Warning',
+            text: 'Your recycle bin is almost full (> 20MB). Please clear it to avoid automatic deletion.',
+            icon: 'warning',
+            confirmButtonColor: 'var(--typo-blue)'
+          });
+        
+        }
+      }
+
+      checkSizeThresholds();
+
+      // ── Action Handlers ──
+      
+      // Click filename to open
+      $(document).on('click', '.item-name', function(e) {
+         e.preventDefault();
+         const name = $(this).text();
+         Swal.fire({
+            title: 'File Preview',
+            text: 'Opening "' + name + '" for viewing...',
+            icon: 'info',
+            confirmButtonColor: 'var(--typo-blue)'
+         });
+      });
+
+      // Click icon container to download
+      $(document).on('click', '.ph-file-xls, .ph-file-pdf', function() {
+         const name = $(this).closest('.flex').find('.item-name').text();
+         if (name) {
+            Swal.fire({
+               title: 'Download Initiated',
+               text: 'Downloading "' + name + '"...',
+               icon: 'success',
+               confirmButtonColor: 'var(--typo-blue)'
+            });
+         }
+      });
+
+      // Restore action
+      $(document).on('click', '.btn-restore', function() {
+         const row = $(this).closest('tr');
+         const name = row.find('.item-name').text();
+         Swal.fire({
+            title: 'Restore Document?',
+            text: '"' + name + '" will be restored back to its original location with all revisions.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Restore it'
+         }).then((result) => {
+            if (result.isConfirmed) {
+               row.fadeOut(300, function() { $(this).remove(); });
+               Swal.fire('Restored!', 'Document has been restored.', 'success');
+            }
+         });
+      });
+
+      // Permanent Delete
+      $(document).on('click', '.btn-delete', function() {
+         const row = $(this).closest('tr');
+         const name = row.find('.item-name').text();
+         Swal.fire({
+            title: 'Permanent Delete?',
+            text: 'Are you sure you want to permanently delete "' + name + '"? This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'var(--typo-red)',
+            confirmButtonText: 'Yes, Delete Permanently'
+         }).then((result) => {
+            if (result.isConfirmed) {
+               row.fadeOut(300, function() { $(this).remove(); });
+               Swal.fire('Deleted!', 'Item removed permanently.', 'success');
+            }
+         });
+      });
+
+      // Empty All
+      $('#btn-empty-all').click(function() {
+         if ($('#deleted-tbody tr').length === 0) {
+            return Swal.fire('Info', 'Recycle bin is already empty.', 'info');
+         }
+         Swal.fire({
+            title: 'Empty Recycle Bin?',
+            text: 'All documents in the recycle bin will be permanently deleted.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'var(--typo-red)',
+            confirmButtonText: 'Empty All'
+         }).then((result) => {
+            if (result.isConfirmed) {
+               $('#deleted-tbody').empty().append('<tr><td colspan="7" class="user-table-cell text-center p-24px">Recycle bin is empty.</td></tr>');
+               Swal.fire('Cleared!', 'Recycle bin has been emptied.', 'success');
+            }
+         });
+      });
+    });
+  </script>
+</body>
+
+</html>

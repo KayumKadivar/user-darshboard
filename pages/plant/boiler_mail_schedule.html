@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mail Schedule | GNFC</title>
+  
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/pages/plant.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+
+  <style>
+    /* Custom Multi-Select Styles */
+    .gnfc-multi-select {
+      position: relative;
+      width: 100%;
+    }
+    .ms-display {
+      min-height: 40px;
+      padding: 6px 12px;
+      background: var(--app-bg);
+      border: 1px solid var(--app-border);
+      border-radius: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      align-items: center;
+    }
+    .ms-display:hover {
+      border-color: var(--typo-blue);
+    }
+    .ms-placeholder {
+      color: var(--typo-hint);
+      font-size: 13px;
+    }
+    .ms-tag {
+      background: rgba(87, 148, 242, 0.1);
+      border: 1px solid rgba(87, 148, 242, 0.2);
+      color: var(--typo-blue);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ms-tag i {
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .ms-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--app-panel);
+      border: 1px solid var(--app-border);
+      border-radius: 8px;
+      margin-top: 4px;
+      z-index: 100;
+      display: none;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+      max-height: 250px;
+      overflow-y: auto;
+      padding-bottom: 8px;
+    }
+    .ms-dropdown.is-open {
+      display: block;
+    }
+    .ms-search-bar {
+      padding: 12px;
+      border-bottom: 1px solid var(--app-border);
+      position: sticky;
+      top: 0;
+      background: var(--app-panel);
+      z-index: 10;
+    }
+    .ms-list {
+      padding: 4px 0;
+    }
+    .ms-option {
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.1s;
+      font-size: 15px; /* Increased font size for emails */
+      color: var(--typo-primary);
+    }
+    .ms-option:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .ms-option.is-selected {
+      background: rgba(87, 148, 242, 0.05);
+    }
+    .ms-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--app-border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ms-option.is-selected .ms-checkbox {
+      background: var(--typo-blue);
+      border-color: var(--typo-blue);
+    }
+    .ms-option.is-selected .ms-checkbox i {
+      display: block;
+    }
+    .ms-checkbox i {
+      display: none;
+      color: white;
+      font-size: 11px;
+    }
+
+    /* Schedule Mode Selectors */
+    .schedule-mode-tabs {
+        display: flex;
+        gap: 0px;
+        background: var(--app-bg);
+        padding: 4px;
+        border-radius: 10px;
+        border: 1px solid var(--app-border);
+    }
+    .mode-tab {
+        flex: 1;
+        padding: 10px 4px;
+        text-align: center;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--typo-secondary);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .mode-tab:hover {
+        color: var(--typo-primary);
+    }
+    .mode-tab.is-active {
+        background: #5794f2;
+        color: white;
+        box-shadow: 0 4px 15px rgba(87, 148, 242, 0.4);
+    }
+    .mode-content {
+        display: none;
+        padding: 20px;
+        background: rgba(255,255,255,0.015);
+        border: 1px solid var(--app-border);
+        border-radius: 10px;
+        margin-top: 12px;
+    }
+    .mode-content.is-active {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .mode-input-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+    .mode-input-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--typo-secondary);
+        white-space: nowrap;
+    }
+    .mode-input-field {
+        width: 100px;
+        flex: none;
+        height: 60px;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--app-border);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .mode-input-field input {
+        background: transparent !important;
+        border: none !important;
+        outline: none !important;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--typo-primary);
+        width: 100%;
+    }
+    /* Remove number spinners */
+    .no-spinner::-webkit-inner-spin-button,
+    .no-spinner::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .no-spinner {
+      -moz-appearance: textfield;
+    }
+    .mode-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--typo-secondary);
+        margin-top: 4px;
+    }
+    .btn-ms-sm {
+        height: 28px !important;
+        padding: 0 10px !important;
+        font-size: 10px !important;
+        letter-spacing: 0.05em;
+    }
+  </style>
+
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <div id="header-container" data-title="Mail Schedule" data-back="boiler_dashboard.html"></div>
+
+    <div class="dashboard-content dashboard-scroll">
+      <div class="flex flex-col gap-16px">
+
+        <!-- SCHEDULE LIST TABLE -->
+        <div class="jt-table-card flex flex-col flex-1 overflow-hidden">
+          <div class="jbd-card-header flex justify-between items-center px-16px py-10px shrink-0">
+            <div class="flex items-center gap-8px">
+              <i class="ph-fill ph-envelope color-blue font-16px"></i>
+              <span class="jbd-card-header-title">Mail Schedule List</span>
+            </div>
+            
+            <div class="flex items-center gap-12px">
+              <span id="record-count" class="font-12px color-label bg-dark-bg px-8px py-4px radius-4px border border-dark">2 Records</span>
+
+              <button class="pm-btn pm-btn--primary px-16px h-32px font-14px" id="btn-add-schedule">
+                <i class="ph-bold ph-plus"></i> Add New
+              </button>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper radius-0px border-none">
+            <table class="user-table" id="schedule-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">Sr</th>
+                  <th style="width: 180px;" class="user-table-left">Plant</th>
+                  <th style="width: 250px;" class="user-table-left">Recipients</th>
+                  <th style="width: 150px;" class="user-table-left">Sender</th>
+                  <th style="width: 160px;">Frequency / Logic</th>
+                  <th style="min-width: 250px;" class="user-table-left">Subject</th>
+                  <th style="width: 100px;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="schedule-body">
+                <!-- Static Rows -->
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-bold user-table-secondary">1</td>
+                  <td class="user-table-bold user-table-blue">BOILER</td>
+                  <td>
+                    <div class="flex flex-wrap gap-4px">
+                      <span class="ui-badge" style="background:rgba(255,255,255,0.05); color:var(--typo-primary); font-size:10px; text-transform:none;">admin@gnfc.in</span>
+                      <span class="ui-badge" style="background:rgba(255,255,255,0.05); color:var(--typo-primary); font-size:10px; text-transform:none;">user1@gnfc.in</span>
+                      <span class="ui-badge" style="background:rgba(87,148,242,0.1); color:var(--typo-blue); font-size:10px;">+1 more</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="flex items-center gap-8px">
+                      <span class="w-24px h-24px radius-full bg-blue-soft border border-blue-alt flex items-center justify-center">
+                        <i class="ph-bold ph-user font-10px color-blue"></i>
+                      </span>
+                      <span class="user-table-bold font-12px">System Admin</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="flex flex-col gap-2px">
+                      <span class="ui-badge" style="background:rgba(99,102,241,0.1); border-color:rgba(99,102,241,0.2); color:#818cf8; font-size:10px;">
+                        <i class="ph-bold ph-calendar-check mr-1"></i> MONTHLY: 1st
+                      </span>
+                      <span class="font-9px color-secondary">Next: 01/05/2026</span>
+                    </div>
+                  </td>
+                  <td class="user-table-bold font-12px">Boiler Monthly Efficiency Report</td>
+                  <td class="user-table-center">
+                    <div class="flex gap-6px justify-center">
+                      <button class="icon-btn btn-edit-row color-orange hover-bg-orange-soft" title="Edit">
+                        <i class="ph-bold ph-pencil-simple font-14px"></i>
+                      </button>
+                      <button class="icon-btn btn-delete-row color-red hover-bg-red-soft" title="Delete">
+                        <i class="ph-bold ph-trash font-14px"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-bold user-table-secondary">2</td>
+                  <td class="user-table-bold user-table-blue">UREA</td>
+                  <td>
+                    <div class="flex flex-wrap gap-4px">
+                        <span class="ui-badge" style="background:rgba(255,255,255,0.05); color:var(--typo-primary); font-size:10px; text-transform:none;">manager@gnfc.in</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="flex items-center gap-8px">
+                      <span class="w-24px h-24px radius-full bg-blue-soft border border-blue-alt flex items-center justify-center">
+                        <i class="ph-bold ph-user font-10px color-blue"></i>
+                      </span>
+                      <span class="user-table-bold font-12px">Shift Incharge</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="flex flex-col gap-2px">
+                      <span class="ui-badge" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.2); color:#34d399; font-size:10px;">
+                        <i class="ph-bold ph-clock mr-1"></i> EVERY 7 DAYS
+                      </span>
+                      <span class="font-9px color-secondary">Next: 21/04/2026</span>
+                    </div>
+                  </td>
+                  <td class="user-table-bold font-12px">Weekly Production Summary</td>
+                  <td class="user-table-center">
+                    <div class="flex gap-6px justify-center">
+                      <button class="icon-btn btn-edit-row color-orange hover-bg-orange-soft" title="Edit">
+                        <i class="ph-bold ph-pencil-simple font-14px"></i>
+                      </button>
+                      <button class="icon-btn btn-delete-row color-red hover-bg-red-soft" title="Delete">
+                        <i class="ph-bold ph-trash font-14px"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="empty-state" class="hidden p-48px text-center">
+            <div class="flex flex-col items-center gap-12px">
+              <i class="ph-duotone ph-envelope-simple-open font-48px color-secondary opacity-20"></i>
+              <p class="color-secondary font-14px">No mail schedules found. Click <strong>Add New</strong> to create one.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ADD / EDIT MODAL -->
+  <div id="modal-schedule" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell" style="max-width: 680px;">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title" id="modal-title">Add New Schedule</h3>
+          <p class="gnfc-modal-subtitle">Mail Automation — Advanced Scheduling</p>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll">
+        <div class="grid grid-cols-2 gap-20px">
+
+          <!-- To Plant -->
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">1. Select Plant</label>
+            <select id="f-plant" class="gnfc-modal-input">
+              <option value="">Choose Plant...</option>
+              <option>ACETIC ACID</option>
+              <option>METHANOL-1</option>
+              <option>METHANOL-2</option>
+              <option>FORMIC ACID</option>
+              <option>AMMONIA</option>
+              <option>NITRO PHOSPHATE</option>
+              <option>DM</option>
+              <option>BOILER</option>
+              <option>INST_WS</option>
+              <option>UREA</option>
+              <option>CMS</option>
+              <option>BAGGING</option>
+              <option>STORE</option>
+              <option>SPP</option>
+              <option>ISO</option>
+              <option>PURCHASE</option>
+              <option>ANITDI</option>
+              <option>CPSU</option>
+              <option>ANIP FILLING</option>
+              <option>ASGP</option>
+              <option>ETHYL ACETATE</option>
+              <option>MINMAX</option>
+              <option>AAQM</option>
+            </select>
+          </div>
+
+          <!-- Sender -->
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">2. Sender Info</label>
+            <input type="text" id="f-sender" class="gnfc-modal-input" placeholder="Enter sender name...">
+          </div>
+
+          <!-- Custom Recipient Selector -->
+          <div class="col-span-2 flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">3. Recipients (Emails)</label>
+            <div class="gnfc-multi-select" id="mail-multi-select">
+              <div class="ms-display" id="ms-display">
+                <span class="ms-placeholder">Select recipients...</span>
+              </div>
+              <div class="ms-dropdown" id="ms-dropdown">
+                <div class="ms-search-bar">
+                  <div class="flex items-center gap-12px">
+                    <div class="flex-1 flex gap-10px items-center bg-dark-bg px-12px h-36px radius-6px border border-dark">
+                        <i class="ph-bold ph-magnifying-glass color-secondary font-16px"></i>
+                        <input type="text" id="ms-search-input" class="bg-transparent border-none outline-none font-13px color-primary text-uppercase w-full" placeholder="SEARCH MAIL...">
+                    </div>
+                    <div class="flex gap-6px">
+                        <button class="pm-btn pm-btn--secondary btn-ms-sm text-uppercase" id="btn-ms-select-all">ALL</button>
+                        <button class="pm-btn pm-btn--secondary btn-ms-sm text-uppercase" id="btn-ms-clear">CLEAR</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="ms-list" id="ms-list">
+                  <!-- Generated options -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scheduling Engine -->
+          <div class="col-span-2 flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">4. Frequency Logic</label>
+            <div class="schedule-mode-tabs" id="mode-tabs">
+                <div class="mode-tab is-active" data-mode="interval">INTERVAL (DAYS)</div>
+                <div class="mode-tab" data-mode="monthly">MONTHLY DATE</div>
+                <div class="mode-tab" data-mode="specific">SPECIFIC DATE</div>
+            </div>
+
+            <!-- Mode: Interval -->
+            <div id="content-interval" class="mode-content is-active">
+                <div class="mode-input-row">
+                    <span class="mode-input-label">Run mail job every</span>
+                    <div class="mode-input-field">
+                        <input type="number" id="f-interval-days" class="bg-transparent border-none outline-none text-center color-primary w-full no-spinner" placeholder="7" value="7">
+                    </div>
+                    <span class="mode-input-label">days from now.</span>
+                </div>
+                <div class="mode-info">
+                    <i class="ph-bold ph-info"></i>
+                    <span>Best for weekly or routine summary reports.</span>
+                </div>
+            </div>
+
+            <!-- Mode: Monthly -->
+            <div id="content-monthly" class="mode-content">
+                <div class="mode-input-row">
+                    <span class="mode-input-label">Send mail every month on the</span>
+                    <div class="mode-input-field" style="width: 140px; flex: none;">
+                        <select id="f-monthly-date" class="bg-transparent border-none outline-none text-center color-primary w-full no-spinner appearance-none cursor-pointer">
+                            <!-- 1 to 31 -->
+                        </select>
+                    </div>
+                    <span class="mode-input-label">day of the month.</span>
+                </div>
+                <div class="mode-info">
+                    <i class="ph-bold ph-info"></i>
+                    <span>Example: 1st of every month for compliance audits.</span>
+                </div>
+            </div>
+
+            <!-- Mode: Specific -->
+            <div id="content-specific" class="mode-content">
+                <div class="flex flex-col gap-12px">
+                    <span class="mode-input-label">Schedule a one-time mail for:</span>
+                    <div class="flex items-center gap-12px">
+                        <div class="flex-1 flex flex-col gap-6px">
+                            <label class="font-10px color-label text-uppercase ls-wide">Day</label>
+                            <select id="f-spec-day" class="gnfc-modal-input h-40px"></select>
+                        </div>
+                        <div class="flex-1 flex flex-col gap-6px">
+                            <label class="font-10px color-label text-uppercase ls-wide">Month</label>
+                            <select id="f-spec-month" class="gnfc-modal-input h-40px">
+                                <option value="">—</option>
+                                <option value="1">JAN</option><option value="2">FEB</option><option value="3">MAR</option>
+                                <option value="4">APR</option><option value="5">MAY</option><option value="6">JUN</option>
+                                <option value="7">JUL</option><option value="8">AUG</option><option value="9">SEP</option>
+                                <option value="10">OCT</option><option value="11">NOV</option><option value="12">DEC</option>
+                            </select>
+                        </div>
+                        <div class="flex-1 flex flex-col gap-6px">
+                            <label class="font-10px color-label text-uppercase ls-wide">Year</label>
+                            <select id="f-spec-year" class="gnfc-modal-input h-40px">
+                                <option value="">—</option>
+                                <option>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="mode-info">
+                    <i class="ph-bold ph-calendar"></i>
+                    <span>Ideal for one-off maintenance or deadline alerts.</span>
+                </div>
+            </div>
+          </div>
+
+          <!-- Subject -->
+          <div class="col-span-2 flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">5. Mail Content</label>
+            <input type="text" id="f-subject" class="gnfc-modal-input" placeholder="Email subject line...">
+            <textarea id="f-message" class="gnfc-modal-input" rows="4" style="height: 100px; resize: vertical; padding-top: 10px;" placeholder="Type your automated message here..."></textarea>
+          </div>
+
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" id="btn-submit" class="pm-btn pm-btn--primary px-40px h-44px font-16px text-uppercase ls-wide">Schedule Job</button>
+        <button type="button" class="pm-btn pm-btn--secondary px-24px h-44px font-16px btn-close-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    $(document).ready(function () {
+      let editingRow = null;
+
+      // Dummy Email Database
+      const EMAIL_LIST = [
+        "admin@gnfc.in", "manager_plant@gnfc.in", "shift.incharge@gnfc.in", 
+        "boiler_eng@gnfc.in", "urea_supervisor@gnfc.in", "maint_team@gnfc.in",
+        "reliability_cell@gnfc.in", "instrument_ws@gnfc.in", "it_dept@gnfc.in",
+        "user_dashboard@gnfc.in", "hr_team@gnfc.in", "safety_insp@gnfc.in"
+      ];
+      let selectedEmails = [];
+
+      // --- Init Modals ---
+      function initSelectors() {
+        // Populate 1-31
+        let d31 = '<option value="">—</option>';
+        for(let i=1; i<=31; i++) d31 += `<option value="${i}">${i}</option>`;
+        $('#f-monthly-date, #f-spec-day').html(d31);
+
+        // Populate Multi-select
+        let msHtml = '';
+        EMAIL_LIST.forEach(email => {
+          msHtml += `
+            <div class="ms-option" data-email="${email}">
+              <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+              <span>${email}</span>
+            </div>
+          `;
+        });
+        $('#ms-list').html(msHtml);
+      }
+      initSelectors();
+
+      // --- Multi-Select Logic ---
+      $('#ms-display').on('click', function(e) {
+        e.stopPropagation();
+        $('#ms-dropdown').toggleClass('is-open');
+      });
+
+      $(document).on('click', function() {
+        $('#ms-dropdown').removeClass('is-open');
+      });
+
+      $('#ms-dropdown').on('click', function(e) { e.stopPropagation(); });
+
+      function updateMSDisplay() {
+        if(selectedEmails.length === 0) {
+          $('#ms-display').html('<span class="ms-placeholder">Select recipients...</span>');
+        } else {
+          let tagsHtml = '';
+          selectedEmails.forEach(email => {
+            tagsHtml += `<span class="ms-tag">${email} <i class="ph-bold ph-x" data-email="${email}"></i></span>`;
+          });
+          $('#ms-display').html(tagsHtml);
+        }
+        
+        $('.ms-option').removeClass('is-selected');
+        selectedEmails.forEach(email => {
+          $(`.ms-option[data-email="${email}"]`).addClass('is-selected');
+        });
+      }
+
+      $('#ms-list').on('click', '.ms-option', function() {
+        const email = $(this).data('email');
+        const idx = selectedEmails.indexOf(email);
+        if(idx > -1) selectedEmails.splice(idx, 1);
+        else selectedEmails.push(email);
+        updateMSDisplay();
+      });
+
+      $('#ms-display').on('click', '.ph-x', function(e) {
+        e.stopPropagation();
+        const email = $(this).data('email');
+        selectedEmails = selectedEmails.filter(e => e !== email);
+        updateMSDisplay();
+      });
+
+      $('#btn-ms-select-all').on('click', function() {
+        selectedEmails = [...EMAIL_LIST];
+        updateMSDisplay();
+      });
+
+      $('#btn-ms-clear').on('click', function() {
+        selectedEmails = [];
+        updateMSDisplay();
+      });
+
+      $('#ms-search-input').on('input', function() {
+        const val = $(this).val().toLowerCase();
+        $('.ms-option').each(function() {
+          const email = $(this).data('email').toLowerCase();
+          $(this).toggle(email.includes(val));
+        });
+      });
+
+      // --- Mode Switching ---
+      $('.mode-tab').on('click', function() {
+        $('.mode-tab').removeClass('is-active');
+        $(this).addClass('is-active');
+        const mode = $(this).data('mode');
+        $('.mode-content').removeClass('is-active');
+        $(`#content-${mode}`).addClass('is-active');
+      });
+
+      // --- Modal Logic ---
+      $('#btn-add-schedule').on('click', function() {
+        editingRow = null;
+        $('#modal-title').html('<i class="ph-bold ph-calendar-plus mr-2"></i>Add New Schedule');
+        $('#btn-submit').text('Schedule Job');
+        $('#modal-schedule .gnfc-modal-input').val('');
+        selectedEmails = [];
+        updateMSDisplay();
+        $('.mode-tab[data-mode="interval"]').click();
+        $('#modal-schedule').addClass('is-open');
+      });
+
+      $('.btn-close-modal').on('click', function() { $('#modal-schedule').removeClass('is-open'); });
+
+      // --- Submit Logic ---
+      $('#btn-submit').on('click', function() {
+        const plant = $('#f-plant').val();
+        const sender = $('#f-sender').val().trim();
+        const subject = $('#f-subject').val().trim();
+        const message = $('#f-message').val().trim();
+        const mode = $('.mode-tab.is-active').data('mode');
+
+        if (!plant || !sender || !subject || selectedEmails.length === 0) {
+          Swal.fire({ icon: 'error', title: 'Missing Info', text: 'Plant, Sender, Subject and at least 1 Recipient are required!', confirmButtonColor: '#5794f2' });
+          return;
+        }
+
+        let logicHtml = '';
+        if(mode === 'interval') {
+            logicHtml = `<span class="ui-badge" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.2); color:#34d399; font-size:10px;"><i class="ph-bold ph-clock mr-1"></i> EVERY ${$('#f-interval-days').val() || 7} DAYS</span>`;
+        } else if(mode === 'monthly') {
+            logicHtml = `<span class="ui-badge" style="background:rgba(99,102,241,0.1); border-color:rgba(99,102,241,0.2); color:#818cf8; font-size:10px;"><i class="ph-bold ph-calendar-check mr-1"></i> MONTHLY: ${$('#f-monthly-date').val() || 1}st</span>`;
+        } else {
+            const specOn = `${$('#f-spec-day').val() || '—'}/${$('#f-spec-month').val() || '—'}/${$('#f-spec-year').val() || '—'}`;
+            logicHtml = `<span class="ui-badge" style="background:rgba(255,255,255,0.05); border:1px solid var(--app-border); color:var(--typo-primary); font-size:10px;"><i class="ph-bold ph-calendar mr-1"></i> ON ${specOn}</span>`;
+        }
+
+        let recipientHtml = '<div class="flex flex-wrap gap-4px">';
+        selectedEmails.slice(0, 2).forEach(e => { recipientHtml += `<span class="ui-badge" style="background:rgba(255,255,255,0.05); color:var(--typo-primary); font-size:10px; text-transform:none;">${e}</span>`; });
+        if(selectedEmails.length > 2) recipientHtml += `<span class="ui-badge" style="background:rgba(87,148,242,0.1); color:var(--typo-blue); font-size:10px;">+${selectedEmails.length - 2} more</span>`;
+        recipientHtml += '</div>';
+
+        if(editingRow) {
+          const $row = $(editingRow);
+          $row.find('td').eq(1).text(plant);
+          $row.find('td').eq(2).html(recipientHtml);
+          $row.find('td').eq(3).find('.user-table-bold').text(sender);
+          $row.find('td').eq(4).html(`<div class="flex flex-col gap-2px">${logicHtml}<span class="font-9px color-secondary">Scheduled</span></div>`);
+          $row.find('td').eq(5).text(subject);
+          Swal.fire({ icon: 'success', title: 'Rescheduled!', text: 'The automation job has been updated.', timer: 1500, showConfirmButton: false });
+        } else {
+          const newIdx = $('#schedule-body tr').length + 1;
+          const newRow = `
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-bold user-table-secondary">${newIdx}</td>
+              <td class="user-table-bold user-table-blue">${plant}</td>
+              <td>${recipientHtml}</td>
+              <td><div class="flex items-center gap-8px"><span class="w-24px h-24px radius-full bg-blue-soft border border-blue-alt flex items-center justify-center"><i class="ph-bold ph-user font-10px color-blue"></i></span><span class="user-table-bold font-12px">${sender}</span></div></td>
+              <td class="user-table-center"><div class="flex flex-col gap-2px">${logicHtml}<span class="font-9px color-secondary">Scheduled</span></div></td>
+              <td class="user-table-bold font-12px">${subject}</td>
+              <td class="user-table-center"><div class="flex gap-6px justify-center"><button class="icon-btn btn-edit-row color-orange hover-bg-orange-soft" title="Edit"><i class="ph-bold ph-pencil-simple font-14px"></i></button><button class="icon-btn btn-delete-row color-red hover-bg-red-soft" title="Delete"><i class="ph-bold ph-trash font-14px"></i></button></div></td>
+            </tr>`;
+          $('#schedule-body').append(newRow);
+          syncMeta();
+          Swal.fire({ icon: 'success', title: 'Success!', text: 'Automation job scheduled.', timer: 1500, showConfirmButton: false });
+        }
+        $('#modal-schedule').removeClass('is-open');
+      });
+
+      // --- Row Actions ---
+      $('#schedule-body').on('click', '.btn-edit-row', function() {
+        editingRow = $(this).closest('tr');
+        const $cells = editingRow.find('td');
+        
+        const plant = $cells.eq(1).text();
+        const sender = $cells.eq(3).find('.user-table-bold').text();
+        const logicText = $cells.eq(4).find('.ui-badge').text().trim();
+        const subject = $cells.eq(5).text();
+
+        $('#f-plant').val(plant);
+        $('#f-sender').val(sender);
+        $('#f-subject').val(subject);
+        
+        // Simulating recipient extraction (in real app, use data-recipients)
+        selectedEmails = [EMAIL_LIST[0]]; 
+        updateMSDisplay();
+
+        if(logicText.includes('EVERY')) {
+            $('.mode-tab[data-mode="interval"]').click();
+            $('#f-interval-days').val(logicText.match(/\d+/)[0]);
+        } else if(logicText.includes('MONTHLY')) {
+            $('.mode-tab[data-mode="monthly"]').click();
+            $('#f-monthly-date').val(logicText.match(/\d+/)[0].replace('st', '').replace('nd', '').replace('rd', '').replace('th', ''));
+        } else {
+            $('.mode-tab[data-mode="specific"]').click();
+        }
+
+        $('#modal-title').html('<i class="ph-bold ph-pencil-simple mr-2"></i>Edit Schedule');
+        $('#btn-submit').text('Update Job');
+        $('#modal-schedule').addClass('is-open');
+      });
+
+      $('#schedule-body').on('click', '.btn-delete-row', function() {
+        const row = $(this).closest('tr');
+        Swal.fire({
+          title: 'Terminate Job?',
+          text: "This automation will stop immediately.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#f2495c',
+          cancelButtonColor: '#475569',
+          confirmButtonText: 'Yes, terminate'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            row.remove();
+            syncMeta();
+            Swal.fire({ icon: 'success', title: 'Terminated!', text: 'Schedule removed.', timer: 1200, showConfirmButton: false });
+          }
+        });
+      });
+
+      function syncMeta() {
+        const rowCount = $('#schedule-body tr').length;
+        $('#record-count').text(rowCount + ' Records');
+        if (rowCount === 0) {
+          $('#empty-state').removeClass('hidden');
+          $('#schedule-table').addClass('hidden');
+        } else {
+          $('#empty-state').addClass('hidden');
+          $('#schedule-table').removeClass('hidden');
+          $('#schedule-body tr').each(function(i) { $(this).find('td').first().text(i + 1); });
+        }
+      }
+      syncMeta();
+    });
+  </script>
+</body>
+
+</html>
