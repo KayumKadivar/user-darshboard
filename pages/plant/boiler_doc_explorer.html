@@ -85,8 +85,7 @@
             <span>Paste Here</span>
           </button>
 
-          <button id="btn-move-buffer" class="explorer-btn"
-            style="background: rgba(255, 182, 193, 0.1); border-color: rgba(255, 182, 193, 0.3); color: #ffb6c1;">
+          <button id="btn-move-buffer" class="explorer-btn">
             <i class="ph-bold ph-tray font-18px"></i>
             <span>Move From Buffer</span>
           </button>
@@ -466,596 +465,544 @@
 
   <!-- Sent Items Modal -->
   <div id="modal-sent-items" class="gnfc-modal-overlay">
-      <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
-        <div class="gnfc-modal-header border-b-2">
-          <div class="flex items-center gap-12px">
-            <h3 class="gnfc-modal-title color-blue">Sent Items (email)</h3>
-          </div>
-          <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+    <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+      <div class="gnfc-modal-header border-b-2">
+        <div class="flex items-center gap-12px">
+          <h3 class="gnfc-modal-title color-blue">Sent Items (email)</h3>
         </div>
-        <div class="gnfc-modal-body bg-dark-bg p-0">
-          <div class="user-table-wrapper">
-            <table class="user-table" style="min-width: 1100px;">
-              <thead class="bg-muted-bg sticky top-0 z-10">
-                <tr>
-                  <th class="user-table-cell text-left" style="width: 180px;">From</th>
-                  <th class="user-table-cell text-left" style="width: 180px;">To</th>
-                  <th class="user-table-cell text-left">Subject</th>
-                  <th class="user-table-cell text-center" style="width: 60px;">Attach</th>
-                  <th class="user-table-cell text-center" style="width: 190px;">Date / Time</th>
-                  <th class="user-table-cell text-center" style="width: 120px;">By</th>
-                  <th class="user-table-cell text-center" style="width: 100px;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="sent-items-tbody">
-                <tr class="user-table-row">
-                  <td class="user-table-cell font-13px">pankajpatel@gnfc.in</td>
-                  <td class="user-table-cell font-13px text-blue fw-600">pankajpatel@gnfc.in</td>
-                  <td class="user-table-cell font-13px">test</td>
-                  <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip opacity-50"></i></td>
-                  <td class="user-table-cell gap-8px flex "><p class="block">02/04/2019</p><p class="block">09:36:29</p></td>
-                  <td class="user-table-cell text-center fw-800 color-blue">M(PMP)</td>
-                  <td class="user-table-cell text-center">
-                    <div class="flex justify-center gap-8px">
-                      <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
-                        title="Send again"></i>
-                      <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-cell font-13px">mmdava@gnfc.in</td>
-                  <td class="user-table-cell font-13px text-blue fw-600">pankajpatel@gnfc.in</td>
-                  <td class="user-table-cell font-13px">FCV1501</td>
-                  <td class="user-table-cell text-center text-muted">-</td>
-                  <td class="user-table-cell gap-8px flex "><p class="block">02/04/2019</p><p class="block">09:36:29</p></td>
-                  <td class="user-table-cell text-center fw-800 color-blue">IE/SIE(MMD)</td>
-                  <td class="user-table-cell text-center">
-                    <div class="flex justify-center gap-8px">
-                      <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
-                        title="Send again"></i>
-                      <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-cell font-13px">anpatel@gnfc.in</td>
-                  <td class="user-table-cell font-13px text-blue fw-600">mmdava@gnfc.in</td>
-                  <td class="user-table-cell font-13px">DCEM 2100 O&M Manual</td>
-                  <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip opacity-50"></i></td>
-                  <td class="user-table-cell gap-8px flex "><p class="block">02/04/2019</p><p class="block">09:36:29</p></td>
-                  <td class="user-table-cell text-center fw-800 color-blue">IE/SIE(ANP)</td>
-                  <td class="user-table-cell text-center">
-                    <div class="flex justify-center gap-8px">
-                      <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
-                        title="Send again"></i>
-                      <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-cell font-13px">rb_limbasiya@gnfc.in</td>
-                  <td class="user-table-cell font-13px text-blue fw-600">anpatel@gnfc.in</td>
-                  <td class="user-table-cell font-13px">Weigh scale totalizer manual</td>
-                  <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip opacity-50"></i></td>
-                  <td class="user-table-cell gap-8px flex "><p class="block">02/04/2019</p><p class="block">09:36:29</p></td>
-                  <td class="user-table-cell text-center fw-800 color-blue">IE/SIE(RBL)</td>
-                  <td class="user-table-cell text-center">
-                    <div class="flex justify-center gap-8px">
-                      <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
-                        title="Send again"></i>
-                      <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="gnfc-modal-footer justify-end">
-          <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
-            onclick="$('#modal-sent-items').removeClass('is-open')">Close</button>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body bg-dark-bg p-0">
+        <div class="user-table-wrapper">
+          <table class="user-table" style="min-width: 1100px;">
+            <thead class="bg-muted-bg sticky top-0 z-10">
+              <tr>
+                <th class="user-table-cell text-left" style="width: 180px;">From</th>
+                <th class="user-table-cell text-left" style="width: 180px;">To</th>
+                <th class="user-table-cell text-left">Subject</th>
+                <th class="user-table-cell text-center" style="width: 60px;">Attach</th>
+                <th class="user-table-cell text-center" style="width: 190px;">Date / Time</th>
+                <th class="user-table-cell text-center" style="width: 120px;">By</th>
+                <th class="user-table-cell text-center" style="width: 100px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="sent-items-tbody">
+              <tr class="user-table-row">
+                <td class="user-table-cell font-13px">pankajpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px text-blue fw-600">pankajpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px">test</td>
+                <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip opacity-50"></i></td>
+                <td class="user-table-cell gap-8px flex ">
+                  <p class="block">02/04/2019</p>
+                  <p class="block">09:36:29</p>
+                </td>
+                <td class="user-table-cell text-center fw-800 color-blue">M(PMP)</td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-8px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
+                      title="Send again"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-cell font-13px">mmdava@gnfc.in</td>
+                <td class="user-table-cell font-13px text-blue fw-600">pankajpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px">FCV1501</td>
+                <td class="user-table-cell text-center text-muted">-</td>
+                <td class="user-table-cell gap-8px flex ">
+                  <p class="block">02/04/2019</p>
+                  <p class="block">09:36:29</p>
+                </td>
+                <td class="user-table-cell text-center fw-800 color-blue">IE/SIE(MMD)</td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-8px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
+                      title="Send again"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-cell font-13px">anpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px text-blue fw-600">mmdava@gnfc.in</td>
+                <td class="user-table-cell font-13px">DCEM 2100 O&M Manual</td>
+                <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip opacity-50"></i></td>
+                <td class="user-table-cell gap-8px flex ">
+                  <p class="block">02/04/2019</p>
+                  <p class="block">09:36:29</p>
+                </td>
+                <td class="user-table-cell text-center fw-800 color-blue">IE/SIE(ANP)</td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-8px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
+                      title="Send again"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-cell font-13px">rb_limbasiya@gnfc.in</td>
+                <td class="user-table-cell font-13px text-blue fw-600">anpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px">Weigh scale totalizer manual</td>
+                <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip opacity-50"></i></td>
+                <td class="user-table-cell gap-8px flex ">
+                  <p class="block">02/04/2019</p>
+                  <p class="block">09:36:29</p>
+                </td>
+                <td class="user-table-cell text-center fw-800 color-blue">IE/SIE(RBL)</td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-8px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
+                      title="Send again"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
+      <div class="gnfc-modal-footer justify-end">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-sent-items').removeClass('is-open')">Close</button>
+      </div>
+    </div>
   </div>
 
   <!-- Documentation Log Modal -->
   <div id="modal-doc-log" class="gnfc-modal-overlay">
-      <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
-        <div class="gnfc-modal-header">
-          <div>
-            <h3 class="gnfc-modal-title">Documentation Log</h3>
-          </div>
-          <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+    <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Documentation Log</h3>
         </div>
-        <!-- Filter Bar -->
-        <div class="flex items-center gap-16px p-12px px-16px border-bottom-dark-border">
-          <div class="flex items-center gap-8px">
-            <label class="gnfc-modal-label">Find By Item :</label>
-            <input type="text" id="log-filter-item" class="gnfc-modal-input" placeholder="address">
-          </div>
-          <div class="flex items-center gap-8px">
-            <label class="gnfc-modal-label">Find By Action :</label>
-            <select id="log-filter-action" class="gnfc-modal-input">
-              <option value="ALL">NO CHOICE</option>
-              <option value="Save File">Save File</option>
-              <option value="Rename">Rename</option>
-              <option value="Delete">Delete</option>
-              <option value="Create Folder">Create Folder</option>
-              <option value="Send Email">Send Email</option>
-            </select>
-          </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <!-- Filter Bar -->
+      <div class="flex items-center gap-16px p-12px px-16px border-bottom-dark-border">
+        <div class="flex items-center gap-8px">
+          <label class="gnfc-modal-label">Find By Item :</label>
+          <input type="text" id="log-filter-item" class="gnfc-modal-input" placeholder="address">
         </div>
-        <div class="gnfc-modal-body gnfc-modal-body--flush p-8px">
-          <div class="user-table-wrapper">
-            <table class=" w-auto user-table">
-              <thead>
-                <tr>
-                  <th class="user-table-head-cell text-center" style="width:50px;">Rev</th>
-                  <th class="user-table-head-cell text-left">Item</th>
-                  <th class="user-table-head-cell text-left" style="width:160px;">Location</th>
-                  <th class="user-table-head-cell text-left" style="width:120px;">Action</th>
-                  <th class="user-table-head-cell text-left">Comment</th>
-                  <th class="user-table-head-cell text-center" style="width:100px;">Date</th>
-                  <th class="user-table-head-cell text-center" style="width:70px;">Time</th>
-                  <th class="user-table-head-cell text-center" style="width:70px;">By</th>
-                </tr>
-              </thead>
-              <tbody id="log-tbody">
-                <tr class="user-table-row" data-item="approval" data-action="Create Folder">
-                  <td class="user-table-cell text-center fw-800 ">0</td>
-                  <td class="user-table-cell text-left">APPROVAL</td>
-                  <td class="user-table-cell text-left">BOILER_INST</td>
-                  <td class="user-table-cell text-left"><span>Create Folder</span></td>
-                  <td class="user-table-cell text-left">Project root approval</td>
-                  <td class="user-table-cell text-center">27/06/2020</td>
-                  <td class="user-table-cell text-center">09:00</td>
-                  <td class="user-table-cell text-center">SYSTEM</td>
-                </tr>
-                <tr class="user-table-row" data-item="boiler_approval_reva.pdf" data-action="Save File">
-                  <td class="user-table-cell text-center fw-800 ">1</td>
-                  <td class="user-table-cell text-left">Boiler_Approval_RevA.pdf</td>
-                  <td class="user-table-cell text-left">BOILER_INST/APPROVAL</td>
-                  <td class="user-table-cell text-left"><span>Save File</span></td>
-                  <td class="user-table-cell text-left">Initial approval doc</td>
-                  <td class="user-table-cell text-center">27/06/2020</td>
-                  <td class="user-table-cell text-center">10:30</td>
-                  <td class="user-table-cell text-center">ADMIN</td>
-                </tr>
-                <tr class="user-table-row" data-item="reports" data-action="Create Folder">
-                  <td class="user-table-cell text-center fw-800 ">0</td>
-                  <td class="user-table-cell text-left">REPORTS</td>
-                  <td class="user-table-cell text-left">BOILER_INST</td>
-                  <td class="user-table-cell text-left"><span>Create Folder</span></td>
-                  <td class="user-table-cell text-left">Reports directory</td>
-                  <td class="user-table-cell text-center">04/11/2024</td>
-                  <td class="user-table-cell text-center">10:00</td>
-                  <td class="user-table-cell text-center">SYSTEM</td>
-                </tr>
-                <tr class="user-table-row" data-item="shutdown_report_oct_2024.pdf" data-action="Save File">
-                  <td class="user-table-cell text-center fw-800 ">0</td>
-                  <td class="user-table-cell text-left">Shutdown_Report_Oct_2024.pdf</td>
-                  <td class="user-table-cell text-left">BOILER_INST/REPORTS/2024</td>
-                  <td class="user-table-cell text-left"><span>Save File</span></td>
-                  <td class="user-table-cell text-left">Monthly safety update</td>
-                  <td class="user-table-cell text-center">04/11/2024</td>
-                  <td class="user-table-cell text-center">14:15</td>
-                  <td class="user-table-cell text-center">KAYUM</td>
-                </tr>
-                <tr class="user-table-row" data-item="shutdown_report_oct_2024.pdf" data-action="Save File">
-                  <td class="user-table-cell text-center fw-800 ">1</td>
-                  <td class="user-table-cell text-left">Shutdown_Report_Oct_2024.pdf</td>
-                  <td class="user-table-cell text-left">BOILER_INST/REPORTS/2024</td>
-                  <td class="user-table-cell text-left"><span>Save File</span></td>
-                  <td class="user-table-cell text-left">Revised with corrections</td>
-                  <td class="user-table-cell text-center">10/11/2024</td>
-                  <td class="user-table-cell text-center">11:20</td>
-                  <td class="user-table-cell text-center">ADMIN</td>
-                </tr>
-                <tr class="user-table-row" data-item="mdm" data-action="Create Folder">
-                  <td class="user-table-cell text-center fw-800 ">0</td>
-                  <td class="user-table-cell text-left">MDM</td>
-                  <td class="user-table-cell text-left">BOILER_INST</td>
-                  <td class="user-table-cell text-left"><span>Create Folder</span></td>
-                  <td class="user-table-cell text-left">MDM directory</td>
-                  <td class="user-table-cell text-center">15/07/2018</td>
-                  <td class="user-table-cell text-center">09:00</td>
-                  <td class="user-table-cell text-center">SYSTEM</td>
-                </tr>
-                <tr class="user-table-row" data-item="payment" data-action="Create Folder">
-                  <td class="user-table-cell text-center fw-800 ">0</td>
-                  <td class="user-table-cell text-left">PAYMENT</td>
-                  <td class="user-table-cell text-left">BOILER_INST</td>
-                  <td class="user-table-cell text-left"><span>Create Folder</span></td>
-                  <td class="user-table-cell text-left">Payment docs</td>
-                  <td class="user-table-cell text-center">14/06/2019</td>
-                  <td class="user-table-cell text-center">08:00</td>
-                  <td class="user-table-cell text-center">SYSTEM</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="gnfc-modal-footer justify-between">
-          <p class="font-10px  italic">Historical records are permanent and cannot be deleted.</p>
-          <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
-            onclick="$('#modal-doc-log').removeClass('is-open')">Close</button>
+        <div class="flex items-center gap-8px">
+          <label class="gnfc-modal-label">Find By Action :</label>
+          <select id="log-filter-action" class="gnfc-modal-input">
+            <option value="ALL">NO CHOICE</option>
+            <option value="Save File">Save File</option>
+            <option value="Rename">Rename</option>
+            <option value="Delete">Delete</option>
+            <option value="Create Folder">Create Folder</option>
+            <option value="Send Email">Send Email</option>
+          </select>
         </div>
       </div>
+      <div class="gnfc-modal-body gnfc-modal-body--flush p-8px">
+        <div class="user-table-wrapper">
+          <table class=" w-auto user-table">
+            <thead>
+              <tr>
+                <th class="user-table-head-cell text-center" style="width:50px;">Rev</th>
+                <th class="user-table-head-cell text-left">Item</th>
+                <th class="user-table-head-cell text-left" style="width:160px;">Location</th>
+                <th class="user-table-head-cell text-left" style="width:120px;">Action</th>
+                <th class="user-table-head-cell text-left">Comment</th>
+                <th class="user-table-head-cell text-center" style="width:100px;">Date</th>
+                <th class="user-table-head-cell text-center" style="width:70px;">Time</th>
+                <th class="user-table-head-cell text-center" style="width:70px;">By</th>
+              </tr>
+            </thead>
+            <tbody id="log-tbody">
+              <tr class="user-table-row" data-item="approval" data-action="Create Folder">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">APPROVAL</td>
+                <td class="user-table-cell text-left">BOILER_INST</td>
+                <td class="user-table-cell text-left"><span>Create Folder</span></td>
+                <td class="user-table-cell text-left">Project root approval</td>
+                <td class="user-table-cell text-center">27/06/2020</td>
+                <td class="user-table-cell text-center">09:00</td>
+                <td class="user-table-cell text-center">SYSTEM</td>
+              </tr>
+              <tr class="user-table-row" data-item="boiler_approval_reva.pdf" data-action="Save File">
+                <td class="user-table-cell text-center fw-800 ">1</td>
+                <td class="user-table-cell text-left">Boiler_Approval_RevA.pdf</td>
+                <td class="user-table-cell text-left">BOILER_INST/APPROVAL</td>
+                <td class="user-table-cell text-left"><span>Save File</span></td>
+                <td class="user-table-cell text-left">Initial approval doc</td>
+                <td class="user-table-cell text-center">27/06/2020</td>
+                <td class="user-table-cell text-center">10:30</td>
+                <td class="user-table-cell text-center">ADMIN</td>
+              </tr>
+              <tr class="user-table-row" data-item="reports" data-action="Create Folder">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">REPORTS</td>
+                <td class="user-table-cell text-left">BOILER_INST</td>
+                <td class="user-table-cell text-left"><span>Create Folder</span></td>
+                <td class="user-table-cell text-left">Reports directory</td>
+                <td class="user-table-cell text-center">04/11/2024</td>
+                <td class="user-table-cell text-center">10:00</td>
+                <td class="user-table-cell text-center">SYSTEM</td>
+              </tr>
+              <tr class="user-table-row" data-item="shutdown_report_oct_2024.pdf" data-action="Save File">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">Shutdown_Report_Oct_2024.pdf</td>
+                <td class="user-table-cell text-left">BOILER_INST/REPORTS/2024</td>
+                <td class="user-table-cell text-left"><span>Save File</span></td>
+                <td class="user-table-cell text-left">Monthly safety update</td>
+                <td class="user-table-cell text-center">04/11/2024</td>
+                <td class="user-table-cell text-center">14:15</td>
+                <td class="user-table-cell text-center">KAYUM</td>
+              </tr>
+              <tr class="user-table-row" data-item="shutdown_report_oct_2024.pdf" data-action="Save File">
+                <td class="user-table-cell text-center fw-800 ">1</td>
+                <td class="user-table-cell text-left">Shutdown_Report_Oct_2024.pdf</td>
+                <td class="user-table-cell text-left">BOILER_INST/REPORTS/2024</td>
+                <td class="user-table-cell text-left"><span>Save File</span></td>
+                <td class="user-table-cell text-left">Revised with corrections</td>
+                <td class="user-table-cell text-center">10/11/2024</td>
+                <td class="user-table-cell text-center">11:20</td>
+                <td class="user-table-cell text-center">ADMIN</td>
+              </tr>
+              <tr class="user-table-row" data-item="mdm" data-action="Create Folder">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">MDM</td>
+                <td class="user-table-cell text-left">BOILER_INST</td>
+                <td class="user-table-cell text-left"><span>Create Folder</span></td>
+                <td class="user-table-cell text-left">MDM directory</td>
+                <td class="user-table-cell text-center">15/07/2018</td>
+                <td class="user-table-cell text-center">09:00</td>
+                <td class="user-table-cell text-center">SYSTEM</td>
+              </tr>
+              <tr class="user-table-row" data-item="payment" data-action="Create Folder">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">PAYMENT</td>
+                <td class="user-table-cell text-left">BOILER_INST</td>
+                <td class="user-table-cell text-left"><span>Create Folder</span></td>
+                <td class="user-table-cell text-left">Payment docs</td>
+                <td class="user-table-cell text-center">14/06/2019</td>
+                <td class="user-table-cell text-center">08:00</td>
+                <td class="user-table-cell text-center">SYSTEM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer justify-between">
+        <p class="font-10px  italic">Historical records are permanent and cannot be deleted.</p>
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-doc-log').removeClass('is-open')">Close</button>
+      </div>
+    </div>
   </div>
 
   <!-- Rename Modal -->
   <div id="modal-rename" class="gnfc-modal-overlay">
-      <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
-        <div class="gnfc-modal-header">
-          <h3 id="rename-modal-title" class="gnfc-modal-title">Rename Folder</h3>
-          <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h3 id="rename-modal-title" class="gnfc-modal-title">Rename Folder</h3>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="mb-12px flex flex-row  gap-8px">
+          <label>Location :</label>
+          <div id="rename-location" class="color-blue font-14px fw-700">/BOILER_INST/</div>
         </div>
-        <div class="gnfc-modal-body">
-          <div class="mb-12px flex flex-row  gap-8px">
-            <label>Location :</label>
-            <div id="rename-location" class="color-blue font-14px fw-700">/BOILER_INST/</div>
-          </div>
-          <div class="mb-12px flex flex-row items-center gap-8px">
-            <label id="rename-label-current">Current Name :</label>
-            <div id="rename-current-name">APPROVAL</div>
-          </div>
-          <div class="flex items-center gap-8px">
-            <label class="gnfc-modal-label">Enter New Name :</label>
-            <input type="text" id="rename-input" class="gnfc-modal-input" placeholder="New Name">
-          </div>
+        <div class="mb-12px flex flex-row items-center gap-8px">
+          <label id="rename-label-current">Current Name :</label>
+          <div id="rename-current-name">APPROVAL</div>
         </div>
-        <div class="gnfc-modal-footer">
-          <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
-            onclick="$('#modal-rename').removeClass('is-open')">Cancel</button>
-          <button id="btn-rename-submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Rename</button>
+        <div class="flex items-center gap-8px">
+          <label class="gnfc-modal-label">Enter New Name :</label>
+          <input type="text" id="rename-input" class="gnfc-modal-input" placeholder="New Name">
         </div>
       </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-rename').removeClass('is-open')">Cancel</button>
+        <button id="btn-rename-submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Rename</button>
+      </div>
+    </div>
   </div>
 
   <!-- View Comment Modal -->
   <div id="modal-view-comment" class="gnfc-modal-overlay">
-      <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
-        <div class="gnfc-modal-header">
-          <div class="flex items-center gap-12px">
-            <i class="ph-bold ph-chat-text color-blue font-24px"></i>
-            <h3 class="gnfc-modal-title">Document Comment</h3>
-          </div>
-          <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
-        </div>
-        <div class="gnfc-modal-body">
-          <div class="flex flex-col gap-16px">
-            <div class="flex flex-row gap-10px">
-              <label>Document Name :</label>
-              <div id="comment-doc-name" class="color-blue fw-700">Boiler_Side_View.pdf</div>
-            </div>
-            <div class="flex flex-row gap-10px">
-              <label>Revision :</label>
-              <div id="comment-rev">0</div>
-            </div>
-            <div>
-              <label class="gnfc-modal-label">Comment :</label>
-              <textarea id="comment-text" rows="4" class="gnfc-modal-input" readonly
-                style="height: auto; resize: none; background: rgba(255,255,255,0.02); cursor: default;"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="gnfc-modal-footer">
-          <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
-            onclick="$('#modal-view-comment').removeClass('is-open')">Close</button>
-        </div>
-      </div>
-  </div>
-
-  <div id="modal-revision-history" class="gnfc-modal-overlay">
-      <div class="gnfc-modal-shell gnfc-modal-shell--xl">
-        <div class="revision-header-panel flex justify-between items-center">
-          <div class="flex items-center gap-12px">
-            <h3 class="revision-title-main">Engineering Documents Revision Detail</h3>
-          </div>
-          <div class="flex items-center gap-12px">
-            <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
-          </div>
-        </div>
-
-        <div class="gnfc-modal-body gnfc-modal-body--flush bg-dark-bg p-10px">
-          <!-- History Section -->
-          <div class="revision-section-label">
-            <i class="ph-bold ph-clock-counter-clockwise"></i>
-            <span>Revision History</span>
-          </div>
-          <div class="user-table-wrapper ">
-            <table class="user-table " style="min-width: auto;">
-              <thead>
-                <tr>
-                  <th class="user-table-cell" style="width:60px;">REV</th>
-                  <th class="user-table-cell text-left">DOCUMENT</th>
-                  <th class="user-table-cell text-left">COMMENT</th>
-                  <th class="user-table-cell" style="width:110px;">DATE</th>
-                  <th class="user-table-cell" style="width:90px;">TIME</th>
-                  <th class="user-table-cell" style="width:70px;">BY</th>
-                  <th class="user-table-cell" style="width:50px;"></th>
-                </tr>
-              </thead>
-              <tbody id="history-tbody">
-                <tr>
-                  <td class="text-center">0</td>
-                  <td class="text-left fw-600 color-blue font-16px">example.pdf</td>
-                  <td class="text-left">Initial release for review</td>
-                  <td class="text-center">10/01/2021</td>
-                  <td class="text-center">10:00</td>
-                  <td class="text-center color-blue fw-700">KAYUM</td>
-                  <td class="text-center">
-                    <i class="ph-bold ph-trash btn-delete-revision"></i>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Current Revision Section -->
-          <div class="revision-section-label mt-10px">
-            <i class="ph-bold ph-check-circle"></i>
-            <span>Current Revision</span>
-          </div>
-          <div class="user-table-wrapper">
-            <table class="user-table" style="min-width: auto;">
-              <thead class="current-rev-header">
-                <tr>
-                  <th class="user-table-cell" style="width:60px;">REV</th>
-                  <th class="user-table-cell text-left">DOCUMENT</th>
-                  <th class="user-table-cell text-left">COMMENT</th>
-                  <th class="user-table-cell" style="width:110px;">DATE</th>
-                  <th class="user-table-cell" style="width:90px;">TIME</th>
-                  <th class="user-table-cell" style="width:70px;">BY</th>
-                  <th class="user-table-cell" style="width:50px;"></th>
-                </tr>
-              </thead>
-              <tbody id="current-rev-tbody">
-                <tr>
-                  <td class="text-center">0</td>
-                  <td class="text-left fw-600 color-blue font-16px">example.pdf</td>
-                  <td class="text-left">Initial release for review</td>
-                  <td class="text-center">10/01/2021</td>
-                  <td class="text-center">10:00</td>
-                  <td class="text-center color-blue fw-700">KAYUM</td>
-                  <td class="text-center">
-                    <i class="ph-bold ph-trash btn-delete-revision"></i>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="gnfc-modal-footer">
-          <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
-            onclick="$('#modal-revision-history').removeClass('is-open')">Close</button>
-        </div>
-      </div>
-  </div>
-
-  <div id="modal-delete-doc" class="gnfc-modal-overlay">
-        <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
-          <div class="gnfc-modal-header border-b-2 bg-red-bg" style="border-bottom-color: var(--red);">
-            <div class="flex items-center gap-12px">
-              <i class="ph-bold ph-warning-octagon color-red font-24px"></i>
-              <h3 class="gnfc-modal-title color-red fw-900 tracking-wider font-mont">DELETE FILE !!!</h3>
-            </div>
-            <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
-          </div>
-          <div class="gnfc-modal-body bg-dark-bg p-24px">
-            <div class="flex flex-col gap-20px">
-              <div class="flex flex-row gap-8px">
-                <label class="fw-800 font-14px color-blue" style="min-width: 90px;">File Name :</label>
-                <div id="delete-doc-path" class="color-blue fw-700 font-14px break-all">
-                  /BOILER_INST/engineering_doc/Boiler_Side_View.pdf</div>
-              </div>
-
-              <div class="flex flex-row gap-8px">
-                <label class="fw-800 font-14px color-blue" style="min-width: 90px;">Revision :</label>
-                <div id="delete-doc-rev" class="fw-900 font-14px color-secondary">0</div>
-              </div>
-
-              <div class="p-12px radius-8px bg-red-bg border-1 border-dashed" style="border-color: var(--red);">
-                <div class="flex gap-10px">
-                  <span class="fw-800 color-red font-14px">Alert &rarr;</span>
-                  <p class="color-red font-13px fw-700 m-0 leading-relaxed">
-                    Revisions of the document will be deleted along with this delete !! Check and save revisions of the
-                    document. To view revision click
-                    <a href="javascript:void(0)" id="link-view-rev-from-delete"
-                      class="color-blue underline fw-800">Here</a>
-                  </p>
-                </div>
-              </div>
-
-              <div class="text-center italic color-green fw-700 font-13px mt-10px">
-                You can still retrieve deleted documents from recycle bin...
-              </div>
-            </div>
-          </div>
-          <div class="gnfc-modal-footer bg-dark-bg border-0 flex justify-center gap-16px pb-24px">
-            <button id="btn-delete-doc-confirm" class="explorer-btn btn-action-red"
-              style="padding: 6px 24px;">Delete</button>
-            <button class="explorer-btn btn-action-blue bg-muted-bg border-muted" style="padding: 6px 24px;"
-              onclick="$('#modal-delete-doc').removeClass('is-open')">Cancel</button>
-          </div>
-        </div>
-      </div>
-  </div>
-
-  <!-- Move From Buffer Modal -->
-    <div id="modal-move-from-buffer" class="gnfc-modal-overlay">
-      <div class="gnfc-modal-shell gnfc-modal-shell--wide">
-        <div class="gnfc-modal-header border-b-2">
-          <div class="flex items-center gap-12px">
-            <i class="ph-bold ph-tray color-red font-24px"></i>
-            <h3 class="gnfc-modal-title">Move From Buffer</h3>
-          </div>
-          <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
-        </div>
-        <div class="gnfc-modal-body bg-dark-bg p-0">
-          <div class="user-table-wrapper border-0 radius-0">
-            <table class="user-table" style="min-width: auto;">
-              <thead class="bg-muted-bg">
-                <tr>
-                  <th class="user-table-cell text-left">Item Name</th>
-                  <th class="user-table-cell text-center" style="width: 100px;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="buffer-tbody">
-                <!-- Buffer items will be rendered here -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="gnfc-modal-footer">
-          <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
-            onclick="$('#modal-move-from-buffer').removeClass('is-open')">Close</button>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Move Confirmation Modal (2nd Step) -->
-    <div id="modal-move-buffer-confirm" class="gnfc-modal-overlay">
-      <div class="gnfc-modal-shell gnfc-modal-shell--medium"
-        style="background: rgba(20, 22, 26, 0.98); border: 1px solid rgba(255,255,255,0.05);">
-        <div class="gnfc-modal-header border-b-2" style="border-bottom-color: var(--blue); background: #181b1f;">
-          <div class="flex items-center gap-12px">
-            <i class="ph-bold ph-shield-check color-blue font-24px"></i>
-            <h3 class="gnfc-modal-title color-blue font-mont fw-900 tracking-wider text-uppercase">DOCUMENT MANAGEMENT
-              SYSTEM: IIMS</h3>
-          </div>
-          <button class="gnfc-modal-close"
-            style="background: rgba(255,255,255,0.05); border-radius: 4px; padding: 4px;"><i
-              class="ph ph-x color-white opacity-60"></i></button>
-        </div>
-
-        <div class="gnfc-modal-body bg-transparent p-32px">
-          <div class="flex flex-col gap-24px">
-            <div class="font-16px fw-800 color-blue tracking-tight">Move folder from buffer</div>
-
-            <div class="flex flex-col gap-16px">
-              <div class="flex items-baseline gap-12px">
-                <span class="font-14px fw-600 color-white opacity-80" style="min-width: 140px;">Selected folder :</span>
-                <span id="confirm-selected-folder" class="font-15px fw-800 color-white">ADMIN</span>
-              </div>
-              <div class="flex items-baseline gap-12px">
-                <span class="font-14px fw-600 color-white opacity-80" style="min-width: 140px;">Server Location :</span>
-                <span id="confirm-server-location" class="font-15px fw-800 color-white italic">/BOILER_INST/</span>
-              </div>
-            </div>
-
-            <div class="mt-8px flex flex-col gap-16px">
-              <div class="font-14px fw-800 color-red tracking-wide">Can not move folder to selected server location !!
-              </div>
-
-              <div class="p-0">
-                <p class="font-14px fw-800 color-blue m-0 leading-6 tracking-tight">
-                  <span class="text-uppercase underline">IMPORTANT:</span> Ensure that the folder or file<br>
-                  which is to be moved is not open in ftp page.<br>
-                  If the folder or file is open in ftp page<br>
-                  move action may not be performed and<br>
-                  error message may be displayed.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="gnfc-modal-footer bg-transparent border-0 flex justify-end gap-12px pb-32px pr-32px">
-          <button class="explorer-btn bg-transparent border-muted color-white scale-effect"
-            style="border-color: rgba(255,255,255,0.1); padding: 7px 20px; font-weight: 800;"
-            onclick="$('#modal-move-buffer-confirm').removeClass('is-open'); $('#modal-move-from-buffer').addClass('is-open')">Back</button>
-
-          <button id="btn-confirm-move-final" class="explorer-btn btn-action-blue scale-effect"
-            style="padding: 7px 32px; font-weight: 800;">Move</button>
-
-          <button id="btn-cancel-move" class="explorer-btn btn-action-red scale-effect"
-            style="padding: 7px 24px; font-weight: 800;"
-            onclick="$('#modal-move-buffer-confirm').removeClass('is-open')">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-  <!-- Register Modal -->
-  <div id="modal-register" class="gnfc-modal-overlay">
-    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
       <div class="gnfc-modal-header">
         <div class="flex items-center gap-12px">
-          <i class="ph-bold ph-calendar-check color-blue font-24px"></i>
-          <h3 class="gnfc-modal-title">Register Documents</h3>
+          <i class="ph-bold ph-chat-text color-blue font-24px"></i>
+          <h3 class="gnfc-modal-title">Document Comment</h3>
         </div>
         <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
       </div>
-      <div class="gnfc-modal-body bg-dark-bg">
-        <div class="flex flex-col gap-20px p-8px">
-          <div class="p-12px radius-8px bg-blue-pale border-blue-light">
-            <div class="flex gap-10px">
-              <i class="ph-bold ph-info color-blue font-18px mt-2px"></i>
-              <p class="color-blue font-13px fw-700 m-0 leading-relaxed">
-                Registering documents will make them trackable in the IIMS system. All selected files in <span id="register-path-display" class="underline"></span> will be registered.
-              </p>
-            </div>
+      <div class="gnfc-modal-body">
+        <div class="flex flex-col gap-16px">
+          <div class="flex flex-row gap-10px">
+            <label>Document Name :</label>
+            <div id="comment-doc-name" class="color-blue fw-700">Boiler_Side_View.pdf</div>
           </div>
-          <div class="flex flex-col gap-12px">
-            <div class="flex flex-row gap-8px items-center">
-              <label class="gnfc-modal-label" style="min-width: 120px;">Register Date :</label>
-              <input type="text" id="register-date" class="gnfc-modal-input" placeholder="DD/MM/YYYY" readonly>
-            </div>
-            <div class="flex flex-row gap-8px items-center">
-              <label class="gnfc-modal-label" style="min-width: 120px;">Registered By :</label>
-              <input type="text" id="register-by" class="gnfc-modal-input" value="ADMIN" readonly>
-            </div>
-            <div class="flex flex-row gap-8px items-center">
-              <label class="gnfc-modal-label" style="min-width: 120px;">Remarks :</label>
-              <input type="text" id="register-remarks" class="gnfc-modal-input" placeholder="Optional remarks...">
-            </div>
+          <div class="flex flex-row gap-10px">
+            <label>Revision :</label>
+            <div id="comment-rev">0</div>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">Comment :</label>
+            <textarea id="comment-text" rows="4" class="gnfc-modal-input" readonly
+              style="height: auto; resize: none; background: rgba(255,255,255,0.02); cursor: default;"></textarea>
           </div>
         </div>
       </div>
       <div class="gnfc-modal-footer">
-        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="$('#modal-register').removeClass('is-open')">Cancel</button>
-        <button id="btn-register-submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Register</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-view-comment').removeClass('is-open')">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- Un-Register Modal -->
-  <div id="modal-unregister" class="gnfc-modal-overlay">
-    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
-      <div class="gnfc-modal-header border-b-2" style="border-bottom-color: var(--red);">
+  <div id="modal-revision-history" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="revision-header-panel flex justify-between items-center">
         <div class="flex items-center gap-12px">
-          <i class="ph-bold ph-prohibit color-red font-24px"></i>
-          <h3 class="gnfc-modal-title color-red fw-900">UN-REGISTER</h3>
+          <h3 class="revision-title-main">Engineering Documents Revision Detail</h3>
+        </div>
+        <div class="flex items-center gap-12px">
+          <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-body gnfc-modal-body--flush bg-dark-bg p-10px">
+        <!-- History Section -->
+        <div class="revision-section-label">
+          <i class="ph-bold ph-clock-counter-clockwise"></i>
+          <span>Revision History</span>
+        </div>
+        <div class="user-table-wrapper ">
+          <table class="user-table " style="min-width: auto;">
+            <thead>
+              <tr>
+                <th class="user-table-cell" style="width:60px;">REV</th>
+                <th class="user-table-cell text-left">DOCUMENT</th>
+                <th class="user-table-cell text-left">COMMENT</th>
+                <th class="user-table-cell" style="width:110px;">DATE</th>
+                <th class="user-table-cell" style="width:90px;">TIME</th>
+                <th class="user-table-cell" style="width:70px;">BY</th>
+                <th class="user-table-cell" style="width:50px;"></th>
+              </tr>
+            </thead>
+            <tbody id="history-tbody">
+              <tr>
+                <td class="text-center">0</td>
+                <td class="text-left fw-600 color-blue font-16px">example.pdf</td>
+                <td class="text-left">Initial release for review</td>
+                <td class="text-center">10/01/2021</td>
+                <td class="text-center">10:00</td>
+                <td class="text-center color-blue fw-700">KAYUM</td>
+                <td class="text-center">
+                  <i class="ph-bold ph-trash btn-delete-revision"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Current Revision Section -->
+        <div class="revision-section-label mt-10px">
+          <i class="ph-bold ph-check-circle"></i>
+          <span>Current Revision</span>
+        </div>
+        <div class="user-table-wrapper">
+          <table class="user-table" style="min-width: auto;">
+            <thead class="current-rev-header">
+              <tr>
+                <th class="user-table-cell" style="width:60px;">REV</th>
+                <th class="user-table-cell text-left">DOCUMENT</th>
+                <th class="user-table-cell text-left">COMMENT</th>
+                <th class="user-table-cell" style="width:110px;">DATE</th>
+                <th class="user-table-cell" style="width:90px;">TIME</th>
+                <th class="user-table-cell" style="width:70px;">BY</th>
+                <th class="user-table-cell" style="width:50px;"></th>
+              </tr>
+            </thead>
+            <tbody id="current-rev-tbody">
+              <tr>
+                <td class="text-center">0</td>
+                <td class="text-left fw-600 color-blue font-16px">example.pdf</td>
+                <td class="text-left">Initial release for review</td>
+                <td class="text-center">10/01/2021</td>
+                <td class="text-center">10:00</td>
+                <td class="text-center color-blue fw-700">KAYUM</td>
+                <td class="text-center">
+                  <i class="ph-bold ph-trash btn-delete-revision"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-revision-history').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-delete-doc" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header border-b-2 bg-red-bg" style="border-bottom-color: var(--red);">
+        <div class="flex items-center gap-12px">
+          <i class="ph-bold ph-warning-octagon color-red font-24px"></i>
+          <h3 class="gnfc-modal-title color-red fw-900 tracking-wider font-mont">DELETE FILE !!!</h3>
         </div>
         <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
       </div>
       <div class="gnfc-modal-body bg-dark-bg p-24px">
         <div class="flex flex-col gap-20px">
+          <div class="flex flex-row gap-8px">
+            <label class="fw-800 font-14px color-blue" style="min-width: 90px;">File Name :</label>
+            <div id="delete-doc-path" class="color-blue fw-700 font-14px break-all">
+              /BOILER_INST/engineering_doc/Boiler_Side_View.pdf</div>
+          </div>
+
+          <div class="flex flex-row gap-8px">
+            <label class="fw-800 font-14px color-blue" style="min-width: 90px;">Revision :</label>
+            <div id="delete-doc-rev" class="fw-900 font-14px color-secondary">0</div>
+          </div>
+
           <div class="p-12px radius-8px bg-red-bg border-1 border-dashed" style="border-color: var(--red);">
             <div class="flex gap-10px">
-              <span class="fw-800 color-red font-14px">Warning &rarr;</span>
+              <span class="fw-800 color-red font-14px">Alert &rarr;</span>
               <p class="color-red font-13px fw-700 m-0 leading-relaxed">
-                Un-registering will remove these documents from the IIMS tracking system. This action is logged and cannot be silently reversed.
+                Revisions of the document will be deleted along with this delete !! Check and save revisions of the
+                document. To view revision click
+                <a href="javascript:void(0)" id="link-view-rev-from-delete" class="color-blue underline fw-800">Here</a>
               </p>
             </div>
           </div>
-          <div class="flex flex-row gap-8px items-center">
-            <label class="gnfc-modal-label" style="min-width: 120px;">Location :</label>
-            <div id="unregister-path-display" class="color-blue fw-700 font-14px"></div>
-          </div>
-          <div class="flex flex-row gap-8px items-center">
-            <label class="gnfc-modal-label" style="min-width: 120px;">Reason :</label>
-            <input type="text" id="unregister-reason" class="gnfc-modal-input" placeholder="Provide reason for un-registering...">
+
+          <div class="text-center italic color-green fw-700 font-13px mt-10px">
+            You can still retrieve deleted documents from recycle bin...
           </div>
         </div>
       </div>
       <div class="gnfc-modal-footer bg-dark-bg border-0 flex justify-center gap-16px pb-24px">
-        <button id="btn-unregister-submit" class="explorer-btn btn-action-red" style="padding: 6px 24px;">Un-Register</button>
-        <button class="explorer-btn btn-action-blue bg-muted-bg border-muted" style="padding: 6px 24px;" onclick="$('#modal-unregister').removeClass('is-open')">Cancel</button>
+        <button id="btn-delete-doc-confirm" class="explorer-btn btn-action-red"
+          style="padding: 6px 24px;">Delete</button>
+        <button class="explorer-btn btn-action-blue bg-muted-bg border-muted" style="padding: 6px 24px;"
+          onclick="$('#modal-delete-doc').removeClass('is-open')">Cancel</button>
       </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Move From Buffer Modal -->
+  <div id="modal-move-from-buffer" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header border-b-2">
+        <div class="flex items-center gap-12px">
+          <i class="ph-bold ph-tray color-red font-24px"></i>
+          <h3 class="gnfc-modal-title">Move From Buffer</h3>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body bg-dark-bg p-0">
+        <div class="user-table-wrapper ">
+          <table class="user-table" style="min-width: auto;">
+            <thead class="bg-muted-bg">
+              <tr>
+                <th class="user-table-cell text-left">Item Name</th>
+                <th class="user-table-cell text-center" style="width: 100px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="buffer-tbody">
+              <!-- Buffer items will be rendered here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-move-from-buffer').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Move Confirmation Modal (2nd Step) -->
+  <div id="modal-move-buffer-confirm" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div class="flex items-center gap-12px">
+          <div>
+            <div class="font-11px fw-700 text-uppercase color-muted">Document Management System · IIMS</div>
+            <h3 class="gnfc-modal-title">Move From Buffer</h3>
+          </div>
+        </div>
+        <button class="gnfc-modal-close" onclick="$('#modal-move-buffer-confirm').removeClass('is-open')">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="gnfc-modal-body">
+        <div class="flex flex-col gap-16px">
+
+          <!-- Move info rows -->
+          <div class="flex flex-col gap-8px">
+            <div class="flex items-center gap-12px p-10px radius-4px bg-dark-subtle border-dark-border">
+              <i class="ph-fill ph-folder text-amber-500 font-20px"></i>
+              <div class="flex flex-col gap-2px flex-1">
+                <span class="font-11px text-uppercase color-muted">Item to Move</span>
+                <span id="confirm-selected-folder" class="font-14px ">ADMIN</span>
+              </div>
+              <span
+                class="font-11px  text-uppercase color-muted px-8px py-3px bg-dark-card radius-4px border-dark-border">FOLDER</span>
+            </div>
+
+            <div class="flex justify-center">
+              <i class="ph-bold ph-arrow-down color-blue font-16px"></i>
+            </div>
+
+            <div class="flex items-center gap-12px p-10px radius-4px bg-dark-subtle border-dark-border">
+              <i class="ph-bold ph-hard-drives color-blue font-20px"></i>
+              <div class="flex flex-col gap-2px flex-1">
+                <span class="font-11px text-uppercase color-muted">Destination</span>
+                <span id="confirm-server-location" class="font-14px color-blue font-mono">/BOILER_INST/</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Warning -->
+          <div class="flex gap-10px p-12px radius-4px bg-red-bg border-dark-border"
+            style="border-left: 3px solid var(--red);">
+            <i class="ph-bold ph-warning color-red font-16px mt-2px flex-shrink-0"></i>
+            <p class="font-13px fw-600 m-0 color-red leading-relaxed">
+              Ensure the item is not open in the FTP page before proceeding. The move may fail if the item is currently
+              in use.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer justify-between">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-move-buffer-confirm').removeClass('is-open'); $('#modal-move-from-buffer').addClass('is-open')">
+          <i class="ph-bold ph-arrow-left"></i> Back
+        </button>
+        <div class="flex gap-10px">
+          <button id="btn-cancel-move" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            onclick="$('#modal-move-buffer-confirm').removeClass('is-open')">
+            Cancel
+          </button>
+          <button id="btn-confirm-move-final" class="gnfc-modal-btn gnfc-modal-btn-primary">
+            <i class="ph-bold ph-arrows-left-right"></i> Confirm Move
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -1072,7 +1019,7 @@
       <div class="gnfc-modal-body bg-dark-bg p-0">
         <div class="flex flex-col">
           <!-- Advanced Dashboard Header -->
-          <div class="p-24px bg-panel-alt border-b flex items-start gap-24px">
+          <div class="bg-panel-alt border-b flex items-start gap-24px">
             <div class="flex-1 flex flex-col gap-12px">
               <div class="flex items-center gap-10px color-blue">
                 <i class="ph-bold ph-shield-check font-20px"></i>
@@ -1643,13 +1590,16 @@
     // Initial Render
     renderFolderContents();
 
-    // ── Row Click Navigation ──
-    $(document).on('click', '.user-table-row', function (e) {
+    // ── Row Click Navigation (scoped to explorer table only) ──
+    $(document).on('click', '#explorer-tbody .user-table-row', function (e) {
       // Prevent navigation if clicking on action icons or checkboxes
       if ($(e.target).closest('.row-actions, .action-icon, .btn-doc-log, .revision-cell, .btn-view-comment').length) return;
 
       const type = $(this).data('type');
       const name = $(this).data('name');
+
+      // Guard: ignore rows without valid data (e.g. modal rows)
+      if (!type || !name) return;
 
       if (type === 'Folder') {
         CURRENT_PATH.push(name);
@@ -2329,12 +2279,9 @@
       $('#modal-move-buffer-confirm').removeClass('is-open');
 
       Swal.fire({
-        toast: true,
-        position: 'top-end',
         icon: 'success',
         title: 'Moved: ' + item.name,
         showConfirmButton: false,
-        timer: 1500
       });
     });
 
