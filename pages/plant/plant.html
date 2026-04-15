@@ -29,7 +29,7 @@
 
   <main class="main-wrapper">
 
-    <div id="header-container" data-title="Plant Units" data-back="../../dashboard.html"></div>
+    <div id="header-container" data-title="Plant Units" data-breadcrumb="Plant:active" data-back="../../dashboard.html"></div>
 
     <div class="dashboard-content dashboard-scroll">
       
@@ -124,8 +124,42 @@
     </div>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script>
     $('#unit-count').text(document.querySelectorAll('.unit-card').length + ' Units');
+
+    $(document).ready(function() {
+      $('.unit-card').on('click', function(e) {
+        const unitName = $(this).find('.unit-name').text().trim();
+        
+        if (unitName !== 'BOILER') {
+          e.preventDefault();
+          
+          Swal.fire({
+            icon: 'error',
+            title: 'Access Denied',
+            text: `Sorry !! ENG_TESTER, YOU ARE NOT AUTHORIZED TO LOGIN TO ${unitName}`,
+            confirmButtonColor: 'var(--brand-primary)',
+            confirmButtonText: 'Cancel',
+            customClass: {
+              confirmButton: 'auth-swal-cancel-btn'
+            },
+            width: '480px',
+            padding: '24px',
+            background: '#ffffff',
+            confirmButtonColor: '#2563eb',
+            confirmButtonText: 'Cancel',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown animate__faster'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp animate__faster'
+            }
+          });
+        }
+      });
+    });
   </script>
 
 </body>

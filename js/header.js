@@ -6,11 +6,32 @@ $(function () {
     const pageTitle = $headerContainer.data('title') || 
                       (document.title ? document.title.split('|')[0].trim() : 'Dashboard');
 
+    const generateBreadcrumbs = () => {
+        const breadcrumbData = $headerContainer.data('breadcrumb');
+        if (!breadcrumbData) return '';
+
+        const items = breadcrumbData.split(',').map(item => {
+            const [label, url] = item.split(':');
+            if (url === 'active') {
+                return `<span class="plant-nav-item is-active">${label}</span>`;
+            }
+            return `
+                <a href="${url}" class="plant-nav-item">${label}</a>
+                <i class="ph-bold ph-caret-right"></i>
+            `;
+        }).join('');
+
+        return `<div class="plant-nav-section">${items}</div>`;
+    };
+
     const headerHTML = `
       <div class="header-bar">
         <div class="header-left-side">
           <i class="sidebar-toggle-header ph ph-list color-label cursor-pointer font-20px"></i>
-          <h2 class="header-title">${pageTitle}</h2>
+          <div class="header-title-section">
+            <h2 class="header-title">${pageTitle}</h2>
+            ${generateBreadcrumbs()}
+          </div>
         </div>
 
         <div class="header-right-side">
