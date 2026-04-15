@@ -57,7 +57,7 @@ $(function () {
         <!-- Jobs & Utility -->
         <a href="#" class="sidebar-link" data-id="job_list">
           <i class="ph ph-bold ph-list-bullets"></i>
-          <span class="sidebar-text">Jub List</span>
+          <span class="sidebar-text">Job List</span>
         </a>
 
         <a href="#" class="sidebar-link" data-id="utility">
@@ -214,9 +214,28 @@ $(function () {
         // Fallback: match by filename
         $(`.sidebar-link`).each(function() {
             const href = $(this).attr('href');
-            if (href && href.endsWith(currentPage)) {
-                $(this).addClass("active");
-            }
         });
     }
+
+    // --- Hover Tooltip Logic ---
+    const $tooltip = $('.sidebar-tooltip');
+    const $tooltipText = $('.sidebar-tooltip-text');
+
+    $(document).on('mouseenter', '.sidebar-link', function () {
+        if (!isCollapsed) return; 
+
+        const text = $(this).find('.sidebar-text').text();
+        const rect = this.getBoundingClientRect();
+
+        $tooltipText.text(text);
+        $tooltip.css({
+            top: rect.top + (rect.height / 2),
+            left: rect.right + 12,
+            transform: 'translateY(-50%)'
+        }).removeClass('hidden').addClass('show');
+    });
+
+    $(document).on('mouseleave', '.sidebar-link', function () {
+        $tooltip.removeClass('show').addClass('hidden');
+    });
 });
