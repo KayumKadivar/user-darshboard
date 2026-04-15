@@ -252,50 +252,54 @@
 
   <script>
     $(document).ready(function () {
+      /** ── Global functions for onclick handlers ── */
+      window.generateReport = function () {
+        const selectedName = $('#nameFilter').val();
+        const startDate = $('#startDateFilter').val();
+        const endDate = $('#endDateFilter').val();
+
+        const formattedStart = startDate ? new Date(startDate).toLocaleDateString('en-GB') : '-';
+        const formattedEnd = endDate ? new Date(endDate).toLocaleDateString('en-GB') : '-';
+        const nameLabel = selectedName || 'All Technicians';
+
+        $('#reportTitle').text(`Name Wise Report: ${nameLabel} (${formattedStart} – ${formattedEnd})`);
+        
+        // Show results container
+        $('#reportResults').css('display', 'flex').stop().hide().fadeIn(300);
+      };
+
+      window.resetFilters = function () {
+        const today = new Date();
+        const lastMonth = new Date(today);
+        lastMonth.setDate(lastMonth.getDate() - 30);
+        const fmt = (d) => d.toISOString().split('T')[0];
+
+        $('#nameFilter').val('');
+        $('#startDateFilter').val(fmt(lastMonth));
+        $('#endDateFilter').val(fmt(today));
+        $('#reportResults').fadeOut(200);
+      };
+
+      // Initial State
       const today = new Date();
       const lastMonth = new Date(today);
       lastMonth.setDate(lastMonth.getDate() - 30);
-
       const fmt = (d) => d.toISOString().split('T')[0];
 
       $('#endDateFilter').val(fmt(today));
       $('#startDateFilter').val(fmt(lastMonth));
       $('#nameFilter').val('PBS');
 
-      // Open date picker on click/focus
-      $('.jt-date-input').on('click focus', function () {
+      // Date picker trigger for all date inputs using delegation
+      $(document).on('click focus', '.jt-date-input', function () {
         if (typeof this.showPicker === 'function') {
           try { this.showPicker(); } catch (e) { }
         }
       });
 
+      // Run initial report
       generateReport();
     });
-
-    function resetFilters() {
-      const today = new Date();
-      const lastMonth = new Date(today);
-      lastMonth.setDate(lastMonth.getDate() - 30);
-      const fmt = (d) => d.toISOString().split('T')[0];
-
-      $('#nameFilter').val('');
-      $('#startDateFilter').val(fmt(lastMonth));
-      $('#endDateFilter').val(fmt(today));
-      $('#reportResults').hide();
-    }
-
-    function generateReport() {
-      const selectedName = $('#nameFilter').val();
-      const startDate = $('#startDateFilter').val();
-      const endDate = $('#endDateFilter').val();
-
-      const formattedStart = startDate ? new Date(startDate).toLocaleDateString('en-GB') : '-';
-      const formattedEnd = endDate ? new Date(endDate).toLocaleDateString('en-GB') : '-';
-      const nameLabel = selectedName || 'All Technicians';
-
-      $('#reportTitle').text(`Name Wise Report: ${nameLabel} (${formattedStart} – ${formattedEnd})`);
-      $('#reportResults').css('display', 'flex');
-    }
   </script>
 </body>
 

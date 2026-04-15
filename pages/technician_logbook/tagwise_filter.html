@@ -66,10 +66,10 @@
 
           <!-- Action Buttons (Standardized to jt-filter-btn) -->
           <div class="jt-filter-btn">
-            <button type="button" class="jt-btn-primary" onclick="showReport()">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filter">
               <i class="ph-bold ph-lightning"></i> APPLY
             </button>
-            <button type="button" class="jt-btn-reset" onclick="resetView()">
+            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
               Reset
             </button>
           </div>
@@ -451,21 +451,24 @@
   </main>
 
   <script>
-    function showReport() {
-      const tagValue = document.getElementById('tagInput').value;
-      if (!tagValue) return;
+    $(document).ready(function () {
+      const showReport = () => {
+        const tagValue = $('#tagInput').val();
+        if (!tagValue) return;
 
-      document.getElementById('displayTag').innerText = tagValue.toUpperCase();
+        // Show the results section with smooth fade
+        $('#report-container').stop().hide().fadeIn(300);
+      };
 
-      // Show the results section
-      const reportContainer = document.getElementById('report-container');
-      reportContainer.style.display = 'block';
-    }
+      const resetView = () => {
+        $('#tagInput').val('');
+        $('#report-container').fadeOut(200);
+      };
 
-    function resetView() {
-      document.getElementById('tagInput').value = '';
-      document.getElementById('report-container').style.display = 'none';
-    }
+      // Event Listeners
+      $('#btn-apply-filter').on('click', showReport);
+      $('#btn-reset-filter').on('click', resetView);
+    });
   </script>
 </body>
 

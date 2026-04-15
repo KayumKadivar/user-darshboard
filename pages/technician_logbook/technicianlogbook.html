@@ -234,7 +234,7 @@
       <div class="quick-access-grid">
 
         <!-- Card 1 -->
-        <button onclick="window.location.href='shift_logbook.html?view=today'" class="ui-card ui-card--interactive qa-card qa-blue">
+        <button id="qa-today" class="ui-card ui-card--interactive qa-card qa-blue">
 
           <div class="qa-icon-box">
             <i class="ph-fill ph-calendar-check"></i>
@@ -249,7 +249,7 @@
         </button>
 
         <!-- Card 2 -->
-        <button onclick="window.location.href='shift_logbook.html?view=prev'" class="ui-card ui-card--interactive qa-card qa-teal">
+        <button id="qa-prev" class="ui-card ui-card--interactive qa-card qa-teal">
 
           <div class="qa-icon-box">
             <i class="ph-fill ph-clock-counter-clockwise"></i>
@@ -264,7 +264,7 @@
         </button>
 
         <!-- Card 3 -->
-        <button onclick="window.location.href='shift_logbook.html?view=weekly'" class="ui-card ui-card--interactive qa-card qa-purple">
+        <button id="qa-weekly" class="ui-card ui-card--interactive qa-card qa-purple">
 
           <div class="qa-icon-box">
             <i class="ph-fill ph-calendar-plus"></i>
@@ -279,7 +279,7 @@
         </button>
 
         <!-- Card 4 -->
-        <button onclick="window.location.href='shift_logbook.html?view=monthly'" class="ui-card ui-card--interactive qa-card qa-green">
+        <button id="qa-monthly" class="ui-card ui-card--interactive qa-card qa-green">
 
           <div class="qa-icon-box">
             <i class="ph-fill ph-calendar"></i>
@@ -338,6 +338,12 @@
         });
         $("#total-count").text($cards.length);
       }
+
+      // Event Listeners for Quick Access
+      $('#qa-today').on('click', () => window.location.href = 'shift_logbook.html?view=today');
+      $('#qa-prev').on('click', () => window.location.href = 'shift_logbook.html?view=prev');
+      $('#qa-weekly').on('click', () => window.location.href = 'shift_logbook.html?view=weekly');
+      $('#qa-monthly').on('click', () => window.location.href = 'shift_logbook.html?view=monthly');
 
       // Initial render
       setSelectedView(selectedView, false);

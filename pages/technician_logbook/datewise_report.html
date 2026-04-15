@@ -263,48 +263,52 @@
 
   <script>
     $(document).ready(function () {
-      $('#startDateFilter');
-      $('#endDateFilter');
+      /** ── Global functions for onclick handlers ── */
+      window.generateReport = function () {
+        const start = $('#startDateFilter').val();
+        const end = $('#endDateFilter').val();
 
-      // Open date picker on click/focus
-      $('.jt-date-input').on('click focus', function () {
+        if (!start || !end) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Dates Required',
+            text: 'Please select both start and end dates to generate the report.',
+            confirmButtonColor: '#3b82f6',
+            background: '#1e293b',
+            color: '#ffffff'
+          });
+          return;
+        }
+
+        // Format for display (DD/MM/YYYY)
+        const formatDate = (dateStr) => {
+          const d = new Date(dateStr);
+          return d.toLocaleDateString('en-GB');
+        };
+
+        $('#dateDisplay').text(`${formatDate(start)} to ${formatDate(end)}`);
+
+        // Show table with smooth fade
+        $('.jt-table-card').stop().hide().fadeIn(400);
+      };
+
+      window.resetReport = function () {
+        $('#startDateFilter, #endDateFilter, #tagNoFilter').val("");
+        $('.jt-table-card').fadeOut(200);
+      };
+
+      // Date picker trigger for all date inputs
+      $(document).on('click focus', '.jt-date-input', function () {
         if (typeof this.showPicker === 'function') {
           try { this.showPicker(); } catch (e) { }
         }
       });
-    });
-
-    function generateReport() {
-      const start = $('#startDateFilter').val();
-      const end = $('#endDateFilter').val();
-
-      if (!start || !end) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Date Required',
-          text: 'Please select both start and end dates to generate the report.',
-          confirmButtonColor: 'var(--brand-primary)'
-        });
-        return;
+      
+      // Auto-trigger if dates are already present (e.g. on back navigation)
+      if ($('#startDateFilter').val() && $('#endDateFilter').val()) {
+          generateReport();
       }
-
-      // Format for display (DD/MM/YYYY)
-      const formatDate = (dateStr) => {
-        const d = new Date(dateStr);
-        return d.toLocaleDateString('en-GB');
-      };
-
-      $('#dateDisplay').text(`${formatDate(start)} to ${formatDate(end)}`);
-
-      // Show with animation
-      $('.jt-table-card').stop().hide().fadeIn(400);
-    }
-
-    function resetReport() {
-      $('#startDateFilter').val("");
-      $('#endDateFilter').val("");
-      $('.jt-table-card').fadeOut(200);
-    }
+    });
   </script>
 </body>
 

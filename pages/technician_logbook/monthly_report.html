@@ -209,21 +209,26 @@
 
   <script>
     $(document).ready(function () {
-      // Open date picker on click/focus
-      $('.jt-date-input').on('click focus', function () {
+      /** ── Global functions for onclick handlers ── */
+      window.generateReport = function () {
+        const $content = $('#report-content');
+        
+        // Simulation of report generation with animation
+        $content.stop().animate({ opacity: 0.4 }, 200, function() {
+            // Simulated delay for "processing"
+            setTimeout(() => {
+                $content.animate({ opacity: 1 }, 300);
+            }, 100);
+        });
+      };
+
+      // Date picker trigger using jQuery delegation
+      $(document).on('click focus', '.jt-date-input', function () {
         if (typeof this.showPicker === 'function') {
           try { this.showPicker(); } catch (e) { }
         }
       });
     });
-
-    function generateReport() {
-      const content = document.getElementById('report-content');
-      content.style.opacity = '0.4';
-      setTimeout(() => {
-        content.style.opacity = '1';
-      }, 400);
-    }
   </script>
 </body>
 

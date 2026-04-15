@@ -57,13 +57,13 @@
           </div>
           <!-- Year Selector with Change Icons -->
           <div class="jt-year-selector">
-            <button type="button" class="jt-year-nav-btn" title="Previous Year" onclick="changeYear(-1)">
+            <button type="button" class="jt-year-nav-btn" id="btn-prev-year" title="Previous Year">
               <i class="ph-bold ph-caret-left"></i>
             </button>
             <div class="jt-year-display">
               Year: <span id="active-year">2025</span>
             </div>
-            <button type="button" class="jt-year-nav-btn" title="Next Year" onclick="changeYear(1)">
+            <button type="button" class="jt-year-nav-btn" id="btn-next-year" title="Next Year">
               <i class="ph-bold ph-caret-right"></i>
             </button>
           </div>
@@ -275,29 +275,33 @@
   </main>
 
   <script>
-    let currentYear = 2025;
-    const years = [2025, 2024, 2023];
-
-    function changeYear(delta) {
-      // Find current index
-      let index = years.indexOf(currentYear);
-      index = index + delta;
-
-      // Boundary check
-      if (index < 0) index = years.length - 1;
-      if (index >= years.length) index = 0;
-
-      currentYear = years[index];
-
-      // Update UI
-      document.getElementById('active-year').innerText = currentYear;
-
-      // Filter rows
-      $('.year-group-2025, .year-group-2024, .year-group-2023').hide();
-      $(`.year-group-${currentYear}`).fadeIn(200);
-    }
-
     $(document).ready(function () {
+      let currentYear = 2025;
+      const years = [2025, 2024, 2023];
+
+      const changeYear = (delta) => {
+        // Find current index
+        let index = years.indexOf(currentYear);
+        index = index + delta;
+
+        // Boundary check (circular nav)
+        if (index < 0) index = years.length - 1;
+        if (index >= years.length) index = 0;
+
+        currentYear = years[index];
+
+        // Update UI
+        $('#active-year').text(currentYear);
+
+        // Filter rows with smooth transition
+        $('[class*="year-group-"]').stop().hide();
+        $(`.year-group-${currentYear}`).fadeIn(200);
+      };
+
+      // Event Listeners
+      $('#btn-prev-year').on('click', () => changeYear(-1));
+      $('#btn-next-year').on('click', () => changeYear(1));
+
       // Initially show only current year
       changeYear(0);
     });

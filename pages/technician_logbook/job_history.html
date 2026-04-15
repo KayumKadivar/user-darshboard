@@ -61,11 +61,15 @@
             <button type="button" class="jt-btn-primary" onclick="openAddJobModal()">
               <i class="ph-bold ph-plus"></i> ADD JOB
             </button>
-            <div class="flex gap-1 ml-4 items-center">
-              <button type="button" id="filter-btn-default" class="jh-date-btn" onclick="setDateFilter('default')">Default Date</button>
-              <button type="button" id="filter-btn-prev"    class="jh-date-btn" onclick="setDateFilter('prev')">Prev Year</button>
-              <button type="button" id="filter-btn-this"    class="jh-date-btn" onclick="setDateFilter('this')">This Year</button>
-              <button type="button" id="filter-btn-next"    class="jh-date-btn" onclick="setDateFilter('next')">Next Year</button>
+            <div class="flex gap-10px ml-10px items-center">
+              <button type="button" id="filter-btn-default" class="jh-date-btn"
+                onclick="setDateFilter('default')">Default Date</button>
+              <button type="button" id="filter-btn-prev" class="jh-date-btn" onclick="setDateFilter('prev')">Prev
+                Year</button>
+              <button type="button" id="filter-btn-this" class="jh-date-btn" onclick="setDateFilter('this')">This
+                Year</button>
+              <button type="button" id="filter-btn-next" class="jh-date-btn" onclick="setDateFilter('next')">Next
+                Year</button>
             </div>
           </div>
         </div>
@@ -167,23 +171,23 @@
           <div class="jt-filter-group col-span-1">
             <label class="jt-filter-label">Filter Options</label>
             <div class="jh-checkbox-group flex gap-16px items-center" style="height: 34px;">
-              <label class="jh-checkbox-item flex items-center gap-8px cursor-pointer" style="color: var(--typo-primary); font-size: 13px;">
+              <label class="jh-checkbox-item flex items-center gap-8px cursor-pointer">
                 <input type="checkbox" id="filter-remark">
                 <span>Remark Only</span>
               </label>
-              <label class="jh-checkbox-item" style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--typo-primary); font-size: 13px;">
+              <label class="jh-checkbox-item flex items-center gap-8px cursor-pointer">
                 <input type="checkbox" id="filter-attach">
                 <span>Attachments</span>
               </label>
             </div>
           </div>
 
-          <div class="jt-filter-group col-span-3 flex justify-end items-end gap-12px">
+          <div class="jt-filter-btn">
             <button class="jt-btn-primary" onclick="renderTable()">
               <i class="ph-bold ph-lightning"></i> APPLY
             </button>
             <button class="jt-btn-reset" onclick="resetFilters()">
-              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+              Reset
             </button>
           </div>
 
@@ -225,7 +229,380 @@
                 <th style="min-width:200px;">Exec Remark</th>
               </tr>
             </thead>
-            <tbody id="jobTableBody"></tbody>
+            <tbody id="jobTableBody">
+              <!-- Row 1 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                <td class="user-table-center user-table-bold user-table-primary">400</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">0208</div>
+                    <div class="user-table-blue user-table-bold font-14px">FV0208B</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">13/01/2026</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: C/V is not closing during pressurized (in line condition).<br>Job Done: ignore this entry.
+                  (CMS Incharge: MAJ)
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 2 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                <td class="user-table-center user-table-bold user-table-primary">400</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">0208</div>
+                    <div class="user-table-blue user-table-bold font-14px">FV0208B</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">09/01/2026</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: C/V is not closing during pressurized (in line condition).<br>Job Done: (CMS Incharge: MAJ)
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 3 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                <td class="user-table-center user-table-bold user-table-primary">200</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">0216</div>
+                    <div class="user-table-blue user-table-bold font-14px">FV0216A</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">13/12/2025</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: LV0203AA control sent to micron for its body to be used in FV0216A.<br>Job Done: (CMS
+                  Incharge: MAJ)
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 4 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">4</td>
+                <td class="user-table-center user-table-bold user-table-primary">200</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">0216</div>
+                    <div class="user-table-blue user-table-bold font-14px">FV0216A</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">13/12/2025</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: LV0203AA control sent to micron for its body to be used in FV0216A.<br>Job Done: Wrong entry.
+                  ignore this entry. (CMS Incharge: MAJ)
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 5 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">5</td>
+                <td class="user-table-center user-table-bold user-table-primary">300</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">0301</div>
+                    <div class="user-table-blue user-table-bold font-14px">FV301A</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">15/11/2025</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: DROPPED FOR HEAVY VIBRATION IN VALVE. PLUG+STEM IS BROKEN.<br>Job Done: Valve was sent to
+                  Micron. After dismantling, body and bonnet were damaged and repaired. Plug, stem and metal seat ring
+                  were replaced.
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><i class="ph-bold ph-paperclip jh-attach-icon"></i></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">URGENT REQUIREMENT</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 6 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">6</td>
+                <td class="user-table-center user-table-bold user-table-primary">300</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">3101</div>
+                    <div class="user-table-blue user-table-bold font-14px">FV3101A</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">15/11/2025</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: C/V Passing and jerky operation.<br>Job Done: *Late job entry* Valve sent to Micron due to
+                  passing and jerking. Metal seat ring and Soft seat (PTFE) replaced. Valve tested and found ok.
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 7 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">7</td>
+                <td class="user-table-center user-table-bold user-table-primary">600</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">0606</div>
+                    <div class="user-table-blue user-table-bold font-14px">FV606</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">13/11/2025</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: FV606 act dropped for overhauling.<br>Job Done: Actuator sent to Micron due to passing.
+                  Replaced seal kit, rework of stem, actuator casing bolt SS M6 18 nos., Rework of body by Drilling,
+                  tapping.
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 8 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">8</td>
+                <td class="user-table-center user-table-bold user-table-primary">700</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">0710</div>
+                    <div class="user-table-blue user-table-bold font-14px">HV710</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">13/11/2025</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: Control valve Passing 1X2500<br>Job Done: Valve sent to Micron. After dismantling, body,
+                  bonnet, stem, plug and metal seat ring were damaged and repaired. Machining carried out.
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 9 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">9</td>
+                <td class="user-table-center user-table-bold user-table-primary">700</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">7508</div>
+                    <div class="user-table-blue user-table-bold font-14px">HV7508</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">13/11/2025</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: Control valve passing 2X600<br>Job Done: Valve sent to Micron due to passing. After
+                  inspection, body, bonnet, plug and metal seat ring damaged and repaired.
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 10 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">10</td>
+                <td class="user-table-center user-table-bold user-table-primary">200</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary user-table-bold">0203</div>
+                    <div class="user-table-blue user-table-bold font-14px">FV0203BA</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">C/V</div>
+                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-secondary">13/11/2025</td>
+                <td class="user-table-primary font-14px" style="line-height:1.6;">
+                  Defect: C/V having noise below 70% MV.<br>Job Done: Valve sent to Micron due to passing. After
+                  inspection, plug was damaged and repaired. Machining of plug along with lapping work, Bottom bushing
+                  and new key replaced.
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <div class="user-table-bold user-table-secondary">-</div>
+                    <div class="user-table-secondary">MAJ</div>
+                  </div>
+                </td>
+                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-secondary"
+                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
+                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
 
@@ -235,40 +612,62 @@
     </section>
   </main>
 
-
-  <!-- ══════════════════════════════════
-       JOB DETAIL MODAL
-       ══════════════════════════════════ -->
-  <div id="job-detail-overlay" class="gnfc-modal-overlay" aria-hidden="true">
+  <!-- ── JOB DETAIL/ADD MODAL ── -->
+  <div id="job-modal-overlay" class="gnfc-modal-overlay" aria-hidden="true">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
 
       <div class="gnfc-modal-header">
         <h3 id="job-modal-title" class="gnfc-modal-title">Job History Detail</h3>
-        <button type="button" onclick="closeJobDetailModal()" class="gnfc-modal-close" aria-label="Close">
+        <button type="button" onclick="closeJobModal()" class="gnfc-modal-close" aria-label="Close">
           <i class="ph-bold ph-x"></i>
         </button>
       </div>
 
       <div class="gnfc-modal-body">
+        <form id="job-management-form" class="modal-form-grid">
+          
+          <!-- Date -->
+          <div class="modal-form-item">
+            <label class="modal-form-label">Job Date</label>
+            <input type="date" class="jt-input" id="modal-date" name="date" required>
+          </div>
 
-        <!-- Row 1: Area, Inst Type, Loop, Tag -->
-        <div class="grid grid-cols-4 gap-16px">
-          <div>
-            <label class="gnfc-modal-label" for="modal-area">Area</label>
+          <!-- Area -->
+          <div class="modal-form-item">
+            <label class="modal-form-label">Area / Plant</label>
             <div class="jt-select-wrap">
-              <select id="modal-area" class="gnfc-modal-input">
-                <option value="400">400</option>
+              <select class="jt-select" id="modal-area" name="area">
+                <option value="100">100</option>
                 <option value="200">200</option>
                 <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
                 <option value="600">600</option>
                 <option value="700">700</option>
+                <option value="800">800</option>
+                <option value="ASH">ASH</option>
               </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
             </div>
           </div>
-          <div>
-            <label class="gnfc-modal-label" for="modal-insttype">Type of Inst</label>
+
+          <!-- Loop -->
+          <div class="modal-form-item">
+            <label class="modal-form-label">Loop Number</label>
+            <input type="text" class="jt-input" id="modal-loop" name="loop" placeholder="e.g. 0208">
+          </div>
+
+          <!-- Tag -->
+          <div class="modal-form-item">
+            <label class="modal-form-label">Tag Number</label>
+            <input type="text" class="jt-input" id="modal-tag" name="tag" placeholder="e.g. FV0208B">
+          </div>
+
+          <!-- Instrument Type -->
+          <div class="modal-form-item">
+            <label class="modal-form-label">Instrument Type</label>
             <div class="jt-select-wrap">
-              <select id="modal-insttype" class="gnfc-modal-input">
+              <select class="jt-select" id="modal-inst-type" name="inst_type">
                 <option>ANALYZER</option>
                 <option>C/V</option>
                 <option>TX</option>
@@ -283,660 +682,223 @@
                 <option>PC</option>
                 <option>N.A.</option>
               </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
             </div>
           </div>
-          <div>
-            <label class="gnfc-modal-label" for="modal-loop">Loop No</label>
-            <input type="text" id="modal-loop" class="gnfc-modal-input" placeholder="e.g. 0208">
-          </div>
-          <div>
-            <label class="gnfc-modal-label" for="modal-tag">Tag No</label>
-            <input type="text" id="modal-tag" class="gnfc-modal-input" placeholder="e.g. FV0208B">
-          </div>
-        </div>
 
-        <!-- Description -->
-        <div class="mt-16px">
-          <label class="gnfc-modal-label" for="modal-description">Description of Job</label>
-          <textarea id="modal-description" rows="5" class="gnfc-modal-input" placeholder="Enter full job details..."></textarea>
-        </div>
-
-        <!-- Row 2: Date, Tech, Job Type, Eng -->
-        <div class="grid grid-cols-4 gap-16px mt-16px">
-          <div>
-            <label class="gnfc-modal-label" for="modal-date">Date</label>
-            <input type="date" id="modal-date" class="gnfc-modal-input">
-          </div>
-          <div>
-            <label class="gnfc-modal-label" for="modal-tech">Tech</label>
-            <input type="text" id="modal-tech" class="gnfc-modal-input" placeholder="Assignee">
-          </div>
-          <div>
-            <label class="gnfc-modal-label" for="modal-jobtype">Type of Job</label>
+          <!-- Job Type -->
+          <div class="modal-form-item">
+            <label class="modal-form-label">Job Type</label>
             <div class="jt-select-wrap">
-              <select id="modal-jobtype" class="gnfc-modal-input">
+              <select class="jt-select" id="modal-job-type" name="job_type">
                 <option>PM</option>
-                <option>DOCUMENTATION</option>
-                <option>HOUSE KEEPING</option>
+                <option>CMS JOB</option>
+                <option>DEFECT MAINTENANCE</option>
                 <option>ABNORMALITY</option>
                 <option>MODIFICATION</option>
-                <option>ISO14001</option>
                 <option>FIELD JOB</option>
                 <option>REVAMP</option>
-                <option>DEFECT MAINTENANCE</option>
-                <option>CONFIGURATION</option>
-                <option>SPARE REPAIR</option>
-                <option>SCRAP</option>
-                <option>MATL RETURN</option>
-                <option>RANGE CHANGE</option>
-                <option>CARD FAILURE</option>
-                <option>INST FAILURE</option>
                 <option>INSPECTION</option>
-                <option>CASH PURCHASE</option>
-                <option>PROCESS REQMT</option>
+                <option>DOCUMENTATION</option>
                 <option>N.A.</option>
               </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
             </div>
           </div>
-          <div>
-            <label class="gnfc-modal-label" for="modal-eng">Eng</label>
-            <select id="modal-eng" class="gnfc-modal-input">
-              <option>MAJ</option>
-              <option>CKV</option>
-              <option>MDM</option>
-            </select>
+
+          <!-- Technician -->
+          <div class="modal-form-item">
+            <label class="modal-form-label">Technician (In-charge)</label>
+            <input type="text" class="jt-input" id="modal-tech" name="tech" placeholder="e.g. MAJ">
           </div>
-        </div>
 
-        <!-- Attachments -->
-        <div class="mt-16px">
-          <label class="gnfc-modal-label">Attachments</label>
-          <div class="grid grid-cols-2 gap-16px">
-
-            <!-- Attach 1 -->
-            <div>
-              <div id="attach-card-1" class="jh-attach-card" onclick="openAttachmentModal(1)">
-                <div class="jh-attach-card-icon">
-                  <i class="ph-fill ph-file-text"></i>
-                </div>
-                <div class="jh-attach-card-info">
-                  <span class="jh-attach-card-label">Attach 1</span>
-                  <span id="display-attach-1" class="jh-attach-card-name">-</span>
-                </div>
-                <i class="ph-bold ph-upload-simple jh-attach-card-upload"></i>
-              </div>
-              <div id="attach-msg-1" class="jh-attach-msg">
-                <span class="jh-attach-msg-label">Attach 1</span>
-                <span class="jh-attach-msg-text">Can be attached in edit mode</span>
-              </div>
-            </div>
-
-            <!-- Attach 2 -->
-            <div>
-              <div id="attach-card-2" class="jh-attach-card" onclick="openAttachmentModal(2)">
-                <div class="jh-attach-card-icon">
-                  <i class="ph-fill ph-file-text"></i>
-                </div>
-                <div class="jh-attach-card-info">
-                  <span class="jh-attach-card-label">Attach 2</span>
-                  <span id="display-attach-2" class="jh-attach-card-name">-</span>
-                </div>
-                <i class="ph-bold ph-upload-simple jh-attach-card-upload"></i>
-              </div>
-              <div id="attach-msg-2" class="jh-attach-msg">
-                <span class="jh-attach-msg-label">Attach 2</span>
-                <span class="jh-attach-msg-text">Can be attached in edit mode</span>
-              </div>
-            </div>
-
+          <!-- Engineer -->
+          <div class="modal-form-item">
+            <label class="modal-form-label">Engineer Name</label>
+            <input type="text" class="jt-input" id="modal-eng" name="eng" placeholder="e.g. ARP">
           </div>
-        </div>
 
-        <!-- Remarks -->
-        <div class="grid grid-cols-2 gap-16px mt-16px">
-          <div>
-            <label class="gnfc-modal-label" for="modal-eng-remark">Engineer's Remark</label>
-            <textarea id="modal-eng-remark" rows="3" class="gnfc-modal-input"></textarea>
+          <!-- Job Description -->
+          <div class="modal-form-item modal-form-full">
+            <label class="modal-form-label">Description of Job</label>
+            <textarea class="jt-input" id="modal-desc" name="desc" rows="3" placeholder="Enter detailed job description..."></textarea>
           </div>
-          <div>
-            <label class="gnfc-modal-label" for="modal-exec-remark">Executive Remark</label>
-            <textarea id="modal-exec-remark" rows="3" class="gnfc-modal-input"></textarea>
+
+          <!-- Remarks -->
+          <div class="modal-form-item modal-form-full">
+            <label class="modal-form-label">Engineer / Execution Remarks</label>
+            <textarea class="jt-input" id="modal-remarks" name="remarks" rows="2" placeholder="Any additional notes..."></textarea>
           </div>
-        </div>
 
-      </div>
-
-      <div class="gnfc-modal-footer gnfc-modal-footer--space-between">
-        <button type="button" id="modal-delete-btn" onclick="deleteJob()" class="gnfc-modal-btn gnfc-modal-btn-danger">Delete Entry</button>
-        <div class="flex gap-12px ml-auto">
-          <button type="button" onclick="closeJobDetailModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
-          <button type="button" id="modal-save-btn" onclick="saveJobDetails()" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Changes</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <!-- ══════════════════════════════════
-       ATTACHMENT UPLOAD MODAL
-       ══════════════════════════════════ -->
-  <div id="attachment-modal" class="gnfc-modal-overlay" aria-hidden="true" style="z-index: 140;">
-    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
-
-      <div class="gnfc-modal-header">
-        <div>
-          <h3 class="gnfc-modal-title">Upload Attachment</h3>
-          <p class="gnfc-modal-subtitle">Add supporting documents</p>
-        </div>
-        <button type="button" onclick="closeAttachmentModal()" class="gnfc-modal-close" aria-label="Close">
-          <i class="ph-bold ph-x"></i>
-        </button>
-      </div>
-
-      <div class="gnfc-modal-body flex flex-col gap-16px">
-
-        <!-- Upload zone -->
-        <div class="jh-upload-zone" id="upload-zone">
-          <input type="file" id="upload-file-input" onchange="handleFileSelect(this)">
-          <div class="jh-upload-icon">
-            <i class="ph-duotone ph-cloud-arrow-up"></i>
-          </div>
-          <p class="jh-upload-zone-text">Click to upload or drag and drop</p>
-          <p class="jh-upload-zone-hint">Upload pdf file (max. 10MB)</p>
-        </div>
-
-        <!-- File preview (shown after selection) -->
-        <div id="file-preview" class="jh-file-preview">
-          <div class="jh-file-preview-icon">
-            <i class="ph-fill ph-file-text"></i>
-          </div>
-          <div class="jh-file-preview-info">
-            <div id="preview-filename" class="jh-file-preview-name">filename.pdf</div>
-            <div id="preview-filesize" class="jh-file-preview-size">0 KB</div>
-          </div>
-          <button type="button" onclick="clearFileSelection()" class="jh-file-preview-clear">
-            <i class="ph-bold ph-trash"></i>
-          </button>
-        </div>
-
+        </form>
       </div>
 
       <div class="gnfc-modal-footer">
-        <button type="button" onclick="closeAttachmentModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
-        <button type="button" onclick="saveAttachment()" class="gnfc-modal-btn gnfc-modal-btn-primary">Save File</button>
+        <button type="button" onclick="closeJobModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+        <button type="button" onclick="saveJob()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+          <i class="ph-bold ph-check"></i> Save Record
+        </button>
       </div>
 
     </div>
   </div>
-  <!-- /ATTACHMENT MODAL -->
 
-
-  <!-- ══════════════════════════════════
-       PAGE SCRIPTS — no map / forEach
-       ══════════════════════════════════ -->
+  <!-- ── PAGE SCRIPTS (jQuery Version) ── -->
   <script>
-    /* ── Static data ── */
-    var jobData = [
-      { sr: 1,  area: '400', loop: '0208', tag: 'FV0208B', instType: 'C/V', jobType: 'CMS JOB', date: '2026-01-13', desc: 'Defect: C/V is not closing during pressurized (in line condition).\nJob Done: ignore this entry. (CMS Incharge: MAJ)', tech: '', eng: 'MAJ', attach: false, remark: '', execRemark: '' },
-      { sr: 2,  area: '400', loop: '0208', tag: 'FV0208B', instType: 'C/V', jobType: 'CMS JOB', date: '2026-01-09', desc: 'Defect: C/V is not closing during pressurized (in line condition).\nJob Done: (CMS Incharge: MAJ)', tech: '', eng: 'MAJ', attach: false, remark: '', execRemark: '' },
-      { sr: 3,  area: '200', loop: '0216', tag: 'FV0216A', instType: 'C/V', jobType: 'CMS JOB', date: '2025-12-13', desc: 'Defect: LV0203AA control sent to micron for its body to be used in FV0216A.\nJob Done: (CMS Incharge: MAJ)', tech: '', eng: 'MAJ', attach: false, remark: '', execRemark: '' },
-      { sr: 4,  area: '200', loop: '0216', tag: 'FV0216A', instType: 'C/V', jobType: 'CMS JOB', date: '2025-12-13', desc: 'Defect: LV0203AA control sent to micron for its body to be used in FV0216A.\nJob Done: Wrong entry. ignore this entry. (CMS Incharge: MAJ)', tech: '', eng: 'MAJ', attach: false, remark: '', execRemark: '' },
-      { sr: 5,  area: '300', loop: '0301', tag: 'FV301A',  instType: 'C/V', jobType: 'CMS JOB', date: '2025-11-15', desc: 'Defect: DROPPED FOR HEAVY VIBRATION IN VALVE. PLUG+STEM IS BROKEN.\nJob Done: Valve was sent to Micron. After dismantling, body and bonnet were damaged and repaired. Plug, stem and metal seat ring were replaced.', tech: '', eng: 'MAJ', attach: true, remark: 'URGENT REQUIREMENT', execRemark: '' },
-      { sr: 6,  area: '300', loop: '3101', tag: 'FV3101A', instType: 'C/V', jobType: 'CMS JOB', date: '2025-11-15', desc: 'Defect: C/V Passing and jerky operation.\nJob Done: *Late job entry* Valve sent to Micron due to passing and jerking. Metal seat ring and Soft seat (PTFE) replaced. Valve tested and found ok.', tech: '', eng: 'MAJ', attach: false, remark: '', execRemark: '' },
-      { sr: 7,  area: '600', loop: '0606', tag: 'FV606',   instType: 'C/V', jobType: 'CMS JOB', date: '2025-11-13', desc: 'Defect: FV606 act dropped for overhauling.\nJob Done: Actuator sent to Micron due to passing. Replaced seal kit, rework of stem, actuator casing bolt SS M6 18 nos., Rework of body by Drilling, tapping.', tech: '', eng: 'MAJ', attach: false, remark: '', execRemark: '' },
-      { sr: 8,  area: '700', loop: '0710', tag: 'HV710',   instType: 'C/V', jobType: 'CMS JOB', date: '2025-11-13', desc: 'Defect: Control valve Passing 1X2500\nJob Done: Valve sent to Micron. After dismantling, body, bonnet, stem, plug and metal seat ring were damaged and repaired. Machining carried out.', tech: '', eng: 'MAJ', attach: false, remark: '', execRemark: '' },
-      { sr: 9,  area: '700', loop: '7508', tag: 'HV7508',  instType: 'C/V', jobType: 'CMS JOB', date: '2025-11-13', desc: 'Defect: Control valve passing 2X600\nJob Done: Valve sent to Micron due to passing. After inspection, body, bonnet, plug and metal seat ring damaged and repaired.', tech: '', eng: 'MAJ', attach: false, remark: '', execRemark: '' },
-      { sr: 10, area: '200', loop: '0203', tag: 'FV0203BA',instType: 'C/V', jobType: 'CMS JOB', date: '2025-11-13', desc: 'Defect: C/V having noise below 70% MV.\nJob Done: Valve sent to Micron due to passing. After inspection, plug was damaged and repaired. Machining of plug along with lapping work, Bottom bushing and new key replaced.', tech: '', eng: 'MAJ', attach: false, remark: '', execRemark: '' }
-    ];
-
-    /* ── Load exported records from localStorage (no forEach) ── */
-    try {
-      var exported = JSON.parse(localStorage.getItem('gnfc_job_history') || '[]');
-      for (var ei = 0; ei < exported.length; ei++) {
-        var rec = exported[ei];
-        jobData.push({
-          sr:         jobData.length + 1,
-          area:       rec.area     || '',
-          loop:       rec.loop     || '',
-          tag:        rec.tag      || rec.instTag || '',
-          instType:   rec.instType || '',
-          jobType:    rec.jobType  || '',
-          date:       rec.date     || '',
-          desc:       rec.desc     || '',
-          tech:       rec.tech     || '',
-          eng:        rec.eng      || '',
-          attach:     false,
-          remark:     '<span class="jh-export-tag">' + (rec.type === 'system' ? 'System' : 'General') + '</span>',
-          execRemark: '',
-          isExported: true
+    $(document).ready(function () {
+      // Initialize DataTable
+      const $tableEl = $('#jh-main-table');
+      if (typeof simpleDatatables !== 'undefined' && $tableEl.length) {
+        new simpleDatatables.DataTable($tableEl[0], {
+          perPage: 10,
+          perPageSelect: [10, 25, 50, 100],
+          searchable: true,
+          fixedHeight: false
         });
       }
-    } catch (e) {}
 
-      /* Tag select - unique tags (no map) */
-      var tagSelect  = document.getElementById('tagSelect');
-      if (tagSelect) {
-        tagSelect.innerHTML = '<option value="">ALL</option>';
-        var tagsSeen   = {};
-        for (var ti = 0; ti < jobData.length; ti++) {
-          var tg = jobData[ti].tag;
-          if (tg && !tagsSeen[tg]) {
-            tagsSeen[tg] = true;
-            var topt = document.createElement('option');
-            topt.value       = tg;
-            topt.textContent = tg;
-            tagSelect.appendChild(topt);
-          }
+      // Backdrop click to close modal
+      $('#job-modal-overlay').on('click', function (e) {
+        if ($(e.target).is('#job-modal-overlay')) closeJobModal();
+      });
+
+      // Date picker polyfill trigger for dynamically added or existing inputs
+      $(document).on('click focus', '.jt-date-input, #modal-date', function () {
+        if (typeof this.showPicker === 'function') {
+          try { this.showPicker(); } catch (e) { }
         }
-      }
+      });
 
-    /* ── Date quick-filter ── */
-    function setDateFilter(type) {
-      var today       = new Date();
-      var curYear     = today.getFullYear();
-      var startDate, endDate;
+      // Delegate row clicks for Detail View (SR and Description columns)
+      $(document).on('click', '.user-table-row td:nth-child(1), .user-table-row td:nth-child(6)', function () {
+        openJobDetailModal($(this));
+      });
+    });
 
-      function fmt(d) {
-        var dd = String(d.getDate()).padStart(2, '0');
-        var mm = String(d.getMonth() + 1).padStart(2, '0');
-        return d.getFullYear() + '-' + mm + '-' + dd;
-      }
+    /** ── Date filter logic (jQuery) ── */
+    window.setDateFilter = function (type) {
+      const today = new Date();
+      const curYear = today.getFullYear();
+      let startDate, endDate;
+
+      const fmt = (d) => {
+        const dd = String(d.getDate()).padStart(2, '0');
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        return `${d.getFullYear()}-${mm}-${dd}`;
+      };
 
       if (type === 'default') {
-        endDate   = new Date();
+        endDate = new Date();
         startDate = new Date();
         startDate.setFullYear(startDate.getFullYear() - 1);
       } else if (type === 'prev') {
         startDate = new Date(curYear - 1, 0, 1);
-        endDate   = new Date(curYear - 1, 11, 31);
+        endDate = new Date(curYear - 1, 11, 31);
       } else if (type === 'this') {
         startDate = new Date(curYear, 0, 1);
-        endDate   = new Date(curYear, 11, 31);
+        endDate = new Date(curYear, 11, 31);
       } else if (type === 'next') {
         startDate = new Date(curYear + 1, 0, 1);
-        endDate   = new Date(curYear + 1, 11, 31);
+        endDate = new Date(curYear + 1, 11, 31);
       }
 
       if (startDate && endDate) {
-        document.getElementById('filter-start-date').value = fmt(startDate);
-        document.getElementById('filter-end-date').value   = fmt(endDate);
+        $('#filter-start-date').val(fmt(startDate));
+        $('#filter-end-date').val(fmt(endDate));
       }
 
-      var btnIds = ['default', 'prev', 'this', 'next'];
-      for (var bi = 0; bi < btnIds.length; bi++) {
-        var btn = document.getElementById('filter-btn-' + btnIds[bi]);
-        if (btnIds[bi] === type) {
-          btn.classList.add('is-active');
-        } else {
-          btn.classList.remove('is-active');
-        }
-      }
-    }
+      // Update active state of buttons
+      $('.jh-date-btn').removeClass('is-active');
+      $(`#filter-btn-${type}`).addClass('is-active');
+    };
 
-    /* ── Format date for display ── */
-    function formatDateDisplay(isoDate) {
-      if (!isoDate) return '';
-      var d = new Date(isoDate);
-      var dd = String(d.getDate()).padStart(2, '0');
-      var mm = String(d.getMonth() + 1).padStart(2, '0');
-      return dd + '/' + mm + '/' + d.getFullYear();
-    }
+    /** ── Job Modal Management (jQuery) ── */
+    window.openAddJobModal = function () {
+      $('#job-modal-title').text('Add New Job Entry');
+      $('#job-management-form')[0].reset();
+      $('#modal-date').val(new Date().toISOString().split('T')[0]);
 
-    /* ── Get filtered data ── */
-    function getFilteredData() {
-      var tagFilter    = document.getElementById('tagSelect').value;
-      var jobTypeFilter = document.getElementById('filter-jobtype').value;
-      var instTypeFilter = document.getElementById('filter-insttype').value;
-      var startVal     = document.getElementById('filter-start-date').value;
-      var endVal       = document.getElementById('filter-end-date').value;
-      var remarkOnly   = document.getElementById('filter-remark').checked;
-      var attachOnly   = document.getElementById('filter-attach').checked;
+      $('#job-modal-overlay').addClass('is-open').attr('aria-hidden', 'false');
+    };
 
-      var result = [];
-      for (var i = 0; i < jobData.length; i++) {
-        var item = jobData[i];
-        var show = true;
+    window.openJobDetailModal = function ($el) {
+      const $row = $el.closest('tr');
+      if (!$row.length) return;
 
-        if (tagFilter     && item.tag      !== tagFilter)     show = false;
-        if (show && jobTypeFilter  && item.jobType  !== jobTypeFilter)  show = false;
-        if (show && instTypeFilter && item.instType !== instTypeFilter) show = false;
-        if (show && remarkOnly && !item.remark)  show = false;
-        if (show && attachOnly && !item.attach)  show = false;
+      const cells = $row[0].cells;
+      $('#job-modal-title').text('Job Detail (Read Only)');
 
-        if (show && (startVal || endVal)) {
-          var itemDate = new Date(item.date);
-          if (startVal) {
-            var start = new Date(startVal);
-            start.setHours(0, 0, 0, 0);
-            if (itemDate < start) show = false;
-          }
-          if (show && endVal) {
-            var end = new Date(endVal);
-            end.setHours(23, 59, 59, 999);
-            if (itemDate > end) show = false;
-          }
-        }
+      // Extract and format data from static row
+      $('#modal-date').val(convertToISODate($(cells[4]).text()));
+      $('#modal-area').val($(cells[1]).text().trim());
 
-        if (show) result.push(item);
-      }
-      return result;
-    }
+      const loopTag = $(cells[2]).text().split('\n');
+      $('#modal-loop').val(loopTag[0]?.trim() || '');
+      $('#modal-tag').val(loopTag[1]?.trim() || '');
 
-    /* ── DataTable instance ── */
-    var dataTable = null;
+      const instJob = $(cells[3]).text().split('\n');
+      $('#modal-inst-type').val(instJob[0]?.trim() || 'C/V');
+      $('#modal-job-type').val(instJob[1]?.trim() || 'PM');
 
-    /* ── Render table ── */
-    function renderTable() {
-      if (dataTable) {
-        dataTable.destroy();
-        dataTable = null;
-      }
+      $('#modal-desc').val($(cells[5]).text().trim());
 
-      var data  = getFilteredData();
-      var tbody = document.getElementById('jobTableBody');
-      tbody.innerHTML = '';
+      const techEng = $(cells[6]).text().split('\n');
+      $('#modal-tech').val(techEng[0]?.trim() || '');
+      $('#modal-eng').val(techEng[1]?.trim() || '');
 
-      for (var i = 0; i < data.length; i++) {
-        var item = data[i];
-        var descHtml = item.desc ? item.desc.replace(/\n/g, '<br>') : '--';
-        var row = '<tr class="user-table-row">' +
-          '<td class="user-table-center user-table-secondary user-table-bold" onclick="openJobDetailModal(' + item.sr + ')">' + item.sr + '</td>' +
-          '<td class="user-table-center user-table-bold user-table-primary">' + (item.area || '--') + '</td>' +
-          '<td>' +
-            '<div class="user-table-cell-stack">' +
-              '<div class="user-table-primary user-table-bold">' + (item.loop || '--') + '</div>' +
-              '<div class="user-table-blue user-table-bold font-14px" >' + (item.tag  || '--') + '</div>' +
-            '</div>' +
-          '</td>' +
-          '<td>' +
-            '<div class="user-table-cell-stack">' +
-              '<div class="user-table-primary">' + (item.instType || '--') + '</div>' +
-              '<div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">' + (item.jobType  || '--') + '</div>' +
-            '</div>' +
-          '</td>' +
-          '<td class="user-table-center user-table-secondary">' + formatDateDisplay(item.date) + '</td>' +
-          '<td class="user-table-primary font-14px" style="line-height:1.6;" onclick="openJobDetailModal(' + item.sr + ')">' + descHtml + '</td>' +
-          '<td>' +
-            '<div class="user-table-cell-stack user-table-center">' +
-              '<div class="user-table-bold user-table-secondary">' + (item.tech || '-') + '</div>' +
-              '<div class="user-table-secondary" >' + (item.eng  || '-') + '</div>' +
-            '</div>' +
-          '</td>' +
-          '<td class="user-table-center">' +
-            (item.attach
-              ? '<i class="ph-bold ph-paperclip jh-attach-icon"></i>'
-              : '<span class="user-table-secondary">-</span>') +
-          '</td>' +
-          '<td>' +
-            '<div class="user-table-cell-stack">' +
-              '<div class="user-table-secondary" style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">'  + (item.remark     || '-') + '</div>' +
-              '<div class="user-table-secondary" style="font-size:0.75rem;">' + (item.execRemark || '-') + '</div>' +
-            '</div>' +
-          '</td>' +
-        '</tr>';
+      const remarks = $(cells[8]).text().split('\n');
+      $('#modal-remarks').val(remarks[0]?.trim() + (remarks[1] ? ' | ' + remarks[1] : ''));
 
-        tbody.innerHTML += row;
-      }
+      $('#job-modal-overlay').addClass('is-open').attr('aria-hidden', 'false');
+    };
 
-      /* Init DataTable for pagination */
-      var tableEl = document.getElementById('jh-main-table');
-      if (data.length > 0 && typeof simpleDatatables !== 'undefined') {
-        dataTable = new simpleDatatables.DataTable(tableEl, {
-          perPage:       10,
-          perPageSelect: [10, 25, 50, 100],
-          searchable:    false,
-          fixedHeight:   false
-        });
-      }
-    }
+    window.closeJobModal = function () {
+      $('#job-modal-overlay').removeClass('is-open').attr('aria-hidden', 'true');
+    };
 
-    /* ── Modal – Add new job ── */
-    var currentJobId   = null;
-    var currentUploadSlot = null;
-
-    function openAddJobModal() {
-      currentJobId = null;
-      document.getElementById('modal-area').value        = '400';
-      document.getElementById('modal-loop').value        = '';
-      document.getElementById('modal-tag').value         = '';
-      document.getElementById('modal-insttype').value    = 'C/V';
-      document.getElementById('modal-description').value = '';
-      document.getElementById('modal-date').value        = new Date().toISOString().split('T')[0];
-      document.getElementById('modal-tech').value        = '';
-      document.getElementById('modal-jobtype').value     = 'PM';
-      document.getElementById('modal-eng').value         = 'MAJ';
-      document.getElementById('modal-eng-remark').value  = '';
-      document.getElementById('modal-exec-remark').value = '';
-      document.getElementById('display-attach-1').textContent = '-';
-      document.getElementById('display-attach-2').textContent = '-';
-
-      document.getElementById('job-modal-title').textContent  = 'Add New Job';
-      document.getElementById('modal-delete-btn').style.display = 'none';
-      document.getElementById('modal-save-btn').textContent   = 'Add Job';
-
-      /* Add mode: hide cards, show messages */
-      document.getElementById('attach-card-1').classList.add('is-hidden');
-      document.getElementById('attach-msg-1').classList.add('is-visible');
-      document.getElementById('attach-card-2').classList.add('is-hidden');
-      document.getElementById('attach-msg-2').classList.add('is-visible');
-
-      var overlay = document.getElementById('job-detail-overlay');
-      overlay.classList.add('is-open');
-      overlay.setAttribute('aria-hidden', 'false');
-    }
-
-    /* ── Modal – Edit existing job ── */
-    function openJobDetailModal(srNumber) {
-      var job = null;
-      for (var i = 0; i < jobData.length; i++) {
-        if (jobData[i].sr === srNumber) { job = jobData[i]; break; }
-      }
-      if (!job) return;
-
-      currentJobId = srNumber;
-      document.getElementById('modal-area').value        = job.area;
-      document.getElementById('modal-loop').value        = job.loop;
-      document.getElementById('modal-tag').value         = job.tag;
-      document.getElementById('modal-insttype').value    = job.instType || 'C/V';
-      document.getElementById('modal-description').value = job.desc;
-      document.getElementById('modal-date').value        = job.date;
-      document.getElementById('modal-tech').value        = job.tech || '';
-      document.getElementById('modal-jobtype').value     = job.jobType;
-      document.getElementById('modal-eng').value         = job.eng;
-      document.getElementById('modal-eng-remark').value  = job.remark    || '';
-      document.getElementById('modal-exec-remark').value = job.execRemark || '';
-
-      document.getElementById('display-attach-1').textContent = job.attach ? 'Report.pdf' : '-';
-      document.getElementById('display-attach-2').textContent = '-';
-
-      document.getElementById('job-modal-title').textContent    = 'Job History Detail';
-      document.getElementById('modal-delete-btn').style.display = 'block';
-      document.getElementById('modal-save-btn').textContent     = 'Save Changes';
-
-      /* Edit mode: show card, hide message */
-      document.getElementById('attach-card-1').classList.remove('is-hidden');
-      document.getElementById('attach-msg-1').classList.remove('is-visible');
-      document.getElementById('attach-card-2').classList.remove('is-hidden');
-      document.getElementById('attach-msg-2').classList.remove('is-visible');
-
-      var overlay = document.getElementById('job-detail-overlay');
-      overlay.classList.add('is-open');
-      overlay.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeJobDetailModal() {
-      var overlay = document.getElementById('job-detail-overlay');
-      overlay.classList.remove('is-open');
-      overlay.setAttribute('aria-hidden', 'true');
-      currentJobId = null;
-    }
-
-    /* ── Save / Update ── */
-    function saveJobDetails() {
-      var area       = document.getElementById('modal-area').value;
-      var loop       = document.getElementById('modal-loop').value;
-      var tag        = document.getElementById('modal-tag').value;
-      var instType   = document.getElementById('modal-insttype').value;
-      var desc       = document.getElementById('modal-description').value;
-      var date       = document.getElementById('modal-date').value;
-      var tech       = document.getElementById('modal-tech').value;
-      var jobType    = document.getElementById('modal-jobtype').value;
-      var eng        = document.getElementById('modal-eng').value;
-      var remark     = document.getElementById('modal-eng-remark').value;
-      var execRemark = document.getElementById('modal-exec-remark').value;
-      var isAttached = document.getElementById('display-attach-1').textContent !== '-';
-
-      if (currentJobId !== null) {
-        /* Edit */
-        for (var fi = 0; fi < jobData.length; fi++) {
-          if (jobData[fi].sr === currentJobId) {
-            jobData[fi].area       = area;
-            jobData[fi].loop       = loop;
-            jobData[fi].tag        = tag;
-            jobData[fi].instType   = instType;
-            jobData[fi].desc       = desc;
-            jobData[fi].date       = date;
-            jobData[fi].tech       = tech;
-            jobData[fi].jobType    = jobType;
-            jobData[fi].eng        = eng;
-            jobData[fi].remark     = remark;
-            jobData[fi].execRemark = execRemark;
-            jobData[fi].attach     = isAttached;
-            break;
-          }
-        }
-        closeJobDetailModal();
-        Swal.fire({ icon: 'success', title: 'Updated!', text: 'Job details updated.', timer: 1500, showConfirmButton: false, width: 300 });
-      } else {
-        /* Add */
-        var maxSr = 0;
-        for (var mi = 0; mi < jobData.length; mi++) {
-          if (jobData[mi].sr > maxSr) maxSr = jobData[mi].sr;
-        }
-        jobData.push({
-          sr: jobData.length > 0 ? maxSr + 1 : 1,
-          area: area, loop: loop, tag: tag,
-          instType: instType, jobType: jobType, date: date,
-          desc: desc, tech: tech, eng: eng,
-          attach: isAttached, remark: remark, execRemark: execRemark
-        });
-        closeJobDetailModal();
-        Swal.fire({ icon: 'success', title: 'Added!', text: 'New job added.', timer: 1500, showConfirmButton: false, width: 300 });
-      }
-
-      renderTable();
-    }
-
-    /* ── Delete ── */
-    async function deleteJob() {
-      var result = await Swal.fire({
-        title: 'Are you sure?',
-        text: 'Do you want to delete this job entry?',
-        icon: 'warning',
-        width: 400,
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor:  '#3085d6',
-        confirmButtonText: 'Yes, delete it!'
-      });
-      if (!result.isConfirmed) return;
-
-      for (var di = 0; di < jobData.length; di++) {
-        if (jobData[di].sr === currentJobId) {
-          jobData.splice(di, 1);
-          break;
-        }
-      }
-      closeJobDetailModal();
-      renderTable();
-      Swal.fire({ title: 'Deleted!', text: 'The job entry has been deleted.', icon: 'success', width: 400 });
-    }
-
-    /* ── Attachment upload modal ── */
-    function openAttachmentModal(slot) {
-      currentUploadSlot = slot;
-      clearFileSelection();
-      var modal = document.getElementById('attachment-modal');
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeAttachmentModal() {
-      var modal = document.getElementById('attachment-modal');
-      modal.classList.remove('is-open');
-      modal.setAttribute('aria-hidden', 'true');
-      currentUploadSlot = null;
-    }
-
-    function handleFileSelect(input) {
-      if (input.files && input.files[0]) {
-        var file    = input.files[0];
-        var zone    = document.getElementById('upload-zone');
-        var preview = document.getElementById('file-preview');
-        /* hide zone text area but keep drop target */
-        document.querySelector('.jh-upload-zone-text').style.opacity = '0';
-        document.querySelector('.jh-upload-zone-hint').style.opacity = '0';
-        document.querySelector('.jh-upload-icon').style.opacity = '0';
-        preview.classList.add('is-visible');
-        document.getElementById('preview-filename').textContent = file.name;
-        document.getElementById('preview-filesize').textContent = formatFileSize(file.size);
-      }
-    }
-
-    function clearFileSelection() {
-      var input = document.getElementById('upload-file-input');
-      if (input) input.value = '';
-      var preview = document.getElementById('file-preview');
-      preview.classList.remove('is-visible');
-      var zoneText = document.querySelector('.jh-upload-zone-text');
-      var zoneHint = document.querySelector('.jh-upload-zone-hint');
-      var zoneIcon = document.querySelector('.jh-upload-icon');
-      if (zoneText) zoneText.style.opacity = '';
-      if (zoneHint) zoneHint.style.opacity = '';
-      if (zoneIcon) zoneIcon.style.opacity = '';
-    }
-
-    function formatFileSize(bytes) {
-      if (bytes === 0) return '0 Bytes';
-      var k     = 1024;
-      var sizes = ['Bytes', 'KB', 'MB', 'GB'];
-      var i     = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-
-    function saveAttachment() {
-      var fileInput = document.getElementById('upload-file-input');
-      if (fileInput.files.length > 0 && currentUploadSlot) {
-        var fileName  = fileInput.files[0].name;
-        var displayEl = document.getElementById('display-attach-' + currentUploadSlot);
-        if (displayEl) {
-          displayEl.textContent = fileName;
-        }
-      }
-      closeAttachmentModal();
-    }
-
-    /* ── Click-outside-to-close ── */
-    $(document).ready(function () {
-      renderTable();
-
-      $('#job-detail-overlay').on('click', function (e) {
-        if (e.target === this) closeJobDetailModal();
+    window.saveJob = function () {
+      Swal.fire({
+        title: 'Success!',
+        text: 'Job record has been saved successfully in static storage.',
+        icon: 'success',
+        background: '#1e293b',
+        color: '#ffffff',
+        confirmButtonColor: '#3b82f6',
+        timer: 2000,
+        showConfirmButton: false
       });
 
-      $('#attachment-modal').on('click', function (e) {
-        if (e.target === this) closeAttachmentModal();
-      });
+      setTimeout(() => { closeJobModal(); }, 1500);
+    };
 
-      // Open date picker on click/focus
-      $('.jt-date-input').on('click focus', function () {
-        if (typeof this.showPicker === 'function') {
-          try { this.showPicker(); } catch (e) { }
-        }
+    window.resetFilters = function () {
+      window.location.reload();
+    };
+
+    window.renderTable = function () {
+      Swal.fire({
+        title: 'Table Filtered',
+        text: 'Rows have been updated based on your selection (Simulation).',
+        icon: 'success',
+        timer: 1200,
+        showConfirmButton: false
+      });
+    };
+
+    // Helper: DD/MM/YYYY to YYYY-MM-DD
+    function convertToISODate(ddmmyyyy) {
+      if (!ddmmyyyy || !ddmmyyyy.includes('/')) return '';
+      const parts = ddmmyyyy.trim().split('/');
+      return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    }
+  </script>
+</body>
+</html>
+
       });
     });
   </script>
 
 </body>
+
 </html>
-
-

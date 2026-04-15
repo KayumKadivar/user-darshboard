@@ -721,97 +721,134 @@
   </main>
 
   <script>
-    // Tab Switching
-    function switchTab(tabId) {
-      $('.tab-btn').removeClass('is-active');
-      $('.tab-panel').addClass('hidden').removeClass('flex');
+    $(document).ready(function () {
+      /** ── Tab Switching ── */
+      window.switchTab = function (tabId) {
+        $('.tab-btn').removeClass('is-active');
+        $('.tab-panel').addClass('hidden').removeClass('flex');
 
-      // Toggle badges
-      $('#ojr-count-badge, #pending-count-badge').addClass('hidden');
-      $('#' + tabId + '-count-badge').removeClass('hidden');
+        // Toggle badges
+        $('#ojr-count-badge, #pending-count-badge').addClass('hidden');
+        $('#' + tabId + '-count-badge').removeClass('hidden');
 
-      $('#tab-' + tabId).addClass('is-active');
-      $('#panel-' + tabId).removeClass('hidden').addClass('flex');
-    }
+        $('#tab-' + tabId).addClass('is-active');
+        $('#panel-' + tabId).removeClass('hidden').addClass('flex');
+      };
 
-    function fillAssignmentForm(row) {
-      $('#form-assigned-to').val(row.tech || '');
-      $('#form-jobs-desc').val(row.desc || '');
-      $('#form-area').val(row.area || '');
+      /** ── Form Handling ── */
+      window.fillAssignmentForm = function (row) {
+        $('#form-assigned-to').val(row.tech || '');
+        $('#form-jobs-desc').val(row.desc || '');
+        $('#form-area').val(row.area || '');
+
+        const $tagSelect = $('#form-tag');
+        if ($tagSelect.find('option[value="' + row.tag + '"]').length === 0) {
+          $tagSelect.append(new Option(row.tag, row.tag));
+        }
+        $tagSelect.val(row.tag);
+
+        const $target = $('#form-assigned-to');
+        if ($target.length) {
+          $target[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          $target.focus();
+        }
+      };
+
+      /** ── Modal Handling ── */
+      window.setModalState = function (modalId, isOpen) {
+        const $modal = $('#' + modalId);
+        if (isOpen) {
+          $modal.addClass('is-open').attr('aria-hidden', 'false');
+        } else {
+          $modal.removeClass('is-open').attr('aria-hidden', 'true');
+        }
+      };
+
+      // Explicit Modal Triggers
+      window.openCJLModal = function () { setModalState('cjl-modal', true); };
+      window.closeCJLModal = function () { setModalState('cjl-modal', false); };
+
+      window.openCJLAttachmentModal = function () { setModalState('cjl-attachment-modal', true); };
+      window.closeCJLAttachmentModal = function () { setModalState('cjl-attachment-modal', false); };
       
-      const tagSelect = $('#form-tag');
-      if (tagSelect.find('option[value="' + row.tag + '"]').length === 0) {
-          tagSelect.append(new Option(row.tag, row.tag));
-      }
-      tagSelect.val(row.tag);
+      window.handleCJLAttachmentUpload = function () {
+        $('#cjl-attachment-feedback').text('File uploaded successfully.').css('color', '#10b981');
+        setTimeout(() => {
+          closeCJLAttachmentModal();
+          $('#cjl-attachment-feedback').text('');
+        }, 1200);
+      };
 
-      document.getElementById('form-assigned-to').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      document.getElementById('form-assigned-to').focus();
-    }
+      window.openSEModal = function () { setModalState('sd-modal', true); };
+      window.closeSEModal = function () { setModalState('sd-modal', false); };
 
-    // Modal Handling
-    function setModalState(modalId, isOpen) {
-      const modal = $('#' + modalId);
-      if (isOpen) {
-        modal.addClass('is-open').attr('aria-hidden', 'false');
-      } else {
-        modal.removeClass('is-open').attr('aria-hidden', 'true');
-      }
-    }
+      window.openHSOModal = function () { setModalState('hso-modal', true); };
+      window.closeHSOModal = function () { setModalState('hso-modal', false); };
 
-    /* Modal Triggers */
-    function openCJLModal() { setModalState('cjl-modal', true); }
-    function closeCJLModal() { setModalState('cjl-modal', false); }
-    
-    function openCJLAttachmentModal() { setModalState('cjl-attachment-modal', true); }
-    function closeCJLAttachmentModal() { setModalState('cjl-attachment-modal', false); }
-    function handleCJLAttachmentUpload() {
-      $('#cjl-attachment-feedback').text('File uploaded successfully.');
-      setTimeout(() => closeCJLAttachmentModal(), 1000);
-    }
-    
-    function openSEModal() { setModalState('sd-modal', true); }
-    function closeSEModal() { setModalState('sd-modal', false); }
-    
-    function openHSOModal() { setModalState('hso-modal', true); }
-    function closeHSOModal() { setModalState('hso-modal', false); }
-    
-    function openSearchModal() { setModalState('search-modal', true); }
-    function closeSearchModal() { setModalState('search-modal', false); }
-    function searchByTag() { /* Search is mock data */ }
+      window.openSearchModal = function () { setModalState('search-modal', true); };
+      window.closeSearchModal = function () { setModalState('search-modal', false); };
+      window.searchByTag = function () {
+          Swal.fire({
+              title: 'Searching...',
+              text: 'Filtering tag history (Simulation).',
+              icon: 'info',
+              timer: 1000,
+              showConfirmButton: false
+          });
+      };
 
-    // Form Actions
-    function saveAssignment() {
-      const btn = $('button[onclick="saveAssignment()"]');
-      const originalText = btn.html();
-      btn.html('<i class="ph-bold ph-check"></i> SAVED!').css('background', '#10b981');
+      /** ── Assignment Actions ── */
+      window.saveAssignment = function () {
+        const $btn = $('button[onclick*="saveAssignment"]');
+        const originalHtml = $btn.html();
+        
+        $btn.html('<i class="ph-bold ph-check"></i> SAVED!')
+            .css({'background': '#10b981', 'border-color': '#10b981'});
 
-      // Clear form
-      $('#form-assigned-to, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc').val('');
-
-      setTimeout(() => {
-        btn.html(originalText).css('background', '');
-      }, 1500);
-    }
-
-    function cancelAssignment() {
-      if (confirm("Clear all inputs?")) {
+        // Clear form fields
         $('#form-assigned-to, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc').val('');
-      }
-    }
 
-    // Reset dropdown icon after selection
-    $(document).on('change', '.assign-select-control', function() {
-      $(this).blur();
-    });
-    
-    // Setup modal backdrop clicks to close
-    $('.gnfc-modal-overlay').on('click', function(e) {
-      if (e.target === this) {
-        $(this).removeClass('is-open').attr('aria-hidden', 'true');
-      }
-    });
+        setTimeout(() => {
+          $btn.html(originalHtml).css({'background': '', 'border-color': ''});
+          Swal.fire({
+              title: 'Saved!',
+              text: 'Job assignment record created.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+          });
+        }, 1200);
+      };
 
+      window.cancelAssignment = function () {
+        Swal.fire({
+          title: 'Reset Form?',
+          text: "All unsaved task inputs will be cleared.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3b82f6',
+          cancelButtonColor: '#ef4444',
+          confirmButtonText: 'Yes, clear it'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('#form-assigned-to, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc').val('');
+          }
+        });
+      };
+
+      // UI Enhancements
+      $(document).on('change', '.assign-select-control', function () {
+        $(this).blur();
+      });
+
+      // Modal backdrop clicks
+      $('.gnfc-modal-overlay').on('click', function (e) {
+        if (e.target === this) {
+          const modalId = $(this).attr('id');
+          setModalState(modalId, false);
+        }
+      });
+    });
   </script>
 </body>
 
