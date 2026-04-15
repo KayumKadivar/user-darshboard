@@ -2,10 +2,6 @@ $(function () {
     // Determine the base path to the root directory dynamically
     const getBasePath = () => {
         const path = window.location.pathname;
-        const projectRoot = 'User Dashbord Hmtl Page'; // Or any other identifier
-        const levels = path.split('/').filter(p => p).length - 1; // Simplistic count
-        
-        // Better: count segments after the root folder or just count "pages"
         const segments = path.split('/');
         const pagesIndex = segments.indexOf('pages');
         if (pagesIndex === -1) return './';
@@ -43,7 +39,7 @@ $(function () {
           <span class="sidebar-text">Officer Logbook</span>
         </a>
 
-        <a href="${basePath}pages/technicianlogbook.html" class="sidebar-link" data-id="technician_logbook">
+        <a href="${basePath}pages/technician_logbook/technicianlogbook.html" class="sidebar-link" data-id="technician_logbook">
           <i class="ph ph-bold ph-factory"></i>
           <span class="sidebar-text">Technician Logbook</span>
         </a>
@@ -113,7 +109,7 @@ $(function () {
           <span class="sidebar-text">Help</span>
         </a>
 
-        <a href="${basePath}pages/assigntoday.html" class="sidebar-link" data-id="opr_job_reg">
+        <a href="${basePath}pages/technician_logbook/assigntoday.html" class="sidebar-link" data-id="opr_job_reg">
           <i class="ph ph-bold ph-clipboard-text"></i>
           <span class="sidebar-text">OPR. Job Reg</span>
         </a>
