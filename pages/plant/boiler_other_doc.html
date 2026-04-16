@@ -39,9 +39,9 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-8px">
               <i class="ph-fill ph-folder text-amber-500 font-20px"></i>
-              <h3 id="current-folder-display" class="font-14px fw-800 text-uppercase">BOILER_INST</h3>
+              <h3 class="font-14px fw-800 text-uppercase">Boiler</h3>
             </div>
-            <div id="path-breadcrumb" class="font-10px fw-700 text-uppercase ">/BOILER_INST/</div>
+            <div id="path-breadcrumb" class="font-14px fw-700 text-uppercase color-secondary">Other_Doc/Boiler/</div>
           </div>
 
           <div class="stats-group">
@@ -1545,7 +1545,8 @@
     }
 
     function formatPath() {
-      return '/' + CURRENT_PATH.join('/') + '/';
+      const displayPath = CURRENT_PATH.filter(p => p !== 'BOILER_INST');
+      return 'Other_Doc/Boiler/' + (displayPath.length > 0 ? displayPath.join('/') + '/' : '');
     }
 
     function getFileTypeLabel(fileName) {
@@ -1835,13 +1836,29 @@
       // Collect all selected file names from upload slots
       const duplicates = [];
       let hasAnyFile = false;
+      let hasError = false;
+      let hasLengthError = false;
 
-      $('.slot-input').each(function () {
-        if (this.files && this.files.length > 0) {
+      $('.slot-comment').removeClass('border-red');
+
+      $('.slot-row-container').each(function () {
+        const fileInput = $(this).find('.slot-input')[0];
+        const commentInput = $(this).find('.slot-comment');
+
+        if (fileInput && fileInput.files && fileInput.files.length > 0) {
           hasAnyFile = true;
-          const fileName = this.files[0].name;
+          const fileName = fileInput.files[0].name;
           if (existingFileNames.indexOf(fileName.toUpperCase()) >= 0) {
             duplicates.push(fileName);
+          }
+
+          const commentVal = commentInput.val().trim();
+          if (!commentVal) {
+            commentInput.addClass('border-red');
+            hasError = true;
+          } else if (commentVal.length < 6) {
+            commentInput.addClass('border-red');
+            hasLengthError = true;
           }
         }
       });
@@ -1862,8 +1879,16 @@
         });
       }
 
+      if (hasError) {
+        return Swal.fire({ icon: 'error', title: 'Comment Required', text: 'Please add a comment for all selected files.', confirmButtonColor: 'var(--typo-red)' });
+      }
+      
+      if (hasLengthError) {
+        return Swal.fire({ icon: 'error', title: 'Invalid Comment', text: 'Comments must be at least 6 characters.', confirmButtonColor: 'var(--typo-red)' });
+      }
+
       $('#modal-upload').removeClass('is-open');
-      Swal.fire('Success', 'File upload request initiated.', 'success');
+      Swal.fire({ icon: 'success', title: 'Upload Initiated', text: 'File upload request initiated successfully.', showConfirmButton: false, timer: 1500 });
     });
 
     // ── Send Mail ──
