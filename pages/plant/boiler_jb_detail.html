@@ -28,7 +28,9 @@
 
     <main class="main-wrapper">
 
-        <div id="header-container" data-title="Junction Box Detail" data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,JB Detail:active" data-back="boiler_inst_data.html"></div>
+        <div id="header-container" data-title="Junction Box Detail"
+            data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,JB Detail:active"
+            data-back="boiler_inst_data.html"></div>
 
         <div class="dashboard-content dashboard-scroll jbd-page-container">
             <div class="space-y-3">
@@ -41,33 +43,26 @@
                         <div class="jbd-filter-group">
                             <label class="input-label">Tag</label>
                             <div class="jbd-filter-row">
-                                <input type="text" id="jb-tag-input" class="jbd-input jbd-w-144px"
+                                <input type="text" id="jb-tag-input" class="gnfc-modal-input flex-1"
                                     placeholder="Tag No…">
-                                <div class="jbd-select-wrap">
-                                    <select id="jb-tag-select" class="jbd-input jbd-select w-full">
+                                <div>
+                                    <select id="jb-tag-select" class="gnfc-modal-input">
                                         <option>Select Tag No</option>
                                         <option>L_110VDCBF</option>
                                         <option>ZSH177906</option>
                                         <option>10-PT-101A</option>
                                     </select>
-                                    <i class="ph-bold ph-caret-down jbd-caret"></i>
                                 </div>
-                                <button class="jbd-btn jbd-btn-blue" id="btn-tag-go">
-                                    Go
-                                </button>
                             </div>
                         </div>
-
-                        <div class="jbd-divider"></div>
-
                         <!-- Junction Box Find Group -->
                         <div class="jbd-filter-group">
                             <label class="input-label">Find Junction Box</label>
                             <div class="jbd-filter-row">
-                                <input type="text" id="jb-find-input" class="jbd-input jbd-w-128px"
+                                <input type="text" id="jb-find-input" class="gnfc-modal-input flex-1"
                                     placeholder="Search…">
-                                <div class="jbd-select-wrap">
-                                    <select id="jb-select" class="jbd-input jbd-select w-full">
+                                <div>
+                                    <select id="jb-select" class="gnfc-modal-input">
                                         <option>Select Junction Box</option>
                                         <option>ACJB-1</option>
                                         <option selected>ACJB-2</option>
@@ -84,14 +79,10 @@
                                         <option>TEST</option>
                                         <option>TJB-01</option>
                                     </select>
-                                    <i class="ph-bold ph-caret-down jbd-caret"></i>
                                 </div>
                                 <button class="jbd-btn jbd-btn-blue" id="btn-jb-go">Go</button>
                             </div>
                         </div>
-
-                        <div class="jbd-divider"></div>
-
                         <!-- Secondary Actions -->
                         <div class="jbd-toolbar-actions">
                             <button class="jbd-btn jbd-btn-ghost" id="btn-update-insbl">
@@ -171,7 +162,7 @@
                                 <div class="jbd-info-item open-edit-modal" data-target="#modal-edit-docno">
                                     <div class="jbd-info-item-label">Document No</div>
                                     <div class="jbd-info-item-value">
-                                        <span>—</span>
+                                        <span></span>
                                         <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
                                     </div>
                                 </div>
@@ -179,7 +170,7 @@
                                 <div class="jbd-info-item open-edit-modal" data-target="#modal-edit-drawingno">
                                     <div class="jbd-info-item-label">Drawing No</div>
                                     <div class="jbd-info-item-value">
-                                        <span>—</span>
+                                        <span> </span>
                                         <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
                                     </div>
                                 </div>
@@ -187,7 +178,7 @@
                                 <div class="jbd-info-item open-edit-modal" data-target="#modal-edit-drawingname">
                                     <div class="jbd-info-item-label">Drawing Name</div>
                                     <div class="jbd-info-item-value">
-                                        <span>—</span>
+                                        <span> </span>
                                         <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
                                     </div>
                                 </div>
@@ -195,7 +186,7 @@
                                 <div class="jbd-info-item open-edit-modal" data-target="#modal-edit-excl">
                                     <div class="jbd-info-item-label">Excl</div>
                                     <div class="jbd-info-item-value">
-                                        <span>—</span>
+                                        <span> </span>
                                         <i class="ph-bold ph-pencil-simple jbd-edit-icon"></i>
                                     </div>
                                 </div>
@@ -217,19 +208,14 @@
                         </div>
 
                         <div class="user-table-wrapper radius-0px border-0">
-                            <table class="user-table" style="table-layout: fixed;">
+                            <table class="user-table" style="min-width: auto;">
                                 <thead>
                                     <tr>
-                                        <th style="width:50px;" rowspan="2" class="color-blue uppercase fw-800">Ch</th>
-                                        <th style="width:140px;" rowspan="2"
-                                            class="jbd-clickable-th color-blue uppercase fw-800 font-16px">Tag Number
-                                        </th>
-                                        <th style="min-width:200px;" rowspan="2" class="color-blue uppercase fw-800">
-                                            Location / Description / Function</th>
-                                        <th style="width:200px;" rowspan="2" class="color-blue uppercase fw-800">JB TERM
-                                        </th>
-                                        <th colspan="2" style="width:240px;" class="color-blue uppercase fw-800">Cabinet
-                                            Term Strip</th>
+                                        <th style="width:50px;" rowspan="2">Ch</th>
+                                        <th style="width:140px;" rowspan="2">Tag Number</th>
+                                        <th style="min-width:300px;" rowspan="2"> Location / Description / Function</th>
+                                        <th style="width:220px;" rowspan="2">JB TERM</th>
+                                        <th style="min-width:240px;" colspan="2">Cabinet Term Strip</th>
                                     </tr>
                                     <tr>
                                         <th style="width:120px;" class="color-blue uppercase fw-700 font-14px">
@@ -244,7 +230,7 @@
                                         <td rowspan="3" class="jbd-ch-num">1</td>
                                         <td rowspan="3" class="px-8px">
                                             <div class="tag-edit-wrapper cursor-pointer">
-                                                <span class="tag-val font-16px fw-700">1PT205</span>
+                                                <span class="fw-600">1PT205</span>
                                                 <i class="ph-bold ph-pencil-simple tag-edit-icon"></i>
                                             </div>
                                         </td>
@@ -348,7 +334,7 @@
                                         <td rowspan="3" class="jbd-ch-num">2</td>
                                         <td rowspan="3" class="px-8px">
                                             <div class="tag-edit-wrapper cursor-pointer">
-                                                <span class="tag-val font-16px fw-700">SPARE</span>
+                                                <span class="fw-600">SPARE</span>
                                                 <i class="ph-bold ph-pencil-simple tag-edit-icon"></i>
                                             </div>
                                         </td>
@@ -452,7 +438,7 @@
                                         <td rowspan="3" class="jbd-ch-num">3</td>
                                         <td rowspan="3" class="px-8px">
                                             <div class="tag-edit-wrapper cursor-pointer">
-                                                <span class="tag-val font-16px fw-700">1FT401</span>
+                                                <span class="fw-600">1FT401</span>
                                                 <i class="ph-bold ph-pencil-simple tag-edit-icon"></i>
                                             </div>
                                         </td>
@@ -556,7 +542,7 @@
                                         <td rowspan="3" class="jbd-ch-num">4</td>
                                         <td rowspan="3" class="px-8px">
                                             <div class="tag-edit-wrapper cursor-pointer">
-                                                <span class="tag-val font-16px fw-700">SPARE</span>
+                                                <span class="fw-600">SPARE</span>
                                                 <i class="ph-bold ph-pencil-simple tag-edit-icon"></i>
                                             </div>
                                         </td>
@@ -665,11 +651,11 @@
                     <div class="checked-by-bar mb-16px">
                         <div class="jbd-badge jbd-badge-muted">
                             <i class="ph-bold ph-user-check"></i>
-                            <span class="jbd-badge-label">Checked By :</span>
-                            <span class="jbd-badge-value">M(AMD)</span>
+                            <span>Checked By :</span>
+                            <span>M(AMD)</span>
                             <span class="mx-10px color-border opacity-50">|</span>
-                            <span class="jbd-badge-label">Date :</span>
-                            <span class="jbd-badge-value">22/03/2014</span>
+                            <span>Date :</span>
+                            <span>22/03/2014</span>
                         </div>
                     </div>
 
@@ -732,8 +718,10 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <p class="gnfc-modal-subtitle mb-8px">JB No : ACJB-2</p>
-                <div class="flex flex-col">
+                <div class="gnfc-modal-info-box">
+                    <p class="gnfc-modal-subtitle">JB No : ACJB-2</p>
+                </div>
+                <div class="gnfc-modal-bulk-row">
                     <label class="gnfc-modal-label">Location :</label>
                     <input type="text" class="gnfc-modal-input" value="GND FLOOR, NEAR BFP, NORTH SIDE.">
                 </div>
@@ -758,8 +746,10 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <p class="gnfc-modal-subtitle mb-8px">JB No : ACJB-2</p>
-                <div class="flex flex-col">
+                <div class="gnfc-modal-info-box">
+                    <p class="gnfc-modal-subtitle">JB No : ACJB-2</p>
+                </div>
+                <div class="gnfc-modal-bulk-row">
                     <label class="gnfc-modal-label">Cable No :</label>
                     <input type="text" class="gnfc-modal-input" value="ACJB1-CCA01">
                 </div>
@@ -784,8 +774,10 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <p class="gnfc-modal-subtitle mb-8px">JB No : ACJB-2</p>
-                <div class="flex flex-col">
+                <div class="gnfc-modal-info-box">
+                    <p class="gnfc-modal-subtitle">JB No : ACJB-2</p>
+                </div>
+                <div class="gnfc-modal-bulk-row">
                     <label class="gnfc-modal-label">Cable Type :</label>
                     <select class="gnfc-modal-input">
                         <option value="SIGNAL 6 PAIR">SIGNAL 6 PAIR</option>
@@ -834,8 +826,10 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <p class="gnfc-modal-subtitle mb-8px">JB No : ACJB-2</p>
-                <div class="flex flex-col">
+                <div class="gnfc-modal-info-box">
+                    <p class="gnfc-modal-subtitle">JB No : ACJB-2</p>
+                </div>
+                <div class="gnfc-modal-bulk-row">
                     <label class="gnfc-modal-label">Cabinet :</label>
                     <input type="text" class="gnfc-modal-input" value="CCA01">
                 </div>
@@ -860,11 +854,12 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <p class="gnfc-modal-subtitle mb-16px">JB No : ACJB-2</p>
-
-                <div class="flex flex-col mb-16px">
+                <div class="gnfc-modal-info-box">
+                    <p class="gnfc-modal-subtitle">JB No : ACJB-2</p>
+                </div>
+                <div class="gnfc-modal-bulk-row">
                     <label class="gnfc-modal-label">Document No :</label>
-                    <input type="text" class="gnfc-modal-input" value="—">
+                    <input type="text" class="gnfc-modal-input">
                 </div>
 
                 <div class="gnfc-modal-bulk-row">
@@ -875,7 +870,7 @@
                 <div class="gnfc-modal-notice gnfc-modal-notice-danger">
                     <p class="gnfc-modal-notice-text gnfc-modal-notice-text--danger">
                         <i class="ph-bold ph-warning-circle mr-1"></i>
-                        NOTE: Old values of all JBs will be replaced if "Update For All JB" is selected.
+                        NOTE: Old values of all JBs will be replaced if selected All JB.
                     </p>
                 </div>
             </div>
@@ -899,10 +894,12 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <p class="gnfc-modal-subtitle mb-8px">JB No : ACJB-2</p>
-                <div class="flex flex-col gap-8px">
+                <div class="gnfc-modal-info-box">
+                    <p class="gnfc-modal-subtitle">JB No : ACJB-2</p>
+                </div>
+                <div class="gnfc-modal-bulk-row">
                     <label class="gnfc-modal-label">Drawing No :</label>
-                    <input type="text" class="gnfc-modal-input" value="—">
+                    <input type="text" class="gnfc-modal-input">
                 </div>
                 <div class="gnfc-modal-bulk-row">
                     <input type="checkbox" id="update-drawingno-all" class="gnfc-checkbox">
@@ -936,10 +933,12 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <p class="gnfc-modal-subtitle mb-8px">JB No : ACJB-2</p>
-                <div class="flex flex-col gap-8px">
+                <div class="gnfc-modal-info-box">
+                    <p class="gnfc-modal-subtitle">JB No : ACJB-2</p>
+                </div>
+                <div class="gnfc-modal-bulk-row">
                     <label class="gnfc-modal-label">Drawing Name :</label>
-                    <input type="text" class="gnfc-modal-input" value="—">
+                    <input type="text" class="gnfc-modal-input">
                 </div>
                 <div class="gnfc-modal-bulk-row">
                     <input type="checkbox" id="update-drawingname-all" class="gnfc-checkbox">
@@ -973,10 +972,12 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <p class="gnfc-modal-subtitle mb-8px">JB No : ACJB-2</p>
-                <div class="flex flex-col gap-8px">
+                <div class="gnfc-modal-info-box">
+                    <p class="gnfc-modal-subtitle">JB No : ACJB-2</p>
+                </div>
+                <div class="gnfc-modal-bulk-row">
                     <label class="gnfc-modal-label">Excl :</label>
-                    <input type="text" class="gnfc-modal-input" value="—">
+                    <input type="text" class="gnfc-modal-input">
                 </div>
                 <div class="gnfc-modal-bulk-row">
                     <input type="checkbox" id="update-excl-all" class="gnfc-checkbox">
@@ -1011,11 +1012,9 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <div class="flex flex-col gap-8px">
-                    <label class="gnfc-modal-label">Revision Details :</label>
-                    <textarea class="gnfc-modal-input" style="min-height: 120px; resize: vertical;"
-                        placeholder="No revision details recorded for this JB."></textarea>
-                </div>
+                <label class="gnfc-modal-label">Revision Details :</label>
+                <textarea class="gnfc-modal-input" style="min-height: 120px; resize: vertical;"
+                    placeholder="No revision details recorded for this JB."></textarea>
             </div>
             <div class="gnfc-modal-footer">
                 <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary btn-update-static">Save
@@ -1038,15 +1037,13 @@
                 </button>
             </div>
             <div class="gnfc-modal-body">
-                <div class="flex flex-col gap-8px">
-                    <div>
-                        <p class="gnfc-modal-subtitle">TAG  No : 1PT205</p>
-                        <p class="gnfc-modal-subtitle">JB No : ACJB</p>
-                    </div>
-                    <label class="gnfc-modal-label">Notes :</label>
-                    <textarea class="gnfc-modal-input" style="min-height: 120px; resize: vertical;"
-                        placeholder="No additional remarks or notes."></textarea>
+                <div class="gnfc-modal-info-box">
+                    <p class="gnfc-modal-subtitle">TAG No : 1PT205</p>
+                    <p class="gnfc-modal-subtitle">JB No : ACJB</p>
                 </div>
+                <label class="gnfc-modal-label">Notes :</label>
+                <textarea class="gnfc-modal-input" style="min-height: 120px; resize: vertical;"
+                    placeholder="No additional remarks or notes."></textarea>
             </div>
             <div class="gnfc-modal-footer">
                 <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary btn-update-static">Update</button>
@@ -1132,7 +1129,6 @@
             <div class="gnfc-modal-header">
                 <div>
                     <h3 class="gnfc-modal-title">Add New JB</h3>
-                    <p class="gnfc-modal-subtitle">JB Detail</p>
                 </div>
                 <button class="gnfc-modal-close btn-close-modal"><i class="ph-bold ph-x text-lg"></i></button>
             </div>
@@ -1140,42 +1136,40 @@
                 <div class="jbd-grid-add-jb">
 
                     <!-- Row 1 -->
-                    <div class="flex flex-col gap-8px">
+                    <div class="flex flex-col">
                         <label class="gnfc-modal-label">New JB No</label>
                         <input type="text" id="add-jb-no" class="gnfc-modal-input" placeholder="e.g. ACJB-3">
                     </div>
-                    <div class="flex flex-col gap-8px">
+                    <div class="flex flex-col">
                         <label class="gnfc-modal-label">Cable Type</label>
-                        <div class="jbd-select-wrap w-full">
-                            <select id="add-jb-type" class="gnfc-modal-input jbd-select w-full">
+                        <div>
+                            <select id="add-jb-type" class="gnfc-modal-input">
                                 <option>Select Type</option>
                                 <option>SIGNAL 12 PAIR</option>
                                 <option>RTD 8 TRIAD</option>
                                 <option>DIGITAL 6 PAIR</option>
                             </select>
-                            <i class="ph-bold ph-caret-down jbd-caret jbd-right-12px"></i>
+                            <!-- <i class="ph-bold ph-caret-down jbd-caret jbd-right-12px"></i> -->
                         </div>
                     </div>
 
                     <!-- Row 2 -->
-                    <div class="flex flex-col gap-8px">
+                    <div class="flex flex-col">
                         <label class="gnfc-modal-label">Number of Node</label>
                         <input type="text" id="add-jb-node" class="gnfc-modal-input" placeholder="0">
                     </div>
-                    <div class="flex flex-col gap-8px">
+                    <div class="flex flex-col">
                         <label class="gnfc-modal-label">Cable Number</label>
                         <input type="text" id="add-jb-cable" class="gnfc-modal-input" placeholder="">
                     </div>
 
                     <!-- Row 3 -->
-                    <div class="flex flex-col gap-8px">
+                    <div class="flex flex-col">
                         <label class="gnfc-modal-label">Cabinet Number</label>
                         <input type="text" id="add-jb-cabinet" class="gnfc-modal-input" placeholder="">
                     </div>
-                    <div></div>
 
-                    <!-- Row 4 -->
-                    <div class="col-span-2 flex flex-col gap-8px">
+                    <div class="flex flex-col">
                         <label class="gnfc-modal-label">Location</label>
                         <input type="text" id="add-jb-loc" class="gnfc-modal-input" placeholder="">
                     </div>
@@ -1190,7 +1184,7 @@
 
     <!-- Edit JB Terminal Modal -->
     <div id="modal-edit-jb-term" class="gnfc-modal-overlay" style="z-index: 10010;" role="dialog" aria-modal="true">
-        <div class="gnfc-modal-shell gnfc-modal-shell--medium p-0px">
+        <div class="gnfc-modal-shell gnfc-modal-shell--narrow p-0px">
             <div class="gnfc-modal-header">
                 <div>
                     <h3 class="gnfc-modal-title uppercase" style="color: var(--typo-blue);">Edit JB Terminal</h3>
@@ -1199,32 +1193,26 @@
                 <button onclick="closeEJTModal()" class="gnfc-modal-close"><i class="ph-bold ph-x text-lg"></i></button>
             </div>
             <div class="gnfc-modal-body">
-                <div class="flex items-center gap-16px mb-16px">
-                    <div class="flex flex-row gap-4px">
-                        <label class="gnfc-modal-label">TAG NO :</label>
-                        <div class="font-14px fw-800 color-blue" id="ejt-tag-no"></div>
+                <div class="gnfc-modal-info-box">
+                    <div class="font-14px color-primary mb-4px flex items-center">
+                        <span>Tag No :</span>
+                        <span class="fw-800 ml-6px" id="ejt-tag-no"></span>
                     </div>
-                    <div class="flex flex-row gap-4px">
-                        <label class="gnfc-modal-label">JB NO :</label>
-                        <div class="font-14px fw-800 color-blue" id="ejt-jb-no"></div>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-16px mb-16px">
-                    <div>
-                        <label class="gnfc-modal-label" id="ejt-term-label">TERM 1 : </label>
-                        <input type="text" id="ejt-term-input-active"
-                            class="w-auto gnfc-modal-input text-center font-700" placeholder="1">
-                    </div>
-
-                    <!-- checkbox Update Revision -->
-                    <div class="gnfc-modal-bulk-row mb-0px">
-                        <input type="checkbox" id="ejt-update-rev" class="gnfc-checkbox">
-                        <label for="ejt-update-rev" class="gnfc-modal-bulk-label">Update Revision</label>
+                    <div class="font-14px color-primary flex items-center">
+                        <span>JB No :</span>
+                        <span class="fw-800 font-16px ml-6px" id="ejt-jb-no"></span>
                     </div>
                 </div>
 
+                <div class="flex flex-col gap-8px mb-16px">
+                    <label class="gnfc-modal-bulk-label" id="ejt-term-label">TERM 1 :</label>
+                    <input type="text" id="ejt-term-input-active" class="gnfc-modal-input font-600" placeholder="1">
+                </div>
 
+                <div class="gnfc-modal-bulk-row mb-0px">
+                    <input type="checkbox" id="ejt-update-rev" class="gnfc-checkbox">
+                    <label for="ejt-update-rev" class="gnfc-modal-bulk-label m-0px">UPDATE REVISION</label>
+                </div>
             </div>
             <div class="gnfc-modal-footer">
                 <button type="button" onclick="updateJBTerm()" class="gnfc-modal-btn gnfc-modal-btn-primary"> Update
@@ -1261,9 +1249,7 @@
                             <option value="TC">TC - Thermocouple</option>
                         </select>
                     </div>
-                </div>
 
-                <div class="flex items-center gap-16px mb-16px">
                     <div class="flex flex-col gap-4px flex-1">
                         <label class="gnfc-modal-label">TAG FILTER</label>
                         <input type="text" id="et-tag-filter" class="gnfc-modal-input uppercase"
@@ -1278,14 +1264,14 @@
                             <option>1FT301</option>
                         </select>
                     </div>
+                    <div class="gnfc-modal-bulk-row">
+                        <input type="checkbox" id="et-update-rev" class="gnfc-checkbox">
+                        <label for="et-update-rev" class="gnfc-modal-bulk-label">Update Revision</label>
+                    </div>
                 </div>
 
-                <!-- checkbox Update Revision -->
-                <div class="gnfc-modal-bulk-row mb-0px">
-                    <input type="checkbox" id="et-update-rev" class="gnfc-checkbox">
-                    <label for="et-update-rev" class="gnfc-modal-bulk-label">Update Revision</label>
-                </div>
             </div>
+
             <div class="gnfc-modal-footer">
                 <button type="button" onclick="updateTag()" class="gnfc-modal-btn gnfc-modal-btn-primary">
                     Update
@@ -1302,18 +1288,17 @@
             <div class="gnfc-modal-header">
                 <div>
                     <h3 class="gnfc-modal-title"> Mark As Control Copy</h3>
-                    <p class="gnfc-modal-subtitle">JB Detail</p>
                 </div>
                 <button onclick="closeControlCopyModal()" class="gnfc-modal-close"><i
                         class="ph-bold ph-x text-lg"></i></button>
             </div>
             <div class="gnfc-modal-body">
-                <div class="font-14px fw-600 color-primary mb-16px">
+                <div class="font-16px fw-600 color-primary mb-16px">
                     Please check data validity for the JB before marking it as a Control Copy.
                 </div>
                 <div class="flex items-center gap-8px py-8px px-10px radius-6px icon-theme-gray">
-                    <span class="font-12px fw-600 color-secondary">JB No :</span>
-                    <span class="font-14px fw-extrabold color-red" id="cc-modal-jb-no">—</span>
+                    <span class="font-14px fw-600 color-secondary">JB No :</span>
+                    <span class="font-14px fw-extrabold color-red fw-700" id="cc-modal-jb-no">—</span>
                 </div>
             </div>
             <div class="gnfc-modal-footer">
@@ -1333,7 +1318,6 @@
             <div class="gnfc-modal-header">
                 <div>
                     <h3 class="gnfc-modal-title">JBDB Update</h3>
-                    <p class="gnfc-modal-subtitle">Sync description &amp; function from InsBl</p>
                 </div>
                 <button onclick="closeInsBlModal()" class="gnfc-modal-close">
                     <i class="ph-bold ph-x text-lg"></i>
@@ -1389,31 +1373,30 @@
                         class="ph-bold ph-x text-lg"></i></button>
             </div>
             <div class="gnfc-modal-body">
-                <div class="flex flex-col gap-8px mb-16px py-8px px-10px radius-6px icon-theme-gray">
-                    <div class="flex items-center gap-8px">
-                        <span class="font-14px fw-600 color-secondary uppercase">Tag No :</span>
-                        <span class="font-16px fw-800 color-primary" id="ect-tag-no">—</span>
+                <div class="gnfc-modal-info-box">
+                    <div class="font-14px color-primary mb-4px flex items-center">
+                        <span>Tag No :</span>
+                        <span class="fw-800 ml-6px" id="ect-tag-no">123456</span>
                     </div>
-                    <div class="flex items-center gap-8px">
-                        <span class="font-14px fw-600 color-secondary uppercase">JB No :</span>
-                        <span class="font-16px fw-800 color-primary" id="ect-jb-no">—</span>
+                    <div class="font-14px color-primary flex items-center">
+                        <span>JB No :</span>
+                        <span class="fw-800 font-16px ml-6px" id="ect-jb-no">ACJB-1</span>
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-4px mb-16px">
-                    <label class="gnfc-modal-label">Enter CAB TERM STRP :</label>
-                    <input type="text" id="ect-term-input" class="gnfc-modal-input uppercase font-700"
-                        placeholder="Terminal Name">
+                <div class="flex flex-col gap-8px mb-16px">
+                    <label class="gnfc-modal-bulk-label">ENTER CAB TERM STRP :</label>
+                    <input type="text" id="ect-term-input" class="gnfc-modal-input font-600" placeholder="Terminal Name">
                 </div>
 
                 <div class="flex flex-col gap-6px">
                     <div class="gnfc-modal-bulk-row mb-0px">
                         <input type="checkbox" id="ect-update-rev" class="gnfc-checkbox">
-                        <label for="ect-update-rev" class="gnfc-modal-bulk-label">Update Revision</label>
+                        <label for="ect-update-rev" class="gnfc-modal-bulk-label m-0px">UPDATE REVISION</label>
                     </div>
                     <div class="gnfc-modal-bulk-row mb-0px">
                         <input type="checkbox" id="ect-update-all" class="gnfc-checkbox">
-                        <label for="ect-update-all" class="gnfc-modal-bulk-label">Update All</label>
+                        <label for="ect-update-all" class="gnfc-modal-bulk-label m-0px">UPDATE ALL</label>
                     </div>
                 </div>
             </div>
@@ -1435,29 +1418,25 @@
                         class="ph-bold ph-x text-lg"></i></button>
             </div>
             <div class="gnfc-modal-body">
-                <div class="flex flex-col gap-8px mb-16px py-8px px-10px radius-6px icon-theme-gray">
-                    <div class="flex items-center gap-8px">
-                        <span class="font-14px fw-600 color-secondary uppercase">Tag No :</span>
-                        <span class="font-16px fw-800 color-primary">1PT205</span>
+                <div class="gnfc-modal-info-box">
+                    <div class="font-14px color-primary mb-4px flex items-center">
+                        <span>Tag No :</span>
+                        <span class="fw-800 ml-6px" id="ecs-tag-no"></span>
                     </div>
-                    <div class="flex items-center gap-8px">
-                        <span class="font-14px fw-600 color-secondary uppercase">JB No :</span>
-                        <span class="font-16px fw-800 color-primary"> ACJB</span>
+                    <div class="font-14px color-primary flex items-center">
+                        <span>JB No :</span>
+                        <span class="fw-800 font-16px ml-6px" id="ecs-jb-no"></span>
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-4px mb-16px">
-                    <label class="gnfc-modal-label" id="ecs-label">Enter CAB TERM NO :</label>
-                    <input type="text" id="ecs-strip-input" class="gnfc-modal-input uppercase font-700"
-                        placeholder="Strip Name">
+                <div class="flex flex-col gap-8px mb-16px">
+                    <label class="gnfc-modal-bulk-label" id="ecs-label">ENTER CAB_TERM_NO 1:</label>
+                    <input type="text" id="ecs-strip-input" class="gnfc-modal-input font-600" placeholder="">
                 </div>
 
-                <div class="flex flex-col gap-6px">
-                    <div class="gnfc-modal-bulk-row mb-0px">
-                        <input type="checkbox" id="ecs-update-rev" class="gnfc-checkbox">
-                        <label for="ecs-update-rev" class="gnfc-modal-bulk-label">Update Revision</label>
-                    </div>
-
+                <div class="gnfc-modal-bulk-row mb-0px">
+                    <input type="checkbox" id="ecs-update-rev" class="gnfc-checkbox">
+                    <label for="ecs-update-rev" class="gnfc-modal-bulk-label m-0px">UPDATE REVISION</label>
                 </div>
             </div>
             <div class="gnfc-modal-footer">
@@ -1469,6 +1448,11 @@
 
     <script>
         // Global Modal Controls
+        let $activeTermRow = null;
+        let $activeTermIndex = 1;
+        let $activeCabTermRow = null;
+        let $activeCabStripRow = null;
+
         function openModal(id) { $(id).addClass('is-open'); }
         function closeModal(id) { $(id).removeClass('is-open'); }
 
@@ -1621,12 +1605,6 @@
             initTagAutocomplete('#et-tag-filter', '#et-tag-select');
             initTagAutocomplete('#status-update-tag-input', '#status-update-tag-select');
 
-            // Toolbar Actions
-            $('#btn-tag-go').on('click', function () {
-                const val = $('#jb-tag-input').val() || $('#jb-tag-select').val();
-                if (!val || val === 'Select Tag No') return;
-                Swal.fire({ icon: 'info', title: 'Search', text: 'Searching for Tag: ' + val, confirmButtonColor: '#2563eb' });
-            });
 
             $('#btn-jb-go').on('click', function () {
                 const val = $('#jb-select').val();
@@ -1676,8 +1654,6 @@
             });
 
             // JB Terminal Edit Trigger
-            let $activeTermRow = null;
-            let $activeTermIndex = 1;
             $('.click-to-edit-jb-term').on('click', function () {
                 $activeTermRow = $(this).closest('tr');
                 $activeTermIndex = $(this).data('term-index');
@@ -1712,7 +1688,6 @@
             });
 
             // Cabinet Terminal Edit Trigger
-            let $activeCabTermRow = null;
             $('.click-to-edit-cab-term').on('click', function () {
                 $activeCabTermRow = $(this).closest('tr');
                 const termVal = $activeCabTermRow.find('.term-input-cab-terminal').val();
@@ -1730,7 +1705,6 @@
             });
 
             // Cabinet Strip Edit Trigger
-            let $activeCabStripRow = null;
             $('.click-to-edit-cab-strip').on('click', function () {
                 $activeCabStripRow = $(this).closest('tr');
                 const stripVal = $activeCabStripRow.find('.term-input-cab-strip').val();
@@ -1744,6 +1718,8 @@
                 const rowIndex = allRowsInTbody.index($activeCabStripRow);
                 const posInChannel = (rowIndex % 3) + 1; // 1, 2, or 3
 
+                $('#ecs-tag-no').text(tagNo);
+                $('#ecs-jb-no').text(jbNo);
                 $('#ecs-label').text('Enter CAB_TERM_NO ' + posInChannel + ':');
                 $('#ecs-strip-input').val(stripVal);
 
@@ -1779,7 +1755,7 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Updated!',
-                    text: 'Field has been updated successfully (Static).',
+                    text: 'Field has been updated successfully',
                     timer: 1500,
                     showConfirmButton: false
                 });
@@ -1797,16 +1773,15 @@
         function updateJBTerm() {
             if ($activeTermRow) {
                 const newVal = $('#ejt-term-input-active').val();
-                // Save back to the specific column (1 or 2) that was clicked
                 $activeTermRow.find(`.term-input-${$activeTermIndex}`).val(newVal);
             }
-
             closeEJTModal();
             Swal.fire({
                 icon: 'success',
-                title: 'Term Updated',
+                title: 'Updated!',
                 text: 'JB Terminal has been updated successfully.',
-                confirmButtonColor: '#2563eb'
+                timer: 1500,
+                showConfirmButton: false
             });
         }
 
@@ -1823,7 +1798,13 @@
                 $activeCabTermRow.find('.term-input-cab-terminal').val(newVal);
             }
             closeCabTermModal();
-            Swal.fire({ icon: 'success', title: 'Updated', text: 'Cabinet Terminal updated.', timer: 1500, showConfirmButton: false });
+            Swal.fire({
+                icon: 'success',
+                title: 'Updated!',
+                text: 'Cabinet Terminal has been updated successfully.',
+                timer: 1500,
+                showConfirmButton: false
+            });
         }
 
         function updateCabStrip() {
@@ -1832,7 +1813,13 @@
                 $activeCabStripRow.find('.term-input-cab-strip').val(newVal);
             }
             closeCabStripModal();
-            Swal.fire({ icon: 'success', title: 'Updated', text: 'Cabinet Strip updated.', timer: 1500, showConfirmButton: false });
+            Swal.fire({
+                icon: 'success',
+                title: 'Updated!',
+                text: 'Cabinet Strip has been updated successfully.',
+                timer: 1500,
+                showConfirmButton: false
+            });
         }
 
         function filterTagsByType() {
@@ -1866,23 +1853,12 @@
             closeInsBlModal();
 
             Swal.fire({
-                title: 'Syncing Data...',
-                text: 'Fetching values from InsBl. Please wait.',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                },
-                timer: 2500, // Simulate the "several seconds" delay
-                timerProgressBar: true
-            }).then(() => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sync Complete',
-                    text: isBulk
-                        ? 'Successfully updated description and function for ALL Junction Boxes.'
-                        : `Successfully updated description and function for JB: ${jbNo}.`,
-                    confirmButtonColor: '#2563eb'
-                });
+                icon: 'success',
+                title: 'Sync Complete',
+                text: isBulk
+                    ? 'Successfully updated description and function for ALL Junction Boxes.'
+                    : `Successfully updated description and function for JB: ${jbNo}.`,
+                confirmButtonColor: '#2563eb'
             });
         }
 

@@ -41,24 +41,24 @@
               <span class="jbd-card-header-title">Search Criteria</span>
             </div>
             <div class="flex items-center gap-8px">
-              <button class="pm-btn pm-btn--add px-16px h-32px font-14px" id="btn-add-job">
+              <button class="pm-btn pm-btn--add" id="btn-add-job">
                 <i class="ph-bold ph-plus-circle"></i> Add Job
               </button>
-              <button class="pm-btn pm-btn--secondary px-12px h-32px font-14px date-filter" data-type="default">Default
+              <button class="toolbar-btn date-filter" data-type="default">Default
                 Date</button>
-              <button class="pm-btn pm-btn--secondary px-12px h-32px font-14px date-filter" data-type="prev">Prev
+              <button class="toolbar-btn date-filter" data-type="prev">Prev
                 Year</button>
-              <button class="pm-btn pm-btn--secondary px-12px h-32px font-14px date-filter" data-type="this">This
+              <button class="toolbar-btn date-filter" data-type="this">This
                 Year</button>
-              <button class="pm-btn pm-btn--secondary px-12px h-32px font-14px date-filter" data-type="next">Next
+              <button class="toolbar-btn date-filter" data-type="next">Next
                 Year</button>
             </div>
           </div>
           <div class="p-16px">
             <div class="grid grid-cols-2 lg-grid-cols-4 gap-16px">
 
-              <div class="flex flex-col gap-8px">
-                <label class="font-14px fw-700 color-label text-uppercase">Loop</label>
+              <div>
+                <label class="gnfc-modal-label">Loop</label>
                 <select class="gnfc-modal-input w-full cursor-pointer" id="filter-loop">
                   <option>ALL</option>
                   <option>100</option>
@@ -66,12 +66,12 @@
                 </select>
               </div>
 
-              <div class="flex flex-col gap-8px">
-                <label class="font-14px fw-700 color-label text-uppercase">Search / Select Tag</label>
+              <div>
+                <label class="gnfc-modal-label">Search / Select Tag</label>
                 <div class="flex gap-8px">
                   <input type="text" id="filter-tag-input" class="gnfc-modal-input flex-1 font-14px uppercase"
                     placeholder="Tag No...">
-                  <select class="gnfc-modal-input flex-1 cursor-pointer font-14px" id="filter-tag">
+                  <select class="gnfc-modal-input flex-1" id="filter-tag">
                     <option value="">ALL</option>
                     <option>FV0208B</option>
                     <option>FV0216A</option>
@@ -85,8 +85,8 @@
                 </div>
               </div>
 
-              <div class="flex flex-col gap-8px">
-                <label class="font-14px fw-700 color-label text-uppercase">Type of Job</label>
+              <div>
+                <label class="gnfc-modal-label">Type of Job</label>
                 <select class="gnfc-modal-input w-full cursor-pointer" id="filter-job-type">
                   <option value="">ALL</option>
                   <option>PM</option>
@@ -112,8 +112,8 @@
                 </select>
               </div>
 
-              <div class="flex flex-col gap-8px">
-                <label class="font-14px fw-700 color-label text-uppercase">Instrument Type</label>
+              <div>
+                <label class="gnfc-modal-label">Instrument Type</label>
                 <select class="gnfc-modal-input w-full cursor-pointer" id="filter-inst-type">
                   <option value="">ALL</option>
                   <option>ANALYZER</option>
@@ -132,18 +132,18 @@
                 </select>
               </div>
 
-              <div class="flex flex-col gap-8px">
-                <label class="font-14px fw-700 color-label text-uppercase">Start Date</label>
+              <div>
+                <label class="gnfc-modal-label">Start Date</label>
                 <input type="date" id="start-date" class="gnfc-modal-input" value="2025-02-09">
               </div>
 
-              <div class="flex flex-col gap-8px">
-                <label class="font-14px fw-700 color-label text-uppercase">End Date</label>
+              <div>
+                <label class="gnfc-modal-label">End Date</label>
                 <input type="date" id="end-date" class="gnfc-modal-input" value="2026-02-09">
               </div>
 
-              <div class="flex flex-col gap-8px">
-                <label class="font-14px fw-700 color-label text-uppercase">Filter Options</label>
+              <div>
+                <label class="gnfc-modal-label">Filter Options</label>
                 <div class="flex gap-4px">
                   <label
                     class="flex items-center gap-6px cursor-pointer font-16px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
@@ -176,7 +176,7 @@
             <span class="jbd-badge-count" id="record-count">10 Records Found</span>
           </div>
 
-          <div class="user-table-wrapper radius-0px border-none">
+          <div class="user-table-wrapper radius-0px border-0">
             <table class="user-table" id="job-history-table">
               <thead>
                 <tr>
@@ -200,17 +200,17 @@
               <tbody id="job-table-body">
                 <!-- Hardcoded Rows as Requested -->
                 <tr class="user-table-row" data-sr="1">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">1</td>
-                  <td class="text-center fw-700">400</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">1</td>
+                  <td class="text-center">400</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">0208</span>
+                      <span>0208</span>
                       <span>FV0208B</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -220,7 +220,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -237,17 +237,17 @@
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="2">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">2</td>
-                  <td class="text-center fw-700">400</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">2</td>
+                  <td class="text-center">400</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">0208</span>
+                      <span>0208</span>
                       <span>FV0208B</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -257,7 +257,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -274,17 +274,17 @@
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="3">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">3</td>
-                  <td class="text-center fw-700">200</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">3</td>
+                  <td class="text-center">200</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">0216</span>
+                      <span>0216</span>
                       <span>FV0216A</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -294,7 +294,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -311,17 +311,17 @@
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="4">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">4</td>
-                  <td class="text-center fw-700">200</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">4</td>
+                  <td class="text-center">200</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">0216</span>
+                      <span>0216</span>
                       <span>FV0216A</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -331,7 +331,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -348,17 +348,17 @@
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="5">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">5</td>
-                  <td class="text-center fw-700">300</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">5</td>
+                  <td class="text-center">300</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">0301</span>
+                      <span>0301</span>
                       <span>FV301A</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -370,7 +370,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -387,17 +387,17 @@
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="6">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">6</td>
-                  <td class="text-center fw-700">300</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">6</td>
+                  <td class="text-center">300</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">3101</span>
+                      <span>3101</span>
                       <span>FV3101A</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -408,7 +408,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -425,17 +425,17 @@
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="7">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">7</td>
-                  <td class="text-center fw-700">600</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">7</td>
+                  <td class="text-center">600</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">0606</span>
+                      <span>0606</span>
                       <span>FV606</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -447,7 +447,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -464,17 +464,17 @@
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="8">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">8</td>
-                  <td class="text-center fw-700">700</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">8</td>
+                  <td class="text-center">700</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">0710</span>
+                      <span>0710</span>
                       <span>HV710</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -485,7 +485,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -502,17 +502,17 @@
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="9">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">9</td>
-                  <td class="text-center fw-700">700</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">9</td>
+                  <td class="text-center">700</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">7508</span>
+                      <span>7508</span>
                       <span>HV7508</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -523,7 +523,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -540,17 +540,17 @@
                   </td>
                 </tr>
                 <tr class="user-table-row" data-sr="10">
-                  <td class="text-center fw-700 color-blue sticky left-0 z-10 bg-panel">10</td>
-                  <td class="text-center fw-700">200</td>
+                  <td class="text-center color-blue sticky left-0 z-10 bg-panel">10</td>
+                  <td class="text-center">200</td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">0203</span>
+                      <span>0203</span>
                       <span>FV0203BA</span>
                     </div>
                   </td>
                   <td class="p-0">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-bold">C/V</span>
+                      <span>C/V</span>
                       <span>CMS JOB</span>
                     </div>
                   </td>
@@ -562,7 +562,7 @@
                   <td class="p-0">
                     <div class="user-table-cell-stack text-center">
                       <span>-</span>
-                      <span class="user-table-bold">MAJ</span>
+                      <span>MAJ</span>
                     </div>
                   </td>
                   <td class="p-0">
@@ -601,7 +601,7 @@
         <div class="flex flex-col gap-16px">
 
           <div class="grid grid-cols-4 gap-16px">
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Area</label>
               <select id="add-modal-area" class="gnfc-modal-input">
                 <option value="">Select Area</option>
@@ -612,7 +612,7 @@
                 <option>700</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Loop No</label>
               <select id="add-modal-loop" class="gnfc-modal-input">
                 <option value="">Select Loop</option>
@@ -626,7 +626,7 @@
                 <option>0203</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Tag No</label>
               <select id="add-modal-tag" class="gnfc-modal-input">
                 <option value="">Select Tag</option>
@@ -640,7 +640,7 @@
                 <option>FV0203BA</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Type of Job</label>
               <select id="add-modal-job-type" class="gnfc-modal-input">
                 <option value="">Select Job Type</option>
@@ -668,13 +668,13 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-8px">
+          <div>
             <label class="gnfc-modal-label">Description of Job</label>
             <textarea id="add-modal-desc" class="gnfc-modal-input" style="height: 120px; resize: vertical;"></textarea>
           </div>
 
           <div class="grid grid-cols-4 gap-16px">
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Type of Inst</label>
               <select id="add-modal-inst-type" class="gnfc-modal-input">
                 <option value="">Select Instrument Type</option>
@@ -693,11 +693,11 @@
                 <option>N.A.</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Date</label>
               <input type="date" id="add-modal-date" class="gnfc-modal-input">
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Tech</label>
               <select id="add-modal-tech" class="gnfc-modal-input">
                 <option value="">Select Technician</option>
@@ -710,7 +710,7 @@
                 <option>N.A.</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Eng</label>
               <select id="add-modal-eng" class="gnfc-modal-input">
                 <option value="">Select Engineer</option>
@@ -721,7 +721,7 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-8px">
+          <div>
             <label class="gnfc-modal-label">Attachments</label>
             <div class="gjh-create-attach-grid">
               <div class="gjh-create-attach-card">
@@ -757,11 +757,11 @@
           </div>
 
           <div class="grid grid-cols-2 gap-16px">
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Engineer's Remark</label>
               <textarea id="add-modal-eng-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Executive Remark</label>
               <textarea id="add-modal-exec-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
             </div>
@@ -771,8 +771,8 @@
 
       <div class="gnfc-modal-footer flex justify-end items-center px-16px py-12px">
         <div class="flex gap-12px">
-          <button class="pm-btn pm-btn--primary px-32px h-40px font-16px" id="btn-create-job">Add Job</button>
-          <button class="pm-btn pm-btn--secondary px-24px h-40px font-16px btn-close-modal">Cancel</button>
+          <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Cancel</button>
+          <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-create-job">Add Job</button>
         </div>
       </div>
     </div>
@@ -792,7 +792,7 @@
         <div class="flex flex-col gap-16px">
 
           <div class="grid grid-cols-4 gap-16px">
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Area</label>
               <select id="modal-area" class="gnfc-modal-input">
                 <option>N.A.</option>
@@ -803,7 +803,7 @@
                 <option>700</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Loop No</label>
               <select id="modal-loop" class="gnfc-modal-input">
                 <option>N.A.</option>
@@ -817,7 +817,7 @@
                 <option>0203</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Tag No</label>
               <select id="modal-tag" class="gnfc-modal-input">
                 <option>NOTAG</option>
@@ -831,7 +831,7 @@
                 <option>FV0203BA</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Type of Job</label>
               <select id="modal-job-type" class="gnfc-modal-input">
                 <option>PM</option>
@@ -858,13 +858,13 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-8px">
+          <div>
             <label class="gnfc-modal-label">Description of Job</label>
             <textarea id="modal-desc" class="gnfc-modal-input" style="height: 120px; resize: vertical;"></textarea>
           </div>
 
           <div class="grid grid-cols-4 gap-16px">
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Type of Inst</label>
               <select id="modal-inst-type" class="gnfc-modal-input">
                 <option>ANALYZER</option>
@@ -882,11 +882,11 @@
                 <option>N.A.</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Date</label>
               <input type="date" id="modal-date" class="gnfc-modal-input">
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Tech</label>
               <select id="modal-tech" class="gnfc-modal-input">
                 <option>PVC</option>
@@ -898,7 +898,7 @@
                 <option>N.A.</option>
               </select>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Eng</label>
               <select id="modal-eng" class="gnfc-modal-input">
                 <option>MAJ</option>
@@ -908,7 +908,7 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-8px">
+          <div>
             <label class="gnfc-modal-label">Attachments</label>
             <div class="gjh-detail-attach-grid">
 
@@ -948,11 +948,11 @@
           </div>
 
           <div class="grid grid-cols-2 gap-16px">
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Engineer's Remark</label>
               <textarea id="modal-eng-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
             </div>
-            <div class="flex flex-col gap-8px">
+            <div>
               <label class="gnfc-modal-label">Executive Remark</label>
               <textarea id="modal-exec-remark" class="gnfc-modal-input" style="height: 80px;"></textarea>
             </div>
@@ -961,10 +961,10 @@
       </div>
 
       <div class="gnfc-modal-footer flex justify-between items-center px-16px py-12px">
-        <button class="pm-btn pm-btn--delete px-24px h-40px font-16px" id="btn-delete-job">Delete Entry</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-danger" id="btn-delete-job">Delete Entry</button>
         <div class="flex gap-12px">
-          <button class="pm-btn pm-btn--secondary px-24px h-40px font-16px btn-close-modal">Cancel</button>
-          <button class="pm-btn pm-btn--primary px-32px h-40px font-16px" id="btn-save-job">Save</button>
+          <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Cancel</button>
+          <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-save-job">Save</button>
         </div>
       </div>
     </div>
