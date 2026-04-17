@@ -883,11 +883,14 @@
 
       // --- Mode Switching ---
       $('.mode-tab').on('click', function () {
-        $('.mode-tab').removeClass('is-active');
+        const $tabsContainer = $(this).parent();
+        $tabsContainer.find('.mode-tab').removeClass('is-active');
         $(this).addClass('is-active');
+
         const mode = $(this).data('mode');
-        $('.mode-content').removeClass('is-active');
-        $(`#content-${mode}`).addClass('is-active');
+        const $wrapper = $tabsContainer.parent();
+        $wrapper.find('.mode-content').removeClass('is-active');
+        $wrapper.find('[id="content-' + mode + '"]').addClass('is-active');
       });
 
       // --- Modal Open ---
@@ -897,7 +900,7 @@
         $('#add-mail-modal input, #add-mail-modal select, #add-mail-modal textarea').val('');
         selectedEmails = [];
         updateMSDisplay();
-        $('.mode-tab[data-mode="interval"]').click();
+        $('#add-mail-modal .mode-tab[data-mode="interval"]').click();
         $('#add-mail-modal').addClass('is-open');
       });
 

@@ -1527,15 +1527,15 @@
 
     const FOLDER_DATA = {
       'BOILER_INST': [
-        { name: 'APPROVAL', type: 'Folder', size: 12148, date: '27/06/2020 RMP', rev: '' },
-        { name: 'CORRESPONDANCE', type: 'Folder', size: 8680, date: '25/08/2021 RMP', rev: '' },
-        { name: 'REPORTS', type: 'Folder', size: 8040, date: '04/11/2024 RMP', rev: '' },
-        { name: 'MDM', type: 'Folder', size: 7033, date: '15/07/2018 RMP', rev: '' },
-        { name: 'PAYMENT', type: 'Folder', size: 254, date: '14/06/2019 RMP', rev: '' }
+        { name: 'APPROVAL', type: 'Folder', size: 12148, date: '27/06/2020 ', rev: '' },
+        { name: 'CORRESPONDANCE', type: 'Folder', size: 8680, date: '25/08/2021 ', rev: '' },
+        { name: 'REPORTS', type: 'Folder', size: 8040, date: '04/11/2024 ', rev: '' },
+        { name: 'MDM', type: 'Folder', size: 7033, date: '15/07/2018 ', rev: '' },
+        { name: 'PAYMENT', type: 'Folder', size: 254, date: '14/06/2019 ', rev: '' }
       ],
       'APPROVAL': [
-        { name: 'DRAWINGS', type: 'Folder', size: 5000, date: '10/01/2021 RMP', rev: '' },
-        { name: 'CERTIFICATES', type: 'Folder', size: 7148, date: '27/06/2020 RMP', rev: '' }
+        { name: 'DRAWINGS', type: 'Folder', size: 5000, date: '10/01/2021 ', rev: '' },
+        { name: 'CERTIFICATES', type: 'Folder', size: 7148, date: '27/06/2020 ', rev: '' }
       ],
       'DRAWINGS': [
         { name: 'Boiler_Side_View.pdf', type: 'File', size: 2500, date: '10/01/2021 RMP', rev: '0' },
@@ -1546,8 +1546,8 @@
         { name: 'Vendor_Certificates.zip', type: 'File', size: 1968, date: '05/02/2021 RMP', rev: '1' }
       ],
       'REPORTS': [
-        { name: '2024', type: 'Folder', size: 4000, date: '01/01/2024 RMP', rev: '' },
-        { name: '2023', type: 'Folder', size: 4040, date: '01/01/2023 RMP', rev: '' }
+        { name: '2024', type: 'Folder', size: 4000, date: '01/01/2024 ', rev: '' },
+        { name: '2023', type: 'Folder', size: 4040, date: '01/01/2023 ', rev: '' }
       ],
       '2024': [
         { name: 'Monthly_Summary_Jan.pdf', type: 'File', size: 2000, date: '31/01/2024 RMP', rev: '0' },
@@ -1665,12 +1665,13 @@
     }
 
     // ── Navigation Engine ──
-    function renderFolderContents() {
-      const currentFolderName = CURRENT_PATH[CURRENT_PATH.length - 1];
-      $('#current-folder-display').text(currentFolderName);
-      updateStats();
-      updateToolbarState();
+    function goToParentFolder() {
+      if (CURRENT_PATH.length > 1) {
+        CURRENT_PATH.pop();
+        renderFolderContents();
+      }
     }
+
     function renderFolderContents() {
       const currentFolderName = CURRENT_PATH[CURRENT_PATH.length - 1];
       const items = FOLDER_DATA[currentFolderName] || [];
