@@ -380,8 +380,84 @@ html[data-theme="light"] .gnfc-modal-input::-webkit-calendar-picker-indicator {
   border-color: #3b82f6;
 }
 
+.gnfc-modal-input.auto-width-input {
+    width: 100%;
+    min-width: 100%;
+    transition: width 0.1s ease;
+}
+
+.form-flex-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+}
+
+.form-flex-wrapper > div {
+    flex: 0 1 200px;
+    min-width: 0; /* Allow items to shrink or move */
+}
+
+/* Specific bases for grid-like initial appearance */
+.form-flex-wrapper.flex-cols-4 > div { flex-basis: calc(25% - 18px); }
+.form-flex-wrapper.flex-cols-3 > div { flex-basis: calc(33.33% - 16px); }
+.form-flex-wrapper.flex-cols-2 > div { flex-basis: calc(50% - 12px); }
+
 .gnfc-modal-input::placeholder {
   color: var(--gnfc-modal-input-placeholder);
+}
+
+.attachment-tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 10px;
+  min-height: 38px;
+  background: var(--gnfc-modal-input-bg);
+  border: 1px solid var(--gnfc-modal-input-border);
+  border-radius: 4px;
+  width: 100%;
+  cursor: default;
+}
+
+.file-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(87, 148, 242, 0.1);
+  color: #5794f2;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 1px solid rgba(87, 148, 242, 0.2);
+  transition: all 0.2s;
+}
+
+.file-tag:hover {
+  background: rgba(87, 148, 242, 0.15);
+}
+
+.file-tag i.ph-x {
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.file-tag i.ph-x:hover {
+  opacity: 1;
+  color: #f2495c;
+  transform: scale(1.2);
+}
+
+.gnfc-modal-input.has-tag-container {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
 
 /* Remove native browser arrow from <select> using gnfc-modal-input */
@@ -541,13 +617,13 @@ select.gnfc-modal-input option {
 
 /* ── Attachment Modal Specific Styles ─────────────────────── */
 .modal-view-header {
-  padding: 10px 16px;
+  padding-bottom: 5px;
   border-bottom: 2px solid var(--gnfc-modal-shell-border);
   background: var(--gnfc-modal-header-bg);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 3px;
+  margin-bottom: 6px;
 }
 
 .modal-header-left {

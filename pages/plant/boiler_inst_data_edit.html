@@ -37,9 +37,9 @@
                     <!-- ─── General Information ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-tag"></i> General Information</div>
-                        <div class="form-grid grid-cols-4">
-                            <div>
-                                <label class="input-label">PLANT AREA</label>
+                        <div class="form-flex-wrapper">
+                            <div style="flex: 0 0 220px;">
+                                <label class="input-label">PLANT AREA <span class="required">*</span></label>
                                 <div class="gnfc-select-group">
                                     <select id="ef-area" class="gnfc-modal-input">
                                         <option>Select Area</option>
@@ -51,17 +51,17 @@
                                     <i class="ph-bold ph-caret-down"></i>
                                 </div>
                             </div>
-                            <div>
-                                <label class="input-label">TAG NO</label>
+                            <div style="flex: 0 0 260px;">
+                                <label class="input-label">TAG NO <span class="required">*</span> </label>
                                 <input type="text" id="ef-tag_no" class="gnfc-modal-input" placeholder="Enter Tag No">
                             </div>
-                            <div>
-                                <label class="input-label">DESCRIPTION</label>
+                            <div style="flex: 1 1 300px;">
+                                <label class="input-label">DESCRIPTION <span class="required">*</span> </label>
                                 <input type="text" id="ef-description" class="gnfc-modal-input"
                                     placeholder="Instrument Description">
                             </div>
-                            <div>
-                                <label class="input-label">HOST</label>
+                            <div style="flex: 0 0 220px;">
+                                <label class="input-label">HOST <span class="required">*</span></label>
                                 <div class="gnfc-select-group">
                                     <select id="ef-host" class="gnfc-modal-input">
                                         <option>DCS</option>
@@ -77,7 +77,7 @@
                     <!-- ─── Controller & IO Module ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-cpu"></i> Controller & IO Module</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">CONTROLLER TYPE</label><input type="text" id="ef-ctrl_type"
                                     class="gnfc-modal-input"></div>
                             <div><label class="input-label">CONTROLLER NO</label><input type="text" id="ef-ctrl_no"
@@ -104,7 +104,7 @@
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-sliders-horizontal"></i> Calibration & Range
                             </div>
-                            <div class="form-grid grid-cols-2">
+                            <div class="form-flex-wrapper flex-cols-2">
                                 <div><label class="input-label">CAL RANGE</label><input type="text" id="ef-cal_range"
                                         class="gnfc-modal-input"></div>
                                 <div><label class="input-label">ENG RANGE</label><input type="text" id="ef-eng_range"
@@ -114,7 +114,7 @@
                         <!-- ─── Trip Settings ─── -->
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-warning-circle"></i> Trip Settings</div>
-                            <div class="form-grid grid-cols-2">
+                            <div class="form-flex-wrapper flex-cols-2">
                                 <div><label class="input-label">TRIP L LL</label><input type="text" id="ef-trip_l"
                                         class="gnfc-modal-input"></div>
                                 <div><label class="input-label">TRIP H HH</label><input type="text" id="ef-trip_h"
@@ -130,7 +130,7 @@
                     <!-- ─── Specifications ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-wrench"></i> Specifications</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-4">
                             <div><label class="input-label">INST TYPE</label>
                                 <div class="gnfc-select-group">
                                     <select id="ef-inst_type" class="gnfc-modal-input">
@@ -173,7 +173,7 @@
                     <!-- ─── Primary Element ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-atom"></i> Primary Element</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">SPECPRIM</label>
                                 <div class="input-icon-group"><input type="text" id="ef-pe_datasheet"
                                         class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
@@ -204,7 +204,7 @@
                     <!-- ─── Secondary Element ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-stack"></i> Secondary Element</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">CALSEC</label>
                                 <div class="input-icon-group"><input type="text" id="ef-se_calc"
                                         class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
@@ -235,15 +235,15 @@
                     <!-- ─── Other Links ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-link"></i> Other Links</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">LOGIC</label>
                                 <div class="input-icon-group"><input type="text" id="ef-logic"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">LOOPSHEET</label>
                                 <div class="input-icon-group"><input type="text" id="ef-loop_sheet"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">HHAND</label>
@@ -293,7 +293,7 @@
                     <!-- ─── Metadata ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-info"></i> Metadata</div>
-                        <div class="form-grid grid-cols-3">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">by</label><input type="text" id="ef-by"
                                     class="gnfc-modal-input"></div>
                             <div><label class="input-label">date1</label><input type="date" id="ef-date1"
@@ -486,54 +486,48 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-center" id="file-list-body">
-                                    <!-- Static dummy files structure for easy backend binding integration -->
-                                    <tr style="cursor: pointer;" class="file-row"
-                                        onclick="selectModalFile(this, 'drawing_001.pdf')">
+                                    <tr style="cursor: pointer;" class="file-row" onclick="selectModalFile(this, 'drawing_001.pdf')">
                                         <td>1</td>
-                                        <td class="text-left font-bold ">
+                                        <td class="text-left font-bold">
                                             <div class="modal-table-row-item">
                                                 <i class="ph-fill ph-file-pdf modal-icon modal-icon-pdf"></i>
-                                                drawing_001.pdf
+                                                <span>drawing_001.pdf</span>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr style="cursor: pointer;" class="file-row"
-                                        onclick="selectModalFile(this, 'specifications_002.pdf')">
+                                    <tr style="cursor: pointer;" class="file-row" onclick="selectModalFile(this, 'specifications_002.pdf')">
                                         <td>2</td>
-                                        <td class="text-left font-bold ">
+                                        <td class="text-left font-bold">
                                             <div class="modal-table-row-item">
                                                 <i class="ph-fill ph-file-pdf modal-icon modal-icon-pdf"></i>
-                                                specifications_002.pdf
+                                                <span>specifications_002.pdf</span>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr style="cursor: pointer;" class="file-row"
-                                        onclick="selectModalFile(this, 'data_sheet_v1.xlsx')">
+                                    <tr style="cursor: pointer;" class="file-row" onclick="selectModalFile(this, 'data_sheet_v1.xlsx')">
                                         <td>3</td>
-                                        <td class="text-left font-bold ">
+                                        <td class="text-left font-bold">
                                             <div class="modal-table-row-item">
                                                 <i class="ph-fill ph-file-xls modal-icon modal-icon-xls"></i>
-                                                data_sheet_v1.xlsx
+                                                <span>data_sheet_v1.xlsx</span>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr style="cursor: pointer;" class="file-row"
-                                        onclick="selectModalFile(this, 'maintenance_log.docx')">
+                                    <tr style="cursor: pointer;" class="file-row" onclick="selectModalFile(this, 'maintenance_log.docx')">
                                         <td>4</td>
-                                        <td class="text-left font-bold ">
+                                        <td class="text-left font-bold">
                                             <div class="modal-table-row-item">
                                                 <i class="ph-fill ph-file-doc modal-icon modal-icon-doc"></i>
-                                                maintenance_log.docx
+                                                <span>maintenance_log.docx</span>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr style="cursor: pointer;" class="file-row"
-                                        onclick="selectModalFile(this, 'budget_estimate.xlsx')">
+                                    <tr style="cursor: pointer;" class="file-row" onclick="selectModalFile(this, 'budget_estimate.xlsx')">
                                         <td>5</td>
-                                        <td class="text-left font-bold ">
+                                        <td class="text-left font-bold">
                                             <div class="modal-table-row-item">
                                                 <i class="ph-fill ph-file-xls modal-icon modal-icon-xls"></i>
-                                                budget_estimate.xlsx
+                                                <span>budget_estimate.xlsx</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -553,59 +547,158 @@
         </div>
 
         <script>
-            $(document).ready(function () {
-                let currentTargetInput = null;
+        window.showCategories = function () {
+            $('#modal-view-files').addClass('hidden');
+            $('#modal-view-categories').removeClass('hidden');
+        };
 
-                $('.btn-att-open').on('click', function (e) {
-                    e.preventDefault();
-                    currentTargetInput = $(this).siblings('input');
+        window.openCategory = function (categoryName) {
+            $('#current-category-name').text(categoryName);
+            $('#modal-view-categories').addClass('hidden');
+            $('#modal-view-files').removeClass('hidden');
 
-                    $('#modal-selected-file-input').val('');
-                    showCategories();
+            // Pre-select files in this category
+            $('.file-row').each(function () {
+                const fileName = $(this).find('span').text().trim();
+                if (window.selectedModalFiles.includes(fileName)) {
+                    $(this).addClass('is-selected');
+                } else {
+                    $(this).removeClass('is-selected');
+                }
+            });
+        };
 
-                    $('#modal-attachment').addClass('is-open');
-                });
+        window.selectModalFile = function (rowElement, fileName) {
+            if ($(rowElement).hasClass('is-selected')) {
+                $(rowElement).removeClass('is-selected');
+                window.selectedModalFiles = window.selectedModalFiles.filter(f => f !== fileName);
+            } else {
+                $(rowElement).addClass('is-selected');
+                if (!window.selectedModalFiles.includes(fileName)) {
+                    window.selectedModalFiles.push(fileName);
+                }
+            }
+        };
 
+        window.confirmFileSelection = function () {
+            if (window.currentTargetInput) {
+                window.currentTargetInput.val(window.selectedModalFiles.join(', '));
+                window.currentTargetInput.trigger('input');
+                if (window.currentTargetInput.attr('id')) {
+                    syncFileTags(window.currentTargetInput.attr('id'));
+                }
+            }
+            $('#modal-attachment').removeClass('is-open');
+        };
 
-                window.showCategories = function () {
-                    $('#modal-view-files').addClass('hidden');
-                    $('#modal-view-categories').removeClass('hidden');
-                };
+        window.syncFileTags = function (inputId) {
+            const input = $('#' + inputId);
+            if (!input.length) return;
+            
+            let container = input.parent().find('.attachment-tag-container');
+            
+            if (container.length === 0) {
+                container = $('<div class="attachment-tag-container"></div>');
+                input.before(container);
+                input.addClass('has-tag-container');
+            }
+            
+            container.empty();
+            const files = input.val() ? input.val().split(',').map(f => f.trim()).filter(f => f !== "") : [];
+            
+            files.forEach(file => {
+                const tag = $('<div class="file-tag"></div>')
+                    .html(`<span>${file}</span>`)
+                    .append($('<i class="ph-bold ph-x"></i>').on('click', function(e) {
+                        e.stopPropagation();
+                        const updatedFiles = input.val().split(',').map(f => f.trim()).filter(f => f !== file && f !== "");
+                        input.val(updatedFiles.join(', '));
+                        window.syncFileTags(inputId);
+                        input.trigger('input');
+                    }));
+                container.append(tag);
+            });
+        };
 
-                window.openCategory = function (categoryName) {
-                    $('#current-category-name').text(categoryName);
-                    $('#modal-view-categories').addClass('hidden');
-                    $('#modal-view-files').removeClass('hidden');
-                };
+        $(document).ready(function() {
+            window.currentTargetInput = null;
+            window.selectedModalFiles = [];
 
-                window.selectModalFile = function (rowElement, fileName) {
-                    $('.file-row').removeClass('is-selected');
-                    $(rowElement).addClass('is-selected');
+            $(document).on('click', '.btn-att-open', function (e) {
+                e.preventDefault();
+                window.currentTargetInput = $(this).closest('.input-icon-group').find('input');
+                const currentVal = window.currentTargetInput.val();
+                window.selectedModalFiles = currentVal ? currentVal.split(',').map(f => f.trim()).filter(f => f !== "") : [];
+                $('.file-row').removeClass('is-selected');
+                showCategories();
+                $('#modal-attachment').addClass('is-open');
+            });
 
-                    $('#modal-selected-file-input').val(fileName);
-                };
-
-                window.confirmFileSelection = function () {
-                    const selectedFile = $('#modal-selected-file-input').val();
-                    if (selectedFile && currentTargetInput) {
-                        currentTargetInput.val(selectedFile);
-                    }
-                    $('#modal-attachment').removeClass('is-open');
-                };
-
-                $('#btn-save-bottom').on('click', function() {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Updated Successfully',
-                        text: 'Instrument data has been updated successfully!',
-                        confirmButtonColor: 'var(--emerald)',
-                        timer: 2000,
-                        showConfirmButton: false
-                    }).then(() => {
-                        window.location.href = 'boiler_inst_data.html';
-                    });
+            $('#btn-save-bottom').on('click', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Updated Successfully',
+                    text: 'Instrument data has been updated successfully!',
+                    confirmButtonColor: 'var(--emerald)',
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = 'boiler_inst_data.html';
                 });
             });
+
+            function initAutoWidth() {
+                $('.gnfc-modal-input:not(select):not([type="date"])').addClass('auto-width-input');
+                const inputs = $('.auto-width-input');
+                
+                inputs.each(function() {
+                    if ($(this).attr('readonly') && $(this).siblings('.btn-att-open').length > 0) {
+                        window.syncFileTags($(this).attr('id'));
+                    }
+                });
+
+                const updateWidth = (input) => {
+                    const baseWidth = $(input).data('base-width') || 0;
+                    const isTagField = $(input).hasClass('has-tag-container');
+                    const valueToMeasure = isTagField ? ' ' : ($(input).val() || $(input).attr('placeholder'));
+
+                    const tempSpan = $('<span>')
+                        .text(valueToMeasure)
+                        .css({
+                            'font': $(input).css('font'),
+                            'visibility': 'hidden',
+                            'position': 'absolute',
+                            'white-space': 'pre',
+                            'letter-spacing': $(input).css('letter-spacing'),
+                            'text-transform': $(input).css('text-transform'),
+                            'padding': '0 12px'
+                        })
+                        .appendTo('body');
+                    
+                    const contentWidth = tempSpan.outerWidth() + 10;
+                    const maxAllowedWidth = $(input).closest('.form-flex-wrapper').width();
+                    const finalWidth = Math.min(Math.max(baseWidth, contentWidth), maxAllowedWidth);
+                    
+                    $(input).css('width', finalWidth + 'px');
+                    $(input).closest('.form-flex-wrapper > div').css('flex-basis', finalWidth + 'px');
+                    tempSpan.remove();
+                };
+
+                setTimeout(() => {
+                    inputs.each(function() {
+                        const parentWidth = $(this).closest('.form-flex-wrapper > div').width();
+                        $(this).data('base-width', parentWidth);
+                        updateWidth(this);
+                    });
+                }, 300);
+
+                $(document).on('input focus', '.auto-width-input', function() {
+                    updateWidth(this);
+                });
+            }
+
+            initAutoWidth();
+        });
         </script>
 </body>
 

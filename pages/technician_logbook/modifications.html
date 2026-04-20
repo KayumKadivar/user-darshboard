@@ -46,52 +46,51 @@
       <div id="plant-nav-container"></div>
 
       <!-- ── FILTER CARD ── -->
-      <div class="jt-filter-card" style="margin-bottom: 24px;">
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
         <div class="jt-filter-header">
           <h3 class="jt-filter-title">
             <i class="ph-bold ph-funnel"></i>
             SEARCH CRITERIA
           </h3>
         </div>
-        <div class="jt-filter-body grid grid-cols-2 gap-16px">
+        <div class="jt-filter-body grid grid-cols-4 gap-16px">
           
-          <!-- Tag Input -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">Search Tag / Description</label>
-            <div class="jt-input-icon-wrap" style="position: relative; width: 100%;">
-              <i class="ph-bold ph-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--typo-label); font-size: 14px; pointer-events: none; z-index: 2;"></i>
-              <input type="text" id="modSearch" class="jt-input" placeholder="Enter Tag No..." style="padding-left: 36px;">
+          <!-- Search / Select Tag -->
+          <div class="jt-filter-group" style="grid-column: span 2;">
+            <label class="gnfc-modal-label" for="modSearchInput">Search / Select Tag</label>
+            <div class="flex items-center gap-12px">
+              <div class="jt-input-wrap flex-1">
+                <i class="ph-bold ph-magnifying-glass jt-input-icon"></i>
+                <input type="text" id="modSearchInput" class="gnfc-modal-input" placeholder="Type Tag No...">
+              </div>
+              <select id="modTagSelect" class="gnfc-modal-input flex-1">
+                <option value="">-- ALL TAGS --</option>
+              </select>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="jt-filter-group flex items-end gap-12px">
+          <div class="jt-filter-btn">
             <button onclick="renderModTable()" class="jt-btn-primary">
               <i class="ph-bold ph-lightning"></i> APPLY
             </button>
             <button onclick="location.reload()" class="jt-btn-reset">
-              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+              Reset
             </button>
           </div>
+          
         </div>
       </div>
 
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card">
-
         <div class="jt-report-header">
           <div class="jt-report-title">
             <i class="ph-fill ph-gear-six"></i>
             <div class="jt-title-stack">
               <h3 class="jt-main-title">Modifications Suggested</h3>
               <p style="font-size: 13px; color: var(--brand-primary); font-weight: 600; margin-top: 2px;">Plant Unit: Acetic Acid</p>
-            </div>
-          </div>
-          <div class="jt-report-actions">
-            <div class="flex gap-16px items-center">
-              <button class="jt-btn-primary">
-                <i class="ph-bold ph-export"></i> EXPORT PDF
-              </button>
             </div>
           </div>
         </div>
@@ -111,12 +110,12 @@
             </thead>
                         <tbody id="mod-table-body">
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">1</td>
-                <td class="user-table-center user-table-bold user-table-blue">2PT1544</td>
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">2PT1544</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Zero checked found ok. Manifold and nipple required. Same informed to IE.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">DSU</td>
+                <td class="user-table-center">DSU</td>
                 <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
+                   <span>OVER</span>
                 </td>
                 <td class="user-table-secondary" style="font-style: italic; font-size: 0.85rem;">ok [written by: MMD Date: 17/03/2017]</td>
                 <td class="user-table-center">
@@ -124,12 +123,12 @@
                 </td>
               </tr>
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">2</td>
-                <td class="user-table-center user-table-bold user-table-blue">4PCV1631B</td>
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">4PCV1631B</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">As per process report its valve is not operate below 30 per due to valve stuck-up, then inform to process the output of PRCA1605 is look at 3.5 kg/cm2 lower limit due to this valve is not operate. After that as per IOM PROM 605 valve is change from 3.5 to 3.2 and trial taken HCPCV working normal. HELP page graphics modification required. Now showing PRCA1631B for HO and PRCA1531B for NC lower limit and higher limit lock value, but need to provide PRCA1605 for both HO and NO control loop output lower limit lock and higher limit lock this is help to process for smooth operation.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">RMK</td>
+                <td class="user-table-center">RMK</td>
                 <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
+                   <span>OVER</span>
                 </td>
                 <td class="user-table-secondary" style="font-style: italic; font-size: 0.85rem;">ok [written by: RMP Date: 19/08/2017]</td>
                 <td class="user-table-center">
@@ -137,12 +136,12 @@
                 </td>
               </tr>
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">3</td>
-                <td class="user-table-center user-table-bold user-table-blue">BDV-8420B</td>
+                <td class="user-table-center">3</td>
+                <td class="user-table-center">BDV-8420B</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Its close limit switch not coming. Be checked in field and adjusted. Now its coming Tagging required in field.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">BBU</td>
+                <td class="user-table-center">BBU</td>
                 <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
+                   <span>OVER</span>
                 </td>
                 <td class="user-table-secondary" style="font-style: italic; font-size: 0.85rem;">ok [written by: MMD Date: 01/04/2017]</td>
                 <td class="user-table-center">
@@ -150,12 +149,12 @@
                 </td>
               </tr>
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">4</td>
-                <td class="user-table-center user-table-bold user-table-blue">SDV-9</td>
+                <td class="user-table-center">4</td>
+                <td class="user-table-center">SDV-9</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Close Limit switch indication some time not coming so Proximity switch adjusted after that operation checked found ok. Proximity mounting required changes because of its not sensing target proper(For this modification show ASP-1 Discharge valve LS)</td>
-                <td class="user-table-center user-table-bold user-table-secondary">VVM</td>
+                <td class="user-table-center">VVM</td>
                 <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
+                   <span>OVER</span>
                 </td>
                 <td class="user-table-secondary" style="font-style: italic; font-size: 0.85rem;">Good. [written by: AMD Date: 19/08/2017]<br>E(MMD) Do needful. [written by: NTD Date: 21/04/2017]</td>
                 <td class="user-table-center">
@@ -163,12 +162,12 @@
                 </td>
               </tr>
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">5</td>
-                <td class="user-table-center user-table-bold user-table-blue">Aa-7</td>
+                <td class="user-table-center">5</td>
+                <td class="user-table-center">Aa-7</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Vessel pressure low not coming so checked found that line block filter feel with ASH and Impulse line too. Both clean and operation checked found ok. Line block Impulse BS tube modification required.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">VVM</td>
+                <td class="user-table-center">VVM</td>
                 <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
+                   <span>OVER</span>
                 </td>
                 <td class="user-table-secondary" style="font-style: italic; font-size: 0.85rem;">What is your suggestion? [written by: AMD Date: 16/08/2018]<br>Can we provide air flushing? [written by: NTD Date: 16/08/2018]</td>
                 <td class="user-table-center">
@@ -176,12 +175,12 @@
                 </td>
               </tr>
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">6</td>
-                <td class="user-table-center user-table-bold user-table-blue">PV-8420A</td>
+                <td class="user-table-center">6</td>
+                <td class="user-table-center">PV-8420A</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Control valve PM job done. Cleaning, Greasing done. Fitting Leakage checked and found ok. Diaphragm passing checked and found ok. Stroke checked found ok. -Start opening checked and found its 4.12 mA, its AFR replace with spare, tubing modification require, stroke check from control room.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">JDB</td>
+                <td class="user-table-center">JDB</td>
                 <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
+                   <span>OVER</span>
                 </td>
                 <td class="user-table-secondary" style="font-style: italic; font-size: 0.85rem;">ok [written by: RMP Date: 25/04/2018]</td>
                 <td class="user-table-center">
@@ -189,12 +188,12 @@
                 </td>
               </tr>
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">7</td>
-                <td class="user-table-center user-table-bold user-table-blue">PV-8420C</td>
+                <td class="user-table-center">7</td>
+                <td class="user-table-center">PV-8420C</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Control valve PM job done. Cleaning, Greasing done. Fitting Leakage checked and found ok. Diaphragm passing checked and found ok. Stroke checked found ok. -Start opening checked and found its 18.95 mA, its AFR replace with spare, tubing modification require, stroke check from control room.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">JDB</td>
+                <td class="user-table-center">JDB</td>
                 <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
+                   <span>OVER</span>
                 </td>
                 <td class="user-table-secondary" style="font-style: italic; font-size: 0.85rem;">ok by: RBL Date: 25/04/2018</td>
                 <td class="user-table-center">
@@ -202,12 +201,12 @@
                 </td>
               </tr>
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">8</td>
-                <td class="user-table-center user-table-bold user-table-blue">LT-2</td>
+                <td class="user-table-center">8</td>
+                <td class="user-table-center">LT-2</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Process require Slurry sump level High bypass for HP pump start so its LT cover try to open but its much more jam so LT remove with base and put on open atmosphere for HP pump start. -After Process clearance LT keep it on original place. -LT mounting base found totally corrode so its require proper base mounting.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">MSA</td>
+                <td class="user-table-center">MSA</td>
                 <td class="user-table-center">
-                  <span class="ui-badge ui-badge--success">OVER</span>
+                   <span>OVER</span>
                 </td>
                 <td class="user-table-secondary" style="font-style: italic; font-size: 0.85rem;">ok [written by: RMP Date: 19/11/2018]</td>
                 <td class="user-table-center">
@@ -224,20 +223,198 @@
   </main>
 
   <script>
-    /** ── Global functions for onclick handlers ── */
-    window.renderModTable = function() {
-      Swal.fire({
-        title: 'Static Mode',
-        text: 'Filtering is currently available only as a simulation in this static view.',
-        icon: 'info',
-        background: '#1e293b',
-        color: '#ffffff',
-        confirmButtonColor: '#3b82f6'
+    /** ── Smart Tag Autocomplete Helper ── */
+    function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+      const $input = $(inputSelector);
+      const $select = $(selectSelector);
+      let snapBackTimeout = null;
+      let snapBackInterval = null;
+      let isAutoRemoving = false;
+
+      function getAvailableTags() {
+        let tags = [];
+        $select.find('option').each(function () {
+          if ($(this).val()) tags.push($(this).val());
+        });
+        return tags;
+      }
+
+      function stopAutoRemove() {
+        clearTimeout(snapBackTimeout);
+        clearInterval(snapBackInterval);
+        isAutoRemoving = false;
+      }
+
+      const tags = getAvailableTags();
+
+      $input.on('input', function (e) {
+        const cursorStart = this.selectionStart;
+        const cursorEnd = this.selectionEnd;
+        const rawVal = $(this).val();
+        const upperVal = rawVal.toUpperCase();
+        if (rawVal !== upperVal) {
+          $(this).val(upperVal);
+          this.setSelectionRange(cursorStart, cursorEnd);
+        }
+
+        const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+        const isDeleting = inputType && inputType.startsWith('delete');
+
+        if (isDeleting) stopAutoRemove();
+
+        let inputVal = $(this).val().toUpperCase();
+
+        if (isDeleting) {
+          let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+          if (hasMatch) {
+            $(this).removeClass('is-invalid-tag');
+          } else {
+            $(this).addClass('is-invalid-tag');
+          }
+
+          let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+          $select.val(exactMatch || '');
+          if (onMatch) onMatch(exactMatch || '');
+          return;
+        }
+
+        // Longest Valid Prefix logic
+        let longestValidPrefix = "";
+        for (let i = inputVal.length; i >= 0; i--) {
+          let sub = inputVal.substring(0, i);
+          if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+            longestValidPrefix = sub;
+            break;
+          }
+        }
+
+        if (inputVal.length > longestValidPrefix.length + 3) {
+          inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+          $(this).val(inputVal);
+        }
+
+        if (inputVal.length > longestValidPrefix.length) {
+          $(this).addClass('is-invalid-tag');
+          $select.val('');
+          if (onMatch) onMatch('');
+
+          stopAutoRemove();
+          const self = this;
+          const targetPrefix = longestValidPrefix;
+          snapBackTimeout = setTimeout(() => {
+            isAutoRemoving = true;
+            snapBackInterval = setInterval(() => {
+              let currentVal = $input.val();
+              if (currentVal.length > targetPrefix.length) {
+                currentVal = currentVal.substring(0, currentVal.length - 1);
+                $input.val(currentVal);
+              } else {
+                clearInterval(snapBackInterval);
+                isAutoRemoving = false;
+                $input.removeClass('is-invalid-tag');
+                let val = $input.val().toUpperCase();
+                if (val.length > 0) {
+                  let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(val));
+                  if (firstMatch) {
+                    $input.val(firstMatch);
+                    self.setSelectionRange(val.length, firstMatch.length);
+                    $select.val(firstMatch);
+                    if (onMatch) onMatch(firstMatch);
+                  }
+                } else {
+                  $select.val('');
+                  if (onMatch) onMatch('');
+                }
+              }
+            }, 150);
+          }, 800);
+          return;
+        }
+
+        stopAutoRemove();
+        $(this).removeClass('is-invalid-tag');
+
+        if (inputVal.length > 0) {
+          let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(inputVal));
+          if (firstMatch) {
+            $(this).val(firstMatch);
+            this.setSelectionRange(inputVal.length, firstMatch.length);
+            $select.val(firstMatch);
+            if (onMatch) onMatch(firstMatch);
+          }
+        } else {
+          $select.val('');
+          if (onMatch) onMatch('');
+        }
       });
+
+      $input.on('keydown', function (e) {
+        if (isAutoRemoving && e.key !== 'Enter') stopAutoRemove();
+        if (e.key === 'Enter') {
+          stopAutoRemove();
+          const currentVal = $(this).val();
+          if (currentVal && !$(this).hasClass('is-invalid-tag')) {
+            e.preventDefault();
+            $(this).val(currentVal);
+            this.setSelectionRange(currentVal.length, currentVal.length);
+            $(this).addClass('tag-confirmed');
+            setTimeout(() => $(this).removeClass('tag-confirmed'), 500);
+            renderModTable();
+          }
+        }
+      });
+
+      $select.on('change', function () {
+        stopAutoRemove();
+        let val = $(this).val();
+        $input.val(val);
+        $input.removeClass('is-invalid-tag');
+        if (onMatch) onMatch(val);
+      });
+    }
+
+    /** ── Search/Filtering Logic ── */
+    window.renderModTable = function() {
+      const searchTerm = $('#modSearchInput').val().toUpperCase().trim();
+      const $rows = $('#mod-table-body tr');
+      let matchCount = 0;
+
+      $rows.each(function() {
+        const $row = $(this);
+        const tagNo = $row.find('td:nth-child(2)').text().toUpperCase().trim();
+        // Also allow description search if desired, but user asked for "tag dropdown"
+        const description = $row.find('td:nth-child(3)').text().toUpperCase();
+
+        if (tagNo.includes(searchTerm) || (searchTerm.length > 3 && description.includes(searchTerm))) {
+          $row.show();
+          matchCount++;
+        } else {
+          $row.hide();
+        }
+      });
+
+      if (matchCount === 0 && searchTerm !== "") {
+        console.log("No results for:", searchTerm);
+      }
     };
 
     $(document).ready(function () {
-      // URL handling
+      // 1. Populate Dropdown from Table
+      const tags = [];
+      $('#mod-table-body tr').each(function() {
+        const tag = $(this).find('td:nth-child(2)').text().trim();
+        if (tag && !tags.includes(tag)) tags.push(tag);
+      });
+      tags.sort().forEach(tag => {
+        $('#modTagSelect').append(`<option value="${tag}">${tag}</option>`);
+      });
+
+      // 2. Initialize Autocomplete
+      initTagAutocomplete('#modSearchInput', '#modTagSelect', (val) => {
+        renderModTable();
+      });
+
+      // URL handling...
       const urlParams = new URLSearchParams(window.location.search);
       const plant = urlParams.get('plant') || 'Acetic Acid';
       
@@ -247,17 +424,55 @@
         $plantText.text('Plant Unit: ' + plant);
       }
 
+      // Live search on enter key
+      $('#modSearchInput').on('keypress', function(e) {
+        if (e.which === 13) {
+          renderModTable();
+        }
+      });
+
       // Add feedback for Export button
       $('.jt-report-actions .jt-btn-primary').on('click', function() {
+        Swal.fire({
+          title: 'Exporting PDF...',
+          text: 'The report generation has started.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+
+      // --- SweetAlert Confirmation for OVER Status ---
+      $('.jt-verify-check').on('change', function () {
+        const $checkbox = $(this);
+        if ($checkbox.is(':checked')) {
           Swal.fire({
-              title: 'Exporting PDF...',
-              text: 'The report generation has started.',
-              icon: 'success',
-              timer: 1500,
-              showConfirmButton: false,
-              background: '#1e293b',
-              color: '#ffffff'
+            title: 'Are you sure?',
+            text: "Are you confirm to over this modification?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, confirm it!',
+            cancelButtonText: 'Cancel',
+            background: 'var(--app-panel)',
+            color: 'var(--typo-primary)'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: 'Confirmed!',
+                text: 'The modification has been marked as OVER.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                background: 'var(--app-panel)',
+                color: 'var(--typo-primary)'
+              });
+            } else {
+              $checkbox.prop('checked', false);
+            }
           });
+        }
       });
     });
   </script>

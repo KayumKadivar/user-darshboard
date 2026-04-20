@@ -38,7 +38,7 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="Acetic Acid Logbook" data-back="plant_detail.html"></div>
+    <div id="header-container" data-title="OT Hours Report" data-breadcrumb="Logbook:modifications.html,OT Hours:active" data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
     <section class="dashboard-content jt-page-content">
@@ -46,50 +46,60 @@
       <!-- Plant Navigation -->
       <div id="plant-nav-container"></div>
 
-      <!-- ── FILTER CARD ── -->
+      <!-- ── SEARCH CRITERIA ── -->
       <div class="jt-filter-card">
         <div class="jt-filter-header">
           <h3 class="jt-filter-title">
-            <i class="ph-bold ph-funnel"></i>
-            SEARCH CRITERIA
+            <i class="ph-bold ph-funnel"></i> Search Criteria
           </h3>
         </div>
-
         <div class="jt-filter-body grid grid-cols-4 gap-16px">
+          
           <!-- Start Date -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label" for="startDate">Start Date</label>
-            <input type="date" id="startDate" class="jt-input jt-date-input" value="2026-02-01">
+            <label class="gnfc-modal-label" for="startDate">Start Date</label>
+            <input type="date" id="startDate" class="gnfc-modal-input jt-date-input" value="2026-02-01">
           </div>
 
           <!-- End Date -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label" for="endDate">End Date</label>
-            <input type="date" id="endDate" class="jt-input jt-date-input" value="2026-02-28">
+            <label class="gnfc-modal-label" for="endDate">End Date</label>
+            <input type="date" id="endDate" class="gnfc-modal-input jt-date-input" value="2026-02-28">
+          </div>
+
+          <!-- Search / Select Tag -->
+          <div class="jt-filter-group" style="grid-column: span 2;">
+            <label class="gnfc-modal-label" for="otSearchInput">Search / Select Tag</label>
+            <div class="flex items-center gap-12px">
+              <div class="jt-input-wrap flex-1">
+                <i class="ph-bold ph-magnifying-glass jt-input-icon"></i>
+                <input type="text" id="otSearchInput" class="gnfc-modal-input" placeholder="Type Tag No...">
+              </div>
+              <select id="otTagSelect" class="gnfc-modal-input flex-1">
+                <option value="">-- ALL TAGS --</option>
+              </select>
+            </div>
           </div>
 
           <!-- Select Name -->
           <div class="jt-filter-group">
-            <label class="jt-filter-label" for="techSelect">Select Name</label>
-            <div class="jt-select-wrap">
-              <select id="techSelect" class="jt-select">
-                <option value="ALL">ALL</option>
-                <option value="DVP">DVP</option>
-                <option value="JKP">JKP</option>
-                <option value="RKM">RKM</option>
-                <option value="NND">NND</option>
-              </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
-            </div>
+            <label class="gnfc-modal-label" for="techSelect">Select Name</label>
+            <select id="techSelect" class="gnfc-modal-input">
+              <option value="ALL">ALL TECHNICIANS</option>
+              <option value="DVP">DVP</option>
+              <option value="JKP">JKP</option>
+              <option value="RKM">RKM</option>
+              <option value="NND">NND</option>
+            </select>
           </div>
 
-          <!-- Action -->
-          <div class="jt-filter-group flex items-end gap-12px">
-            <button type="button" class="jt-btn-primary" onclick="renderTable()">
+          <!-- Actions -->
+          <div class="jt-filter-btn">
+            <button onclick="renderTable()" class="jt-btn-primary">
               <i class="ph-bold ph-lightning"></i> APPLY
             </button>
-            <button type="button" class="jt-btn-reset" onclick="location.reload()">
-              <i class="ph-bold ph-arrow-counter-clockwise"></i>
+            <button onclick="window.location.reload()" class="jt-btn-reset">
+              RESET
             </button>
           </div>
         </div>
@@ -103,52 +113,82 @@
             <i class="ph-fill ph-clock"></i>
             <div class="jt-title-stack">
               <h3 class="jt-main-title">O.T. Hours Report</h3>
+              <p style="font-size: 13px; color: var(--brand-primary); font-weight: 600; margin-top: 2px;">Plant Unit: Acetic Acid</p>
             </div>
           </div>
           <div class="jt-report-actions">
-            <div class="flex gap-16px items-center">
-                          <tbody id="reportTableBody">
+            <button class="jt-btn-primary jt-btn-sm" id="btn-export-pdf">
+              <i class="ph-bold ph-export"></i> EXPORT PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table" id="ot-report-table">
+            <thead>
+              <tr>
+                <th class="user-table-center" style="width: 64px;">Sr</th>
+                <th class="user-table-center" style="width: 120px;">Date</th>
+                <th class="user-table-center" style="width: 100px;">Tech</th>
+                <th class="user-table-center" style="width: 200px;">Instrument / Tag</th>
+                <th class="user-table-center" style="width: 80px;">Type</th>
+                <th style="min-width: 400px;">Description of Job</th>
+                <th class="user-table-center" style="width: 100px;">OT Hours</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
               <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">1</td>
                 <td class="user-table-center user-table-secondary">04/02/2026</td>
                 <td class="user-table-center user-table-bold user-table-blue">DVP</td>
-                <td class="user-table-center user-table-secondary">DCS-YOKOGAWA</td>
-                <td class="user-table-center user-table-bold user-table-orange">PM</td>
+                <td class="user-table-center user-table-secondary" data-tag="DCS-YOKOGAWA">DCS-YOKOGAWA</td>
+                <td class="user-table-center user-table-bold" style="color: var(--brand-orange);">PM</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">C/r ESD console-32 checked all switch resistance and defective micro switch as per availability and requirement replaced (resistance noted down). Also PVC truff provided for cable support. For console-32 job completed. For 2 more console job started and job u/p.</td>
                 <td class="user-table-center user-table-bold user-table-primary">7.0</td>
               </tr>
               <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">2</td>
                 <td class="user-table-center user-table-secondary">05/02/2026</td>
                 <td class="user-table-center user-table-bold user-table-blue">JKP</td>
-                <td class="user-table-center user-table-secondary">FV-101</td>
-                <td class="user-table-center user-table-bold user-table-orange">BD</td>
+                <td class="user-table-center user-table-secondary" data-tag="FV-101">FV-101</td>
+                <td class="user-table-center user-table-bold" style="color: #ef4444;">BD</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Valve stuck at 50%. Free movement checked. Positioner calibration done. Found OK.</td>
                 <td class="user-table-center user-table-bold user-table-primary">2.5</td>
               </tr>
               <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">3</td>
                 <td class="user-table-center user-table-secondary">06/02/2026</td>
                 <td class="user-table-center user-table-bold user-table-blue">RKM</td>
-                <td class="user-table-center user-table-secondary">PT-202</td>
-                <td class="user-table-center user-table-bold user-table-orange">PM</td>
+                <td class="user-table-center user-table-secondary" data-tag="PT-202">PT-202</td>
+                <td class="user-table-center user-table-bold" style="color: var(--brand-orange);">PM</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Routine preventative maintenance check. Transmitter zero check done. Connections tightened.</td>
                 <td class="user-table-center user-table-bold user-table-primary">1.5</td>
               </tr>
               <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">4</td>
                 <td class="user-table-center user-table-secondary">08/02/2026</td>
                 <td class="user-table-center user-table-bold user-table-blue">DVP</td>
-                <td class="user-table-center user-table-secondary">DCS-FOXBORO</td>
-                <td class="user-table-center user-table-bold user-table-orange">PM</td>
+                <td class="user-table-center user-table-secondary" data-tag="DCS-FOXBORO">DCS-FOXBORO</td>
+                <td class="user-table-center user-table-bold" style="color: var(--brand-orange);">PM</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">System health check up. Backup of configuration files initiated.</td>
                 <td class="user-table-center user-table-bold user-table-primary">4.0</td>
               </tr>
               <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">5</td>
                 <td class="user-table-center user-table-secondary">08/02/2026</td>
                 <td class="user-table-center user-table-bold user-table-blue">NND</td>
-                <td class="user-table-center user-table-secondary">HV-303</td>
-                <td class="user-table-center user-table-bold user-table-orange">CM</td>
+                <td class="user-table-center user-table-secondary" data-tag="HV-303">HV-303</td>
+                <td class="user-table-center user-table-bold" style="color: var(--brand-success);">CM</td>
                 <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Leakage attended. Gland packing replaced. Stroke check done from field and DCS.</td>
                 <td class="user-table-center user-table-bold user-table-primary">3.0</td>
               </tr>
             </tbody>
+            <tfoot class="user-table-tfoot">
+              <tr>
+                <td colspan="6" class="user-table-right" style="font-weight: 700;">TOTAL OT HOURS:</td>
+                <td class="user-table-center" id="total-ot-display" style="font-weight: 800; color: var(--brand-primary); font-size: 1.1rem;">18.0</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
@@ -157,44 +197,230 @@
     </section>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-    /** ── Global functions for onclick handlers ── */
-    window.renderTable = function() {
-      Swal.fire({
-          title: 'Static Mode',
-          text: 'Table filtering is currently a simulation in this static view.',
-          icon: 'info',
-          background: '#1e293b',
-          color: '#ffffff',
-          confirmButtonColor: '#3b82f6'
-      });
-    };
+    /** ── Smart Tag Autocomplete Helper ── */
+    function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+      const $input = $(inputSelector);
+      const $select = $(selectSelector);
+      let snapBackTimeout = null;
+      let snapBackInterval = null;
+      let isAutoRemoving = false;
 
-    $(document).ready(function () {
-      // Initialize dynamic values
-      // Total hours sum: 7+2.5+1.5+4+3 = 18.0
-      const $totalIndicator = $('#totalHoursIndicator');
-      if ($totalIndicator.length) {
-        $totalIndicator.text('Total Hours: 18.0');
+      function getAvailableTags() {
+        let tags = [];
+        $select.find('option').each(function () {
+          if ($(this).val()) tags.push($(this).val());
+        });
+        return tags;
       }
 
-      // Date picker trigger using jQuery delegation
-      $(document).on('click focus', '.jt-date-input', function () {
-        if (typeof this.showPicker === 'function') {
-          try { this.showPicker(); } catch (e) { }
+      function stopAutoRemove() {
+        clearTimeout(snapBackTimeout);
+        clearInterval(snapBackInterval);
+        isAutoRemoving = false;
+      }
+
+      const tags = getAvailableTags();
+
+      $input.on('input', function (e) {
+        const cursorStart = this.selectionStart;
+        const cursorEnd = this.selectionEnd;
+        const rawVal = $(this).val();
+        const upperVal = rawVal.toUpperCase();
+        if (rawVal !== upperVal) {
+          $(this).val(upperVal);
+          this.setSelectionRange(cursorStart, cursorEnd);
+        }
+
+        const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+        const isDeleting = inputType && inputType.startsWith('delete');
+
+        if (isDeleting) stopAutoRemove();
+
+        let inputVal = $(this).val().toUpperCase();
+
+        if (isDeleting) {
+          let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+          if (hasMatch) {
+            $(this).removeClass('is-invalid-tag');
+          } else {
+            $(this).addClass('is-invalid-tag');
+          }
+
+          let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+          $select.val(exactMatch || '');
+          if (onMatch) onMatch(exactMatch || '');
+          return;
+        }
+
+        // Longest Valid Prefix logic
+        let longestValidPrefix = "";
+        for (let i = inputVal.length; i >= 0; i--) {
+          let sub = inputVal.substring(0, i);
+          if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+            longestValidPrefix = sub;
+            break;
+          }
+        }
+
+        if (inputVal.length > longestValidPrefix.length + 3) {
+          inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+          $(this).val(inputVal);
+        }
+
+        if (inputVal.length > longestValidPrefix.length) {
+          $(this).addClass('is-invalid-tag');
+          $select.val('');
+          if (onMatch) onMatch('');
+
+          stopAutoRemove();
+          const self = this;
+          const targetPrefix = longestValidPrefix;
+          snapBackTimeout = setTimeout(() => {
+            isAutoRemoving = true;
+            snapBackInterval = setInterval(() => {
+              let currentVal = $input.val();
+              if (currentVal.length > targetPrefix.length) {
+                currentVal = currentVal.substring(0, currentVal.length - 1);
+                $input.val(currentVal);
+              } else {
+                clearInterval(snapBackInterval);
+                isAutoRemoving = false;
+                $input.removeClass('is-invalid-tag');
+                let val = $input.val().toUpperCase();
+                if (val.length > 0) {
+                  let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(val));
+                  if (firstMatch) {
+                    $input.val(firstMatch);
+                    self.setSelectionRange(val.length, firstMatch.length);
+                    $select.val(firstMatch);
+                    if (onMatch) onMatch(firstMatch);
+                  }
+                } else {
+                  $select.val('');
+                  if (onMatch) onMatch('');
+                }
+              }
+            }, 150);
+          }, 800);
+          return;
+        }
+
+        stopAutoRemove();
+        $(this).removeClass('is-invalid-tag');
+
+        if (inputVal.length > 0) {
+          let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(inputVal));
+          if (firstMatch) {
+            $(this).val(firstMatch);
+            this.setSelectionRange(inputVal.length, firstMatch.length);
+            $select.val(firstMatch);
+            if (onMatch) onMatch(firstMatch);
+          }
+        } else {
+          $select.val('');
+          if (onMatch) onMatch('');
         }
       });
 
-      // Export button feedback
-      $('.jt-report-actions .jt-btn-primary').on('click', function() {
-          Swal.fire({
-              title: 'Exporting OT Report...',
-              text: 'PDF is being generated.',
-              icon: 'success',
-              timer: 1500,
-              showConfirmButton: false
-          });
+      $input.on('keydown', function (e) {
+        if (isAutoRemoving && e.key !== 'Enter') stopAutoRemove();
+        if (e.key === 'Enter') {
+          stopAutoRemove();
+          const currentVal = $(this).val();
+          if (currentVal && !$(this).hasClass('is-invalid-tag')) {
+            e.preventDefault();
+            $(this).val(currentVal);
+            this.setSelectionRange(currentVal.length, currentVal.length);
+            $(this).addClass('tag-confirmed');
+            setTimeout(() => $(this).removeClass('tag-confirmed'), 500);
+            renderTable();
+          }
+        }
       });
+
+      $select.on('change', function () {
+        stopAutoRemove();
+        let val = $(this).val();
+        $input.val(val);
+        $input.removeClass('is-invalid-tag');
+        if (onMatch) onMatch(val);
+      });
+    }
+
+    /** ── OT Hours Calculation Logic ── */
+    function calculateTotalOT() {
+      let total = 0;
+      $('#reportTableBody tr:visible').each(function() {
+        const value = parseFloat($(this).find('td:last-child').text());
+        if (!isNaN(value)) total += value;
+      });
+      $('#total-ot-display').text(total.toFixed(1));
+    }
+
+    /** ── Filtering Logic ── */
+    window.renderTable = function() {
+      const tech = $('#techSelect').val();
+      const tagSearch = $('#otSearchInput').val().toUpperCase().trim();
+      const startDate = $('#startDate').val();
+      const endDate = $('#endDate').val();
+
+      $('#reportTableBody tr').each(function() {
+        const $row = $(this);
+        const rowDateStr = $row.find('td:nth-child(2)').text(); // DD/MM/YYYY
+        const rowTech = $row.find('td:nth-child(3)').text().trim();
+        const rowTag = $row.find('td:nth-child(4)').text().toUpperCase();
+
+        // Convert DD/MM/YYYY to YYYY-MM-DD for date comparison
+        const dateParts = rowDateStr.split('/');
+        const rowDateFormatted = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+        let show = true;
+
+        if (tech !== 'ALL' && rowTech !== tech) show = false;
+        if (tagSearch && !rowTag.includes(tagSearch)) show = false;
+        
+        if (startDate && rowDateFormatted < startDate) show = false;
+        if (endDate && rowDateFormatted > endDate) show = false;
+
+        $row.toggle(show);
+      });
+
+      calculateTotalOT();
+    };
+
+    $(document).ready(function () {
+      // 1. Populate Dropdown from Table
+      const tags = [];
+      $('#reportTableBody tr').each(function() {
+        const tag = $(this).find('td:nth-child(4)').text().trim();
+        if (tag && !tags.includes(tag)) tags.push(tag);
+      });
+      tags.sort().forEach(tag => {
+        $('#otTagSelect').append(`<option value="${tag}">${tag}</option>`);
+      });
+
+      // 2. Initialize Autocomplete
+      initTagAutocomplete('#otSearchInput', '#otTagSelect', (val) => {
+        renderTable();
+      });
+
+      // 3. Export PDF Handler
+      $('#btn-export-pdf').on('click', function() {
+        Swal.fire({
+          title: 'Exporting OT Report...',
+          text: 'PDF is being generated.',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+
+      // Initial calculation
+      calculateTotalOT();
     });
   </script>
 

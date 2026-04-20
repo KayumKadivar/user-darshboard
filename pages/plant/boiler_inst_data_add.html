@@ -34,31 +34,15 @@
 
         <div class="dashboard-content dashboard-scroll">
             <div class="plant-container">
-
-                <!-- ─── Add Mode Toolbar ─── -->
-                <!-- <div class="user-toolbar mb-4">
-                    <div class="user-toolbar-left">
-                        <h2 class="section-title m-0"><i class="ph-bold ph-plus-circle color-emerald mr-2"></i> Create New Record</h2>
-                    </div>
-                    <div class="user-toolbar-right gap-12px">
-                        <button class="btn btn-emerald h-40px px-24px" id="btn-save-new">
-                            <i class="ph-bold ph-floppy-disk"></i> Save Instrument
-                        </button>
-                        <button class="btn btn-secondary h-40px px-24px" onclick="window.location.href='boiler_inst_data.html'">
-                            <i class="ph-bold ph-x"></i> Cancel
-                        </button>
-                    </div>
-                </div> -->
-
                 <!-- ─── Main Entry Form ─── -->
                 <div class="inst-data-view-wrapper">
 
                     <!-- ─── General Information ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-tag"></i> General Information</div>
-                        <div class="form-grid grid-cols-4">
-                            <div>
-                                <label class="input-label">PLANT AREA</label>
+                        <div class="form-flex-wrapper">
+                            <div style="flex: 0 0 220px;">
+                                <label class="input-label">PLANT AREA <span class="required">*</span></label>
                                 <div class="gnfc-select-group">
                                     <select id="nf-area" class="gnfc-modal-input">
                                         <option>Select Area</option>
@@ -70,17 +54,16 @@
                                     <i class="ph-bold ph-caret-down"></i>
                                 </div>
                             </div>
-                            <div>
-                                <label class="input-label">TAG NO</label>
-                                <input type="text" id="nf-tag_no" class="gnfc-modal-input" placeholder="Enter Tag No">
+                            <div style="flex: 0 0 260px;">
+                                <label class="input-label">TAG NO <span class="required">*</span></label>
+                                <input type="text" id="nf-tag_no" class="gnfc-modal-input auto-width-input">
                             </div>
-                            <div>
-                                <label class="input-label">DESCRIPTION</label>
-                                <input type="text" id="nf-description" class="gnfc-modal-input"
-                                    placeholder="Instrument Description">
+                            <div style="flex: 1 1 300px;">
+                                <label class="input-label">DESCRIPTION <span class="required">*</span></label>
+                                <input type="text" id="nf-description" class="gnfc-modal-input auto-width-input">
                             </div>
-                            <div>
-                                <label class="input-label">HOST</label>
+                            <div style="flex: 0 0 220px;">
+                                <label class="input-label">HOST <span class="required">*</span></label>
                                 <div class="gnfc-select-group">
                                     <select id="nf-host" class="gnfc-modal-input">
                                         <option>DCS</option>
@@ -96,7 +79,7 @@
                     <!-- ─── Controller & IO Module ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-cpu"></i> Controller & IO Module</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">CONTROLLER TYPE</label><input type="text" id="nf-ctrl_type"
                                     class="gnfc-modal-input"></div>
                             <div><label class="input-label">CONTROLLER NO</label><input type="text" id="nf-ctrl_no"
@@ -123,7 +106,7 @@
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-sliders-horizontal"></i> Calibration & Range
                             </div>
-                            <div class="form-grid grid-cols-2">
+                            <div class="form-flex-wrapper flex-cols-2">
                                 <div><label class="input-label">CAL RANGE</label><input type="text" id="nf-cal_range"
                                         class="gnfc-modal-input"></div>
                                 <div><label class="input-label">ENG RANGE</label><input type="text" id="nf-eng_range"
@@ -133,7 +116,7 @@
                         <!-- ─── Trip Settings ─── -->
                         <div class="form-section">
                             <div class="section-title"><i class="ph-fill ph-warning-circle"></i> Trip Settings</div>
-                            <div class="form-grid grid-cols-2">
+                            <div class="form-flex-wrapper flex-cols-2">
                                 <div><label class="input-label">TRIP L LL</label><input type="text" id="nf-trip_l"
                                         class="gnfc-modal-input"></div>
                                 <div><label class="input-label">TRIP H HH</label><input type="text" id="nf-trip_h"
@@ -149,7 +132,7 @@
                     <!-- ─── Specifications ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-wrench"></i> Specifications</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-4">
                             <div><label class="input-label">INST TYPE</label>
                                 <div class="gnfc-select-group">
                                     <select id="nf-inst_type" class="gnfc-modal-input">
@@ -192,30 +175,30 @@
                     <!-- ─── Primary Element ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-atom"></i> Primary Element</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">SPECPRIM</label>
                                 <div class="input-icon-group"><input type="text" id="nf-pe_datasheet"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">CALPRIM</label>
                                 <div class="input-icon-group"><input type="text" id="nf-pe_calc"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">DRGPRIM</label>
                                 <div class="input-icon-group"><input type="text" id="nf-pe_drawing"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">CALIPRIM</label>
                                 <div class="input-icon-group"><input type="text" id="nf-pe_calreport"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">INSPPRIM</label>
                                 <div class="input-icon-group"><input type="text" id="nf-pe_inspreport"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                         </div>
@@ -223,30 +206,30 @@
                     <!-- ─── Secondary Element ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-stack"></i> Secondary Element</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">CALSEC</label>
                                 <div class="input-icon-group"><input type="text" id="nf-se_calc"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">DRGSEC</label>
                                 <div class="input-icon-group"><input type="text" id="nf-se_drawing"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">INSPSEC</label>
                                 <div class="input-icon-group"><input type="text" id="nf-se_inspreport"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">SPEC</label>
                                 <div class="input-icon-group"><input type="text" id="nf-se_datasheet"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">ACCESSORY</label>
                                 <div class="input-icon-group"><input type="text" id="nf-se_accessory"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                         </div>
@@ -254,18 +237,18 @@
                     <!-- ─── Other Links ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-link"></i> Other Links</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">LOGIC</label>
                                 <div class="input-icon-group"><input type="text" id="nf-logic"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
                             <div><label class="input-label">LOOPSHEET</label>
                                 <div class="input-icon-group"><input type="text" id="nf-loop_sheet"
-                                        class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
+                                        class="gnfc-modal-input" readonly><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
                             </div>
-                            <div><label class="input-label">HHAND</label>
+                            <div><label class="input-label">HELPING HAND</label>
                                 <div class="input-icon-group"><input type="text" id="nf-helping"
                                         class="gnfc-modal-input"><button class="append-icon btn-att-open" type="button"><i
                                             class="ph-bold ph-link"></i></button></div>
@@ -275,7 +258,7 @@
                     <!-- ─── Additional Information ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-files"></i> Additional Information</div>
-                        <div class="form-grid grid-cols-4">
+                        <div class="form-flex-wrapper flex-cols-4">
                             <div>
                                 <label class="input-label">bypass</label>
                                 <div class="gnfc-select-group">
@@ -313,7 +296,7 @@
                     <!-- ─── Metadata ─── -->
                     <div class="form-section">
                         <div class="section-title"><i class="ph-fill ph-info"></i> Metadata</div>
-                        <div class="form-grid grid-cols-3">
+                        <div class="form-flex-wrapper flex-cols-3">
                             <div><label class="input-label">by</label><input type="text" id="nf-by"
                                     class="gnfc-modal-input"></div>
                             <div><label class="input-label">date1</label><input type="date" id="nf-date1"
@@ -490,15 +473,15 @@
                 <!-- Files View -->
                 <div id="modal-view-files" class="hidden p-6px">
                     <div class="modal-view-header">
+                        <h4 class="modal-view-title" id="current-category-name">Category Name</h4>
                         <div class="modal-header-left">
                             <button type="button" onclick="showCategories()" class="modal-back-btn">
                                 <i class="ph-bold ph-arrow-left"></i> Back
                             </button>
-                            <h4 class="modal-view-title" id="current-category-name">Category Name</h4>
                         </div>
                     </div>
-                    <div class="user-table-wrapper p-6px modal-table-fixed-height-sm radius-0px">
-                        <table class="user-table">
+                    <div class="user-table-wrapper modal-table-fixed-height-sm ">
+                        <table class="user-table" style="min-width: auto;">
                             <thead>
                                 <tr>
                                     <th style="width: 60px;">Sr</th>
@@ -581,31 +564,85 @@
             $('#current-category-name').text(categoryName);
             $('#modal-view-categories').addClass('hidden');
             $('#modal-view-files').removeClass('hidden');
+
+            // Highlight files that were already selected
+            $('.file-row').each(function() {
+                const fileName = $(this).find('.modal-table-row-item').text().trim();
+                if (window.selectedModalFiles.includes(fileName)) {
+                    $(this).addClass('is-selected');
+                }
+            });
         };
 
         window.selectModalFile = function (rowElement, fileName) {
-            $('.file-row').removeClass('is-selected');
-            $(rowElement).addClass('is-selected');
-
-            $('#modal-selected-file-input').val(fileName);
+            if ($(rowElement).hasClass('is-selected')) {
+                $(rowElement).removeClass('is-selected');
+                window.selectedModalFiles = window.selectedModalFiles.filter(f => f !== fileName);
+            } else {
+                $(rowElement).addClass('is-selected');
+                if (!window.selectedModalFiles.includes(fileName)) {
+                    window.selectedModalFiles.push(fileName);
+                }
+            }
         };
 
         window.confirmFileSelection = function () {
-            const selectedFile = $('#modal-selected-file-input').val();
-            if (selectedFile && window.currentTargetInput) {
-                window.currentTargetInput.val(selectedFile);
+            if (window.currentTargetInput) {
+                // Update with current selection (supports adding and removing)
+                window.currentTargetInput.val(window.selectedModalFiles.join(', '));
+                // Trigger input event and sync tags
+                window.currentTargetInput.trigger('input');
+                if (window.currentTargetInput.attr('id')) {
+                    syncFileTags(window.currentTargetInput.attr('id'));
+                }
             }
             $('#modal-attachment').removeClass('is-open');
         };
 
+        // Sync visual tags for attachment fields
+        window.syncFileTags = function (inputId) {
+            const input = $('#' + inputId);
+            if (!input.length) return;
+            
+            let container = input.parent().find('.attachment-tag-container');
+            
+            // Create container if it doesn't exist
+            if (container.length === 0) {
+                container = $('<div class="attachment-tag-container"></div>');
+                input.before(container);
+                input.addClass('has-tag-container');
+            }
+            
+            container.empty();
+            const files = input.val() ? input.val().split(',').map(f => f.trim()).filter(f => f !== "") : [];
+            
+            files.forEach(file => {
+                const tag = $('<div class="file-tag"></div>')
+                    .html(`<span>${file}</span>`)
+                    .append($('<i class="ph-bold ph-x"></i>').on('click', function(e) {
+                        e.stopPropagation();
+                        // Filter out this file
+                        const updatedFiles = input.val().split(',').map(f => f.trim()).filter(f => f !== file && f !== "");
+                        input.val(updatedFiles.join(', '));
+                        window.syncFileTags(inputId);
+                        input.trigger('input');
+                    }));
+                container.append(tag);
+            });
+        };
+
         $(document).ready(function() {
             window.currentTargetInput = null;
+            window.selectedModalFiles = [];
 
-            $('.btn-att-open').on('click', function (e) {
+            $(document).on('click', '.btn-att-open', function (e) {
                 e.preventDefault();
-                window.currentTargetInput = $(this).siblings('input');
+                window.currentTargetInput = $(this).closest('.input-icon-group').find('input');
 
-                $('#modal-selected-file-input').val('');
+                const currentVal = window.currentTargetInput.val();
+                window.selectedModalFiles = currentVal ? currentVal.split(',').map(f => f.trim()).filter(f => f !== "") : [];
+                
+                $('.file-row').removeClass('is-selected');
                 showCategories();
 
                 $('#modal-attachment').addClass('is-open');
@@ -624,6 +661,69 @@
                     window.location.href = 'boiler_inst_data.html';
                 });
             });
+
+            // Initialize Auto-Width functionality
+            function initAutoWidth() {
+                // Auto-apply the class to all text inputs
+                $('.gnfc-modal-input:not(select):not([type="date"])').addClass('auto-width-input');
+                
+                const inputs = $('.auto-width-input');
+                
+                // Initialize tags for readonly attachment inputs
+                inputs.each(function() {
+                    if ($(this).attr('readonly') && $(this).siblings('.btn-att-open').length > 0) {
+                        window.syncFileTags($(this).attr('id'));
+                    }
+                });
+
+                const updateWidth = (input) => {
+                    const baseWidth = $(input).data('base-width') || 0;
+                    
+                    // If it's a tag container, measure the container instead
+                    const isTagField = $(input).hasClass('has-tag-container');
+                    const valueToMeasure = isTagField ? ' ' : ($(input).val() || $(input).attr('placeholder'));
+
+                    // Create a temporary span to measure text width
+                    const tempSpan = $('<span>')
+                        .text(valueToMeasure)
+                        .css({
+                            'font': $(input).css('font'),
+                            'visibility': 'hidden',
+                            'position': 'absolute',
+                            'white-space': 'pre',
+                            'letter-spacing': $(input).css('letter-spacing'),
+                            'text-transform': $(input).css('text-transform'),
+                            'padding': '0 12px' // Match input padding
+                        })
+                        .appendTo('body');
+                    
+                    const contentWidth = tempSpan.outerWidth() + 10;
+                    const maxAllowedWidth = $(input).closest('.form-flex-wrapper').width();
+                    const finalWidth = Math.min(Math.max(baseWidth, contentWidth), maxAllowedWidth);
+                    
+                    // Update width on both input and its parent div to force wrapping
+                    $(input).css('width', finalWidth + 'px');
+                    $(input).closest('.form-flex-wrapper > div').css('flex-basis', finalWidth + 'px');
+                    
+                    tempSpan.remove();
+                };
+
+                // Store initial widths after a short delay for layout rendering
+                setTimeout(() => {
+                    inputs.each(function() {
+                        // Capture the parent's width as the base width for the grid slot
+                        const parentWidth = $(this).closest('.form-flex-wrapper > div').width();
+                        $(this).data('base-width', parentWidth);
+                        updateWidth(this);
+                    });
+                }, 300);
+
+                $(document).on('input focus', '.auto-width-input', function() {
+                    updateWidth(this);
+                });
+            }
+
+            initAutoWidth();
         });
     </script>
 </body>

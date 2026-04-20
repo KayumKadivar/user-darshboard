@@ -319,14 +319,12 @@
             <label class="gnfc-modal-label">Attach 1</label>
             <div class="gnfc-modal-input flex align-items-center justify-content-between cursor-pointer btn-open-att gap-4px" data-id="1">
               <div class="font-16px font-bold color-blue flex flex-direction-column">maintenance_log_july.pdf</div>
-              <i class="ph ph-file-pdf font-20px color-blue"></i>
             </div>
           </div>
           <div>
             <label class="gnfc-modal-label">Attach 2</label>
             <div class="gnfc-modal-input flex align-items-center justify-content-between cursor-pointer btn-open-att gap-4px" data-id="2">
               <span class="font-14px opacity-60" id="att-name-2">No file attached</span>
-              <i class="ph ph-folder font-20px color-blue"></i>
             </div>
           </div>
         </div>
@@ -485,11 +483,12 @@
 
     window.handleHistoryFile = function (input) {
       if (input.files && input.files.length > 0) {
-        for (let i = 0; i < input.files.length; i++) {
-          attachmentStore[currentAttId].push(input.files[i]);
-        }
-        // renderAttachmentList(); // Disabled dynamic update to keep static look
-        input.value = ""; // Clear input
+        // Restricted to Single File as per latest requirement
+        const file = input.files[0];
+        attachmentStore[currentAttId] = [file];
+        
+        renderAttachmentList();
+        input.value = ""; // Clear input for next selection
       }
     };
 
@@ -497,7 +496,7 @@
       const $list = $('#history-files-list').empty();
       const files = attachmentStore[currentAttId];
 
-      if (files.length === 0) {
+      if (!files || files.length === 0) {
         $list.html('<p class="text-center font-14px color-secondary py-12px italic">No files selected yet.</p>');
         return;
       }
@@ -509,11 +508,12 @@
 
         const $item = $('#history-file-preview-template').clone().removeClass('hidden').removeAttr('id');
         $item.find('.preview-filename').text(file.name);
-        $item.find('.preview-filesize').text(sizeValue);
+        // Trash button logic
         $item.find('.history-trash-btn').on('click', function () {
-          attachmentStore[currentAttId].splice(index, 1);
+          attachmentStore[currentAttId] = [];
           renderAttachmentList();
         });
+        
         $list.append($item);
       });
     };
@@ -523,14 +523,18 @@
     };
 
     window.resetCurrentSlot = function () {
+      if (!attachmentStore[currentAttId] || attachmentStore[currentAttId].length === 0) {
+          return;
+      }
+
       Swal.fire({
-        title: 'Reset Attachments?',
-        text: 'This will remove all previously uploaded files for this specific entry.',
+        title: 'Clear Attachment?',
+        text: 'This will remove the file from this slot.',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#2563eb',
-        cancelButtonColor: '#f2495c',
-        confirmButtonText: 'Yes, clear all!',
+        confirmButtonColor: '#f2495c',
+        cancelButtonColor: 'var(--app-muted)',
+        confirmButtonText: 'Yes, clear it!',
         background: 'var(--app-panel)',
         color: 'var(--app-text)'
       }).then((result) => {
@@ -540,7 +544,7 @@
           updateMainSlotLabel();
           Swal.fire({
             title: 'Cleared!',
-            text: 'Attachments have been removed.',
+            text: 'Attachment has been removed.',
             icon: 'success',
             background: 'var(--app-panel)',
             color: 'var(--app-text)',
@@ -660,7 +664,7 @@
       $('.btn-open-att').on('click', function () {
         currentAttId = $(this).data('id');
         clearHistoryFile();
-        // renderAttachmentList(); // Removed dynamic listing
+        renderAttachmentList();
         openModal('#modal-jh-attachment');
       });
     });
