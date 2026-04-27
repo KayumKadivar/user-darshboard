@@ -19,7 +19,6 @@
 
   <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
   <script src="../../js/vendor/sweetalert2.all.min.js"></script>
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="../../js/theme-control.js"></script>
   <script src="../../js/sidebar.js" defer></script>
   <script src="../../js/header.js" defer></script>
@@ -37,7 +36,7 @@
   <main class="main-wrapper plant-page__main">
 
     <!-- Header Container (Injected by header.js) -->
-    <div id="header-container" data-title="Assign Today" data-back="plant_detail.html"></div>
+    <div id="header-container" data-title="Assign Today" data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Assign Today:active" data-back="plant_detail.html"></div>
 
     <div class="assign-content custom-scroll">
 
@@ -63,13 +62,13 @@
         </div>
 
         <div class="assign-actions">
-          <button onclick="openCJLModal()" class="btn-assign-action">
-            <i class="ph ph-list-checks"></i> Current Joblist
+          <button onclick="openCJLModal()" class="toolbar-btn">
+            <i class="ph-bold ph-list-checks"></i> Current Joblist
           </button>
-          <button onclick="openSEModal()" class="btn-assign-action">
-            <i class="ph ph-warning-circle"></i> S/D
+          <button onclick="openSEModal()" class="toolbar-btn">
+            <i class="ph-bold ph-warning-circle"></i> S/D
           </button>
-          <button onclick="openSearchModal()" class="btn-assign-action">
+          <button onclick="openSearchModal()" class="toolbar-btn">
             <i class="ph ph-magnifying-glass"></i> Search Tag
           </button>
           <button type="button" onclick="openHSOModal()" class="btn-assign-iso">
@@ -78,21 +77,22 @@
         </div>
       </div>
 
-      <div class="assign-split-layout">
+      <div class="assign-full-container flex flex-col gap-16px">
+        <!-- Job Assignment Form -->
+        <div class="assign-form-card">
+          <div class="assign-form-header">
+            <i class="ph-duotone ph-note-pencil color-blue font-16px"></i>
+            <span class="fw-700  color-primary font-14px">JOB ASSIGNMENT FORM</span>
+          </div>
 
-        <!-- Left Side: Job Assignment Form -->
-        <div class="assign-side-panel">
-          <div class="assign-form-card">
-            <div class="assign-form-header">
-              <i class="ph-duotone ph-note-pencil color-blue font-16px"></i>
-              <span class="fw-700  color-primary font-14px">JOB ASSIGNMENT FORM</span>
-            </div>
-
-            <div class="assign-form-body">
-              <div class="form-field-wrapper">
-                <label class="assign-field-label">Assigned To</label>
-                <div class="assign-select-wrap">
-                  <select id="form-assigned-to" class="gnfc-modal-input">
+          <div class="form-grid grid-cols-12 p-16px">
+            <div class="form-field-wrapper col-span-5">
+              <label class="assign-field-label">ASSIGNED TO <span class="required">*</span></label>
+              <div class="flex items-center gap-8px">
+                <input id="form-assigned-to-input" type="text" placeholder="Enter Tech Name..."
+                  class="gnfc-modal-input font-14px flex-1">
+                <div class="flex-1">
+                  <select id="form-assigned-to-select" class="gnfc-modal-input">
                     <option value="">Select Tech</option>
                     <option>PVS</option>
                     <option>VWM</option>
@@ -104,282 +104,215 @@
                     <option>CNJ_ISD</option>
                     <option>TECH_TESTER</option>
                   </select>
-                  <i class="ph-bold ph-caret-down"></i>
                 </div>
               </div>
+            </div>
 
-              <div class="form-field-wrapper">
-                <label class="assign-field-label">Job Type</label>
-                <div class="assign-select-wrap">
-                  <select id="form-job-type" class="gnfc-modal-input">
+            <div class="form-field-wrapper col-span-3">
+              <label class="assign-field-label">TYPE OF JOB <span class="required">*</span></label>
+              <select id="form-job-type" class="gnfc-modal-input">
+                <option value="">-- Select --</option>
+                <option>PM</option>
+                <option>DOCUMENTATION</option>
+                <option>ABNORMALITY</option>
+                <option>ISO14001</option>
+                <option>DEFECT MAINTENANCE</option>
+                <option>INSPECTION</option>
+                <option>N.A.</option>
+              </select>
+            </div>
+
+            <div class="form-field-wrapper col-span-4">
+              <label class="assign-field-label">LOOP NAME </label>
+              <div class="flex items-center gap-8px">
+                <input id="assign-job-loop-input" type="text" class="gnfc-modal-input flex-1" placeholder="Loop">
+                <div class="flex-1">
+                  <select id="assign-job-loop-select" class="gnfc-modal-input">
+                    <option value="N.A">N.A</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field-wrapper col-span-3">
+              <label class="assign-field-label">AREA <span class="required">*</span></label>
+              <select id="form-area" class="gnfc-modal-input">
+                <option>N.A.</option>
+                <option>BOILER-1</option>
+                <option>BOILER-2</option>
+                <option>TG-1</option>
+                <option>COMMON</option>
+                <option>ASH</option>
+                <option>CHP</option>
+              </select>
+            </div>
+
+            <div class="form-field-wrapper col-span-3">
+              <label class="assign-field-label">INST TYPE <span class="required">*</span></label>
+              <select id="form-inst-type" class="gnfc-modal-input">
+                <option value="">-- Select --</option>
+                <option>ANALYZER</option>
+                <option>C/V</option>
+                <option>TX</option>
+                <option>N.A.</option>
+              </select>
+            </div>
+
+            <div class="form-field-wrapper col-span-6">
+              <label class="assign-field-label">TAG NO <span class="required">*</span></label>
+              <div class="flex items-center gap-8px">
+                <input id="assign-job-tag-input" type="text" placeholder="Search Tag..."
+                  class="gnfc-modal-input font-13px uppercase flex-1">
+                <div class="flex-1">
+                  <select id="assign-job-tag-select" class="gnfc-modal-input">
                     <option value="">-- Select --</option>
-                    <option>PM</option>
-                    <option>DOCUMENTATION</option>
-                    <option>ABNORMALITY</option>
-                    <option>ISO14001</option>
-                    <option>DEFECT MAINTENANCE</option>
-                    <option>INSPECTION</option>
-                    <option>N.A.</option>
+                    <option value="NOTAG">NOTAG</option>
+                    <option value="1FE1501C">1FE1501C</option>
+                    <option value="LT3402031">LT3402031</option>
+                    <option value="FT_1401">FT_1401</option>
+                    <option value="LV_1401">LV_1401</option>
+                    <option value="PT_205">PT_205</option>
+                    <option value="TE_101">TE_101</option>
                   </select>
-                  <i class="ph-bold ph-caret-down"></i>
                 </div>
               </div>
+            </div>
 
-              <div class="form-field-wrapper">
-                <label class="assign-field-label">Loop Name</label>
-                <div class="assign-select-wrap">
-                  <select id="form-loop" class="gnfc-modal-input">
-                    <option>N.A.</option>
-                  </select>
-                  <i class="ph-bold ph-caret-down"></i>
-                </div>
-              </div>
+            <div class="form-field-wrapper col-span-12">
+              <label class="assign-field-label">JOB <span class="required">*</span></label>
+              <textarea id="form-jobs-desc" rows="3" class="gnfc-modal-input"
+                placeholder="Enter task details..."></textarea>
+            </div>
 
-              <div class="form-field-wrapper">
-                <label class="assign-field-label">Area</label>
-                <div class="assign-select-wrap">
-                  <select id="form-area" class="gnfc-modal-input">
-                    <option>N.A.</option>
-                    <option>BOILER-1</option>
-                    <option>BOILER-2</option>
-                    <option>TG-1</option>
-                    <option>COMMON</option>
-                    <option>ASH</option>
-                    <option>CHP</option>
-                  </select>
-                  <i class="ph-bold ph-caret-down"></i>
-                </div>
-              </div>
+            <div class="assign-form-footer col-span-12">
+              <button onclick="saveAssignment()" class="gnfc-modal-btn gnfc-modal-btn-primary">SAVE</button>
+              <button onclick="cancelAssignment()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+            </div>
+          </div>
 
-              <div class="form-field-wrapper">
-                <label class="assign-field-label">Inst Type</label>
-                <div class="assign-select-wrap">
-                  <select id="form-inst-type" class="gnfc-modal-input">
-                    <option value="">-- Select --</option>
-                    <option>ANALYZER</option>
-                    <option>C/V</option>
-                    <option>TX</option>
-                    <option>N.A.</option>
-                  </select>
-                  <i class="ph-bold ph-caret-down"></i>
-                </div>
-              </div>
+        </div>
 
-              <div class="form-field-wrapper">
-                <label class="assign-field-label">Tag No</label>
-                <div class="assign-select-wrap">
-                  <select id="form-tag" class="gnfc-modal-input">
-                    <option>NOTAG</option>
-                  </select>
-                  <i class="ph-bold ph-caret-down"></i>
-                </div>
-              </div>
-
-              <div class="form-field-wrapper form-filed-description">
-                <label class="assign-field-label">JOB</label>
-                <textarea id="form-jobs-desc" rows="3" class="gnfc-modal-input"
-                  placeholder="Enter task details..."></textarea>
-              </div>
-
-              <div class="assign-form-footer form-filed-description">
-                <button onclick="saveAssignment()" class="gnfc-modal-btn gnfc-modal-btn-primary"
-                  style="padding: 10px 24px;">SAVE</button>
-                <button onclick="cancelAssignment()" class="gnfc-modal-btn gnfc-modal-btn-secondary"
-                  style="padding: 10px 16px;">Cancel</button>
+        <!-- Tables Area -->
+        <div class="assign-main-content">
+          <!-- Tabs Navigation -->
+          <div class="assign-tabs">
+            <div class="flex justify-between items-center">
+              <button id="tab-pending" onclick="switchTab('pending')" class="tab-btn is-active">
+                <i class="ph-bold ph-timer"></i> Weekly Pending Jobs
+              </button>
+              <button id="tab-ojr" onclick="switchTab('ojr')" class="tab-btn">
+                <i class="ph-bold ph-article"></i> Operation Job Register
+              </button>
+            </div>
+            <div class="assign-tabs-right flex items-center gap-12px">
+              <span id="ojr-count-badge" class="badge-count hidden">15 Records</span>
+              <span id="pending-count-badge" class="badge-count badge-count--amber">10 Records</span>
+              <div class="assign-select-wrap" style="width: 130px;">
+                <select class="gnfc-modal-input font-14px fw-700 ">
+                  <option>RUNNING</option>
+                  <option>SHUTDOWN</option>
+                  <option>HOLD</option>
+                </select>
+                <i class="ph-bold ph-caret-down" style="font-size: 12px;"></i>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Right Side: Tables Area -->
-        <div class="assign-main-content">
-          <div class="" style="margin-top: 0;">
-            <!-- Tabs Navigation -->
-            <div class="assign-tabs">
-              <div class="flex justify-between items-center">
-                <button id="tab-ojr" onclick="switchTab('ojr')" class="tab-btn is-active">
-                  <i class="ph-bold ph-article"></i> Operation Job Register
-                </button>
-                <button id="tab-pending" onclick="switchTab('pending')" class="tab-btn">
-                  <i class="ph-bold ph-timer"></i> Weekly Pending Jobs
-                </button>
-              </div>
-              <div class="assign-tabs-right flex items-center gap-12px">
-                <span id="ojr-count-badge" class="badge-count">15 Records</span>
-                <span id="pending-count-badge" class="badge-count badge-count--amber hidden">10 Records</span>
-                <div class="assign-select-wrap" style="width: 130px;">
-                  <select class="gnfc-modal-input font-14px fw-700 ">
-                    <option>RUNNING</option>
-                    <option>SHUTDOWN</option>
-                    <option>HOLD</option>
-                  </select>
-                  <i class="ph-bold ph-caret-down" style="font-size: 12px;"></i>
-                </div>
-              </div>
+          <!-- OJR Panel -->
+          <div id="panel-ojr" class="tab-panel hidden">
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center w-50px">Sr</th>
+                    <th class="user-table-center w-100px">Date</th>
+                    <th class="user-table-center w-100px">TagNo</th>
+                    <th class="user-table-center w-120px">Area</th>
+                    <th>Description</th>
+                    <th class="user-table-center w-140px">Status</th>
+                    <th class="user-table-center w-80px">ENG</th>
+                    <th class="user-table-center w-100px">Assign</th>
+                  </tr>
+                </thead>
+                <tbody class="user-table-center">
+                  <tr>
+                    <td>1</td>
+                    <td class="user-table-secondary">30/03/2026</td>
+                    <td class="user-table-bold user-table-blue">LT-102</td>
+                    <td class="user-table-secondary">BOILER-1</td>
+                    <td class="user-table-primary">Routine check of level sensor accuracy</td>
+                    <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
+                    <td class="user-table-bold user-table-secondary">PVS</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td class="user-table-secondary">30/03/2026</td>
+                    <td class="user-table-bold user-table-blue">PT-301</td>
+                    <td class="user-table-secondary">BOILER-2</td>
+                    <td class="user-table-primary">Pressure transmitter calibration due</td>
+                    <td class="user-table-center"><span class="ui-badge ui-badge--info">IN PROGRESS</span></td>
+                    <td class="user-table-bold user-table-secondary">VWM</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td class="user-table-secondary">30/03/2026</td>
+                    <td class="user-table-bold user-table-blue">TT-504</td>
+                    <td class="user-table-secondary">TG-1</td>
+                    <td class="user-table-primary">Temperature fluctuation observed</td>
+                    <td class="user-table-center"><span class="ui-badge ui-badge--danger">HOLD</span></td>
+                    <td class="user-table-bold user-table-secondary">BDR</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td class="user-table-secondary">30/03/2026</td>
+                    <td class="user-table-bold user-table-blue">FT-201</td>
+                    <td class="user-table-secondary">COMMON</td>
+                    <td class="user-table-primary">Flow meter reading erratic</td>
+                    <td class="user-table-center"><span class="ui-badge ui-badge--success">COMPLETED</span></td>
+                    <td class="user-table-bold user-table-secondary">PRP</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
 
-            <!-- OJR Panel -->
-            <div id="panel-ojr" class="tab-panel">
-              <div class="user-table-wrapper">
-                <table class="user-table">
-                  <thead>
-                    <tr>
-                      <th class="user-table-center" style="width: 50px;">Sr</th>
-                      <th class="user-table-center" style="width: 100px;">Date</th>
-                      <th class="user-table-center" style="width: 100px;">TagNo</th>
-                      <th class="user-table-center" style="width: 120px;">Area</th>
-                      <th>Description</th>
-                      <th class="user-table-center" style="width: 140px;">Status</th>
-                      <th class="user-table-center" style="width: 80px;">ENG</th>
-                      <th class="user-table-center" style="width: 100px;">Assign</th>
-                    </tr>
-                  </thead>
-                  <tbody class="user-table-center">
-                    <tr>
-                      <td>1</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">LT-102</td>
-                      <td class="user-table-secondary">BOILER-1</td>
-                      <td class="user-table-primary">Routine check of level sensor accuracy</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
-                      <td class="user-table-bold user-table-secondary">PVS</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">PT-301</td>
-                      <td class="user-table-secondary">BOILER-2</td>
-                      <td class="user-table-primary">Pressure transmitter calibration due</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--info">IN PROGRESS</span></td>
-                      <td class="user-table-bold user-table-secondary">VWM</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">TT-504</td>
-                      <td class="user-table-secondary">TG-1</td>
-                      <td class="user-table-primary">Temperature fluctuation observed</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--danger">HOLD</span></td>
-                      <td class="user-table-bold user-table-secondary">BDR</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">FT-201</td>
-                      <td class="user-table-secondary">COMMON</td>
-                      <td class="user-table-primary">Flow meter reading erratic</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--success">COMPLETED</span></td>
-                      <td class="user-table-bold user-table-secondary">PRP</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">CV-101</td>
-                      <td class="user-table-secondary">ASH</td>
-                      <td class="user-table-primary">Control valve stuck at 50%</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
-                      <td class="user-table-bold user-table-secondary">JDB</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">XV-405</td>
-                      <td class="user-table-secondary">CHP</td>
-                      <td class="user-table-primary">Solenoid valve coil replacement</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--info">IN PROGRESS</span></td>
-                      <td class="user-table-bold user-table-secondary">JMD</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">AT-902</td>
-                      <td class="user-table-secondary">BOILER-1</td>
-                      <td class="user-table-primary">Analyzer showing drift</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--danger">HOLD</span></td>
-                      <td class="user-table-bold user-table-secondary">BSU</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>8</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">PI-112</td>
-                      <td class="user-table-secondary">BOILER-2</td>
-                      <td class="user-table-primary">Gauge glass cleaning</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--success">COMPLETED</span></td>
-                      <td class="user-table-bold user-table-secondary">ENG_TESTER</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">LI-304</td>
-                      <td class="user-table-secondary">TG-1</td>
-                      <td class="user-table-primary">Vibration monitoring check</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
-                      <td class="user-table-bold user-table-secondary">PVS</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td class="user-table-secondary">30/03/2026</td>
-                      <td class="user-table-bold user-table-blue">TI-506</td>
-                      <td class="user-table-secondary">COMMON</td>
-                      <td class="user-table-primary">Cable tray inspection</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--info">IN PROGRESS</span></td>
-                      <td class="user-table-bold user-table-secondary">VWM</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">Assign</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <!-- Pending Jobs Panel -->
+          <div id="panel-pending" class="tab-panel">
 
-            <!-- Pending Jobs Panel -->
-            <div id="panel-pending" class="tab-panel hidden">
-
-              <div class="user-table-wrapper">
-                <table class="user-table">
-                  <thead>
-                    <tr>
-                      <th class="user-table-center" style="width: 50px;">Sr</th>
-                      <th class="user-table-center" style="width: 100px;">Date</th>
-                      <th class="user-table-center" style="width: 100px;">Tag</th>
-                      <th>Description</th>
-                      <th class="user-table-center" style="width: 140px;">Status</th>
-                      <th class="user-table-center" style="width: 80px;">Tech</th>
-                      <th class="user-table-center" style="width: 100px;">ReAssign</th>
-                    </tr>
-                  </thead>
-                  <tbody class="user-table-center">
-                    <tr>
-                      <td>1</td>
-                      <td class="user-table-secondary">28/03/2026</td>
-                      <td class="user-table-bold user-table-blue">LT-102</td>
-                      <td class="user-table-primary">Routine check of level sensor accuracy</td>
-                      <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
-                      <td class="user-table-bold user-table-secondary">PVS</td>
-                      <td class="user-table-center"><button type="button" class="plant-inline-button">ReAssign</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center w-50px">Sr</th>
+                    <th class="user-table-center w-100px">Date</th>
+                    <th class="user-table-center w-100px">Tag</th>
+                    <th>Description</th>
+                    <th class="user-table-center w-140px">Status</th>
+                    <th class="user-table-center w-80px">Tech</th>
+                    <th class="user-table-center w-100px">ReAssign</th>
+                  </tr>
+                </thead>
+                <tbody class="user-table-center">
+                  <tr>
+                    <td>1</td>
+                    <td class="user-table-secondary">28/03/2026</td>
+                    <td class="user-table-bold user-table-blue">LT-102</td>
+                    <td class="user-table-primary">Routine check of level sensor accuracy</td>
+                    <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
+                    <td class="user-table-bold user-table-secondary">PVS</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">ReAssign</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -400,8 +333,8 @@
           </button>
         </div>
         <div class="gnfc-modal-body gnfc-modal-body--tight">
-          <div class="user-table-wrapper" style="max-height: 68vh;">
-            <table class="user-table">
+          <div class="user-table-wrapper max-h-68vh">
+            <table class="user-table min-w-1440px">
               <thead>
                 <tr>
                   <th class="user-table-center">Sr</th>
@@ -469,17 +402,17 @@
         </div>
         <div class="gnfc-modal-body gnfc-modal-body--tight">
           <div class="user-table-wrapper" style="max-height: 68vh;">
-            <table class="user-table">
+            <table class="user-table min-w-1440px">
               <thead>
                 <tr>
-                  <th class="user-table-center" style="width: 50px;">Sr</th>
-                  <th style="width: 150px;">Area / Tag</th>
+                  <th class="user-table-center w-50px">Sr</th>
+                  <th class="w-150px">Area / Tag</th>
                   <th>Description</th>
-                  <th style="width: 150px;">MatReqmnt</th>
-                  <th style="width: 150px;">PreSDActivity</th>
-                  <th style="width: 120px;">int Dep</th>
-                  <th style="width: 120px;">Ext Dep</th>
-                  <th style="width: 200px;">Remarks</th>
+                  <th class="w-150px">MatReqmnt</th>
+                  <th class="w-150px">PreSDActivity</th>
+                  <th class="w-120px">int Dep</th>
+                  <th class="w-120px">Ext Dep</th>
+                  <th class="w-200px">Remarks</th>
                 </tr>
               </thead>
               <tbody>
@@ -536,15 +469,15 @@
                 ISO14001/OHSAS18001 DUE JOBS
               </div>
               <div class="user-table-wrapper">
-                <table class="user-table">
+                <table class="user-table min-w-1440px">
                   <thead>
                     <tr>
-                      <th class="text-center" style="width: 50px;">Sr</th>
-                      <th style="width: 120px;">Tag</th>
+                      <th class="text-center w-50px">Sr</th>
+                      <th class="w-120px">Tag</th>
                       <th>Equipment</th>
                       <th>Cali/Check Procedure</th>
-                      <th style="width: 100px;">Freq (Days)</th>
-                      <th style="width: 120px;">Due Date</th>
+                      <th class="w-100px">Freq (Days)</th>
+                      <th class="w-120px">Due Date</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -568,8 +501,206 @@
           </div>
         </div>
       </div>
-
+    </div>
   </main>
+
+  <!-- Job Assignment Modal (Redesigned with Tables) -->
+  <div id="technician-job-assign" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <h3 id="job-modal-title" class="gnfc-modal-title">Assign Job</h3>
+        <button type="button" onclick="setModalState('technician-job-assign', false)" class="gnfc-modal-close"><i
+            class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="job-modal-form">
+        <div class="gnfc-modal-body gnfc-modal-body--tight">
+
+          <!-- ISO14001/OHSAS18001 DUE JOBS -->
+          <div class="mb-24px">
+            <h3 class="font-14px fw-700 mb-4px color-blue">ISO14001/OHSAS18001 DUE JOBS ()</h3>
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;" class="text-center">Sr</th>
+                    <th style="width: 120px;">Tag</th>
+                    <th>Equipment</th>
+                    <th>Cali/Check Procedure</th>
+                    <th style="width: 180px;">Freq Of Check (Days)</th>
+                    <th style="width: 120px;">DUE DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="user-table-row">
+                    <td class="text-center py-12px user-table-secondary">1</td>
+                    <td class="user-table-blue user-table-bold">LT3402031</td>
+                    <td class="user-table-primary">D-34-3</td>
+                    <td class="user-table-primary">Calibration and Pm </td>
+                    <td class="text-center user-table-primary">182</td>
+                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="text-center py-12px user-table-secondary">2</td>
+                    <td class="user-table-blue user-table-bold">LT3402031</td>
+                    <td class="user-table-primary">D-34-3</td>
+                    <td class="user-table-primary">Calibration and Pm </td>
+                    <td class="text-center user-table-primary">182</td>
+                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- CPCB DUE JOBS -->
+          <div class="mb-24px">
+            <h3 class="font-14px fw-700 mb-4px color-blue">CPCB DUE JOBS ()</h3>
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;" class="text-center">Sr</th>
+                    <th style="width: 120px;">Tag</th>
+                    <th>Cali/Check Procedure</th>
+                    <th style="width: 180px;">Freq Of Check (Days)</th>
+                    <th style="width: 120px;">DUE DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="user-table-row">
+                    <td class="text-center py-12px user-table-secondary">1</td>
+                    <td class="user-table-blue user-table-bold">LT3402031</td>
+                    <td class="user-table-primary">D-34-3</td>
+                    <td class="user-table-primary">Calibration and Pm </td>
+                    <td class="text-center user-table-primary">182</td>
+                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="text-center py-12px user-table-secondary">2</td>
+                    <td class="user-table-blue user-table-bold">LT3402031</td>
+                    <td class="user-table-primary">D-34-3</td>
+                    <td class="user-table-primary">Calibration and Pm </td>
+                    <td class="text-center user-table-primary">182</td>
+                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="text-center py-12px user-table-secondary">3</td>
+                    <td class="user-table-blue user-table-bold">LT3402031</td>
+                    <td class="user-table-primary">D-34-3</td>
+                    <td class="user-table-primary">Calibration and Pm </td>
+                    <td class="text-center user-table-primary">182</td>
+                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- JOB PLANNER -->
+          <div class="mb-24px">
+            <h3 class="font-14px fw-700 mb-4px color-blue">JOB PLANNER</h3>
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th style="width: 50px;" class="text-center">Sr</th>
+                    <th style="width: 120px;">Tag</th>
+                    <th>Description</th>
+                    <th style="width: 180px;">Freq Of Check (Days)</th>
+                    <th style="width: 80px;" class="text-center">Assign</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-center">1</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.
+                    </td>
+                    <td class="user-table-secondary">45</td>
+                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">2</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">BHEL BLR all DCS Panels, OCSs, Ash panel and Station to be vacuum
+                      cleaned. FAN operation to be checked.</td>
+                    <td class="user-table-secondary">45</td>
+                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">3</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">CH4 gas cylinder (Code no 922000195D)expiry date to be check.
+                    </td>
+                    <td class="user-table-secondary">330</td>
+                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">4</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">Boiler Instrument Workshop House Keeping Job.</td>
+                    <td class="user-table-secondary">20</td>
+                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="setModalState('technician-job-assign', false)"
+            class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Pending PM Jobs Modal (New) -->
+  <div id="pending-pm-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Pending PM Jobs</h3>
+        <button type="button" onclick="setModalState('pending-pm-modal', false)" class="gnfc-modal-close"><i
+            class="ph-bold ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="text-center">
+          <h3 class="font-18px fw-700 color-primary uppercase tracking-wider mb-8px">PENDING PM JOBS OF THIS MONTH
+          </h3>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>TAG_NO</th>
+                <th>Type Of Inst</th>
+                <th>CRITICALITY</th>
+                <th>MODE</th>
+                <th>PM MONTH</th>
+                <th class="text-center">Asign</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="user-table-primary fw-600">1FE1501C</td>
+                <td class="text-right">TX</td>
+                <td>Critical</td>
+                <td>RUNNING</td>
+                <td>Apr</td>
+                <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" onclick="setModalState('pending-pm-modal', false)"
+          class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     $(document).ready(function () {
@@ -584,7 +715,26 @@
 
         $('#tab-' + tabId).addClass('is-active');
         $('#panel-' + tabId).removeClass('hidden');
+
+        updateTableCounts();
       };
+
+      /** ── Update Counts ── */
+      window.updateTableCounts = function () {
+        $('.tab-panel').each(function () {
+          const panelId = $(this).attr('id');
+          const tabId = panelId.replace('panel-', '');
+          const rowCount = $(this).find('tbody tr').length;
+          const $badge = $('#' + tabId + '-count-badge');
+
+          if ($badge.length) {
+            $badge.text(rowCount + (rowCount === 1 ? ' Record' : ' Records'));
+          }
+        });
+      };
+
+      // Initial count
+      updateTableCounts();
 
       /** ── Modal Handling ── */
       window.setModalState = function (modalId, isOpen) {
@@ -596,62 +746,165 @@
         }
       };
 
-      window.openCJLModal = function() { setModalState('cjl-modal', true); };
-      window.closeCJLModal = function() { setModalState('cjl-modal', false); };
-      window.openSEModal = function() { setModalState('sd-modal', true); };
-      window.closeSEModal = function() { setModalState('sd-modal', false); };
-      window.openHSOModal = function() { setModalState('hso-modal', true); };
-      window.closeHSOModal = function() { setModalState('hso-modal', false); };
-      window.openSearchModal = function() {
-        Swal.fire({
-          title: 'Search Tag',
-          text: 'Tag search is currently a simulation in this version.',
-          icon: 'info',
-          background: '#1e293b',
-          color: '#ffffff',
-          confirmButtonColor: '#3b82f6'
-        });
+      window.openCJLModal = function () { setModalState('cjl-modal', true); };
+      window.closeCJLModal = function () { setModalState('cjl-modal', false); };
+      window.openSEModal = function () { setModalState('sd-modal', true); };
+      window.closeSEModal = function () { setModalState('sd-modal', false); };
+      window.openHSOModal = function () { setModalState('hso-modal', true); };
+      window.closeHSOModal = function () { setModalState('hso-modal', false); };
+      window.openSearchModal = function () { setModalState('search-modal', true); };
+      window.closeSearchModal = function () { setModalState('search-modal', false); };
+
+      window.searchByTag = function () {
+        // Real-time filtering logic would go here
+        console.log("Searching for: " + $('#search-tag-input').val());
       };
+
+      // --- Smart Tag Autocomplete Helper ---
+      function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let snapBackTimeout = null;
+        let snapBackInterval = null;
+        let isAutoRemoving = false;
+
+        function getAvailableTags() {
+          let tags = [];
+          $select.find('option').each(function () {
+            if ($(this).val()) tags.push($(this).val());
+          });
+          return tags;
+        }
+
+        function stopAutoRemove() {
+          clearTimeout(snapBackTimeout);
+          clearInterval(snapBackInterval);
+          isAutoRemoving = false;
+        }
+
+        const tags = getAvailableTags();
+
+        $input.on('input', function (e) {
+          const cursorStart = this.selectionStart;
+          const cursorEnd = this.selectionEnd;
+          const rawVal = $(this).val();
+          const upperVal = rawVal.toUpperCase();
+          if (rawVal !== upperVal) {
+            $(this).val(upperVal);
+            this.setSelectionRange(cursorStart, cursorEnd);
+          }
+
+          const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+          const isDeleting = inputType && inputType.startsWith('delete');
+
+          if (isDeleting) {
+            stopAutoRemove();
+          }
+
+          let inputVal = $(this).val().toUpperCase();
+
+          if (isDeleting) {
+            let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+            if (hasMatch) {
+              $(this).removeClass('is-invalid-tag');
+            } else {
+              $(this).addClass('is-invalid-tag');
+            }
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          let longestValidPrefix = "";
+          for (let i = inputVal.length; i >= 0; i--) {
+            let sub = inputVal.substring(0, i);
+            if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+            $(this).val(inputVal);
+          }
+
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            $select.val('');
+            if (onMatch) onMatch('');
+
+            stopAutoRemove();
+
+            const self = this;
+            const targetPrefix = longestValidPrefix;
+            snapBackTimeout = setTimeout(() => {
+              isAutoRemoving = true;
+              snapBackInterval = setInterval(() => {
+                let currentVal = $input.val();
+                if (currentVal.length > targetPrefix.length) {
+                  currentVal = currentVal.substring(0, currentVal.length - 1);
+                  $input.val(currentVal);
+                } else {
+                  clearInterval(snapBackInterval);
+                  isAutoRemoving = false;
+                  $input.removeClass('is-invalid-tag');
+
+                  let exactMatch = tags.find(tag => tag.toUpperCase() === currentVal);
+                  $select.val(exactMatch || '');
+                  if (onMatch) onMatch(exactMatch || '');
+                }
+              }, 150);
+            }, 800);
+          } else {
+            stopAutoRemove();
+            $(this).removeClass('is-invalid-tag');
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+          }
+        });
+
+        $select.on('change', function () {
+          const val = $(this).val();
+          if (val) {
+            $input.val(val).removeClass('is-invalid-tag');
+            stopAutoRemove();
+            if (onMatch) onMatch(val);
+          } else {
+            $input.val('');
+          }
+        });
+      }
+
+
 
       /** ── Form Actions ── */
       window.saveAssignment = function () {
-        const $btn = $('button[onclick="saveAssignment()"]');
-        const originalHtml = $btn.html();
-        
-        $btn.html('<i class="ph-bold ph-check"></i> SAVED!')
-            .css({'background': '#10b981', 'border-color': '#10b981'});
-
         // Clear form
-        $('#form-assigned-to, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc').val('');
+        $('#form-assigned-to-input, #form-assigned-to-select, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc, #assign-job-loop-input, #assign-job-tag-input').val('');
+        $('#assign-job-loop-select, #assign-job-tag-select').val('');
 
-        setTimeout(() => {
-          $btn.html(originalHtml).css({'background': '', 'border-color': ''});
-          Swal.fire({
-            title: 'Job Assigned!',
-            text: 'Current job list updated.',
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false,
-            background: '#1e293b',
-            color: '#ffffff'
-          });
-        }, 1200);
+        updateTableCounts();
+        Swal.fire({
+          title: 'Job Assigned!',
+          text: 'Job Successfully Assigned!',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
       };
 
       window.cancelAssignment = function () {
-        Swal.fire({
-          title: 'Clear Form?',
-          text: "Are you sure you want to reset all inputs?",
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonColor: '#3b82f6',
-          cancelButtonColor: '#475569',
-          confirmButtonText: 'Yes, reset'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            $('#form-assigned-to, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc').val('');
-          }
-        });
+        // Clear form fields
+        $('#form-assigned-to-input, #form-assigned-to-select, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc, #assign-job-loop-input, #assign-job-tag-input').val('');
+        $('#assign-job-loop-select, #assign-job-tag-select').val('');
+
+        // Redirect back to plant detail
+        window.location.href = 'plant_detail.html';
       };
 
       // UI Enhancements
@@ -665,9 +918,61 @@
           setModalState($(this).attr('id'), false);
         }
       });
+
+      // --- Auto-open logic for Modals (Show on entry, not on refresh) ---
+      const today = new Date().toLocaleDateString('en-GB');
+      $('#assign-date').text(today);
+
+      const navEntries = performance.getEntriesByType('navigation');
+      if (navEntries.length > 0) {
+        const navType = navEntries[0].type;
+        if (navType === 'navigate' || navType === 'back_forward') {
+          // Show modals on initial entry or back/forward navigation
+          setModalState('technician-job-assign', true);
+          setModalState('pending-pm-modal', true);
+        }
+      } else {
+        // Fallback: if Performance API not supported, show once per session
+        if (!sessionStorage.getItem('modalsShownToday')) {
+          setModalState('technician-job-assign', true);
+          setModalState('pending-pm-modal', true);
+          sessionStorage.setItem('modalsShownToday', 'true');
+        }
+      }
+
+      // --- Dual Input Logic (Assigned To) ---
+      $('#form-assigned-to-select').on('change', function () {
+        $('#form-assigned-to-input').val($(this).val());
+      });
+
+      // --- Plant-based Technician List ---
+      const plantTechs = {
+        'BOILER': ['PVS', 'VWM', 'BDR', 'PRP', 'JDB'],
+        'TURBINE': ['JMD', 'BSU', 'CNJ_ISD'],
+        'COMMON': ['TECH_TESTER', 'ENG_TESTER']
+      };
+
+      function updateTechList() {
+        const currentPlant = $('.color-blue.uppercase.fw-700').first().text().trim();
+        const techs = plantTechs[currentPlant] || plantTechs['BOILER'];
+        const $select = $('#form-assigned-to-select');
+        const currentVal = $select.val();
+
+        $select.html('<option value="">Select Tech</option>');
+        techs.forEach(t => {
+          $select.append(`<option value="${t}">${t}</option>`);
+        });
+        if (techs.includes(currentVal)) $select.val(currentVal);
+      }
+
+      // Initial populate
+      updateTechList();
+
+      // Initialize Autocomplete
+      initTagAutocomplete('#assign-job-loop-input', '#assign-job-loop-select');
+      initTagAutocomplete('#assign-job-tag-input', '#assign-job-tag-select');
     });
   </script>
 </body>
 
 </html>
-

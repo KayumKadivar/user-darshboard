@@ -29,7 +29,7 @@
 
   <main class="technician-main">
 
-    <div id="header-container" data-title="Technician's Logbook" data-back="../../dashboard.html">
+    <div id="header-container" data-title="Technician's Logbook" data-breadcrumb="Logbook:active" data-back="../../dashboard.html">
     </div>
 
     <div class="main-content-scroll custom-scroll">
@@ -48,9 +48,11 @@
           </div>
 
           <div class="ui-switcher">
+            <button data-view="tomorrow" class="ui-switcher-btn">Tomorrow</button>
             <button data-view="today" class="ui-switcher-btn is-active">Today</button>
             <button data-view="prev" class="ui-switcher-btn">Prev Day</button>
             <button data-view="weekly" class="ui-switcher-btn">Weekly</button>
+            <button data-view="monthly" class="ui-switcher-btn">Monthly</button>
           </div>
 
         </div>
@@ -310,17 +312,17 @@
   <script>
     $(document).ready(function() {
       const $timeButtons = $(".ui-switcher-btn");
-      let selectedView = localStorage.getItem('technicianSelectedView') || "today";
+      let selectedView = localStorage.getItem('plantLogbookSelectedView') || "today";
 
       function setSelectedView(viewName, persist = true) {
-        selectedView = ["today", "prev", "weekly", "monthly"].includes(viewName) ? viewName : "today";
+        selectedView = ["tomorrow", "today", "prev", "weekly", "monthly"].includes(viewName) ? viewName : "today";
 
         $timeButtons.each(function() {
           $(this).toggleClass("is-active", $(this).data("view") === selectedView);
         });
 
         if (persist) {
-          localStorage.setItem('technicianSelectedView', selectedView);
+          localStorage.setItem('plantLogbookSelectedView', selectedView);
         }
 
         renderPlantCards();

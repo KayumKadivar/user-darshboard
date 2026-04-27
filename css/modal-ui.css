@@ -238,13 +238,12 @@ html[data-theme="light"] {
 
 /* ── Buttons ─────────────────────────────────────────────── */
 .gnfc-modal-btn {
-  min-height: 32px;
-  padding: 7px 16px;
-  border-radius: 2px;
+  padding: 8px 16px;
+  border-radius: 4px;
   border: 1px solid transparent;
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  /* letter-spacing: 0.04em; */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -286,12 +285,6 @@ html[data-theme="light"] {
   background: #2563eb;
   border-color: #2563eb;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-}
-
-.gnfc-modal-btn-primary:hover {
-  background: #1d4ed8;
-  border-color: #1d4ed8;
 }
 
 .gnfc-modal-btn-primary:hover {
@@ -335,7 +328,7 @@ html[data-theme="light"] {
 /* ── Form helpers (labels, inputs inside modal body) ─────── */
 .gnfc-modal-label {
   display: inline-block;
-  font-size: 0.8125rem;
+  font-size: 0.8825rem;
   font-weight: 700;
   color: var(--gnfc-modal-subtitle-color);
   text-transform: uppercase;
@@ -381,26 +374,35 @@ html[data-theme="light"] .gnfc-modal-input::-webkit-calendar-picker-indicator {
 }
 
 .gnfc-modal-input.auto-width-input {
-    width: 100%;
-    min-width: 100%;
-    transition: width 0.1s ease;
+  width: 100%;
+  min-width: 100%;
+  transition: width 0.1s ease;
 }
 
 .form-flex-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
 }
 
-.form-flex-wrapper > div {
-    flex: 0 1 200px;
-    min-width: 0; /* Allow items to shrink or move */
+.form-flex-wrapper>div {
+  flex: 0 1 200px;
+  min-width: 0;
+  /* Allow items to shrink or move */
 }
 
 /* Specific bases for grid-like initial appearance */
-.form-flex-wrapper.flex-cols-4 > div { flex-basis: calc(25% - 18px); }
-.form-flex-wrapper.flex-cols-3 > div { flex-basis: calc(33.33% - 16px); }
-.form-flex-wrapper.flex-cols-2 > div { flex-basis: calc(50% - 12px); }
+.form-flex-wrapper.flex-cols-4>div {
+  flex-basis: calc(25% - 18px);
+}
+
+.form-flex-wrapper.flex-cols-3>div {
+  flex-basis: calc(33.33% - 16px);
+}
+
+.form-flex-wrapper.flex-cols-2>div {
+  flex-basis: calc(50% - 12px);
+}
 
 .gnfc-modal-input::placeholder {
   color: var(--gnfc-modal-input-placeholder);

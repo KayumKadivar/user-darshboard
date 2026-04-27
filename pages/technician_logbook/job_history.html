@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="../../css/common.css">
   <link rel="stylesheet" href="../../css/modal-ui.css">
   <link rel="stylesheet" href="../../css/pages/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css">
 
   <!-- JS Vendors -->
   <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
@@ -22,8 +21,9 @@
   <script src="../../js/sidebar.js" defer></script>
   <script src="../../js/header.js" defer></script>
   <script src="../../js/plant-nav.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
+
 
   <script>
     window.activeSidebar = 'technician_logbook';
@@ -40,10 +40,12 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="Acetic Acid Logbook" data-back="plant_detail.html"></div>
+    <div id="header-container" data-title="Job History"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Job History:active"
+      data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
-    <section class="dashboard-content plant-page__content">
+    <section class="dashboard-content ">
 
       <!-- Plant Navigation -->
       <div id="plant-nav-container"></div>
@@ -209,7 +211,7 @@
         </div>
 
         <div class="user-table-wrapper">
-          <table class="user-table" id="jh-main-table">
+          <table class="user-table min-w-1440px" id="jh-main-table">
             <thead>
               <tr>
                 <th class="user-table-center" rowspan="2" style="width:64px;">Sr</th>

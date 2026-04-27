@@ -27,6 +27,33 @@
     window.activePage = 'ot_hours';
   </script>
 
+  <style>
+    .jt-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--brand-blue, #5794f2), transparent);
+      width: 100%;
+    }
+    .border-y {
+      border-top: 1px solid var(--app-border, #2c3235);
+      border-bottom: 1px solid var(--app-border, #2c3235);
+    }
+    .p-32px { padding: 32px; }
+    .p-24px { padding: 24px; }
+    .py-16px { padding-top: 16px; padding-bottom: 16px; }
+    .mb-16px { margin-bottom: 16px; }
+    .mb-12px { margin-bottom: 12px; }
+    .mb-8px { margin-bottom: 8px; }
+    .mb-4px { margin-bottom: 4px; }
+    .ml-8px { margin-left: 8px; }
+    .mr-8px { margin-right: 8px; }
+    .gap-24px { gap: 24px; }
+    .gap-20px { gap: 20px; }
+    .fs-22px { font-size: 22px; }
+    .fs-18px { font-size: 18px; }
+    .fs-16px { font-size: 16px; }
+    .fs-15px { font-size: 15px; }
+    .fs-12px { font-size: 12px; }
+  </style>
 </head>
 
 <body class="dashboard-body">
@@ -38,7 +65,7 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="OT Hours Report" data-breadcrumb="Logbook:modifications.html,OT Hours:active" data-back="plant_detail.html"></div>
+    <div id="header-container" data-title="OT Hours Report" data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,OT Hours:active" data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
     <section class="dashboard-content jt-page-content">
@@ -53,151 +80,176 @@
             <i class="ph-bold ph-funnel"></i> Search Criteria
           </h3>
         </div>
-        <div class="jt-filter-body grid grid-cols-4 gap-16px">
+        <div class="jt-filter-body grid grid-cols-3 gap-16px">
           
           <!-- Start Date -->
           <div class="jt-filter-group">
             <label class="gnfc-modal-label" for="startDate">Start Date</label>
-            <input type="date" id="startDate" class="gnfc-modal-input jt-date-input" value="2026-02-01">
+            <input type="date" id="startDate" class="gnfc-modal-input jt-date-input" value="2026-02-01" onchange="renderTable()">
           </div>
 
           <!-- End Date -->
           <div class="jt-filter-group">
             <label class="gnfc-modal-label" for="endDate">End Date</label>
-            <input type="date" id="endDate" class="gnfc-modal-input jt-date-input" value="2026-02-28">
+            <input type="date" id="endDate" class="gnfc-modal-input jt-date-input" value="2026-02-28" onchange="renderTable()">
           </div>
-
-          <!-- Search / Select Tag -->
-          <div class="jt-filter-group" style="grid-column: span 2;">
-            <label class="gnfc-modal-label" for="otSearchInput">Search / Select Tag</label>
-            <div class="flex items-center gap-12px">
-              <div class="jt-input-wrap flex-1">
-                <i class="ph-bold ph-magnifying-glass jt-input-icon"></i>
-                <input type="text" id="otSearchInput" class="gnfc-modal-input" placeholder="Type Tag No...">
-              </div>
-              <select id="otTagSelect" class="gnfc-modal-input flex-1">
-                <option value="">-- ALL TAGS --</option>
-              </select>
-            </div>
-          </div>
-
+            
           <!-- Select Name -->
           <div class="jt-filter-group">
             <label class="gnfc-modal-label" for="techSelect">Select Name</label>
-            <select id="techSelect" class="gnfc-modal-input">
-              <option value="ALL">ALL TECHNICIANS</option>
-              <option value="DVP">DVP</option>
-              <option value="JKP">JKP</option>
-              <option value="RKM">RKM</option>
-              <option value="NND">NND</option>
+            <select id="techSelect" class="gnfc-modal-input" onchange="renderTable()">
+              <option value="ALL">ALL</option>
+              <option value="PVS">PVS</option>
+              <option value="BDR">BDR</option>
+              <option value="PRP">PRP</option>
+              <option value="JDB">JDB</option>
+              <option value="JMD">JMD</option>
+              <option value="BSU">BSU</option>
+              <option value="CNJ_ISD">CNJ_ISD</option>
+              <option value="TECH_TESTER">TECH_TESTER</option>
+              <option value="KBD">KBD</option>
             </select>
           </div>
 
-          <!-- Actions -->
-          <div class="jt-filter-btn">
-            <button onclick="renderTable()" class="jt-btn-primary">
-              <i class="ph-bold ph-lightning"></i> APPLY
-            </button>
-            <button onclick="window.location.reload()" class="jt-btn-reset">
-              RESET
-            </button>
-          </div>
         </div>
       </div>
       <!-- /FILTER CARD -->
 
       <!-- ── TABLE CARD ── -->
       <div class="jt-table-card">
-        <div class="jt-report-header">
+        <div class="jt-report-header justify-between">
           <div class="jt-report-title">
             <i class="ph-fill ph-clock"></i>
             <div class="jt-title-stack">
               <h3 class="jt-main-title">O.T. Hours Report</h3>
-              <p style="font-size: 13px; color: var(--brand-primary); font-weight: 600; margin-top: 2px;">Plant Unit: Acetic Acid</p>
             </div>
           </div>
           <div class="jt-report-actions">
-            <button class="jt-btn-primary jt-btn-sm" id="btn-export-pdf">
-              <i class="ph-bold ph-export"></i> EXPORT PDF
+            <button class="jt-btn-primary jt-btn-sm" onclick="openMonthlyStatementModal()">
+              <i class="ph-bold ph-file-text"></i> Monthly Statement
             </button>
           </div>
         </div>
 
         <div class="user-table-wrapper">
-          <table class="user-table" id="ot-report-table">
+          <table class="user-table min-w-1440px" id="ot-report-table">
             <thead>
               <tr>
-                <th class="user-table-center" style="width: 64px;">Sr</th>
                 <th class="user-table-center" style="width: 120px;">Date</th>
                 <th class="user-table-center" style="width: 100px;">Tech</th>
-                <th class="user-table-center" style="width: 200px;">Instrument / Tag</th>
-                <th class="user-table-center" style="width: 80px;">Type</th>
-                <th style="min-width: 400px;">Description of Job</th>
-                <th class="user-table-center" style="width: 100px;">OT Hours</th>
+                <th class="user-table-center" style="width: 180px;">Tag No</th>
+                <th class="user-table-center" style="width: 150px;">Type Of Job</th>
+                <th style="min-width: 450px;">Description</th>
+                <th class="user-table-center" style="width: 100px;">OT Hour</th>
               </tr>
             </thead>
             <tbody id="reportTableBody">
+
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary">1</td>
-                <td class="user-table-center user-table-secondary">04/02/2026</td>
-                <td class="user-table-center user-table-bold user-table-blue">DVP</td>
-                <td class="user-table-center user-table-secondary" data-tag="DCS-YOKOGAWA">DCS-YOKOGAWA</td>
-                <td class="user-table-center user-table-bold" style="color: var(--brand-orange);">PM</td>
-                <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">C/r ESD console-32 checked all switch resistance and defective micro switch as per availability and requirement replaced (resistance noted down). Also PVC truff provided for cable support. For console-32 job completed. For 2 more console job started and job u/p.</td>
-                <td class="user-table-center user-table-bold user-table-primary">7.0</td>
+                <td class="user-table-center user-table-secondary">07/07/2012</td>
+                <td class="user-table-center user-table-blue">PVS</td>
+                <td class="user-table-center user-table-secondary">TG1_DOC</td>
+                <td class="user-table-center">REVAMP</td>
+                <td class="user-table-primary">Revamp related Job. Lamp and PE l/p list documents updated in soft file, job under progress.</td>
+                <td class="user-table-center user-table-primary">1:0</td>
               </tr>
+
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary">2</td>
-                <td class="user-table-center user-table-secondary">05/02/2026</td>
-                <td class="user-table-center user-table-bold user-table-blue">JKP</td>
-                <td class="user-table-center user-table-secondary" data-tag="FV-101">FV-101</td>
-                <td class="user-table-center user-table-bold" style="color: #ef4444;">BD</td>
-                <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Valve stuck at 50%. Free movement checked. Positioner calibration done. Found OK.</td>
-                <td class="user-table-center user-table-bold user-table-primary">2.5</td>
+                <td class="user-table-center user-table-secondary">24/03/2012</td>
+                <td class="user-table-center user-table-blue">BDR</td>
+                <td class="user-table-center user-table-secondary">24_VDC</td>
+                <td class="user-table-center">MODIFICATION</td>
+                <td class="user-table-primary">Flame scanner 24 VDC supply shifted in DTB panel. And 24 VDC field PS replaced with new one and shifted.</td>
+                <td class="user-table-center user-table-primary">3:0</td>
               </tr>
+
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary">3</td>
                 <td class="user-table-center user-table-secondary">06/02/2026</td>
-                <td class="user-table-center user-table-bold user-table-blue">RKM</td>
-                <td class="user-table-center user-table-secondary" data-tag="PT-202">PT-202</td>
-                <td class="user-table-center user-table-bold" style="color: var(--brand-orange);">PM</td>
-                <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Routine preventative maintenance check. Transmitter zero check done. Connections tightened.</td>
-                <td class="user-table-center user-table-bold user-table-primary">1.5</td>
+                <td class="user-table-center user-table-blue">BDR</td>
+                <td class="user-table-center user-table-secondary">PT-202</td>
+                <td class="user-table-center">PM</td>
+                <td class="user-table-primary">Routine preventative maintenance check. Transmitter zero check done. Connections tightened.</td>
+                <td class="user-table-center user-table-primary">1:30</td>
               </tr>
+
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary">4</td>
                 <td class="user-table-center user-table-secondary">08/02/2026</td>
-                <td class="user-table-center user-table-bold user-table-blue">DVP</td>
-                <td class="user-table-center user-table-secondary" data-tag="DCS-FOXBORO">DCS-FOXBORO</td>
-                <td class="user-table-center user-table-bold" style="color: var(--brand-orange);">PM</td>
-                <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">System health check up. Backup of configuration files initiated.</td>
-                <td class="user-table-center user-table-bold user-table-primary">4.0</td>
+                <td class="user-table-center user-table-blue">PRP</td>
+                <td class="user-table-center user-table-secondary">DCS-FOXBORO</td>
+                <td class="user-table-center">PM</td>
+                <td class="user-table-primary">System health check up. Backup of configuration files initiated.</td>
+                <td class="user-table-center user-table-primary">4:0</td>
               </tr>
+
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary">5</td>
                 <td class="user-table-center user-table-secondary">08/02/2026</td>
-                <td class="user-table-center user-table-bold user-table-blue">NND</td>
-                <td class="user-table-center user-table-secondary" data-tag="HV-303">HV-303</td>
-                <td class="user-table-center user-table-bold" style="color: var(--brand-success);">CM</td>
-                <td class="user-table-primary" style="line-height: 1.5; font-size: 0.8125rem;">Leakage attended. Gland packing replaced. Stroke check done from field and DCS.</td>
-                <td class="user-table-center user-table-bold user-table-primary">3.0</td>
+                <td class="user-table-center user-table-blue">JDB</td>
+                <td class="user-table-center user-table-secondary">HV-303</td>
+                <td class="user-table-center" style="color: var(--brand-success);">CM</td>
+                <td class="user-table-primary">Leakage attended. Gland packing replaced. Stroke check done from field and DCS.</td>
+                <td class="user-table-center user-table-primary">3:0</td>
               </tr>
             </tbody>
             <tfoot class="user-table-tfoot">
               <tr>
-                <td colspan="6" class="user-table-right" style="font-weight: 700;">TOTAL OT HOURS:</td>
-                <td class="user-table-center" id="total-ot-display" style="font-weight: 800; color: var(--brand-primary); font-size: 1.1rem;">18.0</td>
+                <td colspan="5" class="user-table-right">TOTAL OT HOURS:</td>
+                <td class="user-table-center" id="total-ot-display">15.0</td>
               </tr>
             </tfoot>
           </table>
         </div>
       </div>
-      <!-- /TABLE CARD -->
+      <!-- ── MONTHLY STATEMENT MODAL ── -->
+      <div id="modal-monthly-statement" class="gnfc-modal-overlay">
+        <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+          <div class="gnfc-modal-header">
+            <h2 class="gnfc-modal-title uppercase tracking-wider">MONTHLY OT STATEMENT</h2>
+            <button type="button" onclick="closeMonthlyStatementModal()" class="gnfc-modal-close">
+              <i class="ph-bold ph-x"></i>
+            </button>
+          </div>
+          <div class="gnfc-modal-body p-32px">
+            <div class="flex flex-col gap-24px">
+              
+              <div class="text-center">
+                <div class="jt-divider mb-16px"></div>
+                <p class="fs-16px color-secondary">
+                  <span class="fw-600">Duration:</span> 
+                  <span id="ms-duration" class="color-blue fw-700 ml-8px">01/02/2026 To 28/02/2026</span>
+                </p>
+              </div>
+
+              <div class="jt-modal-data-row grid grid-cols-2 gap-24px py-16px border-y">
+                <div class="modal-info-item">
+                  <label class="gnfc-modal-label block mb-4px">PLANT</label>
+                  <div class="fs-18px fw-700 color-primary" id="ms-plant">BOILER</div>
+                </div>
+                <div class="modal-info-item text-right">
+                  <label class="gnfc-modal-label block mb-4px">TOTAL HOURS</label>
+                  <div class="fs-22px fw-800 color-blue" id="ms-total-hours">8 : 30</div>
+                </div>
+              </div>
+
+              <div class="jt-filter-group">
+                <label class="gnfc-modal-label" for="ms-reason">REASON:</label>
+                <input type="text" id="ms-reason" class="gnfc-modal-input w-full" placeholder="Enter reason for OT...">
+              </div>
+
+            </div>
+          </div>
+          <div class="gnfc-modal-footer">
+            <button type="button" class="jt-btn-primary " onclick="exportMonthlyStatement()">
+              <i class="ph-bold ph-export mr-8px"></i> EXPORT
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- /MONTHLY STATEMENT MODAL -->
 
     </section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
   <script>
     /** ── Smart Tag Autocomplete Helper ── */
     function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
@@ -351,26 +403,72 @@
 
     /** ── OT Hours Calculation Logic ── */
     function calculateTotalOT() {
-      let total = 0;
+      let totalMinutes = 0;
       $('#reportTableBody tr:visible').each(function() {
-        const value = parseFloat($(this).find('td:last-child').text());
-        if (!isNaN(value)) total += value;
+        const timeStr = $(this).find('td:last-child').text().trim();
+        if (timeStr && timeStr.includes(':')) {
+          const parts = timeStr.split(':');
+          const hh = parseInt(parts[0]) || 0;
+          const mm = parseInt(parts[1]) || 0;
+          totalMinutes += (hh * 60) + mm;
+        } else if (timeStr && !isNaN(parseFloat(timeStr))) {
+          // Fallback for decimal
+          totalMinutes += Math.round(parseFloat(timeStr) * 60);
+        }
       });
-      $('#total-ot-display').text(total.toFixed(1));
+      
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+      $('#total-ot-display').text(`${hours}:${String(minutes).padStart(1, '0')}`);
     }
+
+    /** ── Monthly Statement Modal Logic ── */
+    window.openMonthlyStatementModal = function() {
+      const startDate = $('#startDate').val();
+      const endDate = $('#endDate').val();
+      const totalDisplay = $('#total-ot-display').text();
+      
+      // Format dates for display (YYYY-MM-DD to DD/MM/YYYY)
+      const fmt = (dStr) => {
+        if(!dStr) return '-';
+        const p = dStr.split('-');
+        return `${p[2]}/${p[1]}/${p[0]}`;
+      };
+
+      $('#ms-duration').text(`${fmt(startDate)} To ${fmt(endDate)}`);
+      $('#ms-total-hours').text(totalDisplay.replace(':', ' : '));
+      $('#ms-plant').text('BOILER'); // Can be dynamic if needed
+      
+      $('#modal-monthly-statement').addClass('is-open');
+    };
+
+    window.closeMonthlyStatementModal = function() {
+      $('#modal-monthly-statement').removeClass('is-open');
+    };
+
+    window.exportMonthlyStatement = function() {
+      const reason = $('#ms-reason').val();
+      Swal.fire({
+        title: 'Exporting...',
+        text: 'Generating Monthly OT Statement PDF',
+        icon: 'info',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      closeMonthlyStatementModal();
+    };
 
     /** ── Filtering Logic ── */
     window.renderTable = function() {
       const tech = $('#techSelect').val();
-      const tagSearch = $('#otSearchInput').val().toUpperCase().trim();
       const startDate = $('#startDate').val();
       const endDate = $('#endDate').val();
 
       $('#reportTableBody tr').each(function() {
         const $row = $(this);
-        const rowDateStr = $row.find('td:nth-child(2)').text(); // DD/MM/YYYY
-        const rowTech = $row.find('td:nth-child(3)').text().trim();
-        const rowTag = $row.find('td:nth-child(4)').text().toUpperCase();
+        const rowDateStr = $row.find('td:nth-child(1)').text(); // DD/MM/YYYY
+        const rowTech = $row.find('td:nth-child(2)').text().trim();
+        const rowTag = $row.find('td:nth-child(3)').text().toUpperCase();
 
         // Convert DD/MM/YYYY to YYYY-MM-DD for date comparison
         const dateParts = rowDateStr.split('/');
@@ -379,7 +477,6 @@
         let show = true;
 
         if (tech !== 'ALL' && rowTech !== tech) show = false;
-        if (tagSearch && !rowTag.includes(tagSearch)) show = false;
         
         if (startDate && rowDateFormatted < startDate) show = false;
         if (endDate && rowDateFormatted > endDate) show = false;
@@ -391,20 +488,8 @@
     };
 
     $(document).ready(function () {
-      // 1. Populate Dropdown from Table
-      const tags = [];
-      $('#reportTableBody tr').each(function() {
-        const tag = $(this).find('td:nth-child(4)').text().trim();
-        if (tag && !tags.includes(tag)) tags.push(tag);
-      });
-      tags.sort().forEach(tag => {
-        $('#otTagSelect').append(`<option value="${tag}">${tag}</option>`);
-      });
-
-      // 2. Initialize Autocomplete
-      initTagAutocomplete('#otSearchInput', '#otTagSelect', (val) => {
-        renderTable();
-      });
+      // Initial filter
+      renderTable();
 
       // 3. Export PDF Handler
       $('#btn-export-pdf').on('click', function() {

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Junction Box Schedule - Report | GNFC</title>
+    <!-- Core UI Styles -->
+    <link rel="stylesheet" href="../../css/phosphor.css">
+    <link rel="stylesheet" href="../../css/theme-vars.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/style.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/pages/plant.css">
+    <!-- Specialized Report Style -->
+    <link rel="stylesheet" href="../../css/pages/report.css">
+    
+    <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="../../js/theme-control.js"></script>
+    <script src="../../js/sidebar.js" defer></script>
+    <script src="../../js/header.js" defer></script>
+    <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
+    <script>window.activePage = 'plants';</script>
+      
+</head>
+<body class="dashboard-body">
+
+    <div class="sidebar-container"></div>
+
+    <main class="main-wrapper">
+
+        <div id="header-container" data-title="Junction Box Schedule Report"
+            data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,JB Detail:boiler_jb_detail.html,Report:active"
+            data-back="boiler_jb_detail.html"></div>
+
+        <div class="dashboard-content dashboard-scroll">
+
+            <!-- Theme-Based Filter Panel (Technician Logbook Style) -->
+            <div class="jt-filter-card no-print mb-24px">
+                <div class="jt-filter-header">
+                    <h2 class="jt-filter-title">
+                        <i class="ph-bold ph-funnel"></i>
+                        SEARCH CRITERIA
+                    </h2>
+                </div>
+                
+                <div class="jt-filter-body">
+                    <!-- Range Start -->
+                    <div class="jt-filter-group">
+                        <label class="jt-filter-label">Range Start (CH)</label>
+                        <div class="jt-select-wrap">
+                            <select id="jbs-ch-from" class="jt-select">
+                                <option value="1" selected>Channel 1</option>
+                                <option value="2">Channel 2</option>
+                                <option value="3">Channel 3</option>
+                                <option value="4">Channel 4</option>
+                                <option value="5">Channel 5</option>
+                                <option value="6">Channel 6</option>
+                                <option value="7">Channel 7</option>
+                                <option value="8">Channel 8</option>
+                                <option value="9">Channel 9</option>
+                                <option value="10">Channel 10</option>
+                                <option value="11">Channel 11</option>
+                                <option value="12">Channel 12</option>
+                            </select>
+                            <i class="ph-bold ph-caret-down jt-select-caret"></i>
+                        </div>
+                    </div>
+
+                    <!-- Range End -->
+                    <div class="jt-filter-group">
+                        <label class="jt-filter-label">Range End (CH)</label>
+                        <div class="jt-select-wrap">
+                            <select id="jbs-ch-to" class="jt-select">
+                                <option value="1">Channel 1</option>
+                                <option value="2">Channel 2</option>
+                                <option value="3">Channel 3</option>
+                                <option value="4">Channel 4</option>
+                                <option value="5">Channel 5</option>
+                                <option value="6">Channel 6</option>
+                                <option value="7">Channel 7</option>
+                                <option value="8">Channel 8</option>
+                                <option value="9">Channel 9</option>
+                                <option value="10">Channel 10</option>
+                                <option value="11">Channel 11</option>
+                                <option value="12" selected>Channel 12</option>
+                            </select>
+                            <i class="ph-bold ph-caret-down jt-select-caret"></i>
+                        </div>
+                    </div>
+
+                    <!-- Visual Filter -->
+                    <div class="jt-filter-group">
+                        <label class="jt-filter-label">Visual Filter</label>
+                        <div class="jt-select-wrap">
+                            <select id="jbs-report-type" class="jt-select">
+                                <option>Show Everything (All)</option>
+                                <option>Descriptions Only</option>
+                                <option>Tag Numbers Only</option>
+                                <option>Loops Only</option>
+                            </select>
+                            <i class="ph-bold ph-caret-down jt-select-caret"></i>
+                        </div>
+                    </div>
+
+                    <!-- Apply Button -->
+                    <div class="jt-filter-btn">
+                        <button type="button" id="btn-apply-filters" class="jt-btn-primary w-full shadow-lg">
+                            <i class="ph-bold ph-lightning"></i> APPLY
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zero State Hero -->
+            <div id="drawing-empty" class="drawing-zero-state flex flex-col items-center justify-center text-center no-print">
+                <div class="zero-state-icon-box flex items-center justify-center relative mb-24px">
+                    <div class="zero-state-glow absolute w-full h-full"></div>
+                    <i class="ph-bold ph-pencil-line"></i>
+                </div>
+                <h2 class="font-24px fw-800 color-primary mb-8px text-uppercase">Ready to Generate</h2>
+                <p class="color-secondary font-18px max-w-500px mx-auto">
+                    Select your channel range above and click <span class="color-blue fw-700">APPLY</span> to render the technical engineering schedule.
+                </p>
+            </div>
+
+
+            <!-- The Drawing Container -->
+            <div id="drawing-output" class="drawing-container">
+                <div class="jb-report-sheet">
+                    <div class="jb-report-inner">
+                        <!-- High-Fidelity Header Masterblock -->
+                        <table class="jb-report-table">
+                            <tr>
+                                <td colspan="3" class="jb-report-header-title">JUNCTION BOX SCHEDULE</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="width: 60%;">
+                                    <div class="font-32px fw-900 text-center p-10px">ACJB-7</div>
+                                </td>
+                                <td>
+                                    <div class="jb-report-label">CABINET : CCA01</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="jb-report-label">LOC : GND FLOOR. NEAR BFW PUMP.</div>
+                                </td>
+                                <td>
+                                    <div class="jb-report-label">ENCL : IP65</div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Main Schedule (Drafting Table) -->
+                        <table class="jb-report-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px;">CH</th>
+                                    <th style="width: 140px;">TAG NO</th>
+                                    <th style="width: 280px;">DESCRIPTION</th>
+                                    <th style="width: 120px;">FUNCTION</th>
+                                    <th style="width: 100px;">SIGNAL CABLE</th>
+                                    <th style="width: 100px;">JB TERM.</th>
+                                    <th style="width: 140px;">SIGNAL 12 PAIR</th>
+                                    <th style="width: 110px;">CAB TERM. 1AITB-3</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Block 1 (Channels 1-4) -->
+                                <tr>
+                                    <td class="text-center">1</td>
+                                    <td class="fw-900">1TT35A</td>
+                                    <td>BFP1 LO TEMP</td>
+                                    <td class="text-center">OPEN LOOP</td>
+                                    <td>
+                                        <div class="schematic-wrapper">
+                                            <div class="node-hub"><div class="node-circle"></div><div class="hub-line"></div></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="schematic-wrapper">
+                                            <div class="fork-connector"><div class="bracket-y"></div></div>
+                                            <div class="term-pair" style="margin-left: -5px;">
+                                                <div class="term-box">1</div>
+                                                <div class="term-box">2</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td rowspan="4" class="p-0">
+                                        <div class="central-pair-block">ACJB7-<br>CCA01</div>
+                                    </td>
+                                    <td>
+                                        <div class="schematic-wrapper">
+                                            <div class="term-pair" style="margin-right: -5px;">
+                                                <div class="term-box">23</div>
+                                                <div class="term-box">24</div>
+                                            </div>
+                                            <div class="fork-connector" style="transform: scaleX(-1);"><div class="bracket-y"></div></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">2</td>
+                                    <td class="fw-900">1TT35B</td>
+                                    <td>BFP2 LO TEMP</td>
+                                    <td class="text-center">OPEN LOOP</td>
+                                    <td><div class="schematic-wrapper"><div class="node-hub"><div class="node-circle"></div><div class="hub-line"></div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="fork-connector"><div class="bracket-y"></div></div><div class="term-pair" style="margin-left:-5px;"><div class="term-box">4</div><div class="term-box">5</div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="term-pair" style="margin-right:-5px;"><div class="term-box">25</div><div class="term-box">26</div></div><div class="fork-connector" style="transform:scaleX(-1);"><div class="bracket-y"></div></div></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">3</td>
+                                    <td class="fw-900">1LT37A</td>
+                                    <td>BFP1 LO TANK LEVEL</td>
+                                    <td class="text-center">OPEN LOOP</td>
+                                    <td><div class="schematic-wrapper"><div class="node-hub"><div class="node-circle"></div><div class="hub-line"></div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="fork-connector"><div class="bracket-y"></div></div><div class="term-pair" style="margin-left:-5px;"><div class="term-box">7</div><div class="term-box">8</div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="term-pair" style="margin-right:-5px;"><div class="term-box">29</div><div class="term-box">30</div></div><div class="fork-connector" style="transform:scaleX(-1);"><div class="bracket-y"></div></div></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">4</td>
+                                    <td class="fw-900">1LT37B</td>
+                                    <td>BFP2 LO TANK LEVEL</td>
+                                    <td class="text-center">OPEN LOOP</td>
+                                    <td><div class="schematic-wrapper"><div class="node-hub"><div class="node-circle"></div><div class="hub-line"></div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="fork-connector"><div class="bracket-y"></div></div><div class="term-pair" style="margin-left:-5px;"><div class="term-box">10</div><div class="term-box">11</div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="term-pair" style="margin-right:-5px;"><div class="term-box">33</div><div class="term-box">34</div></div><div class="fork-connector" style="transform:scaleX(-1);"><div class="bracket-y"></div></div></div></td>
+                                </tr>
+
+                                <!-- Block 2 (Channels 5-8) -->
+                                <tr>
+                                    <td class="text-center">5</td>
+                                    <td class="fw-900">1LT3_61</td>
+                                    <td>TURBINE LO TANK LEVEL</td>
+                                    <td class="text-center">OPEN LOOP</td>
+                                    <td><div class="schematic-wrapper"><div class="node-hub"><div class="node-circle"></div><div class="hub-line"></div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="fork-connector"><div class="bracket-y"></div></div><div class="term-pair" style="margin-left:-5px;"><div class="term-box">13</div><div class="term-box">14</div></div></div></td>
+                                    <td rowspan="4" class="p-0"><div class="central-pair-block">ACJB7-<br>CCA01</div></td>
+                                    <td><div class="schematic-wrapper"><div class="term-pair" style="margin-right:-5px;"><div class="term-box">35</div><div class="term-box">36</div></div><div class="fork-connector" style="transform:scaleX(-1);"><div class="bracket-y"></div></div></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">6</td>
+                                    <td class="fw-900">1TT3_61</td>
+                                    <td>TURB LO TEMP</td>
+                                    <td class="text-center">OPEN LOOP</td>
+                                    <td><div class="schematic-wrapper"><div class="node-hub"><div class="node-circle"></div><div class="hub-line"></div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="fork-connector"><div class="bracket-y"></div></div><div class="term-pair" style="margin-left:-5px;"><div class="term-box">16</div><div class="term-box">17</div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="term-pair" style="margin-right:-5px;"><div class="term-box">37</div><div class="term-box">38</div></div><div class="fork-connector" style="transform:scaleX(-1);"><div class="bracket-y"></div></div></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">7</td>
+                                    <td class="fw-900">SPARE</td>
+                                    <td>-</td>
+                                    <td class="text-center">-</td>
+                                    <td></td>
+                                    <td><div class="schematic-wrapper"><div class="fork-connector"><div class="bracket-y"></div></div><div class="term-pair" style="margin-left:-5px;"><div class="term-box">19</div><div class="term-box">20</div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="term-pair" style="margin-right:-5px;"><div class="term-box">39</div><div class="term-box">40</div></div><div class="fork-connector" style="transform:scaleX(-1);"><div class="bracket-y"></div></div></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">8</td>
+                                    <td class="fw-900">SPARE</td>
+                                    <td>-</td>
+                                    <td class="text-center">-</td>
+                                    <td></td>
+                                    <td><div class="schematic-wrapper"><div class="fork-connector"><div class="bracket-y"></div></div><div class="term-pair" style="margin-left:-5px;"><div class="term-box">22</div><div class="term-box">23</div></div></div></td>
+                                    <td><div class="schematic-wrapper"><div class="term-pair" style="margin-right:-5px;"><div class="term-box">65</div><div class="term-box">66</div></div><div class="fork-connector" style="transform:scaleX(-1);"><div class="bracket-y"></div></div></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Notes Block -->
+                        <div class="jb-report-notes">
+                            <span class="jb-report-notes-title">Notes:</span>
+                            <div class="mt-6px">NO REMARKS.</div>
+                        </div>
+
+                        <!-- High-Fidelity Legacy Footer -->
+                        <table class="jb-report-table">
+                            <tr>
+                                <td class="jb-report-logo-cell" rowspan="2">
+                                    <img src="../../assets/images/gnfc-full-logo.png" alt="Logo">
+                                    <div class="fw-900 mt-6px" style="font-size: 11px;">G N F C</div>
+                                </td>
+                                <td style="width: 180px;">
+                                    <div class="jb-report-label">Doc. No.</div>
+                                    <div class="jb-report-value font-14px">GNFC/INST/BOILER/JB/7</div>
+                                </td>
+                                <td style="width: 180px;">
+                                    <div class="jb-report-label">Drg. Name.</div>
+                                    <div class="jb-report-value font-14px">BOILER</div>
+                                </td>
+                                <td class="text-center" rowspan="2" style="width: 80px; vertical-align: middle;">
+                                    <div class="jb-report-label">Rev:0</div>
+                                </td>
+                                <td rowspan="2">
+                                    <div class="jb-report-label">Prepd By : AMD</div>
+                                    <div class="jb-report-label">Checked By : M(AMD) Date : 08/10/2013</div>
+                                    <div class="jb-report-label mt-6px">Date: 21/04/2026</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="jb-report-label">Drg.No.</div>
+                                    <div class="jb-report-value font-14px">BOILER</div>
+                                </td>
+                                <td>
+                                    <div class="jb-report-label">JB NO.</div>
+                                    <div class="jb-report-value font-14px">ACJB-7</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        $(document).ready(function() {
+            // Instant Show Logic
+            $('#btn-apply-filters').on('click', function() {
+                $('#drawing-empty').hide();
+                $('#drawing-output').fadeIn().addClass('is-visible').css('display', 'flex');
+            });
+
+            $('#btn-reset-filters').on('click', function() {
+                $('#plant-select').val('');
+                $('#jb-select').val('');
+                $('#drawing-output').hide();
+                $('#drawing-empty').show();
+            });
+            $('#drawing-output').hide();
+        });
+    </script>
+</body>
+</html>

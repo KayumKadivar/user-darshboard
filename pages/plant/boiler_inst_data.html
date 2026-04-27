@@ -17,12 +17,18 @@
     <script src="../../js/theme-control.js"></script>
     <script src="../../js/sidebar.js" defer></script>
     <script src="../../js/header.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
 
     <script>window.activePage = 'plants';</script>
 </head>
 
 <body class="dashboard-body">
+
+    <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+        <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+        <div class="gnfc-global-loader-text">Loading Data...</div>
+    </div>
 
     <div class="sidebar-container"></div>
 
@@ -476,6 +482,14 @@
                 $viewForm.removeClass('hidden');
                 $('#f-tag_no').val(tagId);
                 $scrollContainer.scrollTop(0);
+                
+                // Show loader overlay
+                $('#data-loader-overlay').removeClass('hidden');
+                
+                // Simulate network delay for animation
+                setTimeout(() => {
+                    $('#data-loader-overlay').addClass('hidden');
+                }, 800);
             }
 
             function cancelForm() {

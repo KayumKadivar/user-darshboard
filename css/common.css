@@ -17,6 +17,22 @@ html {
     flex-direction: column;
 }
 
+select {
+    font-weight: 500;
+}
+
+input {
+    font-weight: 500;
+}
+
+textarea {
+    font-weight: 500;
+}
+
+select option {
+    font-weight: 500;
+}
+
 /* ── Reusable Layout Classes ── */
 .app-layout-root {
     display: flex;
@@ -982,4 +998,47 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
     border-color: #4ade80 !important;
     box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2) !important;
     transition: all 0.2s ease;
+}
+
+
+.fixed { position: fixed !important; }
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite !important;
+}
+
+
+.gnfc-global-loader {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.425);
+    backdrop-filter: blur(10px);
+    z-index: 99999;
+}
+
+.gnfc-global-loader.hidden {
+    display: none !important;
+}
+
+.gnfc-global-loader-icon {
+    font-size: 55px;
+    color: var(--typo-blue);
+    margin-bottom: 16px;
+    animation: spin 1s linear infinite;
+}
+
+.gnfc-global-loader-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--typo-primary);
+    letter-spacing: 0.5px;
 }

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OT Statement | GNFC</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'ot_statement';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header -->
+    <div id="header-container" data-title="Overtime Statement"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,OT Statement:active"
+      data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content jt-page-content">
+
+      <!-- Plant Navigation Container -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── SEARCH CRITERIA ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i> Search Criteria
+          </h3>
+        </div>
+        <div class="jt-filter-body grid grid-cols-3 gap-16px">
+          <!-- Month -->
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label">Select Month</label>
+            <select id="ot-filter-month" class="gnfc-modal-input">
+              <option value="">All Months</option>
+              <option value="01">January</option>
+              <option value="02">February</option>
+              <option value="03">March</option>
+              <option value="04">April</option>
+              <option value="05">May</option>
+              <option value="06">June</option>
+              <option value="07">July</option>
+              <option value="08">August</option>
+              <option value="09">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+          </div>
+
+          <!-- Year -->
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label">Select Year</label>
+            <select id="ot-filter-year" class="gnfc-modal-input">
+              <option value="">All Years</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+            </select>
+          </div>
+
+          <!-- ECNO -->
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label">ECNO</label>
+            <div class="jt-input-wrap">
+              <i class="ph-bold ph-magnifying-glass jt-input-icon"></i>
+              <input id="ot-filter-ecno" type="text" placeholder="Search ECNO" class="gnfc-modal-input">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TABLE CARD ── -->
+      <div class="jt-table-card">
+        <div class="jt-report-header justify-between">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-timer"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Over Time Statement</h3>
+            </div>
+          </div>
+          <div class="jt-report-actions flex gap-16px">
+            <button type="button" id="btn-open-summary" class="jt-btn-secondary jt-btn-sm">
+              <i class="ph-bold ph-chart-bar mr-4px"></i> SUMMARY
+            </button>
+            <button type="button" id="btn-open-total" class="jt-btn-primary jt-btn-sm">
+              <i class="ph-bold ph-file-text"></i> TOTAL REPORT
+            </button>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">SR</th>
+                <th style="width: 100px;">ECNO</th>
+                <th style="width: 150px;" class="user-table-left">NAME</th>
+                <th style="width: 120px;">DATE</th>
+                <th style="width: 70px;">SHIFT</th>
+                <th style="width: 80px;">FROM</th>
+                <th style="width: 80px;">TO</th>
+                <th style="width: 160px;" class="user-table-left">OT REASON</th>
+                <th class="user-table-left">DETAIL REASON</th>
+                <th style="width: 80px;">HRS</th>
+                <th style="width: 80px;">MIN</th>
+              </tr>
+            </thead>
+            <tbody id="ot-tbody">
+              <tr class="user-table-row" data-month="04" data-year="2026" data-ecno="n.a.">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">N.A.</td>
+                <td class="user-table-primary">N.A.</td>
+                <td class="user-table-center">01/03/2026</td>
+                <td class="user-table-center">A</td>
+                <td class="user-table-center">-</td>
+                <td class="user-table-center">-</td>
+                <td class="user-table-primary"><span>-</span></td>
+                <td class="user-table-desc">nd taken found OK; ner checked found OK</td>
+                <td class="user-table-center ot-cell-rs">-</td>
+                <td class="user-table-center ot-cell-min">-</td>
+              </tr>
+              <tr class="user-table-row" data-month="04" data-year="2026" data-ecno="boile">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">BOILE</td>
+                <td class="user-table-primary">BOILER</td>
+                <td class="user-table-center">01/03/2026</td>
+                <td class="user-table-center">B</td>
+                <td class="user-table-center">-</td>
+                <td class="user-table-center">-</td>
+                <td class="user-table-primary"><span>-</span></td>
+                <td class="user-table-desc">berated so its operation check with operator found ok</td>
+                <td class="user-table-center ot-cell-rs">-</td>
+                <td class="user-table-center ot-cell-min">-</td>
+              </tr>
+              <!-- More static data... -->
+            </tbody>
+            <tfoot class="user-table-tfoot">
+              <tr>
+                <td colspan="9" class="text-right">TOTAL</td>
+                <td id="ot-total-rs" class="user-table-center">0</td>
+                <td id="ot-total-min" class="user-table-center">0</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- OT Summary Modal -->
+  <div id="modal-ot-summary" class="gnfc-modal-overlay" role="dialog" aria-modal="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <h2 class="gnfc-modal-title">OVER TIME SUMMARY</h2>
+        <button type="button" class="gnfc-modal-close close-summary-btn">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body p-20px">
+        <div class="flex flex-col gap-12px">
+          <h3>Over Time Summary for the month of <span id="summ-month-year" class="color-blue ml-4px"></span></h3>
+          
+          <div class="flex items-center gap-8px">
+            <span>No Of Person :</span>
+            <span id="summ-persons">0</span>
+          </div>
+
+          <div class="flex items-center gap-12px whitespace-nowrap">
+            <span>Grand Total :</span>
+            <div class="flex items-center gap-8px">
+              <span>Hr :</span>
+              <input type="text" id="summ-hr" class="gnfc-modal-input w-60px text-center" readonly>
+            </div>
+            <div class="flex items-center gap-8px">
+              <span >Min :</span>
+              <input type="text" id="summ-min" class="gnfc-modal-input w-60px text-center" readonly>
+            </div>
+          </div>
+
+          <div class="border-bottom-dark-border my-4px"></div>
+
+          <div class="flex items-center gap-12px">
+            <label class="fw-700 color-secondary fs-15px whitespace-nowrap" for="summ-reason">Reason :</label>
+            <input type="text" id="summ-reason" class="gnfc-modal-input flex-1" placeholder="Enter reason for OT...">
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="jt-btn-primary px-32px" onclick="exportOtSummary()">
+          <i class="ph-bold ph-export mr-8px"></i> EXPORT
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OT Total Report Modal -->
+  <div id="modal-ot-total-report" class="gnfc-modal-overlay" role="dialog" aria-modal="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <h2 class="gnfc-modal-title">OT TOTAL REPORT</h2>
+        <button type="button" class="gnfc-modal-close close-total-btn">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="flex flex-col">
+          <h3 class="border-bottom-dark-border mb-6px pb-6px">Over Time Summary for the motnh of : <span id="tot-month-year" class="color-blue"></span></h3>
+          <div>
+            <div class="flex items-center gap-12px">
+              <label class="gnfc-modal-label block">TOTAL PERSONS</label>
+              <div id="tot-persons" class="fs-18px fw-700 color-blue">0</div>
+            </div>
+            <div class="flex items-center gap-12px">
+              <label class="gnfc-modal-label block">GRAND TOTAL TIME</label>
+              <div>
+                <span id="tot-hr">0</span> Hr : <span id="tot-min">0</span> Min
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary close-total-btn">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      window._otRenderTable = function filterOtTable() {
+        const month = $('#ot-filter-month').val() || '';
+        const year = $('#ot-filter-year').val() || '';
+        const ecno = ($('#ot-filter-ecno').val() || '').trim().toLowerCase();
+
+        let visibleCount = 0;
+        let totalRs = 0;
+        let totalMin = 0;
+
+        $('#ot-tbody tr').each(function () {
+          const $row = $(this);
+          const rowMonth = $row.data('month') || '';
+          const rowYear = String($row.data('year') || '');
+          const rowEcno = ($row.data('ecno') || '').toLowerCase();
+          const rowName = $row.find('td:nth-child(3)').text().toLowerCase();
+
+          const monthMatch = !month || rowMonth === month;
+          const yearMatch = !year || rowYear.startsWith(year);
+          const ecnoMatch = true; // Bypass ECNO filter as requested for now
+
+          if (monthMatch && yearMatch && ecnoMatch) {
+            $row.show();
+            visibleCount++;
+            totalRs += Number($row.find('.ot-cell-rs').text()) || 0;
+            totalMin += Number($row.find('.ot-cell-min').text()) || 0;
+          } else {
+            $row.hide();
+          }
+        });
+
+        $('#ot-record-count').text(visibleCount);
+        $('#ot-total-rs').text(totalRs);
+        $('#ot-total-min').text(totalMin);
+
+        $('.ot-empty-row').remove();
+        if (visibleCount === 0) {
+          $('#ot-tbody').append('<tr class="ot-empty-row"><td colspan="11" class="user-table-center">No records found.</td></tr>');
+        }
+      };
+
+      window.openOtSummaryModal = function () {
+        const month = $('#ot-filter-month').val();
+        const year = $('#ot-filter-year').val();
+        const minVal = parseInt($('#ot-total-min').text()) || 0;
+        const persons = $('#ot-tbody tr:visible').not('.ot-empty-row').length;
+
+        $('#summ-month-year').text(`${month}/${year}`);
+        $('#summ-persons').text(persons);
+        $('#summ-hr').val(Math.floor(minVal / 60));
+        $('#summ-min').val(minVal % 60);
+
+        $('#modal-ot-summary').addClass('is-open');
+      };
+
+      window.closeOtSummaryModal = function () {
+        $('#modal-ot-summary').removeClass('is-open');
+      };
+
+      window.openOtTotalReportModal = function () {
+        const month = $('#ot-filter-month').val();
+        const year = $('#ot-filter-year').val();
+        const minVal = parseInt($('#ot-total-min').text()) || 0;
+        const persons = $('#ot-tbody tr:visible').not('.ot-empty-row').length;
+
+        $('#tot-month-year').text(`${month}/${year}`);
+        $('#tot-persons').text(persons);
+        $('#tot-hr').text(Math.floor(minVal / 60));
+        $('#tot-min').text(minVal % 60);
+
+        $('#modal-ot-total-report').addClass('is-open');
+      };
+
+      window.closeOtTotalReportModal = function () {
+        $('#modal-ot-total-report').removeClass('is-open');
+      };
+
+      // Event Listeners for Filters
+      $(document).on('change', '#ot-filter-month, #ot-filter-year', window._otRenderTable);
+      $(document).on('input', '#ot-filter-ecno', window._otRenderTable);
+
+      // Event Listeners for opening and closing modals
+      $(document).on('click', '#btn-open-summary', window.openOtSummaryModal);
+      $(document).on('click', '#btn-open-total', window.openOtTotalReportModal);
+      $(document).on('click', '.close-summary-btn', window.closeOtSummaryModal);
+      $(document).on('click', '.close-total-btn', window.closeOtTotalReportModal);
+
+      // Initial render
+      $(document).ready(function () {
+        const now = new Date();
+        $('#ot-filter-month').val(String(now.getMonth() + 1).padStart(2, '0'));
+        $('#ot-filter-year').val(String(now.getFullYear()));
+        window._otRenderTable();
+      });
+
+      // Close on overlay click
+      $('.gnfc-modal-overlay').on('click', function (e) {
+        if (e.target === this) $(this).removeClass('is-open');
+      });
+    })();
+  </script>
+
+</body>
+
+</html>

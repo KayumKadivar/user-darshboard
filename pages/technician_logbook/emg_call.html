@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Call Report | GNFC</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'emg_call';
+  </script>
+
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header -->
+    <div id="header-container" data-title="Emergency Call Report"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,EMG Call:active" data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content jt-page-content">
+
+      <!-- Plant Navigation Container -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── SEARCH CRITERIA ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i> Search Criteria
+          </h3>
+        </div>
+        <div class="jt-filter-body grid grid-cols-3 gap-16px">
+          <!-- Start Date -->
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label">Start Date</label>
+            <input id="emg-start-date" type="date" class="gnfc-modal-input" onchange="filterEmgTable()">
+          </div>
+
+          <!-- End Date -->
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label">End Date</label>
+            <input id="emg-end-date" type="date" class="gnfc-modal-input" onchange="filterEmgTable()">
+          </div>
+
+          <!-- Search -->
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label">Search</label>
+            <div class="jt-input-wrap">
+              <i class="ph-bold ph-magnifying-glass jt-input-icon"></i>
+              <input id="emg-search" type="text" placeholder="Search tag, tech, desc..." class="gnfc-modal-input" oninput="filterEmgTable()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TABLE CARD ── -->
+      <div class="jt-table-card">
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-siren" style="color: var(--brand-danger);"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Emergency Call Report</h3>
+              <p style="font-size: 13px; color: var(--brand-primary); font-weight: 600; margin-top: 2px;">Emergency call logs with overtime summary</p>
+            </div>
+          </div>
+          <div class="jt-report-actions">
+            <button type="button" class="jt-btn-primary jt-btn-sm" onclick="window.print()">
+              <i class="ph-bold ph-printer"></i> PRINT REPORT
+            </button>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead class="sticky top-0 z-10">
+              <tr>
+                <th style="width: 110px;">Date</th>
+                <th style="width: 80px;">Tech</th>
+                <th style="width: 120px;">Tag No</th>
+                <th style="width: 160px;">Type of Job</th>
+                <th>Description</th>
+                <th style="width: 80px;">OT Hr</th>
+              </tr>
+            </thead>
+            <tbody id="emg-table-body">
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">17/09/2025</td>
+                <td class="user-table-center user-table-bold">NRL</td>
+                <td class="user-table-center user-table-blue user-table-bold">CX701</td>
+                <td><span class="badge-red font-10px">ABNORMALITY</span></td>
+                <td>At 02:44 AM, CX701 tripped on LS9105AL, LS9105BL, and LS9105CL due to a low-level trip in D713 (Seal
+                  Oil Drum). Following the trip...</td>
+                <td class="user-table-center user-table-bold">0.0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">14/09/2025</td>
+                <td class="user-table-center user-table-bold">NRL</td>
+                <td class="user-table-center user-table-blue user-table-bold">MV1</td>
+                <td><span class="badge-red font-10px">ABNORMALITY</span></td>
+                <td>Process reported that valve getting open and close several times. Found it got open at 12:09:07,
+                  12:09:17... Relay replaced.</td>
+                <td class="user-table-center user-table-bold">0.0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">11/10/2024</td>
+                <td class="user-table-center user-table-bold">NRL</td>
+                <td class="user-table-center user-table-blue user-table-bold">FT0210CD</td>
+                <td><span class="badge-orange font-10px">DEFECT MAINTENANCE</span></td>
+                <td>Process reported reading decreased. Connected HART, simulation done. 4-20mA cum sensor module changed.
+                </td>
+                <td class="user-table-center user-table-bold">0.0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">08/01/2024</td>
+                <td class="user-table-center user-table-bold">NRL</td>
+                <td class="user-table-center user-table-blue user-table-bold">C1001A</td>
+                <td><span class="badge-green font-10px">PROCESS REQMT</span></td>
+                <td>Loading unloading valve tubing connections done. Simulation taken found Ok. logic taken in line.</td>
+                <td class="user-table-center user-table-bold">0.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="jt-report-footer">
+          <div class="ot-record-info">
+            Showing <span id="emg-record-count" class="fw-700 color-primary mx-1">4</span> entries
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      window.filterEmgTable = function () {
+        const start = $('#emg-start-date').val();
+        const end = $('#emg-end-date').val();
+        const search = ($('#emg-search').val() || '').toLowerCase();
+
+        $('#emg-table-body tr').each(function () {
+          const $row = $(this);
+          const dateStr = $row.find('td:first-child').text(); // DD/MM/YYYY
+          const rowText = $row.text().toLowerCase();
+
+          // Simple date match logic for demo
+          const dateMatch = true; 
+          const searchMatch = !search || rowText.includes(search);
+
+          if (dateMatch && searchMatch) {
+            $row.show();
+          } else {
+            $row.hide();
+          }
+        });
+
+        $('#emg-record-count').text($('#emg-table-body tr:visible').length);
+      }
+
+      $('#emg-start-date, #emg-end-date, #emg-search').on('change input', filterEmgTable);
+      
+      $(document).ready(filterEmgTable);
+    })();
+  </script>
+
+</body>
+
+</html>

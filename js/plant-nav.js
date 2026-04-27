@@ -48,6 +48,13 @@ function renderPlantNav(activePageId) {
                 { id: 'modifications', label: 'Modifications', icon: 'ph-gear-fine', href: 'modifications.html' },
                 { id: 'doc_change', label: 'Doc. Change', icon: 'ph-file-doc', href: 'doc_change.html' }
             ]
+        },
+        {
+            isTools: true,
+            items: [
+                { id: 'ot_statement', label: 'O.T.', icon: 'ph-clock-user', href: 'ot_statement.html', class: 'btn-ot-sm' },
+                { id: 'emg_call', label: 'EMG Call', icon: 'ph-siren', href: 'emg_call.html', class: 'btn-emg-sm' }
+            ]
         }
     ];
 
@@ -57,7 +64,9 @@ function renderPlantNav(activePageId) {
         return group.items.some(i => i.id === activePageId);
     };
 
-    let groupsHtml = navGroups.map((group, gi) => {
+    const plantPart = currentPlant ? `?plant=${encodeURIComponent(currentPlant)}` : '';
+
+    let groupsHtml = navGroups.filter(g => !g.isTools).map((group, gi) => {
         let html = '';
         if (gi > 0) {
             html += `<div class="plant-nav-separator"></div>`;
@@ -83,7 +92,6 @@ function renderPlantNav(activePageId) {
         html += group.items.map(item => {
             const active = isItemActive(item);
             const pillCls = `plant-nav-pill ${active ? 'is-active' : ''}`;
-            const plantPart = currentPlant ? `?plant=${encodeURIComponent(currentPlant)}` : '';
             const href = item.href === '#' ? '#' : `${item.href}${plantPart}`;
             return `
                 <a href="${href}" class="${pillCls}">
@@ -96,20 +104,29 @@ function renderPlantNav(activePageId) {
         return html;
     }).join('');
 
+    // Render Tools (Buttons on the right)
+    const toolsGroup = navGroups.find(g => g.isTools);
+    let toolsHtml = '';
+    if (toolsGroup) {
+        toolsHtml = toolsGroup.items.map(item => {
+            const active = isItemActive(item);
+            const href = item.href === '#' ? '#' : `${item.href}${plantPart}`;
+            return `
+                <button type="button" onclick="window.location.href='${href}'" class="${item.class} ${active ? 'is-active' : ''}">
+                    <i class="ph-bold ${item.icon}"></i>
+                    <span class="btn-text-sm">${item.label}</span>
+                </button>
+            `;
+        }).join('');
+    }
+
     $navContainer.html(`
         <div class="plant-nav-wrapper">
             <nav class="plant-nav-links">
                 ${groupsHtml}
             </nav>
             <div class="plant-nav-tools">
-                <button type="button" onclick="try{window.openOtModal('${currentPlant}')}catch(e){console.log('OT Modal missing')}" class="btn-ot-sm">
-                    <i class="ph-bold ph-clock-user"></i>
-                    <span class="btn-text-sm">O.T.</span>
-                </button>
-                <button type="button" data-open-modal="modal-emg-call" class="btn-emg-sm">
-                    <i class="ph-bold ph-siren"></i>
-                    <span class="btn-text-sm">EMG Call</span>
-                </button>
+                ${toolsHtml}
             </div>
         </div>
     `);
