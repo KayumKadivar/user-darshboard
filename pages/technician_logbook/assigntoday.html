@@ -28,12 +28,10 @@
 
 <body class="dashboard-body plant-page">
 
-  <!-- Sidebar Container (Injected by sidebar.js) -->
   <div class="sidebar-container"></div>
 
   <main class="main-wrapper plant-page__main">
 
-    <!-- Header Container (Injected by header.js) -->
     <div id="header-container" data-title="Assign Today"
       data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Assign Today:active"
       data-back="plant_detail.html"></div>
@@ -103,6 +101,7 @@
                     <option>BSU</option>
                     <option>CNJ_ISD</option>
                     <option>TECH_TESTER</option>
+                    <option>ENG_TESTER</option>
                   </select>
                 </div>
               </div>
@@ -422,10 +421,10 @@
                   </td>
                   <td class="user-table-desc">Boiler 1 AB elevation, the visible flame scanner 2/4 contact was not
                     coming.</td>
-                  <td class="user-table-secondary" style="font-style: italic;">-</td>
-                  <td class="user-table-secondary" style="font-style: italic;">-</td>
-                  <td class="user-table-secondary" style="font-style: italic;">-</td>
-                  <td class="user-table-secondary" style="font-style: italic;">-</td>
+                  <td class="user-table-secondary">-</td>
+                  <td class="user-table-secondary">-</td>
+                  <td class="user-table-secondary">-</td>
+                  <td class="user-table-secondary">-</td>
                   <td><span class="user-table-secondary">Card replacement required.</span></td>
                 </tr>
               </tbody>
@@ -529,7 +528,6 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <!-- No data as per 2nd image -->
                       </tbody>
                     </table>
                   </div>
@@ -550,7 +548,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- No data as per 2nd image -->
                   </tbody>
                 </table>
               </div>
@@ -927,29 +924,6 @@
       $('#form-assigned-to-select').on('change', function () {
         $('#form-assigned-to-input').val($(this).val());
       });
-
-      // --- Plant-based Technician List ---
-      const plantTechs = {
-        'BOILER': ['PVS', 'VWM', 'BDR', 'PRP', 'JDB'],
-        'TURBINE': ['JMD', 'BSU', 'CNJ_ISD'],
-        'COMMON': ['TECH_TESTER', 'ENG_TESTER']
-      };
-
-      function updateTechList() {
-        const currentPlant = $('.color-blue.uppercase.fw-700').first().text().trim();
-        const techs = plantTechs[currentPlant] || plantTechs['BOILER'];
-        const $select = $('#form-assigned-to-select');
-        const currentVal = $select.val();
-
-        $select.html('<option value="">Select Tech</option>');
-        techs.forEach(t => {
-          $select.append(`<option value="${t}">${t}</option>`);
-        });
-        if (techs.includes(currentVal)) $select.val(currentVal);
-      }
-
-      // Initial populate
-      updateTechList();
 
       // Initialize Autocomplete
       initTagAutocomplete('#assign-job-tag-input', '#assign-job-tag-select');

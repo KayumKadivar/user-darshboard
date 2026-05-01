@@ -78,7 +78,7 @@
             <span class="fw-700  color-primary font-14px">JOB ASSIGNMENT FORM</span>
           </div>
 
-                 <div class="form-grid grid-cols-12 p-16px">
+          <div class="form-grid grid-cols-12 p-16px">
             <div class="form-field-wrapper col-span-6">
               <label class="assign-field-label">ASSIGNED TO <span class="required">*</span></label>
               <div class="flex items-center gap-8px">
@@ -96,6 +96,7 @@
                     <option>BSU</option>
                     <option>CNJ_ISD</option>
                     <option>TECH_TESTER</option>
+                    <option>ENG_TESTER</option>
                   </select>
                 </div>
               </div>
@@ -415,10 +416,10 @@
                   </td>
                   <td class="user-table-desc">Boiler 1 AB elevation, the visible flame scanner 2/4 contact was not
                     coming.</td>
-                  <td class="user-table-secondary" style="font-style: italic;">-</td>
-                  <td class="user-table-secondary" style="font-style: italic;">-</td>
-                  <td class="user-table-secondary" style="font-style: italic;">-</td>
-                  <td class="user-table-secondary" style="font-style: italic;">-</td>
+                  <td class="user-table-secondary">-</td>
+                  <td class="user-table-secondary">-</td>
+                  <td class="user-table-secondary">-</td>
+                  <td class="user-table-secondary">-</td>
                   <td><span class="user-table-secondary">Card replacement required.</span></td>
                 </tr>
               </tbody>
@@ -849,29 +850,6 @@
       $('#form-assigned-to-select').on('change', function () {
         $('#form-assigned-to-input').val($(this).val());
       });
-
-      // --- Plant-based Technician List ---
-      const plantTechs = {
-        'BOILER': ['PVS', 'VWM', 'BDR', 'PRP', 'JDB'],
-        'TURBINE': ['JMD', 'BSU', 'CNJ_ISD'],
-        'COMMON': ['TECH_TESTER', 'ENG_TESTER']
-      };
-
-      function updateTechList() {
-        const currentPlant = $('.color-blue.uppercase.fw-700').first().text().trim();
-        const techs = plantTechs[currentPlant] || plantTechs['BOILER'];
-        const $select = $('#form-assigned-to-select');
-        const currentVal = $select.val();
-
-        $select.html('<option value="">Select Tech</option>');
-        techs.forEach(t => {
-          $select.append(`<option value="${t}">${t}</option>`);
-        });
-        if (techs.includes(currentVal)) $select.val(currentVal);
-      }
-
-      // Initial populate
-      updateTechList();
 
       // Initialize Autocomplete
       initTagAutocomplete('#assign-job-tag-input', '#assign-job-tag-select');
