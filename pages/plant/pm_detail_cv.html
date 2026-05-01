@@ -198,7 +198,7 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">CONTROL VALVE PM FORM View</h3>
+          <h3 class="gnfc-modal-title">CONTROL VALVE PM FORM View : <span id="view-modal-tag-display" class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x text-lg"></i>
@@ -394,7 +394,7 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">Control Valve PM Form Edit</h3>
+          <h3 class="gnfc-modal-title">Control Valve PM Form Edit : <span id="edit-modal-tag-display" class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x text-lg"></i>
@@ -579,7 +579,7 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">Control Valve PM Form Add</span></h3>
+          <h3 class="gnfc-modal-title">Control Valve PM Form Add : <span id="add-modal-tag-display" class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x text-lg"></i>
@@ -1123,6 +1123,18 @@
         });
       });
 
+      $('#btn-view-tag-go').on('click', function () {
+        const val = $('#view-tag-select').val();
+        if (!val && $('#view-tag-input').val()) {
+          Swal.fire('Invalid Tag', 'Please select a valid tag from the list.', 'warning');
+        }
+      });
+
+
+      // --- Utilities ---
+      function openModal(id) { $(id).addClass('is-open'); }
+      function closeModal(id) { $(id).removeClass('is-open'); }
+
 
       // --- Interaction Handlers ---
       $('#btn-pending-filter').on('click', function () {
@@ -1199,6 +1211,26 @@
       $('.btn-close-modal, .gnfc-modal-btn-secondary').on('click', function () {
         closeModal($(this).closest('.gnfc-modal-overlay'));
       });
+
+      $('#btn-remark-report').on('click', function () {
+        $('#report-result-title').text('Remark Report – All Tags with Remarks');
+        $('#report-tbody tr').show();
+      });
+
+      function updateReportFilter() {
+        const param = $('#report-param-select').val();
+        const status = $('input[name="report-val"]:checked').val().toUpperCase();
+        if (param) {
+          $('#report-result-title').text(`${param} / ${status}`);
+          if (status === 'NO') $('#report-tbody tr').hide();
+          else $('#report-tbody tr').show();
+        } else {
+          $('#report-result-title').text('Filtered Report');
+        }
+      }
+
+      $('#report-param-select').on('change', updateReportFilter);
+      $('input[name="report-val"]').on('change', updateReportFilter);
     });
   </script>
 </body>

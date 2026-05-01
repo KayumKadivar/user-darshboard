@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Name Wise Report | GNFC</title>
+  <title>Name & Tag Wise Report | GNFC</title>
   <meta name="description" content="GNFC Technician Specific Job Report">
 
   <!-- CSS -->
@@ -24,7 +24,7 @@
 
   <script>
     window.activeSidebar = 'technician_logbook';
-    window.activePage = 'namewise_report';
+    window.activePage = 'name_date_report';
   </script>
 </head>
 
@@ -41,8 +41,8 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="Namewise Report"
-      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Namewise Report:active"
+    <div id="header-container" data-title="Name & Tag Wise Report"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Name & Tag Wise Report:active"
       data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
@@ -59,10 +59,10 @@
             SEARCH CRITERIA
           </h3>
         </div>
-        <div class="jt-filter-body">
+        <div class="form-grid grid-cols-12 p-16px">
 
           <!-- Start Date -->
-          <div>
+          <div class="col-span-2">
             <label class="gnfc-modal-label">Start Date</label>
             <div class="jt-input-wrap">
               <input type="date" id="startDateFilter" class="gnfc-modal-input">
@@ -70,18 +70,31 @@
           </div>
 
           <!-- End Date -->
-          <div>
-            <label class="gnfc-modal-label">End Date</label>
+          <div class="col-span-2">
+            <label class="gnfc-modal-label">End Date </label>
             <div class="jt-input-wrap">
               <input type="date" id="endDateFilter" class="gnfc-modal-input">
             </div>
           </div>
 
+          <!-- Tag Filter -->
+          <div class="col-span-3">
+            <label class="gnfc-modal-label">Tag Number</label>
+            <div class="jt-select-wrap">
+              <select id="tagNoFilter" class="gnfc-modal-input">
+                <option value="">All Tags</option>
+                <option value="FVC0208A">FVC0208A</option>
+                <option value="LV412B">LV412B</option>
+              </select>
+
+            </div>
+          </div>
+
           <!-- Select Name -->
-          <div>
+          <div class="col-span-3">
             <label class="gnfc-modal-label">Technician Name</label>
             <div class="jt-select-wrap">
-              <select id="nameFilter" class="gnfc-modal-input">
+              <select id="nameFilter" class="jt-select">
                 <option value="">All Technicians</option>
                 <option value="PBS">PBS</option>
                 <option value="NRK">NRK</option>
@@ -90,12 +103,11 @@
                 <option value="R.R.">R.R.</option>
                 <option value="SHC">SHC</option>
               </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="jt-filter-btn">
+          <div class="jt-filter-btn grid-span-1">
             <button onclick="generateReport(true)" class="jt-btn-primary">
               <i class="ph-bold ph-lightning"></i> APPLY
             </button>
@@ -114,7 +126,7 @@
           <div class="jt-report-title">
             <i class="ph-fill ph-user-list"></i>
             <div class="jt-title-stack">
-              <h3 class="jt-main-title" id="reportTitle">Name Wise Report</h3>
+              <h3 class="jt-main-title" id="reportTitle">Name & Date Wise Report</h3>
             </div>
           </div>
         </div>
@@ -131,7 +143,7 @@
                 <th rowspan="2" class="user-table-center" style="width: 120px;">Type of Job</th>
                 <th rowspan="2" style="min-width: 300px;">Description</th>
                 <th rowspan="2" class="user-table-center" style="min-width: 250px;">REMARKS</th>
-                <th rowspan="2" class="user-table-center" style="width: 80px;">OT Hr</th>
+
               </tr>
               <tr>
                 <th class="user-table-border-right" style="min-width: 150px;">Assign To</th>
@@ -140,113 +152,108 @@
             <tbody id="reportTableBody">
               <!-- Static Data Rows for Preview -->
               <tr class="user-table-row">
-                <td class="user-table-center">1</td>
+                <td class="user-table-center ">1</td>
                 <td class="user-table-center">01/02/2005</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div></div>
-                    <div>PBS</div>
+                    <div>-</div>
                   </div>
                 </td>
                 <td class="user-table-center">PBS</td>
                 <td class="user-table-center">IIMS</td>
                 <td>N.A.</td>
-                <td>Job status report generated as discussed with SM(TMV).</td>
+                <td >Job status report generated as discussed with SM(TMV).</td>
                 <td>
                   <div class="user-table-cell-stack">
                     <p></p>
                   </div>
                 </td>
-                <td class="user-table-center user-table-primary">0</td>
+
               </tr>
 
               <tr class="user-table-row">
-                <td class="user-table-center">2</td>
+                <td class="user-table-center ">2</td>
                 <td class="user-table-center">01/02/2005</td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div>Exceed PC network is to be removed.</div>
-                    <div>(By:SHC : 01/02/2005)</div>
+                    <div class="user-table-secondary ">(By:SHC : 01/02/2005)</div>
                   </div>
                 </td>
                 <td class="user-table-center">PBS</td>
                 <td class="user-table-center">NOTAG</td>
                 <td>N.A.</td>
-                <td>Windows 98 reloaded. Exceed reloaded. All programs, applications except
+                <td >Windows 98 reloaded. Exceed reloaded. All programs, applications except
                   exceed are removed. It is now under observation.</td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <p></p>
-                  </div>
-                </td>
-                <td class="user-table-center user-table-primary">0</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/20 ]</td>
+
               </tr>
 
               <tr class="user-table-row">
-                <td class="user-table-center">3</td>
+                <td class="user-table-center ">3</td>
                 <td class="user-table-center">22/01/2005</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div></div>
-                    <div>PBS</div>
+                    <div>-</div>
+                    <div class="user-table-secondary ">PBS</div>
                   </div>
                 </td>
                 <td class="user-table-center">PBS</td>
                 <td class="user-table-center">DCS</td>
                 <td>N.A.</td>
-                <td>During house-keeping of AWS101 it is observed that vmcore file observed in /opt/crash/AWS101. After
-                  referring edoc</td>
+                <td >During house-keeping of AWS101 it is observed that vmcore file observed
+                  in /opt/crash/AWS101. After referring edoc</td>
                 <td>
                   <div class="user-table-cell-stack">
                     <p></p>
                   </div>
                 </td>
-                <td class="user-table-center user-table-primary">0</td>
+
               </tr>
 
               <tr class="user-table-row">
-                <td class="user-table-center">4</td>
+                <td class="user-table-center ">4</td>
                 <td class="user-table-center">22/01/2005</td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div>O/P lim is to be provided.</div>
-                    <div>(By:SHC : 22/01/2005)</div>
-                    <div>PBS</div>
+                    <div class="user-table-secondary ">(By:SHC : 22/01/2005)</div>
+                    <div class="user-table-secondary ">PBS</div>
                   </div>
                 </td>
                 <td class="user-table-center">PBS</td>
                 <td class="user-table-center">LV_1413</td>
                 <td>DEFECT MAINTENANCE</td>
-                <td>It is to be done on monday after discussing with SM(SD) as per SIE(MTP).
+                <td >It is to be done on monday after discussing with SM(SD) as per SIE(MTP).
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <p></p>
                   </div>
                 </td>
-                <td class="user-table-center user-table-primary">0</td>
+
               </tr>
 
               <tr class="user-table-row">
-                <td class="user-table-center">5</td>
+                <td class="user-table-center ">5</td>
                 <td class="user-table-center">20/01/2005</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div></div>
-                    <div>PBS</div>
+                    <div>-</div>
+                    <div class="user-table-secondary ">PBS</div>
                   </div>
                 </td>
                 <td class="user-table-center">PBS</td>
                 <td class="user-table-center">DCS</td>
                 <td>N.A.</td>
-                <td>Various reports, find, filehistory, remarks history exported and verified
+                <td >Various reports, find, filehistory, remarks history exported and verified
                   with SM office for archival purpose.</td>
                 <td>
                   <div class="user-table-cell-stack">
                     <p></p>
                   </div>
                 </td>
-                <td class="user-table-center user-table-primary">0</td>
+
               </tr>
             </tbody>
           </table>
@@ -279,7 +286,7 @@
           const formattedEnd = endDate ? new Date(endDate).toLocaleDateString('en-GB') : '-';
           const nameLabel = selectedName || 'All Technicians';
 
-          $('#reportTitle').text(`Name Wise Report: ${nameLabel} (${formattedStart} – ${formattedEnd})`);
+          $('#reportTitle').text(`Name and Tag Wise Report: ${nameLabel} (${formattedStart} – ${formattedEnd})`);
 
           // Show results container
           $('#reportResults').css('display', 'flex').stop().hide().fadeIn(300);

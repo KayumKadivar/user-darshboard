@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Job History | GNFC</title>
+  <meta name="description" content="GNFC System Job History Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/plant-nav.js" defer></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'job_history_system';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="System Job History"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,System Job History:active"
+      data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content-tech-logbook">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- Search Criteria Card -->
+      <div class="jbd-card my-20px">
+        <div class="jbd-card-header flex justify-between items-center px-16px py-10px">
+          <div class="flex items-center gap-8px">
+            <i class="ph-bold ph-sliders-horizontal color-blue font-16px"></i>
+            <span class="jbd-card-header-title">Search Criteria</span>
+          </div>
+
+          <div class="flex gap-12px items-center">
+            <button class="pm-btn pm-btn--add" id="btn-add-job" onclick="openAddJobModal()">
+              <i class="ph-bold ph-plus"></i> ADD JOB
+            </button>
+            <div class="flex gap-4px items-center">
+              <button class="toolbar-btn date-filter" data-type="default">Default Date</button>
+              <button class="toolbar-btn date-filter" data-type="prev">Prev Year</button>
+              <button class="toolbar-btn date-filter" data-type="this">This Year</button>
+              <button class="toolbar-btn date-filter" data-type="next">Next Year</button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-grid grid-cols-12 p-16px">
+
+          <!-- System -->
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Search / Select System</label>
+            <div class="flex gap-8px">
+              <input type="text" id="filter-system-input" class="gnfc-modal-input flex-1" placeholder="System...">
+              <select class="gnfc-modal-input flex-1" id="filter-system">
+                <option value="">ALL</option>
+                <option>MAX DCS</option>
+                <option>HAIL DCS</option>
+                <option>DCS</option>
+                <option>ESD</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Search / Select Category</label>
+            <div class="flex gap-8px">
+              <input type="text" id="filter-category-input" class="gnfc-modal-input flex-1" placeholder="Category...">
+              <select class="gnfc-modal-input flex-1" id="filter-category">
+                <option value="">ALL</option>
+                <option>HARDWARE FAILURE</option>
+                <option>SOFTWARE PROBLEM</option>
+                <option>MAINTENANCE</option>
+                <option>MODIFICATION</option>
+                <option>MAJOR UPGRADE</option>
+                <option>SYSTEM BACKUP</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- HW Type -->
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Search / Select HW Type</label>
+            <div class="flex gap-8px">
+              <input type="text" id="filter-hwtype-input" class="gnfc-modal-input flex-1" placeholder="HW Type...">
+              <select class="gnfc-modal-input flex-1" id="filter-hwtype">
+                <option value="">ALL</option>
+                <option>STATIONS</option>
+                <option>CONTROL MODULES</option>
+                <option>IO MODULES</option>
+                <option>COM MODULES</option>
+                <option>PERIPHERALS</option>
+                <option>CABLES/CONNECTORS</option>
+                <option>CRT</option>
+                <option>POWER SUPPLY</option>
+                <option>N.A.</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-span-3">
+            <label class="gnfc-modal-label">Start Date</label>
+            <input type="date" id="start-date" class="gnfc-modal-input" value="2025-02-09">
+          </div>
+
+          <div class="col-span-3">
+            <label class="gnfc-modal-label">End Date</label>
+            <input type="date" id="end-date" class="gnfc-modal-input" value="2026-02-09">
+          </div>
+
+          <div class="col-span-3">
+            <label class="gnfc-modal-label">Filter Options</label>
+            <div class="flex gap-4px">
+              <label
+                class="flex items-center gap-6px cursor-pointer font-16px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                <input type="checkbox" id="filter-remark" class="accent-gnfc-blue"> Remark
+              </label>
+              <label
+                class="flex items-center gap-6px cursor-pointer font-16px color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                <input type="checkbox" id="filter-attach" class="accent-gnfc-blue"> Attach
+              </label>
+            </div>
+          </div>
+
+          <div class="col-span-3 flex items-end gap-8px">
+            <button class="pm-btn pm-btn--update flex-1 h-40px font-16px text-uppercase ls-wide"
+              onclick="renderTable()">
+              <i class="ph-bold ph-lightning"></i> Apply
+            </button>
+            <button class="jt-btn-reset h-40px px-16px radius-4px font-14px" onclick="resetFilters()">
+              Reset
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Job Records Table Card -->
+      <div class="jbd-card flex flex-col flex-1 overflow-hidden">
+        <div class="jbd-card-header">
+          <div class="flex items-center gap-8px">
+            <i class="ph-fill ph-table font-16px"></i>
+            <span class="jbd-card-header-title">System Job Records</span>
+          </div>
+          <span class="jbd-badge-count" id="record-count">7 Records Found</span>
+        </div>
+
+        <div class="user-table-wrapper radius-0px border-0">
+          <table class="user-table" id="jh-main-table">
+            <thead>
+              <tr>
+                <th rowspan="2" style="width: 50px;">Sr</th>
+                <th rowspan="2" style="width: 100px;">System</th>
+                <th style="width: 180px;">HW Type</th>
+                <th rowspan="2" style="width: 110px;">Date</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th style="width: 100px;">Tech</th>
+                <th rowspan="2" style="width: 90px;">Attach</th>
+                <th rowspan="2" style="min-width: 300px;" class="user-table-center">REMARKS</th>
+                <th rowspan="2" style="width: 100px;">Status</th>
+              </tr>
+              <tr>
+                <th>Category</th>
+                <th class="user-table-border-right">Eng</th>
+              </tr>
+            </thead>
+            <tbody id="jobTableBody">
+              <!-- Row 1 -->
+              <tr class="user-table-row" data-sr="1">
+                <td class="user-table-center fw-600 cursor-pointer user-table-blue">1</td>
+                <td class="user-table-center">MAX DCS</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span>IO MODULES</span>
+                    <span>HARDWARE PROBLEM</span>
+                  </div>
+                </td>
+                <td class="user-table-center">17/04/2026</td>
+                <td>Card output checked and no any variation observed in current and found
+                  its channel no. 1 of output card RJM7 is faulty. Decide to replace AO card RJM7 with spare AO card at
+                  RSM2. Remove installed RJM7 card and also dusting observed on card. Replaced card with spare RSM2 card
+                  and output checked found ok, so air connection made original in field and control valve stroke checked
+                  from o/r with process. Now it is working ok. Job done with M(PMP), M(RBL), M(BBD), ID(TRC), IE(ARP)
+                </td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <span>JMD</span>
+                    <span>PMP</span>
+                  </div>
+                </td>
+                <td class="user-table-center"></td>
+                <td>
+
+                </td>
+                <td class="user-table-center"></td>
+              </tr>
+              <!-- Row 2 -->
+              <tr class="user-table-row" data-sr="2">
+                <td class="user-table-center fw-600 cursor-pointer user-table-blue">2</td>
+                <td class="user-table-center">MAX DCS</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span>IO MODULES</span>
+                    <span>HARDWARE PROBLEM</span>
+                  </div>
+                </td>
+                <td class="user-table-center">17/04/2026</td>
+                <td>Channels of AO card RJM7 was found faulty, so decided to replaced card
+                  with spare AO card RSM2. Card replaced and channel assignment made original (assigned at channel no
+                  2), as earlier channel was assigned at no.5 due to faulty channel. Wiring changed according to
+                  original documented wiring diagram and valve operation checked and found working ok. Job done with
+                  M(PMP), M(RBL), M(MED), IE(TRC), IE(ARP)</td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <span>JMD</span>
+                    <span>PMP</span>
+                  </div>
+                </td>
+                <td class="user-table-center"></td>
+                <td> AO card RJM7 is faulty. [written by : ARP Date : 18/04/2026] </td>
+                <td class="user-table-center"></td>
+              </tr>
+              <!-- Row 3 -->
+              <tr class="user-table-row" data-sr="3">
+                <td class="user-table-center fw-600 cursor-pointer user-table-blue">3</td>
+                <td class="user-table-center">MAX DCS</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span>IO MODULES</span>
+                    <span>HARDWARE PROBLEM</span>
+                  </div>
+                </td>
+                <td class="user-table-center">19/12/2025</td>
+                <td>AUX: C2PCI RJMH A2B card was failed. New card arranged from store. Its
+                  jumpers and address settings done. Replaced card. Working ok. Removed card kept with tag. Same checked
+                  with M(MND), IE(TRC), IE(ARP).</td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <span>PYS</span>
+                    <span>PMP</span>
+                  </div>
+                </td>
+                <td class="user-table-center"></td>
+                <td>
+
+                </td>
+                <td class="user-table-center"></td>
+              </tr>
+              <!-- Row 4 -->
+              <tr class="user-table-row" data-sr="4">
+                <td class="user-table-center fw-600 cursor-pointer user-table-blue">4</td>
+                <td class="user-table-center"></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span>IO MODULES</span>
+                    <span>HARDWARE PROBLEM</span>
+                  </div>
+                </td>
+                <td class="user-table-center">16/12/2025</td>
+                <td>All input of 2C2F01RJM4 were indicating faulty values. Detail checked
+                  found card in fault. Analog input card removed, clean and fixed back. Value indicating normal.</td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <span>BSU</span>
+                    <span>PMP</span>
+                  </div>
+                </td>
+                <td class="user-table-center"></td>
+                <td>
+
+                </td>
+                <td class="user-table-center"></td>
+              </tr>
+              <!-- Row 5 -->
+              <tr class="user-table-row" data-sr="5">
+                <td class="user-table-center fw-600 cursor-pointer user-table-blue">5</td>
+                <td class="user-table-center"></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span>STATIONS</span>
+                    <span>HARDWARE PROBLEM</span>
+                  </div>
+                </td>
+                <td class="user-table-center">16/12/2025</td>
+                <td>Operator station HMI display replaced with spare one.</td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <span>BSU</span>
+                    <span>PMP</span>
+                  </div>
+                </td>
+                <td class="user-table-center"></td>
+                <td>
+
+                </td>
+                <td class="user-table-center"></td>
+              </tr>
+              <!-- Row 6 -->
+              <tr class="user-table-row" data-sr="6">
+                <td class="user-table-center fw-600 cursor-pointer user-table-blue">6</td>
+                <td class="user-table-center"></td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span>STATIONS</span>
+                    <span>HARDWARE PROBLEM</span>
+                  </div>
+                </td>
+                <td class="user-table-center">15/12/2025</td>
+                <td>Engineering station HMI does not power on so replaced with spare one.
+                  Defective HMI kept at CPSU room with tag.</td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <span>PYS</span>
+                    <span>PMP</span>
+                  </div>
+                </td>
+                <td class="user-table-center"></td>
+                <td>
+
+                </td>
+                <td class="user-table-center"></td>
+              </tr>
+              <!-- Row 7 -->
+              <tr class="user-table-row" data-sr="7">
+                <td class="user-table-center fw-600 cursor-pointer user-table-blue">7</td>
+                <td class="user-table-center">ESD</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span>CONTROL MODULES</span>
+                    <span>MAJOR UPGRADE</span>
+                  </div>
+                </td>
+                <td class="user-table-center">02/10/2025</td>
+                <td>Cable laying job taken with electrical between mark 2+ and GPP panel for
+                  below inputs 1) GTG AIR override (DO) 2) GTG ON/OFF Feedback (DO) 3) CCB contact (DO). APR related
+                  logic modification and required channel configuration done by BEETS engineer. Loop simulation taken
+                  with electrical. PMP(M), RBL(M), MMD(M), TRC(IE) and ARP(IE) associated in the job. (01/10/2025).</td>
+                <td>
+                  <div class="user-table-cell-stack user-table-center">
+                    <span>BSU</span>
+                    <span>PMP</span>
+                  </div>
+                </td>
+                <td class="user-table-center"></td>
+                <td>
+
+                </td>
+                <td class="user-table-center"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ── ADD SYSTEM JOB MODAL ── -->
+  <div id="add-job-modal" class="gnfc-modal-overlay" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header bg-panel-alt">
+        <h3 class="gnfc-modal-title">
+          <i class="ph-bold ph-plus-circle"></i> Add New System Job Entry
+        </h3>
+        <button type="button" onclick="closeModal('add-job-modal')" class="gnfc-modal-close" aria-label="Close">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <form id="add-job-form" class="grid grid-cols-12 gap-16px py-8px">
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">System</label>
+            <select class="gnfc-modal-input" name="system">
+              <option>MAX DCS</option>
+              <option>HAIL DCS</option>
+              <option>DCS</option>
+              <option>ESD</option>
+            </select>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Category</label>
+            <select class="gnfc-modal-input" name="category">
+              <option>HARDWARE FAILURE</option>
+              <option>SOFTWARE PROBLEM</option>
+              <option>MAINTENANCE</option>
+              <option>MODIFICATION</option>
+              <option>MAJOR UPGRADE</option>
+              <option>SYSTEM BACKUP</option>
+            </select>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">HW Type</label>
+            <select class="gnfc-modal-input" name="hw_type">
+              <option>STATIONS</option>
+              <option>CONTROL MODULES</option>
+              <option>IO MODULES</option>
+              <option>COM MODULES</option>
+              <option>PERIPHERALS</option>
+              <option>CABLES/CONNECTORS</option>
+              <option>CRT</option>
+              <option>POWER SUPPLY</option>
+              <option>N.A.</option>
+            </select>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Job Description</label>
+            <textarea class="gnfc-modal-input" name="desc" rows="3" placeholder="Enter detailed job description..."></textarea>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Date</label>
+            <input type="date" class="gnfc-modal-input" name="date" required>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Tech</label>
+            <select class="gnfc-modal-input" name="tech">
+              <option>PVS</option>
+              <option>BDR</option>
+              <option>PRP</option>
+              <option>JDB</option>
+              <option>JMD</option>
+              <option>BSU</option>
+              <option>CNJ_ISD</option>
+              <option>TECH_TESTER</option>
+              <option>KBD</option>
+            </select>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Eng</label>
+            <input type="text" class="gnfc-modal-input" name="eng" placeholder="e.g. ARP">
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Status</label>
+            <select class="gnfc-modal-input" name="status">
+              <option value="PENDING">PENDING</option>
+              <option value="OVER">OVER</option>
+            </select>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Remarks</label>
+            <textarea class="gnfc-modal-input" name="remarks" rows="2" placeholder="Enter remarks here..."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="button" onclick="closeModal('add-job-modal')" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+        <button type="submit" form="add-job-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Entry</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EDIT SYSTEM JOB MODAL ── -->
+  <div id="edit-job-modal" class="gnfc-modal-overlay" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header bg-panel-alt">
+        <h3 class="gnfc-modal-title">
+          <i class="ph-bold ph-pencil-simple"></i> Edit / Update System Job Entry
+        </h3>
+        <button type="button" onclick="closeModal('edit-job-modal')" class="gnfc-modal-close" aria-label="Close">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <form id="edit-job-form" class="grid grid-cols-12 gap-16px py-8px">
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">System</label>
+            <select class="gnfc-modal-input" name="system">
+              <option selected>MAX DCS</option>
+              <option>HAIL DCS</option>
+              <option>DCS</option>
+              <option>ESD</option>
+            </select>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Category</label>
+            <select class="gnfc-modal-input" name="category">
+              <option selected>HARDWARE FAILURE</option>
+              <option>SOFTWARE PROBLEM</option>
+              <option>MAINTENANCE</option>
+              <option>MODIFICATION</option>
+              <option>MAJOR UPGRADE</option>
+              <option>SYSTEM BACKUP</option>
+            </select>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">HW Type</label>
+            <select class="gnfc-modal-input" name="hw_type">
+              <option>STATIONS</option>
+              <option>CONTROL MODULES</option>
+              <option selected>IO MODULES</option>
+              <option>COM MODULES</option>
+              <option>PERIPHERALS</option>
+              <option>CABLES/CONNECTORS</option>
+              <option>CRT</option>
+              <option>POWER SUPPLY</option>
+              <option>N.A.</option>
+            </select>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Job Description</label>
+            <textarea class="gnfc-modal-input" name="desc" rows="3">Card output checked and no any variation observed in current and found its channel no.1 of output card RJM7 is faulty. Decide to replace AO card RJM7 with spare AO card at RSM2. Remove installed RJM7 card and also dusting observed on card. Replaced card with spare RSM2 card and output checked found ok, so air connection made original in field and control valve stroke checked from o/r with process. Now it is working ok. Job done with M(PMP), M(RBL), M(BBD), ID(TRC), IE(ARP)</textarea>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Date</label>
+            <input type="date" class="gnfc-modal-input" name="date" value="2026-04-17">
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Tech</label>
+            <select class="gnfc-modal-input" name="tech">
+              <option>PVS</option>
+              <option>BDR</option>
+              <option>PRP</option>
+              <option>JDB</option>
+              <option selected>JMD</option>
+              <option>BSU</option>
+              <option>CNJ_ISD</option>
+              <option>TECH_TESTER</option>
+              <option>KBD</option>
+            </select>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Eng</label>
+            <input type="text" class="gnfc-modal-input" name="eng" value="PMP">
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Status</label>
+            <select class="gnfc-modal-input" name="status">
+              <option value="PENDING">PENDING</option>
+              <option selected value="OVER">OVER</option>
+            </select>
+          </div>
+
+          <div class="col-span-6">
+            <label class="gnfc-modal-label">Attach 1</label>
+            <div onclick="openAttachmentModal()" class="flex flex-col items-center justify-center p-8px border border-dashed border-dark-border radius-4px bg-panel cursor-pointer hover:bg-panel-alt transition-colors">
+               <i class="ph-fill ph-folder-open color-amber font-24px"></i>
+               <span class="font-10px color-secondary mt-4px">Click to change</span>
+            </div>
+          </div>
+          <div class="col-span-6">
+            <label class="gnfc-modal-label">Attach 2</label>
+            <div onclick="openAttachmentModal()" class="flex flex-col items-center justify-center p-8px border border-dashed border-dark-border radius-4px bg-panel cursor-pointer hover:bg-panel-alt transition-colors">
+               <i class="ph-fill ph-folder-open color-amber font-24px"></i>
+               <span class="font-10px color-secondary mt-4px">Click to change</span>
+            </div>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Remarks</label>
+            <textarea class="gnfc-modal-input" name="remarks" rows="2" placeholder="Update remarks here..."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="button" onclick="deleteJobRecord()" class="gnfc-modal-btn gnfc-modal-btn-danger mr-auto">
+          <i class="ph-bold ph-trash"></i> Delete
+        </button>
+        <button type="button" onclick="closeModal('edit-job-modal')" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+        <button type="submit" form="edit-job-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Update Record</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ATTACHMENT MODAL ── -->
+  <div id="attachment-modal" class="gnfc-modal-overlay" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header bg-panel-alt">
+        <h3 class="gnfc-modal-title">
+          HISTORY ATTACHMENTS
+        </h3>
+        <button type="button" onclick="closeModal('attachment-modal')" class="gnfc-modal-close" aria-label="Close">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <div class="flex flex-col gap-12px">
+          <p class="font-14px font-bold color-primary">Save File(s)</p>
+          
+          <div class="flex gap-12px">
+            <input type="text" id="attachment-file-name" class="gnfc-modal-input flex-1" readonly placeholder="No file selected">
+            <label class="jt-btn-secondary h-40px px-16px flex items-center justify-center radius-4px cursor-pointer font-14px">
+              Browse...
+              <input type="file" class="hidden" onchange="$('#attachment-file-name').val(this.files[0].name)">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <p class="font-14px color-red italic mr-auto fw-600">Note : Max size 10Mb at a time !!</p>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="closeModal('attachment-modal')">Cancel</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" onclick="closeModal('attachment-modal')">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAGE SCRIPTS (jQuery Version) ── -->
+  <script>
+    $(document).ready(function () {
+      // Initialize DataTable
+      const $tableEl = $('#jh-main-table');
+      if (typeof simpleDatatables !== 'undefined' && $tableEl.length) {
+        new simpleDatatables.DataTable($tableEl[0], {
+          perPage: 10,
+          perPageSelect: [10, 25, 50, 100],
+          searchable: true,
+          fixedHeight: false
+        });
+      }
+
+      // Sync Search Inputs with Selects
+      function syncSearchInput(inputId, selectId) {
+        $(`#${selectId}`).on('change', function() {
+          $(`#${inputId}`).val($(this).val() === '' ? '' : $(this).val());
+        });
+        
+        $(`#${inputId}`).on('input', function() {
+          const val = $(this).val().toUpperCase();
+          $(`#${selectId} option`).each(function() {
+            if ($(this).text().toUpperCase() === val) {
+              $(`#${selectId}`).val($(this).val());
+              return false;
+            }
+          });
+        });
+      }
+
+      syncSearchInput('filter-system-input', 'filter-system');
+      syncSearchInput('filter-category-input', 'filter-category');
+      syncSearchInput('filter-hwtype-input', 'filter-hwtype');
+
+      // Backdrop click to close modal
+      $('.gnfc-modal-overlay').on('click', function (e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          closeModal($(e.target).attr('id'));
+        }
+      });
+
+      // Date picker polyfill trigger
+      $(document).on('click focus', '.gnfc-modal-input[type="date"]', function () {
+        if (typeof this.showPicker === 'function') {
+          try { this.showPicker(); } catch (e) { }
+        }
+      });
+
+      // Delegate row clicks for Edit View (SR No column)
+      $(document).on('click', '.user-table-row td:nth-child(1)', function () {
+        openEditJobModal($(this));
+      });
+    });
+
+    /** ── Modal Management ── */
+    window.closeModal = function (modalId) {
+      $(`#${modalId}`).removeClass('is-open').attr('aria-hidden', 'true');
+    };
+
+    window.openAddJobModal = function () {
+      const $modal = $('#add-job-modal');
+      const $form = $('#add-job-form');
+      
+      if ($form.length) {
+        $form[0].reset();
+        // Set default date
+        const $dateInput = $form.find('input[name="date"]');
+        if ($dateInput.length) {
+          $dateInput.val(new Date().toISOString().split('T')[0]);
+        }
+      }
+      
+      if ($modal.length) {
+        $modal.addClass('is-open').attr('aria-hidden', 'false');
+      }
+    };
+
+    window.openEditJobModal = function ($el) {
+      const $modal = $('#edit-job-modal');
+      if ($modal.length) {
+        $modal.addClass('is-open').attr('aria-hidden', 'false');
+      }
+    };
+
+    window.openAttachmentModal = function () {
+      $('#attachment-file-name').val('');
+      $('#attachment-modal').addClass('is-open').attr('aria-hidden', 'false');
+    };
+
+    window.deleteJobRecord = function () {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted!',
+            'The record has been deleted.',
+            'success'
+          );
+        }
+      });
+    };
+
+    window.saveJob = function () {
+       // Placeholder for save logic
+       closeModal('add-job-modal');
+       Swal.fire('Saved!', 'System Job entry has been added.', 'success');
+    };
+
+    /** ── Date filter logic ── */
+    window.setDateFilter = function (type) {
+      const today = new Date();
+      const curYear = today.getFullYear();
+      let startDate, endDate;
+
+      const fmt = (d) => {
+        const dd = String(d.getDate()).padStart(2, '0');
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        return `${d.getFullYear()}-${mm}-${dd}`;
+      };
+
+      if (type === 'default') {
+        endDate = new Date();
+        startDate = new Date();
+        startDate.setFullYear(startDate.getFullYear() - 1);
+      } else if (type === 'prev') {
+        startDate = new Date(curYear - 1, 0, 1);
+        endDate = new Date(curYear - 1, 11, 31);
+      } else if (type === 'this') {
+        startDate = new Date(curYear, 0, 1);
+        endDate = new Date(curYear, 11, 31);
+      } else if (type === 'next') {
+        startDate = new Date(curYear + 1, 0, 1);
+        endDate = new Date(curYear + 1, 11, 31);
+      }
+
+      if (startDate && endDate) {
+        $('#start-date').val(fmt(startDate));
+        $('#end-date').val(fmt(endDate));
+      }
+
+      // Update active state of buttons
+      $('.date-filter').removeClass('is-active');
+      $(event.target).addClass('is-active');
+    };
+
+    /** ── Utility & Table Logic ── */
+    window.resetFilters = function () {
+      window.location.reload();
+    };
+
+    window.renderTable = function () {
+      $('#data-loader-overlay').removeClass('hidden');
+
+      setTimeout(() => {
+        $('#data-loader-overlay').addClass('hidden');
+      }, 1500);
+    };
+
+    // Helper: DD/MM/YYYY to YYYY-MM-DD
+    function convertToISODate(ddmmyyyy) {
+      if (!ddmmyyyy || !ddmmyyyy.includes('/')) return '';
+      const parts = ddmmyyyy.trim().split('/');
+      return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    }
+  </script>
+</body>
+
+</html>

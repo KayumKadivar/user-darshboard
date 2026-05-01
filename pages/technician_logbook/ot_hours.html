@@ -57,6 +57,10 @@
 </head>
 
 <body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
 
   <!-- Sidebar -->
   <div class="sidebar-container"></div>
@@ -80,24 +84,24 @@
             <i class="ph-bold ph-funnel"></i> Search Criteria
           </h3>
         </div>
-        <div class="jt-filter-body grid grid-cols-3 gap-16px">
+        <div class="jt-filter-body grid grid-cols-2 lg-grid-cols-4 gap-16px">
           
           <!-- Start Date -->
           <div class="jt-filter-group">
             <label class="gnfc-modal-label" for="startDate">Start Date</label>
-            <input type="date" id="startDate" class="gnfc-modal-input jt-date-input" value="2026-02-01" onchange="renderTable()">
+            <input type="date" id="startDate" class="gnfc-modal-input jt-date-input" value="2026-02-01">
           </div>
 
           <!-- End Date -->
           <div class="jt-filter-group">
             <label class="gnfc-modal-label" for="endDate">End Date</label>
-            <input type="date" id="endDate" class="gnfc-modal-input jt-date-input" value="2026-02-28" onchange="renderTable()">
+            <input type="date" id="endDate" class="gnfc-modal-input jt-date-input" value="2026-02-28">
           </div>
             
           <!-- Select Name -->
           <div class="jt-filter-group">
             <label class="gnfc-modal-label" for="techSelect">Select Name</label>
-            <select id="techSelect" class="gnfc-modal-input" onchange="renderTable()">
+            <select id="techSelect" class="gnfc-modal-input">
               <option value="ALL">ALL</option>
               <option value="PVS">PVS</option>
               <option value="BDR">BDR</option>
@@ -109,6 +113,17 @@
               <option value="TECH_TESTER">TECH_TESTER</option>
               <option value="KBD">KBD</option>
             </select>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-end gap-8px">
+            <button class="pm-btn pm-btn--update flex-1 h-40px font-16px text-uppercase ls-wide"
+              onclick="renderTable(true)">
+              <i class="ph-bold ph-lightning"></i> Apply
+            </button>
+            <button class="jt-btn-reset h-40px px-16px radius-4px font-14px" onclick="window.location.reload()">
+              Reset
+            </button>
           </div>
 
         </div>
@@ -459,37 +474,49 @@
     };
 
     /** ── Filtering Logic ── */
-    window.renderTable = function() {
-      const tech = $('#techSelect').val();
-      const startDate = $('#startDate').val();
-      const endDate = $('#endDate').val();
+    window.renderTable = function(showLoader = false) {
+      if (showLoader) {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          executeRender();
+        }, 1500);
+      } else {
+        executeRender();
+      }
 
-      $('#reportTableBody tr').each(function() {
-        const $row = $(this);
-        const rowDateStr = $row.find('td:nth-child(1)').text(); // DD/MM/YYYY
-        const rowTech = $row.find('td:nth-child(2)').text().trim();
-        const rowTag = $row.find('td:nth-child(3)').text().toUpperCase();
+      function executeRender() {
+        const tech = $('#techSelect').val();
+        const startDate = $('#startDate').val();
+        const endDate = $('#endDate').val();
 
-        // Convert DD/MM/YYYY to YYYY-MM-DD for date comparison
-        const dateParts = rowDateStr.split('/');
-        const rowDateFormatted = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+        $('#reportTableBody tr').each(function() {
+          const $row = $(this);
+          const rowDateStr = $row.find('td:nth-child(1)').text(); // DD/MM/YYYY
+          const rowTech = $row.find('td:nth-child(2)').text().trim();
+          const rowTag = $row.find('td:nth-child(3)').text().toUpperCase();
 
-        let show = true;
+          // Convert DD/MM/YYYY to YYYY-MM-DD for date comparison
+          const dateParts = rowDateStr.split('/');
+          const rowDateFormatted = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 
-        if (tech !== 'ALL' && rowTech !== tech) show = false;
-        
-        if (startDate && rowDateFormatted < startDate) show = false;
-        if (endDate && rowDateFormatted > endDate) show = false;
+          let show = true;
 
-        $row.toggle(show);
-      });
+          if (tech !== 'ALL' && rowTech !== tech) show = false;
+          
+          if (startDate && rowDateFormatted < startDate) show = false;
+          if (endDate && rowDateFormatted > endDate) show = false;
 
-      calculateTotalOT();
+          $row.toggle(show);
+        });
+
+        calculateTotalOT();
+      }
     };
 
     $(document).ready(function () {
-      // Initial filter
-      renderTable();
+      // Initial filter (no loader)
+      renderTable(false);
 
       // 3. Export PDF Handler
       $('#btn-export-pdf').on('click', function() {

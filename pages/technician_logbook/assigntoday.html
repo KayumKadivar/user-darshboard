@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assign Today | GNFC E-Logbook</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Shared Styles -->
   <link rel="stylesheet" href="../../css/phosphor.css">
@@ -36,7 +34,9 @@
   <main class="main-wrapper plant-page__main">
 
     <!-- Header Container (Injected by header.js) -->
-    <div id="header-container" data-title="Assign Today" data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Assign Today:active" data-back="plant_detail.html"></div>
+    <div id="header-container" data-title="Assign Today"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Assign Today:active"
+      data-back="plant_detail.html"></div>
 
     <div class="assign-content custom-scroll">
 
@@ -86,7 +86,7 @@
           </div>
 
           <div class="form-grid grid-cols-12 p-16px">
-            <div class="form-field-wrapper col-span-5">
+            <div class="form-field-wrapper col-span-6">
               <label class="assign-field-label">ASSIGNED TO <span class="required">*</span></label>
               <div class="flex items-center gap-8px">
                 <input id="form-assigned-to-input" type="text" placeholder="Enter Tech Name..."
@@ -122,13 +122,28 @@
               </select>
             </div>
 
-            <div class="form-field-wrapper col-span-4">
+            <div class="form-field-wrapper col-span-3">
               <label class="assign-field-label">LOOP NAME </label>
+              <select id="assign-job-loop-select" class="gnfc-modal-input">
+                <option value="N.A">N.A</option>
+              </select>
+            </div>
+
+            <div class="form-field-wrapper col-span-6">
+              <label class="assign-field-label">TAG NO <span class="required">*</span></label>
               <div class="flex items-center gap-8px">
-                <input id="assign-job-loop-input" type="text" class="gnfc-modal-input flex-1" placeholder="Loop">
+                <input id="assign-job-tag-input" type="text" placeholder="Search Tag..."
+                  class="gnfc-modal-input font-13px uppercase flex-1">
                 <div class="flex-1">
-                  <select id="assign-job-loop-select" class="gnfc-modal-input">
-                    <option value="N.A">N.A</option>
+                  <select id="assign-job-tag-select" class="gnfc-modal-input">
+                    <option value="">-- Select --</option>
+                    <option value="NOTAG">NOTAG</option>
+                    <option value="1FE1501C">1FE1501C</option>
+                    <option value="LT3402031">LT3402031</option>
+                    <option value="FT_1401">FT_1401</option>
+                    <option value="LV_1401">LV_1401</option>
+                    <option value="PT_205">PT_205</option>
+                    <option value="TE_101">TE_101</option>
                   </select>
                 </div>
               </div>
@@ -158,25 +173,6 @@
               </select>
             </div>
 
-            <div class="form-field-wrapper col-span-6">
-              <label class="assign-field-label">TAG NO <span class="required">*</span></label>
-              <div class="flex items-center gap-8px">
-                <input id="assign-job-tag-input" type="text" placeholder="Search Tag..."
-                  class="gnfc-modal-input font-13px uppercase flex-1">
-                <div class="flex-1">
-                  <select id="assign-job-tag-select" class="gnfc-modal-input">
-                    <option value="">-- Select --</option>
-                    <option value="NOTAG">NOTAG</option>
-                    <option value="1FE1501C">1FE1501C</option>
-                    <option value="LT3402031">LT3402031</option>
-                    <option value="FT_1401">FT_1401</option>
-                    <option value="LV_1401">LV_1401</option>
-                    <option value="PT_205">PT_205</option>
-                    <option value="TE_101">TE_101</option>
-                  </select>
-                </div>
-              </div>
-            </div>
 
             <div class="form-field-wrapper col-span-12">
               <label class="assign-field-label">JOB <span class="required">*</span></label>
@@ -517,141 +513,128 @@
 
           <!-- ISO14001/OHSAS18001 DUE JOBS -->
           <div class="mb-24px">
-            <h3 class="font-14px fw-700 mb-4px color-blue">ISO14001/OHSAS18001 DUE JOBS ()</h3>
+            <h3 class="font-14px fw-700 mb-4px">ISO14001/OHSAS18001 DUE JOBS ()</h3>
             <div class="user-table-wrapper">
               <table class="user-table">
                 <thead>
-                  <tr>
-                    <th style="width: 50px;" class="text-center">Sr</th>
-                    <th style="width: 120px;">Tag</th>
-                    <th>Equipment</th>
-                    <th>Cali/Check Procedure</th>
-                    <th style="width: 180px;">Freq Of Check (Days)</th>
-                    <th style="width: 120px;">DUE DATE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="user-table-row">
-                    <td class="text-center py-12px user-table-secondary">1</td>
-                    <td class="user-table-blue user-table-bold">LT3402031</td>
-                    <td class="user-table-primary">D-34-3</td>
-                    <td class="user-table-primary">Calibration and Pm </td>
-                    <td class="text-center user-table-primary">182</td>
-                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-                  </tr>
-                  <tr class="user-table-row">
-                    <td class="text-center py-12px user-table-secondary">2</td>
-                    <td class="user-table-blue user-table-bold">LT3402031</td>
-                    <td class="user-table-primary">D-34-3</td>
-                    <td class="user-table-primary">Calibration and Pm </td>
-                    <td class="text-center user-table-primary">182</td>
-                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-                  </tr>
-                </tbody>
-              </table>
+                    <table class="user-table">
+                      <thead>
+                        <tr>
+                          <th class="user-table-center w-50px">SR</th>
+                          <th class="w-120px">TAG</th>
+                          <th>EQUIPMENT</th>
+                          <th>CALI/CHECK PROCEDURE</th>
+                          <th class="w-180px">FREQ OF CHECK (DAYS)</th>
+                          <th class="w-120px">DUE DATE</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- No data as per 2nd image -->
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+
+            <!-- CPCB DUE JOBS -->
+            <div class="mb-24px">
+              <h3 class="font-14px fw-700 mb-4px uppercase">CPCB DUE JOBS ()</h3>
+              <div class="user-table-wrapper">
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <th class="user-table-center w-50px">SR</th>
+                      <th class="w-120px">TAG</th>
+                      <th>CALI/CHECK PROCEDURE</th>
+                      <th class="w-180px">FREQ OF CHECK (DAYS)</th>
+                      <th class="w-120px">DUE DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- No data as per 2nd image -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- JOB PLANNER -->
+            <div class="mb-24px">
+              <h3 class="font-14px fw-700 mb-4px uppercase">JOB PLANNER</h3>
+              <div class="user-table-wrapper">
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <th class="user-table-center w-50px">SR</th>
+                      <th class="w-120px">TAG</th>
+                      <th>DESCRIPTION</th>
+                      <th class="w-180px">FREQ OF CHECK (DAYS)</th>
+                      <th class="user-table-center w-100px">ASSIGN</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="user-table-row">
+                      <td class="user-table-center">1</td>
+                      <td class="user-table-blue fw-600">NOTAG</td>
+                      <td class="user-table-primary">CPP / CPSU all DCS Panels, OCSs to be vacuum cleaned. FAN operation
+                        to be checked.</td>
+                      <td class="user-table-center user-table-secondary">180</td>
+                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                    </tr>
+                    <tr class="user-table-row">
+                      <td class="user-table-center">2</td>
+                      <td class="user-table-blue fw-600">NOTAG</td>
+                      <td class="user-table-primary">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.
+                      </td>
+                      <td class="user-table-center user-table-secondary">45</td>
+                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                    </tr>
+                    <tr class="user-table-row">
+                      <td class="user-table-center">3</td>
+                      <td class="user-table-blue fw-600">SILO_INTR_BAG</td>
+                      <td class="user-table-primary">Bag filter SOVs to be checked. SOV connection tightness to be
+                        checked.its timer JB and Radar LT cleaning to be done.</td>
+                      <td class="user-table-center user-table-secondary">30</td>
+                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                    </tr>
+                    <tr class="user-table-row">
+                      <td class="user-table-center">4</td>
+                      <td class="user-table-blue fw-600">NOTAG</td>
+                      <td class="user-table-primary">Control room document file to be updated. Boiler, CPP, CPSU, ASH
+                        and CHP control room.</td>
+                      <td class="user-table-center user-table-secondary">60</td>
+                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                    </tr>
+                    <tr class="user-table-row">
+                      <td class="user-table-center">5</td>
+                      <td class="user-table-blue fw-600">NOTAG</td>
+                      <td class="user-table-primary">BHEL BLR all DCS Panels, OCSs, Ash panel and Station to be vacuum
+                        cleaned. FAN operation to be checked.</td>
+                      <td class="user-table-center user-table-secondary">45</td>
+                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                    </tr>
+                    <tr class="user-table-row">
+                      <td class="user-table-center">6</td>
+                      <td class="user-table-blue fw-600">NOTAG</td>
+                      <td class="user-table-primary">CH4 gas cylinder (Code no 922000195D)expiry date to be check.</td>
+                      <td class="user-table-center user-table-secondary">330</td>
+                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                    </tr>
+                    <tr class="user-table-row">
+                      <td class="user-table-center">7</td>
+                      <td class="user-table-blue fw-600">NOTAG</td>
+                      <td class="user-table-primary">ATK data to be uploaded on Eserver.</td>
+                      <td class="user-table-center user-table-secondary">30</td>
+                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
-          <!-- CPCB DUE JOBS -->
-          <div class="mb-24px">
-            <h3 class="font-14px fw-700 mb-4px color-blue">CPCB DUE JOBS ()</h3>
-            <div class="user-table-wrapper">
-              <table class="user-table">
-                <thead>
-                  <tr>
-                    <th style="width: 50px;" class="text-center">Sr</th>
-                    <th style="width: 120px;">Tag</th>
-                    <th>Cali/Check Procedure</th>
-                    <th style="width: 180px;">Freq Of Check (Days)</th>
-                    <th style="width: 120px;">DUE DATE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="user-table-row">
-                    <td class="text-center py-12px user-table-secondary">1</td>
-                    <td class="user-table-blue user-table-bold">LT3402031</td>
-                    <td class="user-table-primary">D-34-3</td>
-                    <td class="user-table-primary">Calibration and Pm </td>
-                    <td class="text-center user-table-primary">182</td>
-                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-                  </tr>
-                  <tr class="user-table-row">
-                    <td class="text-center py-12px user-table-secondary">2</td>
-                    <td class="user-table-blue user-table-bold">LT3402031</td>
-                    <td class="user-table-primary">D-34-3</td>
-                    <td class="user-table-primary">Calibration and Pm </td>
-                    <td class="text-center user-table-primary">182</td>
-                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-                  </tr>
-                  <tr class="user-table-row">
-                    <td class="text-center py-12px user-table-secondary">3</td>
-                    <td class="user-table-blue user-table-bold">LT3402031</td>
-                    <td class="user-table-primary">D-34-3</td>
-                    <td class="user-table-primary">Calibration and Pm </td>
-                    <td class="text-center user-table-primary">182</td>
-                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="gnfc-modal-footer">
+            <button type="button" onclick="setModalState('technician-job-assign', false)"
+              class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
           </div>
-
-          <!-- JOB PLANNER -->
-          <div class="mb-24px">
-            <h3 class="font-14px fw-700 mb-4px color-blue">JOB PLANNER</h3>
-            <div class="user-table-wrapper">
-              <table class="user-table">
-                <thead>
-                  <tr>
-                    <th style="width: 50px;" class="text-center">Sr</th>
-                    <th style="width: 120px;">Tag</th>
-                    <th>Description</th>
-                    <th style="width: 180px;">Freq Of Check (Days)</th>
-                    <th style="width: 80px;" class="text-center">Assign</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="text-center">1</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.
-                    </td>
-                    <td class="user-table-secondary">45</td>
-                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">2</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">BHEL BLR all DCS Panels, OCSs, Ash panel and Station to be vacuum
-                      cleaned. FAN operation to be checked.</td>
-                    <td class="user-table-secondary">45</td>
-                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">3</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">CH4 gas cylinder (Code no 922000195D)expiry date to be check.
-                    </td>
-                    <td class="user-table-secondary">330</td>
-                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">4</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">Boiler Instrument Workshop House Keeping Job.</td>
-                    <td class="user-table-secondary">20</td>
-                    <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="gnfc-modal-footer">
-          <button type="button" onclick="setModalState('technician-job-assign', false)"
-            class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
-        </div>
       </form>
     </div>
   </div>
@@ -969,7 +952,6 @@
       updateTechList();
 
       // Initialize Autocomplete
-      initTagAutocomplete('#assign-job-loop-input', '#assign-job-loop-select');
       initTagAutocomplete('#assign-job-tag-input', '#assign-job-tag-select');
     });
   </script>

@@ -270,7 +270,7 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">OTHER INST PM FORM : <span id="edit-modal-tag-display" class="color-blue ml-4px"></span></h3>
+          <h3 class="gnfc-modal-title">OTHER PM FORM Edit : <span id="edit-modal-tag-display" class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x text-lg"></i>
@@ -741,12 +741,17 @@
       initTagAutocomplete('#view-tag-input', '#view-tag-select', function (tag) {
         showPendingOnly = false;
         $('#pm-details-title').text('PM Details Tag : ' + (tag || 'ALL'));
+
         $('.user-table-row').each(function () {
           const rowTag = $(this).data('tag');
           if (!tag || rowTag === tag) $(this).show();
           else $(this).hide();
         });
       });
+
+      // --- Utilities ---
+      function openModal(id) { $(id).addClass('is-open'); }
+      function closeModal(id) { $(id).removeClass('is-open'); }
 
       $('#btn-view-tag-go').on('click', function () {
         const val = $('#view-tag-select').val();

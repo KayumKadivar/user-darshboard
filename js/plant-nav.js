@@ -17,30 +17,36 @@ function renderPlantNav(activePageId) {
             ]
         },
         {
-            items: [
-                { id: 'job_types', label: 'Type Of Job', icon: 'ph-wrench', href: 'job_types.html' },
-                { id: 'instrument_types', label: 'Type Of Inst', icon: 'ph-cpu', href: 'instrument_types.html' }
-            ]
-        },
-        {
             dropdown: true,
             id: 'reports_group',
             label: 'Reports',
             icon: 'ph-chart-bar',
-            activeIds: ['remark_reports', 'tagwise_filter', 'monthly_report', 'datewise_report', 'namewise_report'],
+            activeIds: ['job_types', 'instrument_types', 'remark_reports', 'tagwise_filter', 'monthly_report', 'datewise_report', 'namewise_report', 'name_date_report'],
             items: [
+                { id: 'job_types', label: 'Type Of Job', icon: 'ph-wrench', href: 'job_types.html' },
+                { id: 'instrument_types', label: 'Type Of Inst', icon: 'ph-cpu', href: 'instrument_types.html' },
                 { id: 'remark_reports', label: 'Remark Report', icon: 'ph-note', href: 'remark_reports.html' },
-                { id: 'tagwise_filter', label: 'TagWise Filter', icon: 'ph-funnel', href: 'tagwise_filter.html' },
+                { id: 'tagwise_filter', label: 'Tag Wise Filter', icon: 'ph-funnel', href: 'tagwise_filter.html' },
                 { id: 'monthly_report', label: 'Monthly Report', icon: 'ph-calendar-blank', href: 'monthly_report.html' },
                 { id: 'datewise_report', label: 'Date Wise Report', icon: 'ph-calendar-dots', href: 'datewise_report.html' },
-                { id: 'namewise_report', label: 'Name Wise Report', icon: 'ph-user-list', href: 'namewise_report.html' }
+                { id: 'namewise_report', label: 'Name Wise Report', icon: 'ph-user-list', href: 'namewise_report.html' },
+                { id: 'name_date_report', label: 'Name & Tag Wise Report', icon: 'ph-users-three', href: 'name_date_report.html' }
+            ]
+        },
+        {
+            dropdown: true,
+            id: 'job_history_group',
+            label: 'Job History',
+            icon: 'ph-clock-counter-clockwise',
+            activeIds: ['job_history', 'job_history_system', 'general_job_history'],
+            items: [
+                { id: 'job_history', label: 'General Job History', icon: 'ph-clipboard-text', href: 'job_history.html' },
+                { id: 'job_history_system', label: 'System Job History', icon: 'ph-desktop', href: 'job_history_system.html' }
             ]
         },
         {
             items: [
-                { id: 'job_history', label: 'Job History', icon: 'ph-clock-counter-clockwise', href: 'job_history.html' },
-                { id: 'ot_hours', label: 'OT Hrs', icon: 'ph-timer', href: 'ot_hours.html' },
-                // { id: 'pending_log', label: 'Pending Log', icon: 'ph-hourglass-medium', href: '#' }
+                { id: 'ot_hours', label: 'OT Hrs', icon: 'ph-timer', href: 'ot_hours.html' }
             ]
         },
         {
@@ -74,6 +80,8 @@ function renderPlantNav(activePageId) {
 
         if (group.dropdown) {
             const active = isGroupActive(group);
+            const activeItem = group.items.find(i => isItemActive(i));
+            const displayLabel = activeItem ? activeItem.label : group.label;
             const pillCls = `plant-nav-pill ${active ? 'is-active' : ''}`;
             const ddId = `pn-dd-${group.id}`;
 
@@ -81,7 +89,7 @@ function renderPlantNav(activePageId) {
                 <div class="plant-nav-dropdown-wrap" data-pn-dropdown>
                     <button type="button" class="${pillCls}" data-pn-trigger="${ddId}">
                         <i class="ph-bold ${group.icon} filter-icon"></i>
-                        ${group.label}
+                        ${displayLabel}
                         <i class="ph-bold ph-caret-down dropdown-caret" data-pn-caret></i>
                     </button>
                 </div>

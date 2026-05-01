@@ -29,6 +29,10 @@
 </head>
 
 <body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
 
   <!-- Sidebar -->
   <div class="sidebar-container"></div>
@@ -37,7 +41,9 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="Tagwise Filter" data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Tagwise Filter:active" data-back="plant_detail.html"></div>
+    <div id="header-container" data-title="Tag wise Filter"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Tag wise Filter:active"
+      data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
     <section class="dashboard-content ">
@@ -55,12 +61,25 @@
         </div>
         <div class="jt-filter-body">
 
-          <!-- Tag Input (Standardized to job_types structure) -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label" for="tagInput">Tag Number</label>
-            <div class="jt-input-wrap">
-              <input type="text" id="tagInput" value="2BOILER-2" class="jt-input"
-                placeholder="Enter Tag (e.g. 2BOILER-2)">
+          <!-- Tag Input with Dual Search/Select Logic -->
+          <div>
+            <label class="gnfc-modal-label">Tag Number</label>
+            <div class="flex items-center gap-8px">
+              <input type="text" id="tagInput" placeholder="Search Tag..."
+                class="gnfc-modal-input font-13px uppercase flex-1" value="2BOILER-2">
+              <div class="flex-1">
+                <select id="tagSelect" class="gnfc-modal-input">
+                  <option value="">-- Select --</option>
+                  <option value="2BOILER-2">2BOILER-2</option>
+                  <option value="TAG-001">TAG-001</option>
+                  <option value="TAG-002">TAG-002</option>
+                  <option value="TAG-003">TAG-003</option>
+                  <option value="TAG-004">TAG-004</option>
+                  <option value="TAG-005">TAG-005</option>
+                  <option value="TAG-006">TAG-006</option>
+                  <option value="TAG-007">TAG-007</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -77,7 +96,7 @@
         </div>
       </div>
 
-      <div id="report-container">
+      <div id="report-container" class="jt-table-card">
 
         <div class="jt-report-header">
           <div class="jt-report-title">
@@ -89,361 +108,321 @@
         </div>
 
         <!-- Table Card -->
-        <div class="jt-table-card">
-          <div class="user-table-wrapper">
-            <table class="user-table min-w-1440px">
-              <thead>
-                <tr>
-                  <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
-                  <th rowspan="2" class="user-table-center" style="width: 100px;">Area</th>
-                  <th class="user-table-center" style="width: 130px;">Loop No</th>
-                  <th class="user-table-center" style="width: 280px;">Job</th>
-                  <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
-                  <th rowspan="2" style="min-width: 400px;">Description</th>
-                  <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
-                  <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
-                  <th class="user-table-center" style="min-width: 300px;">ENG Remarks</th>
-                </tr>
-                <tr>
-                  <th class="user-table-center">Tag No</th>
-                  <th class="user-table-center user-table-border-right">Type of Inst</th>
-                  <th class="user-table-center" style="min-width: 300px;">EXE Remarks</th>
-                </tr>
-              </thead>
-              <tbody id="reportTableBody">
-                <!-- ── DATE GROUP: 02/04/2026 ── -->
-                <tr class="user-table-date">
-                  <td colspan="9" class="user-table-bold">
-                    <i class="ph-fill ph-calendar-blank"></i> 02/04/2026
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">1</td>
-                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">Boiler 2 start up activity done...</div>
-                      <div class="user-table-secondary user-table-orange">DEFECT MAINTENANCE</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
-                  <td class="user-table-primary">Boiler 2 start up activity done lit up 4:10 and boiler 6:15 parallel 2AB1 Ignitor is not coming so clean spark trial done found ok.JOB done with BSU</td>
-                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Area</th>
+                <th class="user-table-center" style="width: 130px;">Loop No</th>
+                <th class="user-table-center" style="width: 280px;">Job</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="user-table-center">Tag No</th>
+                <th class="user-table-center user-table-border-right">Type of Inst</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- ── DATE GROUP: 02/04/2026 ── -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 02/04/2026
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
                   </div>
                 </td>
-                </tr>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Boiler 2 start up activity done</div>
+                    <div class="user-table-secondary ">DEFECT MAINTENANCE</div>
+                  </div>
+                </td>
+                <td class="user-table-center">PRP</td>
+                <td>Boiler 2 start up activity done lit up 4:10 and boiler 6:15 parallel 2AB1 Ignitor is not coming so
+                  clean spark trial done found ok.JOB done with BSU</td>
+                <td class="user-table-center">PRP</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
 
-                <!-- ── DATE GROUP: 24/03/2026 ── -->
-                <tr class="user-table-date">
-                  <td colspan="9" class="user-table-bold">
-                    <i class="ph-fill ph-calendar-blank"></i> 24/03/2026
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">2</td>
-                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">#2 IL Section DCB Card Status Error Appear in R2...</div>
-                      <div class="user-table-secondary user-table-orange">DEFECT MAINTENANCE</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
-                  <td class="user-table-primary">#2 IL Section DCB Card Status Error Appear in R2-M6, R2-M7, R3-M6, R3-M7, R5-M. during checking its ribbon cable (right side) connecting rack 1 and rack 2 was found faulty same replaced and given in line. Job was done on 20/03/2026 kept under observation till 24/03/2026 working normal</td>
-                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+              <!-- ── DATE GROUP: 24/03/2026 ── -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 24/03/2026
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
                   </div>
                 </td>
-                </tr>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>#2 IL Section DCB Card Status Error Appear in R2</div>
+                    <div class="user-table-secondary ">DEFECT MAINTENANCE</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BDR</td>
+                <td>#2 IL Section DCB Card Status Error Appear in R2-M6, R2-M7, R3-M6, R3-M7, R5-M. during checking
+                  its ribbon cable (right side) connecting rack 1 and rack 2 was found faulty same replaced and given
+                  in line. Job was done on 20/03/2026 kept under observation till 24/03/2026 working normal</td>
+                <td class="user-table-center">BDR</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
 
-                <!-- ── DATE GROUP: 15/03/2026 ── -->
-                <tr class="user-table-date">
-                  <td colspan="9" class="user-table-bold">
-                    <i class="ph-fill ph-calendar-blank"></i> 15/03/2026
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">3</td>
-                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">Boiler purge started at 8:24 Hrs...</div>
-                      <div class="user-table-secondary user-table-orange">PROCESS REQMT</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">JCO</td>
-                  <td class="user-table-primary">Boiler purge started at 8:24 Hrs. Boiler Lit up at 9:35 Hrs. Boiler parallel at 14:23 hrs. During the startup activity CD2 ignitor not coming so check and found its flame not stable so its IFM card replace with spare and check its operation found ok, CD4 ignitor not coming so its inst. side check found ok, Inform to process. All visible flame scanner not gating power on so check in detail found its main incoming supply 2A fuse blown so its replace with spare. Startup activity done with BSU and JMD</td>
-                  <td class="user-table-center user-table-bold user-table-secondary">JCO</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+              <!-- ── DATE GROUP: 15/03/2026 ── -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 15/03/2026
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">3</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
                   </div>
                 </td>
-                </tr>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Boiler purge started at 8:24 Hrs</div>
+                    <div class="user-table-secondary ">PROCESS REQMT</div>
+                  </div>
+                </td>
+                <td class="user-table-center">JCO</td>
+                <td>Boiler purge started at 8:24 Hrs. Boiler Lit up at 9:35 Hrs. Boiler parallel at 14:23 hrs. During
+                  the startup activity CD2 ignitor not coming so check and found its flame not stable so its IFM card
+                  replace with spare and check its operation found ok, CD4 ignitor not coming so its inst. side check
+                  found ok, Inform to process. All visible flame scanner not gating power on so check in detail found
+                  its main incoming supply 2A fuse blown so its replace with spare. Startup activity done with BSU and
+                  JMD</td>
+                <td class="user-table-center">JCO</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
 
-                <!-- ── DATE GROUP: 10/12/2025 ── -->
-                <tr class="user-table-date">
-                  <td colspan="9" class="user-table-bold">
-                    <i class="ph-fill ph-calendar-blank"></i> 10/12/2025
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">4</td>
-                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">Associated with process department...</div>
-                      <div class="user-table-secondary user-table-orange">PROCESS REQMT</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">WM</td>
-                  <td class="user-table-primary">Associated with process department for all four mill DP and suction and discharge pressure transmitter impulse line flushing job.</td>
-                  <td class="user-table-center user-table-bold user-table-secondary">WM</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+              <!-- ── DATE GROUP: 10/12/2025 ── -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 10/12/2025
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">4</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
                   </div>
                 </td>
-                </tr>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Associated with process department</div>
+                    <div class="user-table-secondary ">PROCESS REQMT</div>
+                  </div>
+                </td>
+                <td class="user-table-center">WM</td>
+                <td>Associated with process department for all four mill DP and suction and discharge pressure
+                  transmitter impulse line flushing job.</td>
+                <td class="user-table-center">WM</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
 
-                <!-- ── DATE GROUP: 23/11/2025 ── -->
-                <tr class="user-table-date">
-                  <td colspan="9" class="user-table-bold">
-                    <i class="ph-fill ph-calendar-blank"></i> 23/11/2025
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">5</td>
-                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">Boiler-2 Trip on MFT2 DPV fault...</div>
-                      <div class="user-table-secondary user-table-orange">ABNORMALITY</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">WM</td>
-                  <td class="user-table-primary">
-                    <div class="user-table-desc--abnormality">
-                      Boiler-2 Trip on MFT2 DPJ fault at 20:21 hrs. DPU card removed cleaned and try to reboot but not successful. Spare CPU card with old DPU memory card and taken in line. Clearance given to process. Purge started at 21:08 hrs. Boiler parallel at 21:52 Hrs.
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">WM</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+              <!-- ── DATE GROUP: 23/11/2025 ── -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 23/11/2025
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">5</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
                   </div>
                 </td>
-                </tr>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Boiler-2 Trip on MFT2 DPV fault</div>
+                    <div class="user-table-secondary ">ABNORMALITY</div>
+                  </div>
+                </td>
+                <td class="user-table-center">WM</td>
+                <td>
+                  <div class="user-table-desc--abnormality">
+                    Boiler-2 Trip on MFT2 DPJ fault at 20:21 hrs. DPU card removed cleaned and try to reboot but not
+                    successful. Spare CPU card with old DPU memory card and taken in line. Clearance given to process.
+                    Purge started at 21:08 hrs. Boiler parallel at 21:52 Hrs.
+                  </div>
+                </td>
+                <td class="user-table-center">WM</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
 
-                <!-- ── DATE GROUP: 13/11/2025 ── -->
-                <tr class="user-table-date">
-                  <td colspan="9" class="user-table-bold">
-                    <i class="ph-fill ph-calendar-blank"></i> 13/11/2025
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">6</td>
-                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">Boiler 2 trip at 1:42 on man trip...</div>
-                      <div class="user-table-secondary user-table-orange">N.A.</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
-                  <td class="user-table-primary">Boiler 2 trip at 1:42 on man trip PB and fuse leakage found as per process.</td>
-                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+              <!-- ── DATE GROUP: 13/11/2025 ── -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 13/11/2025
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">6</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
                   </div>
                 </td>
-                </tr>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Boiler 2 trip at 1:42 on man trip</div>
+                    <div class="user-table-secondary ">N.A.</div>
+                  </div>
+                </td>
+                <td class="user-table-center">PRP</td>
+                <td>Boiler 2 trip at 1:42 on man trip PB and fuse leakage found as per process.</td>
+                <td class="user-table-center">PRP</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
 
-                <!-- ── DATE GROUP: 01/10/2025 ── -->
-                <tr class="user-table-date">
-                  <td colspan="9" class="user-table-bold">
-                    <i class="ph-fill ph-calendar-blank"></i> 01/10/2025
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">7</td>
-                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">Startup activities done with JDE...</div>
-                      <div class="user-table-secondary user-table-orange">N.A.</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
-                  <td class="user-table-primary">Startup activities done with JDE, Corner-2 AB2 and CD2 ignitor was not coming, during checking found both IFM rod was heating up.</td>
-                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+              <!-- ── DATE GROUP: 01/10/2025 ── -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 01/10/2025
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">7</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
                   </div>
                 </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">8</td>
-                  <td class="user-table-center user-table-bold user-table-primary">N/A</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">Boiler was lit up at 1:45 hrs...</div>
-                      <div class="user-table-secondary user-table-orange">N.A.</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
-                  <td class="user-table-primary">Boiler was lit up at 1:45 hrs and paralleled at morning 6:32 hrs.</td>
-                  <td class="user-table-center user-table-bold user-table-secondary">BDR</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>Startup activities done with JDE</div>
+                    <div class="user-table-secondary ">N.A.</div>
                   </div>
                 </td>
-                </tr>
+                <td class="user-table-center">BDR</td>
+                <td>Startup activities done with JDE, Corner-2 AB2 and CD2 ignitor was not coming, during checking
+                  found both IFM rod was heating up.</td>
+                <td class="user-table-center">BDR</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">8</td>
+                <td class="user-table-center">N/A</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Boiler was lit up at 1:45 hrs</div>
+                    <div class="user-table-secondary ">N.A.</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BDR</td>
+                <td>Boiler was lit up at 1:45 hrs and paralleled at morning 6:32 hrs.</td>
+                <td class="user-table-center">BDR</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
 
-                <!-- ── DATE GROUP: 24/09/2025 ── -->
-                <tr class="user-table-date">
-                  <td colspan="9" class="user-table-bold">
-                    <i class="ph-fill ph-calendar-blank"></i> 24/09/2025
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">9</td>
-                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">Boiler tripped on furnace draft high...</div>
-                      <div class="user-table-secondary user-table-orange">ABNORMALITY</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                  <td class="user-table-primary">
-                    <div class="user-table-desc--abnormality">
-                      Boiler tripped on furnace draft high at 11:26. Also boiler is punctured. Decided to start Boiler-4.
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+              <!-- ── DATE GROUP: 24/09/2025 ── -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 24/09/2025
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">9</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
                   </div>
                 </td>
-                </tr>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Boiler tripped on furnace draft high</div>
+                    <div class="user-table-secondary ">ABNORMALITY</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BSU</td>
+                <td>
+                  <div class="user-table-desc--abnormality">
+                    Boiler tripped on furnace draft high at 11:26. Also boiler is punctured. Decided to start
+                    Boiler-4.
+                  </div>
+                </td>
+                <td class="user-table-center">BSU</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
 
-                <!-- ── DATE GROUP: 22/09/2025 ── -->
-                <tr class="user-table-date">
-                  <td colspan="9" class="user-table-bold">
-                    <i class="ph-fill ph-calendar-blank"></i> 22/09/2025
-                  </td>
-                </tr>
-                <tr class="user-table-row">
-                  <td class="user-table-center user-table-secondary user-table-bold">10</td>
-                  <td class="user-table-center user-table-bold user-table-primary">BOILER-2</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">N.A.</div>
-                      <div class="user-table-secondary user-table-blue">2BOILER-2</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-primary">Boiler 2 trip at 23:00 on Furnace pressure...</div>
-                      <div class="user-table-secondary user-table-orange">N.A.</div>
-                    </div>
-                  </td>
-                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
-                  <td class="user-table-primary">Boiler 2 trip at 23:00 on Furnace pressure High purge start 23:08 and boiler parallel 23:45.</td>
-                  <td class="user-table-center user-table-bold user-table-secondary">PRP</td>
-                  <td class="user-table-center">OVER</td>
-                    <td>
+              <!-- ── DATE GROUP: 22/09/2025 ── -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 22/09/2025
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">10</td>
+                <td class="user-table-center">BOILER-2</td>
+                <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary color-engineer"></p>
-                    <p class="user-table-secondary color-executive"></p>
+                    <div>N.A.</div>
+                    <div class="user-table-secondary user-table-blue">2BOILER-2</div>
                   </div>
                 </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Boiler 2 trip at 23:00 on Furnace pressure</div>
+                    <div class="user-table-secondary ">N.A.</div>
+                  </div>
+                </td>
+                <td class="user-table-center">PRP</td>
+                <td>Boiler 2 trip at 23:00 on Furnace pressure High purge start 23:08 and boiler parallel 23:45.</td>
+                <td class="user-table-center">PRP</td>
+                <td class="user-table-center">OVER</td>
+                <td> Scan IOM and load it in IIMS. [written by : AMD Date : 04/03/2026 ]</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -452,6 +431,129 @@
 
   <script>
     $(document).ready(function () {
+      // --- Smart Tag Autocomplete Helper (Ported from assigntoday.html) ---
+      function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let snapBackTimeout = null;
+        let snapBackInterval = null;
+        let isAutoRemoving = false;
+
+        function getAvailableTags() {
+          let tags = [];
+          $select.find('option').each(function () {
+            if ($(this).val()) tags.push($(this).val());
+          });
+          return tags;
+        }
+
+        function stopAutoRemove() {
+          clearTimeout(snapBackTimeout);
+          clearInterval(snapBackInterval);
+          isAutoRemoving = false;
+        }
+
+        const tags = getAvailableTags();
+
+        $input.on('input', function (e) {
+          const cursorStart = this.selectionStart;
+          const cursorEnd = this.selectionEnd;
+          const rawVal = $(this).val();
+          const upperVal = rawVal.toUpperCase();
+          if (rawVal !== upperVal) {
+            $(this).val(upperVal);
+            this.setSelectionRange(cursorStart, cursorEnd);
+          }
+
+          const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+          const isDeleting = inputType && inputType.startsWith('delete');
+
+          if (isDeleting) {
+            stopAutoRemove();
+          }
+
+          let inputVal = $(this).val().toUpperCase();
+
+          if (isDeleting) {
+            let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+            if (hasMatch) {
+              $(this).removeClass('is-invalid-tag');
+            } else {
+              $(this).addClass('is-invalid-tag');
+            }
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          let longestValidPrefix = "";
+          for (let i = inputVal.length; i >= 0; i--) {
+            let sub = inputVal.substring(0, i);
+            if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+            $(this).val(inputVal);
+          }
+
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            $select.val('');
+            if (onMatch) onMatch('');
+
+            stopAutoRemove();
+
+            const self = this;
+            const targetPrefix = longestValidPrefix;
+            snapBackTimeout = setTimeout(() => {
+              isAutoRemoving = true;
+              snapBackInterval = setInterval(() => {
+                let currentVal = $input.val();
+                if (currentVal.length > targetPrefix.length) {
+                  currentVal = currentVal.substring(0, currentVal.length - 1);
+                  $input.val(currentVal);
+                } else {
+                  clearInterval(snapBackInterval);
+                  isAutoRemoving = false;
+                  $input.removeClass('is-invalid-tag');
+
+                  let exactMatch = tags.find(tag => tag.toUpperCase() === currentVal);
+                  $select.val(exactMatch || '');
+                  if (onMatch) onMatch(exactMatch || '');
+                }
+              }, 150);
+            }, 800);
+          } else {
+            stopAutoRemove();
+            $(this).removeClass('is-invalid-tag');
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+          }
+        });
+
+        $select.on('change', function () {
+          const val = $(this).val();
+          if (val) {
+            $input.val(val).removeClass('is-invalid-tag');
+            stopAutoRemove();
+            if (onMatch) onMatch(val);
+          } else {
+            $input.val('');
+          }
+        });
+      }
+
+      // Initialize Tag Autocomplete
+      initTagAutocomplete('#tagInput', '#tagSelect');
+
       const showReport = () => {
         const tagValue = $('#tagInput').val();
         if (!tagValue) return;
@@ -461,16 +563,22 @@
       };
 
       const resetView = () => {
-        $('#tagInput').val('');
+        $('#tagInput').val('').removeClass('is-invalid-tag');
+        $('#tagSelect').val('');
         $('#report-container').fadeOut(200);
       };
 
       // Event Listeners
-      $('#btn-apply-filter').on('click', showReport);
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          showReport();
+        }, 1500);
+      });
       $('#btn-reset-filter').on('click', resetView);
     });
   </script>
 </body>
 
 </html>
-

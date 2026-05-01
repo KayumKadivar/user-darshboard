@@ -30,6 +30,10 @@
 </head>
 
 <body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
 
   <!-- Sidebar -->
   <div class="sidebar-container"></div>
@@ -38,7 +42,9 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="Job Type Analysis" data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Job Type Analysis:active" data-back="plant_detail.html"></div>
+    <div id="header-container" data-title="Job Type Analysis"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Job Type Analysis:active"
+      data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
     <section class="dashboard-content ">
@@ -60,28 +66,26 @@
 
           <!-- Time Range -->
           <!-- Start Date -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">Start Date</label>
+          <div>
+            <label class="gnfc-modal-label">Start Date</label>
             <div class="jt-input-wrap">
-              <input type="date" id="startDateFilter" class="jt-input">
-              <i class="ph-bold ph-calendar-blank jt-input-icon"></i>
+              <input type="date" id="startDateFilter" class="gnfc-modal-input">
             </div>
           </div>
 
           <!-- End Date -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">End Date</label>
+          <div>
+            <label class="gnfc-modal-label">End Date</label>
             <div class="jt-input-wrap">
-              <input type="date" id="endDateFilter" class="jt-input">
-              <i class="ph-bold ph-calendar-blank jt-input-icon"></i>
+              <input type="date" id="endDateFilter" class="gnfc-modal-input">
             </div>
           </div>
 
           <!-- Job Type Select -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label" for="job-type-select">Type of Job</label>
+          <div>
+            <label class="gnfc-modal-label" for="job-type-select">Select Type of Job</label>
             <div class="jt-select-wrap">
-              <select id="job-type-select" class="jt-select">
+              <select id="job-type-select" class="gnfc-modal-input">
                 <option value="">All Job Types</option>
                 <option value="PM">PM</option>
                 <option value="DOCUMENTATION">DOCUMENTATION</option>
@@ -104,7 +108,6 @@
                 <option value="PROCESS REQMT">PROCESS REQMT</option>
                 <option value="N.A.">N.A.</option>
               </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
             </div>
           </div>
 
@@ -127,7 +130,7 @@
           <div class="jt-report-title">
             <i class="ph-fill ph-table"></i>
             <div class="jt-title-stack">
-              <h3 class="jt-main-title">Job Type Analysis Report</h3>
+              <h3 class="jt-main-title">Type of Job Report</h3>
             </div>
           </div>
         </div>
@@ -145,94 +148,47 @@
                 <th rowspan="2" style="min-width: 400px;">Description</th>
                 <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
                 <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
-                <th class="user-table-center" style="min-width: 300px;">ENG REMARKS</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">REMARKS</th>
                 <th rowspan="2" class="user-table-center" style="width: 60px;">ADD</th>
               </tr>
               <tr>
                 <th class="user-table-center">Tag No</th>
-                <th class="user-table-center">Type of Inst</th>
-                <th class="user-table-center user-table-border-right">EXE REMARKS</th>
+                <th class="user-table-center user-table-border-right">Type of Job </th>
               </tr>
             </thead>
             <tbody id="plant-table-body">
 
-              <!-- ── DATE GROUP: 28/01/2026 ── -->
-              <tr class="user-table-date" data-date-group="28/01/2026">
+              <!-- ── DATE GROUP: 28/03/2026 ── -->
+              <tr class="user-table-date" data-date-group="28/03/2026">
                 <td colspan="10" class="user-table-bold user-table-date">
                   <i class="ph-fill ph-calendar-blank"></i>
-                  28/01/2026
+                  28/03/2026
                 </td>
               </tr>
 
               <!-- Row 1 -->
-              <tr class="user-table-row jt-data-row" data-date="28/01/2026" data-job-type="SPARE REPAIR">
-                <td class="user-table-center user-table-secondary user-table-bold">1</td>
-                <td class="user-table-bold user-table-center user-table-primary">ASH</td>
+              <tr class="user-table-row jt-data-row" data-date="28/03/2026" data-job-type="MODIFICATION">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">BOILER-3</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">N.A.</div>
-                    <div class="user-table-secondary user-table-blue">Ac-1</div>
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">2AB3IGN</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed Pneumatic switch to be repaired.(By:ARP : 28/01/2026)</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">SPARE
-                      REPAIR</div>
+                    <div class="user-table-primary">Ignitor Flame Relay wiring modification to be done.(By ARP :
+                      20/03/2026)</div>
+                    <div>MODIFICATION</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                <td class="user-table-desc user-table-primary">Removed pneumatic switch repaired by seal kit.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                <td class="user-table-center">KED</td>
+                <td>2AB3IGN Ignitor Flame relay related parallel contact wiring done and taken in line...</td>
+                <td class="user-table-center">KED</td>
                 <td class="user-table-center">OVER</td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <p class="user-table-secondary"></p>
-                    <p class="user-table-remarks-purple">
-                      Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
-                    </p>
-                  </div>
-                </td>
-                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
-                  <div class="user-table-cell-stack">
-                    <div><button type="button" class="plant-inline-button" data-action="history"
-                        title="History">H</button></div>
-                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
-                    </div>
-                  </div>
-                </td>
-
-              </tr>
-
-              <!-- Row 2 (Emergency) -->
-              <tr class="user-table-row jt-data-row user-table-row--emergency" data-date="28/01/2026"
-                data-job-type="SPARE REPAIR">
-                <td class="user-table-center user-table-secondary user-table-bold">2</td>
-                <td class="user-table-bold user-table-center user-table-primary">ASH</td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-primary">N.A.</div>
-                    <div class="user-table-secondary user-table-blue">Ca-7</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed Power Cylinder to be repaired.(By:ARP : 28/01/2026)</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">SPARE
-                      REPAIR</div>
-                  </div>
-                </td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                <td class="user-table-desc user-table-primary">Removed power cylinder repaired.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                <td class="user-table-center">OVER</td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <p class="user-table-remarks-purple">
-                      Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
-                    </p>
-                    <p class="user-table-remarks-green">2PV1579A</p>
-                  </div>
+               <td>
+                  Boiler-4 Adam IP (172.16.100.146) was not configured at Inst workshop end. Same was configured by them and after that simulation taken found ok. [written by : TRC Date : 23/03/2026 ] 
                 </td>
                 <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
                   <div class="user-table-cell-stack">
@@ -243,10 +199,222 @@
                   </div>
                 </td>
               </tr>
-              
+
+              <!-- ── DATE GROUP: 14/03/2026 ── -->
+              <tr class="user-table-date" data-date-group="14/03/2026">
+                <td colspan="10" class="user-table-bold user-table-date">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  14/03/2026
+                </td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr class="user-table-row jt-data-row" data-date="14/03/2026" data-job-type="MODIFICATION">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">BOILER-1</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">1PV2583</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Prepared Mascot make SAD power cylinder Installed at corner 3 CD
+                      Damper.(By ARP : 14/03/2026)</div>
+                    <div>MODIFICATION</div>
+                  </div>
+                </td>
+                <td class="user-table-center">PVB</td>
+                <td>Prepared Mascot make SAD power cylinder installed at corner 3 CD Damper. Operation checked. Removed one kept with Tag.</td>
+                <td class="user-table-center">PVB</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  
+                </td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── DATE GROUP: 13/03/2026 ── -->
+              <tr class="user-table-date" data-date-group="13/03/2026">
+                <td colspan="10" class="user-table-bold user-table-date">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  13/03/2026
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="user-table-row jt-data-row" data-date="13/03/2026" data-job-type="MODIFICATION">
+                <td class="user-table-center">3</td>
+                <td class="user-table-center">BOILER-1</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">1PV2583</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Prepared Mascot make SAD power cylinder Installed at corner 3 CD  Damper.(By ARP : 13/03/2026)</div>
+                    <div>MODIFICATION</div>
+                  </div>
+                </td>
+                <td class="user-table-center">PVB</td>
+                <td>Positioner SS tubing done. FB link cut as per
+                  requirement.</td>
+                <td class="user-table-center">PVB</td>
+                <td class="user-table-center">U/P</td>
+               <td>
+                  Boiler-4 Adam IP (172.16.100.146) was not configured at Inst workshop end. Same was configured by them and after that simulation taken found ok. [written by : TRC Date : 23/03/2026 ] 
+                </td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── DATE GROUP: 12/03/2026 ── -->
+              <tr class="user-table-date" data-date-group="12/03/2026">
+                <td colspan="10" class="user-table-bold user-table-date">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  12/03/2026
+                </td>
+              </tr>
+
+              <!-- Row 4 -->
+              <tr class="user-table-row jt-data-row" data-date="12/03/2026" data-job-type="MODIFICATION">
+                <td class="user-table-center">4</td>
+                <td class="user-table-center">BOILER-1</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">NOTAG</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Mascot make Pneumatic positioner installed on spare SAD power cylinder and calibration to be checked.(By:ARP : 12/03/2026)</div>
+                    <div>MODIFICATION</div>
+                  </div>
+                </td>
+                <td class="user-table-center">PVB</td>
+                <td>Mascot make Pneumatic positioner installed on spare SAD
+                  power cylinder. Its calibration done.</td>
+                <td class="user-table-center">PVB</td>
+                <td class="user-table-center">U/P</td>
+               <td>
+                  Boiler-4 Adam IP (172.16.100.146) was not configured at Inst workshop end. Same was configured by them and after that simulation taken found ok. [written by : TRC Date : 23/03/2026 ] 
+                </td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── DATE GROUP: 10/03/2026 ── -->
+              <tr class="user-table-date" data-date-group="10/03/2026">
+                <td colspan="10" class="user-table-bold user-table-date">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  10/03/2026
+                </td>
+              </tr>
+
+              <!-- Row 5 -->
+              <tr class="user-table-row jt-data-row" data-date="10/03/2026" data-job-type="MODIFICATION">
+                <td class="user-table-center">5</td>
+                <td class="user-table-center">BOILER-1</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">1PV2583</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Prepared Mascot make SAD power cylinder Installed at corner 2(By:ARP
+                      : 10/03/2026)</div>
+                    <div>MODIFICATION</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BDR</td>
+                <td>Prepared Mascot made pneumatic positioner with SAD power
+                  cylinder installed at corner 2 CD damper.</td>
+                <td class="user-table-center">BDR</td>
+                <td class="user-table-center">OVER</td>
+               <td>
+                  Boiler-4 Adam IP (172.16.100.146) was not configured at Inst workshop end. Same was configured by them and after that simulation taken found ok. [written by : TRC Date : 23/03/2026 ] 
+                </td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── DATE GROUP: 05/03/2026 ── -->
+              <tr class="user-table-date" data-date-group="05/03/2026">
+                <td colspan="10" class="user-table-bold user-table-date">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  05/03/2026
+                </td>
+              </tr>
+
+              <!-- Row 6 -->
+              <tr class="user-table-row jt-data-row" data-date="05/03/2026" data-job-type="MODIFICATION">
+                <td class="user-table-center">6</td>
+                <td class="user-table-center">N.A.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">NOTAG</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Mascot make Pneumatic positioner installed on spare SAD power
+                      cylinder and calibration to be checked.(By:ARP : 05/03/2026)</div>
+                    <div>MODIFICATION</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BDR</td>
+                <td>Mascot make Pneumatic positioner installed on spare SAD
+                  power cylinder and calibration done.</td>
+                <td class="user-table-center">BDR</td>
+                <td class="user-table-center">OVER</td>
+               <td>
+                  Boiler-4 Adam IP (172.16.100.146) was not configured at Inst workshop end. Same was configured by them and after that simulation taken found ok. [written by : TRC Date : 23/03/2026 ] 
+                </td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
               <!-- Empty state (hidden by default) -->
               <tr class="user-table-row" id="jt-empty-row" style="display: none;">
-                <td colspan="10" class="user-table-center user-table-secondary" style="padding: 2rem;">
+                <td colspan="10" class="user-table-center p-16px" >
                   No records found matching your selected criteria.
                 </td>
               </tr>
@@ -356,7 +524,13 @@
       }
 
       // Event Listeners
-      $('#btn-apply-filters').on('click', handleApplyFilters);
+      $('#btn-apply-filters').on('click', function() {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          handleApplyFilters();
+        }, 1500);
+      });
       $('#btn-reset-filters').on('click', resetFilters);
 
       // Trigger picker on icon click
@@ -375,4 +549,3 @@
 </body>
 
 </html>
-

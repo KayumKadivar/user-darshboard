@@ -32,6 +32,10 @@
 </head>
 
 <body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
 
   <!-- Sidebar -->
   <div class="sidebar-container"></div>
@@ -40,73 +44,80 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="Job History"
-      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Job History:active"
+    <div id="header-container" data-title="General Job History"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,General Job History:active"
       data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
-    <section class="dashboard-content ">
+    <section class="dashboard-content-tech-logbook">
 
       <!-- Plant Navigation -->
       <div id="plant-nav-container"></div>
 
-      <!-- ── FILTER CARD ── -->
-      <div class="jt-filter-card">
-
-        <div class="jt-filter-header">
-          <h3 class="jt-filter-title">
-            <i class="ph-bold ph-funnel"></i>
-            SEARCH CRITERIA
-          </h3>
-
-          <div class="jh-filter-tools">
-            <button type="button" class="jt-btn-primary" onclick="openAddJobModal()">
-              <i class="ph-bold ph-plus"></i> ADD JOB
+      <!-- Search Criteria Card -->
+      <div class="jbd-card my-20px">
+        <div class="jbd-card-header">
+          <div class="flex items-center gap-8px">
+            <i class="ph-bold ph-sliders-horizontal color-blue"></i>
+            <span class="jbd-card-header-title">Search Criteria</span>
+          </div>
+          <div class="flex items-center gap-8px">
+            <button class="pm-btn pm-btn--add" id="btn-add-job" onclick="openAddJobModal()">
+              <i class="ph-bold ph-plus-circle"></i> Add Job
             </button>
-            <div class="flex gap-10px ml-10px items-center">
-              <button type="button" id="filter-btn-default" class="jh-date-btn"
-                onclick="setDateFilter('default')">Default Date</button>
-              <button type="button" id="filter-btn-prev" class="jh-date-btn" onclick="setDateFilter('prev')">Prev
-                Year</button>
-              <button type="button" id="filter-btn-this" class="jh-date-btn" onclick="setDateFilter('this')">This
-                Year</button>
-              <button type="button" id="filter-btn-next" class="jh-date-btn" onclick="setDateFilter('next')">Next
-                Year</button>
-            </div>
+            <button class="toolbar-btn date-filter" data-type="default" onclick="setDateFilter('default')">Default
+              Date</button>
+            <button class="toolbar-btn date-filter" data-type="prev" onclick="setDateFilter('prev')">Prev Year</button>
+            <button class="toolbar-btn date-filter" data-type="this" onclick="setDateFilter('this')">This Year</button>
+            <button class="toolbar-btn date-filter" data-type="next" onclick="setDateFilter('next')">Next Year</button>
           </div>
         </div>
+        <div class="p-16px">
+          <div class="grid grid-cols-2 lg-grid-cols-4 gap-16px">
 
-        <div class="jt-filter-body grid grid-cols-4 gap-16px">
-
-          <!-- Loop -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label" for="filter-loop">Loop Name</label>
-            <div class="jt-select-wrap">
-              <select id="filter-loop" class="jt-select">
-                <option value="">ALL</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-              </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            <!-- Loop -->
+            <div>
+              <label class="gnfc-modal-label">Search / Select Loop</label>
+              <div class="flex gap-8px">
+                <input type="text" id="filter-loop-input" class="gnfc-modal-input flex-1"
+                  placeholder="Loop No...">
+                <select class="gnfc-modal-input flex-1" id="filter-loop">
+                  <option value="">ALL</option>
+                  <option>100</option>
+                  <option>200</option>
+                  <option>300</option>
+                  <option>400</option>
+                  <option>500</option>
+                  <option>600</option>
+                  <option>700</option>
+                  <option>800</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <!-- Tag -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label" for="tagSelect">Tag Number</label>
-            <div class="jt-select-wrap">
-              <select id="tagSelect" class="jt-select">
-                <option value="">ALL</option>
-              </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            <!-- Tag -->
+            <div>
+              <label class="gnfc-modal-label">Search / Select Tag</label>
+              <div class="flex gap-8px">
+                <input type="text" id="filter-tag-input" class="gnfc-modal-input flex-1"
+                  placeholder="Tag No...">
+                <select class="gnfc-modal-input flex-1" id="tagSelect">
+                  <option value="">ALL</option>
+                  <option>FV0208B</option>
+                  <option>FV0216A</option>
+                  <option>FV301A</option>
+                  <option>FV3101A</option>
+                  <option>FV606</option>
+                  <option>HV710</option>
+                  <option>HV7508</option>
+                  <option>FV0203BA</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <!-- Type of Job -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label" for="filter-jobtype">Type of Job</label>
-            <div class="jt-select-wrap">
-              <select id="filter-jobtype" class="jt-select">
+            <div>
+              <label class="gnfc-modal-label">Type of Job</label>
+              <select class="gnfc-modal-input w-full cursor-pointer" id="filter-jobtype">
                 <option value="">ALL</option>
                 <option>PM</option>
                 <option>DOCUMENTATION</option>
@@ -129,15 +140,11 @@
                 <option>PROCESS REQMT</option>
                 <option>N.A.</option>
               </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
             </div>
-          </div>
 
-          <!-- Instrument Type -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label" for="filter-insttype">Instrument Type</label>
-            <div class="jt-select-wrap">
-              <select id="filter-insttype" class="jt-select">
+            <div>
+              <label class="gnfc-modal-label">Type Of Instrument</label>
+              <select class="gnfc-modal-input w-full cursor-pointer" id="filter-insttype">
                 <option value="">ALL</option>
                 <option>ANALYZER</option>
                 <option>C/V</option>
@@ -153,597 +160,760 @@
                 <option>PC</option>
                 <option>N.A.</option>
               </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            </div>
+
+            <div>
+              <label class="gnfc-modal-label">Start Date</label>
+              <input type="date" id="filter-start-date" class="gnfc-modal-input" value="2025-02-09">
+            </div>
+
+            <div>
+              <label class="gnfc-modal-label">End Date</label>
+              <input type="date" id="filter-end-date" class="gnfc-modal-input" value="2026-02-09">
+            </div>
+
+            <div>
+              <label class="gnfc-modal-label">Filter Options</label>
+              <div class="flex gap-4px">
+                <label
+                  class="flex items-center gap-6px cursor-pointer color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                  <input type="checkbox" id="filter-remark" class="accent-gnfc-blue"> Remark
+                </label>
+                <label
+                  class="flex items-center gap-6px cursor-pointer color-primary bg-dark-bg p-8px radius-4px border border-dark-border flex-1">
+                  <input type="checkbox" id="filter-attach" class="accent-gnfc-blue"> Attach
+                </label>
+              </div>
+            </div>
+
+            <div class="flex items-end gap-8px">
+              <button class="pm-btn pm-btn--update flex-1 h-40px text-uppercase ls-wide"
+                onclick="renderTable()">
+                <i class="ph-bold ph-lightning"></i> Apply
+              </button>
+              <button class="jt-btn-reset h-40px px-16px radius-4px" onclick="resetFilters()">
+                Reset
+              </button>
             </div>
           </div>
-
-          <!-- Start Date -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label" for="filter-start-date">Start Date</label>
-            <input type="date" id="filter-start-date" class="jt-input jt-date-input" value="2025-02-09">
-          </div>
-
-          <!-- End Date -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label" for="filter-end-date">End Date</label>
-            <input type="date" id="filter-end-date" class="jt-input jt-date-input" value="2026-02-09">
-          </div>
-
-          <!-- Options -->
-          <div class="jt-filter-group col-span-1">
-            <label class="jt-filter-label">Filter Options</label>
-            <div class="jh-checkbox-group flex gap-16px items-center" style="height: 34px;">
-              <label class="jh-checkbox-item flex items-center gap-8px cursor-pointer">
-                <input type="checkbox" id="filter-remark">
-                <span>Remark Only</span>
-              </label>
-              <label class="jh-checkbox-item flex items-center gap-8px cursor-pointer">
-                <input type="checkbox" id="filter-attach">
-                <span>Attachments</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="jt-filter-btn">
-            <button class="jt-btn-primary" onclick="renderTable()">
-              <i class="ph-bold ph-lightning"></i> APPLY
-            </button>
-            <button class="jt-btn-reset" onclick="resetFilters()">
-              Reset
-            </button>
-          </div>
-
-
         </div>
       </div>
-      <!-- /FILTER CARD -->
 
-      <!-- ── TABLE CARD ── -->
+      <!-- Job Records Table Card -->
       <div class="jbd-card">
-
-        <div class="jt-report-header">
-          <div class="jt-report-title">
+        <div class="jbd-card-header">
+          <div class="flex items-center">
             <i class="ph-fill ph-table"></i>
-            <div class="jt-title-stack">
-              <h3 class="jt-main-title">Job History Report</h3>
-            </div>
+            <span class="jbd-card-header-title">Job Records</span>
           </div>
+          <div class="jbd-badge-count" id="record-count">10 Records Found</div>
         </div>
 
-        <div class="user-table-wrapper">
-          <table class="user-table min-w-1440px" id="jh-main-table">
+        <div class="user-table-wrapper radius-0px border-0">
+          <table class="user-table" id="jh-main-table">
             <thead>
               <tr>
-                <th class="user-table-center" rowspan="2" style="width:64px;">Sr</th>
-                <th class="user-table-center" rowspan="2" style="width:80px;">Area</th>
-                <th class="user-table-left" style="width:140px;">Loop</th>
-                <th class="user-table-left" style="min-width:160px;">Inst Type</th>
-                <th class="user-table-center" rowspan="2" style="width:120px;">Date</th>
-                <th rowspan="2" style="min-width:400px;">Description of Job</th>
-                <th class="user-table-center" style="width:100px;">Tech</th>
-                <th class="user-table-center" rowspan="2" style="width:56px;">Attch</th>
-                <th style="min-width:200px;">Eng Remark</th>
+                <th rowspan="2" style="width: 50px;">Sr</th>
+                <th rowspan="2" style="width: 70px;">Area</th>
+                <th style="min-width: 140px;">Loop</th>
+                <th style="min-width: 140px;">Type Of Inst</th>
+                <th rowspan="2" style="width: 110px;">Date</th>
+                <th rowspan="2" style="min-width: 400px;">Description of Job</th>
+                <th style="width: 90px;">Tech</th>
+                <th rowspan="2" style="width: 40px;">Attach</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">REMARKS</th>
               </tr>
               <tr>
-                <th class="user-table-left">Tag</th>
-                <th class="user-table-left">Job Type</th>
-                <th class="user-table-center">Eng</th>
-                <th style="min-width:200px;">Exec Remark</th>
+                <th>Tag</th>
+                <th style="min-width: 140px;">Type of Job</th>
+                <th class="user-table-border-right">Eng</th>
+
               </tr>
             </thead>
             <tbody id="jobTableBody">
-              <!-- Row 1 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">1</td>
-                <td class="user-table-center user-table-bold user-table-primary">400</td>
+              <!-- Hardcoded Rows -->
+              <tr class="user-table-row" data-sr="1">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">1</td>
+                <td class="text-center">400</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">0208</div>
-                    <div class="user-table-blue user-table-bold font-14px">FV0208B</div>
+                    <span>0208</span>
+                    <span>FV0208B</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">13/01/2026</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: C/V is not closing during pressurized (in line condition).<br>Job Done: ignore this entry.
-                  (CMS Incharge: MAJ)
-                </td>
+                <td class="text-center">13/01/2026</td>
+                <td class="text-left leading-relaxed">Defect: C/V is not closing during pressurized (in line
+                  condition).<br>Job Done: ignore this entry. (CMS Incharge: MAJ)</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td> </td>
               </tr>
-              <!-- Row 2 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">2</td>
-                <td class="user-table-center user-table-bold user-table-primary">400</td>
+              <tr class="user-table-row" data-sr="2">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">2</td>
+                <td class="text-center">400</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">0208</div>
-                    <div class="user-table-blue user-table-bold font-14px">FV0208B</div>
+                    <span>0208</span>
+                    <span>FV0208B</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">09/01/2026</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: C/V is not closing during pressurized (in line condition).<br>Job Done: (CMS Incharge: MAJ)
-                </td>
+                <td class="text-center">09/01/2026</td>
+                <td class="text-left leading-relaxed">Defect: C/V is not closing during pressurized (in line
+                  condition).<br>Job Done: (CMS Incharge: MAJ)</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td> </td>
               </tr>
-              <!-- Row 3 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">3</td>
-                <td class="user-table-center user-table-bold user-table-primary">200</td>
+              <tr class="user-table-row" data-sr="3">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">3</td>
+                <td class="text-center">200</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">0216</div>
-                    <div class="user-table-blue user-table-bold font-14px">FV0216A</div>
+                    <span>0216</span>
+                    <span>FV0216A</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">13/12/2025</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: LV0203AA control sent to micron for its body to be used in FV0216A.<br>Job Done: (CMS
-                  Incharge: MAJ)
-                </td>
+                <td class="text-center">13/12/2025</td>
+                <td class="text-left leading-relaxed">Defect: LV0203AA control sent to micron for its body
+                  to be used in FV0216A.<br>Job Done: (CMS Incharge: MAJ)</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td> </td>
               </tr>
-              <!-- Row 4 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">4</td>
-                <td class="user-table-center user-table-bold user-table-primary">200</td>
+              <tr class="user-table-row" data-sr="4">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">4</td>
+                <td class="text-center">200</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">0216</div>
-                    <div class="user-table-blue user-table-bold font-14px">FV0216A</div>
+                    <span>0216</span>
+                    <span>FV0216A</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">13/12/2025</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: LV0203AA control sent to micron for its body to be used in FV0216A.<br>Job Done: Wrong entry.
-                  ignore this entry. (CMS Incharge: MAJ)
-                </td>
+                <td class="text-center">13/12/2025</td>
+                <td class="text-left leading-relaxed">Defect: LV0203AA control sent to micron for its body
+                  to be used in FV0216A.<br>Job Done: Wrong entry. ignore this entry. (CMS Incharge: MAJ)</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td> </td>
               </tr>
-              <!-- Row 5 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">5</td>
-                <td class="user-table-center user-table-bold user-table-primary">300</td>
+              <tr class="user-table-row" data-sr="5">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">5</td>
+                <td class="text-center">300</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">0301</div>
-                    <div class="user-table-blue user-table-bold font-14px">FV301A</div>
+                    <span>0301</span>
+                    <span>FV301A</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">15/11/2025</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: DROPPED FOR HEAVY VIBRATION IN VALVE. PLUG+STEM IS BROKEN.<br>Job Done: Valve was sent to
-                  Micron. After dismantling, body and bonnet were damaged and repaired. Plug, stem and metal seat ring
-                  were replaced.
-                </td>
+                <td class="text-center">15/11/2025</td>
+                <td class="text-left leading-relaxed">Defect: DROPPED FOR HEAVY VIBRATION IN VALVE.
+                  PLUG+STEM IS BROKEN. NEW STEM TO BE MFG. PLUG TO BE REPAIRED.<br>Job Done: Valve was sent to Micron
+                  due to heavy vibration and plug broken issues. After dismantling and inspection, it was found that
+                  the body, bonnet were damaged and required repairs...</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><i class="ph-bold ph-paperclip jh-attach-icon"></i></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">URGENT REQUIREMENT</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td>URGENT REQUIREMENT</td>
+
               </tr>
-              <!-- Row 6 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">6</td>
-                <td class="user-table-center user-table-bold user-table-primary">300</td>
+              <tr class="user-table-row" data-sr="6">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">6</td>
+                <td class="text-center">300</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">3101</div>
-                    <div class="user-table-blue user-table-bold font-14px">FV3101A</div>
+                    <span>3101</span>
+                    <span>FV3101A</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">15/11/2025</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: C/V Passing and jerky operation.<br>Job Done: *Late job entry* Valve sent to Micron due to
-                  passing and jerking. Metal seat ring and Soft seat (PTFE) replaced. Valve tested and found ok.
-                </td>
+                <td class="text-center">15/11/2025</td>
+                <td class="text-left leading-relaxed">Defect: C/V Passing and jerky operation.<br>Job Done:
+                  *Late job entry* Valve sent to Micron due to passing and jerking. Metal seat ring and Soft seat
+                  provided by micron (PTFE) replaced in control valve. valve was tested and found ok.</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td> </td>
               </tr>
-              <!-- Row 7 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">7</td>
-                <td class="user-table-center user-table-bold user-table-primary">600</td>
+              <tr class="user-table-row" data-sr="7">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">7</td>
+                <td class="text-center">600</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">0606</div>
-                    <div class="user-table-blue user-table-bold font-14px">FV606</div>
+                    <span>0606</span>
+                    <span>FV606</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">13/11/2025</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: FV606 act dropped for overhauling.<br>Job Done: Actuator sent to Micron due to passing.
-                  Replaced seal kit, rework of stem, actuator casing bolt SS M6 18 nos., Rework of body by Drilling,
-                  tapping.
-                </td>
+                <td class="text-center">13/11/2025</td>
+                <td class="text-left leading-relaxed">Defect: FV606 act dropped for overhauling.<br>Job
+                  Done: Actuator was sent to Micron due to a passing issue. After dismantling and inspecting the
+                  valve, Replaced seal kit (By micron), rework of stem, actuator casing bolt SS M6 size 18 nos.,
+                  Rework of body by Drilling, tapping.</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td> </td>
               </tr>
-              <!-- Row 8 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">8</td>
-                <td class="user-table-center user-table-bold user-table-primary">700</td>
+              <tr class="user-table-row" data-sr="8">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">8</td>
+                <td class="text-center">700</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">0710</div>
-                    <div class="user-table-blue user-table-bold font-14px">HV710</div>
+                    <span>0710</span>
+                    <span>HV710</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">13/11/2025</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: Control valve Passing 1X2500<br>Job Done: Valve sent to Micron. After dismantling, body,
-                  bonnet, stem, plug and metal seat ring were damaged and repaired. Machining carried out.
-                </td>
+                <td class="text-center">13/11/2025</td>
+                <td class="text-left leading-relaxed">Control valve Passing 1X2500<br>Valve was sent to
+                  Micron due to a passing issue in the control valve. After dismantling and inspecting the valve, it
+                  was found that body, bonnet, some, plug and metal seat ring were damaged and required repair.</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td> </td>
               </tr>
-              <!-- Row 9 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">9</td>
-                <td class="user-table-center user-table-bold user-table-primary">700</td>
+              <tr class="user-table-row" data-sr="9">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">9</td>
+                <td class="text-center">700</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">7508</div>
-                    <div class="user-table-blue user-table-bold font-14px">HV7508</div>
+                    <span>7508</span>
+                    <span>HV7508</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">13/11/2025</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: Control valve passing 2X600<br>Job Done: Valve sent to Micron due to passing. After
-                  inspection, body, bonnet, plug and metal seat ring damaged and repaired.
-                </td>
+                <td class="text-center">13/11/2025</td>
+                <td class="text-left leading-relaxed">Control valve passing 2X600<br>Valve was sent to
+                  Micron due to a passing issue in the control valve. After dismantling and inspecting the valve, it
+                  was found that body, bonnet, plug and metal seat ring were damaged and required repair.</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td> </td>
               </tr>
-              <!-- Row 10 -->
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">10</td>
-                <td class="user-table-center user-table-bold user-table-primary">200</td>
+              <tr class="user-table-row" data-sr="10">
+                <td class="text-center color-blue cursor-pointer" title="Click to Edit">10</td>
+                <td class="text-center">200</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">0203</div>
-                    <div class="user-table-blue user-table-bold font-14px">FV0203BA</div>
+                    <span>0203</span>
+                    <span>FV0203BA</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">C/V</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">CMS JOB
-                    </div>
+                    <span>C/V</span>
+                    <span>CMS JOB</span>
                   </div>
                 </td>
-                <td class="user-table-center user-table-secondary">13/11/2025</td>
-                <td class="user-table-primary font-14px" style="line-height:1.6;">
-                  Defect: C/V having noise below 70% MV.<br>Job Done: Valve sent to Micron due to passing. After
-                  inspection, plug was damaged and repaired. Machining of plug along with lapping work, Bottom bushing
-                  and new key replaced.
-                </td>
+                <td class="text-center">13/11/2025</td>
+                <td class="text-left leading-relaxed">Defect: C/V having noise below 70% MV.<br>Job Done:
+                  Valve was sent to Micron due to a passing issue in the control valve. After dismantling and
+                  inspecting the valve, it was found that plug was damaged and required repair. Machining of the plug
+                  along with lapping...</td>
                 <td>
-                  <div class="user-table-cell-stack user-table-center">
-                    <div class="user-table-bold user-table-secondary">-</div>
-                    <div class="user-table-secondary">MAJ</div>
+                  <div class="user-table-cell-stack text-center">
+                    <span></span>
+                    <span>MAJ</span>
                   </div>
                 </td>
-                <td class="user-table-center"><span class="user-table-secondary">-</span></td>
-                <td>
-                  <div class="user-table-cell-stack">
-                    <div class="user-table-secondary"
-                      style="font-size:0.75rem; color: var(--brand-primary); opacity: 0.8;">-</div>
-                    <div class="user-table-secondary" style="font-size:0.75rem;">-</div>
-                  </div>
-                </td>
+                <td class="text-center"></td>
+                <td> </td>
               </tr>
             </tbody>
           </table>
         </div>
-
       </div>
-      <!-- /TABLE CARD -->
 
     </section>
   </main>
 
-  <!-- ── JOB DETAIL/ADD MODAL ── -->
-  <div id="job-modal-overlay" class="gnfc-modal-overlay" aria-hidden="true">
+  <!-- ── ADD JOB MODAL ── -->
+  <div id="add-job-modal" class="gnfc-modal-overlay" aria-hidden="true">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
-
-      <div class="gnfc-modal-header">
-        <h3 id="job-modal-title" class="gnfc-modal-title">Job History Detail</h3>
-        <button type="button" onclick="closeJobModal()" class="gnfc-modal-close" aria-label="Close">
+      <div class="gnfc-modal-header bg-panel-alt">
+        <h3 class="gnfc-modal-title">
+          <i class="ph-bold ph-plus-circle"></i> Add New Job Entry
+        </h3>
+        <button type="button" onclick="closeModal('add-job-modal')" class="gnfc-modal-close" aria-label="Close">
           <i class="ph-bold ph-x"></i>
         </button>
       </div>
 
       <div class="gnfc-modal-body">
-        <form id="job-management-form" class="modal-form-grid">
-
-          <!-- Date -->
-          <div class="modal-form-item">
-            <label class="modal-form-label">Job Date</label>
-            <input type="date" class="jt-input" id="modal-date" name="date" required>
-          </div>
-
-          <!-- Area -->
-          <div class="modal-form-item">
-            <label class="modal-form-label">Area / Plant</label>
-            <div class="jt-select-wrap">
-              <select class="jt-select" id="modal-area" name="area">
-                <option value="100">100</option>
-                <option value="200">200</option>
-                <option value="300">300</option>
-                <option value="400">400</option>
-                <option value="500">500</option>
-                <option value="600">600</option>
-                <option value="700">700</option>
-                <option value="800">800</option>
-                <option value="ASH">ASH</option>
-              </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+        <form id="add-job-form" class="grid grid-cols-12 gap-16px py-8px">
+          <div class="col-span-12">
+            <div class="grid grid-cols-5 gap-12px">
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Area</label>
+                <select class="gnfc-modal-input" name="area">
+                  <option value="N.A.">N.A.</option>
+                  <option value="BOILER-1">BOILER-1</option>
+                  <option value="BOILER-2">BOILER-2</option>
+                  <option value="BOILER-3">BOILER-3</option>
+                  <option value="BOILER-4">BOILER-4</option>
+                  <option value="TG-1">TG-1</option>
+                  <option value="TG-2">TG-2</option>
+                  <option value="COMMON">COMMON</option>
+                  <option value="CPSU-HRSG">CPSU-HRSG</option>
+                  <option value="CPSU-GT">CPSU-GT</option>
+                  <option value="CPSU-BOP">CPSU-BOP</option>
+                  <option value="CPSU-BMS">CPSU-BMS</option>
+                  <option value="CHP">CHP</option>
+                  <option value="ASH">ASH</option>
+                  <option value="NG STN">NG STN</option>
+                  <option value="N.A">N.A</option>
+                </select>
+              </div>
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Loop No</label>
+                <input type="text" class="gnfc-modal-input" name="loop" placeholder="N.A.">
+              </div>
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Tag No</label>
+                <select class="gnfc-modal-input" name="tag">
+                  <option value="ZT1777137">ZT1777137</option>
+                  <option value="ZT1777146">ZT1777146</option>
+                  <option value="ZT1777216">ZT1777216</option>
+                  <option value="ZT1777268">ZT1777268</option>
+                  <option value="ZT1777356">ZT1777356</option>
+                  <option value="ZT1777366">ZT1777366</option>
+                  <option value="ZT1777385">ZT1777385</option>
+                  <option value="ZT1777393">ZT1777393</option>
+                  <option value="ZT177903A">ZT177903A</option>
+                  <option value="ZT177903B">ZT177903B</option>
+                  <option value="ZT184203A">ZT184203A</option>
+                  <option value="ZT184203B">ZT184203B</option>
+                  <option value="ZT184203C">ZT184203C</option>
+                  <option value="ZT191105">ZT191105</option>
+                  <option value="ZT191107">ZT191107</option>
+                  <option value="ZT191701">ZT191701</option>
+                  <option value="ZT191802">ZT191802</option>
+                  <option value="ZT191816A">ZT191816A</option>
+                  <option value="ZT191816B">ZT191816B</option>
+                  <option value="ZT191816C">ZT191816C</option>
+                  <option value="ZT191830A">ZT191830A</option>
+                  <option value="ZT191830B">ZT191830B</option>
+                  <option value="ZT8GFDB">ZT8GFDB</option>
+                  <option value="DCS">DCS</option>
+                  <option value="ESD">ESD</option>
+                  <option value="TAS">TAS</option>
+                  <option value="PHD">PHD</option>
+                  <option value="RDIS">RDIS</option>
+                  <option value="IIMS">IIMS</option>
+                  <option value="NOTAG">NOTAG</option>
+                </select>
+              </div>
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Type of Job</label>
+                <select class="gnfc-modal-input" name="job_type">
+                  <option value="PM">PM</option>
+                  <option value="DOCUMENTATION">DOCUMENTATION</option>
+                  <option value="HOUSE KEEPING">HOUSE KEEPING</option>
+                  <option value="ABNORMALITY">ABNORMALITY</option>
+                  <option value="MODIFICATION">MODIFICATION</option>
+                  <option value="ISO14001">ISO14001</option>
+                  <option value="REVAMP">REVAMP</option>
+                  <option value="DEFECT MAINTENANCE">DEFECT MAINTENANCE</option>
+                  <option value="CONFIGURATION">CONFIGURATION</option>
+                  <option value="SPARE REPAIR">SPARE REPAIR</option>
+                  <option value="SCRAP">SCRAP</option>
+                  <option value="MATL RETURN">MATL RETURN</option>
+                  <option value="RANGE CHANGE">RANGE CHANGE</option>
+                  <option value="CARD FAILURE">CARD FAILURE</option>
+                  <option value="INST FAILURE">INST FAILURE</option>
+                  <option value="INSPECTION">INSPECTION</option>
+                  <option value="CASH PURCHASE">CASH PURCHASE</option>
+                  <option value="PROCESS REQMT">PROCESS REQMT</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Type of Inst</label>
+                <select class="gnfc-modal-input" name="inst_type">
+                  <option value="ANALYZER">ANALYZER</option>
+                  <option value="C/V">C/V</option>
+                  <option value="TX">TX</option>
+                  <option value="SWITCH">SWITCH</option>
+                  <option value="PRIMARY ELEMENT">PRIMARY ELEMENT</option>
+                  <option value="TG/PG">TG/PG</option>
+                  <option value="SCANNER">SCANNER</option>
+                  <option value="PCV">PCV</option>
+                  <option value="ROTAMETER">ROTAMETER</option>
+                  <option value="ENVIRON MONITORING">ENVIRON MONITORING</option>
+                  <option value="MACHINE MONITORING">MACHINE MONITORING</option>
+                  <option value="PA SYSTEM">PA SYSTEM</option>
+                  <option value="PC">PC</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          <!-- Loop -->
-          <div class="modal-form-item">
-            <label class="modal-form-label">Loop Number</label>
-            <input type="text" class="jt-input" id="modal-loop" name="loop" placeholder="e.g. 0208">
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Job Description</label>
+            <textarea class="gnfc-modal-input" name="desc" rows="3" placeholder="Enter detailed job description..."></textarea>
           </div>
 
-          <!-- Tag -->
-          <div class="modal-form-item">
-            <label class="modal-form-label">Tag Number</label>
-            <input type="text" class="jt-input" id="modal-tag" name="tag" placeholder="e.g. FV0208B">
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Date</label>
+            <input type="date" class="gnfc-modal-input" name="date" required>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Tech</label>
+            <select class="gnfc-modal-input" name="tech">
+              <option value="PVS">PVS</option>
+              <option value="BDR">BDR</option>
+              <option value="PRP">PRP</option>
+              <option value="JDB">JDB</option>
+              <option value="JMD">JMD</option>
+              <option value="BSU">BSU</option>
+              <option value="CNJ_ISD">CNJ_ISD</option>
+              <option value="TECH_TESTER">TECH_TESTER</option>
+              <option value="KBD">KBD</option>
+            </select>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Eng</label>
+            <input type="text" class="gnfc-modal-input" name="eng" placeholder="e.g. ARP">
           </div>
 
-          <!-- Instrument Type -->
-          <div class="modal-form-item">
-            <label class="modal-form-label">Instrument Type</label>
-            <div class="jt-select-wrap">
-              <select class="jt-select" id="modal-inst-type" name="inst_type">
-                <option>ANALYZER</option>
-                <option>C/V</option>
-                <option>TX</option>
-                <option>SWITCH</option>
-                <option>PRIMARY ELEMENT</option>
-                <option>SCANNER</option>
-                <option>PCV</option>
-                <option>ROTAMETER</option>
-                <option>ENVIRON MONITORING</option>
-                <option>MACHINE MONITORING</option>
-                <option>PA SYSTEM</option>
-                <option>PC</option>
-                <option>N.A.</option>
-              </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+          <div class="col-span-6">
+            <label class="gnfc-modal-label">Attach 1</label>
+            <div class="gnfc-modal-input font-12px color-secondary flex items-center bg-panel-alt" style="height: 40px; border-style: dashed; opacity: 0.7;">
+              Can be attached in edit mode
+            </div>
+          </div>
+          <div class="col-span-6">
+            <label class="gnfc-modal-label">Attach 2</label>
+            <div class="gnfc-modal-input font-12px color-secondary flex items-center bg-panel-alt" style="height: 40px; border-style: dashed; opacity: 0.7;">
+              Can be attached in edit mode
             </div>
           </div>
 
-          <!-- Job Type -->
-          <div class="modal-form-item">
-            <label class="modal-form-label">Job Type</label>
-            <div class="jt-select-wrap">
-              <select class="jt-select" id="modal-job-type" name="job_type">
-                <option>PM</option>
-                <option>CMS JOB</option>
-                <option>DEFECT MAINTENANCE</option>
-                <option>ABNORMALITY</option>
-                <option>MODIFICATION</option>
-                <option>FIELD JOB</option>
-                <option>REVAMP</option>
-                <option>INSPECTION</option>
-                <option>DOCUMENTATION</option>
-                <option>N.A.</option>
-              </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
-            </div>
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Remarks</label>
+            <textarea class="gnfc-modal-input" name="remarks" rows="2" placeholder="Enter remarks here..."></textarea>
           </div>
-
-          <!-- Technician -->
-          <div class="modal-form-item">
-            <label class="modal-form-label">Technician (In-charge)</label>
-            <input type="text" class="jt-input" id="modal-tech" name="tech" placeholder="e.g. MAJ">
-          </div>
-
-          <!-- Engineer -->
-          <div class="modal-form-item">
-            <label class="modal-form-label">Engineer Name</label>
-            <input type="text" class="jt-input" id="modal-eng" name="eng" placeholder="e.g. ARP">
-          </div>
-
-          <!-- Job Description -->
-          <div class="modal-form-item modal-form-full">
-            <label class="modal-form-label">Description of Job</label>
-            <textarea class="jt-input" id="modal-desc" name="desc" rows="3"
-              placeholder="Enter detailed job description..."></textarea>
-          </div>
-
-          <!-- Remarks -->
-          <div class="modal-form-item modal-form-full">
-            <label class="modal-form-label">Engineer / Execution Remarks</label>
-            <textarea class="jt-input" id="modal-remarks" name="remarks" rows="2"
-              placeholder="Any additional notes..."></textarea>
-          </div>
-
         </form>
       </div>
 
       <div class="gnfc-modal-footer">
-        <button type="button" onclick="closeJobModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
-        <button type="button" onclick="saveJob()" class="gnfc-modal-btn gnfc-modal-btn-primary">
-          <i class="ph-bold ph-check"></i> Save Record
+        <button type="button" onclick="closeModal('add-job-modal')" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+        <button type="submit" form="add-job-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Entry</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EDIT JOB MODAL ── -->
+  <div id="edit-job-modal" class="gnfc-modal-overlay" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header bg-panel-alt">
+        <h3 class="gnfc-modal-title">
+          <i class="ph-bold ph-pencil-line"></i> Edit / Update Job Entry
+        </h3>
+        <button type="button" onclick="closeModal('edit-job-modal')" class="gnfc-modal-close" aria-label="Close">
+          <i class="ph-bold ph-x"></i>
         </button>
       </div>
 
+      <div class="gnfc-modal-body">
+        <form id="edit-job-form" class="grid grid-cols-12 gap-16px py-8px">
+          <div class="col-span-12">
+            <div class="grid grid-cols-5 gap-12px">
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Area</label>
+                <select class="gnfc-modal-input" name="area">
+                  <option value="N.A.">N.A.</option>
+                  <option value="BOILER-1">BOILER-1</option>
+                  <option value="BOILER-2">BOILER-2</option>
+                  <option value="BOILER-3">BOILER-3</option>
+                  <option value="BOILER-4" selected>BOILER-4</option>
+                  <option value="TG-1">TG-1</option>
+                  <option value="TG-2">TG-2</option>
+                  <option value="COMMON">COMMON</option>
+                  <option value="CPSU-HRSG">CPSU-HRSG</option>
+                  <option value="CPSU-GT">CPSU-GT</option>
+                  <option value="CPSU-BOP">CPSU-BOP</option>
+                  <option value="CPSU-BMS">CPSU-BMS</option>
+                  <option value="CHP">CHP</option>
+                  <option value="ASH">ASH</option>
+                  <option value="NG STN">NG STN</option>
+                  <option value="N.A">N.A</option>
+                </select>
+              </div>
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Loop No</label>
+                <input type="text" class="gnfc-modal-input" name="loop" value="N.A.">
+              </div>
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Tag No</label>
+                <select class="gnfc-modal-input" name="tag">
+                  <option value="4DURL" selected>4DURL</option>
+                  <option value="ZT1777137">ZT1777137</option>
+                  <option value="ZT1777146">ZT1777146</option>
+                  <option value="ZT1777216">ZT1777216</option>
+                  <option value="ZT1777268">ZT1777268</option>
+                  <option value="ZT1777356">ZT1777356</option>
+                  <option value="ZT1777366">ZT1777366</option>
+                  <option value="ZT1777385">ZT1777385</option>
+                  <option value="ZT1777393">ZT1777393</option>
+                  <option value="ZT177903A">ZT177903A</option>
+                  <option value="ZT177903B">ZT177903B</option>
+                  <option value="ZT184203A">ZT184203A</option>
+                  <option value="ZT184203B">ZT184203B</option>
+                  <option value="ZT184203C">ZT184203C</option>
+                  <option value="ZT191105">ZT191105</option>
+                  <option value="ZT191107">ZT191107</option>
+                  <option value="ZT191701">ZT191701</option>
+                  <option value="ZT191802">ZT191802</option>
+                  <option value="ZT191816A">ZT191816A</option>
+                  <option value="ZT191816B">ZT191816B</option>
+                  <option value="ZT191816C">ZT191816C</option>
+                  <option value="ZT191830A">ZT191830A</option>
+                  <option value="ZT191830B">ZT191830B</option>
+                  <option value="ZT8GFDB">ZT8GFDB</option>
+                  <option value="DCS">DCS</option>
+                  <option value="ESD">ESD</option>
+                  <option value="TAS">TAS</option>
+                  <option value="PHD">PHD</option>
+                  <option value="RDIS">RDIS</option>
+                  <option value="IIMS">IIMS</option>
+                  <option value="NOTAG">NOTAG</option>
+                </select>
+              </div>
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Type of Job</label>
+                <select class="gnfc-modal-input" name="job_type">
+                  <option value="PM" selected>PM</option>
+                  <option value="DOCUMENTATION">DOCUMENTATION</option>
+                  <option value="HOUSE KEEPING">HOUSE KEEPING</option>
+                  <option value="ABNORMALITY">ABNORMALITY</option>
+                  <option value="MODIFICATION">MODIFICATION</option>
+                  <option value="ISO14001">ISO14001</option>
+                  <option value="REVAMP">REVAMP</option>
+                  <option value="DEFECT MAINTENANCE">DEFECT MAINTENANCE</option>
+                  <option value="CONFIGURATION">CONFIGURATION</option>
+                  <option value="SPARE REPAIR">SPARE REPAIR</option>
+                  <option value="SCRAP">SCRAP</option>
+                  <option value="MATL RETURN">MATL RETURN</option>
+                  <option value="RANGE CHANGE">RANGE CHANGE</option>
+                  <option value="CARD FAILURE">CARD FAILURE</option>
+                  <option value="INST FAILURE">INST FAILURE</option>
+                  <option value="INSPECTION">INSPECTION</option>
+                  <option value="CASH PURCHASE">CASH PURCHASE</option>
+                  <option value="PROCESS REQMT">PROCESS REQMT</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
+              <div class="modal-form-item">
+                <label class="gnfc-modal-label">Type of Inst</label>
+                <select class="gnfc-modal-input" name="inst_type">
+                  <option value="ANALYZER">ANALYZER</option>
+                  <option value="C/V" selected>C/V</option>
+                  <option value="TX">TX</option>
+                  <option value="SWITCH">SWITCH</option>
+                  <option value="PRIMARY ELEMENT">PRIMARY ELEMENT</option>
+                  <option value="TG/PG">TG/PG</option>
+                  <option value="SCANNER">SCANNER</option>
+                  <option value="PCV">PCV</option>
+                  <option value="ROTAMETER">ROTAMETER</option>
+                  <option value="ENVIRON MONITORING">ENVIRON MONITORING</option>
+                  <option value="MACHINE MONITORING">MACHINE MONITORING</option>
+                  <option value="PA SYSTEM">PA SYSTEM</option>
+                  <option value="PC">PC</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Job Description</label>
+            <textarea class="gnfc-modal-input" name="desc" rows="4">Valve On/Off operation checked and found ok. Stroke measurement done.
+15G1B-20 mm
+15G1D-20 mm
+15G1C-20 mm</textarea>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Date</label>
+            <input type="date" class="gnfc-modal-input" name="date" value="2026-04-27">
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Tech</label>
+            <select class="gnfc-modal-input" name="tech">
+              <option value="PVS">PVS</option>
+              <option value="BDR">BDR</option>
+              <option value="PRP">PRP</option>
+              <option value="JDB">JDB</option>
+              <option value="JMD" selected>JMD</option>
+              <option value="BSU">BSU</option>
+              <option value="CNJ_ISD">CNJ_ISD</option>
+              <option value="TECH_TESTER">TECH_TESTER</option>
+              <option value="KBD">KBD</option>
+            </select>
+          </div>
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Eng</label>
+            <input type="text" class="gnfc-modal-input" name="eng" value="TRC">
+          </div>
+
+          <div class="col-span-6">
+            <label class="gnfc-modal-label">Attach 1</label>
+            <div onclick="openAttachmentModal()" class="flex flex-col items-center justify-center p-8px border border-dashed border-dark-border radius-4px bg-panel cursor-pointer hover:bg-panel-alt transition-colors">
+               <i class="ph-fill ph-folder-open color-amber font-24px"></i>
+               <span class="font-10px color-secondary mt-4px">Click to change</span>
+            </div>
+          </div>
+          <div class="col-span-6">
+            <label class="gnfc-modal-label">Attach 2</label>
+            <div onclick="openAttachmentModal()" class="flex flex-col items-center justify-center p-8px border border-dashed border-dark-border radius-4px bg-panel cursor-pointer hover:bg-panel-alt transition-colors">
+               <i class="ph-fill ph-folder-open color-amber font-24px"></i>
+               <span class="font-10px color-secondary mt-4px">Click to change</span>
+            </div>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Remarks</label>
+            <textarea class="gnfc-modal-input" name="remarks" rows="2" placeholder="Update remarks here..."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="button" onclick="deleteJobRecord()" class="gnfc-modal-btn gnfc-modal-btn-danger mr-auto">
+          <i class="ph-bold ph-trash"></i> Delete
+        </button>
+        <button type="button" onclick="closeModal('edit-job-modal')" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+        <button type="submit" form="edit-job-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Update Record</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ATTACHMENT MODAL ── -->
+  <div id="attachment-modal" class="gnfc-modal-overlay" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header bg-panel-alt">
+        <h3 class="gnfc-modal-title">
+       HISTORY ATTACHMENTS
+        </h3>
+        <button type="button" onclick="closeModal('attachment-modal')" class="gnfc-modal-close" aria-label="Close">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <div class="flex flex-col gap-12px">
+          <p class="font-14px font-bold color-primary">Save File(s)</p>
+          
+          <div class="flex gap-12px">
+            <input type="text" id="attachment-file-name" class="gnfc-modal-input flex-1" readonly placeholder="No file selected">
+            <label class="jt-btn-secondary h-40px px-16px flex items-center justify-center radius-4px cursor-pointer">
+              Browse...
+              <input type="file" class="hidden" onchange="$('#attachment-file-name').val(this.files[0].name)">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <p class="font-14px color-red italic mr-auto fw-600">Note : Max size 10Mb at a time !!</p>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="closeModal('attachment-modal')">Cancel</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" onclick="closeModal('attachment-modal')">Save</button>
+      </div>
     </div>
   </div>
 
@@ -762,24 +932,88 @@
       }
 
       // Backdrop click to close modal
-      $('#job-modal-overlay').on('click', function (e) {
-        if ($(e.target).is('#job-modal-overlay')) closeJobModal();
+      $('.gnfc-modal-overlay').on('click', function (e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          closeModal($(e.target).attr('id'));
+        }
       });
 
-      // Date picker polyfill trigger for dynamically added or existing inputs
-      $(document).on('click focus', '.jt-date-input, #modal-date', function () {
+      // Date picker polyfill trigger
+      $(document).on('click focus', '.gnfc-modal-input[type="date"]', function () {
         if (typeof this.showPicker === 'function') {
           try { this.showPicker(); } catch (e) { }
         }
       });
 
-      // Delegate row clicks for Detail View (SR and Description columns)
-      $(document).on('click', '.user-table-row td:nth-child(1), .user-table-row td:nth-child(6)', function () {
-        openJobDetailModal($(this));
+      // Delegate row clicks for Edit View (SR No column)
+      $(document).on('click', '.user-table-row td:nth-child(1)', function () {
+        openEditJobModal($(this));
       });
     });
 
-    /** ── Date filter logic (jQuery) ── */
+    /** ── Modal Management ── */
+    window.closeModal = function (modalId) {
+      $(`#${modalId}`).removeClass('is-open').attr('aria-hidden', 'true');
+    };
+
+    window.openAddJobModal = function () {
+      const $modal = $('#add-job-modal');
+      const $form = $('#add-job-form');
+      
+      if ($form.length) {
+        $form[0].reset();
+        // Set default date
+        const $dateInput = $form.find('input[name="date"]');
+        if ($dateInput.length) {
+          $dateInput.val(new Date().toISOString().split('T')[0]);
+        }
+      }
+      
+      if ($modal.length) {
+        $modal.addClass('is-open').attr('aria-hidden', 'false');
+      }
+    };
+
+    window.openEditJobModal = function ($el) {
+      const $modal = $('#edit-job-modal');
+      if ($modal.length) {
+        $modal.addClass('is-open').attr('aria-hidden', 'false');
+      }
+    };
+
+    window.openAttachmentModal = function () {
+      $('#attachment-file-name').val('');
+      $('#attachment-modal').addClass('is-open').attr('aria-hidden', 'false');
+    };
+
+    window.deleteJobRecord = function () {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          closeModal('edit-job-modal');
+          Swal.fire(
+            'Deleted!',
+            'The job record has been deleted.',
+            'success'
+          );
+        }
+      });
+    };
+
+    window.saveJob = function () {
+       // Placeholder for save logic
+       closeModal('add-job-modal');
+       Swal.fire('Saved!', 'Job entry has been added.', 'success');
+    };
+
+    /** ── Date filter logic ── */
     window.setDateFilter = function (type) {
       const today = new Date();
       const curYear = today.getFullYear();
@@ -816,77 +1050,17 @@
       $(`#filter-btn-${type}`).addClass('is-active');
     };
 
-    /** ── Job Modal Management (jQuery) ── */
-    window.openAddJobModal = function () {
-      $('#job-modal-title').text('Add New Job Entry');
-      $('#job-management-form')[0].reset();
-      $('#modal-date').val(new Date().toISOString().split('T')[0]);
-
-      $('#job-modal-overlay').addClass('is-open').attr('aria-hidden', 'false');
-    };
-
-    window.openJobDetailModal = function ($el) {
-      const $row = $el.closest('tr');
-      if (!$row.length) return;
-
-      const cells = $row[0].cells;
-      $('#job-modal-title').text('Job Detail (Read Only)');
-
-      // Extract and format data from static row
-      $('#modal-date').val(convertToISODate($(cells[4]).text()));
-      $('#modal-area').val($(cells[1]).text().trim());
-
-      const loopTag = $(cells[2]).text().split('\n');
-      $('#modal-loop').val(loopTag[0]?.trim() || '');
-      $('#modal-tag').val(loopTag[1]?.trim() || '');
-
-      const instJob = $(cells[3]).text().split('\n');
-      $('#modal-inst-type').val(instJob[0]?.trim() || 'C/V');
-      $('#modal-job-type').val(instJob[1]?.trim() || 'PM');
-
-      $('#modal-desc').val($(cells[5]).text().trim());
-
-      const techEng = $(cells[6]).text().split('\n');
-      $('#modal-tech').val(techEng[0]?.trim() || '');
-      $('#modal-eng').val(techEng[1]?.trim() || '');
-
-      const remarks = $(cells[8]).text().split('\n');
-      $('#modal-remarks').val(remarks[0]?.trim() + (remarks[1] ? ' | ' + remarks[1] : ''));
-
-      $('#job-modal-overlay').addClass('is-open').attr('aria-hidden', 'false');
-    };
-
-    window.closeJobModal = function () {
-      $('#job-modal-overlay').removeClass('is-open').attr('aria-hidden', 'true');
-    };
-
-    window.saveJob = function () {
-      Swal.fire({
-        title: 'Success!',
-        text: 'Job record has been saved successfully in static storage.',
-        icon: 'success',
-        background: '#1e293b',
-        color: '#ffffff',
-        confirmButtonColor: '#3b82f6',
-        timer: 2000,
-        showConfirmButton: false
-      });
-
-      setTimeout(() => { closeJobModal(); }, 1500);
-    };
-
+    /** ── Utility & Table Logic ── */
     window.resetFilters = function () {
       window.location.reload();
     };
 
     window.renderTable = function () {
-      Swal.fire({
-        title: 'Table Filtered',
-        text: 'Rows have been updated based on your selection (Simulation).',
-        icon: 'success',
-        timer: 1200,
-        showConfirmButton: false
-      });
+      $('#data-loader-overlay').removeClass('hidden');
+
+      setTimeout(() => {
+        $('#data-loader-overlay').addClass('hidden');
+      }, 1500);
     };
 
     // Helper: DD/MM/YYYY to YYYY-MM-DD

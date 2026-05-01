@@ -30,6 +30,10 @@
 </head>
 
 <body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
 
   <!-- Sidebar -->
   <div class="sidebar-container"></div>
@@ -38,7 +42,9 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="Instrument Type Analysis" data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Inst Type Analysis:active" data-back="plant_detail.html"></div>
+    <div id="header-container" data-title="Instrument Type Analysis"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Inst Type Analysis:active"
+      data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
     <section class="dashboard-content ">
@@ -59,22 +65,26 @@
         <div class="jt-filter-body">
 
           <!-- Start Date -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">Satrt Date</label>
-            <input type="date" id="startDateFilter" class="jt-input jt-date-input">
+          <div>
+            <label class="gnfc-modal-label">Start Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="startDateFilter" class="gnfc-modal-input">
+            </div>
           </div>
 
           <!-- End Date -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">End Date</label>
-            <input type="date" id="endDateFilter" class="jt-input jt-date-input">
+          <div>
+            <label class="gnfc-modal-label">End Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="endDateFilter" class="gnfc-modal-input">
+            </div>
           </div>
 
           <!-- Instrument Type Select -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label" for="inst-type-select">Type of Instrument</label>
+          <div>
+            <label class="gnfc-modal-label" for="inst-type-select">Type of Instrument</label>
             <div class="jt-select-wrap">
-              <select id="inst-type-select" class="jt-select">
+              <select id="inst-type-select" class="gnfc-modal-input">
                 <option value="">All Instrument Types</option>
                 <option value="ANALYZER">ANALYZER</option>
                 <option value="C/V">C/V</option>
@@ -90,7 +100,6 @@
                 <option value="PC">PC</option>
                 <option value="N.A.">N.A.</option>
               </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
             </div>
           </div>
 
@@ -133,20 +142,19 @@
                 <th rowspan="2" style="min-width: 400px;">Description</th>
                 <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
                 <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
-                <th class="user-table-center" style="min-width: 300px;">ENG REMARKS</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">REMARKS</th>
                 <th rowspan="2" class="user-table-center" style="width: 60px;">ADD</th>
               </tr>
               <tr>
                 <th class="user-table-center">Tag No</th>
-                <th class="user-table-center">Type of Inst</th>
-                <th class="user-table-center user-table-border-right">EXE REMARKS</th>
+                <th class="user-table-center user-table-border-right">Type of Inst</th>
               </tr>
             </thead>
             <tbody id="it-table-body">
 
               <!-- ── DATE GROUP: 28/01/2026 ── -->
               <tr class="user-table-date" data-date-group="28/01/2026">
-                <td colspan="10" class="user-table-bold">
+                <td colspan="10" class="">
                   <i class="ph-fill ph-calendar-blank"></i>
                   28/01/2026
                 </td>
@@ -154,32 +162,27 @@
 
               <!-- Row 1 -->
               <tr class="user-table-row jt-data-row" data-date="28/01/2026" data-inst-type="N.A.">
-                <td class="user-table-center user-table-secondary user-table-bold">1</td>
-                <td class="user-table-center user-table-bold user-table-primary">ASH</td>
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">ASH</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">N.A.</div>
-                    <div class="user-table-blue user-table-bold">Ac-1</div>
+                    <div>N.A.</div>
+                    <div class="user-table-blue">Ac-1</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed Pneumatic switch to be repaired.(By:ARP : 28/01/2026)</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">N.A.</div>
+                    <div>Removed Pneumatic switch to be repaired.(By:ARP : 28/01/2026)</div>
+                    <div class="user-table-secondary" >N.A.</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                <td class="user-table-primary font-14px" style="line-height: 1.5;">Removed pneumatic switch repaired by
+                <td class="user-table-center">BSU</td>
+                <td>Removed pneumatic switch repaired by
                   seal kit replacement.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                <td class="user-table-center">
-                  <span class="">OVER</span>
-                </td>
+                <td class="user-table-center">BSU</td>
+                <td class="user-table-center">OVER</td>
                 <td>
-                  <div class="user-table-cell-stack">
-                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
-                    <p class="user-table-secondary"></p>
-                  </div>
+                  Assigned. Awaiting technician log entry.
                 </td>
                 <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
                   <div class="user-table-cell-stack">
@@ -194,31 +197,26 @@
               <!-- Row 2 (Emergency) -->
               <tr class="user-table-row jt-data-row user-table-row--emergency" data-date="28/01/2026"
                 data-inst-type="N.A.">
-                <td class="user-table-center user-table-secondary user-table-bold">2</td>
-                <td class="user-table-center user-table-bold user-table-primary">ASH</td>
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">ASH</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">N.A.</div>
-                    <div class="user-table-blue user-table-bold">Ca-7</div>
+                    <div>N.A.</div>
+                    <div class="user-table-blue">Ca-7</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed Power Cylinder to be repaired.(By:ARP : 28/01/2026)</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">N.A.</div>
+                    <div>Removed Power Cylinder to be repaired.(By:ARP : 28/01/2026)</div>
+                    <div class="user-table-secondary" >N.A.</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                <td class="user-table-primary font-14px" style="line-height: 1.5;">Removed power cylinder repaired.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                <td class="user-table-center">
-                  <span class="">OVER</span>
-                </td>
+                <td class="user-table-center user-table-secondary">BSU</td>
+                <td class="user-table-primary">Removed power cylinder repaired.</td>
+                <td class="user-table-center user-table-secondary">BSU</td>
+                <td class="user-table-center">OVER</td>
                 <td>
-                  <div class="user-table-cell-stack">
-                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
-                    <p class="user-table-secondary"></p>
-                  </div>
+                  Assigned. Awaiting technician log entry.
                 </td>
                 <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
                   <div class="user-table-cell-stack">
@@ -232,7 +230,7 @@
 
               <!-- ── DATE GROUP: 24/01/2026 ── -->
               <tr class="user-table-date" data-date-group="24/01/2026">
-                <td colspan="10" class="user-table-bold">
+                <td colspan="10" class="">
                   <i class="ph-fill ph-calendar-blank"></i>
                   24/01/2026
                 </td>
@@ -240,31 +238,28 @@
 
               <!-- Row 3 -->
               <tr class="user-table-row jt-data-row" data-date="24/01/2026" data-inst-type="N.A.">
-                <td class="user-table-center user-table-bold">3</td>
-                <td class="user-table-bold user-table-center">ASH</td>
+                <td class="user-table-center">3</td>
+                <td class="user-table-center">ASH</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <span class="user-table-bold">N.A.</span>
+                    <span class="">N.A.</span>
                     <span class="user-table-blue">KPUMP2</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed DV1 Power cylinder to be repaired. (By:ARP : 24/01/2026)
+                    <div>Removed DV1 Power cylinder to be repaired. (By:ARP : 24/01/2026)
                     </div>
-                    <div class="color-orange">N.A.</div>
+                    <div>N.A.</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold">BDR</td>
-                <td class="user-table-desc">During checking found its piston seal rings are also damaged, same informed
-                  to IE, as spare seal kit is not available cylinder boxed up and kept in workshop.</td>
-                <td class="user-table-center user-table-bold">BDR</td>
+                <td class="user-table-center">BDR</td>
+                <td>During checking found its piston seal rings are also damaged, same informed
+                </td>
+                <td class="user-table-center">BDR</td>
                 <td class="user-table-center">OVER</td>
                 <td>
-                  <div class="user-table-cell-stack">
-                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
-                    <p class="user-table-secondary"></p>
-                  </div>
+                  Assigned. Awaiting technician log entry.
                 </td>
                 <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
                   <div class="user-table-cell-stack">
@@ -278,7 +273,7 @@
 
               <!-- ── DATE GROUP: 19/01/2026 ── -->
               <tr class="user-table-date" data-date-group="19/01/2026">
-                <td colspan="10" class="user-table-bold">
+                <td colspan="10" class="">
                   <i class="ph-fill ph-calendar-blank"></i>
                   19/01/2026
                 </td>
@@ -286,29 +281,26 @@
 
               <!-- Row 4 -->
               <tr class="user-table-row jt-data-row" data-date="19/01/2026" data-inst-type="N.A.">
-                <td class="user-table-center user-table-bold">4</td>
-                <td class="user-table-bold user-table-center">ASH</td>
+                <td class="user-table-center">4</td>
+                <td class="user-table-center">ASH</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <span class="user-table-bold">N.A.</span>
+                    <span class="">N.A.</span>
                     <span class="user-table-blue">Ab-3</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed power cylinder to be repaired.(By:ARP : 19/01/2026)</div>
-                    <div class="color-orange">N.A.</div>
+                    <div>Removed power cylinder to be repaired.(By:ARP : 19/01/2026)</div>
+                    <div>N.A.</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold">JDB</td>
-                <td class="user-table-desc">Removed power cylinder repaired done.</td>
-                <td class="user-table-center user-table-bold">JDB</td>
+                <td class="user-table-center">JDB</td>
+                <td>Removed power cylinder repaired done.</td>
+                <td class="user-table-center">JDB</td>
                 <td class="user-table-center">OVER</td>
                 <td>
-                  <div class="user-table-cell-stack">
-                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
-                    <p class="user-table-secondary"></p>
-                  </div>
+                  Assigned. Awaiting technician log entry.
                 </td>
                 <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
                   <div class="user-table-cell-stack">
@@ -322,7 +314,7 @@
 
               <!-- ── DATE GROUP: 27/12/2025 ── -->
               <tr class="user-table-date" data-date-group="27/12/2025">
-                <td colspan="10" class="user-table-bold">
+                <td colspan="10" class="">
                   <i class="ph-fill ph-calendar-blank"></i>
                   27/12/2025
                 </td>
@@ -330,30 +322,27 @@
 
               <!-- Row 8 -->
               <tr class="user-table-row jt-data-row" data-date="27/12/2025" data-inst-type="SCANNER">
-                <td class="user-table-center user-table-bold">8</td>
-                <td class="user-table-bold user-table-center">BOILER-2</td>
+                <td class="user-table-center">8</td>
+                <td class="user-table-center">BOILER-2</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <span class="user-table-bold">N.A.</span>
+                    <span class="">N.A.</span>
                     <span class="user-table-blue">2UV_FS</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed UV Flame Scanner to be checked.(By:ARP : 27/12/2025)</div>
-                    <div class="color-orange">SCANNER</div>
+                    <div>Removed UV Flame Scanner to be checked.(By:ARP : 27/12/2025)</div>
+                    <div>SCANNER</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold">JDB</td>
-                <td class="user-table-desc">Removed UV Flame Scanner check and found its flame sensor tube is faulty
-                  soits replace with spare and check its operation found ok.</td>
-                <td class="user-table-center user-table-bold">JDB</td>
+                <td class="user-table-center">JDB</td>
+                <td>Removed UV Flame Scanner check and found its flame sensor tube is faulty
+                </td>
+                <td class="user-table-center">JDB</td>
                 <td class="user-table-center">OVER</td>
                 <td>
-                  <div class="user-table-cell-stack">
-                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
-                    <p class="user-table-secondary"></p>
-                  </div>
+                  Assigned. Awaiting technician log entry.
                 </td>
                 <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
                   <div class="user-table-cell-stack">
@@ -367,7 +356,7 @@
 
               <!-- ── DATE GROUP: 22/12/2025 ── -->
               <tr class="user-table-date" data-date-group="22/12/2025">
-                <td colspan="10" class="user-table-bold">
+                <td colspan="10" class="">
                   <i class="ph-fill ph-calendar-blank"></i>
                   22/12/2025
                 </td>
@@ -375,30 +364,27 @@
 
               <!-- Row 10 -->
               <tr class="user-table-row jt-data-row" data-date="22/12/2025" data-inst-type="SCANNER">
-                <td class="user-table-center user-table-bold">10</td>
-                <td class="user-table-bold user-table-center">BOILER-3</td>
+                <td class="user-table-center">10</td>
+                <td class="user-table-center">BOILER-3</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <span class="user-table-bold">N.A.</span>
+                    <span class="">N.A.</span>
                     <span class="user-table-blue">3UV_FS</span>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">Removed UV Flame Scanner to be repaired.(By:ARP : 22/12/2025)</div>
-                    <div class="color-orange">SCANNER</div>
+                    <div>Removed UV Flame Scanner to be repaired.(By:ARP : 22/12/2025)</div>
+                    <div>SCANNER</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold">JDB</td>
-                <td class="user-table-desc">Removed 2nos UV Flame Scanner check found its flame sensor tube faulty so
-                  its replace with spare and check its operation found ok.</td>
-                <td class="user-table-center user-table-bold">JDB</td>
+                <td class="user-table-center">JDB</td>
+                <td>Removed 2nos UV Flame Scanner check found its flame sensor tube faulty so
+                </td>
+                <td class="user-table-center">JDB</td>
                 <td class="user-table-center">OVER</td>
                 <td>
-                  <div class="user-table-cell-stack">
-                    <p class="user-table-secondary">Assigned. Awaiting technician log entry.</p>
-                    <p class="user-table-secondary"></p>
-                  </div>
+                  Assigned. Awaiting technician log entry.
                 </td>
                 <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
                   <div class="user-table-cell-stack">
@@ -474,9 +460,11 @@
         $dataRows.each(function () {
           const $row = $(this);
 
-          // If no filters are selected, hide everything
+          // If no filters are selected, show everything
           if (!isFilterActive) {
-            $row.hide();
+            $row.show();
+            visibleDates[rowDateStr] = true;
+            anyVisible = true;
             return;
           }
 
@@ -520,19 +508,6 @@
       }
 
       function handleApplyFilters() {
-        const instType = $instTypeSelect.val();
-        const startVal = $startDateInput.val();
-        const endVal = $endDateInput.val();
-
-        if (!startVal && !endVal) {
-          Swal.fire({
-            icon: 'info',
-            title: 'No Selection',
-            text: 'Please select an Instrument Type or Date range before applying filters.'
-          });
-          return;
-        }
-
         applyFilters();
       }
 
@@ -544,13 +519,25 @@
       }
 
       // Event Listeners
-      $('#btn-apply-filters').on('click', handleApplyFilters);
+      $('#btn-apply-filters').on('click', function() {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          handleApplyFilters();
+        }, 1500);
+      });
       $('#btn-reset-filters').on('click', resetFilters);
 
       // Open date picker on click/focus
       $startDateInput.add($endDateInput).on('click focus', function () {
         if (typeof this.showPicker === 'function') {
           try { this.showPicker(); } catch (e) { }
+        }
+      });
+      $('.jt-input-icon').on('click', function () {
+        const $input = $(this).siblings('input');
+        if ($input.length && typeof $input[0].showPicker === 'function') {
+          try { $input[0].showPicker(); } catch (e) { }
         }
       });
 
@@ -561,4 +548,3 @@
 </body>
 
 </html>
-

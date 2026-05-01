@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assign Tomorrow | GNFC E-Logbook</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
   <!-- Shared Styles -->
   <link rel="stylesheet" href="../../css/phosphor.css">
   <link rel="stylesheet" href="../../css/theme-vars.css">
@@ -81,8 +78,8 @@
             <span class="fw-700  color-primary font-14px">JOB ASSIGNMENT FORM</span>
           </div>
 
-          <div class="form-grid grid-cols-12 p-16px">
-            <div class="form-field-wrapper col-span-5">
+                 <div class="form-grid grid-cols-12 p-16px">
+            <div class="form-field-wrapper col-span-6">
               <label class="assign-field-label">ASSIGNED TO <span class="required">*</span></label>
               <div class="flex items-center gap-8px">
                 <input id="form-assigned-to-input" type="text" placeholder="Enter Tech Name..."
@@ -118,13 +115,28 @@
               </select>
             </div>
 
-            <div class="form-field-wrapper col-span-4">
+            <div class="form-field-wrapper col-span-3">
               <label class="assign-field-label">LOOP NAME </label>
+              <select id="assign-job-loop-select" class="gnfc-modal-input">
+                <option value="N.A">N.A</option>
+              </select>
+            </div>
+
+            <div class="form-field-wrapper col-span-6">
+              <label class="assign-field-label">TAG NO <span class="required">*</span></label>
               <div class="flex items-center gap-8px">
-                <input id="assign-job-loop-input" type="text" class="gnfc-modal-input flex-1" placeholder="Loop">
+                <input id="assign-job-tag-input" type="text" placeholder="Search Tag..."
+                  class="gnfc-modal-input font-13px uppercase flex-1">
                 <div class="flex-1">
-                  <select id="assign-job-loop-select" class="gnfc-modal-input">
-                    <option value="N.A">N.A</option>
+                  <select id="assign-job-tag-select" class="gnfc-modal-input">
+                    <option value="">-- Select --</option>
+                    <option value="NOTAG">NOTAG</option>
+                    <option value="1FE1501C">1FE1501C</option>
+                    <option value="LT3402031">LT3402031</option>
+                    <option value="FT_1401">FT_1401</option>
+                    <option value="LV_1401">LV_1401</option>
+                    <option value="PT_205">PT_205</option>
+                    <option value="TE_101">TE_101</option>
                   </select>
                 </div>
               </div>
@@ -154,25 +166,6 @@
               </select>
             </div>
 
-            <div class="form-field-wrapper col-span-6">
-              <label class="assign-field-label">TAG NO <span class="required">*</span></label>
-              <div class="flex items-center gap-8px">
-                <input id="assign-job-tag-input" type="text" placeholder="Search Tag..."
-                  class="gnfc-modal-input font-13px uppercase flex-1">
-                <div class="flex-1">
-                  <select id="assign-job-tag-select" class="gnfc-modal-input">
-                    <option value="">-- Select --</option>
-                    <option value="NOTAG">NOTAG</option>
-                    <option value="1FE1501C">1FE1501C</option>
-                    <option value="LT3402031">LT3402031</option>
-                    <option value="FT_1401">FT_1401</option>
-                    <option value="LV_1401">LV_1401</option>
-                    <option value="PT_205">PT_205</option>
-                    <option value="TE_101">TE_101</option>
-                  </select>
-                </div>
-              </div>
-            </div>
 
             <div class="form-field-wrapper col-span-12">
               <label class="assign-field-label">JOB <span class="required">*</span></label>
@@ -454,7 +447,7 @@
 
           <!-- ISO14001/OHSAS18001 DUE JOBS -->
           <div class="mb-24px">
-            <h3 class="font-14px fw-700 mb-4px color-blue">ISO14001/OHSAS18001 DUE JOBS ()</h3>
+            <h3 class="font-14px fw-700 mb-4px">ISO14001/OHSAS18001 DUE JOBS ()</h3>
             <div class="user-table-wrapper">
               <table class="user-table">
                 <thead>
@@ -491,7 +484,7 @@
 
           <!-- CPCB DUE JOBS -->
           <div class="mb-24px">
-            <h3 class="font-14px fw-700 mb-4px color-blue">CPCB DUE JOBS ()</h3>
+            <h3 class="font-14px fw-700 mb-4px">CPCB DUE JOBS ()</h3>
             <div class="user-table-wrapper">
               <table class="user-table">
                 <thead>
@@ -535,7 +528,7 @@
 
           <!-- JOB PLANNER -->
           <div class="mb-24px">
-            <h3 class="font-14px fw-700 mb-4px color-blue">JOB PLANNER</h3>
+            <h3 class="font-14px fw-700 mb-4px">JOB PLANNER</h3>
             <div class="user-table-wrapper">
               <table class="user-table">
                 <thead>
@@ -881,7 +874,6 @@
       updateTechList();
 
       // Initialize Autocomplete
-      initTagAutocomplete('#assign-job-loop-input', '#assign-job-loop-select');
       initTagAutocomplete('#assign-job-tag-input', '#assign-job-tag-select');
     });
   </script>

@@ -21,7 +21,7 @@
   <script src="../../js/sidebar.js" defer></script>
   <script src="../../js/header.js" defer></script>
   <script src="../../js/plant-nav.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
 
   <script>
     window.activeSidebar = 'technician_logbook';
@@ -30,6 +30,10 @@
 </head>
 
 <body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
 
   <!-- Sidebar -->
   <div class="sidebar-container"></div>
@@ -57,33 +61,36 @@
         <div class="jt-filter-body">
 
           <!-- Tag Filter -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">Tag Number</label>
+          <div>
+            <label class="gnfc-modal-label">Tag Number</label>
             <div class="jt-select-wrap">
-              <select id="tagNoFilter" class="jt-select">
+              <select id="tagNoFilter" class="gnfc-modal-input">
                 <option value="">All Tags</option>
                 <option value="FVC0208A">FVC0208A</option>
                 <option value="LV412B">LV412B</option>
               </select>
-              <i class="ph-bold ph-caret-down jt-select-caret"></i>
             </div>
           </div>
 
           <!-- Start Date -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">Satrt Date</label>
-            <input type="date" id="startDateFilter" class="jt-input jt-date-input">
+          <div>
+            <label class="gnfc-modal-label">Start Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="startDateFilter" class="gnfc-modal-input">
+            </div>
           </div>
 
           <!-- End Date -->
-          <div class="jt-filter-group">
-            <label class="jt-filter-label">End Date</label>
-            <input type="date" id="endDateFilter" class="jt-input jt-date-input">
+          <div>
+            <label class="gnfc-modal-label">End Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="endDateFilter" class="gnfc-modal-input">
+            </div>
           </div>
 
           <!-- Actions -->
           <div class="jt-filter-btn">
-            <button onclick="generateReport()" class="jt-btn-primary">
+            <button onclick="generateReport(true)" class="jt-btn-primary">
               <i class="ph-bold ph-lightning"></i> APPLY
             </button>
             <button onclick="resetReport()" class="jt-btn-reset">
@@ -121,13 +128,12 @@
                 <th rowspan="2" style="min-width: 400px;">Description</th>
                 <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
                 <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
-                <th class="user-table-center" style="min-width: 300px;">ENG REMARKS</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">REMARKS</th>
                 <th rowspan="2" class="user-table-center" style="width: 60px;">ADD</th>
               </tr>
               <tr>
                 <th class="user-table-center">Tag No</th>
-                <th class="user-table-center">Type of Inst</th>
-                <th class="user-table-center user-table-border-right">EXE REMARKS</th>
+                <th class="user-table-center user-table-border-right">Type of Inst</th>
               </tr>
             </thead>
             <tbody id="reportTableBody">
@@ -140,28 +146,27 @@
 
               <!-- Row 1 -->
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">1</td>
-                <td class="user-table-center user-table-bold user-table-primary">N.A</td>
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">N.A</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">N.A</div>
-                    <div class="user-table-blue user-table-bold">NOTAG</div>
+                    <div>N.A</div>
+                    <div class="user-table-blue">NOTAG</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">-</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">PM</div>
+                    <div>-</div>
+                    <div>PM</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold user-table-secondary">-</td>
-                <td class="user-table-primary font-14px" style="line-height: 1.6;">Boiler CPP CPSU system round taken
+                <td class="user-table-center">-</td>
+                <td class="user-table-primary">Boiler CPP CPSU system round taken
                   found OK. All visible and UV flame scanner checked found OK.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">PVS</td>
+                <td class="user-table-center">PVS</td>
                 <td class="user-table-center">OVER</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary" ></p>
                     <p class="user-table-remarks-purple">
                       Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
                     </p>
@@ -177,30 +182,28 @@
 
               <!-- Row 2 -->
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">2</td>
-                <td class="user-table-center user-table-bold user-table-primary">COMMON</td>
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">COMMON</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">N.A.</div>
-                    <div class="user-table-blue user-table-bold">NOTAG</div>
+                    <div>N.A.</div>
+                    <div class="user-table-blue">NOTAG</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">BHEL Boilers and CPSU Trend report to be prepared as per tags given
+                    <div>BHEL Boilers and CPSU Trend report to be prepared as per tags given
                       by process dept.(By:ARP : 01/12/2025)</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">PROCESS
-                      REQMT</div>
+                    <div>PROCESSREQMT</div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold user-table-secondary">JDB</td>
-                <td class="user-table-primary font-14px" style="line-height: 1.6;">BHEL Boilers 1 and 2 prepared as per
+                <td class="user-table-center">JDB</td>
+                <td class="user-table-primary">BHEL Boilers 1 and 2 prepared as per
                   tags given by process dept. further job u/p.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">JDB</td>
+                <td class="user-table-center">JDB</td>
                 <td class="user-table-center">OVER</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary" ></p>
                     <p class="user-table-remarks-purple">
                       Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
                     </p>
@@ -216,30 +219,29 @@
 
               <!-- Row 3 -->
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">3</td>
-                <td class="user-table-center user-table-bold user-table-primary">N.A.</td>
+                <td class="user-table-center">3</td>
+                <td class="user-table-center">N.A.</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary user-table-bold">N.A.</div>
-                    <div class="user-table-blue user-table-bold">NOTAG</div>
+                    <div>N.A.</div>
+                    <div class="user-table-blue">NOTAG</div>
                   </div>
                 </td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <div class="user-table-primary">UV flame scanner detector tube to be checked for
+                    <div>UV flame scanner detector tube to be checked for
                       PO:6200022682(By:ARP : 01/12/2025)</div>
-                    <div class="user-table-secondary" style="font-size: 0.85rem; color: var(--brand-orange);">INSPECTION
+                    <div>INSPECTION
                     </div>
                   </div>
                 </td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
-                <td class="user-table-primary font-14px" style="line-height: 1.6;">Four UV tube checked all found
+                <td class="user-table-center">BSU</td>
+                <td class="user-table-primary">Four UV tube checked all found
                   defective. Same shown to IE. Job u/p.</td>
-                <td class="user-table-center user-table-bold user-table-secondary">BSU</td>
+                <td class="user-table-center">BSU</td>
                 <td class="user-table-center">OVER</td>
                 <td>
                   <div class="user-table-cell-stack">
-                    <p class="user-table-secondary" ></p>
                     <p class="user-table-remarks-purple">
                       Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
                     </p>
@@ -264,32 +266,42 @@
   <script>
     $(document).ready(function () {
       /** ── Global functions for onclick handlers ── */
-      window.generateReport = function () {
-        const start = $('#startDateFilter').val();
-        const end = $('#endDateFilter').val();
-
-        if (!start || !end) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Dates Required',
-            text: 'Please select both start and end dates to generate the report.',
-            confirmButtonColor: '#3b82f6',
-            background: '#1e293b',
-            color: '#ffffff'
-          });
-          return;
+      window.generateReport = function (showLoader = false) {
+        if (showLoader) {
+          $('#data-loader-overlay').removeClass('hidden');
+          setTimeout(() => {
+            $('#data-loader-overlay').addClass('hidden');
+            executeGenerate();
+          }, 1500);
+        } else {
+          executeGenerate();
         }
 
-        // Format for display (DD/MM/YYYY)
-        const formatDate = (dateStr) => {
-          const d = new Date(dateStr);
-          return d.toLocaleDateString('en-GB');
-        };
+        function executeGenerate() {
+          const start = $('#startDateFilter').val();
+          const end = $('#endDateFilter').val();
 
-        $('#dateDisplay').text(`${formatDate(start)} to ${formatDate(end)}`);
+          if (!start || !end) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Dates Required',
+              text: 'Please select both start and end dates to generate the report.',
+              confirmButtonColor: '#3b82f6',
+            });
+            return;
+          }
 
-        // Show table with smooth fade
-        $('.jt-table-card').stop().hide().fadeIn(400);
+          // Format for display (DD/MM/YYYY)
+          const formatDate = (dateStr) => {
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-GB');
+          };
+
+          $('#dateDisplay').text(`${formatDate(start)} to ${formatDate(end)}`);
+
+          // Show table with smooth fade
+          $('.jt-table-card').stop().hide().fadeIn(400);
+        }
       };
 
       window.resetReport = function () {
@@ -301,6 +313,12 @@
       $(document).on('click focus', '.jt-date-input', function () {
         if (typeof this.showPicker === 'function') {
           try { this.showPicker(); } catch (e) { }
+        }
+      });
+      $(document).on('click', '.jt-input-icon', function () {
+        const $input = $(this).siblings('input');
+        if ($input.length && typeof $input[0].showPicker === 'function') {
+          try { $input[0].showPicker(); } catch (e) { }
         }
       });
       
