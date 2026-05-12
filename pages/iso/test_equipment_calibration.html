@@ -61,69 +61,128 @@
         </button>
       </div>
 
-      <!-- Real-time Stats Row -->
-      <div class="rf-bar-wrapper justify-end">
-        <div class="rf-summary-badge" id="records-count-badge">
-          Total Entries: 4
-        </div>
-      </div>
-
       <!-- Main Data Table -->
       <div class="user-table-wrapper">
-        <table class="user-table min-w-1440px">
+        <table class="user-table min-w-1600px">
           <thead>
             <tr>
-              <th class="user-table-center w-50px">SR</th>
-              <th>EQUIPMENT TAG / NAME</th>
-              <th>SERIAL NO</th>
-              <th>LAST CALIBRATION DATE</th>
-              <th>NEXT DUE DATE</th>
-              <th>STATUS</th>
+              <th class="user-table-center w-50px">NO</th>
+              <th class="user-table-left w-300px">ITEM</th>
+              <th class="user-table-left w-100px">PLANT</th>
+              <th class="user-table-left w-120px">INST C/H</th>
+              <th class="user-table-left w-200px">MAKE / MODELNO</th>
+              <th class="user-table-left w-120px">SRNO</th>
+              <th class="user-table-center w-140px">LAST CALIBRATED</th>
+              <th class="user-table-center w-140px">CAL DUE DATE</th>
+              <th class="user-table-left">REMARK</th>
+              <th class="user-table-center w-60px">BY</th>
+              <th class="user-table-center w-100px">CAL REPORT</th>
             </tr>
           </thead>
           <tbody id="equipment-calibration-table-body">
-            <!-- Date Section 1 -->
+            <!-- Section: Due Date Reached -->
             <tr class="user-table-date-row">
-              <td colspan="6" class="user-table-date">30/12/2025</td>
+              <td colspan="11" class="user-table-date text-center fw-700 color-red bg-red-50">DUE DATE REACHED</td>
             </tr>
             <tr class="user-table-row">
-              <td class="user-table-center font-14px fw-600">1</td>
-              <td class="font-14px fw-700 color-blue">FLUKE-87-V</td>
-              <td>SN-873910</td>
-              <td>15/12/2025</td>
-              <td>14/12/2026</td>
-              <td>Calibrated</td>
-            </tr>
-            <tr class="user-table-row">
-              <td class="user-table-center font-14px fw-600">2</td>
-              <td class="font-14px fw-700 color-blue">FLUKE-754</td>
-              <td>SN-754019</td>
-              <td>18/12/2025</td>
-              <td>17/12/2026</td>
-              <td>Calibrated</td>
             </tr>
 
-            <!-- Date Section 2 -->
+            <!-- Section: Due Date Not Reached -->
             <tr class="user-table-date-row">
-              <td colspan="6" class="user-table-date">30/08/2025</td>
-            </tr>
-            <tr class="user-table-row">
-              <td class="user-table-center font-14px fw-600">3</td>
-              <td class="font-14px fw-700 color-blue">DRAGER-X-AM</td>
-              <td>SN-901828</td>
-              <td>22/08/2025</td>
-              <td>21/08/2026</td>
-              <td>Calibrated</td>
-            </tr>
-            <tr class="user-table-row">
-              <td class="user-table-center font-14px fw-600">4</td>
-              <td class="font-14px fw-700 color-blue">MEGGER-MIT410</td>
-              <td>SN-410091</td>
-              <td>25/08/2025</td>
-              <td>24/08/2026</td>
-              <td>Calibrated</td>
+              <td colspan="11" class="user-table-date text-center fw-700 color-blue bg-blue-50">DUE DATE NOT REACHED</td>
             </tr>
 
+            <!-- Row 1 -->
+            <tr class="user-table-row">
+              <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">1</td>
+              <td class="fw-600 color-primary item-name-iso">BLR-001 (PRESSURE CALIBRATOR)</td>
+              <td class="plant-name">BOILER</td>
+              <td class="fw-500 inst-control">BLR-001</td>
+              <td class="make-model">
+                <div class="fw-600 make-val">DRUCK</div>
+                <div class="font-11px color-secondary model-val">DPI812 pFlex</div>
+              </td>
+              <td class="font-13px sr-no">5877129</td>
+              <td class="user-table-center font-13px last-cal">22/01/2026</td>
+              <td class="user-table-center font-13px fw-600 color-emerald next-due">23/01/2027</td>
+              <td class="remark-val"></td>
+              <td class="user-table-center fw-600">HAS</td>
+              <td class="user-table-center">
+                <div class="flex items-center justify-center gap-8px">
+                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
+                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr class="user-table-row">
+              <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">2</td>
+              <td class="fw-600 color-primary item-name-iso">BLR-002 (Digital Multimeter)</td>
+              <td class="plant-name">BOILER</td>
+              <td class="fw-500 inst-control">BLR-002</td>
+              <td class="make-model">
+                <div class="fw-600 make-val">FLUKE</div>
+                <div class="font-11px color-secondary model-val">FLUKE-28II</div>
+              </td>
+              <td class="font-13px sr-no">A04071D14</td>
+              <td class="user-table-center font-13px last-cal">02/03/2026</td>
+              <td class="user-table-center font-13px fw-600 color-emerald next-due">02/03/2027</td>
+              <td class="remark-val"></td>
+              <td class="user-table-center fw-600">HAS</td>
+              <td class="user-table-center">
+                <div class="flex items-center justify-center gap-8px">
+                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
+                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 3 -->
+            <tr class="user-table-row">
+              <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">3</td>
+              <td class="fw-600 color-primary item-name-iso">BLR-003 (Temp Simulator)</td>
+              <td class="plant-name">BOILER</td>
+              <td class="fw-500 inst-control">BLR-003</td>
+              <td class="make-model">
+                <div class="fw-600 make-val">FLUKE</div>
+                <div class="font-11px color-secondary model-val">724</div>
+              </td>
+              <td class="font-13px sr-no">5745387</td>
+              <td class="user-table-center font-13px last-cal">03/03/2026</td>
+              <td class="user-table-center font-13px fw-600 color-emerald next-due">03/03/2027</td>
+              <td class="remark-val"></td>
+              <td class="user-table-center fw-600">HAS</td>
+              <td class="user-table-center">
+                <div class="flex items-center justify-center gap-8px">
+                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
+                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 4 -->
+            <tr class="user-table-row">
+              <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">4</td>
+              <td class="fw-600 color-primary item-name-iso">BLR-027 (mv/mA Simulator)</td>
+              <td class="plant-name">BOILER</td>
+              <td class="fw-500 inst-control">BLR-027</td>
+              <td class="make-model">
+                <div class="fw-600 make-val">FLUKE</div>
+                <div class="font-11px color-secondary model-val">715</div>
+              </td>
+              <td class="font-13px sr-no">7144602</td>
+              <td class="user-table-center font-13px last-cal">19/01/2026</td>
+              <td class="user-table-center font-13px fw-600 color-emerald next-due">19/01/2027</td>
+              <td class="remark-val"></td>
+              <td class="user-table-center fw-600">MMD</td>
+              <td class="user-table-center">
+                <div class="flex items-center justify-center gap-8px">
+                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
+                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -134,57 +193,222 @@
   <div id="add-equipment-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell">
       <div class="gnfc-modal-header">
-        <h2 class="gnfc-modal-title color-blue text-uppercase">Add New Record</h2>
+        <h2 class="gnfc-modal-title color-blue text-uppercase">Add New Record Test Equipment</h2>
         <button type="button" class="gnfc-modal-close" id="btn-close-add-modal">
           <i class="ph-bold ph-x font-18px"></i>
         </button>
       </div>
 
       <div class="gnfc-modal-body">
-        <div class="px-8px mb-16px">
-          <div class="font-14px fw-400 color-secondary">ISO 14000</div>
-          <div class="font-14px fw-400 color-secondary">Gujarat Narmada Valley Fertilizers & Chemical Ltd.</div>
-          <div class="font-14px fw-400 color-secondary" id="add-form-plant-title">Plant - BOILER</div>
-        </div>
+       
 
         <form id="add-equipment-form" class="px-8px">
-          <div class="grid grid-cols-2 gap-16px">
-            <div class="flex flex-col gap-4px">
-              <label class="gnfc-modal-label fw-700 font-12px">LOG DATE <span class="color-red">*</span></label>
-              <input type="date" id="add-date" class="gnfc-modal-input" required>
+          <div class="form-grid grid-cols-12 gap-16px">
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label fw-700 font-12px">ITEM</label>
+              <input type="text" id="add-tag" class="gnfc-modal-input uppercase" placeholder="e.g. BLR-001" required>
             </div>
 
-            <div class="flex flex-col gap-4px">
-              <label class="gnfc-modal-label fw-700 font-12px">EQUIPMENT TAG / NAME <span class="color-red">*</span></label>
-              <input type="text" id="add-tag" class="gnfc-modal-input uppercase" placeholder="e.g. FLUKE-87-V" required>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label fw-700 font-12px">INST CONTROL NO</label>
+              <input type="text" id="add-inst-control" class="gnfc-modal-input uppercase" placeholder="e.g. BLR-001" required>
             </div>
 
-            <div class="flex flex-col gap-4px">
-              <label class="gnfc-modal-label fw-700 font-12px">SERIAL NO <span class="color-red">*</span></label>
-              <input type="text" id="add-serial" class="gnfc-modal-input uppercase" placeholder="e.g. SN-873910" required>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label fw-700 font-12px">MAKE</label>
+              <input type="text" id="add-make" class="gnfc-modal-input uppercase" placeholder="e.g. FLUKE" required>
             </div>
 
-            <div class="flex flex-col gap-4px">
-              <label class="gnfc-modal-label fw-700 font-12px">LAST CALIBRATION DATE <span class="color-red">*</span></label>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label fw-700 font-12px">MODEL</label>
+              <input type="text" id="add-model" class="gnfc-modal-input uppercase" placeholder="e.g. 724" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label fw-700 font-12px">PLANT</label>
+              <input type="text" id="add-plant-field" class="gnfc-modal-input bg-app-panel uppercase fw-600" readonly>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label fw-700 font-12px">SRNO</label>
+              <input type="text" id="add-serial" class="gnfc-modal-input uppercase" placeholder="e.g. 5877129" required>
+            </div>
+
+            <div class="col-span-6">
+              <label class="gnfc-modal-label fw-700 font-12px">LAST CAL DATE</label>
               <input type="date" id="add-last-cali" class="gnfc-modal-input" required>
             </div>
-
-            <div class="flex flex-col gap-4px">
-              <label class="gnfc-modal-label fw-700 font-12px">NEXT DUE DATE <span class="color-red">*</span></label>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label fw-700 font-12px">CAL DUE DATE</label>
               <input type="date" id="add-next-cali" class="gnfc-modal-input" required>
             </div>
 
-            <div class="flex flex-col gap-4px">
-              <label class="gnfc-modal-label fw-700 font-12px">STATUS <span class="color-red">*</span></label>
-              <input type="text" id="add-status" class="gnfc-modal-input" placeholder="e.g. Calibrated" required>
+            <!-- Remark -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label fw-700 font-12px">REMARK</label>
+              <textarea id="add-remark" class="gnfc-modal-input min-h-80px" placeholder="Enter calibration remarks..."></textarea>
             </div>
           </div>
         </form>
       </div>
 
-      <div class="gnfc-modal-footer">
+      <div class="gnfc-modal-footer flex justify-end items-center gap-12px">
         <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-cancel-add-modal">Cancel</button>
-        <button type="submit" form="add-equipment-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        <button type="submit" form="add-equipment-form" class="gnfc-modal-btn gnfc-modal-btn-primary px-32px">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Equipment Calibration Record Modal -->
+  <div id="edit-equipment-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell">
+      <div class="gnfc-modal-header">
+        <h2 class="gnfc-modal-title color-blue text-uppercase">Test Equipment</h2>
+        <button type="button" class="gnfc-modal-close" id="btn-close-edit-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <form id="edit-equipment-form" class="px-8px">
+          <div class="form-grid grid-cols-12 gap-16px">
+            <!-- Item & Inst Control No -->
+            <div class="col-span-6 flex flex-col gap-4px">
+              <label class="gnfc-modal-label fw-700 font-12px">ITEM</label>
+              <input type="text" id="edit-tag" class="gnfc-modal-input uppercase" required>
+            </div>
+            <div class="col-span-6 flex flex-col gap-4px">
+              <label class="gnfc-modal-label fw-700 font-12px">INST CONTROL NO</label>
+              <input type="text" id="edit-inst-control" class="gnfc-modal-input uppercase" required>
+            </div>
+
+            <!-- Make, Model, Plant, SRNO -->
+            <div class="col-span-3 flex flex-col gap-4px">
+              <label class="gnfc-modal-label fw-700 font-12px">MAKE</label>
+              <input type="text" id="edit-make" class="gnfc-modal-input uppercase" required>
+            </div>
+            <div class="col-span-3 flex flex-col gap-4px">
+              <label class="gnfc-modal-label fw-700 font-12px">MODEL</label>
+              <input type="text" id="edit-model" class="gnfc-modal-input uppercase" required>
+            </div>
+            <div class="col-span-3 flex flex-col gap-4px">
+              <label class="gnfc-modal-label fw-700 font-12px">PLANT</label>
+              <input type="text" id="edit-plant-field" class="gnfc-modal-input bg-app-panel uppercase fw-600" readonly>
+            </div>
+            <div class="col-span-3 flex flex-col gap-4px">
+              <label class="gnfc-modal-label fw-700 font-12px">SRNO</label>
+              <input type="text" id="edit-serial" class="gnfc-modal-input uppercase" required>
+            </div>
+
+            <!-- Dates & Frequency -->
+            <div class="col-span-6 flex flex-col gap-4px">
+              <label class="gnfc-modal-label fw-700 font-12px">LAST CAL DATE</label>
+              <input type="date" id="edit-last-cali" class="gnfc-modal-input" required>
+            </div>
+            <div class="col-span-6 flex flex-col gap-4px">
+              <label class="gnfc-modal-label fw-700 font-12px">FREQUENCY</label>
+              <input type="number" id="edit-frequency" class="gnfc-modal-input" value="365" required>
+            </div>
+
+            <!-- Remark -->
+            <div class="col-span-12 flex flex-col gap-4px">
+              <label class="gnfc-modal-label fw-700 font-12px">REMARK</label>
+              <textarea id="edit-remark" class="gnfc-modal-input min-h-80px" placeholder="Enter calibration remarks..."></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="gnfc-modal-footer flex justify-between items-center w-full">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-danger px-24px" id="btn-delete-record">Delete</button>
+        <div class="flex gap-12px">
+          <button type="submit" form="edit-equipment-form" class="gnfc-modal-btn gnfc-modal-btn-primary px-24px">Save</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px" id="btn-cancel-edit-modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calibration Report Modal (Instrument WebWorld) -->
+  <div id="report-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell max-w-800px">
+      <div class="gnfc-modal-header bg-app-panel border-bottom">
+        <div class="flex items-center gap-8px">
+          <i class="ph-fill ph-globe-hemisphere-west color-blue font-20px"></i>
+          <h2 class="gnfc-modal-title font-14px color-primary fw-600">Instrument WebWorld / Test Equipment Calibration Report</h2>
+        </div>
+        <button type="button" class="gnfc-modal-close" id="btn-close-report-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body bg-white p-24px">
+        <!-- Report Header Section -->
+        <div class="flex justify-between items-start border-bottom pb-16px mb-20px">
+          <div class="flex flex-col gap-8px">
+            <div class="font-20px fw-700 color-blue" id="rep-item-title">Item:BLR-001 (PRESSURE CALIBRATOR)</div>
+            <div class="flex gap-40px mt-8px">
+              <div class="font-18px color-blue fw-600" id="rep-model-title">Model:DPI612 pFlex</div>
+              <div class="font-18px color-blue fw-600" id="rep-serial-title">Serial No:5877129</div>
+            </div>
+          </div>
+          <div class="font-16px fw-700 color-primary" id="rep-plant-title">Plantcode:BOILER</div>
+        </div>
+
+        <!-- Toolbar Section -->
+        <div class="flex justify-end mb-12px">
+          <button class="flex items-center gap-4px color-secondary hover-color-blue transition-all">
+            <i class="ph-fill ph-folder-open font-24px color-yellow"></i>
+          </button>
+        </div>
+
+        <!-- Files Table -->
+        <div class="border rounded-sm overflow-hidden">
+          <table class="w-full text-left font-13px border-collapse">
+            <thead class="bg-gray-100 border-bottom">
+              <tr>
+                <th class="p-8px border-right fw-600">Name</th>
+                <th class="p-8px border-right fw-600">Type</th>
+                <th class="p-8px border-right fw-600">Size</th>
+                <th class="p-8px fw-600">Last Modified</th>
+              </tr>
+            </thead>
+            <tbody id="report-files-list">
+              <tr class="border-bottom hover-bg-gray-50 cursor-pointer">
+                <td class="p-8px border-right flex items-center gap-8px color-blue underline">
+                  <i class="ph-bold ph-file-xls font-16px color-emerald"></i>
+                  <span id="rep-file-1">blr 001.xlsx</span>
+                </td>
+                <td class="p-8px border-right color-secondary">XLSX File</td>
+                <td class="p-8px border-right color-secondary">11kb</td>
+                <td class="p-8px color-secondary">18/01/2025</td>
+              </tr>
+              <tr class="hover-bg-gray-50 cursor-pointer">
+                <td class="p-8px border-right flex items-center gap-8px color-blue underline">
+                  <i class="ph-bold ph-file-xls font-16px color-emerald"></i>
+                  <span id="rep-file-2">cal1-blr 001.xlsx</span>
+                </td>
+                <td class="p-8px border-right color-secondary">XLSX File</td>
+                <td class="p-8px border-right color-secondary">11kb</td>
+                <td class="p-8px color-secondary">22/01/2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer bg-gray-50 py-12px flex justify-between items-center px-24px">
+        <div class="flex items-center gap-8px color-secondary font-12px">
+          <i class="ph-bold ph-globe font-16px"></i>
+          <span>Internet</span>
+        </div>
+        <div class="flex items-center gap-16px">
+          <div class="flex items-center gap-4px color-secondary font-12px">
+            <i class="ph-bold ph-magnifying-glass-plus font-16px"></i>
+            <span>100%</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -201,27 +425,128 @@
       $('#add-form-plant-title').text(`Plant - ${upperPlant}`);
 
       // --- 2. Modal Open / Close Action handlers ---
-      const $overlay = $('#add-equipment-modal');
+      const $addOverlay = $('#add-equipment-modal');
+      const $editOverlay = $('#edit-equipment-modal');
+      const $reportOverlay = $('#report-modal');
+      let $activeEditRow = null;
 
       $('#btn-open-add-modal').on('click', function() {
-        // Reset form controls
         $('#add-equipment-form')[0].reset();
-        // Default to current date
-        const todayStr = new Date().toISOString().split('T')[0];
-        $('#add-date').val(todayStr);
-        $('#add-last-cali').val(todayStr);
-        $('#add-next-cali').val(todayStr);
-        $overlay.addClass('is-open');
+        $('#add-plant-field').val(upperPlant);
+        $addOverlay.addClass('is-open');
       });
 
       $('#btn-close-add-modal, #btn-cancel-add-modal').on('click', function() {
-        $overlay.removeClass('is-open');
+        $addOverlay.removeClass('is-open');
+      });
+
+      // Report Modal Trigger (Folder Icon)
+      $(document).on('click', '.btn-view-report', function() {
+        const $row = $(this).closest('tr');
+        const item = $row.find('.item-name-iso').text().trim();
+        const model = $row.find('.model-val').text().trim();
+        const serial = $row.find('.sr-no').text().trim();
+        const plant = $row.find('.plant-name').text().trim();
+
+        $('#rep-item-title').text(`Item:${item}`);
+        $('#rep-model-title').text(`Model:${model}`);
+        $('#rep-serial-title').text(`Serial No:${serial}`);
+        $('#rep-plant-title').text(`Plantcode:${plant}`);
+
+        // Mock filenames based on item tag
+        const tagBase = item.split(' ')[0].toLowerCase();
+        $('#rep-file-1').text(`${tagBase}.xlsx`);
+        $('#rep-file-2').text(`cal1-${tagBase}.xlsx`);
+
+        $reportOverlay.addClass('is-open');
+      });
+
+      $('#btn-close-report-modal').on('click', function() {
+        $reportOverlay.removeClass('is-open');
+      });
+
+      // Edit Modal Handlers (Triggered by SR No click)
+      $(document).on('click', '.btn-edit-record', function() {
+        $activeEditRow = $(this).closest('tr');
+        
+        // Extract data from row
+        const item = $activeEditRow.find('.item-name-iso').text().trim();
+        const plant = $activeEditRow.find('.plant-name').text().trim();
+        const instControl = $activeEditRow.find('.inst-control').text().trim();
+        const make = $activeEditRow.find('.make-val').text().trim();
+        const model = $activeEditRow.find('.model-val').text().trim();
+        const srNo = $activeEditRow.find('.sr-no').text().trim();
+        const remark = $activeEditRow.find('.remark-val').text().trim();
+        
+        // Dates need conversion from DD/MM/YYYY to YYYY-MM-DD
+        const lastCalStr = $activeEditRow.find('.last-cal').text().trim();
+        const [d, m, y] = lastCalStr.split('/');
+        const lastCalISO = `${y}-${m}-${d}`;
+
+        // Populate modal
+        $('#edit-tag').val(item);
+        $('#edit-inst-control').val(instControl);
+        $('#edit-make').val(make);
+        $('#edit-model').val(model);
+        $('#edit-plant-field').val(plant);
+        $('#edit-serial').val(srNo);
+        $('#edit-last-cali').val(lastCalISO);
+        $('#edit-remark').val(remark);
+
+        $editOverlay.addClass('is-open');
+      });
+
+      $('#btn-close-edit-modal, #btn-cancel-edit-modal').on('click', function() {
+        $editOverlay.removeClass('is-open');
+      });
+
+      $('#btn-delete-record').on('click', function() {
+        if ($activeEditRow) {
+          Swal.fire({
+            title: 'Delete Record?',
+            text: "Are you sure you want to remove this calibration entry?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e11d48',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $activeEditRow.fadeOut(400, function() {
+                $(this).remove();
+                reindexSerialNumbers();
+                $editOverlay.removeClass('is-open');
+                Swal.fire('Deleted!', 'Record has been removed.', 'success');
+              });
+            }
+          });
+        }
+      });
+
+      $('#edit-equipment-form').on('submit', function(e) {
+        e.preventDefault();
+        if ($activeEditRow) {
+          // Update row with new values
+          $activeEditRow.find('.item-name-iso').text($('#edit-tag').val().trim().toUpperCase());
+          $activeEditRow.find('.inst-control').text($('#edit-inst-control').val().trim().toUpperCase());
+          $activeEditRow.find('.make-val').text($('#edit-make').val().trim().toUpperCase());
+          $activeEditRow.find('.model-val').text($('#edit-model').val().trim().toUpperCase());
+          $activeEditRow.find('.sr-no').text($('#edit-serial').val().trim().toUpperCase());
+          $activeEditRow.find('.remark-val').text($('#edit-remark').val().trim());
+          
+          const rawLast = $('#edit-last-cali').val();
+          const [y, m, d] = rawLast.split('-');
+          $activeEditRow.find('.last-cal').text(`${d}/${m}/${y}`);
+          
+          $editOverlay.removeClass('is-open');
+          Swal.fire('Updated!', 'Record changes saved successfully.', 'success');
+        }
       });
 
       // Close on escape key press
       $(document).on('keydown', function(e) {
-        if (e.key === 'Escape' && $overlay.hasClass('is-open')) {
-          $overlay.removeClass('is-open');
+        if (e.key === 'Escape') {
+           $('.gnfc-modal-overlay').removeClass('is-open');
         }
       });
 
@@ -229,15 +554,12 @@
       $('#add-equipment-form').on('submit', function(e) {
         e.preventDefault();
 
-        const rawDate = $('#add-date').val();
-        if (!rawDate) return;
-
-        // Reformat date from YYYY-MM-DD to DD/MM/YYYY
-        const dParts = rawDate.split('-');
-        const formattedDate = `${dParts[2]}/${dParts[1]}/${dParts[0]}`;
-
         const tagVal = $('#add-tag').val().trim().toUpperCase();
+        const instControlVal = $('#add-inst-control').val().trim().toUpperCase();
         const serialVal = $('#add-serial').val().trim().toUpperCase();
+        const makeVal = $('#add-make').val().trim().toUpperCase();
+        const modelVal = $('#add-model').val().trim().toUpperCase();
+        const remarkVal = $('#add-remark').val().trim();
         
         const lastCaliDateRaw = $('#add-last-cali').val();
         const lParts = lastCaliDateRaw.split('-');
@@ -247,51 +569,39 @@
         const nParts = nextCaliDateRaw.split('-');
         const formattedNextCali = `${nParts[2]}/${nParts[1]}/${nParts[0]}`;
 
-        const statusVal = $('#add-status').val().trim() || 'Calibrated';
-
+        const plantVal = upperPlant;
         const $tbody = $('#equipment-calibration-table-body');
 
-        // Check if group date section header exists
-        let $dateHeader = $tbody.find(`.user-table-date-row`).filter(function() {
-          return $(this).find('.user-table-date').text().trim() === formattedDate;
-        });
-
-        // HTML template of new row
         const newRowHtml = `
-          <tr class="user-table-row" data-date="${formattedDate}">
-            <td class="user-table-center font-14px fw-600"></td>
-            <td class="font-14px fw-700 color-blue">${tagVal}</td>
-            <td>${serialVal}</td>
-            <td>${formattedLastCali}</td>
-            <td>${formattedNextCali}</td>
-            <td>${statusVal}</td>
+          <tr class="user-table-row">
+            <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record"></td>
+            <td class="fw-600 color-primary item-name-iso">${tagVal}</td>
+            <td class="plant-name">${plantVal}</td>
+            <td class="fw-500 inst-control">${instControlVal}</td>
+            <td class="make-model">
+              <div class="fw-600 make-val">${makeVal}</div>
+              <div class="font-11px color-secondary model-val">${modelVal}</div>
+            </td>
+            <td class="font-13px sr-no">${serialVal}</td>
+            <td class="user-table-center font-13px last-cal">${formattedLastCali}</td>
+            <td class="user-table-center font-13px fw-600 color-emerald next-due">${formattedNextCali}</td>
+            <td class="remark-val">${remarkVal}</td>
+            <td class="user-table-center fw-600">ADMIN</td>
+            <td class="user-table-center">
+              <div class="flex items-center justify-center gap-8px">
+                <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
+                <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+              </div>
+            </td>
           </tr>
         `;
 
-        if ($dateHeader.length > 0) {
-          // Append the record directly below the last child row of this date group
-          let $lastRowOfGroup = $tbody.find(`tr[data-date="${formattedDate}"]`).last();
-          if ($lastRowOfGroup.length > 0) {
-            $lastRowOfGroup.after(newRowHtml);
-          } else {
-            $dateHeader.after(newRowHtml);
-          }
+        // Append to 'Due Date Not Reached' section
+        const $lastSection = $tbody.find('.user-table-date-row').last();
+        if ($lastSection.length) {
+          $lastSection.after(newRowHtml);
         } else {
-          // Prepend new date section and its row at the top of table body
-          const dateSectionHtml = `
-            <tr class="user-table-date-row">
-              <td colspan="6" class="user-table-date">${formattedDate}</td>
-            </tr>
-            <tr class="user-table-row" data-date="${formattedDate}">
-              <td class="user-table-center font-14px fw-600"></td>
-              <td class="font-14px fw-700 color-blue">${tagVal}</td>
-              <td>${serialVal}</td>
-              <td>${formattedLastCali}</td>
-              <td>${formattedNextCali}</td>
-              <td>${statusVal}</td>
-            </tr>
-          `;
-          $tbody.prepend(dateSectionHtml);
+          $tbody.append(newRowHtml);
         }
 
         // --- 4. Reindex Serial Numbers (SR) sequentially ---
@@ -317,7 +627,10 @@
         const $tbody = $('#equipment-calibration-table-body');
         let srCount = 1;
         $tbody.find('.user-table-row').each(function() {
-          $(this).find('.user-table-center').text(srCount++);
+          const $srCell = $(this).find('td:first-child');
+          if ($srCell.hasClass('user-table-center')) {
+             $srCell.text(srCount++);
+          }
         });
         // Update live total records badge counter
         $('#records-count-badge').text(`Total Entries: ${srCount - 1}`);
