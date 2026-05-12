@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calibration Register | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="iso.html"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,Calibration Register:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Calibration Register Unit Panel -->
+      <div class="calibration-grid-container">
+        <div class="calibration-unit-grid">
+          <div class="calibration-unit-card" onclick="handleUnitClick('AA')">
+            <span class="calibration-unit-name">AA</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('AAQM')">
+            <span class="calibration-unit-name">AAQM</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('AMM')">
+            <span class="calibration-unit-name">AMM</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('ANIPF')">
+            <span class="calibration-unit-name">ANIPF</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('ANITDI')">
+            <span class="calibration-unit-name">ANITDI</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('ASGP')">
+            <span class="calibration-unit-name">ASGP</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('BAGG')">
+            <span class="calibration-unit-name">BAGG</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('BOILER')">
+            <span class="calibration-unit-name">BOILER</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('CMS')">
+            <span class="calibration-unit-name">CMS</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('CPSU')">
+            <span class="calibration-unit-name">CPSU</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('DM')">
+            <span class="calibration-unit-name">DM</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('EA')">
+            <span class="calibration-unit-name">EA</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('FA')">
+            <span class="calibration-unit-name">FA</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('INSTWS')">
+            <span class="calibration-unit-name">INSTWS</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('M1')">
+            <span class="calibration-unit-name">M1</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('M2')">
+            <span class="calibration-unit-name">M2</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('MINMAX')">
+            <span class="calibration-unit-name">MINMAX</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('NPP')">
+            <span class="calibration-unit-name">NPP</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('SPP')">
+            <span class="calibration-unit-name">SPP</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('UREA')">
+            <span class="calibration-unit-name">UREA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Section (8 registers matching user screenshot) -->
+      <div class="calibration-filter-panel">
+        <!-- Row 1 Filter -->
+        <div class="calibration-filter-row">
+          <label class="calibration-filter-option">
+            <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Calibration Register" checked>
+            <span>Calibration Register</span>
+          </label>
+          <label class="calibration-filter-option">
+            <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Instrument Maintenance Register">
+            <span>Instrument Maintenance Register</span>
+          </label>
+          <label class="calibration-filter-option">
+            <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Radioactive Measurement Register">
+            <span>Radioactive Measurement Register</span>
+          </label>
+          <label class="calibration-filter-option">
+            <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Radioactive Source Replacement Records">
+            <span>Radioactive Source Replacement Records</span>
+          </label>
+        </div>
+
+        <div class="calibration-filter-divider"></div>
+
+        <!-- Row 2 Filter -->
+        <div class="calibration-filter-row">
+          <label class="calibration-filter-option">
+            <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Lead Acid Batteries Maintenance Register">
+            <span>Lead Acid Batteries Maintenance Register</span>
+          </label>
+          <label class="calibration-filter-option">
+            <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Lead Acid Batteries Replacement Register">
+            <span>Lead Acid Batteries Replacement Register</span>
+          </label>
+          <label class="calibration-filter-option">
+            <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Test Equipment Calibration Register">
+            <span>Test Equipment Calibration Register</span>
+          </label>
+          <label class="calibration-filter-option">
+            <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Lifting/Logistic Equipment Checking Record">
+            <span>LIFTING/LOGISTIC EQUIPMENT CHECKING RECORD</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    $(function() {
+      window.handleUnitClick = function(unit) {
+        // Check which radio button is selected
+        const selectedFilter = $('input[name="calibrationFilter"]:checked').val();
+        
+        switch (selectedFilter) {
+          case 'Radioactive Measurement Register':
+            window.location.href = `radioactive_magereemnt.html?plant=${unit}`;
+            break;
+          case 'Radioactive Source Replacement Records':
+            window.location.href = `radioactive_source_replacement.html?plant=${unit}`;
+            break;
+          case 'Lead Acid Batteries Maintenance Register':
+            window.location.href = `lead_acid_batteries_maintenance.html?plant=${unit}`;
+            break;
+          case 'Lead Acid Batteries Replacement Register':
+            window.location.href = `lead_acid_batteries_replacement.html?plant=${unit}`;
+            break;
+          case 'Test Equipment Calibration Register':
+            window.location.href = `test_equipment_calibration.html?plant=${unit}`;
+            break;
+          case 'Lifting/Logistic Equipment Checking Record':
+            window.location.href = `lifting_logistic_equipment.html?plant=${unit}`;
+            break;
+          case 'Instrument Maintenance Register':
+            window.location.href = `instrument_maintenance_register.html?plant=${unit}`;
+            break;
+          default:
+            window.location.href = `calibration_detail.html?plant=${unit}`;
+            break;
+        }
+      };
+    });
+  </script>
+</body>
+
+</html>

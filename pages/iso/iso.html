@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISO/CPCB/OHSAS Dashboard | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+    document.title = "ISO/CPCB/OHSAS Dashboard";
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="../../dashboard.html"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- NEW RESTURED 2-COLUMN DASHBOARD LAYOUT -->
+      <div class="iso-dashboard-layout">
+        <!-- MAIN WORKSPACE CONTENT (RIGHT COLUMN) -->
+        <div class="iso-workspace-right">
+
+          <!-- Premium Brand Header Banner (Inside Workspace Flow) -->
+          <div class="iso-hero-banner">
+            <div class="iso-hero-overlay"></div>
+            <div class="iso-hero-content">
+              <div class="iso-header-flex">
+                <div class="iso-left-brand">
+                  <h1 class="iso-hero-title">ISO / CPCB / OHSAS</h1>
+                  <p class="iso-hero-subtitle">Gujarat Narmada Valley Fertilizers & Chemical Ltd.</p>
+                </div>
+                <div class="iso-right-brand">
+                  <h2 class="instrument-title">INSTRUMENT Web World</h2>
+                  <p class="motto-text">“Let The World Set Standards By What We Do...”</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex">
+
+            <div class="iso-legacy-nav-stack">
+              <button class="iso-btn-nav-calibration" onclick="handleNavigation('Calibration Register')">Calibration Register </button>
+
+              <button class="iso-btn-nav-calibration" onclick="handleNavigation('CPCB')">CPCB </button>
+
+              <button class="iso-btn-nav-calibration" onclick="handleNavigation('OHSAS Calibration Register')">OHSAS Calibration </button>
+
+              <!-- Documents Button with Dropdown -->
+              <div class="iso-dropdown-wrapper">
+                <button class="iso-btn-nav trigger-btn" onclick="toggleDropdown(this, event)">
+                  <span>Documents</span>
+                  <i class="ph ph-caret-right caret-indicator"></i>
+                </button>
+                <div class="iso-floating-menu">
+                  <div class="iso-menu-item" onclick="handleNavigation('LEVEL-1')">LEVEL-1</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('LEVEL-2')">LEVEL-2</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('LEVEL-3')">LEVEL-3</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('Emergency Preparedness Plan')">Emergency
+                    Preparedness Plan</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('Register Of Regulation (ROR)')">Register Of
+                    Regulation (ROR)</div>
+                </div>
+              </div>
+
+              <!-- Dept. Report Button with Dropdown -->
+              <div class="iso-dropdown-wrapper">
+                <button class="iso-btn-nav trigger-btn" onclick="toggleDropdown(this, event)">
+                  <span>Dept. Report</span>
+                  <i class="ph ph-caret-right caret-indicator"></i>
+                </button>
+                <div class="iso-floating-menu">
+                  <div class="iso-menu-item" onclick="handleNavigation('PDR Edit')">Procedure Deviation Register(PDR)/
+                    Edit
+                  </div>
+                  <div class="iso-menu-item" onclick="handleNavigation('PDR Report')">Procedure Deviation Register(PDR)/
+                    Report</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('Monthly Inspection Report')">Monthly Inspection
+                    Report</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('SOP Edit')">Procedure Deviation Register(SOP)/
+                    Edit
+                  </div>
+                  <div class="iso-menu-item" onclick="handleNavigation('PDR-SOP Report')">PDR-SOP Report</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('Status of Objectives')">Status Of Objectives &
+                    Targets(SOT)</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('Consumption Register')">Consumption Register
+                  </div>
+                  <div class="iso-menu-item" onclick="handleNavigation('Communication Register')">Int. Communication
+                    Register</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('Toolbox Talk')">Toolbox Talk</div>
+                </div>
+              </div>
+
+              <!-- Audit Reports Button with Dropdown -->
+              <div class="iso-dropdown-wrapper">
+                <button class="iso-btn-nav trigger-btn" onclick="toggleDropdown(this, event)">
+                  <span>Audit Reports</span>
+                  <i class="ph ph-caret-right caret-indicator"></i>
+                </button>
+                <div class="iso-floating-menu">
+                  <div class="iso-menu-item" onclick="handleNavigation('External Audit')">External</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('Internal Audit')">Internal</div>
+                </div>
+              </div>
+
+              <!-- Direct Click Buttons -->
+              <button class="iso-btn-nav" onclick="handleNavigation('Dept. Ref. Documents')">
+                <span>Dept. Ref. Documents</span>
+              </button>
+              <button class="iso-btn-nav" onclick="handleNavigation('Training')">
+                <span>Training</span>
+              </button>
+              <button class="iso-btn-nav" onclick="handleNavigation('Communication')">
+                <span>Communication</span>
+              </button>
+              <button class="iso-btn-nav" onclick="handleNavigation('Objectives')">
+                <span>Objectives</span>
+              </button>
+            </div>
+            <!-- Redesigned Horizontal Portals Button Area -->
+            <div class="iso-portals-flex-row">
+
+              <div>
+                <div class="iso-center-top-actions">
+                  <!-- Policy Dropdown -->
+                  <div class="iso-dropdown-wrapper center-btn-wrap">
+                    <button class="iso-btn-center-action trigger-btn" onclick="toggleDropdown(this, event)">
+                      <span>Policy</span>
+                      <i class="ph ph-caret-down"></i>
+                    </button>
+                    <div class="iso-floating-menu bottom-placement policy-dropdown-menu">
+                      <div class="iso-menu-item" onclick="handleNavigation('Policy English')">English</div>
+                      <div class="iso-menu-item" onclick="handleNavigation('Policy Gujarati')">Gujarati</div>
+                    </div>
+                  </div>
+
+                  <button onclick="handleNavigation('Certificate')" class="iso-btn-center-action">
+                    <span>Certificate</span>
+                  </button>
+                </div>
+
+                <div class="iso-restructured-cards-row">
+
+                  <!-- What's new? Panel -->
+                  <div class="iso-panel-card-simple card-whats-new">
+                    <div class="panel-card-simple-header">
+                      <h4>What's new?</h4>
+                    </div>
+                    <div class="panel-card-simple-body">
+                      <div class="simple-bullet-stack">
+                        <div class="simple-bullet-item">
+                          <i class="ph-bold ph-caret-right text-green font-14px flex-shrink-0 mt-2px"></i>
+                          <p>Trailing module is modified.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Notice Board Panel (Clean and Empty) -->
+                  <div class="iso-panel-card-simple card-notice-board">
+                    <div class="panel-card-simple-header">
+                      <h4>Notice board</h4>
+                    </div>
+                    <div class="panel-card-simple-body notice-board-empty">
+                      <!-- Blank space as requested -->
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="iso-portal-buttons-grid">
+                  <a href="#" onclick="handleNavigation('ISO Cell Site', event)" class="iso-legacy-portal-btn">
+                    <span>ISO Cell Site</span>
+                  </a>
+                  <a href="#" target="_blank" class="iso-legacy-portal-btn">
+                    <span>ISDWEB</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ─── JAVASCRIPT LOGIC ─── -->
+  <script>
+    $(function () {
+      // Close dropdowns when clicking outside
+      $(document).on('click', function (e) {
+        if (!$(e.target).closest('.iso-dropdown-wrapper').length) {
+          $('.iso-floating-menu').removeClass('is-open');
+          $('.trigger-btn').removeClass('is-active');
+        }
+      });
+    });
+
+    // Toggle Dropdown Menu
+    function toggleDropdown(btnElement, event) {
+      event.stopPropagation();
+      const $btn = $(btnElement);
+      const $wrapper = $btn.closest('.iso-dropdown-wrapper');
+      const $menu = $wrapper.find('.iso-floating-menu');
+
+      // Close all other open dropdowns
+      $('.iso-floating-menu').not($menu).removeClass('is-open');
+      $('.trigger-btn').not($btn).removeClass('is-active');
+
+      // Toggle current menu
+      $btn.toggleClass('is-active');
+      $menu.toggleClass('is-open');
+    }
+
+    // Passive navigation function that you can link to new pages later
+    function handleNavigation(targetName, event) {
+      if (event) event.preventDefault();
+
+      // Close open dropdowns upon item selection
+      $('.iso-floating-menu').removeClass('is-open');
+      $('.trigger-btn').removeClass('is-active');
+
+      console.log(`Navigation clicked for target: ${targetName}`);
+
+      if (targetName === 'LEVEL-1') {
+        window.location.href = 'level_1.html';
+      } else if (targetName === 'LEVEL-2') {
+        window.location.href = 'level_2.html';
+      } else if (targetName === 'LEVEL-3') {
+        window.location.href = 'level_3.html';
+      } else if (targetName === 'Emergency Preparedness Plan') {
+        window.location.href = 'emregencyplan.html';
+      } else if (targetName === 'Register Of Regulation (ROR)') {
+        window.location.href = 'ror.html';
+      } else if (targetName === 'Calibration Register') {
+        window.location.href = 'calibration_regiter.html';
+      } else if (targetName === 'CPCB') {
+        window.location.href = 'cpcb.html';
+      } else if (targetName === 'OHSAS Calibration Register') {
+        window.location.href = 'ohsas_calibration_regiter.html';
+      }
+    }
+  </script>
+</body>
+
+</html>

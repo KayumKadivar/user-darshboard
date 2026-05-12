@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CPCB Details | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="cpcb.html" data-title="BOILER"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,CPCB:cpcb.html,BOILER:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- CPCB Register Table Panel -->
+      <div class="dms-container">
+        <!-- Premium Action Bar Row -->
+        <div class="action-bar-panel"
+          style="display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); border: 1px solid var(--app-border); border-radius: 12px; padding: 16px 24px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); border-left: 5px solid var(--typo-orange);">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div
+              style="background: rgba(255, 153, 0, 0.1); width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--typo-orange); font-size: 1.5rem;">
+              <i class="ph-fill ph-file-text"></i>
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                <h2
+                  style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--typo-primary); margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                  CPCB Analyzer Register</h2>
+                <span
+                  style="background: rgba(255, 153, 0, 0.08); color: var(--typo-orange); border: 1px solid rgba(255, 153, 0, 0.2); border-radius: 6px; padding: 3px 10px; font-size: 0.75rem; font-weight: 700; font-family: 'Outfit', sans-serif; letter-spacing: 0.5px;">IMS/F/INST/CPCB-01</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--typo-secondary); margin: 0; font-weight: 500;">Manage and track
+                plant continuous emission monitoring system (CEMS) analyzer registers</p>
+            </div>
+          </div>
+          <button class="premium-action-btn" data-open-modal="technician-job-assign"
+            style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #ff9900 0%, #e05300 100%); color: #ffffff !important; border: none; border-radius: 8px; padding: 10px 20px; font-family: 'Outfit', sans-serif; font-size: 0.875rem; font-weight: 800; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 15px rgba(255, 153, 0, 0.25); text-decoration: none;">
+            <i class="ph-bold ph-plus" style="font-size: 1.1rem;"></i>
+            <span>Add New Job</span>
+          </button>
+        </div>
+
+        <!-- Corporate Table system from style.css (class applied: user-table) -->
+        <div class="user-table-wrapper" style="overflow-x: auto;">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th class="user-table-center" style="width: 50px;">Sr</th>
+                <th>Tag</th>
+                <th>Type Of Inst</th>
+                <th>Make / Model</th>
+                <th>Serial No</th>
+                <th>Cali Procedure</th>
+                <th class="user-table-center" style="width: 100px;">Cali Freq (Days)</th>
+                <th style="width: 160px;">DueDate / LastDone</th>
+              </tr>
+            </thead>
+            <tbody id="cpcb-table-body">
+              <tr class="user-table-row">
+                <td class="user-table-center clickable-cell" data-open-modal="technician-job-edit">1</td>
+                <td class="clickable-tag" data-open-modal="tag-pm-records">1AT2513</td>
+                <td>ANALYZER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>THERMO FISHER</div>
+                    <div>43i</div>
+                  </div>
+                </td>
+                <td>1161240069</td>
+                <td style="max-width: 400px;">SOX Analyzer PM related job. 1)Analyzer calibration to be check.
+                  2)Analyzer room AC performance to be check. 3)fan filter to be clean. 4)Calibration cylinder pressure
+                  to be check. 5)Alarm status to be check. 6) Leak test to be done.</td>
+                <td class="user-table-center">14</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>15/05/2026</div>
+                    <div>01/05/2026</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center clickable-cell" data-open-modal="technician-job-edit">2</td>
+                <td class="clickable-tag" data-open-modal="tag-pm-records">1AT2514</td>
+                <td>ANALYZER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>THERMO FISHER</div>
+                    <div>42i</div>
+                  </div>
+                </td>
+                <td>1161240084</td>
+                <td style="max-width: 400px;">NOX Analyzer PM related job. 1)Analyzer calibration to be check. 2)fan
+                  filter to be clean. 3)vaccume/DA/zero air pressure and silica gel to be check. 4)Alarm status to be
+                  check. 5) Leak test to be done.</td>
+                <td class="user-table-center">14</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>15/05/2026</div>
+                    <div>01/05/2026</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center clickable-cell" data-open-modal="technician-job-edit">3</td>
+                <td class="clickable-tag" data-open-modal="tag-pm-records">2AT2513</td>
+                <td>ANALYZER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>THERMO FISHER</div>
+                    <div>43i</div>
+                  </div>
+                </td>
+                <td>1161240070</td>
+                <td style="max-width: 400px;">SOX Analyzer PM related job. 1)Analyzer calibration to be check. 2)fan
+                  filter to be clean. 3)Alarm status to be check. 4) Leak test to be done.</td>
+                <td class="user-table-center">14</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>15/05/2026</div>
+                    <div>01/05/2026</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center clickable-cell" data-open-modal="technician-job-edit">4</td>
+                <td class="clickable-tag" data-open-modal="tag-pm-records">AT177601</td>
+                <td>ANALYZER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>ABB</div>
+                    <div>EL-3020</div>
+                  </div>
+                </td>
+                <td>F-NO 3 353821.9</td>
+                <td style="max-width: 400px;">NOX Analyzer PM related job. 1)Analyzer calibration to be check.
+                  2)Calibration cylinder pressure to be check. 3) Leak test to be done.</td>
+                <td class="user-table-center">14</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>15/05/2026</div>
+                    <div>01/05/2026</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center clickable-cell" data-open-modal="technician-job-edit">5</td>
+                <td class="clickable-tag" data-open-modal="tag-pm-records">AT177602</td>
+                <td>ANALYZER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>ABB</div>
+                    <div>EL-3020</div>
+                  </div>
+                </td>
+                <td>F-NO 3 353821.9</td>
+                <td style="max-width: 400px;">SOX Analyzer PM related job. 1)Analyzer calibration to be check.
+                  2)Calibration cylinder pressure to be check. 3) Leak test to be done.</td>
+                <td class="user-table-center">14</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>15/05/2026</div>
+                    <div>01/05/2026</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center clickable-cell" data-open-modal="technician-job-edit">6</td>
+                <td class="clickable-tag" data-open-modal="tag-pm-records">2AT2514</td>
+                <td>ANALYZER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>THERMO FISHER</div>
+                    <div>42i</div>
+                  </div>
+                </td>
+                <td>1161240085</td>
+                <td style="max-width: 400px;">NOX Analyzer PM related job. 1)Analyzer calibration to be check. 2)fan
+                  filter to be clean. 3)vaccume/DA/zero air pressure and Silica gel status to be check. 4)Alarm status
+                  to be check. 5) Leak test to be done.</td>
+                <td class="user-table-center">14</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>15/05/2026</div>
+                    <div>01/05/2026</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center clickable-cell" data-open-modal="technician-job-edit">7</td>
+                <td class="clickable-tag" data-open-modal="tag-pm-records">3AT2513</td>
+                <td>ANALYZER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>THERMO FISHER</div>
+                    <div>43i</div>
+                  </div>
+                </td>
+                <td>1161240071</td>
+                <td style="max-width: 400px;">SOX Analyzer PM related job. 1)Analyzer calibration to be check. 2)fan
+                  filter to be clean. 3)Alarm status to be check. 4) Leak test to be done.</td>
+                <td class="user-table-center">14</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>15/05/2026</div>
+                    <div>01/05/2026</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center clickable-cell" data-open-modal="technician-job-edit">8</td>
+                <td class="clickable-tag" data-open-modal="tag-pm-records">3AT2514</td>
+                <td>ANALYZER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>THERMO FISHER</div>
+                    <div>42i</div>
+                  </div>
+                </td>
+                <td>1161240086</td>
+                <td style="max-width: 400px;">NOX Analyzer PM related job. 1)Analyzer calibration to be check. 2)fan
+                  filter to be clean. 3)vaccume/DA/zero air pressure and Silica gel status to be check. 4)Alarm status
+                  to be check. 5) Leak test to be done.</td>
+                <td class="user-table-center">14</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>15/05/2026</div>
+                    <div>01/05/2026</div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center clickable-cell" data-open-modal="technician-job-edit">9</td>
+                <td class="clickable-tag" data-open-modal="tag-pm-records">1AT2512</td>
+                <td>ANALYZER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>FORBES MARSHALL</div>
+                    <div>CODEL</div>
+                  </div>
+                </td>
+                <td>PSU/SPU/RCU-13177 sensor sr. 1)FMDCM21XX-SPARE-18156 TRX1 2)FMDCM21XX-SPARE-18156 TRX2</td>
+                <td style="max-width: 400px;">Sensor to be cleaned and reading to be noted</td>
+                <td class="user-table-center">14</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>20/05/2026</div>
+                    <div>06/05/2026</div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    $(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const plantCode = urlParams.get('plant') || 'BOILER';
+      let activeEditRow = null;
+
+      $(document).on('click', '[data-open-modal]', function () {
+        const modalId = $(this).data('open-modal');
+        $('#' + modalId).addClass('is-open');
+        $('body').css('overflow', 'hidden');
+        if (modalId === 'technician-job-edit') activeEditRow = $(this).closest('tr');
+      });
+
+      $(document).on('click', '[data-close-modal]', function () {
+        const modalId = $(this).data('close-modal');
+        $('#' + modalId).removeClass('is-open');
+        if (!$('.gnfc-modal-overlay.is-open').length) $('body').css('overflow', '');
+      });
+
+      $(document).on('click', '.clickable-tag', function () {
+        const tag = $(this).text().trim();
+        $('#pm-records-tag-no').text(tag);
+      });
+    });
+  </script>
+
+  <!-- Modal: Technician Job Create Modal -->
+  <div id="technician-job-assign" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add New CPCB Analyzer Job</h3>
+        <button type="button" data-close-modal="technician-job-assign" class="gnfc-modal-close"><i
+            class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="job-modal-form">
+        <div class="gnfc-modal-body gnfc-modal-body--tight" style="overflow-y:auto;">
+          <div class="form-grid grid-cols-12">
+            <!-- Row 1: Tag No and Procedure -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">TAG NO <span class="required">*</span></label>
+              <div class="flex gap-4px">
+                <input id="modal-field-tag-input" type="text" class="gnfc-modal-input flex-1" placeholder="Search Tag">
+                <select id="modal-field-tag-select" class="gnfc-modal-input flex-1">
+                  <option value="">Select Tag</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 2: Frequency, Last Done, Format -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">FREQUENCY OF CHECK (DAYS)</label>
+              <input id="modal-field-freq" type="number" class="gnfc-modal-input" placeholder="e.g. 14">
+            </div>
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">LAST DONE ON</label>
+              <input id="modal-field-last-done" type="date" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">FORMAT</label>
+              <select id="modal-field-format" class="gnfc-modal-input">
+                <option value="CPCB">CPCB</option>
+                <option value="IMS/F/INST/CPCB-01">IMS/F/INST/CPCB-01</option>
+              </select>
+            </div>
+
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">CALIBRATION / CHECK PROCEDURE <span class="required">*</span></label>
+              <textarea id="modal-field-procedure" rows="4" class="gnfc-modal-input w-full"
+                placeholder="Procedure..."></textarea>
+            </div>
+
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" data-close-modal="technician-job-assign"
+            class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Technician Job Edit Modal (Static) -->
+  <div id="technician-job-edit" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Edit CPCB Analyzer Job</h3>
+        <button type="button" data-close-modal="technician-job-edit" class="gnfc-modal-close"><i
+            class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="job-edit-modal-form">
+        <div class="gnfc-modal-body gnfc-modal-body--tight" style="overflow-y:auto;">
+          <div class="form-grid grid-cols-12">
+            <!-- Row 1: Tag No and Procedure -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">TAG NO <span class="required">*</span></label>
+              <div class="flex gap-4px">
+                <input id="edit-field-tag-input" type="text" class="gnfc-modal-input flex-1" placeholder="Search Tag">
+                <select id="edit-field-tag-select" class="gnfc-modal-input flex-1">
+                  <option value="">Select Tag</option>
+                </select>
+              </div>
+            </div>
+
+
+            <!-- Row 2: Frequency, Last Done, Format, CPCB Status -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">FREQUENCY OF CHECK (DAYS)</label>
+              <input id="edit-field-freq" type="number" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">LAST DONE ON</label>
+              <input id="edit-field-last-done" type="date" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">FORMAT</label>
+              <select id="edit-field-format" class="gnfc-modal-input">
+                <option value="CPCB">CPCB</option>
+                <option value="IMS/F/INST/CPCB-01">IMS/F/INST/CPCB-01</option>
+              </select>
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">CPCB</label>
+              <select id="edit-field-status" class="gnfc-modal-input">
+                <option value="CPCB">CPCB</option>
+              </select>
+            </div>
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">CALIBRATION / CHECK PROCEDURE <span class="required">*</span></label>
+              <textarea id="edit-field-procedure" rows="4" class="gnfc-modal-input w-full"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer modal-footer-between">
+          <button type="button" id="edit-modal-btn-delete" class="gnfc-modal-btn gnfc-modal-btn-danger">Delete</button>
+          <div class="flex-gap-8px">
+            <button type="button" data-close-modal="technician-job-edit"
+              class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+            <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(function () {
+      let activeEditRow = null;
+
+      // Modal Open Handler (Generic)
+      $(document).on('click', '[data-open-modal]', function () {
+        const modalId = $(this).data('open-modal');
+        if (modalId) {
+          $('#' + modalId).addClass('is-open');
+          $('body').css('overflow', 'hidden');
+
+          // Initialize date and dynamic tags if it is the assign or edit modal
+          if (modalId === 'technician-job-assign' || modalId === 'technician-job-edit') {
+            // Dynamically populate Tag select dropdown options from table tags
+            const tags = new Set();
+            $('tr.user-table-row').each(function () {
+              const tagText = $(this).find('td').eq(1).text().trim();
+              if (tagText) {
+                tags.add(tagText);
+              }
+            });
+
+            // Populate Create Tag selector
+            const $tagSelect = $('#modal-field-tag-select');
+            $tagSelect.empty();
+            $tagSelect.append('<option value="">Select Tag</option>');
+            tags.forEach(tag => {
+              $tagSelect.append(`<option value="${tag}">${tag}</option>`);
+            });
+
+            // Populate Edit Tag selector
+            const $editTagSelect = $('#edit-field-tag-select');
+            $editTagSelect.empty();
+            $editTagSelect.append('<option value="">Select Tag</option>');
+            tags.forEach(tag => {
+              $editTagSelect.append(`<option value="${tag}">${tag}</option>`);
+            });
+          }
+
+          // Initialize date for create modal
+          if (modalId === 'technician-job-assign') {
+            const today = new Date().toISOString().split('T')[0];
+            $('#modal-field-last-done').val(today);
+          }
+        }
+      });
+
+      // Edit Click Handler (Populates the edit modal dynamically)
+      $(document).on('click', '.clickable-cell', function () {
+        activeEditRow = $(this).closest('tr');
+        const $row = activeEditRow;
+
+        // Extract values from cells
+        const tag = $row.find('td').eq(1).text().trim();
+        const makeModel = $row.find('td').eq(3).find('div div').eq(0).text().trim(); // E.g. THERMO FISHER
+        const procedure = $row.find('td').eq(5).text().trim();
+        const freq = $row.find('td').eq(6).text().trim();
+
+        // Last Done is the second div inside index 7
+        const lastDoneRaw = $row.find('td').eq(7).find('div div').eq(1).text().trim(); // Format: DD/MM/YYYY
+
+        // Format lastDone to YYYY-MM-DD for the date input
+        let lastDoneDate = "";
+        if (lastDoneRaw) {
+          const parts = lastDoneRaw.split('/');
+          if (parts.length === 3) {
+            lastDoneDate = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+          }
+        }
+
+        // Set values in static edit modal fields
+        $('#edit-field-tag-input').val(tag);
+        $('#edit-field-tag-select').val(tag);
+        $('#edit-field-freq').val(freq);
+        if (lastDoneDate) {
+          $('#edit-field-last-done').val(lastDoneDate);
+        }
+        $('#edit-field-procedure').val(procedure);
+
+        // Formats and defaults
+        $('#edit-field-format').val('CPCB');
+        $('#edit-field-status').val('CPCB');
+      });
+
+      // Delete Click Handler
+      $('#edit-modal-btn-delete').on('click', function () {
+        Swal.fire({
+          title: 'Delete Entry?',
+          text: 'Are you sure you want to permanently delete this analyzer entry? This action cannot be undone.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#e11d48',
+
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'The entry has been successfully deleted.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+
+            // Smooth fade-out of the deleted row
+            if (activeEditRow) {
+              activeEditRow.fadeOut(500, function () {
+                $(this).remove();
+              });
+            }
+
+            $('#technician-job-edit').removeClass('is-open');
+            $('body').css('overflow', '');
+          }
+        });
+      });
+
+      // Modal Close Handler (Generic)
+      $(document).on('click', '[data-close-modal]', function () {
+        const modalId = $(this).data('close-modal');
+        $('#' + modalId).removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      // Autocomplete functionality for Tag Select inside create modal
+      $('#modal-field-tag-input').on('input', function () {
+        const text = $(this).val().toLowerCase();
+        $('#modal-field-tag-select option').each(function () {
+          const optionVal = $(this).val().toLowerCase();
+          if (optionVal.includes(text)) {
+            $(this).prop('selected', true);
+            return false;
+          }
+        });
+      });
+
+      $(document).on('change', '#modal-field-tag-select', function () {
+        $('#modal-field-tag-input').val($(this).val());
+      });
+
+      // Autocomplete functionality for Tag Select inside edit modal
+      $('#edit-field-tag-input').on('input', function () {
+        const text = $(this).val().toLowerCase();
+        $('#edit-field-tag-select option').each(function () {
+          const optionVal = $(this).val().toLowerCase();
+          if (optionVal.includes(text)) {
+            $(this).prop('selected', true);
+            return false;
+          }
+        });
+      });
+
+      $(document).on('change', '#edit-field-tag-select', function () {
+        $('#edit-field-tag-input').val($(this).val());
+      });
+
+      // Create Form Submit Handler
+      $('#job-modal-form').on('submit', function (e) {
+        e.preventDefault();
+
+        Swal.fire({
+          title: 'Apply Changes?',
+          text: 'Are you sure you want to save this new analyzer entry?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#ff9900',
+
+          confirmButtonText: 'Yes, save it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Saved!',
+              text: 'New analyzer entry registered successfully.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+            $('#technician-job-assign').removeClass('is-open');
+            $('body').css('overflow', '');
+            $('#job-modal-form')[0].reset();
+          }
+        });
+      });
+
+      // Edit Form Submit Handler
+      $('#job-edit-modal-form').on('submit', function (e) {
+        e.preventDefault();
+
+        Swal.fire({
+          title: 'Save Changes?',
+          text: 'Are you sure you want to update this analyzer entry?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#ff9900',
+
+          confirmButtonText: 'Yes, save changes!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Updated!',
+              text: 'Analyzer entry has been updated successfully.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+            $('#technician-job-edit').removeClass('is-open');
+            $('body').css('overflow', '');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

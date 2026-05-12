@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Acid Batteries Maintenance Register | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container (Breadcrumb & Nav Title) -->
+    <div id="header-container" data-back="calibration_regiter.html" data-title="BOILER"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,Calibration Register:calibration_regiter.html,Lead Acid Batteries Maintenance:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Action Bar -->
+      <div class="action-bar-panel calib-action-bar">
+        <div class="calib-action-left">
+          <div class="calib-action-icon-box">
+            <i class="ph-bold ph-battery-charging"></i>
+          </div>
+          <div>
+            <div class="calib-action-title-group">
+              <h2 class="calib-action-title">Lead Acid Batteries Maintenance Register</h2>
+              <span class="calib-action-badge text-uppercase">IMS/F/INST/04</span>
+            </div>
+            <p class="calib-action-subtitle">Periodic maintenance log for backup battery systems and remedial actions taken</p>
+          </div>
+        </div>
+        <button class="premium-action-btn calib-action-add-btn" id="btn-open-add-modal">
+          <i class="ph-bold ph-plus"></i>
+          <span>Add New Record</span>
+        </button>
+      </div>
+
+      <!-- Main Data Table -->
+      <div class="user-table-wrapper">
+        <table class="user-table min-w-1440px">
+          <thead>
+            <tr>
+              <th class="user-table-center w-50px">Sr</th>
+              <th>Maintenance Date</th>
+              <th>Problem Found</th>
+              <th>Remidial Action</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody id="battery-maintenance-table-body">
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">1</td>
+              <td>08/08/2021</td>
+              <td>NIL</td>
+              <td>DM water level checked in batteries and filled DM water in require battery</td>
+              <td>ok</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">2</td>
+              <td>11/11/2021</td>
+              <td>NIL</td>
+              <td>DM water level checked in batteries and filled DM water in require battery</td>
+              <td>ok</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">3</td>
+              <td>09/02/2021</td>
+              <td>NIL</td>
+              <td>DM water level checked in batteries and filled DM water in require battery</td>
+              <td>ok</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">4</td>
+              <td>09/07/2020</td>
+              <td>NIL</td>
+              <td>DM water level checked in batteries and filled DM water in require battery</td>
+              <td>ok</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">5</td>
+              <td>18/05/2020</td>
+              <td>NIL</td>
+              <td>DM water level checked and found OK.</td>
+              <td>-</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">6</td>
+              <td>08/05/2020</td>
+              <td>NIL</td>
+              <td>DM water level checked and found OK.</td>
+              <td>-</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">7</td>
+              <td>14/02/2020</td>
+              <td>NIL</td>
+              <td>NIL</td>
+              <td>DM WATER ADDED</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">8</td>
+              <td>20/01/2020</td>
+              <td>NIL</td>
+              <td>DM water level checked and found OK.</td>
+              <td>NIL</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">9</td>
+              <td>17/10/2019</td>
+              <td>NIL</td>
+              <td>NIL</td>
+              <td>DM WATER ADDED</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">10</td>
+              <td>11/11/2019</td>
+              <td>NA</td>
+              <td>DM water level checked and found OK.</td>
+              <td>-</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">11</td>
+              <td>25/04/2019</td>
+              <td>-</td>
+              <td>DM water level checked and found OK.</td>
+              <td>-</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">12</td>
+              <td>18/05/2019</td>
+              <td>-</td>
+              <td>DM water level checked and found OK.</td>
+              <td>-</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">13</td>
+              <td>15/03/2019</td>
+              <td>NIL</td>
+              <td>DM water level checked and found OK.</td>
+              <td>-</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">14</td>
+              <td>15/12/2018</td>
+              <td>NIL</td>
+              <td>NIL</td>
+              <td>DM water added.</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">15</td>
+              <td>30/01/2019</td>
+              <td>NIL</td>
+              <td>NIL</td>
+              <td>NIL</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">16</td>
+              <td>28/08/2018</td>
+              <td>NIL</td>
+              <td>NIL</td>
+              <td>NIL</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">17</td>
+              <td>12/06/2010</td>
+              <td>NIL</td>
+              <td>NIL</td>
+              <td>DM WATER ADDED</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Maintenance Record Modal -->
+  <!-- Add Battery Maintenance Record Modal -->
+  <div id="add-maintenance-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add New Battery Maintenance Record</h3>
+        <button type="button" class="gnfc-modal-close" id="btn-close-add-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <form id="add-maintenance-form" class="form-grid grid-cols-12">
+  
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Maintenance Date</label>
+            <input type="date" id="add-date" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Problem Found</label>
+            <input type="text" id="add-problem" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Remidial Action</label>
+            <input type="text" id="add-action" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Remarks</label>
+            <textarea id="add-remarks" class="gnfc-modal-input textarea-h-60"></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="submit" form="add-maintenance-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-cancel-add-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const plantParam = urlParams.get('plant') || 'BOILER';
+      const upperPlant = plantParam.toUpperCase();
+
+      $('#header-container').attr('data-title', `${upperPlant} - BATTERY MAINTENANCE`);
+      $('#add-form-plant-title').text(`Plant - ${upperPlant}`);
+
+      const $overlay = $('#add-maintenance-modal');
+
+      $('#btn-open-add-modal').on('click', function() {
+        $('#add-maintenance-form')[0].reset();
+        $overlay.addClass('is-open');
+      });
+
+      $('#btn-close-add-modal, #btn-cancel-add-modal').on('click', function() {
+        $overlay.removeClass('is-open');
+      });
+
+      $(document).on('keydown', function(e) {
+        if (e.key === 'Escape' && $overlay.hasClass('is-open')) {
+          $overlay.removeClass('is-open');
+        }
+      });
+
+      $('#add-maintenance-form').on('submit', function(e) {
+        e.preventDefault();
+
+        const rawDate = $('#add-date').val();
+        let dateVal = rawDate;
+        if (rawDate.includes('-')) {
+          const parts = rawDate.split('-');
+          dateVal = `${parts[2]}/${parts[1]}/${parts[0]}`;
+        }
+
+        const problemVal = $('#add-problem').val().trim();
+        const actionVal = $('#add-action').val().trim();
+        const remarksVal = $('#add-remarks').val().trim() || 'ok';
+
+        $overlay.removeClass('is-open');
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Record Saved Successfully',
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+
+      function reindexSerialNumbers() {
+        const $tbody = $('#battery-maintenance-table-body');
+        let srCount = 1;
+        $tbody.find('.user-table-row').each(function() {
+          $(this).find('.user-table-center').text(srCount++);
+        });
+        $('#records-count-badge').text(`Total Entries: ${srCount - 1}`);
+      }
+
+      reindexSerialNumbers();
+    });
+  </script>
+</body>
+
+</html>

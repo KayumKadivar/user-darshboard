@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Operation Job Register | GNFC</title>
+
+  <!-- Reusable Theme CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+
+  <!-- Page Specific CSS (Consolidated) -->
+  <link rel="stylesheet" href="ojr.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script>window.activePage = 'opr_job_reg';</script>
+</head>
+
+<body class="dashboard-body">
+
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <div class="dashboard-content dashboard-scroll animate-fade-in">
+
+      <!-- PAGE HEADER (CUSTOM) -->
+      <div class="ojr-main-header">
+        <div class="ojr-header-left">
+          <div class="ojr-header-icon">
+            <i class="ph-fill ph-clipboard-text"></i>
+          </div>
+          <div>
+            <h1 class="ojr-header-title">Operation Job Register</h1>
+            <p class="ojr-header-subtitle">Instrument Department | <span id="plant-display" class="color-blue fw-700">AAQM</span></p>
+          </div>
+        </div>
+
+        <!-- SECONDARY NAV (TABS STYLE) -->
+        <div class="flex items-center gap-12px">
+          <!-- DROPDOWN 1 -->
+          <select class="gnfc-modal-input w-160px font-12px fw-700 uppercase" style="height: 32px;">
+            <option value=""></option>
+            <option>SHUT DOWN</option>
+            <option>NO PERMIT</option>
+            <option>HOLD</option>
+          </select>
+
+          <!-- DROPDOWN 2 -->
+          <select class="gnfc-modal-input w-180px font-12px fw-700 uppercase" style="height: 32px;">
+            <option>WEEKLY</option>
+            <option>MONTHLY</option>
+            <option selected>WEEKLYPENDING</option>
+            <option>MONTHLYPENDING</option>
+            <option>YEARLY</option>
+            <option>YEARLYPENDING</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TABLE SECTION -->
+      <div class="ojr-card p-0px overflow-hidden border-dark-border mt-16px">
+        <div class="user-table-wrapper border-0 radius-0px">
+          <table class="user-table w-full">
+            <thead>
+              <tr>
+                <th rowspan="2" class="w-50px user-table-center">Sr</th>
+                <th rowspan="2" class="w-150px user-table-left">Job No / Tag No</th>
+                <th rowspan="2" class="w-120px user-table-left">Area / Job Date</th>
+                <th rowspan="2" class="user-table-left">Description</th>
+                <th rowspan="2" class="w-64px user-table-center">SE</th>
+                <th colspan="2" class="user-table-center bg-app-panel-alt">OPERATION</th>
+                <th colspan="3" class="user-table-center bg-app-panel-alt">INSTRUMENT</th>
+              </tr>
+              <tr>
+                <th class="w-80px user-table-center">SHIFT</th>
+                <th class="w-100px user-table-center">DATE</th>
+                <th class="w-120px user-table-center">STATUS</th>
+                <th class="user-table-center">REMARK</th>
+                <th class="w-100px user-table-center">ENG</th>
+              </tr>
+            </thead>
+            <tbody id="fa-table-body">
+              <!-- ROW 1 -->
+              <tr class="user-table-row cur-pointer" onclick="openEditModal(1)">
+                <td class="user-table-center user-table-bold user-table-blue bg-app-panel-alt-hover">1</td>
+                <td class="user-table-cell">
+                  <div class="fw-700 color-primary">1327</div>
+                  <div class="font-11px color-secondary">AI_HC</div>
+                </td>
+                <td class="user-table-cell">
+                  <div>ALL</div>
+                  <div class="font-11px color-secondary">05/05/2026</div>
+                </td>
+                <td class="user-table-cell">data were observed erratic from 16.30 hrs on 04.05.2026</td>
+                <td class="user-table-center">VHN</td>
+                <td class="user-table-center">G</td>
+                <td class="user-table-center">0</td>
+                <td class="user-table-center">
+                  <span class="status-badge badge-blue">OPEN</span>
+                </td>
+                <td class="user-table-cell">-</td>
+                <td class="user-table-center fw-700">-</td>
+              </tr>
+
+              <!-- ROW 2 -->
+              <tr class="user-table-row cur-pointer" onclick="openEditModal(2)">
+                <td class="user-table-center user-table-bold user-table-blue bg-app-panel-alt-hover">2</td>
+                <td class="user-table-cell">
+                  <div class="fw-700 color-primary">1326</div>
+                  <div class="font-11px color-secondary">AI_NOX</div>
+                </td>
+                <td class="user-table-cell">
+                  <div>ALL</div>
+                  <div class="font-11px color-secondary">04/05/2026</div>
+                </td>
+                <td class="user-table-cell">summation of NOX parameter [i.e., NOX = NO + NO2] is not matching intermittently from 10.30 hrs on 03.05.2026</td>
+                <td class="user-table-center">VHN</td>
+                <td class="user-table-center">G</td>
+                <td class="user-table-center">0</td>
+                <td class="user-table-center">
+                  <span class="status-badge badge-blue">OPEN</span>
+                </td>
+                <td class="user-table-cell">-</td>
+                <td class="user-table-center fw-700">-</td>
+              </tr>
+
+              <!-- ROW 3 -->
+              <tr class="user-table-row cur-pointer" onclick="openEditModal(3)">
+                <td class="user-table-center user-table-bold user-table-blue bg-app-panel-alt-hover">3</td>
+                <td class="user-table-cell">
+                  <div class="fw-700 color-primary">1324</div>
+                  <div class="font-11px color-secondary">AI_HC</div>
+                </td>
+                <td class="user-table-cell">
+                  <div>ALL</div>
+                  <div class="font-11px color-secondary">30/04/2026</div>
+                </td>
+                <td class="user-table-cell">data were observed erratic value intermittently from 19.15 hrs on 28.04.2026</td>
+                <td class="user-table-center">VHN</td>
+                <td class="user-table-center">G</td>
+                <td class="user-table-center">0</td>
+                <td class="user-table-center">
+                  <span class="status-badge badge-blue">OPEN</span>
+                </td>
+                <td class="user-table-cell">-</td>
+                <td class="user-table-center fw-700">-</td>
+              </tr>
+
+              <!-- ROW 4 -->
+              <tr class="user-table-row cur-pointer" onclick="openEditModal(4)">
+                <td class="user-table-center user-table-bold user-table-blue bg-app-panel-alt-hover">4</td>
+                <td class="user-table-cell">
+                  <div class="fw-700 color-primary">1323</div>
+                  <div class="font-11px color-secondary">AI_HC</div>
+                </td>
+                <td class="user-table-cell">
+                  <div>ALL</div>
+                  <div class="font-11px color-secondary">30/04/2026</div>
+                </td>
+                <td class="user-table-cell">data were observed in maintenance mode from 11.00 hrs on 24.04.2026</td>
+                <td class="user-table-center">VHN</td>
+                <td class="user-table-center">G</td>
+                <td class="user-table-center">0</td>
+                <td class="user-table-center">
+                  <span class="status-badge badge-blue">OPEN</span>
+                </td>
+                <td class="user-table-cell">-</td>
+                <td class="user-table-center fw-700">-</td>
+              </tr>
+
+              <!-- ROW 5 -->
+              <tr class="user-table-row cur-pointer" onclick="openEditModal(5)">
+                <td class="user-table-center user-table-bold user-table-blue bg-app-panel-alt-hover">5</td>
+                <td class="user-table-cell">
+                  <div class="fw-700 color-primary">1322</div>
+                  <div class="font-11px color-secondary">AI_HC</div>
+                </td>
+                <td class="user-table-cell">
+                  <div>ALL</div>
+                  <div class="font-11px color-secondary">30/04/2026</div>
+                </td>
+                <td class="user-table-cell">data were not available intermittently from 09.45 hrs on 25.04.2026</td>
+                <td class="user-table-center">VHN</td>
+                <td class="user-table-center">G</td>
+                <td class="user-table-center">0</td>
+                <td class="user-table-center">
+                  <span class="status-badge badge-blue">OPEN</span>
+                </td>
+                <td class="user-table-cell">-</td>
+                <td class="user-table-center fw-700">-</td>
+              </tr>
+
+              <!-- ROW 6 -->
+              <tr class="user-table-row cur-pointer" onclick="openEditModal(6)">
+                <td class="user-table-center user-table-bold user-table-blue bg-app-panel-alt-hover">6</td>
+                <td class="user-table-cell">
+                  <div class="fw-700 color-primary">1321</div>
+                  <div class="font-11px color-secondary">AI_WS</div>
+                </td>
+                <td class="user-table-cell">
+                  <div>ALL</div>
+                  <div class="font-11px color-secondary">30/04/2026</div>
+                </td>
+                <td class="user-table-cell">data were not available intermittently from 09.45 hrs on 20.04.2026</td>
+                <td class="user-table-center">VHN</td>
+                <td class="user-table-center">G</td>
+                <td class="user-table-center">0</td>
+                <td class="user-table-center">
+                  <span class="status-badge badge-blue">OPEN</span>
+                </td>
+                <td class="user-table-cell">-</td>
+                <td class="user-table-center fw-700">-</td>
+              </tr>
+
+              <!-- ROW 7 -->
+              <tr class="user-table-row cur-pointer" onclick="openEditModal(7)">
+                <td class="user-table-center user-table-bold user-table-blue bg-app-panel-alt-hover">7</td>
+                <td class="user-table-cell">
+                  <div class="fw-700 color-primary">1320</div>
+                  <div class="font-11px color-secondary">AAQM_DIS</div>
+                </td>
+                <td class="user-table-cell">
+                  <div>ALL</div>
+                  <div class="font-11px color-secondary">30/04/2026</div>
+                </td>
+                <td class="user-table-cell">Display board module board error is observed open</td>
+                <td class="user-table-center">VHN</td>
+                <td class="user-table-center">G</td>
+                <td class="user-table-center">30/04/26</td>
+                <td class="user-table-center">
+                  <span class="status-badge badge-orange">O/P</span>
+                </td>
+                <td class="user-table-cell">A temporary solution has been done. The permanent fix will come in 1 week, so HAS then permanent solution will be done.</td>
+                <td class="user-table-center fw-700">HAS</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div class="gnfc-modal-overlay" id="modal-edit-job">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <header class="gnfc-modal-header">
+        <div class="flex flex-direction-column">
+          <h2 class="gnfc-modal-title">INSTRUMENT (Edit)</h2>
+          <p class="gnfc-modal-subtitle">Update job details and remarks</p>
+        </div>
+        <button class="gnfc-modal-close" onclick="closeEditModal()">
+          <i class="ph ph-x"></i>
+        </button>
+      </header>
+      <div class="gnfc-modal-body">
+        <div class="flex flex-direction-column gap-24px">
+          <!-- TOP ROW: OPERATION & INSTRUMENT -->
+          <div class="grid grid-cols-2 gap-24px">
+            <!-- OPERATION SECTION -->
+            <div class="ojr-card bg-app-bg-alt border-dark-border p-16px">
+              <h3 class="font-10px fw-900 color-blue uppercase ls-2px border-bottom-dark-border pb-8px mb-16px">OPERATION</h3>
+              <div class="grid grid-cols-2 gap-16px">
+                <div class="flex flex-direction-column gap-4px">
+                  <label class="gnfc-modal-label">JOB NO</label>
+                  <input type="text" class="gnfc-modal-input" value="1327">
+                </div>
+                <div class="flex flex-direction-column gap-4px">
+                  <label class="gnfc-modal-label">DATE(M/D/Y)</label>
+                  <input type="text" class="gnfc-modal-input" value="05/05/2026">
+                </div>
+                <div class="flex flex-direction-column gap-4px">
+                  <label class="gnfc-modal-label">SHIFT</label>
+                  <input type="text" class="gnfc-modal-input" value="G">
+                </div>
+                <div class="flex flex-direction-column gap-4px">
+                  <label class="gnfc-modal-label">SE</label>
+                  <input type="text" class="gnfc-modal-input" value="VHN">
+                </div>
+              </div>
+            </div>
+
+            <!-- INSTRUMENT SECTION -->
+            <div class="ojr-card bg-app-bg-alt border-dark-border p-16px">
+              <h3 class="font-10px fw-900 color-orange uppercase ls-2px border-bottom-dark-border pb-8px mb-16px">INSTRUMENT</h3>
+              <div class="grid grid-cols-1 gap-16px">
+                <div class="grid grid-cols-2 gap-16px">
+                  <div class="flex flex-direction-column gap-4px">
+                    <label class="gnfc-modal-label">DATE(M/D/Y)</label>
+                    <input type="text" class="gnfc-modal-input" value="5/5/2026">
+                  </div>
+                  <div class="flex flex-direction-column gap-4px">
+                    <label class="gnfc-modal-label">ENG</label>
+                    <input type="text" class="gnfc-modal-input" value="ENG_TEST">
+                  </div>
+                </div>
+                <div class="flex flex-direction-column gap-4px">
+                  <label class="gnfc-modal-label">STATUS</label>
+                  <select class="gnfc-modal-input fw-700 color-blue">
+                    <option value="U/P">U/P (Under Progress)</option>
+                    <option value="OVER" selected>OVER</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOTTOM ROW: DESCRIPTION & REMARK -->
+          <div class="grid grid-cols-2 gap-24px">
+            <div class="flex flex-direction-column gap-4px">
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input p-12px" rows="4" style="height: auto;">data were observed erratic from 16.30 hrs on 04.05.2026</textarea>
+            </div>
+            <div class="flex flex-direction-column gap-4px">
+              <label class="gnfc-modal-label">REMARK</label>
+              <textarea class="gnfc-modal-input p-12px" rows="4" style="height: auto;"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="gnfc-modal-footer">
+        <div class="flex items-center gap-12px mr-auto font-12px color-secondary">
+          <span>Jobno:</span>
+          <input type="text" class="gnfc-modal-input w-80px h-24px font-11px" value="1327" readonly>
+          <span>/</span>
+          <input type="text" class="gnfc-modal-input w-80px h-24px font-11px" value="1327" readonly>
+        </div>
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px" onclick="closeEditModal()">Cancel</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary px-24px" onclick="closeEditModal()">Save Changes</button>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const plantName = urlParams.get('plant') || 'AMM';
+    document.getElementById("plant-display").textContent = plantName;
+
+    $(function () {
+      if (typeof renderHeader === 'function') {
+        renderHeader({
+          title: `Operation Job Register - ${plantName}`,
+          breadcrumbs: [
+            { label: "Dashboard", href: "../../dashboard.html" },
+            { label: "Operation Job Register", href: "ojr.html" },
+            { label: plantName }
+          ],
+          backLink: "ojr.html"
+        });
+      }
+    });
+
+    function openEditModal(sr) {
+      document.getElementById('modal-edit-job').classList.add('is-open');
+    }
+    function closeEditModal() {
+      document.getElementById('modal-edit-job').classList.remove('is-open');
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bypass Detail | GNFC</title>
+
+  <!-- Reusable Theme CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+
+  <!-- Page Specific CSS (Consolidated) -->
+  <link rel="stylesheet" href="ojr.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script>window.activePage = 'opr_job_reg';</script>
+</head>
+
+<body class="dashboard-body">
+
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <div class="dashboard-content dashboard-scroll animate-fade-in">
+
+      <!-- PAGE HEADER (CUSTOM) -->
+      <div class="ojr-main-header">
+        <div class="ojr-header-left">
+          <div class="ojr-header-icon">
+            <i class="ph-fill ph-warning-diamond"></i>
+          </div>
+          <div>
+            <h1 class="ojr-header-title">Bypass Parameter Detail</h1>
+            <p class="ojr-header-subtitle">Instrument Department | <span id="plant-display"
+                class="color-blue fw-700">AMM</span></p>
+          </div>
+        </div>
+
+        <!-- SECONDARY NAV (TABS STYLE) -->
+        <div class="ojr-tabs-container">
+          <button onclick="openBypassModal()" class="ojr-tab-btn is-active">
+            <i class="ph ph-list-bullets"></i>
+            Bypassed Parameters
+          </button>
+          <button onclick="openHistoryModal()" class="ojr-tab-btn is-active">
+            <i class="ph ph-clock-counter-clockwise"></i>
+            History
+          </button>
+          <button class="ojr-tab-btn is-active">
+            <i class="ph ph-calendar"></i>
+            Shift
+          </button>
+        </div>
+      </div>
+
+      <!-- TABLE SECTION -->
+      <div class="user-table-wrapper shadow">
+        <table class="user-table w-full">
+          <thead>
+            <tr>
+              <th class="w-50px user-table-center">Sr</th>
+              <th class="user-table-left w-140px">Tag No</th>
+              <th class="user-table-left">Action</th>
+              <th class="user-table-left w-200px">Bypass Request</th>
+              <th class="user-table-left w-200px">Bypassed On</th>
+              <th class="user-table-left w-150px">Inline Request</th>
+              <th class="user-table-left w-150px">Taken Inline</th>
+            </tr>
+          </thead>
+          <tbody id="bypass-table-body">
+            <!-- DATE GROUP -->
+            <tr class="user-table-date-row">
+              <td colspan="7">
+                <div class="flex items-center">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  16/03/2026
+                </div>
+              </td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-bold user-table-blue">1</td>
+              <td class="user-table-cell">
+                <div class="fw-700 color-primary">P1324</div>
+                <div class="font-11px color-secondary">1300</div>
+              </td>
+              <td class="user-table-cell">
+                <div class="status-badge badge-red mb-4px">BYPASS</div>
+                <div class="font-11px color-secondary mt-4px">ps1563l ASU REVAMP STOP LOGIC</div>
+              </td>
+              <td class="user-table-cell">
+                <div class="flex items-start gap-8px font-11px">
+                  <i class="ph-fill ph-circle color-red mt-4px font-8px"></i>
+                  <div>
+                    <div class="color-primary fw-600">3/16/2026 12:16 PM</div>
+                    <div class="color-secondary">DVP/MVB</div>
+                  </div>
+                </div>
+              </td>
+              <td class="user-table-cell">
+                <div class="flex items-start gap-8px font-11px">
+                  <i class="ph-fill ph-circle color-green mt-4px font-8px"></i>
+                  <div>
+                    <div class="color-primary fw-600">3/16/2026 1:08 PM</div>
+                    <div class="color-secondary">MAJ</div>
+                  </div>
+                </div>
+              </td>
+              <td class="user-table-cell"></td>
+              <td class="user-table-cell"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODALS -->
+  <div id="modal-bypass-parameters" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <header class="gnfc-modal-header">
+        <div class="flex flex-direction-column">
+          <h2 class="gnfc-modal-title">BYPASSED PARAMETER</h2>
+          <p class="gnfc-modal-subtitle"><span id="modal-plant-display">AMM</span> / AREA:</p>
+        </div>
+        <button class="gnfc-modal-close" onclick="closeBypassModal()">
+          <i class="ph ph-x"></i>
+        </button>
+      </header>
+      <div class="gnfc-modal-body p-10px">
+        <div class="user-table-wrapper">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th class="w-50px text-center">Sr</th>
+                <th class="text-left w-140px">TAGNO</th>
+                <th class="text-left">ACTION</th>
+                <th class="text-left w-200px">BYPASS REQUEST</th>
+                <th class="text-left w-200px">BYPASSED ON</th>
+                <th class="text-left w-120px">IN-LINE REQ</th>
+                <th class="text-left w-120px">TAKEN IN LINE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center user-table-blue fw-700">1</td>
+                <td>
+                  <div class="fw-700 color-primary">P1324</div>
+                  <div class="font-11px color-secondary">1300</div>
+                </td>
+                <td>
+                  <div class="status-badge badge-red mb-4px">BYPASS</div>
+                  <div class="font-11px color-secondary mt-4px">Purpose: ps1563l ASU REVAMP STOP LOGIC</div>
+                </td>
+                <td>
+                  <div class="flex items-start gap-8px font-11px">
+                    <i class="ph-fill ph-circle color-red mt-4px font-8px"></i>
+                    <div>
+                      <div class="color-primary fw-600">3/16/2026 12:16 PM</div>
+                      <div class="color-secondary">(DVP/MVB)</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="flex items-start gap-8px font-11px">
+                    <i class="ph-fill ph-circle color-green mt-4px font-8px"></i>
+                    <div>
+                      <div class="color-primary fw-600">3/16/2026 1:08 PM</div>
+                      <div class="color-secondary">(MAJ)</div>
+                    </div>
+                  </div>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <footer class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px" onclick="closeBypassModal()">Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="modal-history" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <header class="gnfc-modal-header">
+        <div class="flex flex-direction-column">
+          <h2 class="gnfc-modal-title">BYPASS PARAMETERS HISTORY</h2>
+          <p class="gnfc-modal-subtitle"><span id="modal-history-plant-display">AMM</span> / AREA:</p>
+        </div>
+        <button class="gnfc-modal-close" onclick="closeHistoryModal()">
+          <i class="ph ph-x"></i>
+        </button>
+      </header>
+      <div class="gnfc-modal-body">
+        <div class="user-table-wrapper">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th class="w-50px text-center">Sr</th>
+                <th class="text-left w-140px">TAGNO</th>
+                <th class="text-left">ACTION</th>
+                <th class="text-left w-200px">BYPASS REQUEST</th>
+                <th class="text-left w-200px">BYPASSED ON</th>
+                <th class="text-left w-150px">IN-LINE REQ</th>
+                <th class="text-left w-150px">TAKEN IN LINE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center user-table-blue fw-700">1</td>
+                <td>
+                  <div class="fw-700 color-primary">PS7037L</div>
+                  <div class="font-11px color-secondary">7000</div>
+                </td>
+                <td>
+                  <div class="status-badge badge-red mb-4px">BYPASS</div>
+                  <div class="font-11px color-secondary mt-4px">Purpose: PS7037L/PS7037BL for checking</div>
+                </td>
+                <td>
+                  <div class="flex items-start gap-8px font-11px">
+                    <i class="ph-fill ph-circle color-red mt-4px font-8px"></i>
+                    <div>
+                      <div class="color-primary fw-600">3/14/2026 6:36 PM</div>
+                      <div class="color-secondary">(AAS/NMP)</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="flex items-start gap-8px font-11px">
+                    <i class="ph-fill ph-circle color-green mt-4px font-8px"></i>
+                    <div>
+                      <div class="color-primary fw-600">3/15/2026 8:40 AM</div>
+                      <div class="color-secondary">(MAJ)</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="flex items-start gap-8px font-11px">
+                    <i class="ph-fill ph-circle color-red mt-4px font-8px"></i>
+                    <div>
+                      <div class="color-primary fw-600">3/15/2026 8:42 AM</div>
+                      <div class="color-secondary">(MVB/DVP)</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="flex items-start gap-8px font-11px">
+                    <i class="ph-fill ph-circle color-green mt-4px font-8px"></i>
+                    <div>
+                      <div class="color-primary fw-600">3/15/2026 8:42 AM</div>
+                      <div class="color-secondary">(MAJ)</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <footer class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px" onclick="closeHistoryModal()">Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const plantName = urlParams.get('plant') || 'AMM';
+    document.getElementById("plant-display").textContent = plantName;
+
+    $(function () {
+      if (typeof renderHeader === 'function') {
+        renderHeader({
+          title: `Bypass Detail - ${plantName}`,
+          breadcrumbs: [
+            { label: "Dashboard", href: "../../dashboard.html" },
+            { label: "Operation Job Register", href: "ojr.html" },
+            { label: plantName }
+          ],
+          backLink: "ojr.html"
+        });
+      }
+    });
+
+    function openBypassModal() {
+      document.getElementById('modal-bypass-parameters').classList.add('is-open');
+    }
+    function closeBypassModal() {
+      document.getElementById('modal-bypass-parameters').classList.remove('is-open');
+    }
+    function openHistoryModal() {
+      document.getElementById('modal-history').classList.add('is-open');
+    }
+    function closeHistoryModal() {
+      document.getElementById('modal-history').classList.remove('is-open');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeBypassModal();
+        closeHistoryModal();
+      }
+    });
+  </script>
+
+</body>
+
+</html>

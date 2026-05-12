@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radioactive Measurement Register | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container (Breadcrumb & Nav Title) -->
+    <div id="header-container" data-back="calibration_regiter.html" data-title="BOILER - RADIOACTIVE"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,Calibration Register:calibration_regiter.html,BOILER:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Radioactive Action Bar -->
+      <div class="action-bar-panel calib-action-bar">
+        <div class="calib-action-left">
+          <div class="calib-action-icon-box">
+            <i class="ph-bold ph-radiation"></i>
+          </div>
+          <div>
+            <div class="calib-action-title-group">
+              <h2 class="calib-action-title">Radioactive Measurement Register</h2>
+              <span class="calib-action-badge text-uppercase">IMS/F/INST/02</span>
+            </div>
+            <p class="calib-action-subtitle">Manage and track radioactive source radiation safety checks and standard values</p>
+          </div>
+        </div>
+        <button class="premium-action-btn calib-action-add-btn" id="btn-open-add-modal">
+          <i class="ph-bold ph-plus"></i>
+          <span>Add New Record</span>
+        </button>
+      </div>
+      
+      <!-- Main Data Table -->
+      <div class="user-table-wrapper">
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th class="user-table-center w-50px">Sr</th>
+              <th class="user-table-left" style="min-width: 120px;">Tag</th>
+              <th class="user-table-left" style="min-width: 120px;">Standard Value</th>
+              <th class="user-table-left" style="min-width: 200px;">Measured Value At 5 Cm</th>
+              <th class="user-table-left" style="min-width: 200px;">Measured Value At 1 Mtr</th>
+              <th class="user-table-left">Remarks</th>
+            </tr>
+          </thead>
+          <tbody id="radioactive-tbody">
+            
+            <!-- Date Group 1 -->
+            <tr class="user-table-date" data-date="20/12/2025">
+              <td colspan="6">20/12/2025</td>
+            </tr>
+            <tr class="user-table-row" data-date="20/12/2025">
+              <td class="user-table-center font-14px fw-600">1</td>
+              <td>LT42001</td>
+              <td>200 MicroSv/Hr</td>
+              <td>20 MicroSv/Hr</td>
+              <td>1 MicroSv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="20/12/2025">
+              <td class="user-table-center font-14px fw-600">2</td>
+              <td>LT42003</td>
+              <td>200 MicroSv/Hr</td>
+              <td>22 MicroSv/Hr</td>
+              <td>1 MicroSv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="20/12/2025">
+              <td class="user-table-center font-14px fw-600">3</td>
+              <td>LSH42005</td>
+              <td>200 MicroSv/Hr</td>
+              <td>45 MicroSv/Hr</td>
+              <td>2 MicroSv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="20/12/2025">
+              <td class="user-table-center font-14px fw-600">4</td>
+              <td>DT32020</td>
+              <td>200 MicroSv/Hr</td>
+              <td>52 MicroSv/Hr</td>
+              <td>1 MicroSv/Hr</td>
+              <td>Ok</td>
+            </tr>
+
+            <!-- Date Group 2 -->
+            <tr class="user-table-date" data-date="25/08/2025">
+              <td colspan="6">25/08/2025</td>
+            </tr>
+            <tr class="user-table-row" data-date="25/08/2025">
+              <td class="user-table-center font-14px fw-600">5</td>
+              <td>LT42001</td>
+              <td>200 MicroSv/Hr</td>
+              <td>50 MicroSv/Hr</td>
+              <td>2 MicroSv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="25/08/2025">
+              <td class="user-table-center font-14px fw-600">6</td>
+              <td>LT42003</td>
+              <td>200 MicroSv/Hr</td>
+              <td>35 MicroSv/Hr</td>
+              <td>3 MicroSv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="25/08/2025">
+              <td class="user-table-center font-14px fw-600">7</td>
+              <td>LSH42005</td>
+              <td>200 MicroSv/Hr</td>
+              <td>40 MicroSv/Hr</td>
+              <td>2 MicroSv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="25/08/2025">
+              <td class="user-table-center font-14px fw-600">8</td>
+              <td>DT32020</td>
+              <td>200 MicroSv/Hr</td>
+              <td>6 MicroSv/Hr</td>
+              <td>1 MicroSv/Hr</td>
+              <td>Ok</td>
+            </tr>
+
+            <!-- Date Group 3 -->
+            <tr class="user-table-date" data-date="21/12/2024">
+              <td colspan="6">21/12/2024</td>
+            </tr>
+            <tr class="user-table-row" data-date="21/12/2024">
+              <td class="user-table-center font-14px fw-600">9</td>
+              <td>LT42003</td>
+              <td>200 micro Sv/Hr</td>
+              <td>60 micro Sv/Hr</td>
+              <td>35 micro Sv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="21/12/2024">
+              <td class="user-table-center font-14px fw-600">10</td>
+              <td>DT32020</td>
+              <td>200 micro Sv/Hr</td>
+              <td>7 micro Sv/Hr</td>
+              <td>1 micro Sv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="21/12/2024">
+              <td class="user-table-center font-14px fw-600">11</td>
+              <td>LSH42005</td>
+              <td>200 micro Sv/Hr</td>
+              <td>60 micro Sv/Hr</td>
+              <td>4 micro Sv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="21/12/2024">
+              <td class="user-table-center font-14px fw-600">12</td>
+              <td>LT42001</td>
+              <td>200 micro Sv/Hr</td>
+              <td>45 micro Sv/Hr</td>
+              <td>4 micro Sv/Hr</td>
+              <td>Ok</td>
+            </tr>
+
+            <!-- Date Group 4 -->
+            <tr class="user-table-date" data-date="01/07/2024">
+              <td colspan="6">01/07/2024</td>
+            </tr>
+            <tr class="user-table-row" data-date="01/07/2024">
+              <td class="user-table-center font-14px fw-600">13</td>
+              <td>LSH42005</td>
+              <td>200 micro Sv/Hr</td>
+              <td>30 micro Sv/Hr</td>
+              <td>6 micro Sv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="01/07/2024">
+              <td class="user-table-center font-14px fw-600">14</td>
+              <td>LT42001</td>
+              <td>200 micro Sv/Hr</td>
+              <td>26 micro Sv/Hr</td>
+              <td>6 micro Sv/Hr</td>
+              <td>Ok</td>
+            </tr>
+            <tr class="user-table-row" data-date="01/07/2024">
+              <td class="user-table-center font-14px fw-600">15</td>
+              <td>LT42003</td>
+              <td>200 micro Sv/Hr</td>
+              <td>22 micro Sv/Hr</td>
+              <td>6 micro Sv/Hr</td>
+              <td>Ok</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Radioactive Record Modal -->
+  <div id="add-radioactive-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add New Radioactive Record</h3>
+        <button type="button" class="gnfc-modal-close" id="btn-close-add-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <!-- Vertical Form Layout based on Image -->
+        <form id="add-radioactive-form" class="form-grid grid-cols-12">
+
+          <!-- Tag No (Search & Select) -->
+          <div class="col-span-7">
+            <label class="gnfc-modal-label">Tag No</label>
+            <div class="flex gap-4px">
+              <input id="add-tag-input" type="text" class="gnfc-modal-input flex-1 uppercase">
+              <select id="add-tag-select" class="gnfc-modal-input flex-1">
+                <option value="">-- Select Tag --</option>
+                <option value="LT42001">LT42001</option>
+                <option value="LT42003">LT42003</option>
+                <option value="LSH42005">LSH42005</option>
+                <option value="DT32020">DT32020</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-span-5">
+            <label class="gnfc-modal-label">Standard Value</label>
+            <input type="text" id="add-std-val" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-6">
+            <label class="gnfc-modal-label">Measured Value at 5 cm</label>
+            <input type="text" id="add-m5-val" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-6">
+            <label class="gnfc-modal-label">Measured Value at 1Mtr</label>
+            <input type="text" id="add-m1-val" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Remarks</label>
+            <textarea id="add-remarks" class="gnfc-modal-input textarea-h-60"></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="submit" form="add-radioactive-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-cancel-add-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      function updateRecordCountBadge() {
+        const count = $('#radioactive-tbody tr.user-table-row').length;
+        $('#records-count-badge').text(`Total Entries: ${count}`);
+      }
+      updateRecordCountBadge();
+
+
+
+      // --- 3. Modal Actions Trigger and Close ---
+      $('#btn-open-add-modal').on('click', function() {
+        $('#add-radioactive-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      $('#btn-close-add-modal, #btn-cancel-add-modal').on('click', function() {
+        $('#add-radioactive-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+        $('#add-radioactive-form')[0].reset();
+        $('#add-tag-input').removeClass('is-invalid-tag');
+      });
+
+      // --- 4. Tag Autocomplete Engine ---
+      function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let snapBackTimeout = null;
+        let snapBackInterval = null;
+        let isAutoRemoving = false;
+
+        function getAvailableTags() {
+          let tags = [];
+          $select.find('option').each(function () {
+            if ($(this).val()) tags.push($(this).val());
+          });
+          return tags;
+        }
+
+        function stopAutoRemove() {
+          clearTimeout(snapBackTimeout);
+          clearInterval(snapBackInterval);
+          isAutoRemoving = false;
+        }
+
+        const tags = getAvailableTags();
+
+        $input.on('input', function (e) {
+          const cursorStart = this.selectionStart;
+          const cursorEnd = this.selectionEnd;
+          const rawVal = $(this).val();
+          const upperVal = rawVal.toUpperCase();
+          if (rawVal !== upperVal) {
+            $(this).val(upperVal);
+            this.setSelectionRange(cursorStart, cursorEnd);
+          }
+
+          const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+          const isDeleting = inputType && inputType.startsWith('delete');
+
+          if (isDeleting) {
+            stopAutoRemove();
+          }
+
+          let inputVal = $(this).val().toUpperCase();
+
+          if (isDeleting) {
+            let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+            if (hasMatch) {
+              $(this).removeClass('is-invalid-tag');
+            } else {
+              $(this).addClass('is-invalid-tag');
+            }
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          let longestValidPrefix = "";
+          for (let i = inputVal.length; i >= 0; i--) {
+            let sub = inputVal.substring(0, i);
+            if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+            $(this).val(inputVal);
+          }
+
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            $select.val('');
+            if (onMatch) onMatch('');
+
+            stopAutoRemove();
+
+            const self = this;
+            const targetPrefix = longestValidPrefix;
+            snapBackTimeout = setTimeout(() => {
+              isAutoRemoving = true;
+              snapBackInterval = setInterval(() => {
+                let currentVal = $input.val();
+                if (currentVal.length > targetPrefix.length) {
+                  currentVal = currentVal.substring(0, currentVal.length - 1);
+                  $input.val(currentVal);
+                } else {
+                  clearInterval(snapBackInterval);
+                  isAutoRemoving = false;
+                  $input.removeClass('is-invalid-tag');
+
+                  let val = $input.val().toUpperCase();
+                  if (val.length > 0) {
+                    let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(val));
+                    if (firstMatch) {
+                      $input.val(firstMatch);
+                      self.setSelectionRange(val.length, firstMatch.length);
+                      $select.val(firstMatch);
+                      if (onMatch) onMatch(firstMatch);
+                    }
+                  } else {
+                    $select.val('');
+                    if (onMatch) onMatch('');
+                  }
+                }
+              }, 150);
+            }, 800);
+
+            return;
+          }
+
+          stopAutoRemove();
+          $(this).removeClass('is-invalid-tag');
+
+          if (inputVal.length > 0) {
+            let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(inputVal));
+            if (firstMatch) {
+              $(this).val(firstMatch);
+              this.setSelectionRange(inputVal.length, firstMatch.length);
+              $select.val(firstMatch);
+              if (onMatch) onMatch(firstMatch);
+            }
+          } else {
+            $select.val('');
+            if (onMatch) onMatch('');
+          }
+        });
+
+        $input.on('keydown', function (e) {
+          if (isAutoRemoving && e.key !== 'Enter') {
+            stopAutoRemove();
+          }
+
+          if (e.key === 'Enter') {
+            stopAutoRemove();
+            const currentVal = $(this).val();
+            if (currentVal && !$(this).hasClass('is-invalid-tag')) {
+              e.preventDefault();
+              $(this).val(currentVal);
+              this.setSelectionRange(currentVal.length, currentVal.length);
+            }
+          }
+        });
+
+        $select.on('change', function () {
+          stopAutoRemove();
+          let val = $(this).val();
+          $input.val(val);
+          if (onMatch) onMatch(val);
+        });
+      }
+
+      // Initialize Autocomplete
+      initTagAutocomplete('#add-tag-input', '#add-tag-select');
+
+      // --- 5. Add Record Save Handler ---
+      $('#add-radioactive-form').on('submit', function(e) {
+        e.preventDefault();
+
+        // Extract values
+        const today = new Date();
+        const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+
+        const tag = $('#add-tag-input').val().trim().toUpperCase();
+        if (!tag || $('#add-tag-input').hasClass('is-invalid-tag')) {
+          Swal.fire('Error', 'Please select a valid Tag No', 'error');
+          return;
+        }
+
+        const stdVal = $('#add-std-val').val().trim();
+        const m5Val = $('#add-m5-val').val().trim();
+        const m1Val = $('#add-m1-val').val().trim();
+        const remarks = $('#add-remarks').val().trim() || 'Ok';
+
+        // Check if date header exists in tbody
+        let $dateHeader = $('#radioactive-tbody tr.user-table-date').filter(function() {
+          return $(this).data('date') === formattedDate;
+        });
+
+        // Create new row
+        const newRowHTML = `
+          <tr class="user-table-row" data-date="${formattedDate}" style="display: none;">
+            <td class="user-table-center font-14px fw-600">NEW</td>
+            <td>${tag}</td>
+            <td>${stdVal}</td>
+            <td>${m5Val}</td>
+            <td>${m1Val}</td>
+            <td>${remarks}</td>
+          </tr>
+        `;
+
+        if ($dateHeader.length > 0) {
+          // Date header exists, insert right after the header
+          $dateHeader.after(newRowHTML);
+        } else {
+          // Date header does not exist, insert at the top of tbody
+          const newHeaderHTML = `
+            <tr class="user-table-date" data-date="${formattedDate}">
+              <td colspan="6">${formattedDate}</td>
+            </tr>
+          `;
+          $('#radioactive-tbody').prepend(newRowHTML).prepend(newHeaderHTML);
+        }
+
+        // Show row with transition
+        const $addedRow = $('#radioactive-tbody tr.user-table-row').filter(function() {
+          return $(this).find('td').eq(1).text() === tag && $(this).attr('data-date') === formattedDate;
+        }).first();
+
+        // Trigger automatic serial numbering reindexing
+        reindexSerialNumbers();
+        updateRecordCountBadge();
+
+        $addedRow.fadeIn(500);
+
+        // Success Popup
+        Swal.fire({
+          icon: 'success',
+          title: 'Saved!',
+          text: `Radioactive measurement for tag ${tag} was saved.`,
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          $('#add-radioactive-modal').removeClass('is-open');
+          $('#add-radioactive-form')[0].reset();
+        });
+      });
+
+      // Global helper to reindex serial numbers sequentially
+      function reindexSerialNumbers() {
+        $('#radioactive-tbody tr.user-table-row').each(function(index) {
+          $(this).find('td').first().text(index + 1);
+        });
+      }
+
+      // Generic backdrop overlay click helper
+      $(document).on('click', '.gnfc-modal-overlay', function (e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          $(this).removeClass('is-open');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

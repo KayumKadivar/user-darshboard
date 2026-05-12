@@ -117,17 +117,50 @@ select option {
 .admin-sidebar-logo {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 20px;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 0 20px;
     border-bottom: 1px solid var(--app-border, #23272e);
-    height: 56px;
+    height: 60px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--app-sidebar);
+    position: relative;
+    overflow: hidden;
 }
 
-.admin-sidebar-logo img {
-    height: 32px;
+.sidebar-logo-img {
+    height: 36px;
     width: auto;
     flex-shrink: 0;
+    filter: drop-shadow(0 0 10px rgba(255, 153, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--typo-orange, #FF9900);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    text-transform: uppercase;
+    transition: opacity 0.2s ease, transform 0.3s ease;
+}
+
+.app-sidebar.is-collapsed .admin-sidebar-logo {
+    justify-content: center;
+    padding: 0;
+}
+
+.app-sidebar.is-collapsed .logo-text {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-10px);
+    width: 0;
+    display: none;
+}
+
+.app-sidebar.is-collapsed .sidebar-logo-img {
+    transform: scale(1.1);
 }
 
 .admin-sidebar-section {
@@ -522,6 +555,10 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
     background: var(--app-border);
     opacity: 0.8;
 
+}
+
+.border-bottom-light {
+    border-bottom: 1px solid var(--app-border);
 }
 
 /* ── Content View Utils ── */

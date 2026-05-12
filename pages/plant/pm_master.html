@@ -28,7 +28,9 @@
   <div class="sidebar-container"></div>
 
   <main class="main-wrapper">
-    <div id="header-container" data-title="PM Master" data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,PM Master:active" data-back="/pages/plant/boiler_dashboard.html"></div>
+    <div id="header-container" data-title="PM Master"
+      data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,PM Master:active"
+      data-back="/pages/plant/boiler_dashboard.html"></div>
 
     <div class="dashboard-content dashboard-scroll">
       <div class="mx-auto flex flex-col gap-16px" style="width: 100%;">
@@ -80,8 +82,7 @@
             <div class="flex flex-col gap-18px">
               <!-- Inline row for Search and Tag Detail -->
               <div class="flex items-center gap-16px">
-                <label class="gnfc-modal-label text-nowrap" style="width: 180px;">SEARCH /
-                  SELECT TAG :</label>
+                <label class="gnfc-modal-label text-nowrap" style="width: 180px;">SEARCH / SELECT TAG :</label>
 
                 <div class="flex items-center gap-12px flex-1">
                   <!-- Search Input -->
@@ -95,10 +96,6 @@
                     <option value="1DPT2591">1DPT2591</option>
                     <option value="FT_1401">FT_1401</option>
                   </select>
-
-                  <span class="font-10px fw-700 color-secondary text-uppercase opacity-60 text-nowrap">
-                    SELECT TAG TO EDIT / DELETE
-                  </span>
                 </div>
               </div>
 
@@ -180,58 +177,69 @@
       </div>
 
       <div class="gnfc-modal-body">
-        <div class="grid grid-cols-2 gap-16px">
+        <div class="flex flex-col gap-16px">
+          <!-- Tag Search & Select Row -->
           <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">TAG_NO</label>
-            <select id="add-modal-pm-tag-no" class="gnfc-modal-input">
-              <option value="">Select Tag No</option>
-              <option value="1_110VDCEF">1_110VDCEF</option>
-              <option value="1_132KVL1L2_OFF">1_132KVL1L2_OFF</option>
-              <option value="1_2BLRTRP_EHTC">1_2BLRTRP_EHTC</option>
-              <option value="1_2BLRTRP_TP">1_2BLRTRP_TP</option>
-            </select>
+            <label class="gnfc-modal-label">TAG NO  <span class="">*</span></label>
+            <div class="flex gap-12px">
+              <input id="add-modal-tag-input" type="text" class="gnfc-modal-input flex-1 uppercase"
+                placeholder="Type Tag No...">
+              <select id="add-modal-pm-tag-no" class="gnfc-modal-input flex-1">
+                <option value="">Select Tag No</option>
+                <option value="1_110VDCEF">1_110VDCEF</option>
+                <option value="1_132KVL1L2_OFF">1_132KVL1L2_OFF</option>
+                <option value="1_2BLRTRP_EHTC">1_2BLRTRP_EHTC</option>
+                <option value="1_2BLRTRP_TP">1_2BLRTRP_TP</option>
+                <option value="1AR2510">1AR2510</option>
+                <option value="1DPT2591">1DPT2591</option>
+                <option value="FT_1401">FT_1401</option>
+              </select>
+            </div>
           </div>
 
-          <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">CRITICALITY</label>
-            <input id="add-modal-pm-criticality" type="text" class="gnfc-modal-input" placeholder="Enter criticality">
-          </div>
+          <!-- Rest of the fields in a grid -->
+          <div class="grid grid-cols-2 gap-16px">
+            <div class="flex flex-col gap-4px">
+              <label class="gnfc-modal-label">CRITICALITY  <span class="">*</span></label>
+              <input id="add-modal-pm-criticality" type="text" class="gnfc-modal-input" placeholder="Enter criticality">
+            </div>
 
-          <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">INST TYPE</label>
-            <select id="add-modal-pm-inst-type" class="gnfc-modal-input">
-              <option value="ANALYZER">ANALYZER</option>
-              <option value="TX">TX</option>
-              <option value="C/V">C/V</option>
-              <option value="SWITCH">SWITCH</option>
-            </select>
-          </div>
+            <div class="flex flex-col gap-4px">
+              <label class="gnfc-modal-label">INST TYPE  <span class="">*</span></label>
+              <select id="add-modal-pm-inst-type" class="gnfc-modal-input">
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="TX">TX</option>
+                <option value="C/V">C/V</option>
+                <option value="SWITCH">SWITCH</option>
+              </select>
+            </div>
 
-          <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">MODE</label>
-            <select id="add-modal-pm-mode" class="gnfc-modal-input">
-              <option value="RUNNING">RUNNING</option>
-              <option value="STANDBY">S/D</option>
-            </select>
-          </div>
+            <div class="flex flex-col gap-4px">
+              <label class="gnfc-modal-label">MODE  <span class="">*</span></label>
+              <select id="add-modal-pm-mode" class="gnfc-modal-input">
+                <option value="RUNNING">RUNNING</option>
+                <option value="STANDBY">S/D</option>
+              </select>
+            </div>
 
-          <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">PM MONTH</label>
-            <select id="add-modal-pm-month" class="gnfc-modal-input">
-              <option value="">Select Month</option>
-              <option value="Jan">January</option>
-              <option value="Feb">February</option>
-              <option value="Mar">March</option>
-              <option value="Apr">April</option>
-              <option value="May">May</option>
-              <option value="Jun">June</option>
-              <option value="Jul">July</option>
-              <option value="Aug">August</option>
-              <option value="Sep">September</option>
-              <option value="Oct">October</option>
-              <option value="Nov">November</option>
-              <option value="Dec">December</option>
-            </select>
+            <div class="flex flex-col gap-4px">
+              <label class="gnfc-modal-label">PM MONTH  <span class="">*</span></label>
+              <select id="add-modal-pm-month" class="gnfc-modal-input">
+                <option value="">Select Month</option>
+                <option value="Jan">January</option>
+                <option value="Feb">February</option>
+                <option value="Mar">March</option>
+                <option value="Apr">April</option>
+                <option value="May">May</option>
+                <option value="Jun">June</option>
+                <option value="Jul">July</option>
+                <option value="Aug">August</option>
+                <option value="Sep">September</option>
+                <option value="Oct">October</option>
+                <option value="Nov">November</option>
+                <option value="Dec">December</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -260,17 +268,30 @@
       <div class="gnfc-modal-body">
         <div class="grid grid-cols-2 gap-16px">
           <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">TAG_NO</label>
-            <input id="edit-modal-pm-tag-no" type="text" class="gnfc-modal-input" value="1AR2510" readonly>
+            <label class="gnfc-modal-label">TAG_NO <span class="required">*</span></label>
+            <div class="flex gap-12px">
+              <input id="edit-modal-tag-input" type="text" class="gnfc-modal-input flex-1 uppercase"
+                placeholder="Type Tag No...">
+              <select id="edit-modal-pm-tag-no" class="gnfc-modal-input flex-1">
+                <option value="">Select Tag No</option>
+                <option value="1_110VDCEF">1_110VDCEF</option>
+                <option value="1_132KVL1L2_OFF">1_132KVL1L2_OFF</option>
+                <option value="1_2BLRTRP_EHTC">1_2BLRTRP_EHTC</option>
+                <option value="1_2BLRTRP_TP">1_2BLRTRP_TP</option>
+                <option value="1AR2510">1AR2510</option>
+                <option value="1DPT2591">1DPT2591</option>
+                <option value="FT_1401">FT_1401</option>
+              </select>
+            </div>
           </div>
 
           <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">CRITICALITY</label>
+            <label class="gnfc-modal-label">CRITICALITY <span class="required">*</span></label>
             <input id="edit-modal-pm-criticality" type="text" class="gnfc-modal-input" value="No">
           </div>
 
           <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">INSTTYPE</label>
+            <label class="gnfc-modal-label">INSTTYPE <span class="required">*</span></label>
             <select id="edit-modal-pm-inst-type" class="gnfc-modal-input">
               <option value="ANALYZER" selected>ANALYZER</option>
               <option value="TX">TX</option>
@@ -280,7 +301,7 @@
           </div>
 
           <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">MODE</label>
+            <label class="gnfc-modal-label">MODE <span class="required">*</span></label>
             <select id="edit-modal-pm-mode" class="gnfc-modal-input">
               <option value="RUNNING" selected>RUNNING</option>
               <option value="STANDBY">S/D</option>
@@ -288,7 +309,7 @@
           </div>
 
           <div class="flex flex-col gap-4px">
-            <label class="gnfc-modal-label">PM_MONTH</label>
+            <label class="gnfc-modal-label">PM_MONTH <span class="required">*</span></label>
             <select id="edit-modal-pm-month" class="gnfc-modal-input">
               <option value="">Select Month</option>
               <option value="Jan">Jan</option>
@@ -876,11 +897,17 @@
       // Initialize Update Status Section
       initTagAutocomplete('#status-update-tag-input', '#status-update-tag-select');
 
+      // Initialize Add PM Modal Section
+      initTagAutocomplete('#add-modal-tag-input', '#add-modal-pm-tag-no');
+
+      // Initialize Edit PM Modal Section
+      initTagAutocomplete('#edit-modal-tag-input', '#edit-modal-pm-tag-no');
+
       $('#btn-add-pm').on('click', () => {
         $('#pm-add-modal').addClass('is-open');
       });
 
-      $('#btn-pm-add-save').on('click', function() {
+      $('#btn-pm-add-save').on('click', function () {
         Swal.fire({
           icon: 'success',
           title: 'Saved!',
@@ -902,10 +929,11 @@
           });
         }
         $('#edit-modal-pm-tag-no').val(_selectedTagNo);
+        $('#edit-modal-tag-input').val(_selectedTagNo);
         $('#pm-edit-modal').addClass('is-open');
       });
 
-      $('#btn-pm-edit-update').on('click', function() {
+      $('#btn-pm-edit-update').on('click', function () {
         Swal.fire({
           icon: 'success',
           title: 'Updated!',

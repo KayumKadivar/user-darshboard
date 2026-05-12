@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job List Detail | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="joblist.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'job_list';
+
+    const plant = "BOILER";
+    document.title = "REVAMP JOB LIST (BOILER) | GNFC";
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="joblist.html"
+      data-breadcrumb="Dashboard:../../dashboard.html,Job List:joblist.html,active">
+    </div>
+
+    <!-- Page Content -->
+    <div class="app-content-area">
+
+      <!-- Action Bar -->
+      <div class="action-bar">
+        <!-- Left Tools -->
+        <div id="leftTools" class="tool-group">
+          <div class="tool-item">
+            <span class="plant-filter-label">Attachments :</span>
+            <select id="attachmentSelect" class="gnfc-modal-input w-140px px-8px">
+              <option value="">Select</option>
+              <option value="1">Doc 1</option>
+            </select>
+          </div>
+
+          <div class="tool-group gap-8px">
+            <button onclick="openAttachmentsModal()" class="admin-action-btn" title="Open Folder">
+              <i class="ph-fill ph-folder-open"></i>
+            </button>
+            <button onclick="previewAttachment()" class="admin-action-btn" title="Preview Attachment">
+              <i class="ph-bold ph-eye"></i>
+            </button>
+            <button onclick="confirmDeleteAttachment()" class="admin-action-btn delete-btn" title="Delete Attachment">
+              <i class="ph-bold ph-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Tools -->
+        <div class="tool-group">
+          <div class="tool-item">
+            <span class="plant-filter-label">Category</span>
+            <select id="categoryFilter" onchange="applyFilters()"
+              class="gnfc-modal-input w-200px font-14px fw-600 px-8px">
+              <option value="ALL">ALL</option>
+              <option value="N.A.">N.A.</option>
+              <option value="AFTER S/D">AFTER S/D</option>
+              <option value="BEFORE S/D">BEFORE S/D</option>
+              <option value="MACHINE HOUSE">MACHINE HOUSE</option>
+              <option value="N.A.">N.A.</option>
+              <option value="PSA">PSA</option>
+              <option value="S/D">S/D</option>
+              <option value="ALL">ALL</option>
+            </select>
+          </div>
+
+          <div class="tool-item">
+            <span class="plant-filter-label">Area</span>
+            <select id="areaFilter" onchange="applyFilters()" class="gnfc-modal-input w-160px font-14px fw-600 px-8px">
+              <option value="ALL">ALL</option>
+              <option value="N.A.">N.A.</option>
+              <option value="ASH">ASH</option>
+              <option value="BOILER-1">BOILER-1</option>
+              <option value="BOILER-2">BOILER-2</option>
+              <option value="BOILER-3">BOILER-3</option>
+              <option value="BOILER-4">BOILER-4</option>
+              <option value="CHP">CHP</option>
+              <option value="COMMON">COMMON</option>
+              <option value="CPSU-BMS">CPSU-BMS</option>
+              <option value="CPSU-BOP">CPSU-BOP</option>
+              <option value="CPSU-GT">CPSU-GT</option>
+              <option value="CPSU-HRSG">CPSU-HRSG</option>
+              <option value="NG STN">NG STN</option>
+              <option value="TG-1">TG-1</option>
+              <option value="TG-2">TG-2</option>
+              <option value="ALL">ALL</option>
+            </select>
+          </div>
+
+
+          <div id="addNewAction" class="tool-group">
+            <div class="action-divider"></div>
+            <button type="button" onclick="openAddJobModal()" class="plant-nav-pill">
+              <i class="ph-bold ph-plus color-blue"></i>
+              <span>ADD NEW</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <section class="plant-table-card">
+        <div class="plant-table-container">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table"></i>
+              <span id="dynamicTableTitle" class="plant-table-card__title">JOB LIST</span>
+            </div>
+
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="mainTable">
+              <thead id="headerStandard" class="mode-header">
+                <tr>
+                  <th class="user-table-center" rowspan="2" style="width: 60px">Sr</th>
+                  <th class="user-table-center" style="width: 140px">Area</th>
+                  <th class="user-table-left" rowspan="2">Description</th>
+                  <th class="user-table-center" style="width: 140px">Target Date</th>
+                  <th class="user-table-center" style="width: 120px">Status</th>
+                  <th class="user-table-center" rowspan="2" style="width: 380px">Remark</th>
+                </tr>
+                <tr>
+                  <th class="user-table-center">Tag No</th>
+                  <th class="user-table-center">Last Reviewed Date</th>
+                  <th class="user-table-center user-table-border-right">By</th>
+                </tr>
+              </thead>
+
+              <!-- Standard Body -->
+              <tbody id="bodyStandard" class="mode-body">
+                <!-- Global Date Header -->
+                <tr class="user-table-date">
+                  <td colspan="6" class="user-table-date">Last Reviewed on :</td>
+                </tr>
+
+                <!-- Category: BEFORE S/D -->
+                <tr class="user-table-date" data-category="BEFORE S/D">
+                  <td colspan="6" class="user-table-category">BEFORE S/D</td>
+                </tr>
+                <!-- Row 1 -->
+                <tr class="user-table-row" data-category="BEFORE S/D" data-area="N.A.">
+                  <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">1</td>
+                  <td class="user-table-left">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-secondary">ASH</span>
+                      <span class="user-table-blue fw-700 cursor-pointer" onclick="openEditJobModal()">AUX CAB</span>
+                    </div>
+                  </td>
+                  <td class="user-table-left">Aux cabinet tags shifting Job. Detailing and Shifting of Instrument and
+                    power feeder in running plant.</td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>25/05/2026</span>
+                      <span class="user-table-secondary">20/05/2026</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-left">PENDING</div>
+                      <div class="user-table-left">PES</div>
+                    </div>
+                  </td>
+                  <td class="">
+                    <i class="ph-bold ph-chat-circle-dots cursor-pointer" onclick="openRemarkModal('PES', 'Eng')"></i>
+                  </td>
+                </tr>
+                <!-- Row 2 -->
+                <tr class="user-table-row" data-category="BEFORE S/D" data-area="N.A.">
+                  <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">2</td>
+                  <td class="user-table-left">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-secondary">BOILER-1</span>
+                      <span class="user-table-blue fw-700 cursor-pointer" onclick="openEditJobModal()">BASEFRAME</span>
+                    </div>
+                  </td>
+                  <td class="user-table-left">Baseframe detailing</td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>15/06/2026</span>
+                      <span class="user-table-secondary">10/06/2026</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-left">PENDING</div>
+                      <div class="user-table-left">PES</div>
+                    </div>
+                  </td>
+                  <td class="">
+                    <i class="ph-bold ph-chat-circle-dots cursor-pointer" onclick="openRemarkModal('PES', 'Eng')"></i>
+                  </td>
+                </tr>
+                <!-- Row 3 -->
+                <tr class="user-table-row" data-category="BEFORE S/D" data-area="N.A.">
+                  <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">3</td>
+                  <td class="user-table-left">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-secondary">BOILER-2</span>
+                      <span class="user-table-blue fw-700 cursor-pointer" onclick="openEditJobModal()">MASTER
+                        TYALIST</span>
+                    </div>
+                  </td>
+                  <td class="user-table-left">PLC tags list and cable shifting to new cabinet detailing</td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>30/06/2026</span>
+                      <span class="user-table-secondary">25/06/2026</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-left">PENDING</div>
+                      <div class="user-table-left">PES</div>
+                    </div>
+                  </td>
+                  <td class="">
+                    <i class="ph-bold ph-chat-circle-dots cursor-pointer" onclick="openRemarkModal('PES', 'Eng')"></i>
+                  </td>
+                </tr>
+                <!-- Row 4 -->
+                <tr class="user-table-row" data-category="BEFORE S/D" data-area="N.A.">
+                  <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">4</td>
+                  <td class="user-table-left">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-secondary">BOILER-3</span>
+                      <span class="user-table-blue fw-700 cursor-pointer" onclick="openEditJobModal()">110 UPS</span>
+                    </div>
+                  </td>
+                  <td class="user-table-left">Secondary feeder for New ESD system Note to be raised to electrical dept.
+                  </td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>10/07/2026</span>
+                      <span class="user-table-secondary">05/07/2026</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-left">PENDING</div>
+                      <div class="user-table-left">PES</div>
+                    </div>
+                  </td>
+                  <td class="">
+                    <i class="ph-bold ph-chat-circle-dots cursor-pointer" onclick="openRemarkModal('PES', 'Eng')"></i>
+                  </td>
+                </tr>
+                <!-- Row 5 -->
+                <tr class="user-table-row" data-category="BEFORE S/D" data-area="N.A.">
+                  <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">5</td>
+                  <td class="user-table-left">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-secondary">BOILER-4</span>
+                      <span class="user-table-blue fw-700 cursor-pointer" onclick="openEditJobModal()">40</span>
+                    </div>
+                  </td>
+                  <td class="user-table-left">4C requirement for annual s/d. ESD and DCS Upgradation.</td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>15/07/2026</span>
+                      <span class="user-table-secondary">11/07/2026</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-left">PENDING</div>
+                      <div class="user-table-left">PES</div>
+                    </div>
+                  </td>
+                  <td class="">
+                    <i class="ph-bold ph-chat-circle-dots cursor-pointer" onclick="openRemarkModal('PES', 'Eng')"></i>
+                  </td>
+                </tr>
+                <!-- Row 6 -->
+                <tr class="user-table-row" data-category="BEFORE S/D" data-area="N.A.">
+                  <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">6</td>
+                  <td class="user-table-left">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-secondary">CHP</span>
+                      <span class="user-table-blue fw-700 cursor-pointer" onclick="openEditJobModal()">SERVER
+                        ROOM</span>
+                    </div>
+                  </td>
+                  <td class="user-table-left">CCS Server room location and note to operation group.</td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>20/07/2026</span>
+                      <span class="user-table-secondary">15/07/2026</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-left">PENDING</div>
+                      <div class="user-table-left">PES</div>
+                    </div>
+                  </td>
+                  <td class="">
+                    <i class="ph-bold ph-chat-circle-dots cursor-pointer" onclick="openRemarkModal('PES', 'Eng')"></i>
+                  </td>
+                </tr>
+                <!-- Row 7 -->
+                <tr class="user-table-row" data-category="BEFORE S/D" data-area="N.A.">
+                  <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">7</td>
+                  <td class="user-table-left">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-secondary">COMMON</span>
+                      <span class="user-table-blue fw-700 cursor-pointer" onclick="openEditJobModal()">CML</span>
+                    </div>
+                  </td>
+                  <td class="user-table-left">Note to civil for Server room, furniture and partition.</td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>25/07/2026</span>
+                      <span class="user-table-secondary">20/07/2026</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-left">PENDING</div>
+                      <div class="user-table-left">KJB</div>
+                    </div>
+                  </td>
+                  <td class="">
+                    <i class="ph-bold ph-chat-circle-dots cursor-pointer" onclick="openRemarkModal('KJB', 'Eng')"></i>
+                  </td>
+                </tr>
+
+                <!-- Category: DOCUMENTATION -->
+                <tr class="user-table-date" data-category="DOCUMENTATION">
+                  <td colspan="6" class="user-table-category">DOCUMENTATION</td>
+                </tr>
+                <tr class="user-table-row" data-category="DOCUMENTATION" data-area="BOILER-2">
+                  <td class="user-table-center  cursor-pointer color-primary fw-700" onclick="openEditJobModal()">10
+                  </td>
+                  <td class="user-table-left">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-secondary">CPSU-BMS</span>
+                      <span class="user-table-blue fw-700 cursor-pointer" onclick="openEditJobModal()">DOC-04</span>
+                    </div>
+                  </td>
+                  <td class="user-table-left">Review of AMC modification in plant SID manual.</td>
+                  <td class="user-table-center">31/12/2015</td>
+                  <td class="">
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-left">PENDING</div>
+                      <div class="user-table-left ">KJB</div>
+                    </div>
+                  </td>
+                  <td class="">
+                    Detail shall be collected and implemented in manual.
+                    <i class="ph-bold ph-chat-circle-dots cursor-pointer" onclick="openRemarkModal()"></i>
+                  </td>
+                </tr>
+
+                <!-- Category: S/D -->
+                <tr class="user-table-date" data-category="S/D">
+                  <td colspan="6" class="user-table-category">S/D</td>
+                </tr>
+                <!-- Row 8 -->
+                <tr class="user-table-row" data-category="S/D" data-area="N.A.">
+                  <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">8</td>
+                  <td class="user-table-left">
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-secondary">CPSU-BOP</span>
+                      <span class="user-table-blue fw-700 cursor-pointer" onclick="openEditJobModal()">MCC Electrical
+                        Cables</span>
+                    </div>
+                  </td>
+                  <td class="user-table-left">Electrical Note for MCC side cable removal and re installation in new PLC
+                    Cabinet.</td>
+                  <td class="user-table-center"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-left">PENDING</div>
+                      <div class="user-table-left">KJB</div>
+                    </div>
+                  </td>
+                  <td class="">
+                    <span class="color-red font-12px">Note sent with Termination detail on date 15/11/2014 [written by:
+                      KJB Date: 17/11/2014]</span>
+                    <i class="ph-bold ph-chat-circle-dots cursor-pointer" onclick="openRemarkModal('KJB', 'Eng')"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Attachments Modal -->
+      <div id="attachmentsModal" class="gnfc-modal-overlay">
+        <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+          <div class="gnfc-modal-header">
+            <div class="modal-title-box">
+              <h2 class="gnfc-modal-title">
+                Job List Attachments
+              </h2>
+            </div>
+            <button onclick="closeAttachmentsModal()" class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+          </div>
+          <div class="gnfc-modal-body">
+            <div id="fileInputContainer">
+              <!-- Initial rows -->
+              <div class="file-upload-row">
+                <label class="custom-file-label">
+                  <i class="ph-bold ph-file-arrow-up mr-12px text-lg color-secondary"></i>
+                  <span class="file-name-display">No file chosen...</span>
+                  <div class="browse-btn">Browse..</div>
+                  <input type="file" class="hidden" onchange="updateFileName(this)">
+                </label>
+              </div>
+              <div class="file-upload-row">
+                <label class="custom-file-label">
+                  <i class="ph-bold ph-file-arrow-up mr-12px text-lg color-secondary"></i>
+                  <span class="file-name-display">No file chosen...</span>
+                  <div class="browse-btn">Browse..</div>
+                  <input type="file" class="hidden" onchange="updateFileName(this)">
+                </label>
+              </div>
+              <div id="addFileBtnContainer">
+                <button type="button" onclick="addNewFileInput()" class="add-file-trigger">
+                  <i class="ph-bold ph-plus"></i> Add File
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="gnfc-modal-footer">
+            <span class="mr-auto color-red font-14px fw-600">Note: Max size 2GB at a time !!</span>
+            <button onclick="closeAttachmentsModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+            <button onclick="saveAttachments()" class="gnfc-modal-btn gnfc-modal-btn-primary">
+              <i class="ph-bold ph-floppy-disk mr-6px"></i> Save Files
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Remark Modal -->
+  <div id="remarkModal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <div class="modal-title-box">
+          <h2 class="gnfc-modal-title color-blue">Remarks</h2>
+        </div>
+        <button onclick="closeRemarkModal()" class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="pb-10px">
+          <span class="font-14px fw-700 color-primary">Remark By : <span id="remarkModalUser"
+              class="color-blue ml-4px">ENG_TESTER</span></span>
+        </div>
+        <textarea id="remarkTextArea" class="gnfc-modal-input plant-remark-textarea"
+          placeholder="Enter remark..."></textarea>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button onclick="saveRemark()" class="gnfc-modal-btn gnfc-modal-btn-primary w-100px">SAVE</button>
+        <button onclick="confirmClearRemark()" id="clearRemarkBtn" class="gnfc-modal-btn gnfc-modal-btn-secondary">Clear
+          Remark</button>
+        <button onclick="closeRemarkModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary w-100px">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Job Modal -->
+  <div id="addJobModal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <div class="modal-title-box">
+          <h2 class="gnfc-modal-title flex items-center gap-12px">
+            <span class="tracking-wide">Revamp Job List Add</span>
+          </h2>
+        </div>
+        <button onclick="closeAddJobModal()" class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="form-grid grid-cols-12">
+
+          <div class="col-span-8">
+            <label class="gnfc-modal-label text-uppercase">Tag No</label>
+            <div class="flex gap-12px">
+              <input type="text" id="tagSearchInputAdd" class="gnfc-modal-input flex-1" placeholder="Search Tag">
+              <select id="tagSelectAdd" class="gnfc-modal-input flex-1">
+                <option value="">Select Tag</option>
+                <option value="NONE">NONE</option>
+                <option value="LV-101">LV-101</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">N</label>
+            <input type="text" class="gnfc-modal-input" placeholder="IN Value">
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Target Date</label>
+            <input type="date" class="gnfc-modal-input">
+          </div>
+
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Area <span class="required">*</span></label>
+            <select class="gnfc-modal-input">
+              <option value="N.A.">N.A.</option>
+              <option value="ASH">ASH</option>
+              <option value="BOILER-1">BOILER-1</option>
+              <option value="BOILER-2">BOILER-2</option>
+              <option value="BOILER-3">BOILER-3</option>
+              <option value="BOILER-4">BOILER-4</option>
+              <option value="CHP">CHP</option>
+              <option value="COMMON">COMMON</option>
+              <option value="CPSU-BMS">CPSU-BMS</option>
+              <option value="CPSU-BOP">CPSU-BOP</option>
+              <option value="CPSU-GT">CPSU-GT</option>
+              <option value="CPSU-HRSG">CPSU-HRSG</option>
+              <option value="NG STN">NG STN</option>
+              <option value="TG-1">TG-1</option>
+              <option value="TG-2">TG-2</option>
+            </select>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Category <span class="required">*</span></label>
+            <select class="gnfc-modal-input">
+              <option value="">Select Category</option>
+              <option value="AFTER S/D">AFTER S/D</option>
+              <option value="BEFORE S/D">BEFORE S/D</option>
+              <option value="MACHINE HOUSE">MACHINE HOUSE</option>
+              <option value="N.A.">N.A.</option>
+              <option value="PSA">PSA</option>
+              <option value="S/D">S/D</option>
+            </select>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Status <span class="required">*</span></label>
+            <select class="gnfc-modal-input">
+              <option value="-">-</option>
+              <option value="PENDING">PENDING</option>
+              <option value="OVER">OVER</option>
+            </select>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Last Reviewed</label>
+            <input type="date" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Entered By</label>
+            <input type="text" class="gnfc-modal-input" value="ENG_TESTER" readonly>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label text-uppercase">Description <span class="required">*</span></label>
+            <textarea class="gnfc-modal-input w-full" style="min-height: 100px !important;"
+              placeholder="Enter job description..."></textarea>
+          </div>
+
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <div class="flex justify-end gap-12px">
+          <button onclick="closeAddJobModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+          <button onclick="saveAddJob()" class="gnfc-modal-btn gnfc-modal-btn-primary flex items-center gap-8px">
+            <i class="ph ph-floppy-disk"></i> Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Job Modal -->
+  <div id="editJobModal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <div class="modal-title-box">
+          <h2 class="gnfc-modal-title flex items-center gap-12px">
+            <span class="tracking-wide">Revamp Job List Edit</span>
+          </h2>
+        </div>
+        <button onclick="closeEditJobModal()" class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="form-grid grid-cols-12">
+
+          <div class="col-span-8">
+            <label class="gnfc-modal-label text-uppercase">Tag No </label>
+            <div class="flex gap-12px">
+              <input type="text" id="tagSearchInputEdit" class="gnfc-modal-input flex-1" placeholder="Search Tag">
+              <select id="tagSelectEdit" class="gnfc-modal-input flex-1">
+                <option value="">Select Tag</option>
+                <option value="NONE">NONE</option>
+                <option value="LV-101">LV-101</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">N</label>
+            <input type="text" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label">Over Date</label>
+            <input type="date" class="gnfc-modal-input">
+          </div>
+
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Area</label>
+            <select class="gnfc-modal-input">
+              <option value="N.A.">N.A.</option>
+              <option value="ASH">ASH</option>
+              <option value="BOILER-1">BOILER-1</option>
+              <option value="BOILER-2">BOILER-2</option>
+              <option value="BOILER-3">BOILER-3</option>
+              <option value="BOILER-4">BOILER-4</option>
+              <option value="CHP">CHP</option>
+              <option value="COMMON">COMMON</option>
+              <option value="CPSU-BMS">CPSU-BMS</option>
+              <option value="CPSU-BOP">CPSU-BOP</option>
+              <option value="CPSU-GT">CPSU-GT</option>
+              <option value="CPSU-HRSG">CPSU-HRSG</option>
+              <option value="NG STN">NG STN</option>
+              <option value="TG-1">TG-1</option>
+              <option value="TG-2">TG-2</option>
+            </select>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Category</label>
+            <select class="gnfc-modal-input">
+              <option value="">Select Category</option>
+              <option value="AFTER S/D">AFTER S/D</option>
+              <option value="BEFORE S/D">BEFORE S/D</option>
+              <option value="MACHINE HOUSE">MACHINE HOUSE</option>
+              <option value="N.A.">N.A.</option>
+              <option value="PSA">PSA</option>
+              <option value="S/D">S/D</option>
+            </select>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Status</label>
+            <select class="gnfc-modal-input">
+              <option value="PENDING">PENDING</option>
+              <option value="OVER">OVER</option>
+              <option value="U/P">U/P</option>
+            </select>
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Target Date</label>
+            <input type="date" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Last Reviewed</label>
+            <input type="date" class="gnfc-modal-input">
+          </div>
+
+          <div class="col-span-4">
+            <label class="gnfc-modal-label text-uppercase">Entered By</label>
+            <input type="text" class="gnfc-modal-input opacity-70" value="ENG_TESTER" readonly>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label text-uppercase">Description</label>
+            <textarea class="gnfc-modal-input w-full" style="min-height: 100px !important;"
+              placeholder="Enter job description..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <div class="flex justify-between w-full">
+          <button id="deleteJobBtn" onclick="confirmDeleteJob()"
+            class="gnfc-modal-btn gnfc-modal-btn-danger flex items-center gap-8px">
+            <i class="ph ph-trash"></i> Delete
+          </button>
+          <div class="flex gap-12px">
+            <button onclick="closeEditJobModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+            <button onclick="saveEditJob()" class="gnfc-modal-btn gnfc-modal-btn-primary flex items-center gap-8px">
+              <i class="ph ph-floppy-disk"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function () {
+
+      //  Attachment Modal
+      window.openAttachmentsModal = () => $("#attachmentsModal").addClass("is-open");
+      window.closeAttachmentsModal = () => $("#attachmentsModal").removeClass("is-open");
+
+      //  Remark Modal
+      window.openRemarkModal = (user, type, hideClear = false) => {
+        $("#remarkModalUser").text(user);
+        hideClear ? $("#clearRemarkBtn").hide() : $("#clearRemarkBtn").show();
+        $("#remarkModal").addClass("is-open");
+      };
+      window.closeRemarkModal = () => $("#remarkModal").removeClass("is-open");
+
+      //  Add Job Modal
+      window.openAddJobModal = () => {
+        $(".h-planner-field").hide();
+        $(".h-standard-field").show();
+        $("#addJobModal").addClass("is-open");
+      };
+      window.closeAddJobModal = () => $("#addJobModal").removeClass("is-open");
+
+      //  Edit Job Modal
+      window.openEditJobModal = () => {
+        $(".h-planner-field").hide();
+        $(".h-standard-field").show();
+        $("#editJobModal").addClass("is-open");
+      };
+      window.closeEditJobModal = () => $("#editJobModal").removeClass("is-open");
+
+      // Utility Helpers from plant_detail.html
+      function syncSingleOptionSelect(selectId, value) {
+        const $select = $(`#${selectId}`);
+        if ($select.length) {
+          if ($select.find(`option[value="${value}"]`).length) {
+            $select.val(value).trigger('change');
+          } else if (value && value !== 'N.A') {
+            $select.append(`<option value="${value}">${value}</option>`);
+            $select.val(value).trigger('change');
+          }
+        }
+      }
+
+      // Tag AutoComplete
+      function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let snapBackTimeout = null;
+        let snapBackInterval = null;
+        let isAutoRemoving = false;
+
+        // Re-fetch tags dynamically to ensure accuracy
+        function getAvailableTags() {
+          let tags = [];
+          $select.find('option').each(function () {
+            const val = $(this).val();
+            if (val && val !== "NONE") tags.push(val.toUpperCase());
+          });
+          return tags;
+        }
+
+        function stopAutoRemove() {
+          clearTimeout(snapBackTimeout);
+          clearInterval(snapBackInterval);
+          isAutoRemoving = false;
+        }
+
+        $input.on('input', function (e) {
+          const tags = getAvailableTags();
+          const cursorStart = this.selectionStart;
+          const cursorEnd = this.selectionEnd;
+          const rawVal = $(this).val();
+          const upperVal = rawVal.toUpperCase();
+          if (rawVal !== upperVal) {
+            $(this).val(upperVal);
+            this.setSelectionRange(cursorStart, cursorEnd);
+          }
+
+          const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+          const isDeleting = inputType && inputType.startsWith('delete');
+
+          if (isDeleting) {
+            stopAutoRemove();
+          }
+
+          let inputVal = $(this).val().toUpperCase();
+
+          // 3-Character Filter Logic
+          if (inputVal.length >= 3) {
+            $select.find('option').each(function () {
+              const optVal = ($(this).val() || "").toUpperCase();
+              const optText = ($(this).text() || "").toUpperCase();
+              if (optVal === "" || optVal === "NONE" || optVal.includes(inputVal) || optText.includes(inputVal)) {
+                $(this).show();
+              } else {
+                $(this).hide();
+              }
+            });
+          } else {
+            $select.find('option').show();
+          }
+
+          if (isDeleting) {
+            let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+            if (hasMatch) {
+              $(this).removeClass('is-invalid-tag');
+            } else {
+              $(this).addClass('is-invalid-tag');
+            }
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          let longestValidPrefix = "";
+          for (let i = inputVal.length; i >= 0; i--) {
+            let sub = inputVal.substring(0, i);
+            if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+            $(this).val(inputVal);
+          }
+
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            $select.val('');
+            if (onMatch) onMatch('');
+
+            stopAutoRemove();
+
+            const self = this;
+            const targetPrefix = longestValidPrefix;
+            snapBackTimeout = setTimeout(() => {
+              isAutoRemoving = true;
+              snapBackInterval = setInterval(() => {
+                let currentVal = $input.val();
+                if (currentVal.length > targetPrefix.length) {
+                  currentVal = currentVal.substring(0, currentVal.length - 1);
+                  $input.val(currentVal);
+                } else {
+                  clearInterval(snapBackInterval);
+                  isAutoRemoving = false;
+                  $input.removeClass('is-invalid-tag');
+
+                  let exactMatch = tags.find(tag => tag.toUpperCase() === currentVal);
+                  $select.val(exactMatch || '');
+                  if (onMatch) onMatch(exactMatch || '');
+                }
+              }, 150);
+            }, 800);
+          } else {
+            stopAutoRemove();
+            $(this).removeClass('is-invalid-tag');
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+          }
+        });
+
+        $select.on('change', function () {
+          const val = $(this).val();
+          if (val) {
+            $input.val(val).removeClass('is-invalid-tag');
+            stopAutoRemove();
+            if (onMatch) onMatch(val);
+          }
+        });
+      }
+
+      // Initialize Smart Autocomplete for both modals
+      initTagAutocomplete('#tagSearchInputAdd', '#tagSelectAdd');
+      initTagAutocomplete('#tagSearchInputEdit', '#tagSelectEdit');
+
+      // Combined Filtering Logic (Category + Area)
+      window.applyFilters = function () {
+        const selCat = $('#categoryFilter').val();
+        const selArea = $('#areaFilter').val();
+        const $rows = $('#bodyStandard tr');
+
+        // Step 1: Set visibility based on filters
+        $rows.each(function () {
+          const rowCat = $(this).attr('data-category');
+          const rowArea = $(this).attr('data-area');
+
+          if (!rowCat && !rowArea) {
+            $(this).show();
+            return;
+          }
+
+          if (rowCat && !rowArea) {
+            if (selCat === 'ALL' || rowCat === selCat) {
+              $(this).show();
+            } else {
+              $(this).hide();
+            }
+            return;
+          }
+
+          const matchCat = (selCat === 'ALL' || rowCat === selCat);
+          const matchArea = (selArea === 'ALL' || rowArea === selArea);
+
+          if (matchCat && matchArea) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+
+        // Step 2: Hide Category Headers if they have no visible data rows
+        $('#bodyStandard tr.user-table-date[data-category]').each(function () {
+          if ($(this).is(':visible')) {
+            const cat = $(this).attr('data-category');
+            const hasVisibleRows = $('#bodyStandard tr.user-table-row').filter(function () {
+              return $(this).attr('data-category') === cat && $(this).is(':visible');
+            }).length > 0;
+
+            if (!hasVisibleRows) {
+              $(this).hide();
+            }
+          }
+        });
+      };
+
+      // Attachment Preview
+      window.previewAttachment = function () {
+        const file = document.getElementById('attachmentSelect').value;
+        if (!file) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Please select file',
+            text: 'Select an attachment from the dropdown first.',
+            confirmButtonColor: 'var(--blue)'
+          });
+          return;
+        }
+      };
+
+      // Attachment Deletion Confirmation
+      window.confirmDeleteAttachment = function () {
+        const file = document.getElementById('attachmentSelect').value;
+        if (!file) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Please select file',
+            text: 'Select an attachment from the dropdown first.',
+            confirmButtonColor: 'var(--blue)'
+          });
+          return;
+        }
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "Do you really want to delete this attachment? This action cannot be undone.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: 'var(--blue)',
+          cancelButtonColor: 'var(--red)',
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'The attachment has been successfully deleted.',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          }
+        });
+      };
+
+      // Attachments Save Confirmation
+      window.saveAttachments = function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Attachments have been successfully saved.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          closeAttachmentsModal();
+        });
+      };
+
+      // Remark Save Confirmation
+      window.saveRemark = function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Remark has been successfully saved.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          closeRemarkModal();
+        });
+      };
+
+      // Remark Clear Confirmation
+      window.confirmClearRemark = function () {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "Do you really want to clear this remark? This action cannot be undone.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: 'var(--blue)',
+          cancelButtonColor: 'var(--red)',
+          confirmButtonText: 'Yes, clear it!',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            document.getElementById('remarkTextArea').value = '';
+            Swal.fire({
+              title: 'Cleared!',
+              text: 'The remark has been successfully cleared.',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              closeRemarkModal();
+            });
+          }
+        });
+      };
+
+      // Job Save Confirmations
+      window.saveAddJob = function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Job has been successfully added.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          closeAddJobModal();
+        });
+      };
+
+      // Edit Job Confirmation
+      window.saveEditJob = function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Job has been successfully updated.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          closeEditJobModal();
+        });
+      };
+
+      // Delete Job Confirmation
+      window.confirmDeleteJob = function () {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "Do you really want to delete this job? This action cannot be undone.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: 'var(--blue)',
+          cancelButtonColor: 'var(--red)',
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'The job has been successfully deleted.',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              closeEditJobModal();
+            });
+          }
+        });
+      };
+
+      renderTable();
+    });
+
+    // Update File Name
+    function updateFileName(input) {
+      const $display = $(input).closest('.custom-file-label').find('.file-name-display');
+      if (input.files && input.files.length > 0) {
+        $display.text(input.files[0].name).addClass('color-primary').removeClass('color-secondary');
+      } else {
+        $display.text('No file chosen...').removeClass('color-primary').addClass('color-secondary');
+      }
+    }
+
+    // Add New File Input
+    function addNewFileInput() {
+      const $row = $(`
+        <div class="file-upload-row animate-fade-in">
+          <label class="custom-file-label">
+            <i class="ph-bold ph-file-arrow-up mr-12px text-lg color-secondary"></i>
+            <span class="file-name-display">No file chosen...</span>
+            <div class="browse-btn">Browse..</div>
+            <input type="file" class="hidden" onchange="updateFileName(this)">
+          </label>
+        </div>
+      `);
+      $("#addFileBtnContainer").before($row);
+    }
+  </script>
+</body>
+
+</html>

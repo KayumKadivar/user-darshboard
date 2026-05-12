@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job List | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="joblist.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'job_list';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <div id="header-container" data-back="joblist.html"
+      data-breadcrumb="Dashboard:../../dashboard.html,Job List:joblist.html,active">
+    </div>
+
+    <div class="app-content-area">
+      <!-- Premium Action Bar -->
+      <div class="action-bar mb-20px">
+        <div class="tool-group">
+          <div class="tool-item">
+            <span class="plant-filter-label">Area Filter:</span>
+            <select id="areaFilter" onchange="applyFilters()" class="gnfc-modal-input">
+              <option value="ALL">ALL AREAS</option>
+              <option value="BOILER">BOILER</option>
+              <option value="CPP">CPP</option>
+              <option value="CPSU">CPSU</option>
+              <option value="ASH">ASH</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tool-group">
+          <button type="button" onclick="openAddJobModal()" class="plant-nav-pill">
+            <i class="ph-bold ph-plus color-blue"></i>
+            <span>ADD JOB</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Planner Card -->
+      <section class="plant-table-card">
+        <div class="plant-table-container">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-calendar-check font-20px"></i>
+              <h2 class="plant-table-card__title">JOB PLANNER</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1200px" id="plannerTable">
+            <thead>
+              <tr>
+                <th class="user-table-center" style="width: 60px">Sr</th>
+                <th class="user-table-left" style="width: 180px">Tag No</th>
+                <th class="user-table-left">Description</th>
+                <th class="user-table-center" style="width: 140px">Due Date</th>
+                <th class="user-table-center" style="width: 140px">Last Done</th>
+                <th class="user-table-center" style="width: 180px">Freq (Days)</th>
+              </tr>
+            </thead>
+            <tbody id="bodyPlanner">
+              <!-- Section: Due date reached -->
+              <tr class="user-table-date">
+                <td colspan="6" class="user-table-category color-red">
+                  Due date reached
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">1</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">CH4 gas cylinder (Code no 8220001850) expiry date to be check</td>
+                <td class="user-table-center">
+                  <span class="badge-status-over color-red fw-700">04.04.2024</span>
+                </td>
+                <td class="user-table-center">09/05/2023</td>
+                <td class="user-table-center fw-700">330</td>
+              </tr>
+
+              <!-- Section: Due date not reached -->
+              <tr class="user-table-date">
+                <td colspan="6" class="user-table-category color-blue">
+                  Due date not reached
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center cursor-pointer color-primary fw-700" onclick="openEditJobModal()">1</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">All System SW Back-up to be taken on SSD.</td>
+                <td class="user-table-center">05/05/2025</td>
+                <td class="user-table-center">05/05/2025</td>
+                <td class="user-table-center">365</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">2</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">Boiler Instrument Workshop House Keeping Job.</td>
+                <td class="user-table-center">13/05/2025</td>
+                <td class="user-table-center">23/04/2024</td>
+                <td class="user-table-center">30</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">3</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">Tubing and tapping of Vessel/ switcher to be cleaned of all line.</td>
+                <td class="user-table-center">14/05/2025</td>
+                <td class="user-table-center">14/04/2024</td>
+                <td class="user-table-center">30</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">4</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.</td>
+                <td class="user-table-center">14/05/2025</td>
+                <td class="user-table-center">30/03/2024</td>
+                <td class="user-table-center">45</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">5</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">All air filters in the block switch line to be cleaned in dry fly-ash
+                  system.</td>
+                <td class="user-table-center">14/05/2025</td>
+                <td class="user-table-center">14/04/2024</td>
+                <td class="user-table-center">30</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">6</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">BHEL ELR sill DCS Panels, OCSs, Ash panel and Station to be vacuum cleaned.
+                  FAN operation to be checked.</td>
+                <td class="user-table-center">14/05/2025</td>
+                <td class="user-table-center">30/03/2024</td>
+                <td class="user-table-center">45</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">7</td>
+                <td class="user-table-left user-table-blue fw-700">1AR2510</td>
+                <td class="user-table-left">O2 analyzer guide pipe inspection job.</td>
+                <td class="user-table-center">16/05/2025</td>
+                <td class="user-table-center">17/11/2023</td>
+                <td class="user-table-center">180</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">8</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">Test equipment list. 1) 2 Nos. of DMM 2) 3 No. of current/voltage simulator
+                  3) 1 No. of pressure simulator 4) 3 No. of RTD/TC simulator 5) 1 No. of HART simulator</td>
+                <td class="user-table-center">17/05/2025</td>
+                <td class="user-table-center">02/04/2024</td>
+                <td class="user-table-center">45</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">9</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">1.0 Ton chain block testing and inspection job. For inspect req. SAP
+                  transaction is ZIW21</td>
+                <td class="user-table-center">21/05/2025</td>
+                <td class="user-table-center">29/06/2023</td>
+                <td class="user-table-center">330</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">10</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">Control room document files to be updated, Boiler, CPP, CPSU, ASH and CHP
+                  control room.</td>
+                <td class="user-table-center">22/05/2025</td>
+                <td class="user-table-center">23/04/2024</td>
+                <td class="user-table-center">30</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">11</td>
+                <td class="user-table-left user-table-blue fw-700">GC</td>
+                <td class="user-table-left">Alarm/Events to be checked.</td>
+                <td class="user-table-center">23/05/2025</td>
+                <td class="user-table-center">23/04/2024</td>
+                <td class="user-table-center">30</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">12</td>
+                <td class="user-table-left user-table-blue fw-700">NOTAG</td>
+                <td class="user-table-left">CPP/CPSU all DCS Panels, OCSs to be vacuum cleaned. FAN operation to be
+                  checked.</td>
+                <td class="user-table-center">28/05/2025</td>
+                <td class="user-table-center">21/11/2023</td>
+                <td class="user-table-center">180</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center">13</td>
+                <td class="user-table-left user-table-blue fw-700">SILO_INTR_BAG</td>
+                <td class="user-table-left">Bag filter SOVs to be checked. SOV connection tightness to be checked its
+                  timer J3 and Radar LT cleaning to be done.</td>
+                <td class="user-table-center">28/05/2025</td>
+                <td class="user-table-center">28/04/2024</td>
+                <td class="user-table-center">30</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- Add Job Modal -->
+    <div id="addJobModal" class="gnfc-modal-overlay">
+      <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+        <div class="gnfc-modal-header">
+          <div class="flex items-center gap-12px">
+            <h3 class="gnfc-modal-title uppercase color-blue" id="addJobModalTitle">Add Job Planner</h3>
+          </div>
+          <button class="gnfc-modal-close" onclick="closeAddJobModal()">
+            <i class="ph ph-x"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body bg-light-bg">
+          <div class="form-grid grid-cols-12">
+
+            <!-- Tag No (col-span-6) -->
+            <div class="col-span-9">
+              <label class="gnfc-modal-label">Tag No <span class="required">*</span></label>
+              <div class="flex gap-12px">
+                <input type="text" id="tagSearchInputEdit" class="gnfc-modal-input flex-1" placeholder="Search Tag...">
+                <select id="tagSelectEdit" class="gnfc-modal-input flex-1">
+                  <option value="NONE">Select Tag</option>
+                  <option value="NOTAG">NOTAG</option>
+                  <option value="1AR2510">1AR2510</option>
+                  <option value="GC">GC</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Last Done On (col-span-6) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Last Done On <span class="required">*</span></label>
+              <input type="date" id="lastDoneInputEdit" class="gnfc-modal-input">
+            </div>
+
+            <!-- Schedule Logic (col-span-12) -->
+            <div class="col-span-12 ">
+              <label class="gnfc-modal-label">Frequency Of Check <span class="required">*</span></label>
+
+              <!-- Tab Selector -->
+              <div class="schedule-mode-tabs mb-10px" id="mode-tabs-edit">
+                <div class="mode-tab is-active" data-mode="interval">Interval (Days)</div>
+                <div class="mode-tab" data-mode="monthly">Monthly Date</div>
+                <div class="mode-tab" data-mode="weekly">Weekly Days</div>
+                <div class="mode-tab" data-mode="specific">Specific Date</div>
+              </div>
+
+              <!-- Mode: Interval -->
+              <div id="content-interval-edit" class="mode-content is-active">
+                <div class="flex items-center gap-8px font-14px fw-600" style="color: var(--typo-secondary);">
+                  <span>Run job every</span>
+                  <input type="number" id="freqDaysEdit" class="gnfc-modal-input" style="width: 100px;" placeholder="365"
+                    value="365">
+                  <span>Days.</span>
+                </div>
+              </div>
+
+              <!-- Mode: Monthly -->
+              <div id="content-monthly-edit" class="mode-content">
+                <div class="flex items-center gap-8px font-14px fw-600" style="color: var(--typo-secondary);">
+                  <span>Run job every month on the</span>
+                  <select id="monthlyDateEdit" class="gnfc-modal-input" style="width: 100px;"></select>
+                  <span>Date.</span>
+                </div>
+              </div>
+
+              <!-- Mode: Weekly -->
+              <div id="content-weekly-edit" class="mode-content">
+                <div class="flex flex-col gap-8px font-14px fw-600">
+                  <span style="color: var(--typo-secondary);">Run job on selected days of the week:</span>
+                  <div class="day-chips-container">
+                    <div class="day-chip" data-day="Mon">MON</div>
+                    <div class="day-chip" data-day="Tue">TUE</div>
+                    <div class="day-chip" data-day="Wed">WED</div>
+                    <div class="day-chip" data-day="Thu">THU</div>
+                    <div class="day-chip" data-day="Fri">FRI</div>
+                    <div class="day-chip" data-day="Sat">SAT</div>
+                    <div class="day-chip" data-day="Sun">SUN</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mode: Specific -->
+              <div id="content-specific-edit" class="mode-content">
+                <div class="flex flex-col gap-8px font-14px fw-600">
+                  <span style="color: var(--typo-secondary);">Schedule a one-time job for:</span>
+                  <div class="flex items-center gap-8px">
+                    <select id="specDayEdit" class="gnfc-modal-input flex-1"></select>
+                    <select id="specMonthEdit" class="gnfc-modal-input flex-1">
+                      <option value="">Month</option>
+                      <option value="1">JAN</option>
+                      <option value="2">FEB</option>
+                      <option value="3">MAR</option>
+                      <option value="4">APR</option>
+                      <option value="5">MAY</option>
+                      <option value="6">JUN</option>
+                      <option value="7">JUL</option>
+                      <option value="8">AUG</option>
+                      <option value="9">SEP</option>
+                      <option value="10">OCT</option>
+                      <option value="11">NOV</option>
+                      <option value="12">DEC</option>
+                    </select>
+                    <select id="specYearEdit" class="gnfc-modal-input flex-1">
+                      <option value="">Year</option>
+                      <option>2026</option>
+                      <option>2027</option>
+                      <option>2028</option>
+                      <option>2029</option>
+                      <option>2030</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Job Description (col-span-12) -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">Job Description <span class="required">*</span></label>
+              <textarea id="descInputEdit" class="gnfc-modal-input" style="min-height: 100px !important;"
+                placeholder="Enter detailed job description here..."></textarea>
+            </div>
+
+            <!-- Parameters - Column 1 (col-span-3) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Type Of Inst <span class="required">*</span></label>
+              <select id="instTypeSelectEdit" class="gnfc-modal-input">
+                <option value="N.A.">N.A.</option>
+                <option value="ANALYSER">ANALYSER</option>
+              </select>
+            </div>
+
+            <!-- Parameters - Column 2 (col-span-3) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Type Of Job <span class="required">*</span></label>
+              <select id="jobTypeSelectEdit" class="gnfc-modal-input">
+                <option value="N.A.">N.A.</option>
+                <option value="PM">PM</option>
+                <option value="SCRAP">SCRAP</option>
+              </select>
+            </div>
+
+            <!-- Parameters - Column 3 (col-span-3) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Area <span class="required">*</span></label>
+              <select id="areaSelectEdit" class="gnfc-modal-input">
+                <option value="N.A.">N.A.</option>
+                <option value="BOILER">BOILER</option>
+                <option value="COMMON">COMMON</option>
+              </select>
+            </div>
+
+            <!-- Parameters - Column 4 (col-span-3) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Update On Due Date</label>
+              <select id="updateDueDateSelectEdit" class="gnfc-modal-input">
+                <option value="Y">Y</option>
+                <option value="N">N</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <div class="flex justify-end gap-12px w-full">
+            <button onclick="closeAddJobModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+            <button onclick="saveAddJob()" class="gnfc-modal-btn gnfc-modal-btn-primary flex items-center gap-8px">
+              <i class="ph ph-floppy-disk"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Job Modal -->
+    <div id="editJobModal" class="gnfc-modal-overlay">
+      <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+        <div class="gnfc-modal-header">
+          <div class="flex items-center gap-12px">
+            <h3 class="gnfc-modal-title uppercase color-blue" id="editJobModalTitle">Edit Job Planner</h3>
+          </div>
+          <button class="gnfc-modal-close" onclick="closeEditJobModal()">
+            <i class="ph ph-x"></i>
+          </button>
+        </div>
+        <div class="gnfc-modal-body bg-light-bg">
+          <div class="form-grid grid-cols-12">
+
+            <!-- Tag No (col-span-6) -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">Tag No <span class="required">*</span></label>
+              <div class="flex gap-12px">
+                <input type="text" id="tagSearchInputEdit" class="gnfc-modal-input flex-1" placeholder="Search Tag...">
+                <select id="tagSelectEdit" class="gnfc-modal-input flex-1">
+                  <option value="NONE">SELECT TAG</option>
+                  <option value="NOTAG">NOTAG</option>
+                  <option value="1AR2510">1AR2510</option>
+                  <option value="GC">GC</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Last Done On (col-span-6) -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">Last Done On <span class="required">*</span></label>
+              <input type="date" id="lastDoneInputEdit" class="gnfc-modal-input">
+            </div>
+
+            <!-- Schedule Logic (col-span-12) -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">Frequency Of Check <span class="required">*</span></label>
+
+              <!-- Tab Selector -->
+              <div class="schedule-mode-tabs mb-10px" id="mode-tabs-edit">
+                <div class="mode-tab is-active" data-mode="interval">INTERVAL (DAYS)</div>
+                <div class="mode-tab" data-mode="monthly">MONTHLY DATE</div>
+                <div class="mode-tab" data-mode="weekly">WEEKLY DAYS</div>
+                <div class="mode-tab" data-mode="specific">SPECIFIC DATE</div>
+              </div>
+
+              <!-- Mode: Interval -->
+              <div id="content-interval-edit" class="mode-content is-active">
+                <div class="flex items-center gap-8px font-14px fw-600" style="color: var(--typo-secondary);">
+                  <span>Run job every</span>
+                  <input type="number" id="freqDaysEdit" class="gnfc-modal-input" style="width: 100px;" placeholder="365"
+                    value="365">
+                  <span>days.</span>
+                </div>
+              </div>
+
+              <!-- Mode: Monthly -->
+              <div id="content-monthly-edit" class="mode-content">
+                <div class="flex items-center gap-8px font-14px fw-600" style="color: var(--typo-secondary);">
+                  <span>Run job every month on the</span>
+                  <select id="monthlyDateEdit" class="gnfc-modal-input" style="width: 100px;"></select>
+                  <span>Date.</span>
+                </div>
+              </div>
+
+              <!-- Mode: Weekly -->
+              <div id="content-weekly-edit" class="mode-content">
+                <div class="flex flex-col gap-8px font-14px fw-600">
+                  <span style="color: var(--typo-secondary);">Run job on selected days of the week:</span>
+                  <div class="day-chips-container">
+                    <div class="day-chip" data-day="Mon">MON</div>
+                    <div class="day-chip" data-day="Tue">TUE</div>
+                    <div class="day-chip" data-day="Wed">WED</div>
+                    <div class="day-chip" data-day="Thu">THU</div>
+                    <div class="day-chip" data-day="Fri">FRI</div>
+                    <div class="day-chip" data-day="Sat">SAT</div>
+                    <div class="day-chip" data-day="Sun">SUN</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mode: Specific -->
+              <div id="content-specific-edit" class="mode-content">
+                <div class="flex flex-col gap-8px font-14px fw-600">
+                  <span style="color: var(--typo-secondary);">Schedule a one-time job for:</span>
+                  <div class="flex items-center gap-8px">
+                    <select id="specDayEdit" class="gnfc-modal-input flex-1"></select>
+                    <select id="specMonthEdit" class="gnfc-modal-input flex-1">
+                      <option value="">Month</option>
+                      <option value="1">JAN</option>
+                      <option value="2">FEB</option>
+                      <option value="3">MAR</option>
+                      <option value="4">APR</option>
+                      <option value="5">MAY</option>
+                      <option value="6">JUN</option>
+                      <option value="7">JUL</option>
+                      <option value="8">AUG</option>
+                      <option value="9">SEP</option>
+                      <option value="10">OCT</option>
+                      <option value="11">NOV</option>
+                      <option value="12">DEC</option>
+                    </select>
+                    <select id="specYearEdit" class="gnfc-modal-input flex-1">
+                      <option value="">Year</option>
+                      <option>2026</option>
+                      <option>2027</option>
+                      <option>2028</option>
+                      <option>2029</option>
+                      <option>2030</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Job Description (col-span-12) -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">Job Description <span class="required">*</span></label>
+              <textarea id="descInputEdit" class="gnfc-modal-input" style="min-height: 100px !important;"
+                placeholder="Enter detailed job description here..."></textarea>
+            </div>
+
+            <!-- Parameters - Column 1 (col-span-3) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Type Of Inst <span class="required">*</span></label>
+              <select id="instTypeSelectEdit" class="gnfc-modal-input">
+                <option value="N.A.">N.A.</option>
+                <option value="ANALYSER">ANALYSER</option>
+              </select>
+            </div>
+
+            <!-- Parameters - Column 2 (col-span-3) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Type Of Job <span class="required">*</span></label>
+              <select id="jobTypeSelectEdit" class="gnfc-modal-input">
+                <option value="N.A.">N.A.</option>
+                <option value="PM">PM</option>
+                <option value="SCRAP">SCRAP</option>
+              </select>
+            </div>
+
+            <!-- Parameters - Column 3 (col-span-3) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Area <span class="required">*</span></label>
+              <select id="areaSelectEdit" class="gnfc-modal-input">
+                <option value="N.A.">N.A.</option>
+                <option value="BOILER">BOILER</option>
+                <option value="COMMON">COMMON</option>
+              </select>
+            </div>
+
+            <!-- Parameters - Column 4 (col-span-3) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Update On Due Date</label>
+              <select id="updateDueDateSelectEdit" class="gnfc-modal-input">
+                <option value="Y">Y</option>
+                <option value="N">N</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <div class="flex justify-between w-full">
+            <button onclick="confirmDeleteJob()" class="gnfc-modal-btn gnfc-modal-btn-danger flex items-center gap-8px">
+              <i class="ph ph-trash"></i> Delete
+            </button>
+            <div class="flex gap-12px">
+              <button onclick="closeEditJobModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+              <button onclick="saveEditJob()" class="gnfc-modal-btn gnfc-modal-btn-primary flex items-center gap-8px">
+                <i class="ph ph-floppy-disk"></i> Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const plant = urlParams.get('plant');
+    const mode = urlParams.get('mode');
+
+    $(document).ready(function () {
+      // Dynamic Title Update
+      document.title = `${mode} | GNFC E-Logbook`;
+
+      // Initialize Selector Options for Days (1-31)
+      function initModalDaySelectors() {
+        let d31 = '<option value="">Date</option>';
+        for (let i = 1; i <= 31; i++) d31 += `<option value="${i}">${i}</option>`;
+        $('#monthlyDateAdd, #specDayAdd, #monthlyDateEdit, #specDayEdit').html(d31);
+      }
+      initModalDaySelectors();
+
+      // Mode Switch tab logic
+      $(document).on('click', '.schedule-mode-tabs .mode-tab', function () {
+        const $tabsContainer = $(this).parent();
+        $tabsContainer.find('.mode-tab').removeClass('is-active');
+        $(this).addClass('is-active');
+
+        const mode = $(this).data('mode');
+        const $wrapper = $tabsContainer.parent();
+        $wrapper.find('.mode-content').removeClass('is-active');
+
+        const suffix = $tabsContainer.attr('id').endsWith('-add') ? '-add' : '-edit';
+        $wrapper.find('[id="content-' + mode + suffix + '"]').addClass('is-active');
+      });
+
+      // Day Chip Toggle
+      $(document).on('click', '.day-chip', function () {
+        $(this).toggleClass('is-selected');
+      });
+
+      window.openAddJobModal = () => {
+        $("#addJobModal").addClass("is-open");
+        // Reset to Interval (Days) tab by default
+        $('#mode-tabs-add .mode-tab[data-mode="interval"]').click();
+      };
+      window.closeAddJobModal = () => $("#addJobModal").removeClass("is-open");
+ 
+      window.openEditJobModal = () => {
+        $("#editJobModal").addClass("is-open");
+      };
+      window.closeEditJobModal = () => $("#editJobModal").removeClass("is-open");
+
+      // Dynamic Prefilling on Row Clicking (Sr and Tag No cells)
+      $('#plannerTable tbody tr').each(function () {
+        const $row = $(this);
+        if ($row.hasClass('user-table-date')) return; // skip headers
+
+        const $srCell = $row.find('td').eq(0);
+        const $tagCell = $row.find('td').eq(1);
+
+        // Add visual cues for clickable edit triggers
+        $srCell.addClass('cursor-pointer color-primary fw-700');
+        $tagCell.addClass('cursor-pointer');
+
+        const triggerModal = function () {
+          const sr = $srCell.text().trim();
+          const tag = $tagCell.text().trim();
+          const desc = $row.find('td').eq(2).text().trim();
+          const lastDoneRaw = $row.find('td').eq(4).text().trim();
+          const freq = $row.find('td').eq(5).text().trim();
+
+          // Convert DD/MM/YYYY to YYYY-MM-DD for date input
+          let lastDoneFormatted = "";
+          if (lastDoneRaw && lastDoneRaw !== "--") {
+            const parts = lastDoneRaw.split('/');
+            if (parts.length === 3) {
+              lastDoneFormatted = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+            }
+          }
+
+          // Populate the modal fields
+          $('#tagSearchInputEdit').val(tag);
+          $('#tagSelectEdit').val(tag === "NOTAG" ? "NOTAG" : (tag === "GC" ? "GC" : (tag === "1AR2510" ? "1AR2510" : "NONE")));
+          $('#lastDoneInputEdit').val(lastDoneFormatted);
+          $('#descInputEdit').val(desc);
+
+          // Populate parameters with reasonable fallbacks
+          $('#instTypeSelectEdit').val(tag === "1AR2510" ? "ANALYSER" : "N.A.");
+          $('#jobTypeSelectEdit').val(sr === "12" ? "N.A." : "PM");
+          $('#areaSelectEdit').val("BOILER");
+          $('#updateDueDateSelectEdit').val("Y");
+
+          // Parse and prefill Frequency/Schedule Logic
+          const freqTrim = freq.trim();
+          if (/^\d+$/.test(freqTrim)) {
+            // pure number -> INTERVAL mode
+            $('#mode-tabs-edit .mode-tab[data-mode="interval"]').click();
+            $('#freqDaysEdit').val(freqTrim);
+          } else if (freqTrim.toUpperCase().startsWith("MONTHLY")) {
+            $('#mode-tabs-edit .mode-tab[data-mode="monthly"]').click();
+            const match = freqTrim.match(/\d+/);
+            if (match) $('#monthlyDateEdit').val(match[0]);
+          } else if (freqTrim.toUpperCase().startsWith("WEEKLY")) {
+            $('#mode-tabs-edit .mode-tab[data-mode="weekly"]').click();
+            $('#editJobModal .day-chip').removeClass('is-selected');
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            days.forEach(d => {
+              if (freqTrim.toLowerCase().includes(d.toLowerCase())) {
+                $(`#editJobModal .day-chip[data-day="${d}"]`).addClass('is-selected');
+              }
+            });
+          } else {
+            // Specific date -> SPECIFIC DATE mode
+            $('#mode-tabs-edit .mode-tab[data-mode="specific"]').click();
+            const parts = freqTrim.split('/');
+            if (parts.length === 3) {
+              $('#specDayEdit').val(parseInt(parts[0]));
+              $('#specMonthEdit').val(parseInt(parts[1]));
+              $('#specYearEdit').val(parts[2]);
+            }
+          }
+
+          // Open edit modal
+          openEditJobModal();
+        };
+
+        $srCell.on('click', triggerModal);
+        $tagCell.on('click', triggerModal);
+      });
+
+      // SweetAlert Action confirmations with auto-close
+      window.saveAddJob = function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Job plan has been successfully added.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          closeAddJobModal();
+        });
+      };
+
+      window.saveEditJob = function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Job plan has been successfully updated.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          closeEditJobModal();
+        });
+      };
+
+      window.confirmDeleteJob = function () {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "Do you really want to delete this job plan? This action cannot be undone.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: 'var(--blue)',
+          cancelButtonColor: 'var(--red)',
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'The job plan has been successfully deleted.',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              closeEditJobModal();
+            });
+          }
+        });
+      };
+
+      // Initialize Tag Autocomplete
+      initTagAutocomplete('#tagSearchInputAdd', '#tagSelectAdd');
+      initTagAutocomplete('#tagSearchInputEdit', '#tagSelectEdit');
+    });
+
+    function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+      const $input = $(inputSelector);
+      const $select = $(selectSelector);
+      let snapBackTimeout = null;
+      let snapBackInterval = null;
+      let isAutoRemoving = false;
+
+      function getAvailableTags() {
+        let tags = [];
+        $select.find('option').each(function () {
+          const val = $(this).val();
+          if (val && val !== "NONE") tags.push(val.toUpperCase());
+        });
+        return tags;
+      }
+
+      function stopAutoRemove() {
+        clearTimeout(snapBackTimeout);
+        clearInterval(snapBackInterval);
+        isAutoRemoving = false;
+      }
+
+      $input.on('input', function (e) {
+        const tags = getAvailableTags();
+        const cursorStart = this.selectionStart;
+        const rawVal = $(this).val();
+        const upperVal = rawVal.toUpperCase();
+
+        if (rawVal !== upperVal) {
+          $(this).val(upperVal);
+          this.setSelectionRange(cursorStart, cursorStart);
+        }
+
+        const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+        const isDeleting = inputType && inputType.startsWith('delete');
+
+        if (isDeleting) stopAutoRemove();
+
+        let inputVal = $(this).val().toUpperCase();
+
+        // Filter select options
+        if (inputVal.length >= 2) {
+          $select.find('option').each(function () {
+            const optVal = ($(this).val() || "").toUpperCase();
+            if (optVal === "" || optVal === "NONE" || optVal.includes(inputVal)) {
+              $(this).show();
+            } else {
+              $(this).hide();
+            }
+          });
+        } else {
+          $select.find('option').show();
+        }
+
+        if (isDeleting) {
+          let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+          $select.val(exactMatch || 'NONE');
+          return;
+        }
+
+        let longestValidPrefix = "";
+        for (let i = inputVal.length; i >= 0; i--) {
+          let sub = inputVal.substring(0, i);
+          if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+            longestValidPrefix = sub;
+            break;
+          }
+        }
+
+        if (inputVal.length > longestValidPrefix.length) {
+          $(this).addClass('is-invalid-tag');
+          $select.val('NONE');
+          stopAutoRemove();
+
+          const targetPrefix = longestValidPrefix;
+          snapBackTimeout = setTimeout(() => {
+            isAutoRemoving = true;
+            snapBackInterval = setInterval(() => {
+              let currentVal = $input.val();
+              if (currentVal.length > targetPrefix.length) {
+                $input.val(currentVal.substring(0, currentVal.length - 1));
+              } else {
+                clearInterval(snapBackInterval);
+                isAutoRemoving = false;
+                $input.removeClass('is-invalid-tag');
+                let exactMatch = tags.find(tag => tag.toUpperCase() === currentVal);
+                $select.val(exactMatch || 'NONE');
+              }
+            }, 100);
+          }, 800);
+        } else {
+          stopAutoRemove();
+          $(this).removeClass('is-invalid-tag');
+          let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+          $select.val(exactMatch || 'NONE');
+        }
+      });
+
+      $select.on('change', function () {
+        const val = $(this).val();
+        if (val && val !== 'NONE') {
+          $input.val(val).removeClass('is-invalid-tag');
+          stopAutoRemove();
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

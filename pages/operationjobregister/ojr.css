@@ -1,0 +1,138 @@
+/* ==========================================================================
+   OPERATION JOB REGISTER - CONSOLIDATED STYLES
+   ========================================================================== */
+
+/* --- Layout & Header --- */
+.ojr-main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: var(--app-panel, #181b1f);
+    border: 1px solid var(--app-border, #23272e);
+    border-radius: 8px;
+}
+
+.ojr-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ojr-header-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(87, 148, 242, 0.1);
+    border-radius: 10px;
+    color: var(--typo-blue, #5794f2);
+    font-size: 20px;
+}
+
+.ojr-header-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--typo-primary, #ffffff);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.ojr-header-subtitle {
+    font-size: 0.8rem;
+    color: var(--typo-secondary, #d1d5db);
+    margin: 4px 0 0 0;
+}
+
+/* --- Unit Grid (Main List) --- */
+.unit-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: var(--app-panel, #181b1f);
+    border: 1px solid var(--app-border, #23272e);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.unit-card:hover {
+    border-color: var(--typo-blue, #5794F2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.unit-name { font-size: 1rem; font-weight: 700; color: var(--typo-primary, #ffffff); margin: 0; }
+.unit-caption { font-size: 0.75rem; color: var(--typo-secondary, #d1d5db); margin: 4px 0 0 0; }
+.unit-icon {
+    font-size: 1.5rem; color: var(--typo-blue, #5794F2); background: rgba(87, 148, 242, 0.1);
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px;
+}
+
+.mode-selector {
+    display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: var(--app-bg, #0e1013);
+    border: 1px solid var(--app-border, #23272e); border-radius: 8px; cursor: pointer; transition: all 0.2s;
+}
+.mode-selector:hover { border-color: var(--typo-blue, #5794F2); }
+.mode-selector input:checked+span { color: var(--typo-blue, #5794F2); }
+
+/* --- Secondary Navigation (Tabs) --- */
+.ojr-tabs-container {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    background: var(--app-panel-alt, #1c1f24);
+    border: 1px solid var(--app-border, #23272e);
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.ojr-tab-btn {
+    display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px;
+    background: transparent; border: 1px solid transparent; border-radius: 8px;
+    color: var(--typo-secondary, #d1d5db); font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+
+.ojr-tab-btn i { font-size: 18px; color: var(--typo-blue, #5794f2); }
+.ojr-tab-btn:hover { background: rgba(87, 148, 242, 0.08); color: var(--typo-blue); }
+.ojr-tab-btn.is-active { background: var(--typo-blue, #5794f2); color: #ffffff; box-shadow: 0 4px 12px rgba(87, 148, 242, 0.3); }
+.ojr-tab-btn.is-active i { color: #ffffff; }
+
+/* --- Table & Data --- */
+.table-responsive { overflow-x: auto; width: 100%; }
+
+.user-table-date-row { background: var(--app-panel-alt, #1c1f24) !important; }
+.user-table-date-row td {
+    color: var(--typo-blue, #5794f2) !important; font-size: 0.85rem !important; font-weight: 800 !important;
+    padding: 10px 16px !important; border-bottom: 2px solid var(--app-border) !important;
+}
+
+.status-badge {
+    display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px;
+    font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.badge-red { background: rgba(242, 73, 92, 0.1); color: #f2495c; border: 1px solid rgba(242, 73, 92, 0.2); }
+.badge-green { background: rgba(115, 191, 105, 0.1); color: #73bf69; border: 1px solid rgba(115, 191, 105, 0.2); }
+.badge-orange { background: rgba(251, 191, 36, 0.1); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2); }
+.badge-blue { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+
+/* --- Search Box --- */
+.input-with-icon { position: relative; display: flex; align-items: center; width: 100%; }
+.input-with-icon i { position: absolute; left: 14px; font-size: 18px; color: var(--typo-blue); }
+
+.ojr-card {
+    background: var(--app-panel, #181b1f);
+    border: 1px solid var(--app-border, #23272e);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+
+.shadow{
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);;
+}

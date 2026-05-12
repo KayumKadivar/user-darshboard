@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Acid Batteries Replacement Register | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container (Breadcrumb & Nav Title) -->
+    <div id="header-container" data-back="calibration_regiter.html" data-title="BOILER"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,Calibration Register:calibration_regiter.html,Lead Acid Batteries Replacement:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Action Bar -->
+      <div class="action-bar-panel calib-action-bar">
+        <div class="calib-action-left">
+          <div class="calib-action-icon-box">
+            <i class="ph-fill ph-battery-charging"></i>
+          </div>
+          <div>
+            <div class="calib-action-title-group">
+              <h2 class="calib-action-title">Lead Acid Batteries Replacement Register</h2>
+              <span class="calib-action-badge text-uppercase">IMS/F/INST/04</span>
+            </div>
+            <p class="calib-action-subtitle">Tracking history of lead acid battery serial numbers and procurement details upon replacement</p>
+          </div>
+        </div>
+        <button class="premium-action-btn calib-action-add-btn" id="btn-open-add-modal">
+          <i class="ph-bold ph-plus"></i>
+          <span>Add New Record</span>
+        </button>
+      </div>
+
+      <!-- Main Data Table -->
+      <div class="user-table-wrapper">
+        <table class="user-table min-w-1440px">
+          <thead>
+            <tr>
+              <th class="user-table-center w-50px">Sr</th>
+              <th>Lead Acid Battery Serial No</th>
+              <th>Procurement Reference</th>
+              <th>Replacement Reason</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody id="battery-replacement-table-body">
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">1</td>
+              <td>7851</td>
+              <td>PO no: 5200020988 dated 19.03.2025</td>
+              <td>Exhausted</td>
+              <td></td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">2</td>
+              <td>UMK-LL29</td>
+              <td>PO NO: 4500020938 Dated 23/01/2011</td>
+              <td>EXHAUSTED</td>
+              <td>-</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">3</td>
+              <td>1320112013</td>
+              <td>PO NO: 5500041287, received on 23/01/2014</td>
+              <td>New jumbo procured with new battery.</td>
+              <td>New jumbo procured with new battery.</td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">4</td>
+              <td>HSB OST2133</td>
+              <td>OK/4500011783 - 20/7/08 INSPECTED ON 10/10/08</td>
+              <td>EXHAUSTED</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Battery Replacement Record Modal -->
+  <div id="add-replacement-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell">
+      <div class="gnfc-modal-header">
+        <h2 class="gnfc-modal-title color-blue text-uppercase">Add New Record</h2>
+        <button type="button" class="gnfc-modal-close" id="btn-close-add-modal">
+          <i class="ph-bold ph-x font-18px"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <form id="add-replacement-form" class="px-8px">
+          <div class="form-grid grid-cols-12 gap-16px">
+            <div class="col-span-4">
+              <label class="gnfc-modal-label fw-700 font-12px">LEAD ACID BATTERY SERIAL NO</label>
+              <input type="text" id="add-serial" class="gnfc-modal-input uppercase">
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label fw-700 font-12px">PROCUREMENT REFERENCE</label>
+              <input type="text" id="add-procurement" class="gnfc-modal-input">
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label fw-700 font-12px">REPLACEMENT REASO</label>
+              <input type="text" id="add-reason" class="gnfc-modal-input">
+            </div>
+
+            <div class="col-span-12">
+              <label class="gnfc-modal-label fw-700 font-12px">REMARKS</label>
+              <textarea id="add-remarks" class="gnfc-modal-input textarea-h-80"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-cancel-add-modal">Cancel</button>
+        <button type="submit" form="add-replacement-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const plantParam = urlParams.get('plant') || 'BOILER';
+      const upperPlant = plantParam.toUpperCase();
+
+      $('#header-container').attr('data-title', `${upperPlant} - BATTERY REPLACEMENT`);
+      $('#add-form-plant-title').text(`Plant - ${upperPlant}`);
+
+      const $overlay = $('#add-replacement-modal');
+
+      $('#btn-open-add-modal').on('click', function() {
+        $('#add-replacement-form')[0].reset();
+        $overlay.addClass('is-open');
+      });
+
+      $('#btn-close-add-modal, #btn-cancel-add-modal').on('click', function() {
+        $overlay.removeClass('is-open');
+      });
+
+      $(document).on('keydown', function(e) {
+        if (e.key === 'Escape' && $overlay.hasClass('is-open')) {
+          $overlay.removeClass('is-open');
+        }
+      });
+
+      $('#add-replacement-form').on('submit', function(e) {
+        e.preventDefault();
+
+        const serialVal = $('#add-serial').val().trim().toUpperCase();
+        const procurementVal = $('#add-procurement').val().trim();
+        const reasonVal = $('#add-reason').val().trim();
+        const remarksVal = $('#add-remarks').val().trim() || '-';
+
+        const $tbody = $('#battery-replacement-table-body');
+
+        const newRowHtml = `
+          <tr class="user-table-row">
+            <td class="user-table-center font-14px fw-600"></td>
+            <td>${serialVal}</td>
+            <td>${procurementVal}</td>
+            <td>${reasonVal}</td>
+            <td>${remarksVal}</td>
+          </tr>
+        `;
+
+        $tbody.prepend(newRowHtml);
+        reindexSerialNumbers();
+
+        $overlay.removeClass('is-open');
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Record Saved Successfully',
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+
+      function reindexSerialNumbers() {
+        const $tbody = $('#battery-replacement-table-body');
+        let srCount = 1;
+        $tbody.find('.user-table-row').each(function() {
+          $(this).find('.user-table-center').text(srCount++);
+        });
+        $('#records-count-badge').text(`Total Entries: ${srCount - 1}`);
+      }
+
+      reindexSerialNumbers();
+    });
+  </script>
+</body>
+
+</html>

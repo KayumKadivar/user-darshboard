@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CPCB | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="iso.html"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,CPCB:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Calibration Register Unit Panel -->
+      <div class="calibration-grid-container">
+        <div class="calibration-unit-grid">
+          <div class="calibration-unit-card" onclick="handleUnitClick('AA')">
+            <span class="calibration-unit-name">AA</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('AAQM')">
+            <span class="calibration-unit-name">AAQM</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('AMM')">
+            <span class="calibration-unit-name">AMM</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('ANIPF')">
+            <span class="calibration-unit-name">ANIPF</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('ANITDI')">
+            <span class="calibration-unit-name">ANITDI</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('ASGP')">
+            <span class="calibration-unit-name">ASGP</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('BAGG')">
+            <span class="calibration-unit-name">BAGG</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('BOILER')">
+            <span class="calibration-unit-name">BOILER</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('CMS')">
+            <span class="calibration-unit-name">CMS</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('CPSU')">
+            <span class="calibration-unit-name">CPSU</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('DM')">
+            <span class="calibration-unit-name">DM</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('EA')">
+            <span class="calibration-unit-name">EA</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('FA')">
+            <span class="calibration-unit-name">FA</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('INSTWS')">
+            <span class="calibration-unit-name">INSTWS</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('M1')">
+            <span class="calibration-unit-name">M1</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('M2')">
+            <span class="calibration-unit-name">M2</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('MINMAX')">
+            <span class="calibration-unit-name">MINMAX</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('NPP')">
+            <span class="calibration-unit-name">NPP</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('SPP')">
+            <span class="calibration-unit-name">SPP</span>
+          </div>
+          <div class="calibration-unit-card" onclick="handleUnitClick('UREA')">
+            <span class="calibration-unit-name">UREA</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    $(function() {
+      window.handleUnitClick = function(unit) {
+        console.log(`Clicked Unit in OHSAS: ${unit}`);
+        // Navigate relative to pages/iso/
+        window.location.href = `ohsas_calibration_detail.html?plant=${unit}`;
+      };
+    });
+  </script>
+</body>
+
+</html>

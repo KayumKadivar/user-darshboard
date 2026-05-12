@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lifting/Logistic Equipment Checking Record | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    /* Premium Action Button UI */
+    .table-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(var(--typo-secondary-rgb), 0.05);
+      border: 1px solid var(--app-border);
+      color: var(--typo-secondary);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .table-action-btn:hover {
+      background: rgba(255, 102, 0, 0.1);
+      border-color: var(--typo-orange);
+      color: var(--typo-orange);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 102, 0, 0.15);
+    }
+
+    .table-action-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Icon adjustments */
+    .table-action-btn i {
+      line-height: 1;
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container (Breadcrumb & Nav Title) -->
+    <div id="header-container" data-back="calibration_regiter.html" data-title="BOILER"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,Calibration Register:calibration_regiter.html,Lifting Logistic Equipment Checking:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Action Bar -->
+      <div class="action-bar-panel calib-action-bar">
+        <div class="calib-action-left">
+          <div class="calib-action-icon-box">
+            <i class="ph-bold ph-crane"></i>
+          </div>
+          <div>
+            <div class="calib-action-title-group">
+              <h2 class="calib-action-title">Lifting/Logistic Equipment Checking Record</h2>
+              <span class="calib-action-badge text-uppercase">IMS/F/INST/10</span>
+            </div>
+            <p class="calib-action-subtitle">Periodic safety verification and load test certification for hoists, cranes, and slings</p>
+          </div>
+        </div>
+        <button class="premium-action-btn calib-action-add-btn" id="btn-open-add-modal">
+          <i class="ph-bold ph-plus"></i>
+          <span>Add New Record</span>
+        </button>
+      </div>
+
+      <!-- Main Data Table -->
+      <div class="user-table-wrapper">
+        <table class="user-table ">
+          <thead>
+            <tr>
+              <th class="user-table-center w-50px">Sr</th>
+              <th class="user-table-left">Name</th>
+              <th class="user-table-left">Type</th>
+              <th class="user-table-left">Size</th>
+              <th class="user-table-left">Last Modified</th>
+              <th class="user-table-center w-80px">Action</th>
+            </tr>
+          </thead>
+          <tbody id="lifting-equipment-table-body">
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">1</td>
+              <td class="color-blue">
+                <i class="ph-fill ph-folder font-20px text-yellow-500"></i>
+                <span>AMMONIA</span>
+              </td>
+              <td>&lt;Folder&gt;</td>
+              <td>1856kb</td>
+              <td>10/10/2025</td>
+              <td class="user-table-center">
+                <button class="table-action-btn color-secondary hover-color-primary" title="Rename">
+                  <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">2</td>
+              <td class="color-blue">
+                <i class="ph-fill ph-folder font-20px text-yellow-500"></i>
+                <span>ASRP</span>
+              </td>
+              <td>&lt;Folder&gt;</td>
+              <td>1423kb</td>
+              <td>24/09/2025</td>
+              <td class="user-table-center">
+                <button class="table-action-btn color-secondary hover-color-primary" title="Rename">
+                  <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">3</td>
+              <td class="color-blue">
+                <i class="ph-fill ph-folder font-20px text-yellow-500"></i>
+                <span>BOILER</span>
+              </td>
+              <td>&lt;Folder&gt;</td>
+              <td>5146kb</td>
+              <td>06/07/2024</td>
+              <td class="user-table-center">
+                <button class="table-action-btn color-secondary hover-color-primary" title="Rename">
+                  <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">4</td>
+              <td class="color-blue">
+                <i class="ph-fill ph-folder font-20px text-yellow-500"></i>
+                <span>CMS</span>
+              </td>
+              <td>&lt;Folder&gt;</td>
+              <td>8552kb</td>
+              <td>25/12/2025</td>
+              <td class="user-table-center">
+                <button class="table-action-btn color-secondary hover-color-primary" title="Rename">
+                  <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">5</td>
+              <td class="color-blue">
+                <i class="ph-fill ph-folder font-20px text-yellow-500"></i>
+                <span>CPP</span>
+              </td>
+              <td>&lt;Folder&gt;</td>
+              <td>5958kb</td>
+              <td>06/12/2025</td>
+              <td class="user-table-center">
+                <button class="table-action-btn color-secondary hover-color-primary" title="Rename">
+                  <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Lifting Record Modal -->
+  <div id="add-lifting-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add New Lifting Record</h3>
+        <button type="button" class="gnfc-modal-close" id="btn-close-add-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <form id="add-lifting-form" class="form-grid grid-cols-12 max-w-500px mx-auto">
+          
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Folder Name</label>
+            <input type="text" id="add-name" class="gnfc-modal-input uppercase" placeholder="e.g. AMMONIA" required>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Type</label>
+            <input type="text" id="add-type" class="gnfc-modal-input" value="<Folder>" readonly>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Size (kb)</label>
+            <input type="text" id="add-size" class="gnfc-modal-input" placeholder="e.g. 1856kb" required>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Last Modified</label>
+            <input type="date" id="add-date" class="gnfc-modal-input" required>
+          </div>
+        </form>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="submit" form="add-lifting-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-cancel-add-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // --- 1. Dynamic URL Query Parameter Parsing ---
+      const urlParams = new URLSearchParams(window.location.search);
+      const plantParam = urlParams.get('plant') || 'BOILER';
+      const upperPlant = plantParam.toUpperCase();
+
+      // Configure Header container attributes
+      $('#header-container').attr('data-title', `${upperPlant} - LIFTING EQUIPMENT`);
+      $('#add-form-plant-title').text(`Plant - ${upperPlant}`);
+
+      // --- 2. Modal Open / Close Action handlers ---
+      const $overlay = $('#add-lifting-modal');
+
+      $('#btn-open-add-modal').on('click', function() {
+        $('#add-lifting-form')[0].reset();
+        const todayStr = new Date().toISOString().split('T')[0];
+        $('#add-date').val(todayStr);
+        $('#add-test-date').val(todayStr);
+        $overlay.addClass('is-open');
+      });
+
+      $('#btn-close-add-modal, #btn-cancel-add-modal').on('click', function() {
+        $overlay.removeClass('is-open');
+      });
+
+      $(document).on('keydown', function(e) {
+        if (e.key === 'Escape' && $overlay.hasClass('is-open')) {
+          $overlay.removeClass('is-open');
+        }
+      });
+
+      // --- 3. Form Submit and Row Injection Logic ---
+      $('#add-lifting-form').on('submit', function(e) {
+        e.preventDefault();
+
+        const rawDate = $('#add-date').val();
+        if (!rawDate) return;
+
+        const dParts = rawDate.split('-');
+        const formattedDate = `${dParts[2]}/${dParts[1]}/${dParts[0]}`;
+
+        const nameVal = $('#add-name').val().trim().toUpperCase();
+        const typeVal = $('#add-type').val().trim();
+        const sizeVal = $('#add-size').val().trim();
+
+        const $tbody = $('#lifting-equipment-table-body');
+
+        const newRowHtml = `
+          <tr class="user-table-row">
+            <td class="user-table-center font-14px fw-600"></td>
+            <td class="color-blue">
+              <i class="ph-fill ph-folder font-20px text-yellow-500"></i>
+              <span>${nameVal}</span>
+            </td>
+            <td>${typeVal}</td>
+            <td>${sizeVal}</td>
+            <td>${formattedDate}</td>
+            <td class="user-table-center">
+              <button class="table-action-btn color-secondary hover-color-primary" title="Rename">
+                <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+
+        if ($dateHeader.length > 0) {
+          let $lastRowOfGroup = $tbody.find(`tr[data-date="${formattedDate}"]`).last();
+          if ($lastRowOfGroup.length > 0) {
+            $lastRowOfGroup.after(newRowHtml);
+          } else {
+            $dateHeader.after(newRowHtml);
+          }
+        } else {
+          const dateSectionHtml = `
+            <tr class="user-table-date-row">
+              <td colspan="6" class="user-table-date">${formattedDate}</td>
+            </tr>
+            <tr class="user-table-row" data-date="${formattedDate}">
+              <td class="user-table-center font-14px fw-600"></td>
+              <td class="font-14px fw-700 color-blue">${tagVal}</td>
+              <td>${swlVal}</td>
+              <td>${formattedTestDate}</td>
+              <td>${certVal}</td>
+              <td>${remarksVal}</td>
+            </tr>
+          `;
+          $tbody.prepend(dateSectionHtml);
+        }
+
+        reindexSerialNumbers();
+        $overlay.removeClass('is-open');
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Record Saved Successfully',
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+
+      function reindexSerialNumbers() {
+        const $tbody = $('#lifting-equipment-table-body');
+        let srCount = 1;
+        $tbody.find('.user-table-row').each(function() {
+          // Only update the first cell (the SR column)
+          $(this).find('td:first-child').text(srCount++);
+        });
+        $('#records-count-badge').text(`Total Entries: ${srCount - 1}`);
+      }
+
+      reindexSerialNumbers();
+    });
+  </script>
+</body>
+
+</html>

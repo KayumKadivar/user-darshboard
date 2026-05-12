@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calibration Details | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="calibration_regiter.html" data-title="BOILER"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,Calibration Register:calibration_regiter.html,BOILER:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <div class="action-bar-panel calib-action-bar">
+        <div class="calib-action-left">
+          <div class="calib-action-icon-box">
+            <i class="ph-fill ph-file-text"></i>
+          </div>
+          <div>
+            <div class="calib-action-title-group">
+              <h2 class="calib-action-title">Calibration Register</h2>
+              <span class="calib-action-badge">IMS/F/INST/01</span>
+            </div>
+            <p class="calib-action-subtitle">Manage and track plant instrumentation calibration checks and scheduling
+            </p>
+          </div>
+        </div>
+        <button class="premium-action-btn calib-action-add-btn" data-open-modal="technician-job-assign">
+          <i class="ph-bold ph-plus"></i>
+          <span>Add New Job</span>
+        </button>
+      </div>
+
+      <!-- Corporate Table system from style.css (class applied: user-table) -->
+      <div class="user-table-wrapper">
+        <table class="user-table min-w-1440px">
+          <thead>
+            <tr>
+              <th class="user-table-center w-50px" rowspan="2">Sr</th>
+              <th rowspan="2">Tag</th>
+              <th rowspan="2">Type Of Inst</th>
+              <th rowspan="2">Process OCP No</th>
+              <th rowspan="2">Application</th>
+              <th class="w-150px">Make</th>
+              <th rowspan="2">Serial No</th>
+              <th rowspan="2">Quoted Accuracy</th>
+              <th rowspan="2">Cali Procedure</th>
+              <th class="user-table-center w-100px" rowspan="2">Cali Freq (Days)</th>
+              <th class="w-160px">Due Date</th>
+            </tr>
+            <tr>
+              <th class="w-150px">Model</th>
+              <th>Last Done</th>
+            </tr>
+          </thead>
+          <tbody id="calibration-table-body">
+            <!-- Static Rows directly rendered as requested -->
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">1</td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">QRA7703</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>HONEYWELL</div>
+                  <div>S3-KAl2</div>
+                </div>
+              </td>
+              <td>K0339623221852</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>10/05/2026</div>
+                  <div>11/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">2</td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">QRA7704</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>HONEYWELL</div>
+                  <div>S3-KAl2</div>
+                </div>
+              </td>
+              <td>K0339623471988</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>10/05/2026</div>
+                  <div>11/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">3</td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">QRA7705</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>HONEYWELL</div>
+                  <div>S3-KAl2</div>
+                </div>
+              </td>
+              <td>K0339623221851</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>10/05/2026</div>
+                  <div>11/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">4</td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">4140001</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>BIONICS</div>
+                  <div>TX-1250-XD</div>
+                </div>
+              </td>
+              <td>712045</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>13/05/2026</div>
+                  <div>13/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">5</td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">4140005</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>AMBETRONICS</div>
+                  <div>GT-1033 FLP</div>
+                </div>
+              </td>
+              <td>35430326</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>13/05/2026</div>
+                  <div>13/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">6</td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">QRA7702</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO-DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>DRAGER</div>
+                  <div>Polytron 5100</div>
+                </div>
+              </td>
+              <td>ARFC-1126</td>
+              <td>5%</td>
+              <td>Function checking by applying 50 ppm actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>13/05/2026</div>
+                  <div>13/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">7</td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">4148807</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>HONEYWELL</div>
+                  <div>S3-KAl2</div>
+                </div>
+              </td>
+              <td>K0339623201853</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>14/05/2026</div>
+                  <div>15/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">8</td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">4148809</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>BIONICS</div>
+                  <div>TX-1250-XD</div>
+                </div>
+              </td>
+              <td>712046</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>14/05/2026</div>
+                  <div>15/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">9</td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">4148810</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>AMBETRONICS</div>
+                  <div>GT-1033-FLP</div>
+                </div>
+              </td>
+              <td>35470326</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">100</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>14/05/2026</div>
+                  <div>15/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">10
+              </td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">4148811</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>AMBETRONICS</div>
+                  <div>GT-1033-FLP</div>
+                </div>
+              </td>
+              <td>35480326</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>18/05/2026</div>
+                  <div>17/11/2025</div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">11
+              </td>
+              <td class="clickable-tag" data-open-modal="tag-pm-records">4148806</td>
+              <td>CO SENSOR</td>
+              <td>OCP-1</td>
+              <td>CO DETECTOR</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>HONEYWELL</div>
+                  <div>GT-1033-FLP</div>
+                </div>
+              </td>
+              <td>K0339622401775</td>
+              <td>5%</td>
+              <td>Function checking by applying actual measuring variable/medium</td>
+              <td class="user-table-center">180</td>
+              <td>
+                <div class="user-table-cell-stack">
+                  <div>18/05/2026</div>
+                  <div>17/11/2025</div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- </div> -->
+
+    </div>
+  </main>
+
+  <!-- Modal: Technician Job Create Modal (Static) -->
+  <div id="technician-job-assign" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <h3 id="job-modal-title" class="gnfc-modal-title">Add New Calibration Job</h3>
+        <button type="button" data-close-modal="technician-job-assign" class="gnfc-modal-close"><i
+            class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="job-modal-form">
+        <div class="gnfc-modal-body gnfc-modal-body--tight modal-body-scroll-y">
+          <div class="form-grid grid-cols-12">
+
+            <!-- Row 1: Tag No, Application, Process OCP NO -->
+            <div class="col-span-8">
+              <label class="gnfc-modal-label">TAG NO </label>
+              <div class="flex gap-4px">
+                <input id="modal-field-tag-input" type="text" class="gnfc-modal-input flex-1" placeholder="Search Tag"
+                  required>
+                <select id="modal-field-tag-select" class="gnfc-modal-input flex-1">
+                  <!-- Dynamically populated -->
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">APPLICATION</label>
+              <input id="modal-field-application" type="text" class="gnfc-modal-input"
+                placeholder="Enter application details">
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">PROCESS OCP NO / OEP NO</label>
+              <input id="modal-field-ocp" type="text" class="gnfc-modal-input" placeholder="Enter process OCP/OEP No">
+            </div>
+
+            <!-- Row 2: Frequency of Check, Last Done On, Quoted Accuracy -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">FREQUENCY OF CHECK (DAYS) </label>
+              <input id="modal-field-freq" type="number" class="gnfc-modal-input" placeholder="e.g. 180" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">LAST DONE ON </label>
+              <input id="modal-field-last-done" type="date" class="gnfc-modal-input" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">QUOTED ACCURACY</label>
+              <input id="modal-field-accuracy" type="text" class="gnfc-modal-input" placeholder="e.g. 5%">
+            </div>
+
+            <!-- Row 3: Format, ESD/OHSAS -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">FORMAT </label>
+              <select id="modal-field-format" class="gnfc-modal-input" required>
+                <option value="GAS">GAS</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="TC RTD">TC RTD</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="SWITCH">SWITCH</option>
+                <option value="VALVE">VALVE</option>
+                <option value="CYLINDER">CYLINDER</option>
+                <option value="SPARK PLUG">SPARK PLUG</option>
+              </select>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">ISO / OHSAS </label>
+              <select id="modal-field-esd-ohsas" class="gnfc-modal-input" required>
+                <option value="ISO">ISO</option>
+                <option value="OHSAS">OHSAS</option>
+                <option value="BOTH">BOTH</option>
+              </select>
+            </div>
+
+            <!-- Row 4: Calibration/Check Procedure -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">CALIBRATION / CHECK PROCEDURE </label>
+              <textarea id="modal-field-procedure" rows="4" class="gnfc-modal-input w-full"
+                placeholder="Enter detailed calibration and check procedure guidelines..." required></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="button" data-close-modal="technician-job-assign"
+            class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Technician Job Edit Modal (Static) -->
+  <div id="technician-job-edit" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <h3 id="job-edit-modal-title" class="gnfc-modal-title">Edit Calibration Job</h3>
+        <button type="button" data-close-modal="technician-job-edit" class="gnfc-modal-close"><i
+            class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="job-edit-modal-form">
+        <div class="gnfc-modal-body gnfc-modal-body--tight modal-body-scroll-y">
+          <div class="form-grid grid-cols-12">
+
+            <!-- Row 1: Tag No, Application, Process OCP NO -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Tag No </label>
+              <div class="flex gap-4px">
+                <input id="edit-field-tag-input" type="text" class="gnfc-modal-input flex-1" placeholder="Search Tag"
+                  required>
+                <select id="edit-field-tag-select" class="gnfc-modal-input flex-1">
+                  <!-- Dynamically populated -->
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Application</label>
+              <input id="edit-field-application" type="text" class="gnfc-modal-input"
+                placeholder="Enter application details">
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Process OCP No</label>
+              <input id="edit-field-ocp" type="text" class="gnfc-modal-input" placeholder="Enter process OCP/OEP No">
+            </div>
+
+            <!-- Row 2: Frequency of Check, Last Done On, Quoted Accuracy -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Frequency of Check (Days)</label>
+              <input id="edit-field-freq" type="number" class="gnfc-modal-input" placeholder="e.g. 180" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Last Done On</label>
+              <input id="edit-field-last-done" type="date" class="gnfc-modal-input" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Quoted Accuracy</label>
+              <input id="edit-field-accuracy" type="text" class="gnfc-modal-input" placeholder="e.g. 5%">
+            </div>
+
+            <!-- Row 3: Format, ESD/OHSAS -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">Format </label>
+              <select id="edit-field-format" class="gnfc-modal-input" required>
+                <option value="GAS">GAS</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="TC RTD">TC RTD</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="SWITCH">SWITCH</option>
+                <option value="VALVE">VALVE</option>
+                <option value="CYLINDER">CYLINDER</option>
+                <option value="SPARK PLUG">SPARK PLUG</option>
+              </select>
+            </div>
+
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">ISO / OHSAS </label>
+              <select id="edit-field-esd-ohsas" class="gnfc-modal-input" required>
+                <option value="ISO">ISO</option>
+                <option value="OHSAS">OHSAS</option>
+                <option value="BOTH">BOTH</option>
+              </select>
+            </div>
+
+            <!-- Row 4: Calibration/Check Procedure -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">CALIBRATION / CHECK PROCEDURE </label>
+              <textarea id="edit-field-procedure" rows="4" class="gnfc-modal-input w-full"
+                placeholder="Enter detailed calibration and check procedure guidelines..." required></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer modal-footer-between">
+          <button type="button" id="edit-modal-btn-delete" class="gnfc-modal-btn gnfc-modal-btn-danger">Delete</button>
+          <div class="flex-gap-8px">
+            <button type="button" data-close-modal="technician-job-edit"
+              class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+            <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Tag PM / Calibration Records Modal (Static) -->
+  <div id="tag-pm-records" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl records-modal-shell">
+      <div class="gnfc-modal-header records-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title records-modal-title">Calibration Records</h3>
+          <p class="records-modal-subtitle">
+            PM Details Tag: <span id="pm-records-tag-no" class="records-modal-tag-badge">LT-2</span>
+          </p>
+        </div>
+        <button type="button" data-close-modal="tag-pm-records" class="gnfc-modal-close records-modal-close-btn"><i
+            class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="user-table-wrapper">
+          <table class="user-table w-full">
+            <thead>
+              <tr>
+                <th class="user-table-center w-50px">Sr</th>
+                <th>PM Date</th>
+                <th>Tech Name</th>
+                <th>Checked By</th>
+                <th>Approved Date</th>
+                <th class="user-table-center w-120px">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Row 1 (Attention/Red) -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">1</td>
+                <td class="user-table-center">
+                  <span class="color-red fw-600">28/04/2026</span>
+                </td>
+                <td class="user-table-center">
+                  <span>KBD</span>
+                </td>
+                <td class="user-table-center">
+                  <span class="color-orange fw-600">Pending</span>
+                </td>
+                <td class="user-table-center"></td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 2 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">2</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">28/01/2026</span>
+                </td>
+                <td class="user-table-center">
+                  <span>BSU</span>
+                </td>
+                <td class="user-table-center">
+                  <span>PMP</span>
+                </td>
+                <td class="user-table-center">28/04/2026 11:00:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 3 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">3</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">27/01/2026</span>
+                </td>
+                <td class="user-table-center">
+                  <span>BSU</span>
+                </td>
+                <td class="user-table-center">
+                  <span>TRC</span>
+                </td>
+                <td class="user-table-center">17/03/2026 14:00:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 4 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">4</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">27/10/2025</span>
+                </td>
+                <td class="user-table-center">
+                  <span>JMD</span>
+                </td>
+                <td class="user-table-center">
+                  <span>TRC</span>
+                </td>
+                <td class="user-table-center">22/12/2025 14:17:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 5 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">5</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">28/07/2025</span>
+                </td>
+                <td class="user-table-center">
+                  <span>PVS</span>
+                </td>
+                <td class="user-table-center">
+                  <span>PMP</span>
+                </td>
+                <td class="user-table-center">14/11/2025 15:27:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 6 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">6</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">28/04/2025</span>
+                </td>
+                <td class="user-table-center">
+                  <span>BSU</span>
+                </td>
+                <td class="user-table-center">
+                  <span>RBL</span>
+                </td>
+                <td class="user-table-center">23/07/2025 8:28:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 7 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">7</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">28/01/2025</span>
+                </td>
+                <td class="user-table-center">
+                  <span>PRP</span>
+                </td>
+                <td class="user-table-center">
+                  <span>RBL</span>
+                </td>
+                <td class="user-table-center">25/03/2025 11:29:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 8 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">8</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">28/10/2024</span>
+                </td>
+                <td class="user-table-center">
+                  <span>BSU</span>
+                </td>
+                <td class="user-table-center">
+                  <span>RBL</span>
+                </td>
+                <td class="user-table-center">16/12/2024 16:08:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 9 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">9</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">30/07/2024</span>
+                </td>
+                <td class="user-table-center">
+                  <span>JMD</span>
+                </td>
+                <td class="user-table-center">
+                  <span>RBL</span>
+                </td>
+                <td class="user-table-center">17/08/2024 13:36:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 10 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">10</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">30/04/2024</span>
+                </td>
+                <td class="user-table-center">
+                  <span>PRP</span>
+                </td>
+                <td class="user-table-center">
+                  <span>RBL</span>
+                </td>
+                <td class="user-table-center">11/07/2024 9:50:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+              <!-- Row 11 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">11</td>
+                <td class="user-table-center">
+                  <span class="color-green fw-600">31/01/2024</span>
+                </td>
+                <td class="user-table-center">
+                  <span>PVS</span>
+                </td>
+                <td class="user-table-center">
+                  <span>RBL</span>
+                </td>
+                <td class="user-table-center">20/03/2024 9:25:00</td>
+                <td class="user-table-center records-actions-cell">
+                  <button type="button" class="action-view-btn" title="View Report"><i
+                      class="ph-bold ph-eye"></i></button>
+                  <button type="button" class="action-del-btn" title="Delete Record"><i
+                      class="ph-bold ph-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" data-close-modal="tag-pm-records"
+          class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Transmitter Maintenance Report (Static/Dynamic) -->
+  <div id="view-pm-report" class="gnfc-modal-overlay report-modal-overlay" role="dialog" aria-modal="true"
+    aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl report-modal-shell-padding-zero">
+      <div class="gnfc-modal-header report-modal-header-border">
+        <h3 class="gnfc-modal-title">Transmitters Maintenance Report</h3>
+        <button type="button" data-close-modal="view-pm-report" class="gnfc-modal-close"><i
+            class="ph-bold ph-x text-lg"></i></button>
+      </div>
+
+      <!-- Modal Content: Legacy Paper Layout -->
+
+      <!-- Report Document Body with layout panels -->
+      <div class="gnfc-modal-body report-modal-body-wrapper">
+
+        <!-- PANEL 1: Legacy Paper Copy Layout -->
+        <div id="rpt-layout-legacy" class="report-layout-panel report-legacy-paper">
+          <table class="report-legacy-table">
+            <tbody>
+              <!-- Header title row -->
+              <tr>
+                <td colspan="4" class="report-legacy-title">
+                  <strong>TRANSMITERS MAINTENANCE REPORTOF <span id="rpt-title-tag">LT-2</span></strong>
+                </td>
+              </tr>
+
+              <!-- Row 1: Done & Due Date -->
+              <tr>
+                <td class="w-25 fw-bold">MAINTENANCE DONE DATE</td>
+                <td class="w-25">
+                  <input type="text" id="rpt-done-date" readonly value="28/01/2026" class="report-legacy-input">
+                </td>
+                <td class="w-25 fw-bold">MAINTENANCE DUE DATE</td>
+                <td class="w-25">
+                  <input type="text" id="rpt-due-date" readonly value="25/01/2026" class="report-legacy-input">
+                </td>
+              </tr>
+
+              <!-- Row 2: Section Header -->
+              <tr>
+                <td colspan="2" class="center-bold-bg">
+                  TRANSMITTER UNDER CALIBRATION
+                </td>
+                <td colspan="2" class="bg-white"></td>
+              </tr>
+
+              <!-- Row 3: Tag No & Physical Conditions -->
+              <tr>
+                <td class="fw-bold">TAG NO</td>
+                <td>
+                  <input type="text" id="rpt-tag-no" readonly value="LT-2" class="report-legacy-input">
+                </td>
+                <td colspan="2" rowspan="6" class="v-align-top-w-50">
+                  <div class="report-legacy-physical-desc">
+                    Physical conditions fof transmitter installation for Corrosion ,weather proofing, connection
+                    tightness any other abnormality
+                  </div>
+                  <input type="text" readonly value="ok" class="report-legacy-input">
+                </td>
+              </tr>
+
+              <!-- Row 4: Make -->
+              <tr>
+                <td class="fw-bold">MAKE</td>
+                <td>
+                  <input type="text" id="rpt-make" readonly value="E and H" class="report-legacy-input">
+                </td>
+              </tr>
+
+              <!-- Row 5: Model -->
+              <tr>
+                <td class="fw-bold">MODEL</td>
+                <td>
+                  <input type="text" id="rpt-model" readonly value="PROSONIC-M" class="report-legacy-input">
+                </td>
+              </tr>
+
+              <!-- Row 6: Serial No -->
+              <tr>
+                <td class="fw-bold">SRNO</td>
+                <td>
+                  <input type="text" id="rpt-srno" readonly value="7103900109" class="report-legacy-input">
+                </td>
+              </tr>
+
+              <!-- Row 7: Calibration Range -->
+              <tr>
+                <td class="fw-bold">CALIBRAION RANGE</td>
+                <td>
+                  <input type="text" id="rpt-cal-range" readonly value="E: 3800 MM, F: 3000 MM"
+                    class="report-legacy-input">
+                </td>
+              </tr>
+
+              <!-- Row 8: Engineering Range -->
+              <tr>
+                <td class="fw-bold">ENGINEERING RANGE</td>
+                <td>
+                  <input type="text" id="rpt-eng-range" readonly value="0-100 %" class="report-legacy-input">
+                </td>
+              </tr>
+
+              <!-- Row 9: PH Transmitter -->
+              <tr>
+                <td class="fw-bold">IN CASE OF PH TRANSMITTER</td>
+                <td class="v-align-middle">
+                  <div class="report-legacy-ph-row-flex">
+                    <span>pH4:</span>
+                    <input type="text" readonly value="" class="report-legacy-ph-input">
+                  </div>
+                </td>
+                <td class="v-align-middle">
+                  <div class="report-legacy-ph-row-flex">
+                    <span>pH7:</span>
+                    <input type="text" readonly value="" class="report-legacy-ph-input">
+                  </div>
+                </td>
+                <td class="v-align-middle">
+                  <div class="report-legacy-ph-row-flex">
+                    <span>pH9:</span>
+                    <input type="text" readonly value="" class="report-legacy-ph-input">
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 10: Standard Inst / Multimeter -->
+              <tr>
+                <td colspan="2" class="v-align-top-bold">
+                  STANDARD INST AND VALIDITY
+                  <div class="report-legacy-subtext">
+                    CALIBRATOR VOL-23 (Valid till 25/11/2026)
+                  </div>
+                </td>
+                <td colspan="2" class="v-align-top-bold">
+                  STANDARD MULTIMETER AND VALIDITY
+                  <div class="report-legacy-subtext">
+                    FLUKE-87-V (Valid till 14/08/2026)
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 11: Zero & Span -->
+              <tr>
+                <td colspan="2" class="fw-bold">
+                  <div class="report-legacy-flex-between">
+                    <span>ZERO CHECKING STATUS:</span>
+                    <input type="text" readonly value="ok" class="report-legacy-status-input">
+                  </div>
+                </td>
+                <td colspan="2" class="fw-bold">
+                  <div class="report-legacy-flex-between">
+                    <span>SPAN CHECKING STATUS:</span>
+                    <input type="text" readonly value="ok" class="report-legacy-status-input">
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 12: Remark -->
+              <tr>
+                <td class="center-bold">REMARK</td>
+                <td colspan="3">
+                  <input type="text" id="rpt-remark" readonly value="ok" class="report-legacy-input">
+                </td>
+              </tr>
+
+              <!-- Row 13: Signatures -->
+              <tr>
+                <td class="fw-bold">CALIBRATIN DONE BY TECH.</td>
+                <td>
+                  <input type="text" id="rpt-tech-name" readonly value="BSU" class="report-legacy-input">
+                </td>
+                <td class="fw-bold">VARIFIED BY ENGR.</td>
+                <td>
+                  <input type="text" id="rpt-engr-name" readonly value="PMP" class="report-legacy-input">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Legacy button on bottom left inside report -->
+          <div class="report-legacy-button-container">
+            <button type="button" data-close-modal="view-pm-report" class="report-legacy-btn-checked">
+              <i class="ph-bold ph-check-circle"></i>
+              <span>Checked</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="button" data-close-modal="view-pm-report"
+          class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function () {
+      let activeEditRow = null;
+
+      // Click handler to open Calibration History Modal with clicked tag
+      $(document).on('click', '.clickable-tag', function () {
+        const clickedTag = $(this).text().trim();
+        $('#pm-records-tag-no').text(clickedTag);
+        $('#tag-pm-records').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      // View Report click handler with dynamic parent row matching and data population
+      $(document).on('click', '.action-view-btn', function () {
+        const $historyRow = $(this).closest('tr');
+        const rptDoneDate = $historyRow.find('td').eq(1).text().trim();
+        const rptTechName = $historyRow.find('td').eq(2).text().trim();
+        const rptVerifiedBy = $historyRow.find('td').eq(3).text().trim();
+
+        // Match parent row for additional static instrument details
+        const activeTag = $('#pm-records-tag-no').text().trim();
+        const $mainRow = $('td.clickable-tag').filter(function () {
+          return $(this).text().trim() === activeTag;
+        }).closest('tr');
+
+        // Populate Legacy Paper Layout fields
+        $('#rpt-title-tag').text(activeTag);
+        $('#rpt-tag-no').val(activeTag);
+        $('#rpt-done-date').val(rptDoneDate);
+        $('#rpt-due-date').val($mainRow.find('td').eq(10).find('div div').eq(0).text().trim());
+        $('#rpt-make').val($mainRow.find('td').eq(5).find('div div').eq(0).text().trim());
+        $('#rpt-model').val($mainRow.find('td').eq(5).find('div div').eq(1).text().trim());
+        $('#rpt-srno').val($mainRow.find('td').eq(6).text().trim());
+        $('#rpt-cal-range').val($mainRow.find('td').eq(7).text().trim());
+        $('#rpt-eng-range').val($mainRow.find('td').eq(7).text().trim());
+        $('#rpt-tech-name').val(rptTechName);
+        $('#rpt-engr-name').val(rptVerifiedBy === 'Pending' ? '—' : rptVerifiedBy);
+
+        // Customize remark
+        if (rptVerifiedBy === 'Pending') {
+          $('#rpt-remark').val('Calibration check completed by technician. Awaiting engineering inspection.');
+        } else {
+          $('#rpt-remark').val('Instrument checked and calibrated successfully within tolerance limits.');
+        }
+
+        // Open Report Modal on top
+        $('#view-pm-report').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      // Delete History Record click handler with details and automatic serial reindexing
+      $(document).on('click', '.action-del-btn', function () {
+        const $row = $(this).closest('tr');
+        const tagNo = $('#pm-records-tag-no').text().trim();
+        const pmDate = $row.find('td').eq(1).text().trim();
+
+        Swal.fire({
+          title: 'Delete Calibration Record?',
+          html: `Are you sure you want to delete the calibration record of <strong>${tagNo}</strong> on <strong>${pmDate}</strong>?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#e11d48',
+          cancelButtonColor: 'var(--typo-secondary)',
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'The record has been successfully deleted.',
+              icon: 'success',
+              timer: 1200,
+              showConfirmButton: false
+            });
+            $row.fadeOut(400, function () {
+              $(this).remove();
+              // Renumber remaining Sr columns
+              $('#tag-pm-records tbody tr').each(function (index) {
+                $(this).find('td').first().text(index + 1);
+              });
+            });
+          }
+        });
+      });
+
+      // Modal Open Handler (Generic)
+      $(document).on('click', '[data-open-modal]', function () {
+        const modalId = $(this).data('open-modal');
+        if (modalId) {
+          $('#' + modalId).addClass('is-open');
+          $('body').css('overflow', 'hidden');
+
+          // Initialize date and dynamic tags if it is the assign or edit modal
+          if (modalId === 'technician-job-assign' || modalId === 'technician-job-edit') {
+            // Dynamically populate Tag select dropdown options from table tags
+            const tags = new Set();
+            $('tr.user-table-row').each(function () {
+              const tagText = $(this).find('td').eq(1).text().trim();
+              if (tagText) {
+                tags.add(tagText);
+              }
+            });
+
+            // Populate Create tag dropdown
+            const $tagSelect = $('#modal-field-tag-select');
+            $tagSelect.empty();
+            $tagSelect.append('<option value="">Select Tag</option>');
+            tags.forEach(tag => {
+              $tagSelect.append(`<option value="${tag}">${tag}</option>`);
+            });
+
+            // Populate Edit tag dropdown
+            const $editTagSelect = $('#edit-field-tag-select');
+            $editTagSelect.empty();
+            $editTagSelect.append('<option value="">Select Tag</option>');
+            tags.forEach(tag => {
+              $editTagSelect.append(`<option value="${tag}">${tag}</option>`);
+            });
+          }
+
+          // Default today's date for create modal
+          if (modalId === 'technician-job-assign') {
+            const today = new Date().toISOString().split('T')[0];
+            $('#modal-field-last-done').val(today);
+          }
+        }
+      });
+
+      // Edit Click Handler (Populates the edit modal dynamically)
+      $(document).on('click', '.clickable-cell', function () {
+        activeEditRow = $(this).closest('tr');
+        const $row = activeEditRow;
+
+        // Extract values from cells
+        const tag = $row.find('td').eq(1).text().trim();
+        const ocp = $row.find('td').eq(3).text().trim();
+        const application = $row.find('td').eq(4).text().trim();
+        const accuracy = $row.find('td').eq(7).text().trim();
+        const procedure = $row.find('td').eq(8).text().trim();
+        const freq = $row.find('td').eq(9).text().trim();
+
+        // Last Done is the second div inside index 10
+        const lastDoneRaw = $row.find('td').eq(10).find('div div').eq(1).text().trim(); // Format: DD/MM/YYYY
+
+        // Format lastDone to YYYY-MM-DD for the date input
+        let lastDoneDate = "";
+        if (lastDoneRaw) {
+          const parts = lastDoneRaw.split('/');
+          if (parts.length === 3) {
+            lastDoneDate = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+          }
+        }
+
+        // Set values in static edit modal fields
+        $('#edit-field-tag-input').val(tag);
+        $('#edit-field-tag-select').val(tag);
+        $('#edit-field-application').val(application);
+        $('#edit-field-ocp').val(ocp);
+        $('#edit-field-freq').val(freq);
+        if (lastDoneDate) {
+          $('#edit-field-last-done').val(lastDoneDate);
+        }
+        $('#edit-field-accuracy').val(accuracy);
+        $('#edit-field-procedure').val(procedure);
+
+        // Formats and defaults
+        $('#edit-field-format').val('IMS/F/INST/01');
+        $('#edit-field-esd-ohsas').val('N.A.');
+      });
+
+      // Delete Click Handler
+      $('#edit-modal-btn-delete').on('click', function () {
+        Swal.fire({
+          title: 'Delete Entry?',
+          text: 'Are you sure you want to permanently delete this calibration entry? This action cannot be undone.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#e11d48',
+          
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'The entry has been successfully deleted.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+
+            // Smooth fade-out of the deleted row
+            if (activeEditRow) {
+              activeEditRow.fadeOut(500, function () {
+                $(this).remove();
+              });
+            }
+
+            $('#technician-job-edit').removeClass('is-open');
+            $('body').css('overflow', '');
+          }
+        });
+      });
+
+      // Modal Close Handler (Generic)
+      $(document).on('click', '[data-close-modal]', function () {
+        const modalId = $(this).data('close-modal');
+        $('#' + modalId).removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      // Autocomplete functionality for Tag Select inside create modal
+      $('#modal-field-tag-input').on('input', function () {
+        const text = $(this).val().toLowerCase();
+        $('#modal-field-tag-select option').each(function () {
+          const optionVal = $(this).val().toLowerCase();
+          if (optionVal.includes(text)) {
+            $(this).prop('selected', true);
+            return false;
+          }
+        });
+      });
+
+      $(document).on('change', '#modal-field-tag-select', function () {
+        $('#modal-field-tag-input').val($(this).val());
+      });
+
+      // Autocomplete functionality for Tag Select inside edit modal
+      $('#edit-field-tag-input').on('input', function () {
+        const text = $(this).val().toLowerCase();
+        $('#edit-field-tag-select option').each(function () {
+          const optionVal = $(this).val().toLowerCase();
+          if (optionVal.includes(text)) {
+            $(this).prop('selected', true);
+            return false;
+          }
+        });
+      });
+
+      $(document).on('change', '#edit-field-tag-select', function () {
+        $('#edit-field-tag-input').val($(this).val());
+      });
+
+      // Create Form Submit Handler
+      $('#job-modal-form').on('submit', function (e) {
+        e.preventDefault();
+
+        Swal.fire({
+          title: 'Apply Changes?',
+          text: 'Are you sure you want to save this new calibration entry?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#ff9900',
+          
+          confirmButtonText: 'Yes, save it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Saved!',
+              text: 'New calibration entry registered successfully.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+            $('#technician-job-assign').removeClass('is-open');
+            $('body').css('overflow', '');
+            $('#job-modal-form')[0].reset();
+          }
+        });
+      });
+
+      // Edit Form Submit Handler
+      $('#job-edit-modal-form').on('submit', function (e) {
+        e.preventDefault();
+
+        Swal.fire({
+          title: 'Save Changes?',
+          text: 'Are you sure you want to update this calibration entry?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#ff9900',
+          
+          confirmButtonText: 'Yes, save changes!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Updated!',
+              text: 'Calibration entry has been updated successfully.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+            $('#technician-job-edit').removeClass('is-open');
+            $('body').css('overflow', '');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

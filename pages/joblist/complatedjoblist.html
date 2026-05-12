@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Completed Job List | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="joblist.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'job_list';
+
+    // Static Page Configuration
+    const plant = "BOILER";
+    const mode = "COMPLETED JOB LIST";
+    const pageTitle = `${mode} (${plant})`;
+
+    document.title = `${pageTitle} | GNFC`;
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header -->
+    <div id="header-container" data-back="joblist.html"
+      data-breadcrumb="Dashboard:../../dashboard.html,Job List:joblist.html,active">
+    </div>
+
+    <div class="app-content-area">
+
+      <!-- Filters & Actions -->
+      <div class="action-bar">
+        <div class="tool-group">
+          <div class="tool-item">
+            <span class="plant-filter-label">Category:</span>
+            <select id="categoryFilter" onchange="applyFilters()"
+              class="gnfc-modal-input w-200px font-14px fw-600 px-8px">
+              <option value="ALL">ALL</option>
+              <option value="N.A.">N.A.</option>
+              <option value="C/V">C/V</option>
+              <option value="DCS">DCS</option>
+              <option value="DOCUMENTATION">DOCUMENTATION</option>
+              <option value="ESD">ESD</option>
+              <option value="FIELD IMPROVEMENT">FIELD IMPROVEMENT</option>
+              <option value="FIELD INST">FIELD INST</option>
+              <option value="MACHINE HOUSE">MACHINE HOUSE</option>
+              <option value="MODIFICATION">MODIFICATION</option>
+              <option value="OPR. REQUIREMENT">OPR. REQUIREMENT</option>
+              <option value="PROCUREMENT">PROCUREMENT</option>
+              <option value="SPARES REPAIRING">SPARES REPAIRING</option>
+            </select>
+          </div>
+          <div class="action-divider"></div>
+          <div class="tool-item">
+            <span class="plant-filter-label">Area:</span>
+            <select id="areaFilter" onchange="applyFilters()" class="gnfc-modal-input px-8px" style="min-width: 150px;">
+              <option value="ALL">ALL</option>
+              <option value="N.A.">N.A.</option>
+              <option value="ASH">ASH</option>
+              <option value="BOILER-1">BOILER-1</option>
+              <option value="BOILER-2">BOILER-2</option>
+              <option value="BOILER-3">BOILER-3</option>
+              <option value="BOILER-4">BOILER-4</option>
+              <option value="CHP">CHP</option>
+              <option value="COMMON">COMMON</option>
+              <option value="CPSU-BMS">CPSU-BMS</option>
+              <option value="CPSU-BOP">CPSU-BOP</option>
+              <option value="CPSU-GT">CPSU-GT</option>
+              <option value="CPSU-HRSG">CPSU-HRSG</option>
+              <option value="NG STN">NG STN</option>
+              <option value="TG-1">TG-1</option>
+              <option value="TG-2">TG-2</option>
+            </select>
+          <div class="action-divider"></div>
+          <div class="tool-item">
+            <span class="plant-filter-label">Year:</span>
+            <select id="yearFilter" onchange="applyFilters()" class="gnfc-modal-input px-8px" style="min-width: 100px;">
+              <option value="ALL">ALL</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2005">2005</option>
+              <option value="2004">2004</option>
+              <option value="2003">2003</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Data Card -->
+      <div class="admin-card p-0px overflow-hidden">
+        <div class="user-table-scroll">
+          <table class="user-table user-table-bordered user-table-fixed">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 60px">SR</th>
+                <th  class="user-table-left" style="width: 150px">AREA</th>
+                <th rowspan="2" class="user-table-left">DESCRIPTION</th>
+                <th rowspan="2" class="user-table-center" style="width: 120px">OverDate</th>
+                <th rowspan="2" class="user-table-center" style="width: 450px">REMARKS</th>
+              </tr>
+              <tr>
+                <th class="user-table-left user-table-border-right" style="width: 150px">TAG</th>
+              </tr>
+
+            </thead>
+            <tbody id="bodyCompleted">
+              <!-- Row 1 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A." data-year="2003">
+                <td class="user-table-center">1</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>N.A.</span>
+                  </div>
+                </td>
+                <td class="user-table-left">ATB302 spare column to be manufactured.</td>
+                <td class="user-table-center">11/08/2003</td>
+                <td class="user-table-left"></td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A." data-year="2003">
+                <td class="user-table-center">2</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>T1A7751 PLC</span>
+                  </div>
+                </td>
+                <td class="user-table-left">T1A7751 defective element to be replaced</td>
+                <td class="user-table-center">25/12/2003</td>
+                <td class="user-table-left">RTD element replaced [written by KGG 25/12/2003]</td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A." data-year="2003">
+                <td class="user-table-center">3</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>FV8109</span>
+                  </div>
+                </td>
+                <td class="user-table-left">FV8109 bonnet windows to be closed with SS316 plate thickness=1mm(5.5" X
+                  1.5")</td>
+                <td class="user-table-center">25/12/2003</td>
+                <td class="user-table-left">SS plate provided. [written by KGG 25/12/2003]</td>
+              </tr>
+
+              <!-- Row 4 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">4</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>FT8001</span>
+                  </div>
+                </td>
+                <td class="user-table-left">FT8001 Relocation at up stream of PIC8001A</td>
+                <td class="user-table-center">13/01/2004</td>
+                <td class="user-table-left">discussed with process and not required [written by KGG 20/01/2004]</td>
+              </tr>
+
+              <!-- Row 5 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">5</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>FT7603</span>
+                  </div>
+                </td>
+                <td class="user-table-left">FT7603 Relocation at up stream of PIC7603A</td>
+                <td class="user-table-center">20/01/2004</td>
+                <td class="user-table-left">This modification now not required to process group [written by KGG
+                  20/01/2004]</td>
+              </tr>
+
+              <!-- Row 6 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">6</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>FT8101</span>
+                  </div>
+                </td>
+                <td class="user-table-left">FT8101 Relocation at up stream of PIC8101A</td>
+                <td class="user-table-center">20/01/2004</td>
+                <td class="user-table-left">Now this modification not required [written by KGG 20/01/2004]</td>
+              </tr>
+
+              <!-- Row 7 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">7</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>N.A.</span>
+                  </div>
+                </td>
+                <td class="user-table-left">PLC PROGRAMMER (TAS)</td>
+                <td class="user-table-center">01/03/2004</td>
+                <td class="user-table-left">Program password protected. [written by KGG 01/03/2004]</td>
+              </tr>
+
+              <!-- Row 8 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">8</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>N.A.</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Replacement of canopy for transmitters (Acetic Acid)</td>
+                <td class="user-table-center">01/03/2004</td>
+                <td class="user-table-left">32 nos canopy replaced [written by KGG 01/03/2004]</td>
+              </tr>
+
+              <!-- Row 9 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">9</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>AI-1-11</span>
+                  </div>
+                </td>
+                <td class="user-table-left">DCS input channel found fluctuating [AI-1-11]</td>
+                <td class="user-table-center">01/03/2004</td>
+                <td class="user-table-left">Analog input card calibrated and now both indication matching [written by
+                  KGG 01/03/2004]</td>
+              </tr>
+
+              <!-- Row 10 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">10</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>N.A.</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Spares for chilled water unit 3</td>
+                <td class="user-table-center">01/03/2004</td>
+                <td class="user-table-left">Materials received [written by KGG 01/03/2004]</td>
+              </tr>
+
+              <!-- Row 11 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">11</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>N.A.</span>
+                  </div>
+                </td>
+                <td class="user-table-left">DIFF. PRESSURE TRANSMITTER</td>
+                <td class="user-table-center">01/03/2004</td>
+                <td class="user-table-left">Materials received [written by KGG 01/03/2004]</td>
+              </tr>
+
+              <!-- Row 12 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">12</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>N.A.</span>
+                  </div>
+                </td>
+                <td class="user-table-left">POWER SUPPLY FOR TAS</td>
+                <td class="user-table-center">01/03/2004</td>
+                <td class="user-table-left">materials received [written by KGG 01/03/2004]</td>
+              </tr>
+
+              <!-- Row 13 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A.">
+                <td class="user-table-center">13</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>CHW-B</span>
+                  </div>
+                </td>
+                <td class="user-table-left">CHW-B TIMER REPLACEMENT.</td>
+                <td class="user-table-center">13/04/2004</td>
+                <td class="user-table-left"></td>
+              </tr>
+
+              <!-- Row 14 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A." data-year="2004">
+                <td class="user-table-center">14</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>N.A.</span>
+                  </div>
+                </td>
+                <td class="user-table-left">27 Nos pressure switch calibration checking.</td>
+                <td class="user-table-center">01/05/2004</td>
+                <td class="user-table-left"></td>
+              </tr>
+
+              <!-- Row 15 -->
+              <tr class="user-table-row" data-category="N.A." data-area="N.A." data-year="2005">
+                <td class="user-table-center">15</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>N.A.</span>
+                    <span>N.A.</span>
+                  </div>
+                </td>
+                <td class="user-table-left">202 Nos Transmitters calibration checking and P.M.</td>
+                <td class="user-table-center">01/02/2005</td>
+                <td class="user-table-left"></td>
+              </tr>
+              <!-- Year 2024 Data (4 rows) -->
+              <tr class="user-table-row" data-category="C/V" data-area="BOILER-1" data-year="2024">
+                <td class="user-table-center">16</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>BOILER-1</span>
+                    <span>CV-4001</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Control valve periodic maintenance and calibration.</td>
+                <td class="user-table-center">15/03/2024</td>
+                <td class="user-table-left">Job completed successfully. [written by KGG]</td>
+              </tr>
+              <tr class="user-table-row" data-category="DCS" data-area="COMMON" data-year="2024">
+                <td class="user-table-center">17</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>COMMON</span>
+                    <span>DCS-NODE-1</span>
+                  </div>
+                </td>
+                <td class="user-table-left">DCS logic update for steam drum level control.</td>
+                <td class="user-table-center">20/05/2024</td>
+                <td class="user-table-left">Logic verified and tested.</td>
+              </tr>
+              <tr class="user-table-row" data-category="FIELD INST" data-area="BOILER-2" data-year="2024">
+                <td class="user-table-center">18</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>BOILER-2</span>
+                    <span>PT-2021</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Pressure transmitter replacement at main steam line.</td>
+                <td class="user-table-center">12/08/2024</td>
+                <td class="user-table-left">New transmitter calibrated.</td>
+              </tr>
+              <tr class="user-table-row" data-category="MODIFICATION" data-area="ASH" data-year="2024">
+                <td class="user-table-center">19</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>ASH</span>
+                    <span>ASH-CONV-1</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Modification of ash conveyor speed control logic.</td>
+                <td class="user-table-center">05/11/2024</td>
+                <td class="user-table-left">Efficiency improved by 15%.</td>
+              </tr>
+
+              <!-- Year 2025 Data (3 rows) -->
+              <tr class="user-table-row" data-category="ESD" data-area="BOILER-3" data-year="2025">
+                <td class="user-table-center">20</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>BOILER-3</span>
+                    <span>ESD-VALVE-1</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Annual testing of emergency shutdown valves.</td>
+                <td class="user-table-center">10/01/2025</td>
+                <td class="user-table-left">All valves operational.</td>
+              </tr>
+              <tr class="user-table-row" data-category="PROCUREMENT" data-area="BOILER-4" data-year="2025">
+                <td class="user-table-center">21</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>BOILER-4</span>
+                    <span>N.A.</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Procurement of high-temperature RTD sensors.</td>
+                <td class="user-table-center">22/02/2025</td>
+                <td class="user-table-left">Stock received and verified.</td>
+              </tr>
+              <tr class="user-table-row" data-category="FIELD IMPROVEMENT" data-area="CPSU-GT" data-year="2025">
+                <td class="user-table-center">22</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>CPSU-GT</span>
+                    <span>GT-VIB-01</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Installation of vibration monitoring probes on GT-1.</td>
+                <td class="user-table-center">18/04/2025</td>
+                <td class="user-table-left">Data integrated with DCS.</td>
+              </tr>
+
+              <!-- Year 2026 Data (3 rows) -->
+              <tr class="user-table-row" data-category="MACHINE HOUSE" data-area="TG-1" data-year="2026">
+                <td class="user-table-center">23</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>TG-1</span>
+                    <span>TG1-GOV-01</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Turbine governor overhaul and recalibration.</td>
+                <td class="user-table-center">05/01/2026</td>
+                <td class="user-table-left">Governor tested at full load.</td>
+              </tr>
+              <tr class="user-table-row" data-category="SPARES REPAIRING" data-area="CHP" data-year="2026">
+                <td class="user-table-center">24</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>CHP</span>
+                    <span>CHP-MT-05</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Repairing of motor protection relay from CHP.</td>
+                <td class="user-table-center">12/02/2026</td>
+                <td class="user-table-left">Relay calibrated and returned to store.</td>
+              </tr>
+              <tr class="user-table-row" data-category="OPR. REQUIREMENT" data-area="NG STN" data-year="2026">
+                <td class="user-table-center">25</td>
+                <td class="user-table-left">
+                  <div class="user-table-cell-stack">
+                    <span>NG STN</span>
+                    <span>NG-PT-501</span>
+                  </div>
+                </td>
+                <td class="user-table-left">Pressure transmitter relocation as per operations request.</td>
+                <td class="user-table-center">25/03/2026</td>
+                <td class="user-table-left">New location verified by process team.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(function () {
+      // Dynamic Title Update
+      $('#dynamicTitle').text(`${mode} (${plant})`);
+    });
+
+    window.applyFilters = function () {
+      const selCat = $('#categoryFilter').val();
+      const selArea = $('#areaFilter').val();
+      const selYear = $('#yearFilter').val();
+      const $rows = $('#bodyCompleted tr');
+
+      $rows.each(function () {
+        const rowCat = $(this).attr('data-category');
+        const rowArea = $(this).attr('data-area');
+        const rowYear = $(this).attr('data-year');
+
+        const matchCat = (selCat === 'ALL' || rowCat === selCat);
+        const matchArea = (selArea === 'ALL' || rowArea === selArea);
+        const matchYear = (selYear === 'ALL' || rowYear === selYear);
+
+        if (matchCat && matchArea && matchYear) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    };
+  </script>
+</body>
+
+</html>

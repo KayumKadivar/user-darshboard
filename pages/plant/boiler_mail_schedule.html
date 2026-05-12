@@ -20,7 +20,67 @@
 
   <script>window.activePage = 'plants';</script>
 
+  <style>
+    /* Day Chips for Weekly Frequency */
+    .day-chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
 
+    .day-chip {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid var(--app-border);
+      background: var(--app-bg);
+      color: var(--typo-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .day-chip:hover {
+      border-color: var(--typo-blue);
+      color: var(--typo-blue);
+      transform: translateY(-2px);
+      background: rgba(87, 148, 242, 0.05);
+    }
+
+    .day-chip.is-selected {
+      background: var(--typo-blue);
+      border-color: var(--typo-blue);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(87, 148, 242, 0.35);
+    }
+
+    .day-chip.is-selected:hover {
+      background: #4a85e2;
+      transform: translateY(-1px);
+    }
+
+    /* Animation for selection */
+    .day-chip::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.2);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .day-chip:active::after {
+      opacity: 1;
+    }
+  </style>
 </head>
 
 <body class="dashboard-body">
@@ -412,6 +472,7 @@
             <div class="schedule-mode-tabs" id="mode-tabs">
               <div class="mode-tab is-active" data-mode="interval">INTERVAL (DAYS)</div>
               <div class="mode-tab" data-mode="monthly">MONTHLY DATE</div>
+              <div class="mode-tab" data-mode="weekly">WEEKLY DAYS</div>
               <div class="mode-tab" data-mode="specific">SPECIFIC DATE</div>
             </div>
 
@@ -437,6 +498,22 @@
                 <span class="mode-input-label">day of the month.</span>
               </div>
 
+            </div>
+
+            <!-- Mode: Weekly -->
+            <div id="content-weekly" class="mode-content">
+              <div class="flex flex-col gap-12px">
+                <span class="mode-input-label">Send mail every week on selected days:</span>
+                <div class="day-chips-container">
+                  <div class="day-chip" data-day="Mon">MON</div>
+                  <div class="day-chip" data-day="Tue">TUE</div>
+                  <div class="day-chip" data-day="Wed">WED</div>
+                  <div class="day-chip" data-day="Thu">THU</div>
+                  <div class="day-chip" data-day="Fri">FRI</div>
+                  <div class="day-chip" data-day="Sat">SAT</div>
+                  <div class="day-chip" data-day="Sun">SUN</div>
+                </div>
+              </div>
             </div>
 
             <!-- Mode: Specific -->
@@ -629,6 +706,7 @@
             <div class="schedule-mode-tabs" id="mode-tabs">
               <div class="mode-tab is-active" data-mode="interval">INTERVAL (DAYS)</div>
               <div class="mode-tab" data-mode="monthly">MONTHLY DATE</div>
+              <div class="mode-tab" data-mode="weekly">WEEKLY DAYS</div>
               <div class="mode-tab" data-mode="specific">SPECIFIC DATE</div>
             </div>
 
@@ -654,6 +732,22 @@
                 <span class="mode-input-label">day of the month.</span>
               </div>
 
+            </div>
+
+            <!-- Mode: Weekly -->
+            <div id="content-weekly" class="mode-content">
+              <div class="flex flex-col gap-12px">
+                <span class="mode-input-label">Send mail every week on selected days:</span>
+                <div class="day-chips-container">
+                  <div class="day-chip" data-day="Mon">MON</div>
+                  <div class="day-chip" data-day="Tue">TUE</div>
+                  <div class="day-chip" data-day="Wed">WED</div>
+                  <div class="day-chip" data-day="Thu">THU</div>
+                  <div class="day-chip" data-day="Fri">FRI</div>
+                  <div class="day-chip" data-day="Sat">SAT</div>
+                  <div class="day-chip" data-day="Sun">SUN</div>
+                </div>
+              </div>
             </div>
 
             <!-- Mode: Specific -->
@@ -892,6 +986,11 @@
         $wrapper.find('[id="content-' + mode + '"]').addClass('is-active');
       });
 
+      // Day Chip Toggle
+      $(document).on('click', '.day-chip', function () {
+        $(this).toggleClass('is-selected');
+      });
+
       // --- Modal Open ---
       $('#btn-add-schedule').on('click', function () {
         editingRow = null;
@@ -900,6 +999,7 @@
         selectedEmails = [];
         updateMSDisplay();
         $('#add-mail-modal .mode-tab[data-mode="interval"]').click();
+        $('.day-chip').removeClass('is-selected');
         $('#add-mail-modal').addClass('is-open');
       });
 

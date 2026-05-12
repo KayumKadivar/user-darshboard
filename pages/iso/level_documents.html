@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISO Level Documents | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    /* ─── Reconstructed Legacy Slanted Header (Proper Right Lean Slants) ─── */
+    .iso-slanted-header {
+      display: flex;
+      width: 100%;
+      height: 76px;
+      background: #004d26; /* Deep dark forest green */
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    /* Slanted geometric modules leaning bottom-left to top-right */
+    .slanted-module {
+      position: relative;
+      background: linear-gradient(135deg, #0a5c2c 0%, #15803d 100%);
+      color: #ffffff;
+      padding: 12px 24px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);
+      margin-right: -4%;
+      z-index: 3;
+    }
+
+    /* Slanted golden divider border */
+    .slanted-module:not(:first-child)::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+      background: #ffc107; /* Golden yellow */
+      z-index: 5;
+    }
+
+    .slanted-module:nth-child(2) {
+      clip-path: polygon(12% 0, 100% 0, 88% 100%, 0 100%);
+      padding-left: 48px;
+      z-index: 2;
+    }
+
+    .slanted-module:nth-child(3) {
+      clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+      background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+      padding-left: 48px;
+      margin-right: 0;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Logo Styling */
+    .slanted-logo-wrapper {
+      width: 44px;
+      height: 44px;
+      background: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      flex-shrink: 0;
+    }
+
+    .slanted-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .module-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .module-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      margin: 0;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      line-height: 1.2;
+    }
+
+    .module-subtitle {
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin-top: 1px;
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: 0.01em;
+    }
+
+    /* Module 3 content styling */
+    .module-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .highlight-yellow {
+      color: #ffc107 !important;
+    }
+
+    .web-world-tag {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .motto-text {
+      font-size: 0.7rem;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.85);
+      margin-top: 2px;
+    }
+
+    /* Far Right Navigation Controls inside Header */
+    .header-nav-links {
+      display: flex;
+      gap: 16px;
+      align-self: flex-end;
+      margin-bottom: 2px;
+      padding-right: 12px;
+    }
+
+    .nav-btn-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-btn-link:hover {
+      color: #ffc107;
+    }
+
+    /* ── Document Management System UI (Recreates legacy sections) ── */
+    .dms-container {
+      background: var(--app-panel);
+      border: 1px solid var(--app-border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--iso-glow-shadow);
+      margin-bottom: 24px;
+    }
+
+    .dms-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--app-border);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .dms-code-badge {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .dms-path-badge {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--typo-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dms-path-badge i {
+      color: #ffc107;
+      font-size: 1.1rem;
+    }
+
+    /* Folder Actions Toolbar */
+    .dms-toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .dms-toolbar-btn {
+      background: var(--app-panel-alt);
+      border: 1px solid var(--app-border);
+      color: var(--typo-secondary);
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dms-toolbar-btn:hover {
+      border-color: #10b981;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    /* Premium File list Table */
+    .dms-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--app-border);
+    }
+
+    .dms-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .dms-table th {
+      background: var(--app-panel-alt);
+      color: var(--typo-primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--app-border);
+    }
+
+    .dms-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--app-border);
+      color: var(--typo-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .dms-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .dms-table tr:hover td {
+      background: rgba(16, 185, 129, 0.02);
+    }
+
+    .file-name-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--typo-primary);
+      font-weight: 600;
+    }
+
+    .file-icon-doc {
+      color: #2b579a;
+      font-size: 1.25rem;
+    }
+
+    .file-icon-pdf {
+      color: #f40f0f;
+      font-size: 1.25rem;
+    }
+
+    .file-icon-xls {
+      color: #217346;
+      font-size: 1.25rem;
+    }
+
+    .file-icon-folder {
+      color: #fbbf24; /* Golden yellow folder */
+      font-size: 1.25rem;
+    }
+
+    /* Table Action column links */
+    .file-actions {
+      display: flex;
+      gap: 14px;
+    }
+
+    .file-action-link {
+      color: var(--typo-secondary);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.15s ease;
+    }
+
+    .file-action-link:hover {
+      color: #10b981;
+    }
+
+    .file-action-delete {
+      color: var(--typo-hint);
+    }
+
+    .file-action-delete:hover {
+      color: #ef4444;
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="iso.html"
+      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,Documents:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Reconstructed Legacy Slanted Header (Slants Lean Right - High Parity with Screenshot) -->
+      <div class="iso-slanted-header">
+        <!-- Module 1: Brand -->
+        <div class="slanted-module">
+          <div class="slanted-logo-wrapper">
+            <img src="../../assets/images/gnfc-sidebar-logo-short.png" class="slanted-logo" alt="GNFC Logo">
+          </div>
+          <div class="module-info">
+            <h2 class="module-title">ISO 14000</h2>
+            <p class="module-subtitle">Gujarat Narmada Valley Fertilizers & Chemical Ltd.</p>
+          </div>
+        </div>
+
+        <!-- Module 2: Repeated (Legacy design faithfully restored) -->
+        <div class="slanted-module">
+          <div class="slanted-logo-wrapper">
+            <img src="../../assets/images/gnfc-sidebar-logo-short.png" class="slanted-logo" alt="GNFC Logo">
+          </div>
+          <div class="module-info">
+            <h2 class="module-title">ISO 14000</h2>
+            <p class="module-subtitle">Gujarat Narmada Valley Fertilizers & Chemical Ltd.</p>
+          </div>
+        </div>
+
+        <!-- Module 3: Instrument Web World with inline links -->
+        <div class="slanted-module">
+          <div class="slanted-logo-wrapper">
+            <img src="../../assets/images/gnfc-sidebar-logo-short.png" class="slanted-logo" alt="GNFC Logo">
+          </div>
+          <div class="module-info">
+            <div class="module-title-row">
+              <h2 class="module-title highlight-yellow">INSTRUMENT</h2>
+              <span class="web-world-tag">Web World</span>
+            </div>
+            <p class="module-subtitle motto-text">“Let The World Set Standards By What We Do...”</p>
+          </div>
+
+          <!-- Embedded Header Links inside Header on the far right -->
+          <div class="header-nav-links">
+            <a href="iso.html" class="nav-btn-link"><i class="ph ph-arrow-left"></i> Back</a>
+            <a href="../../dashboard.html" class="nav-btn-link"><i class="ph ph-house"></i> Main</a>
+            <a href="../../Login.html" class="nav-btn-link"><i class="ph ph-sign-out"></i> Logout</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modernized Document Management System Card -->
+      <div class="dms-container">
+        <!-- Badge & Path Info Row -->
+        <div class="dms-meta-row">
+          <div class="dms-code-badge">
+            ISO14000 DMS CODE: IMS/F/INST/10
+          </div>
+          <div class="dms-path-badge">
+            <i class="ph-fill ph-folder-open"></i>
+            <span id="current-folder-path">ISO/DOC/LEVEL-1/</span>
+          </div>
+        </div>
+
+        <!-- Toolbar controls -->
+        <div class="dms-toolbar">
+          <button class="dms-toolbar-btn" onclick="history.back()" title="Up one folder">
+            <i class="ph ph-arrow-up"></i>
+          </button>
+          <button class="dms-toolbar-btn" title="Upload document">
+            <i class="ph ph-upload-simple"></i>
+          </button>
+          <button class="dms-toolbar-btn" title="Save current list">
+            <i class="ph ph-floppy-disk"></i>
+          </button>
+        </div>
+
+        <!-- Files List Table -->
+        <div class="dms-table-wrapper">
+          <table class="dms-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Last Modified</th>
+                <th style="width: 120px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="files-table-body">
+              <!-- Dynamically populated files listing -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ─── Dynamic Level Content Logic ─── -->
+  <script>
+    $(function () {
+      // 1. Parse level query parameter
+      const params = new URLSearchParams(window.location.search);
+      const level = params.get('level') || '1';
+      
+      // Update breadcrumb & folder path text
+      $('#current-folder-path').text(`ISO/DOC/LEVEL-${level}/`);
+      
+      // Define files list database matching levels 1, 2, 3 exactly
+      const filesDb = {
+        '1': [
+          { name: 'ems.doc', type: 'Microsoft Word Document', size: '441Kb', date: '05/07/2014', icon: 'ph-file-doc file-icon-doc' },
+          { name: 'ems.lwp', type: 'LWP File', size: '1085Kb', date: '07/10/2009', icon: 'ph-file file-icon-doc' },
+          { name: 'gnfc-msm-level-1.pdf', type: 'PDF File', size: '511Kb', date: '27/07/2010', icon: 'ph-file-pdf file-icon-pdf' }
+        ],
+        '2': [
+          { name: 'ARCHIEVED DOCUMENTS', type: '&lt;Folder&gt;', size: '12363Kb', date: '06/07/2016', icon: 'ph-folder file-icon-folder' },
+          { name: 'EMD', type: '&lt;Folder&gt;', size: '378Kb', date: '07/07/2015', icon: 'ph-folder file-icon-folder' },
+          { name: 'ON SITE EMERGENCY PLAN (OEP)', type: '&lt;Folder&gt;', size: '4923Kb', date: '05/07/2014', icon: 'ph-folder file-icon-folder' },
+          { name: 'REAL REG OF ENV ASPECT AND IMPACTS', type: '&lt;Folder&gt;', size: '154Kb', date: '05/07/2014', icon: 'ph-folder file-icon-folder' },
+          { name: 'REGISTER OF INTERESTED PARTIES', type: '&lt;Folder&gt;', size: '40Kb', date: '12/01/2018', icon: 'ph-folder file-icon-folder' },
+          { name: 'ROR', type: '&lt;Folder&gt;', size: '151Kb', date: '06/07/2016', icon: 'ph-folder file-icon-folder' }
+        ],
+        '3': [
+          { name: 'FORMS AND FORMATES', type: '&lt;Folder&gt;', size: '5000Kb', date: '05/07/2014', icon: 'ph-folder file-icon-folder' }
+        ]
+      };
+
+      const files = filesDb[level] || filesDb['1'];
+      const $tbody = $('#files-table-body');
+
+      // Populate rows
+      files.forEach(file => {
+        const row = `
+          <tr>
+            <td>
+              <div class="file-name-cell">
+                <i class="ph-fill ${file.icon}"></i>
+                <span>${file.name}</span>
+              </div>
+            </td>
+            <td>${file.type}</td>
+            <td>${file.size}</td>
+            <td>${file.date}</td>
+            <td>
+              <div class="file-actions">
+                <a href="#" class="file-action-link" title="View Document">
+                  <i class="ph ph-eye"></i>
+                </a>
+                <a href="#" class="file-action-link" title="Download Document">
+                  <i class="ph ph-download-simple"></i>
+                </a>
+                <a href="#" class="file-action-link file-action-delete" title="Delete Document">
+                  <i class="ph ph-x"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+        `;
+        $tbody.append(row);
+      });
+    });
+  </script>
+</body>
+
+</html>
