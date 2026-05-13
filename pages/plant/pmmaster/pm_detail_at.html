@@ -4,30 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GNFC | Switch PM Detail</title>
+  <title>GNFC | Analyzer PM Detail</title>
 
   <!-- Project CSS -->
-  <link rel="stylesheet" href="../../css/phosphor.css">
-  <link rel="stylesheet" href="../../css/theme-vars.css">
-  <link rel="stylesheet" href="../../css/utilities.css">
-  <link rel="stylesheet" href="../../css/common.css">
-  <link rel="stylesheet" href="../../css/pages/style.css">
-  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
 
   <!-- Vendor Scripts -->
-  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
-  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
 
   <script>window.activePage = 'plants';</script>
 </head>
 
 <body class="dashboard-body">
-  <script src="../../js/theme-control.js"></script>
 
   <div class="sidebar-container"></div>
 
   <main class="main-wrapper">
-    <div id="header-container" data-title="Switch PM Detail" data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,PM Master:pm_master.html,SW Detail:active" data-back="pm_master.html"></div>
+    <div id="header-container" data-title="Analyzer PM Detail" data-breadcrumb="Plant:../plant.html,Boiler:../boiler_dashboard.html,PM Master:pm_master.html,AT Detail:active" data-back="pm_master.html"></div>
 
 
     <div class="dashboard-content dashboard-scroll">
@@ -37,8 +39,8 @@
         <div class="jbd-card">
           <div class="jbd-card-header">
             <div class="flex items-center gap-8px">
-              <i class="ph-bold ph-toggle-left color-blue font-16px"></i>
-              <span class="jbd-card-header-title">Switch PM Detail Filter</span>
+              <i class="ph-bold ph-chart-bar color-blue font-16px"></i>
+              <span class="jbd-card-header-title">Analyzer PM Detail — Tag Selection</span>
             </div>
           </div>
           <div class="p-16px flex flex-col gap-16px">
@@ -52,33 +54,27 @@
                   <div class="relative flex-1">
                     <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer font-14px">
                       <option value="">-- All Tags --</option>
-                      <option value="1_2BLRTRP_EHTC">1_2BLRTRP_EHTC</option>
-                      <option value="1_2BLRPS_821">1_2BLRPS_821</option>
-                      <option value="1_2BLRPS_822">1_2BLRPS_822</option>
-                      <option value="1_2BLRPS_804">1_2BLRPS_804</option>
-                      <option value="1_2BLRPS_805">1_2BLRPS_805</option>
-                      <option value="1_2BLRPS_105">1_2BLRPS_105</option>
-                      <option value="1_2BLRPS_106">1_2BLRPS_106</option>
-                      <option value="1_2BLRPS_107">1_2BLRPS_107</option>
+                      <option value="1AR2510">1AR2510</option>
+                      <option value="1AR2511">1AR2511</option>
+                      <option value="1AR2512">1AR2512</option>
+                      <option value="1AR2513">1AR2513</option>
+                      <option value="1AR2514">1AR2514</option>
                     </select>
                   </div>
                 </div>
               </div>
 
               <!-- Add Selection -->
-              <div style="min-width: 280px;">
+              <div  style="min-width: 280px;">
                 <label class="gnfc-modal-label text-nowrap">Add PM For :</label>
                 <div class="relative flex-1">
                   <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer font-14px">
                     <option value="">-- Select Tag --</option>
-                    <option value="1_2BLRTRP_EHTC">1_2BLRTRP_EHTC</option>
-                    <option value="1_2BLRPS_821">1_2BLRPS_821</option>
-                    <option value="1_2BLRPS_822">1_2BLRPS_822</option>
-                    <option value="1_2BLRPS_804">1_2BLRPS_804</option>
-                    <option value="1_2BLRPS_805">1_2BLRPS_805</option>
-                    <option value="1_2BLRPS_105">1_2BLRPS_105</option>
-                    <option value="1_2BLRPS_106">1_2BLRPS_106</option>
-                    <option value="1_2BLRPS_107">1_2BLRPS_107</option>
+                    <option value="1AR2510">1AR2510</option>
+                    <option value="1AR2511">1AR2511</option>
+                    <option value="1AR2512">1AR2512</option>
+                    <option value="1AR2513">1AR2513</option>
+                    <option value="1AR2514">1AR2514</option>
                   </select>
                 </div>
               </div>
@@ -123,59 +119,57 @@
                 </thead>
                 <tbody id="pm-details-tbody">
                   <!-- Static Rows -->
-                  <tr class="user-table-row" data-tag="1_2BLRTRP_EHTC" data-checked="true">
+                  <tr class="user-table-row" data-tag="1AR2510" data-checked="true">
                     <td class="text-center fw-600">1</td>
-                    <td class="text-center">1_2BLRTRP_EHTC</td>
-                    <td class="text-center color-green">15/03/2024</td>
-                    <td class="text-center">Kayum Kadivar</td>
-                    <td class="text-center">M.A. Patel</td>
-                    <td class="text-center">15/03/2024</td>
+                    <td class="text-center">1AR2510</td>
+                    <td class="text-center color-green">15/03/2026</td>
+                    <td class="text-center">PBS</td>
+                    <td class="text-center">SHC</td>
+                    <td class="text-center color-green">15/03/2026</td>
                     <td class="text-center">
                       <div class="action-btn-group">
-                        <button class="action-btn action-btn--view btn-view" data-tag="1_2BLRTRP_EHTC" title="View"><i
+                        <button class="action-btn action-btn--view btn-view" data-tag="1AR2510" title="View"><i
                             class="ph ph-eye"></i></button>
-                        <button class="action-btn action-btn--edit btn-edit" data-tag="1_2BLRTRP_EHTC" title="Edit"><i
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="1AR2510" title="Edit"><i
                             class="ph ph-pencil"></i></button>
-                        <button class="action-btn action-btn--delete btn-delete" data-tag="1_2BLRTRP_EHTC"
-                          title="Delete"><i class="ph ph-trash"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="1AR2510" title="Delete"><i
+                            class="ph ph-trash"></i></button>
                       </div>
                     </td>
                   </tr>
-
-                  <tr class="user-table-row" data-tag="1_2BLRPS_821" data-checked="false">
+                  <tr class="user-table-row" data-tag="1AR2511" data-checked="false">
                     <td class="text-center fw-600">2</td>
-                    <td class="text-center">1_2BLRPS_821</td>
-                    <td class="text-center color-red">16/03/2024</td>
+                    <td class="text-center">1AR2511</td>
+                    <td class="text-center color-red">16/03/2026</td>
                     <td class="text-center">Rahul Sharma</td>
                     <td class="text-center">-</td>
                     <td class="text-center">-</td>
                     <td class="text-center">
                       <div class="action-btn-group">
-                        <button class="action-btn action-btn--view btn-view" data-tag="1_2BLRPS_821" title="View"><i
+                        <button class="action-btn action-btn--view btn-view" data-tag="1AR2511" title="View"><i
                             class="ph ph-eye"></i></button>
-                        <button class="action-btn action-btn--edit btn-edit" data-tag="1_2BLRPS_821" title="Edit"><i
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="1AR2511" title="Edit"><i
                             class="ph ph-pencil"></i></button>
-                        <button class="action-btn action-btn--delete btn-delete" data-tag="1_2BLRPS_821"
-                          title="Delete"><i class="ph ph-trash"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="1AR2511" title="Delete"><i
+                            class="ph ph-trash"></i></button>
                       </div>
                     </td>
                   </tr>
-
-                  <tr class="user-table-row" data-tag="1_2BLRPS_822" data-checked="true">
+                  <tr class="user-table-row" data-tag="1AR2512" data-checked="true">
                     <td class="text-center fw-600">3</td>
-                    <td class="text-center">1_2BLRPS_822</td>
-                    <td class="text-center color-green">17/03/2024</td>
+                    <td class="text-center">1AR2512</td>
+                    <td class="text-center color-green">17/03/2026</td>
                     <td class="text-center">Amit Verma</td>
                     <td class="text-center">M.A. Patel</td>
-                    <td class="text-center">17/03/2024</td>
+                    <td class="text-center color-green">17/03/2026</td>
                     <td class="text-center">
                       <div class="action-btn-group">
-                        <button class="action-btn action-btn--view btn-view" data-tag="1_2BLRPS_822" title="View"><i
+                        <button class="action-btn action-btn--view btn-view" data-tag="1AR2512" title="View"><i
                             class="ph ph-eye"></i></button>
-                        <button class="action-btn action-btn--edit btn-edit" data-tag="1_2BLRPS_822" title="Edit"><i
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="1AR2512" title="Edit"><i
                             class="ph ph-pencil"></i></button>
-                        <button class="action-btn action-btn--delete btn-delete" data-tag="1_2BLRPS_822"
-                          title="Delete"><i class="ph ph-trash"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="1AR2512" title="Delete"><i
+                            class="ph ph-trash"></i></button>
                       </div>
                     </td>
                   </tr>
@@ -189,12 +183,12 @@
     </div>
   </main>
 
-  <!-- Switch PM Detail (View Only) Modal -->
+  <!-- Analyzer PM Detail (View Only) Modal -->
   <div id="pm-view-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">SWITCH PM FORM : <span id="view-modal-tag-display"
+          <h3 class="gnfc-modal-title">ANALYZER PM FORM : <span id="view-modal-tag-display"
               class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
@@ -210,94 +204,94 @@
                 <!-- Basic Information -->
                 <tr>
                   <td colspan="2" style="width: 260px;">Tag No</td>
-                  <td colspan="2" id="print-tag-no"></td>
+                  <td colspan="2"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Make</td>
-                  <td colspan="2" id="print-make"></td>
+                  <td colspan="2">PROBE-IL, ELECTRONI</td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (H)</td>
-                  <td colspan="2" id="print-setting-h"></td>
+                  <td colspan="2">Cal Range</td>
+                  <td colspan="2">0-10 %</td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (L)</td>
-                  <td colspan="2" id="print-setting-l"></td>
+                  <td colspan="2">Engineering Range</td>
+                  <td colspan="2">0-10 %</td>
                 </tr>
                 <tr>
                   <td colspan="2">Location</td>
-                  <td colspan="2" id="print-location"></td>
+                  <td colspan="2">BOILER AREA</td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Mode</td>
-                  <td colspan="2" id="print-job-mode">NORMAL</td>
+                  <td colspan="2">NORMAL</td>
                 </tr>
-
                 <!-- Checklist -->
                 <tr>
-                  <td colspan="2">Glanding OK? </td>
-                  <td colspan="2" id="print-check-1">YES</td>
+                  <td colspan="2">Sample path leakage checked?</td>
+                  <td colspan="2">YES</td>
                 </tr>
                 <tr>
-                  <td colspan="2">Tag stamping OK?</td>
-                  <td colspan="2" id="print-check-2">YES</td>
-                </tr>
-                <tr>
-                  <td colspan="2">Manifold condition ok?</td>
-                  <td colspan="2" id="print-check-3">YES</td>
-                </tr>
-                <tr>
-                  <td colspan="2">Leakage At Drain Valve/Plug/Tubing</td>
-                  <td colspan="2" id="print-check-4">NO</td>
-                </tr>
-                <tr>
-                  <td colspan="2">Canopy Required ?</td>
-                  <td colspan="2" id="print-check-5">NO</td>
-                </tr>
-                <tr>
-                  <td colspan="2">Monsoon Protection ok?</td>
-                  <td colspan="2" id="print-check-6">YES</td>
+                  <td colspan="2">Filter replaced?</td>
+                  <td colspan="2">YES</td>
                 </tr>
 
                 <!-- Calibration -->
                 <tr>
-                  <td class="w-200px">SET Before Calibration</td>
-                  <td class="w-200px">RESET Before Calibration</td>
-                  <td id="print-set-before" class="fw-600 text-center color-primary"></td>
-                  <td id="print-reset-before" class="fw-600 text-center color-primary"></td>
+                  <td class="w-200px">Zero Before</td>
+                  <td class="w-200px">Zero After</td>
+                  <td class="fw-600 text-center color-primary"></td>
+                  <td class="fw-600 text-center color-primary"></td>
                 </tr>
                 <tr>
-                  <td class="w-200px">SET After Calibration</td>
-                  <td class="w-200px">RESET After Calibration</td>
-                  <td id="print-set-after" class="fw-600 text-center color-primary"></td>
-                  <td id="print-reset-after" class="fw-600 text-center color-primary"></td>
+                  <td class="w-200px">Reading1 Before</td>
+                  <td class="w-200px">Reading1 After</td>
+                  <td class="fw-600 text-center color-primary"></td>
+                  <td class="fw-600 text-center color-primary"></td>
+                </tr>
+                <tr>
+                  <td class="w-200px">Reading2 Before</td>
+                  <td class="w-200px">Reading2 After</td>
+                  <td class="fw-600 text-center color-primary"></td>
+                  <td class="fw-600 text-center color-primary"></td>
+                </tr>
+                <tr>
+                  <td class="w-200px">Reading3 Before</td>
+                  <td class="w-200px">Reading3 After</td>
+                  <td class="fw-600 text-center color-primary"></td>
+                  <td class="fw-600 text-center color-primary"></td>
+                </tr>
+                <tr>
+                  <td class="w-200px">Span Before</td>
+                  <td class="w-200px">Span After</td>
+                  <td class="fw-600 text-center color-primary"></td>
+                  <td class="fw-600 text-center color-primary"></td>
                 </tr>
 
-                <!-- Remarks & Signs -->
+                <!-- Sign Marks -->
                 <tr>
                   <td colspan="2">Tech Remark</td>
-                  <td colspan="2" id="print-tech-remark"></td>
+                  <td colspan="2"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Tech Name</td>
-                  <td colspan="2" id="print-tech-name"></td>
+                  <td colspan="2"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Date</td>
-                  <td colspan="2" id="print-job-date"></td>
+                  <td colspan="2"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Checked By Eng</td>
-                  <td colspan="2" id="print-checked-by">ENG_TESTER</td>
+                  <td colspan="2">Checked By</td>
+                  <td colspan="2">ENG_TESTER</td>
                 </tr>
                 <tr>
                   <td colspan="2">Date</td>
-                  <td colspan="2" id="print-sign-date">30/07/2019</td>
+                  <td colspan="2">07/04/2026</td>
                 </tr>
                 <tr>
                   <td colspan="2">Eng Remark</td>
-                  <td colspan="2" id="print-eng-remark">Zero drifting of -56 mmwc so zero
-                    triming done.</td>
+                  <td colspan="2">ok</td>
                 </tr>
               </tbody>
             </table>
@@ -307,15 +301,17 @@
       <div class="gnfc-modal-footer">
         <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Close</button>
       </div>
+
     </div>
   </div>
+</div>
 
-  <!-- Switch PM Form Edit Modal -->
+  <!-- Edit PM Form Modal -->
   <div id="pm-edit-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">SWITCH PM FORM : <span id="edit-modal-tag-display"
+          <h3 class="gnfc-modal-title">ANALYZER PM FORM : <span id="edit-modal-tag-display"
               class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
@@ -324,12 +320,10 @@
       </div>
       <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
         <div class="flex flex-col gap-16px">
-
-          <!-- Tabular Form Structure -->
           <div class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
               <tbody>
-                <!-- Basic Information -->
+                <!-- Basic -->
                 <tr>
                   <td colspan="2" style="width: 260px;">Tag No</td>
                   <td colspan="2"><input type="text" class="pm-form-input" readonly></td>
@@ -339,11 +333,11 @@
                   <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (H)</td>
+                  <td colspan="2">Cal Range</td>
                   <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (L)</td>
+                  <td colspan="2">Engineering Range</td>
                   <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
@@ -355,47 +349,49 @@
                   <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
 
-                <!-- Inspection Checklist -->
+                <!-- Checklist -->
                 <tr>
-                  <td colspan="2">Glanding OK? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">Sample path leakage checked? <span class="required">*</span></td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Tag stamping OK? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
-                </tr>
-                <tr>
-                  <td colspan="2">Manifold condition ok? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
-                </tr>
-                <tr>
-                  <td colspan="2">Leakage At Drain Valve/Plug/Tubing <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
-                </tr>
-                <tr>
-                  <td colspan="2">Canopy Required ? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
-                </tr>
-                <tr>
-                  <td colspan="2">Monsoon Protection ok? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">Filter replaced? <span class="required">*</span></td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
 
-                <!-- Calibration Data (2x2 Grid) -->
+                <!-- Calibration Grid -->
                 <tr>
-                  <td class="w-200px">SET Before Calibration <span class="required">*</span></td>
-                  <td class="w-200px">RESET Before Calibration<span class="required">*</span></td>
+                  <td class="w-200px">Zero Before <span class="required">*</span></td>
+                  <td class="w-200px">Zero After <span class="required">*</span></td>
                   <td><input type="text" class="pm-form-input"></td>
                   <td><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
-                  <td class="w-200px">SET After Calibration <span class="required">*</span></td>
-                  <td class="w-200px">RESET After Calibration <span class="required">*</span></td>
+                  <td class="w-200px">Reading1 Before <span class="required">*</span></td>
+                  <td class="w-200px">Reading1 After <span class="required">*</span></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td class="w-200px">Reading2 Before <span class="required">*</span></td>
+                  <td class="w-200px">Reading2 After <span class="required">*</span></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td class="w-200px">Reading3 Before <span class="required">*</span></td>
+                  <td class="w-200px">Reading3 After <span class="required">*</span></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td class="w-200px">Span Before <span class="required">*</span></td>
+                  <td class="w-200px">Span After <span class="required">*</span></td>
                   <td><input type="text" class="pm-form-input"></td>
                   <td><input type="text" class="pm-form-input"></td>
                 </tr>
 
-                <!-- Technical Footer Information -->
+                <!-- Footer -->
                 <tr>
                   <td colspan="2">Tech Remark</td>
                   <td colspan="2"><input type="text" class="pm-form-input"></td>
@@ -426,17 +422,17 @@
         </div>
       </div>
       <div class="gnfc-modal-footer">
-        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-edit-save-pm">SAVE</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-save-pm">SAVE</button>
       </div>
     </div>
   </div>
 
-  <!-- Switch PM Form Add Modal -->
+  <!-- Add PM Form Modal -->
   <div id="pm-add-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">SWITCH PM FORM : <span id="add-modal-tag-display"
+          <h3 class="gnfc-modal-title">ANALYZER PM FORM : <span id="add-modal-tag-display"
               class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
@@ -445,123 +441,104 @@
       </div>
       <div class="gnfc-modal-body dashboard-scroll" style="max-height: 70vh;">
         <div class="flex flex-col gap-16px">
-
-          <!-- Tabular Form Structure -->
           <div class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
               <tbody>
-                <!-- Basic Information -->
+                <!-- Basic -->
+                 <tr>
+                  <td colspan="4"><p>SPECIAL INSTRUCTION : </p></td>
+                 </tr>
                 <tr>
                   <td colspan="2" style="width: 260px;">Tag No</td>
-                  <td colspan="2">
-                    <input type="text" class="pm-form-input" readonly>
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input" readonly></td>
                 </tr>
                 <tr>
                   <td colspan="2">Make</td>
-                  <td colspan="2">
-                    <input type="text" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (H)</td>
-                  <td colspan="2">
-                    <input type="text" class="pm-form-input">
-                  </td>
+                  <td colspan="2">Cal Range</td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (L)</td>
-                  <td colspan="2">
-                    <input type="text" class="pm-form-input">
-                  </td>
+                  <td colspan="2">Engineering Range</td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Location</td>
-                  <td colspan="2">
-                    <input type="text" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Mode</td>
-                  <td colspan="2">
-                    <input type="text" class="pm-form-input" value="NORMAL">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input" value="NORMAL"></td>
                 </tr>
 
-                <!-- Instructional Header -->
+                <!-- Checklist -->
                 <tr>
-                  <td colspan="4" class="fw-700">
-                    Select check box If Answer is Yes otherwise keep blank.
-                  </td>
+                  <td colspan="4" class="fw-700">Select check box If Answer is Yes otherwise keep blank.</td>
                 </tr>
-
-                <!-- Inspection Checklist -->
                 <tr>
-                  <td colspan="2">Glanding OK? <span class="required">*</span></td>
+                  <td colspan="2">Sample path leakage checked? <span class="required">*</span></td>
                   <td colspan="2"><input type="checkbox"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Tag stamping OK? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
-                </tr>
-                <tr>
-                  <td colspan="2">Manifold condition ok? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
-                </tr>
-                <tr>
-                  <td colspan="2">Leakage At Drain Valve/Plug/Tubing <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
-                </tr>
-                <tr>
-                  <td colspan="2">Canopy Required? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
-                </tr>
-                <tr>
-                  <td colspan="2">Monsoon Protection ok? <span class="required">*</span></td>
+                  <td colspan="2">Filter replaced? <span class="required">*</span></td>
                   <td colspan="2"><input type="checkbox"></td>
                 </tr>
 
-                <!-- Calibration Data (2x2 Grid) -->
+                <!-- Calibration Grid -->
                 <tr>
-                  <td width="w-200px">SET Before Calibration <span class="required">*</span></td>
-                  <td width="w-200px">RESET Before Calibration <span class="required">*</span></td>
+                  <td class="w-200px">Zero Before <span class="required">*</span></td>
+                  <td class="w-200px">Zero After <span class="required">*</span></td>
                   <td><input type="text" class="pm-form-input"></td>
                   <td><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
-                  <td width="w-200px">SET After Calibration <span class="required">*</span></td>
-                  <td width="w-200px">RESET After Calibration <span class="required">*</span></td>
+                  <td class="w-200px">Reading1 Before <span class="required">*</span></td>
+                  <td class="w-200px">Reading1 After <span class="required">*</span></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td class="w-200px">Reading2 Before <span class="required">*</span></td>
+                  <td class="w-200px">Reading2 After <span class="required">*</span></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td class="w-200px">Reading3 Before <span class="required">*</span></td>
+                  <td class="w-200px">Reading3 After <span class="required">*</span></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                  <td><input type="text" class="pm-form-input"></td>
+                </tr>
+                <tr>
+                  <td class="w-200px">Span Before <span class="required">*</span></td>
+                  <td class="w-200px">Span After <span class="required">*</span></td>
                   <td><input type="text" class="pm-form-input"></td>
                   <td><input type="text" class="pm-form-input"></td>
                 </tr>
 
-                <!-- Technical Footer Information -->
+                <!-- Footer -->
                 <tr>
                   <td colspan="2">Tech Remark</td>
-                  <td colspan="2">
-                    <input type="text" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Tech Name</td>
-                  <td colspan="2">
-                    <input type="text" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Date</td>
-                  <td colspan="2">
-                    <input type="text" id="add-job-date" class="pm-form-input">
-                  </td>
+                  <td colspan="2"><input type="text" class="pm-form-input"></td>
                 </tr>
               </tbody>
             </table>
           </div>
-
         </div>
       </div>
       <div class="gnfc-modal-footer">
-        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-add-save-pm">SAVE</button>
+        <button class="pm-btn pm-btn--update font-14px px-24px btn-close-modal">Close</button>
+        <button class="pm-btn pm-btn--add font-14px px-24px ml-8px" id="btn-save-pm-add">SAVE</button>
       </div>
     </div>
   </div>
@@ -569,7 +546,7 @@
   <div id="pm-reports-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header py-12px">
-        <h3 class="gnfc-modal-title">SWITCH PM REPORT</h3>
+        <h3 class="gnfc-modal-title">ANALYZER PM REPORT</h3>
         <button class="gnfc-modal-close btn-close-modal">
           <i class="ph-bold ph-x text-lg"></i>
         </button>
@@ -584,12 +561,8 @@
             <div >
               <select id="report-param-select" class="gnfc-modal-input w-280px">
                 <option value="">-- Choose Parameter --</option>
-                <option>Glanding OK?</option>
-                <option>Tag stamping OK?</option>
-                <option>Manifold condition ok?</option>
-                <option>Leakage At Drain Valve/Plug/Tubing</option>
-                <option>Canopy Required ?</option>
-                <option>Monsoon Protection ok?</option>
+                <option>Sample path leakage checked?</option>
+                <option>Filter replaced?</option>
               </select>
             </div>
             <div class="flex items-center gap-12px">
@@ -707,14 +680,24 @@
     </div>
   </div>
 
-  <script src="../../js/sidebar.js" defer></script>
-  <script src="../../js/header.js" defer></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
 
   <script>
     $(document).ready(function () {
       let showPendingOnly = false;
 
-      // Smart Tag Autocomplete Helper
+      // --- Utilities ---
+      function openModal(id) { $(id).addClass('is-open'); }
+      function closeModal(id) {
+        if (id instanceof jQuery) id.removeClass('is-open');
+        else $(id).removeClass('is-open');
+      }
+
+      $('.btn-close-modal').on('click', function () {
+        closeModal($(this).closest('.gnfc-modal-overlay'));
+      });
+
       // --- Tag Search Autocomplete Helper (Refined Standard) ---
       function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
         const $input = $(inputSelector);
@@ -859,7 +842,7 @@
         });
       }
 
-      // Initialize Autocomplete for SW View Filter
+      // Initialize Autocomplete for AT View Filter
       initTagAutocomplete('#view-tag-input', '#view-tag-select', function (tag) {
         showPendingOnly = false;
         $('#pm-details-title').text('PM Details Tag : ' + (tag || 'ALL'));
@@ -870,15 +853,26 @@
         });
       });
 
+      $('#btn-view-tag-go').on('click', function () {
+        const val = $('#view-tag-select').val();
+        if (!val && $('#view-tag-input').val()) {
+          Swal.fire('Invalid Tag', 'Please select a valid tag from the list.', 'warning');
+        } else {
+          Swal.fire({
+            icon: 'success',
+            title: 'Filtered',
+            text: 'Displaying details for: ' + (val || 'All Tags'),
+            timer: 1500,
+            showConfirmButton: false,
+            confirmButtonColor: '#2563eb'
+          });
+        }
+      });
 
-      // --- Utilities ---
-      function openModal(id) { $(id).addClass('is-open'); }
-      function closeModal(id) { $(id).removeClass('is-open'); }
-
-      // --- Interaction Handlers ---
       $('#btn-pending-filter').on('click', function () {
         showPendingOnly = !showPendingOnly;
-        $(this).toggleClass('pm-btn--add pm-btn--edit');
+        $(this).closest('div').toggleClass('border-blue border-dark');
+
         if (showPendingOnly) {
           $('#pm-details-title').text('PM Details Tag : Pending for Eng Sign');
           $('.user-table-row').each(function () {
@@ -886,41 +880,42 @@
             else $(this).show();
           });
         } else {
-          $('#view-tag-select').trigger('change');
+          $('#view-tag-input').trigger('input');
         }
       });
 
       $('#add-tag-select').on('change', function () {
         const tag = $(this).val();
         if (!tag) return;
+
         $('#add-modal-tag-display').text(tag);
-        $('#add-job-date').val(new Date().toLocaleDateString('en-GB'));
         openModal('#pm-add-modal');
         $(this).val('');
       });
 
       $('#btn-open-reports').on('click', () => openModal('#pm-reports-modal'));
 
-      $('.btn-close-modal').on('click', function () {
-        closeModal($(this).closest('.gnfc-modal-overlay'));
-      });
-
       $(document).on('click', '.btn-view', function () {
         const tag = $(this).data('tag');
         $('#view-modal-tag-display').text(tag);
-        // Standardized Population (Mock)
-        $('#print-tag-no').text(tag);
         openModal('#pm-view-modal');
       });
 
       $(document).on('click', '.btn-edit', function () {
         const tag = $(this).data('tag');
-        const row = $(this).closest('tr');
-        $('#edit-tag-no').val(tag);
         $('#edit-modal-tag-display').text(tag);
-        $('#edit-tech-name').val(row.find('td:eq(3)').text());
-        $('#edit-job-date').val(row.find('td:eq(2)').text());
         openModal('#pm-edit-modal');
+      });
+
+      $('#btn-save-pm, #btn-save-pm-add').on('click', function () {
+        Swal.fire({
+          icon: 'success',
+          title: 'Saved Successfully',
+          text: 'The Analyzer PM record has been updated.',
+          timer: 1500,
+          showConfirmButton: false,
+          confirmButtonColor: '#2563eb'
+        }).then(() => closeModal($(this).closest('.gnfc-modal-overlay')));
       });
 
       $(document).on('click', '.btn-delete', function () {
@@ -930,36 +925,11 @@
           showCancelButton: true,
           confirmButtonColor: '#fe4a49',
           confirmButtonText: 'Yes, Delete'
-        }).then((result) => {
-          if (result.isConfirmed) Swal.fire('Deleted!', 'Record removed.', 'success');
-        });
-      });
-
-      // Save Handlers
-      $('#btn-edit-save-pm').on('click', function () {
-        Swal.fire({
-          icon: 'success',
-          title: 'Record Updated',
-          text: 'PM record has been successfully updated.',
-          timer: 1500,
-          showConfirmButton: false
-        });
-        closeModal('#pm-edit-modal');
-      });
-
-      $('#btn-add-save-pm').on('click', function () {
-        Swal.fire({
-          icon: 'success',
-          title: 'New Record Added',
-          text: 'New PM record has been successfully added to the database.',
-          timer: 1500,
-          showConfirmButton: false
-        });
-        closeModal('#pm-add-modal');
+        }).then((result) => { if (result.isConfirmed) Swal.fire('Deleted!', 'Record removed.', 'success'); });
       });
 
       $('#btn-remark-report').on('click', function () {
-        $('#report-result-title').text('Remark Report – All Tags with Remarks');
+        $('#report-result-title').text('Remark Report – Analyzer Tags');
         $('#report-tbody tr').show();
       });
 
@@ -968,14 +938,10 @@
         const status = $('input[name="report-val"]:checked').val().toUpperCase();
         if (param) {
           $('#report-result-title').text(`${param} / ${status}`);
-          if (status === 'NO') {
-            $('#report-tbody tr').hide();
-            $('#report-tbody tr:eq(4)').show();
-          } else {
-            $('#report-tbody tr').show();
-          }
+          if (status === 'NO') $('#report-tbody tr').hide();
+          else $('#report-tbody tr').show();
         } else {
-          $('#report-result-title').text('Filtered Report');
+          $('#report-result-title').text('Analyzer PM Report');
         }
       }
 

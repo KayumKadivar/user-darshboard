@@ -462,22 +462,53 @@ html[data-theme="light"] .gnfc-modal-input::-webkit-calendar-picker-indicator {
   overflow: hidden !important;
 }
 
-/* Remove native browser arrow from <select> using gnfc-modal-input */
+/* ── Refined Custom Select Styling ── */
 select.gnfc-modal-input {
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  appearance: none;
-  padding-right: 40px;
-  /* Spacing for custom arrow */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238e8e9e' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
+  padding-right: 42px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%235794f2' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 16px !important;
   cursor: pointer;
+  border: 1px solid var(--gnfc-modal-input-border);
+  background-color: var(--gnfc-modal-input-bg);
+  color: var(--gnfc-modal-input-text);
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+select.gnfc-modal-input:hover {
+  border-color: #5794f2;
+  background-color: var(--app-panel-alt, #22252b);
+}
+
+select.gnfc-modal-input:focus {
+  border-color: #5794f2;
+  box-shadow: 0 0 0 3px rgba(87, 148, 242, 0.2);
+  outline: none;
 }
 
 select.gnfc-modal-input option {
-  background-color: var(--gnfc-modal-input-bg);
-  color: var(--gnfc-modal-input-text);
+  background-color: #1a1d21; /* Dark background for options */
+  color: #ffffff;
+  padding: 12px;
+  font-size: 14px;
+}
+
+/* Light Theme overrides */
+html[data-theme="light"] select.gnfc-modal-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%232563eb' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+}
+
+html[data-theme="light"] select.gnfc-modal-input option {
+  background-color: #ffffff;
+  color: #0f172a;
 }
 
 /* ── Scrollbar inside modal body ─────────────────────────── */
@@ -518,6 +549,120 @@ select.gnfc-modal-input option {
 
 .gnfc-modal-body::-webkit-scrollbar-thumb:hover {
   background: var(--gnfc-modal-scrollbar-hover);
+}
+
+/* ── Premium Custom Select Component ── */
+.gnfc-select-custom {
+  position: relative;
+  width: 100%;
+  user-select: none;
+}
+
+.gnfc-select-custom-trigger {
+  width: 100%;
+  height: 32px;
+  padding: 0 36px 0 12px;
+  background: var(--gnfc-modal-input-bg);
+  border: 1px solid var(--gnfc-modal-input-border);
+  border-radius: 4px;
+  color: var(--gnfc-modal-input-text);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gnfc-select-custom-trigger:hover {
+  border-color: #5794f2;
+  background: var(--app-panel-alt, #22252b);
+}
+
+.gnfc-select-custom.is-open .gnfc-select-custom-trigger {
+  border-color: #5794f2;
+  box-shadow: 0 0 0 3px rgba(87, 148, 242, 0.2);
+}
+
+.gnfc-select-custom-trigger::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%235794f2' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.2s ease;
+}
+
+.gnfc-select-custom.is-open .gnfc-select-custom-trigger::after {
+  transform: rotate(180deg);
+}
+
+.gnfc-select-custom-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #1a1d21;
+  border: 1px solid #2c3235;
+  border-radius: 6px;
+  padding: 4px;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  animation: selectFadeIn 0.2s ease-out;
+}
+
+.gnfc-select-custom.is-open .gnfc-select-custom-options {
+  display: block;
+}
+
+.gnfc-select-custom-option {
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #8e8e9e;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gnfc-select-custom-option:hover {
+  background: rgba(87, 148, 242, 0.1);
+  color: #5794f2;
+}
+
+.gnfc-select-custom-option.is-selected {
+  background: #5794f2;
+  color: #ffffff;
+}
+
+@keyframes selectFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Light Theme overrides */
+html[data-theme="light"] .gnfc-select-custom-options {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+}
+
+html[data-theme="light"] .gnfc-select-custom-option {
+  color: #475569;
+}
+
+html[data-theme="light"] .gnfc-select-custom-option:hover {
+  background: #f1f5f9;
+  color: #2563eb;
+}
+
+html[data-theme="light"] .gnfc-select-custom-option.is-selected {
+  background: #2563eb;
+  color: #ffffff;
 }
 
 /* ── MicroModal integration (for emg_call_modal.js etc.) ──── */

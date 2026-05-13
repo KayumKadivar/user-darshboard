@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GNFC | PM Pending Report</title>
+
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- Vendor Scripts -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/pm-nav.js" defer></script>
+
+  <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <div id="header-container" data-title="PM Pending Report"
+      data-breadcrumb="Plant:../plant.html,PM Master:pm_master.html,PM Pending:active"
+      data-back="pm_master.html"></div>
+
+    <div class="dashboard-content dashboard-scroll">
+      <div class="mx-auto flex flex-col gap-16px" style="width: 100%;">
+        
+        <!-- PM Navigation Container -->
+        <div id="pm-nav-container"></div>
+        
+        <div class="jbd-card">
+          <div class="jbd-card-header">
+            <h3 class="font-14px fw-700 color-blue text-uppercase flex items-center gap-8px">
+              <i class="ph-bold ph-clock-countdown"></i> Instrument Data - PM Pending Report
+            </h3>
+          </div>
+          <div class="p-16px">
+            <div class="flex flex-col gap-24px">
+              <!-- Filters Grid -->
+              <div class="flex flex-wrap items-center gap-24px">
+                <div class="flex items-center gap-12px">
+                  <label class="fw-500">PM For Month : </label>
+                  <div class="jt-select-wrap" style="width: 180px;">
+                    <select id="pending-month-select" class="jt-select cursor-pointer">
+                      <option value="ALL">ALL</option>
+                      <option value="JAN">January</option>
+                      <option value="FEB">February</option>
+                      <option value="MAR">March</option>
+                      <option value="APR">April</option>
+                      <option value="MAY">May</option>
+                      <option value="JUN">June</option>
+                      <option value="JUL">July</option>
+                      <option value="AUG">August</option>
+                      <option value="SEP">September</option>
+                      <option value="OCT">October</option>
+                      <option value="NOV">November</option>
+                      <option value="DEC">December</option>
+                    </select>
+                    <i class="ph-bold ph-caret-down jt-select-caret"></i>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-12px">
+                  <label class="fw-500">Inst Type :</label>
+                  <div class="jt-select-wrap" style="width: 180px;">
+                    <select id="pending-type-select" class="jt-select cursor-pointer">
+                      <option value="ALL">ALL</option>
+                      <option value="C/V">C/V</option>
+                      <option value="TX">TX</option>
+                      <option value="ANALYZER">ANALYZER</option>
+                      <option value="SWITCH">SWITCH</option>
+                    </select>
+                    <i class="ph-bold ph-caret-down jt-select-caret"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Report Table -->
+              <div class="user-table-wrapper">
+                <table class="user-table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">TAG_NO</th>
+                      <th class="text-center">Type Of Inst</th>
+                      <th class="text-center">CRITICALITY</th>
+                      <th class="text-center">MODE</th>
+                      <th class="text-center">PM MONTH</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pending-report-tbody">
+                    <tr class="user-table-row" data-month="OCT" data-type="TX">
+                      <td class="user-table-cell text-center">101-FI-005</td>
+                      <td class="user-table-cell text-center">TX</td>
+                      <td class="user-table-cell text-center">HIGH</td>
+                      <td class="user-table-cell text-center">RUNNING</td>
+                      <td class="user-table-cell text-center">OCT</td>
+                    </tr>
+                    <tr class="user-table-row" data-month="NOV" data-type="C/V">
+                      <td class="user-table-cell text-center">102-PV-202</td>
+                      <td class="user-table-cell text-center">C/V</td>
+                      <td class="user-table-cell text-center">MEDIUM</td>
+                      <td class="user-table-cell text-center">STANDBY</td>
+                      <td class="user-table-cell text-center">NOV</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      $('#pending-month-select, #pending-type-select').on('change', function () {
+        const month = $('#pending-month-select').val();
+        const type = $('#pending-type-select').val();
+
+        $('#pending-report-tbody tr').each(function () {
+          const rowMonth = $(this).data('month');
+          const rowType = $(this).data('type');
+          const monthMatch = (month === 'ALL' || rowMonth.startsWith(month));
+          const typeMatch = (type === 'ALL' || rowType === type);
+          $(this).toggle(monthMatch && typeMatch);
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
