@@ -7891,3 +7891,104 @@ table.user-table td {
   border-color: var(--typo-blue, #5794F2) !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+
+/* ── Transmitter PM Premium Filter UI (Compact) ── */
+.tx-filter-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr auto; /* Status takes only what it needs */
+    gap: 20px;
+    padding: 12px 20px;
+    align-items: flex-end;
+}
+
+.tx-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Status Segmented Control Styling - Now Compact */
+.tx-status-segmented {
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 3px;
+    border: 1px solid var(--app-border);
+    height: 38px;
+    width: 320px; /* Fixed width to prevent stretching */
+}
+
+.tx-status-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+    user-select: none;
+    position: relative;
+}
+
+.tx-status-option input {
+    position: absolute;
+    opacity: 0;
+}
+
+.tx-status-option span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--app-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tx-status-option:hover span {
+    color: var(--app-text);
+}
+
+.tx-status-option:has(input:checked) {
+    background: var(--blue);
+    box-shadow: 0 2px 6px rgba(87, 148, 242, 0.3);
+}
+
+.tx-status-option:has(input:checked) span {
+    color: #fff !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1250px) {
+    .tx-filter-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .tx-status-group {
+        grid-column: span 1; /* Keeping it in 2nd column if possible */
+    }
+}
+
+@media (max-width: 1024px) {
+    .tx-filter-container {
+        grid-template-columns: 1fr 1fr;
+    }
+    .tx-status-group {
+        grid-column: span 2;
+        width: 100%;
+    }
+    .tx-status-segmented {
+        width: 100%; /* Spans full on tablet for better touch */
+    }
+}
+
+@media (max-width: 768px) {
+    .tx-filter-container {
+        grid-template-columns: 1fr;
+        padding: 12px;
+    }
+    .tx-status-group {
+        grid-column: span 1;
+    }
+}
+
+

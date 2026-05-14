@@ -29,7 +29,9 @@
   <div class="sidebar-container"></div>
 
   <main class="main-wrapper">
-    <div id="header-container" data-title="Transmitter PM Detail" data-breadcrumb="Plant:../plant.html,Boiler:../boiler_dashboard.html,PM Master:pm_master.html,TX Detail:active" data-back="pm_master.html"></div>
+    <div id="header-container" data-title="Transmitter PM Detail"
+      data-breadcrumb="Plant:../plant.html,Boiler:../boiler_dashboard.html,PM Master:pm_master.html,TX Detail:active"
+      data-back="pm_master.html"></div>
 
 
     <!-- Transmitter PM Detail Filter  -->
@@ -37,111 +39,79 @@
       <div class="flex flex-col gap-16px">
 
         <!-- Top Filter Card -->
-        <div class="jbd-card">
-          <div class="jbd-card-header">
-            <div class="flex items-center gap-8px">
-              <i class="ph-bold ph-broadcast color-blue font-16px"></i>
-              <span class="jbd-card-header-title">Transmitter PM Detail Filter</span>
-            </div>
+        <div class="jt-filter-card">
+          <div class="jt-filter-header">
+            <h2 class="jt-filter-title">
+              <i class="ph-bold ph-broadcast color-blue"></i>
+              Transmitter PM Detail Filter
+            </h2>
           </div>
-          <div class="p-16px flex flex-col gap-16px">
-            <div class="flex flex-wrap items-center gap-16px">
-              <!-- View Selection -->
-              <div class="" style="min-width: 400px;">
-                <label class="gnfc-modal-label text-nowrap">Search / Select Tag :</label>
-                <div class="flex items-center gap-8px flex-1">
-                  <input type="text" id="view-tag-input" class="gnfc-modal-input flex-1 font-14px uppercase"
-                    placeholder="Tag No...">
-                  <div class="gnfc-select-custom flex-1" id="view-tag-custom-wrap">
-                    <div class="gnfc-select-custom-trigger" id="view-tag-trigger" style="height: 40px; font-size: 14px;">-- All Tags --</div>
-                    <div class="gnfc-select-custom-options dashboard-scroll" style="max-height: 300px; overflow-y: auto;">
-                      <div class="gnfc-select-custom-option is-selected" data-value="">-- All Tags --</div>
-                      <div class="gnfc-select-custom-option" data-value="FIL_1412">FIL_1412</div>
-                      <div class="gnfc-select-custom-option" data-value="FT_1401">FT_1401</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3447A">LIH_3447A</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3447B">LIH_3447B</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3447R">LIH_3447R</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3449A">LIH_3449A</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3449B">LIH_3449B</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3449R">LIH_3449R</div>
-                      <div class="gnfc-select-custom-option" data-value="LIHL_1442_04">LIHL_1442_04</div>
-                      <div class="gnfc-select-custom-option" data-value="LIHL_1442_06">LIHL_1442_06</div>
-                      <div class="gnfc-select-custom-option" data-value="LT_3464">LT_3464</div>
-                      <div class="gnfc-select-custom-option" data-value="PT_3433">PT_3433</div>
-                      <div class="gnfc-select-custom-option" data-value="PT_3465">PT_3465</div>
-                    </div>
-                    <select id="view-tag-select" class="hide-select" style="display: none;">
-                      <option value="">-- All Tags --</option>
-                      <option value="FIL_1412">FIL_1412</option>
-                      <option value="FT_1401">FT_1401</option>
-                      <option value="LIH_3447A">LIH_3447A</option>
-                      <option value="LIH_3447B">LIH_3447B</option>
-                      <option value="LIH_3447R">LIH_3447R</option>
-                      <option value="LIH_3449A">LIH_3449A</option>
-                      <option value="LIH_3449B">LIH_3449B</option>
-                      <option value="LIH_3449R">LIH_3449R</option>
-                      <option value="LIHL_1442_04">LIHL_1442_04</option>
-                      <option value="LIHL_1442_06">LIHL_1442_06</option>
-                      <option value="LT_3464">LT_3464</option>
-                      <option value="PT_3433">PT_3433</option>
-                      <option value="PT_3465">PT_3465</option>
-                    </select>
-                  </div>
+          <div class="tx-filter-container">
+            <!-- Search Selection -->
+            <div class="tx-filter-group">
+              <label class="gnfc-modal-label">Select Tag to view PM Details :</label>
+              <div class="jt-input-wrap gap-8px">
+                <input type="text" id="view-tag-input" class="gnfc-modal-input flex-1" placeholder="Tag No...">
+                <div class="jt-select-wrap flex-1">
+                  <select id="view-tag-select" class="gnfc-modal-input w-full">
+                    <option value="">-- All Tags --</option>
+                    <option value="FIL_1412">FIL_1412</option>
+                    <option value="FT_1401">FT_1401</option>
+                    <option value="LIH_3447A">LIH_3447A</option>
+                    <option value="LIH_3447B">LIH_3447B</option>
+                    <option value="LIH_3447R">LIH_3447R</option>
+                    <option value="LIH_3449A">LIH_3449A</option>
+                    <option value="LIH_3449B">LIH_3449B</option>
+                    <option value="LIH_3449R">LIH_3449R</option>
+                    <option value="LIHL_1442_04">LIHL_1442_04</option>
+                    <option value="LIHL_1442_06">LIHL_1442_06</option>
+                    <option value="LT_3464">LT_3464</option>
+                    <option value="PT_3433">PT_3433</option>
+                    <option value="PT_3465">PT_3465</option>
+                  </select>
                 </div>
               </div>
+            </div>
 
-              <!-- Add Selection -->
-              <div style="min-width: 280px;">
-                <label class="gnfc-modal-label text-nowrap">Add PM For :</label>
-                <div class="gnfc-select-custom flex-1" id="add-tag-custom-wrap">
-                    <div class="gnfc-select-custom-trigger" id="add-tag-trigger" style="height: 40px; font-size: 14px;">-- Select Tag --</div>
-                    <div class="gnfc-select-custom-options dashboard-scroll" style="max-height: 250px; overflow-y: auto;">
-                      <div class="gnfc-select-custom-option is-selected" data-value="">-- Select Tag --</div>
-                      <div class="gnfc-select-custom-option" data-value="FIL_1412">FIL_1412</div>
-                      <div class="gnfc-select-custom-option" data-value="FT_1401">FT_1401</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3447A">LIH_3447A</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3447B">LIH_3447B</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3447R">LIH_3447R</div>
-                      <div class="gnfc-select-custom-option" data-value="LIH_3449A">LIH_3449A</div>
-                      <div class="gnfc-select-custom-option" data-value="LIHL_1442_04">LIHL_1442_04</div>
-                      <div class="gnfc-select-custom-option" data-value="LIHL_1442_06">LIHL_1442_06</div>
-                    </div>
-                    <select id="add-tag-select" class="hide-select" style="display: none;">
-                      <option value="">-- Select Tag --</option>
-                      <option value="FIL_1412">FIL_1412</option>
-                      <option value="FT_1401">FT_1401</option>
-                      <option value="LIH_3447A">LIH_3447A</option>
-                      <option value="LIH_3447B">LIH_3447B</option>
-                      <option value="LIH_3447R">LIH_3447R</option>
-                      <option value="LIH_3449A">LIH_3449A</option>
-                      <option value="LIHL_1442_04">LIHL_1442_04</option>
-                      <option value="LIHL_1442_06">LIHL_1442_06</option>
-                    </select>
-                  </div>
+            <!-- Detail Selection -->
+            <div class="tx-filter-group">
+              <label class="gnfc-modal-label">Select Tag To view PM Detail : </label>
+              <div class="jt-select-wrap">
+                <select id="add-tag-select" class="gnfc-modal-input w-full">
+                  <option value="">-- Select Tag --</option>
+                  <option value="FIL_1412">FIL_1412</option>
+                  <option value="FT_1401">FT_1401</option>
+                  <option value="LIH_3447A">LIH_3447A</option>
+                  <option value="LIH_3447B">LIH_3447B</option>
+                  <option value="LIH_3447R">LIH_3447R</option>
+                  <option value="LIH_3449A">LIH_3449A</option>
+                  <option value="LIHL_1442_04">LIHL_1442_04</option>
+                  <option value="LIHL_1442_06">LIHL_1442_06</option>
+                </select>
               </div>
+            </div>
 
-                <!-- Combined Status Filter Radio Group -->
-                <div class="flex items-center gap-12px bg-dark-bg px-16px h-40px radius-6px border border-dark ml-auto">
-                  <label class="flex items-center gap-6px cursor-pointer font-14px color-primary m-0px">
-                    <input type="radio" name="pm-status-filter" value="all" checked class="w-16px h-16px"> All
-                  </label>
-                  <div class="ui-divider-v h-20px mx-4px"></div>
-                  <label class="flex items-center gap-6px cursor-pointer font-14px color-primary m-0px">
-                    <input type="radio" name="pm-status-filter" value="pending" class="w-16px h-16px"> Pending
-                  </label>
-                  <div class="ui-divider-v h-20px mx-4px"></div>
-                  <label class="flex items-center gap-6px cursor-pointer font-14px color-primary m-0px">
-                    <input type="radio" name="pm-status-filter" value="completed" class="w-16px h-16px"> Completed
-                  </label>
-                </div>
-
-                <button id="btn-open-reports" class="pm-btn pm-btn--update h-40px px-16px">
-                  <i class="ph-bold ph-file-text"></i> PM Reports
-                </button>
+            <!-- Segmented Status Filter -->
+            <div class="tx-filter-group tx-status-group">
+              <label class="gnfc-modal-label">Filter by Status :</label>
+              <div class="tx-status-segmented">
+                <label class="tx-status-option">
+                  <input type="radio" name="pm-status-filter" value="all" checked>
+                  <span>All</span>
+                </label>
+                <label class="tx-status-option">
+                  <input type="radio" name="pm-status-filter" value="pending">
+                  <span>Pending</span>
+                </label>
+                <label class="tx-status-option">
+                  <input type="radio" name="pm-status-filter" value="completed">
+                  <span>Completed</span>
+                </label>
               </div>
             </div>
           </div>
         </div>
+
 
         <!-- Main Details Table Card -->
         <div class="jbd-card">
@@ -154,74 +124,62 @@
             <!-- Inline Filter Moved from Modal -->
             <div class="flex items-center gap-16px">
               <div class="flex items-center gap-8px">
-                <label class="gnfc-modal-label m-0px font-12px color-label uppercase">Report by Yes/No :</label>
+                <label class="gnfc-modal-label">Report by Yes/No :</label>
                 <!-- Premium Custom Dropdown -->
-                <div class="gnfc-select-custom w-220px" id="report-param-custom-wrap">
-                  <div class="gnfc-select-custom-trigger" id="report-param-trigger">Choose Parameter</div>
-                  <div class="gnfc-select-custom-options dashboard-scroll" style="max-height: 250px; overflow-y: auto;">
-                    <div class="gnfc-select-custom-option is-selected" data-value="">Choose Parameter</div>
-                    <div class="gnfc-select-custom-option" data-value="Range Checked By HHT?">Range Checked By HHT?</div>
-                    <div class="gnfc-select-custom-option" data-value="Mounting Zero Checked Before Calibration?">Mounting Zero Checked Before Calibration?</div>
-                    <div class="gnfc-select-custom-option" data-value="Glanding / Cable Support OK?">Glanding / Cable Support OK?</div>
-                    <div class="gnfc-select-custom-option" data-value="Tag Stamping OK?">Tag Stamping OK?</div>
-                    <div class="gnfc-select-custom-option" data-value="Canopy required?">Canopy required?</div>
-                    <div class="gnfc-select-custom-option" data-value="Manifold Condition OK?">Manifold Condition OK?</div>
-                    <div class="gnfc-select-custom-option" data-value="Any Leakage At Drain Valve/Plug/Tubing ?">Any Leakage At Drain Valve/Plug/Tubing ?</div>
-                    <div class="gnfc-select-custom-option" data-value="Tapping Flushed?">Tapping Flushed?</div>
-                    <div class="gnfc-select-custom-option" data-value="Monsoon Protection OK?">Monsoon Protection OK?</div>
-                  </div>
-                  <!-- Hidden native select for data binding -->
-                  <select id="report-param-select" class="hide-select" style="display: none;">
-                    <option value="">Choose Parameter</option>
-                    <option>Range Checked By HHT?</option>
-                    <option>Mounting Zero Checked Before Calibration?</option>
-                    <option>Glanding / Cable Support OK?</option>
-                    <option>Tag Stamping OK?</option>
-                    <option>Canopy required?</option>
-                    <option>Manifold Condition OK?</option>
-                    <option>Any Leakage At Drain Valve/Plug/Tubing ?</option>
-                    <option>Tapping Flushed?</option>
-                    <option>Monsoon Protection OK?</option>
-                  </select>
-                </div>
+                <select id="report-param-select" class="gnfc-modal-input">
+                  <option value="">Choose Parameter</option>
+                  <option value="Range Checked By HHT?">Range Checked By HHT?</option>
+                  <option value="Mounting Zero Checked Before Calibration?">Mounting Zero Checked Before Calibration?
+                  </option>
+                  <option value="Glanding / Cable Support OK?">Glanding / Cable Support OK?</option>
+                  <option value="Tag Stamping OK?">Tag Stamping OK?</option>
+                  <option value="Canopy required?">Canopy required?</option>
+                  <option value="Manifold Condition OK?">Manifold Condition OK?</option>
+                  <option value="Any Leakage At Drain Valve/Plug/Tubing ?">Any Leakage At Drain Valve/Plug/Tubing ?
+                  </option>
+                  <option value="Tapping Flushed?">Tapping Flushed?</option>
+                  <option value="Monsoon Protection OK?">Monsoon Protection OK?</option>
+                </select>
               </div>
-              <div class="flex items-center gap-12px bg-dark-bg px-12px h-32px radius-6px border border-dark">
-                <label class="flex items-center gap-4px cursor-pointer font-12px color-primary m-0px">
-                  Yes: <input type="radio" name="report-val" value="yes" checked class="w-14px h-14px">
+              <div class="flex items-center gap-16px bg-dark-bg px-12px h-32px radius-6px border border-dark">
+                <label class="gnfc-radio-label font-12px">
+                  <input type="radio" name="report-val" value="yes" checked class="gnfc-radio fw-600">
+                  <span>Yes</span>
                 </label>
                 <div class="ui-divider-v h-16px mx-4px"></div>
-                <label class="flex items-center gap-4px cursor-pointer font-12px color-primary m-0px">
-                  No: <input type="radio" name="report-val" value="no" class="w-14px h-14px">
+                <label class="gnfc-radio-label font-12px">
+                  <input type="radio" name="report-val" value="no" class="gnfc-radio fw-600">
+                  <span>No</span>
                 </label>
               </div>
-              <button id="btn-remark-report" class="pm-btn pm-btn--add h-32px px-12px font-12px">
-                Remark Report
-              </button>
             </div>
           </div>
           <div class="p-16px">
             <div class="user-table-wrapper">
-              <table class="user-table" style="min-width: auto;">
+              <table class="user-table">
                 <thead>
                   <tr>
                     <th style="width: 60px;">Sr</th>
-                    <th style="width: 180px;">Tag No</th>
-                    <th style="width: 140px;">Job Date</th>
-                    <th>Tech Name</th>
-                    <th>Checked By</th>
-                    <th style="width: 140px;">Checked Date</th>
-                    <th style="width: 180px;">Actions</th>
+                    <th style="min-width: 100px;">Tag No</th>
+                    <th style="min-width: 100px;">Job Date</th>
+                    <th style="min-width: 120px;">Tech Name</th>
+                    <th style="min-width: 112px;">Checked By</th>
+                    <th style="min-width: 140px; ">Checked Date</th>
+                    <th style="min-width: 250px;">Tech Remark</th>
+                    <th style="min-width: 250px;">Eng Remark</th>
+                    <th style="min-width: 120px;">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="pm-details-tbody">
-                  <!-- Static Rows -->
-                  <tr class="user-table-row" data-tag="LIHL_1442_04" data-checked="true">
+                  <tr class="user-table-row">
                     <td class="text-center fw-600">1</td>
-                    <td class="text-center">LIHL_1442_04</td>
-                    <td class="text-center color-green">01/01/2005</td>
-                    <td class="text-center">PBS</td>
-                    <td class="text-center">SHC</td>
-                    <td class="text-center color-green">01/01/2005</td>
+                    <td class="text-center fw-600 color-blue">LIHL_1442_04</td>
+                    <td class="text-center color-green fw-600">01/01/2005</td>
+                    <td class="text-center fw-600">PBS</td>
+                    <td class="text-center fw-600">SHC</td>
+                    <td class="text-center fw-600">01/01/2005</td>
+                    <td>Found OK after calibration.</td>
+                    <td>Verified and Approved.</td>
                     <td class="text-center">
                       <div class="action-btn-group">
                         <button class="action-btn action-btn--view btn-view" data-tag="LIHL_1442_04"
@@ -233,13 +191,15 @@
                       </div>
                     </td>
                   </tr>
-                  <tr class="user-table-row" data-tag="LIHL_1442_06" data-checked="true">
+                  <tr class="user-table-row">
                     <td class="text-center fw-600">2</td>
-                    <td class="text-center">LIHL_1442_06</td>
-                    <td class="text-center color-green">03/01/2005</td>
-                    <td class="text-center">PBS</td>
-                    <td class="text-center">SHC</td>
-                    <td class="text-center color-green">03/01/2005</td>
+                    <td class="text-center fw-600 color-blue">LIHL_1442_06</td>
+                    <td class="text-center color-green fw-600">03/01/2005</td>
+                    <td class="text-center fw-600">PBS</td>
+                    <td class="text-center fw-600">SHC</td>
+                    <td class="text-center fw-600">03/01/2005</td>
+                    <td>Standard maintenance done.</td>
+                    <td>Report Checked.</td>
                     <td class="text-center">
                       <div class="action-btn-group">
                         <button class="action-btn action-btn--view btn-view" data-tag="LIHL_1442_06" title="View"><i
@@ -251,13 +211,15 @@
                       </div>
                     </td>
                   </tr>
-                  <tr class="user-table-row" data-tag="FT_1401" data-checked="false">
+                  <tr class="user-table-row">
                     <td class="text-center fw-600">3</td>
-                    <td class="text-center">FT_1401</td>
-                    <td class="text-center color-red">15/08/2005</td>
-                    <td class="text-center">BPB</td>
-                    <td class="text-center">-</td>
-                    <td class="text-center">-</td>
+                    <td class="text-center fw-600 color-blue">FT_1401</td>
+                    <td class="text-center color-red fw-600">15/08/2005</td>
+                    <td class="text-center fw-600">BPB</td>
+                    <td class="text-center fw-600">-</td>
+                    <td class="text-center fw-600">-</td>
+                    <td>Pending inspection.</td>
+                    <td>Awaiting Review.</td>
                     <td class="text-center">
                       <div class="action-btn-group">
                         <button class="action-btn action-btn--view btn-view" data-tag="FT_1401" title="View"><i
@@ -265,6 +227,86 @@
                         <button class="action-btn action-btn--edit btn-edit" data-tag="FT_1401" title="Edit"><i
                             class="ph ph-pencil"></i></button>
                         <button class="action-btn action-btn--delete btn-delete" data-tag="FT_1401" title="Delete"><i
+                            class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="text-center fw-600">4</td>
+                    <td class="text-center fw-600 color-blue">LIH_3447A</td>
+                    <td class="text-center color-green fw-600">10/02/2024</td>
+                    <td class="text-center fw-600">KSM</td>
+                    <td class="text-center fw-600">RJK</td>
+                    <td class="text-center fw-600">10/02/2024</td>
+                    <td>Zero adjustment done.</td>
+                    <td>Calibration Certified.</td>
+                    <td class="text-center">
+                      <div class="action-btn-group">
+                        <button class="action-btn action-btn--view btn-view" data-tag="LIH_3447A" title="View"><i
+                            class="ph ph-eye"></i></button>
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="LIH_3447A" title="Edit"><i
+                            class="ph ph-pencil"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="LIH_3447A" title="Delete"><i
+                            class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="text-center fw-600">5</td>
+                    <td class="text-center fw-600 color-blue">LIH_3447B</td>
+                    <td class="text-center color-red fw-600">12/02/2024</td>
+                    <td class="text-center fw-600">KSM</td>
+                    <td class="text-center fw-600">-</td>
+                    <td class="text-center fw-600">-</td>
+                    <td>Found dirty, cleaned.</td>
+                    <td>Remark added.</td>
+                    <td class="text-center">
+                      <div class="action-btn-group">
+                        <button class="action-btn action-btn--view btn-view" data-tag="LIH_3447B" title="View"><i
+                            class="ph ph-eye"></i></button>
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="LIH_3447B" title="Edit"><i
+                            class="ph ph-pencil"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="LIH_3447B" title="Delete"><i
+                            class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="text-center fw-600">6</td>
+                    <td class="text-center fw-600 color-blue">LT_3464</td>
+                    <td class="text-center color-green fw-600">15/03/2024</td>
+                    <td class="text-center fw-600">DBP</td>
+                    <td class="text-center fw-600">SHC</td>
+                    <td class="text-center fw-600">15/03/2024</td>
+                    <td>Maintenance completed.</td>
+                    <td>Verified.</td>
+                    <td class="text-center">
+                      <div class="action-btn-group">
+                        <button class="action-btn action-btn--view btn-view" data-tag="LT_3464" title="View"><i
+                            class="ph ph-eye"></i></button>
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="LT_3464" title="Edit"><i
+                            class="ph ph-pencil"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="LT_3464" title="Delete"><i
+                            class="ph ph-trash"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="text-center fw-600">7</td>
+                    <td class="text-center fw-600 color-blue">PT_3433</td>
+                    <td class="text-center color-red fw-600">20/03/2024</td>
+                    <td class="text-center fw-600">DBP</td>
+                    <td class="text-center fw-600">-</td>
+                    <td class="text-center fw-600">-</td>
+                    <td>Parts replaced.</td>
+                    <td>Eng Review pending.</td>
+                    <td class="text-center">
+                      <div class="action-btn-group">
+                        <button class="action-btn action-btn--view btn-view" data-tag="PT_3433" title="View"><i
+                            class="ph ph-eye"></i></button>
+                        <button class="action-btn action-btn--edit btn-edit" data-tag="PT_3433" title="Edit"><i
+                            class="ph ph-pencil"></i></button>
+                        <button class="action-btn action-btn--delete btn-delete" data-tag="PT_3433" title="Delete"><i
                             class="ph ph-trash"></i></button>
                       </div>
                     </td>
@@ -830,7 +872,7 @@
   </div>
 
   <!-- Transmitter PM Report Modal -->
-  <div id="pm-reports-modal" class="gnfc-modal-overlay">
+  <!-- <div id="pm-reports-modal" class="gnfc-modal-overlay">
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header py-12px">
         <h3 class="gnfc-modal-title">TRANSMITTER PM REPORT</h3>
@@ -839,7 +881,6 @@
         </button>
       </div>
       <div class="gnfc-modal-body dashboard-scroll" >
-        <!-- Report Result Container -->
         <div id="report-result-container" class="animate-fade-in">
           <div class="jbd-card border-none radius-0px">
             <div class="p-0">
@@ -863,7 +904,6 @@
                     </tr>
                   </thead>
                   <tbody id="report-tbody">
-                    <!-- Static Rows for Remark Report -->
                     <tr class="user-table-row">
                       <td class="text-center fw-600">1</td>
                       <td class="text-center">LIH_3447A</td>
@@ -935,7 +975,7 @@
         <button class="pm-btn pm-btn--update font-14px px-24px btn-close-modal">Close</button>
       </div>
     </div>
-  </div>
+  </div> -->
 
 
   <script>
@@ -1093,13 +1133,13 @@
         let titleSuffix = tag || 'ALL';
         if (status === 'pending') titleSuffix = 'Pending Sign';
         else if (status === 'completed') titleSuffix = 'Completed';
-        
+
         $('#pm-details-title').text('PM Details Tag : ' + titleSuffix);
 
         $('.user-table-row').each(function () {
           const rowTag = $(this).data('tag');
           const isChecked = $(this).data('checked') === true;
-          
+
           let showByTag = !tag || rowTag === tag;
           let showByStatus = true;
           if (status === 'pending') showByStatus = !isChecked;
@@ -1115,7 +1155,7 @@
         applyMainFilters();
       });
 
-      $('input[name="pm-status-filter"]').on('change', function() {
+      $('input[name="pm-status-filter"]').on('change', function () {
         applyMainFilters();
       });
 
@@ -1181,38 +1221,9 @@
         $('#report-tbody tr').show();
       });
 
-      // --- Reusable Custom Select Initializer ---
-      function initPremiumSelect(wrapperId, triggerId, nativeSelectId) {
-        const $wrapper = $(wrapperId);
-        const $trigger = $(triggerId);
-        const $native = $(nativeSelectId);
-
-        $trigger.on('click', function (e) {
-          e.stopPropagation();
-          $('.gnfc-select-custom').not($wrapper).removeClass('is-open');
-          $wrapper.toggleClass('is-open');
-        });
-
-        $wrapper.find('.gnfc-select-custom-option').on('click', function () {
-          const val = $(this).data('value');
-          const text = $(this).text();
-
-          $trigger.text(text);
-          $wrapper.find('.gnfc-select-custom-option').removeClass('is-selected');
-          $(this).addClass('is-selected');
-          $wrapper.removeClass('is-open');
-
-          $native.val(val).trigger('change');
-        });
-      }
-
-      // Initialize all custom selects
-      initPremiumSelect('#report-param-custom-wrap', '#report-param-trigger', '#report-param-select');
-      initPremiumSelect('#view-tag-custom-wrap', '#view-tag-trigger', '#view-tag-select');
-      initPremiumSelect('#add-tag-custom-wrap', '#add-tag-trigger', '#add-tag-select');
-
-      $(document).on('click', function () {
-        $('.gnfc-select-custom').removeClass('is-open');
+      // Event listener for report parameter select
+      $('#report-param-select').on('change', function () {
+        updateReportFilter();
       });
 
       function updateReportFilter() {
@@ -1222,7 +1233,7 @@
           $('#report-result-title').text(`${param} / ${status}`);
           if (status === 'NO') $('#report-tbody tr').hide();
           else $('#report-tbody tr').show();
-          
+
           // Open modal automatically when filter is used from main page
           if (!$('#pm-reports-modal').hasClass('is-open')) {
             openModal('#pm-reports-modal');
@@ -1236,6 +1247,7 @@
       $('input[name="report-val"]').on('change', updateReportFilter);
       $('.btn-close-modal').on('click', function () { closeModal($(this).closest('.gnfc-modal-overlay')); });
     });
-  </script></body>
+  </script>
+</body>
 
 </html>
