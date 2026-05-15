@@ -32,75 +32,80 @@
     <div id="header-container" data-title="Control Valve PM Detail" data-breadcrumb="Plant:../plant.html,Boiler:../boiler_dashboard.html,PM Master:pm_master.html,CV Detail:active" data-back="pm_master.html"></div>
 
 
+    <!-- Control Valve PM Detail Filter  -->
     <div class="dashboard-content dashboard-scroll">
       <div class="flex flex-col gap-16px">
 
         <!-- Top Filter Card -->
-        <div class="jbd-card">
-          <div class="jbd-card-header">
-            <div class="flex items-center gap-8px">
-              <i class="ph-bold ph-broadcast color-blue font-16px"></i>
-              <span class="jbd-card-header-title">Control Valve PM Detail Filter</span>
-            </div>
+        <div class="jt-filter-card">
+          <div class="jt-filter-header">
+            <h2 class="jt-filter-title">
+              <i class="ph-bold ph-broadcast color-blue"></i>
+              Control Valve PM Detail Filter
+            </h2>
           </div>
-          <div class="p-16px flex flex-col gap-16px">
-            <div class="flex flex-wrap items-center gap-16px">
-              <!-- View Selection -->
-              <div class="" style="min-width: 400px;">
-                <label class="gnfc-modal-label text-nowrap">Search / Select Tag :</label>
-                <div class="flex items-center gap-8px flex-1">
-                  <input type="text" id="view-tag-input" class="gnfc-modal-input flex-1 font-14px uppercase"
-                    placeholder="Tag No...">
-                  <div class="relative flex-1">
-                    <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer font-14px">
-                      <option value="">-- All Tags --</option>
-                      <option value="FIL_1412">FIL_1412</option>
-                      <option value="FT_1401">FT_1401</option>
-                      <option value="LIH_3447A">LIH_3447A</option>
-                      <option value="LIH_3447B">LIH_3447B</option>
-                      <option value="LIH_3447R">LIH_3447R</option>
-                      <option value="LIH_3449A">LIH_3449A</option>
-                      <option value="LIH_3449B">LIH_3449B</option>
-                      <option value="LIH_3449R">LIH_3449R</option>
-                      <option value="LIHL_1442_04">LIHL_1442_04</option>
-                      <option value="LIHL_1442_06">LIHL_1442_06</option>
-                      <option value="LT_3464">LT_3464</option>
-                      <option value="PT_3433">PT_3433</option>
-                      <option value="PT_3465">PT_3465</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Add Selection -->
-              <div style="min-width: 280px;">
-                <label class="gnfc-modal-label text-nowrap">Add PM For :</label>
-                <div class="relative flex-1">
-                  <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer font-14px">
-                    <option value="">-- Select Tag --</option>
+          <div class="tx-filter-container">
+            <!-- Search Selection -->
+            <div class="tx-filter-group">
+              <label class="gnfc-modal-label">Search / Select Tag :</label>
+              <div class="jt-input-wrap gap-8px">
+                <input type="text" id="view-tag-input" class="gnfc-modal-input flex-1 font-14px uppercase"
+                  placeholder="Tag No...">
+                <div class="jt-select-wrap flex-1">
+                  <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer font-14px">
+                    <option value="">-- All Tags --</option>
                     <option value="FIL_1412">FIL_1412</option>
                     <option value="FT_1401">FT_1401</option>
                     <option value="LIH_3447A">LIH_3447A</option>
                     <option value="LIH_3447B">LIH_3447B</option>
                     <option value="LIH_3447R">LIH_3447R</option>
                     <option value="LIH_3449A">LIH_3449A</option>
+                    <option value="LIH_3449B">LIH_3449B</option>
+                    <option value="LIH_3449R">LIH_3449R</option>
                     <option value="LIHL_1442_04">LIHL_1442_04</option>
                     <option value="LIHL_1442_06">LIHL_1442_06</option>
+                    <option value="LT_3464">LT_3464</option>
+                    <option value="PT_3433">PT_3433</option>
+                    <option value="PT_3465">PT_3465</option>
                   </select>
                 </div>
               </div>
+            </div>
 
-              <!-- Filter Actions -->
-              <div class="flex items-center gap-12px ml-auto">
-                <div class="flex items-center gap-8px bg-dark-bg px-12px py-6px radius-6px border border-dark">
-                  <i class="ph-bold ph-clock color-orange font-14px"></i>
-                  <span class="font-14px fw-700 uppercase color-label">Pending Sign</span>
-                  <button class="pm-btn pm-btn--edit h-28px px-8px font-10px" id="btn-pending-filter">GO</button>
-                </div>
+            <!-- Detail Selection -->
+            <div class="tx-filter-group">
+              <label class="gnfc-modal-label">Add PM For : </label>
+              <div class="jt-select-wrap">
+                <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer font-14px">
+                  <option value="">-- Select Tag --</option>
+                  <option value="FIL_1412">FIL_1412</option>
+                  <option value="FT_1401">FT_1401</option>
+                  <option value="LIH_3447A">LIH_3447A</option>
+                  <option value="LIH_3447B">LIH_3447B</option>
+                  <option value="LIH_3447R">LIH_3447R</option>
+                  <option value="LIH_3449A">LIH_3449A</option>
+                  <option value="LIHL_1442_04">LIHL_1442_04</option>
+                  <option value="LIHL_1442_06">LIHL_1442_06</option>
+                </select>
+              </div>
+            </div>
 
-                <button id="btn-open-reports" class="pm-btn pm-btn--update h-40px px-16px">
-                  <i class="ph-bold ph-file-text"></i> PM Reports
-                </button>
+            <!-- Segmented Status Filter -->
+            <div class="tx-filter-group tx-status-group">
+              <label class="gnfc-modal-label">Filter by Status :</label>
+              <div class="tx-status-segmented">
+                <label class="tx-status-option">
+                  <input type="radio" name="pm-status-filter" value="all" checked>
+                  <span>All</span>
+                </label>
+                <label class="tx-status-option">
+                  <input type="radio" name="pm-status-filter" value="pending">
+                  <span>Pending</span>
+                </label>
+                <label class="tx-status-option">
+                  <input type="radio" name="pm-status-filter" value="completed">
+                  <span>Completed</span>
+                </label>
               </div>
             </div>
           </div>
@@ -108,10 +113,50 @@
 
         <!-- Main Details Table Card -->
         <div class="jbd-card">
-          <div class="jbd-card-header">
+          <div class="jbd-card-header flex items-center justify-between py-8px">
             <div class="flex items-center gap-8px">
               <i class="ph-bold ph-table color-blue font-16px"></i>
               <span class="jbd-card-header-title" id="pm-details-title">PM Details Tag : ALL</span>
+            </div>
+
+            <!-- Inline Filter -->
+            <div class="flex items-center gap-16px">
+              <div class="flex items-center gap-8px">
+                <label class="gnfc-modal-label">Report by Yes/No :</label>
+                <select id="report-param-select" class="gnfc-modal-input">
+                  <option value="">Choose Parameter</option>
+                  <option value="Actuator leakage is there?">Actuator leakage is there?</option>
+                  <option value="Corrosion is there?">Corrosion is there?</option>
+                  <option value="Duebushing leakage is there?">Duebushing leakage is there?</option>
+                  <option value="Stem Greasing Ok?">Stem Greasing Ok?</option>
+                  <option value="Vent tube checked?">Vent tube checked?</option>
+                  <option value="Bonnet gland leakage is there?">Bonnet gland leakage is there?</option>
+                  <option value="Bonnet Corrosion is there?">Bonnet Corrosion is there?</option>
+                  <option value="Bonnet leakage is there?">Bonnet leakage is there?</option>
+                  <option value="Steam cleaning Greasing done?">Steam cleaning Greasing done?</option>
+                  <option value="Body flange leakage is there?">Body flange leakage is there?</option>
+                  <option value="Body leakage is there?">Body leakage is there?</option>
+                  <option value="Body corrosion is there?">Body corrosion is there?</option>
+                  <option value="Insulation required?">Insulation required?</option>
+                  <option value="Positioner guages working?">Positioner guages working?</option>
+                  <option value="Air leakage is there?">Air leakage is there?</option>
+                  <option value="General condition ok?">General condition ok?</option>
+                  <option value="Cable gland ok?">Cable gland ok?</option>
+                  <option value="Mounting ok?">Mounting ok?</option>
+                  <option value="Feedback lever condition ok?">Feedback lever condition ok?</option>
+                </select>
+              </div>
+              <div class="flex items-center gap-16px bg-dark-bg px-12px h-32px radius-6px border border-dark">
+                <label class="gnfc-radio-label font-12px">
+                  <input type="radio" name="report-val" value="yes" checked class="gnfc-radio fw-600">
+                  <span>Yes</span>
+                </label>
+                <div class="ui-divider-v h-16px mx-4px"></div>
+                <label class="gnfc-radio-label font-12px">
+                  <input type="radio" name="report-val" value="no" class="gnfc-radio fw-600">
+                  <span>No</span>
+                </label>
+              </div>
             </div>
           </div>
           <div class="p-16px">
@@ -120,23 +165,27 @@
                 <thead>
                   <tr>
                     <th style="width: 60px;">Sr</th>
-                    <th style="width: 180px;">Tag No</th>
-                    <th style="width: 140px;">Job Date</th>
-                    <th>Tech Name</th>
-                    <th>Checked By</th>
-                    <th style="width: 140px;">Checked Date</th>
-                    <th style="width: 180px;">Actions</th>
+                    <th style="min-width: 100px;">Tag No</th>
+                    <th style="min-width: 100px;">Job Date</th>
+                    <th style="min-width: 120px;">Tech Name</th>
+                    <th style="min-width: 112px;">Checked By</th>
+                    <th style="min-width: 140px;">Checked Date</th>
+                    <th style="min-width: 250px;">Tech Remark</th>
+                    <th style="min-width: 250px;">Eng Remark</th>
+                    <th style="min-width: 120px;">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="pm-details-tbody">
                   <!-- Static Rows -->
                   <tr class="user-table-row" data-tag="1AB2IGN" data-checked="true">
                     <td class="text-center fw-600">1</td>
-                    <td class="text-center">1AB2IGN</td>
-                    <td class="text-center color-green fw-800">01/01/2026</td>
+                    <td>1AB2IGN</td>
+                    <td class="text-center color-green fw-600">01/01/2026</td>
                     <td class="text-center">PBS</td>
                     <td class="text-center">SHC</td>
-                    <td class="text-center color-green fw-800">01/01/2026</td>
+                    <td class="text-center fw-600">01/01/2026</td>
+                    <td>Found OK.</td>
+                    <td>Verified.</td>
                     <td class="text-center">
                       <div class="action-btn-group">
                         <button class="action-btn action-btn--view btn-view" data-tag="1AB2IGN" title="View"><i
@@ -150,11 +199,13 @@
                   </tr>
                   <tr class="user-table-row" data-tag="1PV203" data-checked="true">
                     <td class="text-center fw-600">2</td>
-                    <td class="text-center">1PV203</td>
-                    <td class="text-center color-green fw-800">03/01/2026</td>
+                    <td>1PV203</td>
+                    <td class="text-center color-green fw-600">03/01/2026</td>
                     <td class="text-center">PBS</td>
                     <td class="text-center">SHC</td>
-                    <td class="text-center color-green fw-800">03/01/2026</td>
+                    <td class="text-center fw-600">03/01/2026</td>
+                    <td>Standard maintenance done.</td>
+                    <td>Report Checked.</td>
                     <td class="text-center">
                       <div class="action-btn-group">
                         <button class="action-btn action-btn--view btn-view" data-tag="1PV203" title="View"><i
@@ -168,11 +219,13 @@
                   </tr>
                   <tr class="user-table-row" data-tag="1HV404" data-checked="false">
                     <td class="text-center fw-600">3</td>
-                    <td class="text-center">1HV404</td>
-                    <td class="text-center color-red fw-800">15/08/2026</td>
+                    <td>1HV404</td>
+                    <td class="text-center color-red fw-600">15/08/2026</td>
                     <td class="text-center">BPB</td>
                     <td class="text-center">-</td>
-                    <td class="text-center">-</td>
+                    <td class="text-center fw-600">-</td>
+                    <td>Pending inspection.</td>
+                    <td>Awaiting Review.</td>
                     <td class="text-center">
                       <div class="action-btn-group">
                         <button class="action-btn action-btn--view btn-view" data-tag="1HV404" title="View"><i
@@ -525,27 +578,27 @@
                 <!-- Technical Footer Information -->
                 <tr>
                   <td colspan="2">Tech Remark</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2"><input type="text" id="edit-tech-remark" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Tech Name</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2"><input type="text" id="edit-tech-name" class="pm-form-input" readonly></td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Date</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2"><input type="text" id="edit-job-date" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Checked by Eng</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2"><input type="text" id="edit-eng-name" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Date</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2"><input type="text" id="edit-sign-date" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Eng Remark</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2"><input type="text" id="edit-eng-remark" class="pm-form-input"></td>
                 </tr>
               </tbody>
             </table>
@@ -807,7 +860,6 @@
               </tbody>
             </table>
           </div>
-
         </div>
       </div>
       <div class="gnfc-modal-footer">
@@ -1098,17 +1150,58 @@
         });
       }
 
-      // --- Initialize Autocomplete ---
-      initTagAutocomplete('#view-tag-input', '#view-tag-select', function (tag) {
-        showPendingOnly = false;
-        $('#pm-details-title').text('PM Details Tag : ' + (tag || 'ALL'));
+      function applyMainFilters() {
+        const tag = $('#view-tag-select').val();
+        const status = $('input[name="pm-status-filter"]:checked').val();
+
+        let titleSuffix = tag || 'ALL';
+        if (status === 'pending') titleSuffix = 'Pending Sign';
+        else if (status === 'completed') titleSuffix = 'Completed';
+
+        $('#pm-details-title').text('PM Details Tag : ' + titleSuffix);
 
         $('.user-table-row').each(function () {
           const rowTag = $(this).data('tag');
-          if (!tag || rowTag === tag) $(this).show();
+          const isChecked = $(this).data('checked') === true;
+
+          let showByTag = !tag || rowTag === tag;
+          let showByStatus = true;
+          if (status === 'pending') showByStatus = !isChecked;
+          else if (status === 'completed') showByStatus = isChecked;
+
+          if (showByTag && showByStatus) $(this).show();
           else $(this).hide();
         });
+      }
+
+      // Initialize Autocomplete for CV View Filter
+      initTagAutocomplete('#view-tag-input', '#view-tag-select', function (tag) {
+        applyMainFilters();
       });
+
+      $('input[name="pm-status-filter"]').on('change', function () {
+        applyMainFilters();
+      });
+
+      function updateReportFilter() {
+        const param = $('#report-param-select').val();
+        const status = $('input[name="report-val"]:checked').val().toUpperCase();
+        if (param) {
+          $('#report-result-title').text(`${param} / ${status}`);
+          if (status === 'NO') $('#report-tbody tr').hide();
+          else $('#report-tbody tr').show();
+
+          // Open modal automatically when filter is used from main page
+          if (!$('#pm-reports-modal').hasClass('is-open')) {
+            openModal('#pm-reports-modal');
+          }
+        } else {
+          $('#report-result-title').text('Filtered Report');
+        }
+      }
+
+      $('#report-param-select').on('change', updateReportFilter);
+      $('input[name="report-val"]').on('change', updateReportFilter);
 
       $('#btn-view-tag-go').on('click', function () {
         const val = $('#view-tag-select').val();
@@ -1124,21 +1217,6 @@
 
 
       // --- Interaction Handlers ---
-      $('#btn-pending-filter').on('click', function () {
-        showPendingOnly = !showPendingOnly;
-        $(this).toggleClass('pm-btn--add pm-btn--edit');
-
-        if (showPendingOnly) {
-          $('#pm-details-title').text('PM Details Tag : Pending for Eng Sign');
-          $('.user-table-row').each(function () {
-            if ($(this).data('checked') === true) $(this).hide();
-            else $(this).show();
-          });
-        } else {
-          $('#view-tag-select').trigger('change');
-        }
-      });
-
       $('#add-tag-select').on('change', function () {
         const tag = $(this).val();
         if (!tag) return;
@@ -1171,8 +1249,15 @@
         const row = $(this).closest('tr');
         $('#edit-tag-no').val(tag);
         $('#edit-modal-tag-display').text(tag);
-        $('#edit-tech-name').val(row.find('td:eq(3)').text());
+        
+        // Populate inputs
         $('#edit-job-date').val(row.find('td:eq(2)').text());
+        $('#edit-tech-name').val(row.find('td:eq(3)').text());
+        $('#edit-eng-name').val(row.find('td:eq(4)').text());
+        $('#edit-sign-date').val(row.find('td:eq(5)').text());
+        $('#edit-tech-remark').val(row.find('td:eq(6)').text());
+        $('#edit-eng-remark').val(row.find('td:eq(7)').text());
+
         openModal('#pm-edit-modal');
       });
 
@@ -1214,21 +1299,6 @@
         $('#report-result-title').text('Remark Report – All Tags with Remarks');
         $('#report-tbody tr').show();
       });
-
-      function updateReportFilter() {
-        const param = $('#report-param-select').val();
-        const status = $('input[name="report-val"]:checked').val().toUpperCase();
-        if (param) {
-          $('#report-result-title').text(`${param} / ${status}`);
-          if (status === 'NO') $('#report-tbody tr').hide();
-          else $('#report-tbody tr').show();
-        } else {
-          $('#report-result-title').text('Filtered Report');
-        }
-      }
-
-      $('#report-param-select').on('change', updateReportFilter);
-      $('input[name="report-val"]').on('change', updateReportFilter);
     });
   </script>
 </body>

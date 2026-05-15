@@ -29,73 +29,72 @@
   <div class="sidebar-container"></div>
 
   <main class="main-wrapper">
-    <div id="header-container" data-title="Vibration PM Detail" data-breadcrumb="Plant:../plant.html,Boiler:../boiler_dashboard.html,PM Master:pm_master.html,VIB Detail:active" data-back="pm_master.html"></div>
+    <div id="header-container" data-title="Vibration PM Detail"
+      data-breadcrumb="Plant:../plant.html,Boiler:../boiler_dashboard.html,PM Master:pm_master.html,VIB Detail:active"
+      data-back="pm_master.html"></div>
 
 
     <div class="dashboard-content dashboard-scroll">
       <div class="flex flex-col gap-16px">
 
         <!-- Top Filter Card -->
-        <div class="jbd-card">
-          <div class="jbd-card-header">
-            <div class="flex items-center gap-8px">
-              <i class="ph-bold ph-activity color-blue font-16px"></i>
-              <span class="jbd-card-header-title">Vibration PM Detail Filter</span>
-            </div>
+        <div class="jt-filter-card">
+          <div class="jt-filter-header">
+            <h2 class="jt-filter-title">
+              <i class="ph-bold ph-activity color-blue"></i>
+              Vibration PM Detail Filter
+            </h2>
           </div>
-          <div class="p-16px">
-            <div class="flex flex-wrap items-end gap-16px">
-              <!-- View Selection -->
-              <div class="flex flex-col gap-8px flex-1" style="min-width: 320px; flex-basis: 40%">
-                <label class="gnfc-modal-label">Select Tag To View</label>
-                <div class="flex items-center gap-8px">
-                  <input type="text" id="view-tag-input" class="gnfc-modal-input flex-1" placeholder="Search…">
-                  <div class="relative flex-1">
-                    <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer"
-                      style="background-image: none !important;">
-                      <option value="">-- All Tags --</option>
-                      <option value="1ZT2301">1ZT2301</option>
-                      <option value="1ZT2302">1ZT2302</option>
-                      <option value="1ZT2303">1ZT2303</option>
-                      <option value="1XT2301">1XT2301</option>
-                      <option value="1YT2301">1YT2301</option>
-                    </select>
-                    <i
-                      class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
-                  </div>
-                  <button class="pm-btn pm-btn--update px-20px h-40px" id="btn-view-tag-go">Go</button>
-                </div>
-              </div>
-
-              <!-- Add Selection -->
-              <div class="flex flex-col gap-8px flex-1" style="min-width: 200px; flex-basis: 20%; max-width: 300px;">
-                <label class="gnfc-modal-label">Select Tag To Add PM</label>
-                <div class="relative">
-                  <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer"
-                    style="background-image: none !important;">
-                    <option value="">-- Select Tag --</option>
+          <div class="tx-filter-container">
+            <!-- Search Selection -->
+            <div class="tx-filter-group">
+              <label class="gnfc-modal-label">SELECT TAG TO VIEW :</label>
+              <div class="jt-input-wrap gap-8px">
+                <input type="text" id="view-tag-input" class="gnfc-modal-input flex-1" placeholder="Search...">
+                <div class="jt-select-wrap flex-1">
+                  <select id="view-tag-select" class="gnfc-modal-input w-full cursor-pointer">
+                    <option value="">-- All Tags --</option>
                     <option value="1ZT2301">1ZT2301</option>
                     <option value="1ZT2302">1ZT2302</option>
                     <option value="1ZT2303">1ZT2303</option>
                     <option value="1XT2301">1XT2301</option>
                     <option value="1YT2301">1YT2301</option>
                   </select>
-                  <i
-                    class="ph-bold ph-caret-down absolute right-12px top-1/2 -translate-y-1/2 color-label pointer-events-none font-12px"></i>
                 </div>
               </div>
+            </div>
 
-              <!-- Filter Actions -->
-              <div class="flex items-center gap-8px flex-wrap flex-1 fw-700" style="min-width: 280px;">
-                <p>
-                  <i class="ph-bold ph-clock"></i> PENDING SIGN
-                  <button class="pm-btn pm-btn--edit" id="btn-pending-filter">GO</button>
-                </p>
-                <!-- <button id="btn-open-reports" class="pm-btn pm-btn--update" style="white-space: nowrap;">
-                  <i class="ph-bold ph-file-text"></i> PM Reports
-                  <span
-                    class="bg-white color-dark px-6px py-2px radius-4px ml-4px fw-700 inline-block text-center flex-none">GO</span>
-                </button> -->
+            <!-- Add Selection -->
+            <div class="tx-filter-group">
+              <label class="gnfc-modal-label">SELECT TAG TO ADD PM : </label>
+              <div class="jt-select-wrap">
+                <select id="add-tag-select" class="gnfc-modal-input w-full cursor-pointer">
+                  <option value="">-- Select Tag --</option>
+                  <option value="1ZT2301">1ZT2301</option>
+                  <option value="1ZT2302">1ZT2302</option>
+                  <option value="1ZT2303">1ZT2303</option>
+                  <option value="1XT2301">1XT2301</option>
+                  <option value="1YT2301">1YT2301</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Segmented Status Filter -->
+            <div class="tx-filter-group tx-status-group">
+              <label class="gnfc-modal-label">FILTER BY STATUS :</label>
+              <div class="tx-status-segmented">
+                <label class="tx-status-option">
+                  <input type="radio" name="pm-status-filter" value="all" checked>
+                  <span>ALL</span>
+                </label>
+                <label class="tx-status-option">
+                  <input type="radio" name="pm-status-filter" value="pending">
+                  <span>PENDING</span>
+                </label>
+                <label class="tx-status-option">
+                  <input type="radio" name="pm-status-filter" value="completed">
+                  <span>COMPLETED</span>
+                </label>
               </div>
             </div>
           </div>
@@ -115,23 +114,27 @@
                 <thead>
                   <tr>
                     <th style="width: 60px;">Sr</th>
-                    <th style="width: 180px;">Tag No</th>
-                    <th style="width: 140px;">Job Date</th>
-                    <th>Tech Name</th>
-                    <th>Checked By</th>
-                    <th style="width: 140px;">Checked Date</th>
-                    <th style="width: 180px;">Actions</th>
+                    <th style="min-width: 100px;">Tag No</th>
+                    <th style="min-width: 100px;">Job Date</th>
+                    <th style="min-width: 120px;">Tech Name</th>
+                    <th style="min-width: 112px;">Checked By</th>
+                    <th style="min-width: 140px;">Checked Date</th>
+                    <th style="min-width: 250px;">Tech Remark</th>
+                    <th style="min-width: 250px;">Eng Remark</th>
+                    <th style="min-width: 120px;">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="pm-details-tbody">
                   <!-- Static Rows -->
                   <tr class="user-table-row" data-tag="1ZT2301" data-checked="true">
                     <td class="text-center fw-600">1</td>
-                    <td class="text-center">1ZT2301</td>
-                    <td class="text-center color-green ">20/03/2026</td>
-                    <td class="text-center">Ramesh Patel</td>
+                    <td>1ZT2301</td>
+                    <td class="text-center color-green fw-600">20/03/2026</td>
+                    <td class="text-center">RMP</td>
                     <td class="text-center">SHC</td>
-                    <td class="text-center color-green ">20/03/2026</td>
+                    <td class="text-center fw-600">20/03/2026</td>
+                    <td>Vibration levels within limits.</td>
+                    <td>Verified.</td>
                     <td class="text-center">
                       <div class="action-btn-group">
                         <button class="action-btn action-btn--view btn-view" data-tag="1ZT2301" title="View"><i
@@ -145,11 +148,13 @@
                   </tr>
                   <tr class="user-table-row" data-tag="1ZT2302" data-checked="false">
                     <td class="text-center fw-600">2</td>
-                    <td class="text-center">1ZT2302</td>
-                    <td class="text-center color-red ">21/03/2026</td>
-                    <td class="text-center">Suresh Kumar</td>
+                    <td>1ZT2302</td>
+                    <td class="text-center color-red fw-600">21/03/2026</td>
+                    <td class="text-center">SKS</td>
                     <td class="text-center">-</td>
-                    <td class="text-center">-</td>
+                    <td class="text-center fw-600">-</td>
+                    <td>Pending analysis.</td>
+                    <td>Awaiting Review.</td>
                     <td class="text-center">
                       <div class="action-btn-group">
                         <button class="action-btn action-btn--view btn-view" data-tag="1ZT2302" title="View"><i
@@ -163,11 +168,13 @@
                   </tr>
                   <tr class="user-table-row" data-tag="1XT2301" data-checked="true">
                     <td class="text-center fw-600">3</td>
-                    <td class="text-center">1XT2301</td>
-                    <td class="text-center color-green ">22/03/2026</td>
-                    <td class="text-center">Amit Shah</td>
+                    <td>1XT2301</td>
+                    <td class="text-center color-green fw-600">22/03/2026</td>
+                    <td class="text-center">AMT</td>
                     <td class="text-center">M.A. Patel</td>
-                    <td class="text-center color-green ">22/03/2026</td>
+                    <td class="text-center fw-600">22/03/2026</td>
+                    <td>Found normal.</td>
+                    <td>Verified.</td>
                     <td class="text-center">
                       <div class="action-btn-group">
                         <button class="action-btn action-btn--view btn-view" data-tag="1XT2301" title="View"><i
@@ -417,7 +424,7 @@
                 </tr>
                 <tr>
                   <td>Tech Name</td>
-                  <td colspan="5" id="print-tech-name">Ramesh Patel</td>
+                  <td colspan="5" id="print-tech-name">RMP</td>
                 </tr>
                 <tr>
                   <td>Job Date</td>
@@ -461,7 +468,7 @@
       </div>
       <div class="gnfc-modal-body dashboard-scroll" style="max-height: 75vh;">
         <div class="flex flex-col gap-16px">
-          <div class="jbd-alert jbd-alert--warning">
+          <!-- <div class="jbd-alert jbd-alert--warning">
             <div class="flex items-start gap-12px">
               <i class="ph-bold ph-warning-circle font-20px mt-2px"></i>
               <div>
@@ -470,14 +477,15 @@
                   TESTING AND CALIBRATION.</div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
               <tbody>
                 <tr>
                   <td colspan="1" style="width: 160px;">Tag No:</td>
-                  <td colspan="5" id="edit-tag-no"><input type="text" class="pm-form-input" value="1ZT2301" readonly></td>
+                  <td colspan="5" id="edit-tag-no"><input type="text" class="pm-form-input" value="1ZT2301" readonly>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="1">Job Mode:</td>
@@ -509,7 +517,8 @@
 
                 <tr>
                   <td colspan="1">Proximeter Model No <span class="required">*</span></td>
-                  <td colspan="5" id="edit-prox-model"><input type="text" class="pm-form-input" value="3300 XL 8mm"></td>
+                  <td colspan="5" id="edit-prox-model"><input type="text" class="pm-form-input" value="3300 XL 8mm">
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="1">Proximeter S/N <span class="required">*</span></td>
@@ -517,7 +526,8 @@
                 </tr>
                 <tr>
                   <td colspan="1">Probe Model No <span class="required">*</span></td>
-                  <td colspan="5" id="edit-probe-model"><input type="text" class="pm-form-input" value="3300 XL 8mm"></td>
+                  <td colspan="5" id="edit-probe-model"><input type="text" class="pm-form-input" value="3300 XL 8mm">
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="1">Probe S/N <span class="required">*</span></td>
@@ -537,7 +547,8 @@
                 </tr>
                 <tr>
                   <td colspan="1">Card Model No <span class="required">*</span></td>
-                  <td colspan="5" id="edit-card-model"><input type="text" class="pm-form-input" value="Prox/Seismic"></td>
+                  <td colspan="5" id="edit-card-model"><input type="text" class="pm-form-input" value="Prox/Seismic">
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="1">Card S/N <span class="required">*</span></td>
@@ -579,92 +590,100 @@
                 <tr class="bg-dark-bg  color-primary font-14px uppercase text-center">
                   <td rowspan="2">Calibration Setting <span class="required">*</span></td>
                   <td colspan="2">Before <span class="required">*</span></td>
-                  <td colspan="2">After <span class="required">*</span></td>
+                  <td colspan="2" class="user-table-border-right">After <span class="required">*</span></td>
                 </tr>
                 <tr class="bg-dark-bg  color-primary font-14px uppercase text-center">
                   <td>Panel <span class="required">*</span></td>
                   <td>DCS <span class="required">*</span></td>
                   <td>Panel <span class="required">*</span></td>
-                  <td>DCS <span class="required">*</span></td>
+                  <td class="user-table-border-right">DCS <span class="required">*</span></td>
                 </tr>
                 <tr>
                   <td>1 <span class="required">*</span></td>
                   <td id="edit-cal-bp-1"><input type="text" class="pm-form-input" value="0.01"></td>
                   <td id="edit-cal-bd-1"><input type="text" class="pm-form-input" value="0.0"></td>
                   <td id="edit-cal-ap-1"><input type="text" class="pm-form-input" value="0.0"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-1"><input type="text" class="pm-form-input" value="0.0"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-1"><input type="text" class="pm-form-input"
+                      value="0.0"></td>
                 </tr>
                 <tr>
                   <td>2 <span class="required">*</span></td>
                   <td id="edit-cal-bp-2"><input type="text" class="pm-form-input" value="2.52"></td>
                   <td id="edit-cal-bd-2"><input type="text" class="pm-form-input" value="2.51"></td>
                   <td id="edit-cal-ap-2"><input type="text" class="pm-form-input" value="2.5"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-2"><input type="text" class="pm-form-input" value="2.5"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-2"><input type="text" class="pm-form-input"
+                      value="2.5"></td>
                 </tr>
                 <tr>
                   <td>3 <span class="required">*</span></td>
                   <td id="edit-cal-bp-3"><input type="text" class="pm-form-input" value="5.03"></td>
                   <td id="edit-cal-bd-3"><input type="text" class="pm-form-input" value="5.02"></td>
                   <td id="edit-cal-ap-3"><input type="text" class="pm-form-input" value="5.0"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-3"><input type="text" class="pm-form-input" value="5.0"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-3"><input type="text" class="pm-form-input"
+                      value="5.0"></td>
                 </tr>
                 <tr>
                   <td>4 <span class="required">*</span></td>
                   <td id="edit-cal-bp-4"><input type="text" class="pm-form-input" value="7.54"></td>
                   <td id="edit-cal-bd-4"><input type="text" class="pm-form-input" value="7.53"></td>
                   <td id="edit-cal-ap-4"><input type="text" class="pm-form-input" value="7.5"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-4"><input type="text" class="pm-form-input" value="7.5"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-4"><input type="text" class="pm-form-input"
+                      value="7.5"></td>
                 </tr>
                 <tr>
                   <td>5 <span class="required">*</span></td>
                   <td id="edit-cal-bp-5"><input type="text" class="pm-form-input" value="10.05"></td>
                   <td id="edit-cal-bd-5"><input type="text" class="pm-form-input" value="10.04"></td>
                   <td id="edit-cal-ap-5"><input type="text" class="pm-form-input" value="10.0"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-5"><input type="text" class="pm-form-input" value="10.0"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-5"><input type="text" class="pm-form-input"
+                      value="10.0"></td>
                 </tr>
                 <tr>
                   <td>6 <span class="required">*</span></td>
                   <td id="edit-cal-bp-6"><input type="text" class="pm-form-input" value="12.52"></td>
                   <td id="edit-cal-bd-6"><input type="text" class="pm-form-input" value="12.51"></td>
                   <td id="edit-cal-ap-6"><input type="text" class="pm-form-input" value="12.5"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-6"><input type="text" class="pm-form-input" value="12.5"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-6"><input type="text" class="pm-form-input"
+                      value="12.5"></td>
                 </tr>
                 <tr>
                   <td>7 <span class="required">*</span></td>
                   <td id="edit-cal-bp-7"><input type="text" class="pm-form-input" value="15.03"></td>
                   <td id="edit-cal-bd-7"><input type="text" class="pm-form-input" value="15.02"></td>
                   <td id="edit-cal-ap-7"><input type="text" class="pm-form-input" value="15.0"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-7"><input type="text" class="pm-form-input" value="15.0"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-7"><input type="text" class="pm-form-input"
+                      value="15.0"></td>
                 </tr>
                 <tr>
                   <td>8 <span class="required">*</span></td>
                   <td id="edit-cal-bp-8"><input type="text" class="pm-form-input" value="17.54"></td>
                   <td id="edit-cal-bd-8"><input type="text" class="pm-form-input" value="17.53"></td>
                   <td id="edit-cal-ap-8"><input type="text" class="pm-form-input" value="17.5"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-8"><input type="text" class="pm-form-input" value="17.5"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-8"><input type="text" class="pm-form-input"
+                      value="17.5"></td>
                 </tr>
                 <tr>
                   <td>9 <span class="required">*</span></td>
                   <td id="edit-cal-bp-9"><input type="text" class="pm-form-input" value="20.01"></td>
                   <td id="edit-cal-bd-9"><input type="text" class="pm-form-input" value="20.0"></td>
                   <td id="edit-cal-ap-9"><input type="text" class="pm-form-input" value="20.0"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-9"><input type="text" class="pm-form-input" value="20.0"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-9"><input type="text" class="pm-form-input"
+                      value="20.0"></td>
                 </tr>
                 <tr>
                   <td>10 <span class="required">*</span></td>
                   <td id="edit-cal-bp-10"><input type="text" class="pm-form-input" value="22.51"></td>
                   <td id="edit-cal-bd-10"><input type="text" class="pm-form-input" value="22.5"></td>
                   <td id="edit-cal-ap-10"><input type="text" class="pm-form-input" value="22.5"></td>
-                  <td class="user-table-border-right" id="edit-cal-ad-10"><input type="text" class="pm-form-input" value="22.5"></td>
+                  <td class="user-table-border-right" id="edit-cal-ad-10"><input type="text" class="pm-form-input"
+                      value="22.5"></td>
                 </tr>
                 <tr>
                   <td>SET <span class="required">*</span></td>
-                  <td colspan="4" class="user-table-border-right" id="edit-cal-setes"><input type="text" class="pm-form-input" value="SETES"></td>
+                  <td colspan="4" class="user-table-border-right" id="edit-cal-setes"><input type="text"
+                      class="pm-form-input" value="SETES"></td>
                 </tr>
 
-                <tr class="bg-dark-bg color-primary font-14px uppercase">
-                  <td colspan="6">Physical Condition <span class="required">*</span></td>
-                </tr>
                 <tr>
                   <td colspan="1">Probe Physical Condition <span class="required">*</span></td>
                   <td colspan="5" id="edit-probe-cond"><input type="text" class="pm-form-input" value="GOOD"></td>
@@ -680,11 +699,13 @@
 
                 <tr>
                   <td colspan="1">Tech Remark</td>
-                  <td colspan="5" id="edit-tech-remark"><input type="text" class="pm-form-input" value="Found OK after adjustment"></td>
+                  <td colspan="5" id="edit-tech-remark"><input type="text" class="pm-form-input"
+                      value="Found OK after adjustment"></td>
                 </tr>
                 <tr>
                   <td colspan="1">Tech Name</td>
-                  <td colspan="5" id="edit-tech-name"><input type="text" class="pm-form-input" value="Ramesh Patel" readonly></td>
+                  <td colspan="5" id="edit-tech-name"><input type="text" class="pm-form-input" value="RMP"
+                      readonly></td>
                 </tr>
                 <tr>
                   <td colspan="1">Job Date</td>
@@ -693,6 +714,10 @@
                 <tr>
                   <td colspan="1">Checked By Eng</td>
                   <td colspan="5" id="edit-eng-name"><input type="text" class="pm-form-input" value="ENG_TESTER"></td>
+                </tr>
+                <tr>
+                  <td colspan="1">Date</td>
+                  <td colspan="5" id="edit-sign-date"><input type="text" class="pm-form-input"></td>
                 </tr>
                 <tr>
                   <td colspan="1">Eng Remark</td>
@@ -723,7 +748,7 @@
       </div>
       <div class="gnfc-modal-body dashboard-scroll" style="max-height: 75vh;">
         <div class="flex flex-col gap-16px">
-          <div class="jbd-alert jbd-alert--warning">
+          <!-- <div class="jbd-alert jbd-alert--warning">
             <div class="flex items-start gap-12px">
               <i class="ph-bold ph-warning-circle font-20px mt-2px"></i>
               <div>
@@ -732,7 +757,7 @@
                   TESTING AND CALIBRATION.</div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
@@ -844,14 +869,15 @@
                 <tr class="bg-dark-bg  color-primary font-14px uppercase text-center">
                   <td rowspan="2">Calibration Setting <span class="required">*</span></td>
                   <td colspan="2">Before <span class="required">*</span></td>
-                  <td colspan="2">After <span class="required">*</span></td>
+                  <td colspan="2" class="user-table-border-right">After <span class="required">*</span></td>
                 </tr>
                 <tr class="bg-dark-bg  color-primary font-14px uppercase text-center">
                   <td>Panel <span class="required">*</span></td>
                   <td>DCS <span class="required">*</span></td>
                   <td>Panel <span class="required">*</span></td>
-                  <td>DCS <span class="required">*</span></td>
-                </tr>                <tr>
+                  <td class="user-table-border-right">DCS <span class="required">*</span></td>
+                </tr>
+                <tr>
                   <td>1 <span class="required">*</span></td>
                   <td id="add-cal-bp-1"><input type="text" class="pm-form-input"></td>
                   <td id="add-cal-bd-1"><input type="text" class="pm-form-input"></td>
@@ -923,12 +949,13 @@
                 </tr>
                 <tr>
                   <td>SET <span class="required">*</span></td>
-                  <td colspan="4" class="user-table-border-right" id="add-cal-setes"><input type="text" class="pm-form-input" value="SETES"></td>
+                  <td colspan="4" class="user-table-border-right" id="add-cal-setes"><input type="text"
+                      class="pm-form-input" value="SETES"></td>
                 </tr>
 
-                <tr class="bg-dark-bg  color-primary font-14px uppercase">
+                <!-- <tr class="bg-dark-bg  color-primary font-14px uppercase">
                   <td colspan="6">Physical Condition <span class="required">*</span></td>
-                </tr>
+                </tr> -->
                 <tr>
                   <td colspan="1" id="add-probe-cond">Probe Physical Condition <span class="required">*</span></td>
                   <td colspan="5"><input type="text" class="pm-form-input"></td>
@@ -973,14 +1000,14 @@
           <i class="ph-bold ph-x text-lg"></i>
         </button>
       </div>
-      <div class="gnfc-modal-body dashboard-scroll" >
+      <div class="gnfc-modal-body dashboard-scroll">
         <!-- Filter Actions -->
         <div class="flex justify-between gap-12px border-b border-dashed border-dark pb-16px">
 
           <!-- Report by Yes/No :  -->
           <div class="flex items-center gap-16px">
             <label class="gnfc-modal-label">Report by Yes/No : </label>
-            <div >
+            <div>
               <select id="report-param-select" class="gnfc-modal-input w-280px">
                 <option value="">-- Choose Parameter --</option>
                 <option>Probe Physical Condition OK?</option>
@@ -1215,29 +1242,37 @@
         });
       }
 
-      // Initialize Autocomplete for VIB View Filter
-      initTagAutocomplete('#view-tag-input', '#view-tag-select', function (tag) {
-        $('#pm-details-tbody tr').each(function () {
+      function applyMainFilters() {
+        const tag = $('#view-tag-select').val();
+        const status = $('input[name="pm-status-filter"]:checked').val();
+
+        let titleSuffix = tag || 'ALL';
+        if (status === 'pending') titleSuffix = 'Pending Sign';
+        else if (status === 'completed') titleSuffix = 'Completed';
+
+        $('#pm-details-title').text('PM Details Tag : ' + titleSuffix);
+
+        $('.user-table-row').each(function () {
           const rowTag = $(this).data('tag');
-          if (!tag || rowTag === tag) $(this).show();
+          const isChecked = $(this).data('checked') === true;
+
+          let showByTag = !tag || rowTag === tag;
+          let showByStatus = true;
+          if (status === 'pending') showByStatus = !isChecked;
+          else if (status === 'completed') showByStatus = isChecked;
+
+          if (showByTag && showByStatus) $(this).show();
           else $(this).hide();
         });
+      }
+
+      // Initialize Autocomplete for VIB View Filter
+      initTagAutocomplete('#view-tag-input', '#view-tag-select', function (tag) {
+        applyMainFilters();
       });
 
-      $('#btn-view-tag-go').on('click', function () {
-        const val = $('#view-tag-select').val();
-        if (!val && $('#view-tag-input').val()) {
-          Swal.fire('Invalid Tag', 'Please select a valid tag from the list.', 'warning');
-        } else {
-          Swal.fire({
-            icon: 'success',
-            title: 'Filtered',
-            text: 'Displaying details for: ' + (val || 'All Tags'),
-            timer: 1500,
-            showConfirmButton: false,
-            confirmButtonColor: 'var(--color-primary)'
-          });
-        }
+      $('input[name="pm-status-filter"]').on('change', function () {
+        applyMainFilters();
       });
 
 
@@ -1250,8 +1285,20 @@
         openModal('#pm-view-modal');
       });
 
-      // Edit Modal
       $(document).on('click', '.btn-edit', function () {
+        const tag = $(this).data('tag');
+        const row = $(this).closest('tr');
+        $('#edit-tag-no').find('input').val(tag);
+        $('#edit-modal-tag-display').text(tag);
+        
+        // Populate inputs
+        $('#edit-job-date').find('input').val(row.find('td:eq(2)').text());
+        $('#edit-tech-name').find('input').val(row.find('td:eq(3)').text());
+        $('#edit-eng-name').find('input').val(row.find('td:eq(4)').text());
+        $('#edit-sign-date').find('input').val(row.find('td:eq(5)').text());
+        $('#edit-tech-remark').find('input').val(row.find('td:eq(6)').text());
+        $('#edit-eng-remark').find('input').val(row.find('td:eq(7)').text());
+
         openModal('#pm-edit-modal');
       });
 

@@ -33,7 +33,7 @@
   <main class="main-wrapper">
     <!-- Header Container -->
     <div id="header-container" data-back="iso.html"
-      data-breadcrumb="Dashboard:../../dashboard.html,ISO Dashboard:iso.html,Calibration Register:active">
+      data-breadcrumb="ISO Dashboard:iso.html,Calibration Register:active">
     </div>
 
     <!-- Page Content Area -->
@@ -155,6 +155,17 @@
 
   <script>
     $(function() {
+      // 1. Restore state from localStorage on page load
+      const savedFilter = localStorage.getItem('calibration_selected_filter');
+      if (savedFilter) {
+        $(`input[name="calibrationFilter"][value="${savedFilter}"]`).prop('checked', true);
+      }
+
+      // 2. Save state to localStorage on change
+      $('input[name="calibrationFilter"]').on('change', function() {
+        localStorage.setItem('calibration_selected_filter', $(this).val());
+      });
+
       window.handleUnitClick = function(unit) {
         // Check which radio button is selected
         const selectedFilter = $('input[name="calibrationFilter"]:checked').val();

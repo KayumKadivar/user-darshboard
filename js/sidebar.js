@@ -45,7 +45,7 @@ $(function () {
         <!-- Compliance -->
         <a href="${basePath}pages/iso/iso.html" class="sidebar-link" data-id="iso">
           <i class="ph ph-bold ph-certificate"></i>
-          <span class="sidebar-text">ISO/CPCB/OHSAS</span>
+          <span class="sidebar-text">ISO/CPCB</span>
         </a>
 
         <!-- Jobs & Utility -->
