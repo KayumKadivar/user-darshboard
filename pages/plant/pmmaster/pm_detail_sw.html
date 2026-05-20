@@ -120,7 +120,7 @@
             <div class="flex items-center gap-16px">
               <div class="flex items-center gap-8px">
                 <label class="gnfc-modal-label">Report by Yes/No :</label>
-                <select id="report-param-select" class="gnfc-modal-input">
+                <select id="main-report-param-select" class="gnfc-modal-input">
                   <option value="">Choose Parameter</option>
                   <option value="Glanding OK?">Glanding OK?</option>
                   <option value="Tag stamping OK?">Tag stamping OK?</option>
@@ -132,12 +132,12 @@
               </div>
               <div class="flex items-center gap-16px bg-dark-bg px-12px h-32px radius-6px border border-dark">
                 <label class="gnfc-radio-label font-12px">
-                  <input type="radio" name="report-val" value="yes" checked class="gnfc-radio fw-600">
+                  <input type="radio" name="main-report-val" value="yes" checked class="gnfc-radio fw-600">
                   <span>Yes</span>
                 </label>
                 <div class="ui-divider-v h-16px mx-4px"></div>
                 <label class="gnfc-radio-label font-12px">
-                  <input type="radio" name="report-val" value="no" class="gnfc-radio fw-600">
+                  <input type="radio" name="main-report-val" value="no" class="gnfc-radio fw-600">
                   <span>No</span>
                 </label>
               </div>
@@ -161,7 +161,30 @@
                 </thead>
                 <tbody id="pm-details-tbody">
                   <!-- Static Rows -->
-                  <tr class="user-table-row" data-tag="1_2BLRTRP_EHTC" data-checked="true">
+                  <tr class="user-table-row" 
+                      data-tag="1_2BLRTRP_EHTC" 
+                      data-checked="true"
+                      data-make="CUSTOM MAKE"
+                      data-setting-h="90 mmwc"
+                      data-setting-l="40 mmwc"
+                      data-location="BOILER AREA"
+                      data-job-mode="NORMAL"
+                      data-check-1="YES"
+                      data-check-2="YES"
+                      data-check-3="YES"
+                      data-check-4="NO"
+                      data-check-5="NO"
+                      data-check-6="YES"
+                      data-set-before="91"
+                      data-reset-before="41"
+                      data-set-after="90"
+                      data-reset-after="40"
+                      data-tech-remark="Found OK."
+                      data-tech-name="Kayum Kadivar"
+                      data-job-date="15/03/2024"
+                      data-checked-by="M.A. Patel"
+                      data-sign-date="15/03/2024"
+                      data-eng-remark="Verified.">
                     <td class="text-center fw-600">1</td>
                     <td>1_2BLRTRP_EHTC</td>
                     <td class="text-center color-green fw-600">15/03/2024</td>
@@ -182,7 +205,30 @@
                     </td>
                   </tr>
 
-                  <tr class="user-table-row" data-tag="1_2BLRPS_821" data-checked="false">
+                  <tr class="user-table-row" 
+                      data-tag="1_2BLRPS_821" 
+                      data-checked="false"
+                      data-make="ABB"
+                      data-setting-h="85 mmwc"
+                      data-setting-l="35 mmwc"
+                      data-location="BOILER HOUSE"
+                      data-job-mode="NORMAL"
+                      data-check-1="NO"
+                      data-check-2="YES"
+                      data-check-3="NO"
+                      data-check-4="YES"
+                      data-check-5="YES"
+                      data-check-6="NO"
+                      data-set-before="83"
+                      data-reset-before="33"
+                      data-set-after="85"
+                      data-reset-after="35"
+                      data-tech-remark="Pending inspection."
+                      data-tech-name="Rahul Sharma"
+                      data-job-date="16/03/2024"
+                      data-checked-by="-"
+                      data-sign-date=""
+                      data-eng-remark="Awaiting Review.">
                     <td class="text-center fw-600">2</td>
                     <td>1_2BLRPS_821</td>
                     <td class="text-center color-red fw-600">16/03/2024</td>
@@ -203,7 +249,30 @@
                     </td>
                   </tr>
 
-                  <tr class="user-table-row" data-tag="1_2BLRPS_822" data-checked="true">
+                  <tr class="user-table-row" 
+                      data-tag="1_2BLRPS_822" 
+                      data-checked="true"
+                      data-make="YOKOGAWA"
+                      data-setting-h="95 mmwc"
+                      data-setting-l="45 mmwc"
+                      data-location="TURBINE ROOM"
+                      data-job-mode="NORMAL"
+                      data-check-1="YES"
+                      data-check-2="YES"
+                      data-check-3="YES"
+                      data-check-4="NO"
+                      data-check-5="NO"
+                      data-check-6="YES"
+                      data-set-before="96"
+                      data-reset-before="46"
+                      data-set-after="95"
+                      data-reset-after="45"
+                      data-tech-remark="Calibration done."
+                      data-tech-name="Amit Verma"
+                      data-job-date="17/03/2024"
+                      data-checked-by="M.A. Patel"
+                      data-sign-date="17/03/2024"
+                      data-eng-remark="Verified.">
                     <td class="text-center fw-600">3</td>
                     <td>1_2BLRPS_822</td>
                     <td class="text-center color-green fw-600">17/03/2024</td>
@@ -238,7 +307,7 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">SWITCH PM FORM : <span id="view-modal-tag-display"
+          <h3 class="gnfc-modal-title">Calibration Report For Switch :  <span id="view-modal-tag-display"
               class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
@@ -251,21 +320,31 @@
           <div id="printable-report" class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
               <tbody>
+      
+                <tr>
+                  <td colspan="2" class="fw-700 uppercase bg-light-panel border-r text-left">CALIBRATION DONE DATE :</td>
+                  <td colspan="2" id="print-job-date-top" class="fw-600 color-blue"></td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="fw-800 bg-light-panel py-6px uppercase border-b-double text-left">
+                    PM FORM :
+                  </td>
+                </tr>
                 <!-- Basic Information -->
                 <tr>
-                  <td colspan="2" style="width: 260px;">Tag No</td>
-                  <td colspan="2" id="print-tag-no"></td>
+                  <td colspan="2" style="width: 260px;">Tag_no</td>
+                  <td colspan="2" id="print-tag-no" class="fw-600 color-blue"></td>
                 </tr>
                 <tr>
                   <td colspan="2">Make</td>
                   <td colspan="2" id="print-make"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (H)</td>
+                  <td colspan="2">Setting (H/HH)</td>
                   <td colspan="2" id="print-setting-h"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (L)</td>
+                  <td colspan="2">Setting (L/LL)</td>
                   <td colspan="2" id="print-setting-l"></td>
                 </tr>
                 <tr>
@@ -303,45 +382,44 @@
                   <td colspan="2" id="print-check-6">YES</td>
                 </tr>
 
-                <!-- Calibration -->
+               
                 <tr>
-                  <td class="w-200px">SET Before Calibration</td>
-                  <td class="w-200px">RESET Before Calibration</td>
-                  <td id="print-set-before" class="fw-600 text-center color-primary"></td>
-                  <td id="print-reset-before" class="fw-600 text-center color-primary"></td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">SET Before Calibration</td>
+                  <td id="print-set-before" class="border-r" style="width: 15%;"></td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">RESET Before Calibration</td>
+                  <td id="print-reset-before" class="border-r" style="width: 15%;"></td>
                 </tr>
                 <tr>
-                  <td class="w-200px">SET After Calibration</td>
-                  <td class="w-200px">RESET After Calibration</td>
-                  <td id="print-set-after" class="fw-600 text-center color-primary"></td>
-                  <td id="print-reset-after" class="fw-600 text-center color-primary"></td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">SET After Calibration</td>
+                  <td id="print-set-after" class="color-primary border-r" style="width: 15%;"></td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">RESET After Calibration</td>
+                  <td id="print-reset-after" style="width: 15%;"></td>
                 </tr>
 
-                <!-- Remarks & Signs -->
+                <!-- Technical Footer Information matching image -->
                 <tr>
-                  <td colspan="2">Tech Remark</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700 border-r">Technician Remark</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700">Engineer Remark</td>
+                </tr>
+                <tr>
                   <td colspan="2" id="print-tech-remark"></td>
+                  <td colspan="2" id="print-eng-remark"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Tech Name</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700 border-r">Calibration Done By Technician</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700">Verified By Engineer</td>
+                </tr>
+                <tr>
                   <td colspan="2" id="print-tech-name"></td>
+                  <td colspan="2" id="print-checked-by"></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Job Date</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700 border-r">CALIBRATION DONE DATE :</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700">CHECKED BY ENG. DATE :</td>
+                </tr>
+                <tr>
                   <td colspan="2" id="print-job-date"></td>
-                </tr>
-                <tr>
-                  <td colspan="2">Checked By Eng</td>
-                  <td colspan="2" id="print-checked-by">ENG_TESTER</td>
-                </tr>
-                <tr>
-                  <td colspan="2">Date</td>
-                  <td colspan="2" id="print-sign-date">30/07/2019</td>
-                </tr>
-                <tr>
-                  <td colspan="2">Eng Remark</td>
-                  <td colspan="2" id="print-eng-remark">Zero drifting of -56 mmwc so zero
-                    triming done.</td>
+                  <td colspan="2" id="print-sign-date"></td>
                 </tr>
               </tbody>
             </table>
@@ -359,7 +437,7 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">SWITCH PM FORM : <span id="edit-modal-tag-display"
+          <h3 class="gnfc-modal-title">Calibration Report For Switch : <span id="edit-modal-tag-display"
               class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
@@ -373,96 +451,173 @@
           <div class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
               <tbody>
+                <tr>
+                  <td colspan="2" class="fw-700 uppercase bg-light-panel border-r text-left">CALIBRATION DONE DATE :</td>
+                  <td colspan="2">
+                    <input type="text" id="edit-job-date-top" class="pm-form-input" placeholder="DD/MM/YYYY">
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="fw-800 bg-light-panel py-6px uppercase border-b-double text-left">
+                    PM FORM :
+                  </td>
+                </tr>
                 <!-- Basic Information -->
                 <tr>
-                  <td colspan="2" style="width: 260px;">Tag No</td>
-                  <td colspan="2"><input type="text" class="pm-form-input" readonly></td>
+                  <td colspan="2">Tag No</td>
+                  <td colspan="2">
+                    <input type="text" id="edit-tag-no" class="pm-form-input font-600 color-blue" readonly>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Make</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2">
+                    <input type="text" id="edit-make" class="pm-form-input">
+                  </td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (H)</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2">Setting (H/HH)</td>
+                  <td colspan="2">
+                    <input type="text" id="edit-setting-h" class="pm-form-input">
+                  </td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (L)</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2">Setting (L/LL)</td>
+                  <td colspan="2">
+                    <input type="text" id="edit-setting-l" class="pm-form-input">
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Location</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2">
+                    <input type="text" id="edit-location" class="pm-form-input">
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Job Mode</td>
-                  <td colspan="2"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2">
+                    <input type="text" id="edit-job-mode" class="pm-form-input">
+                  </td>
                 </tr>
 
                 <!-- Inspection Checklist -->
                 <tr>
+                  <td colspan="4" class="fw-700 bg-light-panel py-8px color-text text-left">
+                    Select Answer from the dropdown options. <span class="required">*</span>
+                  </td>
+                </tr>
+                <tr>
                   <td colspan="2">Glanding OK? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input" id="edit-check-1">
+                      <option value="YES">YES</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Tag stamping OK? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input" id="edit-check-2">
+                      <option value="YES">YES</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Manifold condition ok? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input" id="edit-check-3">
+                      <option value="YES">YES</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Leakage At Drain Valve/Plug/Tubing <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input" id="edit-check-4">
+                      <option value="NO">NO</option>
+                      <option value="YES">YES</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Canopy Required ? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input" id="edit-check-5">
+                      <option value="NO">NO</option>
+                      <option value="YES">YES</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Monsoon Protection ok? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input" id="edit-check-6">
+                      <option value="YES">YES</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </td>
                 </tr>
 
-                <!-- Calibration Data (2x2 Grid) -->
                 <tr>
-                  <td class="w-200px">SET Before Calibration <span class="required">*</span></td>
-                  <td class="w-200px">RESET Before Calibration<span class="required">*</span></td>
-                  <td><input type="text" class="pm-form-input"></td>
-                  <td><input type="text" class="pm-form-input"></td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">SET Before Calibration</td>
+                  <td class="border-r" style="width: 15%;">
+                    <input type="text" id="edit-set-before" class="pm-form-input text-center w-full">
+                  </td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">RESET Before Calibration</td>
+                  <td style="width: 15%;">
+                    <input type="text" id="edit-reset-before" class="pm-form-input text-center w-full">
+                  </td>
                 </tr>
                 <tr>
-                  <td class="w-200px">SET After Calibration <span class="required">*</span></td>
-                  <td class="w-200px">RESET After Calibration <span class="required">*</span></td>
-                  <td><input type="text" class="pm-form-input"></td>
-                  <td><input type="text" class="pm-form-input"></td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">SET After Calibration</td>
+                  <td class="border-r" style="width: 15%;">
+                    <input type="text" id="edit-set-after" class="pm-form-input text-center w-full">
+                  </td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">RESET After Calibration</td>
+                  <td style="width: 15%;">
+                    <input type="text" id="edit-reset-after" class="pm-form-input text-center w-full">
+                  </td>
                 </tr>
 
-                <!-- Technical Footer Information -->
+                <!-- Technical Footer Information matching image -->
                 <tr>
-                  <td colspan="2">Tech Remark</td>
-                  <td colspan="2" id="edit-tech-remark"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700 border-r">Technician Remark</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700">Engineer Remark</td>
                 </tr>
                 <tr>
-                  <td colspan="2">Tech Name</td>
-                  <td colspan="2" id="edit-tech-name"><input type="text" class="pm-form-input" readonly></td>
+                  <td colspan="2">
+                    <textarea id="edit-tech-remark" class="pm-form-textarea"></textarea>
+                  </td>
+                  <td colspan="2">
+                    <textarea id="edit-eng-remark" class="pm-form-textarea"></textarea>
+                  </td>
                 </tr>
                 <tr>
-                  <td colspan="2">Job Date</td>
-                  <td colspan="2" id="edit-job-date"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700 border-r">Calibration Done By Technician</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700">Verified By Engineer</td>
                 </tr>
                 <tr>
-                  <td colspan="2">Checked By Eng</td>
-                  <td colspan="2" id="edit-eng-name"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2">
+                    <input type="text" id="edit-tech-name" class="pm-form-input" readonly>
+                  </td>
+                  <td colspan="2">
+                    <input type="text" id="edit-eng-name" class="pm-form-input">
+                  </td>
                 </tr>
                 <tr>
-                  <td colspan="2">Date</td>
-                  <td colspan="2" id="edit-sign-date"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700 border-r">CALIBRATION DONE DATE :</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700">CHECKED BY ENG. DATE :</td>
                 </tr>
                 <tr>
-                  <td colspan="2">Eng Remark</td>
-                  <td colspan="2" id="edit-eng-remark"><input type="text" class="pm-form-input"></td>
+                  <td colspan="2">
+                    <input type="text" id="edit-job-date" class="pm-form-input" placeholder="DD/MM/YYYY">
+                  </td>
+                  <td colspan="2">
+                    <input type="text" id="edit-sign-date" class="pm-form-input" placeholder="DD/MM/YYYY">
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -470,7 +625,10 @@
         </div>
       </div>
       <div class="gnfc-modal-footer">
-        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-edit-save-pm">SAVE</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-edit-save-pm">
+          SAVE
+        </button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">CLOSE</button>
       </div>
     </div>
   </div>
@@ -480,7 +638,7 @@
     <div class="gnfc-modal-shell gnfc-modal-shell--wide">
       <div class="gnfc-modal-header">
         <div>
-          <h3 class="gnfc-modal-title">SWITCH PM FORM : <span id="add-modal-tag-display"
+          <h3 class="gnfc-modal-title">Calibration Report For Switch : <span id="add-modal-tag-display"
               class="color-blue ml-4px"></span></h3>
         </div>
         <button class="gnfc-modal-close btn-close-modal">
@@ -494,11 +652,23 @@
           <div class="user-table-wrapper">
             <table class="user-table" style="min-width: auto;">
               <tbody>
+           
+                <tr>
+                  <td colspan="2" class="fw-700 uppercase bg-light-panel border-r text-left">CALIBRATION DONE DATE :</td>
+                  <td colspan="2">
+                    <input type="text" id="add-job-date-top" class="pm-form-input" placeholder="DD/MM/YYYY">
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="fw-800 bg-light-panel py-6px uppercase border-b-double text-left">
+                    PM FORM :
+                  </td>
+                </tr>
                 <!-- Basic Information -->
                 <tr>
                   <td colspan="2" style="width: 260px;">Tag No</td>
                   <td colspan="2">
-                    <input type="text" class="pm-form-input" readonly>
+                    <input type="text" id="add-tag-no-val" class="pm-form-input font-600 color-blue" readonly>
                   </td>
                 </tr>
                 <tr>
@@ -508,13 +678,13 @@
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (H)</td>
+                  <td colspan="2">Setting (H/HH)</td>
                   <td colspan="2">
                     <input type="text" class="pm-form-input">
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2">Setting (L)</td>
+                  <td colspan="2">Setting (L/LL)</td>
                   <td colspan="2">
                     <input type="text" class="pm-form-input">
                   </td>
@@ -528,74 +698,112 @@
                 <tr>
                   <td colspan="2">Job Mode</td>
                   <td colspan="2">
-                    <input type="text" class="pm-form-input" value="NORMAL">
-                  </td>
-                </tr>
-
-                <!-- Instructional Header -->
-                <tr>
-                  <td colspan="4" class="fw-700">
-                    Select check box If Answer is Yes otherwise keep blank.
+                    <input type="text" class="pm-form-input">
                   </td>
                 </tr>
 
                 <!-- Inspection Checklist -->
                 <tr>
+                  <td colspan="4" class="fw-700 bg-light-panel py-8px color-text text-left">
+                    Select Answer from the dropdown options. <span class="required">*</span>
+                  </td>
+                </tr>
+                <tr>
                   <td colspan="2">Glanding OK? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input">
+                      <option value="YES" selected>YES</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Tag stamping OK? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input">
+                      <option value="YES" selected>YES</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Manifold condition ok? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input">
+                      <option value="YES" selected>YES</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Leakage At Drain Valve/Plug/Tubing <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">
+                    <select class="pm-form-input">
+                      <option value="NO" selected>NO</option>
+                      <option value="YES">YES</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
-                  <td colspan="2">Canopy Required? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
+                  <td colspan="2">Canopy Required ? <span class="required">*</span></td>
+                  <td colspan="2">
+                    <select class="pm-form-input">
+                      <option value="NO" selected>NO</option>
+                      <option value="YES">YES</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td colspan="2">Monsoon Protection ok? <span class="required">*</span></td>
-                  <td colspan="2"><input type="checkbox"></td>
-                </tr>
-
-                <!-- Calibration Data (2x2 Grid) -->
-                <tr>
-                  <td width="w-200px">SET Before Calibration <span class="required">*</span></td>
-                  <td width="w-200px">RESET Before Calibration <span class="required">*</span></td>
-                  <td><input type="text" class="pm-form-input"></td>
-                  <td><input type="text" class="pm-form-input"></td>
-                </tr>
-                <tr>
-                  <td width="w-200px">SET After Calibration <span class="required">*</span></td>
-                  <td width="w-200px">RESET After Calibration <span class="required">*</span></td>
-                  <td><input type="text" class="pm-form-input"></td>
-                  <td><input type="text" class="pm-form-input"></td>
-                </tr>
-
-                <!-- Technical Footer Information -->
-                <tr>
-                  <td colspan="2">Tech Remark</td>
                   <td colspan="2">
-                    <input type="text" class="pm-form-input">
+                    <select class="pm-form-input">
+                      <option value="YES" selected>YES</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </td>
+                </tr>
+
+        
+                <tr>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">SET Before Calibration</td>
+                  <td class="border-r" style="width: 15%;">
+                    <input type="text" id="add-set-before" class="pm-form-input text-center w-full">
+                  </td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">RESET Before Calibration</td>
+                  <td style="width: 15%;">
+                    <input type="text" id="add-reset-before" class="pm-form-input text-center w-full">
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2">Tech Name</td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">SET After Calibration</td>
+                  <td class="border-r" style="width: 15%;">
+                    <input type="text" id="add-set-after" class="pm-form-input text-center w-full">
+                  </td>
+                  <td class="border-r" style="width: 20%; white-space: nowrap;">RESET After Calibration</td>
+                  <td style="width: 15%;">
+                    <input type="text" id="add-reset-after" class="pm-form-input text-center w-full">
+                  </td>
+                </tr>
+
+                <!-- Technical Footer Information matching image -->
+                <tr>
+                  <td colspan="2" class="text-center bg-light-panel fw-700 border-r">Technician Remark</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700">Calibration Done By Technician</td>
+                </tr>
+                <tr>
+                  <td colspan="2" rowspan="3" class="border-r">
+                    <textarea id="add-tech-remark" class="pm-form-textarea" style="height: 100%; min-height: 130px;"></textarea>
+                  </td>
                   <td colspan="2">
-                    <input type="text" class="pm-form-input">
+                    <input type="text" class="pm-form-input w-full" value="" readonly>
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2">Job Date</td>
+                  <td colspan="2" class="text-center bg-light-panel fw-700">CALIBRATION DONE DATE :</td>
+                </tr>
+                <tr>
                   <td colspan="2">
-                    <input type="text" id="add-job-date" class="pm-form-input">
+                    <input type="text" id="add-job-date" class="pm-form-input w-full" placeholder="DD/MM/YYYY">
                   </td>
                 </tr>
               </tbody>
@@ -605,7 +813,10 @@
         </div>
       </div>
       <div class="gnfc-modal-footer">
-        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-add-save-pm">SAVE</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-add-save-pm">
+          SAVE
+        </button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">CLOSE</button>
       </div>
     </div>
   </div>
@@ -905,6 +1116,8 @@
       function applyMainFilters() {
         const tag = $('#view-tag-select').val();
         const status = $('input[name="pm-status-filter"]:checked').val();
+        const reportParam = $('#main-report-param-select').val();
+        const reportVal = $('input[name="main-report-val"]:checked').val()?.toUpperCase();
 
         let titleSuffix = tag || 'ALL';
         if (status === 'pending') titleSuffix = 'Pending Sign';
@@ -921,7 +1134,17 @@
           if (status === 'pending') showByStatus = !isChecked;
           else if (status === 'completed') showByStatus = isChecked;
 
-          if (showByTag && showByStatus) $(this).show();
+          let showByReport = true;
+          if (reportParam) {
+            const paramIndex = $('#main-report-param-select option:selected').index();
+            if (paramIndex > 0) {
+              const checkAttr = `check-${paramIndex}`;
+              const rowVal = $(this).data(checkAttr); // "YES" or "NO"
+              showByReport = (rowVal === reportVal);
+            }
+          }
+
+          if (showByTag && showByStatus && showByReport) $(this).show();
           else $(this).hide();
         });
       }
@@ -935,6 +1158,9 @@
         applyMainFilters();
       });
 
+      $('#main-report-param-select').on('change', applyMainFilters);
+      $('input[name="main-report-val"]').on('change', applyMainFilters);
+
       // --- Utilities ---
       function openModal(id) { $(id).addClass('is-open'); }
       function closeModal(id) { $(id).removeClass('is-open'); }
@@ -944,7 +1170,17 @@
         const tag = $(this).val();
         if (!tag) return;
         $('#add-modal-tag-display').text(tag);
-        $('#add-job-date').val(new Date().toLocaleDateString('en-GB'));
+        $('#add-tag-no-val').val(tag);
+        
+        // Reset all inputs and textareas to blank, but restore selects to their HTML-defined default selected options
+        const $modal = $('#pm-add-modal');
+        $modal.find('input[type="text"]').not('#add-tag-no-val').val('');
+        $modal.find('textarea').val('');
+        $modal.find('select').each(function () {
+          const defaultVal = $(this).find('option[selected]').val() || $(this).find('option:first').val();
+          $(this).val(defaultVal);
+        });
+        
         openModal('#pm-add-modal');
         $(this).val('');
       });
@@ -956,26 +1192,75 @@
       });
 
       $(document).on('click', '.btn-view', function () {
-        const tag = $(this).data('tag');
+        const row = $(this).closest('tr');
+        const tag = row.data('tag');
         $('#view-modal-tag-display').text(tag);
-        // Standardized Population (Mock)
+        
         $('#print-tag-no').text(tag);
+        $('#print-make').text(row.data('make') || '');
+        $('#print-setting-h').text(row.data('setting-h') || '');
+        $('#print-setting-l').text(row.data('setting-l') || '');
+        $('#print-location').text(row.data('location') || '');
+        $('#print-job-mode').text(row.data('job-mode') || 'NORMAL');
+        
+        $('#print-check-1').text(row.data('check-1') || 'YES');
+        $('#print-check-2').text(row.data('check-2') || 'YES');
+        $('#print-check-3').text(row.data('check-3') || 'YES');
+        $('#print-check-4').text(row.data('check-4') || 'NO');
+        $('#print-check-5').text(row.data('check-5') || 'NO');
+        $('#print-check-6').text(row.data('check-6') || 'YES');
+        
+        $('#print-set-before').text(row.data('set-before') || '');
+        $('#print-reset-before').text(row.data('reset-before') || '');
+        $('#print-set-after').text(row.data('set-after') || '');
+        $('#print-reset-after').text(row.data('reset-after') || '');
+        
+        $('#print-tech-remark').text(row.data('tech-remark') || '');
+        $('#print-tech-name').text(row.data('tech-name') || '');
+        $('#print-job-date').text(row.data('job-date') || '');
+        $('#print-job-date-top').text(row.data('job-date') || '');
+        
+        $('#print-checked-by').text(row.data('checked-by') || '');
+        $('#print-sign-date').text(row.data('sign-date') || '');
+        $('#print-eng-remark').text(row.data('eng-remark') || '');
+
         openModal('#pm-view-modal');
       });
 
       $(document).on('click', '.btn-edit', function () {
-        const tag = $(this).data('tag');
         const row = $(this).closest('tr');
-        $('#edit-tag-no').val(tag);
+        const tag = row.data('tag');
         $('#edit-modal-tag-display').text(tag);
+        
+        $('#edit-tag-no').val(tag);
+        $('#edit-make').val(row.data('make') || '');
+        $('#edit-setting-h').val(row.data('setting-h') || '');
+        $('#edit-setting-l').val(row.data('setting-l') || '');
+        $('#edit-location').val(row.data('location') || '');
+        $('#edit-job-mode').val(row.data('job-mode') || 'NORMAL');
+        
+        $('#edit-check-1').val(row.data('check-1') || 'YES');
+        $('#edit-check-2').val(row.data('check-2') || 'YES');
+        $('#edit-check-3').val(row.data('check-3') || 'YES');
+        $('#edit-check-4').val(row.data('check-4') || 'NO');
+        $('#edit-check-5').val(row.data('check-5') || 'NO');
+        $('#edit-check-6').val(row.data('check-6') || 'YES');
+        
+        $('#edit-set-before').val(row.data('set-before') || '');
+        $('#edit-reset-before').val(row.data('reset-before') || '');
+        $('#edit-set-after').val(row.data('set-after') || '');
+        $('#edit-reset-after').val(row.data('reset-after') || '');
+        
+        $('#edit-tech-remark').val(row.data('tech-remark') || '');
+        const getVal = (val) => { return val === '-' ? '' : (val || ''); };
 
-        // Populate inputs
-        $('#edit-job-date').find('input').val(row.find('td:eq(2)').text());
-        $('#edit-tech-name').find('input').val(row.find('td:eq(3)').text());
-        $('#edit-eng-name').find('input').val(row.find('td:eq(4)').text());
-        $('#edit-sign-date').find('input').val(row.find('td:eq(5)').text());
-        $('#edit-tech-remark').find('input').val(row.find('td:eq(6)').text());
-        $('#edit-eng-remark').find('input').val(row.find('td:eq(7)').text());
+        $('#edit-tech-name').val(getVal(row.data('tech-name')));
+        $('#edit-job-date').val(getVal(row.data('job-date')));
+        $('#edit-job-date-top').val(getVal(row.data('job-date')));
+        
+        $('#edit-eng-name').val(getVal(row.data('checked-by')));
+        $('#edit-sign-date').val(getVal(row.data('sign-date')));
+        $('#edit-eng-remark').val(getVal(row.data('eng-remark')));
 
         openModal('#pm-edit-modal');
       });
@@ -1021,8 +1306,8 @@
       });
 
       function updateReportFilter() {
-        const param = $('#report-param-select').val();
-        const status = $('input[name="report-val"]:checked').val().toUpperCase();
+        const param = $('#pm-reports-modal #report-param-select').val();
+        const status = $('#pm-reports-modal input[name="report-val"]:checked').val().toUpperCase();
         if (param) {
           $('#report-result-title').text(`${param} / ${status}`);
           if (status === 'NO') {
@@ -1031,18 +1316,13 @@
           } else {
             $('#report-tbody tr').show();
           }
-
-          // Open modal automatically when filter is used from main page
-          if (!$('#pm-reports-modal').hasClass('is-open')) {
-            openModal('#pm-reports-modal');
-          }
         } else {
           $('#report-result-title').text('Filtered Report');
         }
       }
 
-      $('#report-param-select').on('change', updateReportFilter);
-      $('input[name="report-val"]').on('change', updateReportFilter);
+      $('#pm-reports-modal #report-param-select').on('change', updateReportFilter);
+      $('#pm-reports-modal input[name="report-val"]').on('change', updateReportFilter);
     });
   </script>
 </body>

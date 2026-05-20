@@ -65,10 +65,6 @@
           <div class="flex">
 
             <div class="iso-legacy-nav-stack">
-              <button class="iso-btn-nav-calibration" onclick="handleNavigation('Calibration Register')">Calibration Register </button>
-
-              <button class="iso-btn-nav-calibration" onclick="handleNavigation('CPCB')">CPCB </button>
-
 
               <!-- Documents Button with Dropdown -->
               <div class="iso-dropdown-wrapper">
@@ -140,65 +136,145 @@
               <button class="iso-btn-nav" onclick="handleNavigation('Objectives')">
                 <span>Objectives</span>
               </button>
+
+              <!-- Policy Button with Dropdown -->
+              <div class="iso-dropdown-wrapper">
+                <button class="iso-btn-nav trigger-btn" onclick="toggleDropdown(this, event)">
+                  <span>Policy</span>
+                  <i class="ph ph-caret-right caret-indicator"></i>
+                </button>
+                <div class="iso-floating-menu">
+                  <div class="iso-menu-item" onclick="handleNavigation('Policy English')">English</div>
+                  <div class="iso-menu-item" onclick="handleNavigation('Policy Gujarati')">Gujarati</div>
+                </div>
+              </div>
+
+              <!-- Certificate Button -->
+              <button onclick="handleNavigation('Certificate')" class="iso-btn-nav">
+                <span>Certificate</span>
+              </button>
+
+              <!-- Portal Links -->
+              <div class="iso-portal-buttons-grid" style="gap: 12px; margin-top: 4px;">
+                <a href="#" onclick="handleNavigation('ISO Cell Site', event)" class="iso-legacy-portal-btn" style="height: 48px; text-decoration: none;">
+                  <span>ISO Cell Site</span>
+                </a>
+                <a href="#" target="_blank" class="iso-legacy-portal-btn" style="height: 48px; text-decoration: none;">
+                  <span>ISDWEB</span>
+                </a>
+              </div>
             </div>
+
             <!-- Redesigned Horizontal Portals Button Area -->
             <div class="iso-portals-flex-row">
-
-              <div>
-                <div class="iso-center-top-actions">
-                  <!-- Policy Dropdown -->
-                  <div class="iso-dropdown-wrapper center-btn-wrap">
-                    <button class="iso-btn-center-action trigger-btn" onclick="toggleDropdown(this, event)">
-                      <span>Policy</span>
-                      <i class="ph ph-caret-down"></i>
-                    </button>
-                    <div class="iso-floating-menu bottom-placement policy-dropdown-menu">
-                      <div class="iso-menu-item" onclick="handleNavigation('Policy English')">English</div>
-                      <div class="iso-menu-item" onclick="handleNavigation('Policy Gujarati')">Gujarati</div>
-                    </div>
+              <!-- Calibration Register Unit Panel -->
+              <div class="calibration-grid-container" style="margin-bottom: 0;">
+                <div class="calibration-unit-grid">
+                  <div class="calibration-unit-card" onclick="handleUnitClick('AA')">
+                    <span class="calibration-unit-name">AA</span>
                   </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('AAQM')">
+                    <span class="calibration-unit-name">AAQM</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('AMM')">
+                    <span class="calibration-unit-name">AMM</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('ANIPF')">
+                    <span class="calibration-unit-name">ANIPF</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('ANITDI')">
+                    <span class="calibration-unit-name">ANITDI</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('ASGP')">
+                    <span class="calibration-unit-name">ASGP</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('BAGG')">
+                    <span class="calibration-unit-name">BAGG</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('BOILER')">
+                    <span class="calibration-unit-name">BOILER</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('CMS')">
+                    <span class="calibration-unit-name">CMS</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('CPSU')">
+                    <span class="calibration-unit-name">CPSU</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('DM')">
+                    <span class="calibration-unit-name">DM</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('EA')">
+                    <span class="calibration-unit-name">EA</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('FA')">
+                    <span class="calibration-unit-name">FA</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('INSTWS')">
+                    <span class="calibration-unit-name">INSTWS</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('M1')">
+                    <span class="calibration-unit-name">M1</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('M2')">
+                    <span class="calibration-unit-name">M2</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('MINMAX')">
+                    <span class="calibration-unit-name">MINMAX</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('NPP')">
+                    <span class="calibration-unit-name">NPP</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('SPP')">
+                    <span class="calibration-unit-name">SPP</span>
+                  </div>
+                  <div class="calibration-unit-card" onclick="handleUnitClick('UREA')">
+                    <span class="calibration-unit-name">UREA</span>
+                  </div>
+                </div>
+              </div>
 
-                  <button onclick="handleNavigation('Certificate')" class="iso-btn-center-action">
-                    <span>Certificate</span>
-                  </button>
+              <!-- Filter Section -->
+              <div class="calibration-filter-panel" style="margin-top: 0;">
+                <!-- Row 1 Filter -->
+                <div class="calibration-filter-row">
+                  <label class="calibration-filter-option">
+                    <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="CPCB Calibration Register" checked>
+                    <span>CPCB Calibration Register</span>
+                  </label>
+                  <label class="calibration-filter-option">
+                    <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Instrument Maintenance Register">
+                    <span>Instrument Maintenance Register</span>
+                  </label>
+                  <label class="calibration-filter-option">
+                    <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Radioactive Measurement Register">
+                    <span>Radioactive Measurement Register</span>
+                  </label>
+                  <label class="calibration-filter-option">
+                    <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Radioactive Source Replacement Records">
+                    <span>Radioactive Source Replacement Records</span>
+                  </label>
                 </div>
 
-                <div class="iso-restructured-cards-row">
+                <div class="calibration-filter-divider"></div>
 
-                  <!-- What's new? Panel -->
-                  <div class="iso-panel-card-simple card-whats-new">
-                    <div class="panel-card-simple-header">
-                      <h4>What's new?</h4>
-                    </div>
-                    <div class="panel-card-simple-body">
-                      <div class="simple-bullet-stack">
-                        <div class="simple-bullet-item">
-                          <i class="ph-bold ph-caret-right text-green font-14px flex-shrink-0 mt-2px"></i>
-                          <p>Trailing module is modified.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Notice Board Panel (Clean and Empty) -->
-                  <div class="iso-panel-card-simple card-notice-board">
-                    <div class="panel-card-simple-header">
-                      <h4>Notice board</h4>
-                    </div>
-                    <div class="panel-card-simple-body notice-board-empty">
-                      <!-- Blank space as requested -->
-                    </div>
-                  </div>
-
-                </div>
-
-                <div class="iso-portal-buttons-grid">
-                  <a href="#" onclick="handleNavigation('ISO Cell Site', event)" class="iso-legacy-portal-btn">
-                    <span>ISO Cell Site</span>
-                  </a>
-                  <a href="#" target="_blank" class="iso-legacy-portal-btn">
-                    <span>ISDWEB</span>
-                  </a>
+                <!-- Row 2 Filter -->
+                <div class="calibration-filter-row">
+                  <label class="calibration-filter-option">
+                    <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Lead Acid Batteries Maintenance Register">
+                    <span>Lead Acid Batteries Maintenance Register</span>
+                  </label>
+                  <label class="calibration-filter-option">
+                    <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Lead Acid Batteries Replacement Register">
+                    <span>Lead Acid Batteries Replacement Register</span>
+                  </label>
+                  <label class="calibration-filter-option">
+                    <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Test Equipment Calibration Register">
+                    <span>Test Equipment Calibration Register</span>
+                  </label>
+                  <label class="calibration-filter-option">
+                    <input type="radio" name="calibrationFilter" class="calibration-filter-radio" value="Lifting/Logistic Equipment Checking Record">
+                    <span>LIFTING/LOGISTIC EQUIPMENT CHECKING RECORD</span>
+                  </label>
                 </div>
               </div>
             </div>
@@ -219,6 +295,49 @@
           $('.trigger-btn').removeClass('is-active');
         }
       });
+
+      // Restore filter state from localStorage on page load
+      const savedFilter = localStorage.getItem('calibration_selected_filter');
+      if (savedFilter) {
+        $(`input[name="calibrationFilter"][value="${savedFilter}"]`).prop('checked', true);
+      }
+
+      // Save filter state to localStorage on change
+      $('input[name="calibrationFilter"]').on('change', function() {
+        localStorage.setItem('calibration_selected_filter', $(this).val());
+      });
+
+      // Handle unit clicks based on selected filter
+      window.handleUnitClick = function(unit) {
+        const selectedFilter = $('input[name="calibrationFilter"]:checked').val();
+        
+        switch (selectedFilter) {
+          case 'Radioactive Measurement Register':
+            window.location.href = `radioactive_magereemnt.html?plant=${unit}`;
+            break;
+          case 'Radioactive Source Replacement Records':
+            window.location.href = `radioactive_source_replacement.html?plant=${unit}`;
+            break;
+          case 'Lead Acid Batteries Maintenance Register':
+            window.location.href = `lead_acid_batteries_maintenance.html?plant=${unit}`;
+            break;
+          case 'Lead Acid Batteries Replacement Register':
+            window.location.href = `lead_acid_batteries_replacement.html?plant=${unit}`;
+            break;
+          case 'Test Equipment Calibration Register':
+            window.location.href = `test_equipment_calibration.html?plant=${unit}`;
+            break;
+          case 'Lifting/Logistic Equipment Checking Record':
+            window.location.href = `lifting_logistic_equipment.html?plant=${unit}`;
+            break;
+          case 'Instrument Maintenance Register':
+            window.location.href = `instrument_maintenance_register.html?plant=${unit}`;
+            break;
+          default:
+            window.location.href = `calibration_detail.html?plant=${unit}`;
+            break;
+        }
+      };
     });
 
     // Toggle Dropdown Menu
@@ -257,8 +376,8 @@
         window.location.href = 'emregencyplan.html';
       } else if (targetName === 'Register Of Regulation (ROR)') {
         window.location.href = 'ror.html';
-      } else if (targetName === 'Calibration Register') {
-        window.location.href = 'calibration_regiter.html';
+      } else if (targetName === 'CPCB Calibration Register') {
+        window.location.href = 'iso.html';
       } else if (targetName === 'CPCB') {
         window.location.href = 'cpcb.html';
       }
