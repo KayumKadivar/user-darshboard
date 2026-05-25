@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View PDR Static Fields | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .pdr-view-card {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    }
+
+    .pdr-table-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 2px solid var(--app-border);
+      padding-bottom: 14px;
+    }
+    
+    .pdr-plant-label {
+      color: var(--typo-orange) !important;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .pdr-static-title {
+      color: var(--typo-secondary) !important;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      background: var(--app-bg);
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--app-border);
+    }
+
+    .edit-action-link {
+      color: #7c3aed !important;
+      font-weight: 800;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="pdr_sop_unified.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Unified PDR/SOP Dashboard:pdr_sop_unified.html,View PDR Static Fields:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+        <!-- Modern Card Wrapper -->
+        <div class="pdr-view-card">
+          <div class="pdr-table-title-bar">
+            <div class="pdr-plant-label">
+              <i class="ph-bold ph-buildings"></i> Plant: <span id="pdr-plant-name">BOILER</span>
+            </div>
+            <div class="pdr-static-title">PDR Static Data</div>
+          </div>        
+
+          <div class="user-table-wrapper" style="margin: 0;">
+            <table class="user-table">
+              <thead>
+                <tr>
+                  <th class="user-table-center w-80px">Sr No</th>
+                  <th class="user-table-center w-120px">OCP NO</th>
+                  <th class="user-table-left">OCP Purpose</th>
+                  <th class="user-table-left">Performance criteria</th>
+                  <th class="user-table-center w-100px">Action</th>
+                </tr>
+              </thead>
+              <tbody id="pdr-static-table-body">
+                <tr class="user-table-row">
+                  <td class="user-table-center font-14px fw-600">1</td>
+                  <td class="user-table-center font-14px">1</td>
+                  <td>Operation control validation standards for process parameters.</td>
+                  <td>To ensure optimum operational stability</td>
+                  <td class="user-table-center">
+                    <a href="#" class="edit-action-link edit-url-btn" data-sr="1" data-ocp="1" data-purpose="Operation control validation standards for process parameters." data-criteria="To ensure optimum operational stability">
+                      <i class="ph-bold ph-pencil-simple"></i> Edit
+                    </a>
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center font-14px fw-600">2</td>
+                  <td class="user-table-center font-14px">2</td>
+                  <td>Environment compliance standards check and record keeping.</td>
+                  <td>To minimize overall emission levels</td>
+                  <td class="user-table-center">
+                    <a href="#" class="edit-action-link edit-url-btn" data-sr="2" data-ocp="2" data-purpose="Environment compliance standards check and record keeping." data-criteria="To minimize overall emission levels">
+                      <i class="ph-bold ph-pencil-simple"></i> Edit
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+  <!-- Modal Overlay -->
+  <div class="gnfc-modal-overlay" id="pdr-static-modal">
+    <!-- Modal Shell -->
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      
+      <!-- Modal Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title" id="pdr-modal-title">Edit Static Field</h3>
+          <p class="gnfc-modal-subtitle" style="font-size: 11px; margin-top: 4px; color: var(--typo-orange);">Plant: <span id="pdr-modal-plant-name">BOILER</span></p>
+        </div>
+        <button class="gnfc-modal-close" id="btn-close-modal" type="button">
+          <i class="ph ph-x" style="font-size: 18px;"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="gnfc-modal-body">
+        <form id="pdr-static-form">
+          <input type="hidden" id="pdr-edit-sr" value="">
+          
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label" for="pdr-ocp-no">OCP NO</label>
+            <input type="text" id="pdr-ocp-no" class="gnfc-modal-input" placeholder="e.g. 9" required>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label" for="pdr-ocp-purpose">OCP Purpose</label>
+            <textarea id="pdr-ocp-purpose" class="gnfc-modal-input" style="height: 80px; resize: vertical;" placeholder="e.g. Safe disposal of used cotton waste..." required></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label" for="pdr-perf-criteria">Performance Criteria</label>
+            <textarea id="pdr-perf-criteria" class="gnfc-modal-input" style="height: 80px; resize: vertical;" placeholder="e.g. To minimize overall emission levels" required></textarea>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-cancel-modal">Cancel</button>
+        <button type="submit" form="pdr-static-form" class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-save-modal">Save</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // 1. Read Plant from URL query parameters and persist it in sessionStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      let plant = urlParams.get('plant');
+      if (plant) {
+        sessionStorage.setItem('current_pdr_plant', plant);
+      } else {
+        plant = sessionStorage.getItem('current_pdr_plant') || 'BOILER';
+      }
+      $('#pdr-plant-name').text(plant);
+      $('#pdr-modal-plant-name').text(plant);
+
+      // Modal Helper functions
+      function openPdrModal(rowData = {}) {
+        $('#pdr-edit-sr').val(rowData.sr);
+        $('#pdr-ocp-no').val(rowData.ocp);
+        $('#pdr-ocp-purpose').val(rowData.purpose);
+        $('#pdr-perf-criteria').val(rowData.criteria);
+        $('#pdr-static-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      }
+
+      function closePdrModal() {
+        $('#pdr-static-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      }
+
+      $('#btn-close-modal, #btn-cancel-modal').on('click', function() {
+        closePdrModal();
+      });
+
+      // Close modal on click outside shell
+      $('#pdr-static-modal').on('click', function(e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          closePdrModal();
+        }
+      });
+
+      // Handle escape key
+      $(document).on('keydown', function(e) {
+        if (e.key === 'Escape' && $('#pdr-static-modal').hasClass('is-open')) {
+          closePdrModal();
+        }
+      });
+
+      // Bind Edit links
+      $('.edit-url-btn').on('click', function(e) {
+        e.preventDefault();
+        const sr = $(this).attr('data-sr');
+        const ocp = $(this).attr('data-ocp');
+        const purpose = $(this).attr('data-purpose');
+        const criteria = $(this).attr('data-criteria');
+        openPdrModal({ sr, ocp, purpose, criteria });
+      });
+
+      // Handle form submission
+      $('#pdr-static-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        const sr = $('#pdr-edit-sr').val();
+        const ocpNo = $('#pdr-ocp-no').val().trim();
+        const ocpPurpose = $('#pdr-ocp-purpose').val().trim();
+        const criteria = $('#pdr-perf-criteria').val().trim();
+        
+        // Find row to update
+        const $row = $(`#pdr-static-table-body tr`).filter(function() {
+          return $(this).find('.edit-url-btn').attr('data-sr') === sr;
+        });
+        
+        if ($row.length > 0) {
+          $row.find('td:nth-child(2)').text(ocpNo);
+          $row.find('td:nth-child(3)').text(ocpPurpose);
+          $row.find('td:nth-child(4)').text(criteria);
+          
+          // Update data attributes on edit link
+          const $editBtn = $row.find('.edit-url-btn');
+          $editBtn.attr('data-ocp', ocpNo);
+          $editBtn.attr('data-purpose', ocpPurpose);
+          $editBtn.attr('data-criteria', criteria);
+        }
+        
+        closePdrModal();
+
+        Swal.fire({
+          title: 'Updated!',
+          text: 'Static field updated successfully.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

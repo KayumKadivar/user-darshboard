@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tool Box Talk | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .tbt-dashboard-wrapper {
+      min-height: calc(100vh - 120px);
+    }
+
+    /* Modern Card Layout */
+    .config-block {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #e2e8f0);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Buttons */
+    .btn-orange-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--typo-orange, #ea580c);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+    }
+
+    .btn-orange-fill:hover {
+      background: #f97316;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+    }
+
+    .btn-orange-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ffffff;
+      color: var(--typo-orange, #ea580c) !important;
+      border: 1.5px solid var(--typo-orange, #ea580c) !important;
+      border-radius: 6px;
+      padding: 9px 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-orange-outline:hover {
+      background: #fff7ed;
+      color: #c2410c !important;
+      border-color: #c2410c !important;
+      transform: translateY(-1.5px);
+    }
+
+    .table-section {
+      margin-top: 20px;
+    }
+
+    .user-table th {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      background: var(--app-panel-alt, #edf2f8) !important;
+      color: var(--typo-primary, #1e293b) !important;
+    }
+
+    .user-table td {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      vertical-align: middle;
+    }
+
+    .table-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--app-border, #cbd5e1);
+      padding-bottom: 14px;
+    }
+
+    .table-active-plant {
+      color: var(--typo-orange, #ea580c);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 850;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .table-title {
+      color: var(--typo-primary);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Internal layout CSS classes */
+    .setup-flow-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .setup-flow-header .btn-orange-fill,
+    .setup-flow-header .btn-orange-outline {
+      height: 36px;
+      padding: 0 16px;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .config-block.setup-flow-block {
+      padding: 12px 20px;
+    }
+
+    .document-no-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--typo-secondary, #64748b);
+      background: var(--app-panel-alt, #edf2f8);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--app-border, #cbd5e1);
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .flex-align-center-gap-8 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flex-align-center-gap-16 {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .orange-icon {
+      color: var(--typo-orange);
+      font-size: 20px;
+    }
+
+    .setup-flow-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--typo-primary);
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .plant-selector-dropdown {
+      width: 180px;
+      cursor: pointer;
+      height: 36px;
+      border-radius: 6px;
+      font-weight: 600;
+      padding: 0 10px;
+      border: 1.5px solid #cbd5e1;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .select-plant-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--typo-orange);
+      text-transform: uppercase;
+      margin-bottom: 0;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    /* Modal variables override for proper layouts */
+    .remarks-textarea {
+      resize: none;
+      padding: 8px 12px;
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="../iso.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Tool Box Talk:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between tbt-dashboard-wrapper">
+      <div>
+
+        <!-- Setup Flow / Dashboard Block -->
+        <div class="config-block setup-flow-block">
+          <div class="setup-flow-header">
+            <div>
+              <div class="document-no-badge">Form and Format Document No : IMS/T/INST/06</div>
+              <div class="flex-align-center-gap-8">
+                <i class="ph-bold ph-list-dashes orange-icon"></i>
+                <h3 class="setup-flow-title">
+                  TOOL BOX TALK SETUP FLOW
+                </h3>
+              </div>
+            </div>
+            <div class="flex-align-center-gap-16">
+              <button class="btn-orange-fill" onclick="setModalState('add-tbt-modal', true)">
+                <i class="ph-bold ph-plus"></i> Add
+              </button>
+              <div class="flex-align-center-gap-8">
+                <span class="select-plant-label">SELECT PLANT:</span>
+                <select id="plant-selector" class="filter-select plant-selector-dropdown">
+                  <option value="ACETIC ACID">ACETIC ACID</option>
+                  <option value="BOILER">BOILER</option>
+                  <option value="CPP">CPP</option>
+                  <option value="AMMONIA">AMMONIA</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Records Table Section -->
+        <div class="config-block table-section" id="records-table-container">
+          <div class="table-header-row">
+            <div class="table-active-plant">
+              <i class="ph-bold ph-buildings"></i> Plant: <span id="table-plant-name">ACETIC ACID</span>
+            </div>
+            <div class="table-title">
+              TOOL BOX TALK LOGS
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table">
+              <thead>
+                <tr>
+                  <th class="w-60px">Sr</th>
+                  <th class="w-110px">Date</th>
+                  <th class="w-100px">Plant</th>
+                  <th class="text-left min-w-180px">Toolbox talk conducted by</th>
+                  <th class="text-left min-w-250px">Topics covered</th>
+                  <th class="text-left min-w-180px">GNFC Tech</th>
+                  <th class="w-120px">Dept. Helpers</th>
+                  <th class="w-180px">Other Contract labours</th>
+                </tr>
+              </thead>
+              <tbody id="tbt-table-body">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Record Modal Popup -->
+  <div id="add-tbt-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Add Tool Box Talk Record</h3>
+          <p class="gnfc-modal-subtitle">Plant: <span id="modal-plant-name">ACETIC ACID</span></p>
+        </div>
+        <button type="button" onclick="setModalState('add-tbt-modal', false)" class="gnfc-modal-close">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <form id="tbt-record-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid-2col">
+            <div>
+              <label class="gnfc-modal-label" for="tbt-date">Date *</label>
+              <input type="date" id="tbt-date" class="gnfc-modal-input" required>
+            </div>
+            <div>
+              <label class="gnfc-modal-label" for="tbt-plant-input">Plant *</label>
+              <input type="text" id="tbt-plant-input" class="gnfc-modal-input" placeholder="e.g. M3" required>
+            </div>
+          </div>
+
+          <div class="form-grid-2col">
+            <div>
+              <label class="gnfc-modal-label" for="tbt-conducted">Toolbox talk conducted by *</label>
+              <input type="text" id="tbt-conducted" class="gnfc-modal-input" placeholder="e.g. VES" required>
+            </div>
+            <div>
+              <label class="gnfc-modal-label" for="tbt-tech">GNFC Tech *</label>
+              <input type="text" id="tbt-tech" class="gnfc-modal-input" placeholder="e.g. RAT, SBP, HRK" required>
+            </div>
+          </div>
+
+          <div class="form-group-margin">
+            <label class="gnfc-modal-label" for="tbt-topics">Topics covered *</label>
+            <textarea id="tbt-topics" class="gnfc-modal-input remarks-textarea" style="height: 75px;" placeholder="Describe safety topics covered..." required></textarea>
+          </div>
+
+          <div class="form-grid-2col">
+            <div>
+              <label class="gnfc-modal-label" for="tbt-helpers">Dept. Helpers</label>
+              <input type="number" id="tbt-helpers" class="gnfc-modal-input" value="0" min="0">
+            </div>
+            <div>
+              <label class="gnfc-modal-label" for="tbt-labours">Other Contract labours</label>
+              <input type="number" id="tbt-labours" class="gnfc-modal-input" value="0" min="0">
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">
+            Save
+          </button>
+          <button type="button" onclick="setModalState('add-tbt-modal', false)" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript logic -->
+  <script>
+    function setModalState(modalId, isOpen) {
+      const $modal = $('#' + modalId);
+      if (isOpen) {
+        // Pre-fill today's date and active plant
+        const today = new Date().toISOString().split('T')[0];
+        $('#tbt-date').val(today);
+        $('#tbt-plant-input').val($('#plant-selector').val());
+        $modal.addClass('is-open').attr('aria-hidden', 'false');
+      } else {
+        $modal.removeClass('is-open').attr('aria-hidden', 'true');
+        $('#tbt-record-form')[0].reset();
+      }
+    }
+
+    function scrollToTable() {
+      document.getElementById('records-table-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    $(function () {
+      // Shared Static Database loaded with legacy user-table data
+      const mockDatabase = [
+        { sr: 1, date: '08/07/2015', plant: 'M3', conducted: 'VES', topics: 'Guidelines for working at chemical leakage, splash prone areas.', tech: 'RAT, SBP, HRK', helpers: '1', labours: '0' },
+        { sr: 2, date: '21/07/2015', plant: 'M1', conducted: 'BPB', topics: 'Guidelines while working in Analyzer house.', tech: 'A.M.VITHLANI', helpers: '1', labours: '0' },
+        { sr: 3, date: '21/07/2015', plant: 'M1', conducted: 'DPB', topics: 'General Safety guidelines for field jobs.', tech: 'A.M.VITHLANI', helpers: '1', labours: '0' },
+        { sr: 4, date: '22/07/2015', plant: 'M2', conducted: 'VES', topics: 'Guidelines for use of specific PPEs.', tech: 'RAT, SBP, HRK', helpers: '1', labours: '0' },
+        { sr: 5, date: '22/07/2015', plant: 'NPF', conducted: 'KSP', topics: 'Safety while working with instruments installed in process fluid lines.', tech: 'VGJ', helpers: '1', labours: '0' },
+        { sr: 6, date: '23/07/2015', plant: 'BOILER', conducted: 'JCB', topics: 'Guidelines for Control valve dropping & Box-up jobs.', tech: 'PVP, PRP', helpers: '2', labours: '0' }
+      ];
+
+      let currentPlant = 'ACETIC ACID';
+
+      function renderTable() {
+        const records = mockDatabase;
+        const $tbody = $('#tbt-table-body');
+        $tbody.empty();
+
+        if (records.length === 0) {
+          $tbody.append(`
+            <tr class="user-table-row">
+              <td colspan="8" class="user-table-center empty-table-cell">
+                No Tool Box Talk records logged
+              </td>
+            </tr>
+          `);
+          return;
+        }
+
+        records.forEach(row => {
+          $tbody.append(`
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">${row.sr}</td>
+              <td class="user-table-center">${row.date}</td>
+              <td class="user-table-center fw-600 color-hint">${row.plant}</td>
+              <td class="text-left font-14px fw-600 orange-text">${row.conducted}</td>
+              <td class="text-left">${row.topics}</td>
+              <td class="text-left">${row.tech}</td>
+              <td class="user-table-center">${row.helpers}</td>
+              <td class="user-table-center">${row.labours}</td>
+            </tr>
+          `);
+        });
+      }
+
+      // Initial load
+      renderTable();
+
+      // Dropdown selector handling
+      $('#plant-selector').on('change', function () {
+        currentPlant = $(this).val();
+        $('#table-plant-name').text(currentPlant);
+        $('#modal-plant-name').text(currentPlant);
+        renderTable();
+      });
+
+      // Submit Handling
+      $('#tbt-record-form').on('submit', function (e) {
+        e.preventDefault();
+
+        // Convert ISO date yyyy-mm-dd to dd/mm/yyyy for consistency
+        const rawDate = $('#tbt-date').val();
+        let formattedDate = rawDate;
+        if (rawDate) {
+          const parts = rawDate.split('-');
+          if (parts.length === 3) {
+            formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+          }
+        }
+
+        const plant = $('#tbt-plant-input').val();
+        const conducted = $('#tbt-conducted').val();
+        const topics = $('#tbt-topics').val();
+        const tech = $('#tbt-tech').val();
+        const helpers = $('#tbt-helpers').val() || '0';
+        const labours = $('#tbt-labours').val() || '0';
+
+        const newSr = mockDatabase.length + 1;
+        mockDatabase.push({
+          sr: newSr,
+          date: formattedDate,
+          plant,
+          conducted,
+          topics,
+          tech,
+          helpers,
+          labours
+        });
+
+        renderTable();
+        setModalState('add-tbt-modal', false);
+
+        // Premium success alert
+        Swal.fire({
+          icon: 'success',
+          title: 'Record Saved Successfully!',
+          text: 'The new Tool Box Talk record has been added to the register.',
+          timer: 1800,
+          showConfirmButton: false,
+          toast: false
+        });
+      });
+
+      // Overlay click to close
+      $('.gnfc-modal-overlay').on('click', function (e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          setModalState(this.id, false);
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

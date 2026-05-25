@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internal Communication Register | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .comm-dashboard-wrapper {
+      min-height: calc(100vh - 120px);
+    }
+
+    /* Modern Card Layout */
+    .config-block {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #e2e8f0);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .premium-config-card {
+      background: var(--app-bg, #f8fafc);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 180px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: left;
+    }
+
+    .premium-config-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--typo-orange, #ea580c);
+      opacity: 0.8;
+    }
+
+    .premium-config-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+      border-color: var(--typo-orange, #ea580c);
+    }
+
+    .premium-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(234, 88, 12, 0.08);
+      color: var(--typo-orange, #ea580c);
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn-orange-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--typo-orange, #ea580c);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+     
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+    }
+
+    .btn-orange-fill:hover {
+      background: #f97316;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+    }
+
+    .btn-orange-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ffffff;
+      color: var(--typo-orange, #ea580c) !important;
+      border: 1.5px solid var(--typo-orange, #ea580c) !important;
+      border-radius: 6px;
+      padding: 9px 18px;
+     
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-orange-outline:hover {
+      background: #fff7ed;
+      color: #c2410c !important;
+      border-color: #c2410c !important;
+      transform: translateY(-1.5px);
+    }
+
+    .premium-config-card.horizontal-card {
+      min-height: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 24px;
+    }
+
+    .card-left-flex {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .premium-card-icon.no-margin {
+      margin-bottom: 0;
+    }
+
+    .card-title-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--typo-primary);
+      text-transform: uppercase;
+      margin: 0;
+     
+    }
+
+    .premium-btn-group.no-border {
+      display: flex;
+      gap: 12px;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .table-section {
+      margin-top: 20px;
+    }
+
+    .user-table th {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      background: var(--app-panel-alt, #edf2f8) !important;
+      color: var(--typo-primary, #1e293b) !important;
+    }
+
+    .user-table td {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      vertical-align: middle;
+    }
+
+    /* Internal layout CSS classes */
+    .setup-flow-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .setup-flow-header .btn-orange-fill,
+    .setup-flow-header .btn-orange-outline {
+      height: 36px;
+      padding: 0 16px;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .config-block.setup-flow-block {
+      padding: 12px 20px;
+    }
+
+    .document-no-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--typo-secondary, #64748b);
+      background: var(--app-panel-alt, #edf2f8);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--app-border, #cbd5e1);
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .flex-align-center-gap-8 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flex-align-center-gap-16 {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .orange-icon {
+      color: var(--typo-orange);
+      font-size: 20px;
+    }
+
+    .setup-flow-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--typo-primary);
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .select-plant-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--typo-orange);
+      text-transform: uppercase;
+      margin-bottom: 0;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .plant-selector-dropdown {
+      width: 200px;
+      cursor: pointer;
+      height: 38px;
+      border-radius: 6px;
+      font-weight: 600;
+      padding: 0 12px;
+      border: 1.5px solid #cbd5e1;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .table-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--app-border, #cbd5e1);
+      padding-bottom: 14px;
+    }
+
+    .table-active-plant {
+      color: var(--typo-orange, #ea580c);
+     
+      font-weight: 850;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .table-title {
+      color: var(--typo-primary);
+     
+      font-weight: 800;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .user-table-wrapper {
+      margin: 0;
+      overflow-x: auto;
+    }
+
+    .user-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .w-60px {
+      width: 60px;
+    }
+
+    .w-110px {
+      width: 110px;
+    }
+
+    .w-150px {
+      width: 150px;
+    }
+
+    .w-180px {
+      width: 180px;
+    }
+
+    .min-w-150px {
+      min-width: 150px;
+    }
+
+    .min-w-200px {
+      min-width: 200px;
+    }
+
+    .text-left {
+      text-align: left;
+    }
+
+    .orange-text {
+      color: var(--typo-orange);
+    }
+
+    .empty-table-cell {
+      color: #64748b;
+      font-style: italic;
+      padding: 20px;
+    }
+
+    .form-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group-margin {
+      margin-bottom: 16px;
+    }
+
+    .medium-select {
+      height: 38px;
+      padding: 0 12px;
+      font-weight: 500;
+    }
+
+    .remarks-textarea {
+      height: 70px;
+      resize: none;
+      padding: 8px 12px;
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="../iso.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Internal Communication Register:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between comm-dashboard-wrapper">
+      <div>
+
+        <!-- Setup Flow / Dashboard Block -->
+        <div class="config-block setup-flow-block">
+          <div class="setup-flow-header">
+            <div>
+              <div class="document-no-badge">Form and Format Document No : IMS/E/INST/06</div>
+              <div class="flex-align-center-gap-8">
+                <i class="ph-bold ph-list-dashes orange-icon"></i>
+                <h3 class="setup-flow-title">
+                  Internal Communication Register Setup Flow
+                </h3>
+              </div>
+            </div>
+            <div class="flex-align-center-gap-16">
+              <button class="btn-orange-fill" onclick="setModalState('add-comm-modal', true)">
+                <i class="ph-bold ph-plus"></i> Add
+              </button>
+
+              <div class="flex-align-center-gap-8">
+                <span class="select-plant-label">Select plant:</span>
+                <select id="plant-selector" class="filter-select plant-selector-dropdown">
+                  <option value="ACETIC ACID">ACETIC ACID</option>
+                  <option value="BOILER">BOILER</option>
+                  <option value="CPP">CPP</option>
+                  <option value="AMMONIA">AMMONIA</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <!-- Records Table Section -->
+        <div class="config-block table-section" id="records-table-container">
+          <div class="table-header-row">
+            <div class="table-active-plant">
+              <i class="ph-bold ph-buildings"></i> Plant: <span id="table-plant-name">ACETIC ACID</span>
+            </div>
+            <div class="table-title">
+              Communication Logs
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table">
+              <thead>
+                <tr>
+                  <th class="w-60px">Sr</th>
+                  <th class="w-110px">Date</th>
+                  <th class="text-left min-w-180px">Name of Employee, Desig and Sign</th>
+                  <th class="text-left min-w-200px">Description of Concern/ Suggestion</th>
+                  <th class="text-left min-w-200px">Action Taken/ Proposed</th>
+                  <th class="text-left min-w-180px">Sign of HOD/Sectional Head with Date</th>
+                  <th class="text-left min-w-150px">Remarks (If any no action/delayed action)</th>
+                </tr>
+              </thead>
+              <tbody id="comm-table-body">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Record Modal Popup -->
+  <div id="add-comm-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Add Communication Record</h3>
+          <p class="gnfc-modal-subtitle">Plant: <span id="modal-plant-name">ACETIC ACID</span></p>
+        </div>
+        <button type="button" onclick="setModalState('add-comm-modal', false)" class="gnfc-modal-close">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <form id="comm-record-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid-2col">
+            <div>
+              <label class="gnfc-modal-label" for="comm-date">Date *</label>
+              <input type="date" id="comm-date" class="gnfc-modal-input" required>
+            </div>
+            <div>
+              <label class="gnfc-modal-label" for="comm-hod">Sign of HOD/Sectional Head with Date</label>
+              <input type="text" id="comm-hod" class="gnfc-modal-input"
+                placeholder="e.g. H. O. Patel (HOD) - 25/05/2026">
+            </div>
+          </div>
+
+          <div class="form-group-margin">
+            <label class="gnfc-modal-label" for="comm-employee">Name of Employee, Desig and Sign *</label>
+            <input type="text" id="comm-employee" class="gnfc-modal-input" placeholder="e.g. John Doe (Operator)"
+              required>
+          </div>
+
+          <div class="form-grid-2col">
+            <div>
+              <label class="gnfc-modal-label" for="comm-concern">Description of Concern/ Suggestion *</label>
+              <textarea id="comm-concern" class="gnfc-modal-input remarks-textarea" style="height: 75px;"
+                placeholder="Describe concern/suggestion..." required></textarea>
+            </div>
+            <div>
+              <label class="gnfc-modal-label" for="comm-action">Action Taken/ Proposed *</label>
+              <textarea id="comm-action" class="gnfc-modal-input remarks-textarea" style="height: 75px;"
+                placeholder="Describe actions taken..." required></textarea>
+            </div>
+          </div>
+
+          <div>
+            <label class="gnfc-modal-label" for="comm-remarks">Remarks (If any no action/delayed action)</label>
+            <textarea id="comm-remarks" class="gnfc-modal-input remarks-textarea" style="height: 60px;"
+              placeholder="Optional remarks..."></textarea>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">
+            Save
+          </button>
+          <button type="button" onclick="setModalState('add-comm-modal', false)"
+            class="gnfc-modal-btn gnfc-modal-btn-secondary">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript logic -->
+  <script>
+    function setModalState(modalId, isOpen) {
+      const $modal = $('#' + modalId);
+      if (isOpen) {
+        // Pre-fill today's date
+        const today = new Date().toISOString().split('T')[0];
+        $('#comm-date').val(today);
+        $modal.addClass('is-open').attr('aria-hidden', 'false');
+      } else {
+        $modal.removeClass('is-open').attr('aria-hidden', 'true');
+        $('#comm-record-form')[0].reset();
+      }
+    }
+
+    function scrollToTable() {
+      document.getElementById('records-table-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    $(function () {
+      // Static Database (Shared across all plants)
+      const mockDatabase = [
+        { sr: 1, date: '2026-05-10', employee: 'Amit Patel (Jr. Engineer)', concern: 'Noise level high near compressor area', action: 'Ear muffs provided and maintenance scheduled', hod: 'H. O. Patel (HOD) - 10/05/2026', remarks: 'NIL' },
+        { sr: 2, date: '2026-05-12', employee: 'Ramesh Kumar (Operator)', concern: 'Steam leakage near main steam header valve block', action: 'Flange tightening done under supervision', hod: 'K. R. Varma (HOD) - 12/05/2026', remarks: 'NIL' },
+        { sr: 3, date: '2026-05-15', employee: 'Sanjay Shah (Technician)', concern: 'Slight vibration in pump P-102 line', action: 'Bellow replacement proposed in shutdown', hod: 'H. O. Patel (HOD) - 16/05/2026', remarks: 'Action pending next shutdown' }
+      ];
+
+      let currentPlant = 'ACETIC ACID';
+
+      function renderTable() {
+        const records = mockDatabase;
+        const $tbody = $('#comm-table-body');
+        $tbody.empty();
+
+        if (records.length === 0) {
+          $tbody.append(`
+            <tr class="user-table-row">
+              <td colspan="7" class="user-table-center empty-table-cell">
+                No communication records logged
+              </td>
+            </tr>
+          `);
+          return;
+        }
+
+        records.forEach(row => {
+          $tbody.append(`
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">${row.sr}</td>
+              <td class="user-table-center">${row.date}</td>
+              <td class="text-left font-14px fw-600 orange-text">${row.employee}</td>
+              <td class="text-left">${row.concern}</td>
+              <td class="text-left">${row.action}</td>
+              <td class="text-left">${row.hod || '-'}</td>
+              <td class="text-left">${row.remarks || '-'}</td>
+            </tr>
+          `);
+        });
+      }
+
+      // Initial load
+      renderTable();
+
+      // Dropdown selector handling
+      $('#plant-selector').on('change', function () {
+        currentPlant = $(this).val();
+        $('#table-plant-name').text(currentPlant);
+        $('#modal-plant-name').text(currentPlant);
+        renderTable();
+      });
+
+      // Submit Handling
+      $('#comm-record-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const date = $('#comm-date').val();
+        const employee = $('#comm-employee').val();
+        const concern = $('#comm-concern').val();
+        const action = $('#comm-action').val();
+        const hod = $('#comm-hod').val();
+        const remarks = $('#comm-remarks').val();
+
+        const newSr = mockDatabase.length + 1;
+        mockDatabase.push({
+          sr: newSr,
+          date,
+          employee,
+          concern,
+          action,
+          hod,
+          remarks
+        });
+
+        renderTable();
+        setModalState('add-comm-modal', false);
+
+        // Premium success alert
+        Swal.fire({
+          icon: 'success',
+          title: 'Record Saved Successfully!',
+          text: 'The new internal communication record has been added to the register.',
+          timer: 1800,
+          showConfirmButton: false,
+          toast: false
+        });
+      });
+
+      // Overlay click to close
+      $('.gnfc-modal-overlay').on('click', function (e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          setModalState(this.id, false);
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

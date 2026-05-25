@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procedure Deviation Register (PDR) - Report | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .pdr-report-content {
+      min-height: calc(100vh - 120px);
+    }
+
+    /* Glassmorphic Selector box matching pdr_sop_report.html */
+    .filter-panel-card {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 16px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      max-width: 240px;
+      min-width: 160px;
+      text-align: left;
+    }
+
+    .filter-label {
+      color: var(--typo-orange, #ea580c);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .filter-select {
+      width: 100%;
+      padding: 8px 12px;
+      height: 38px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 6px;
+      background: var(--app-panel, #ffffff);
+      color: var(--typo-primary);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--typo-orange, #ea580c);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+    }
+
+    /* Action button */
+    .btn-orange-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--typo-orange, #ea580c);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+      height: 38px;
+    }
+
+    .btn-orange-fill:hover {
+      background: #f97316;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+    }
+
+    /* Results Header Banner matching pdr_sop_report.html */
+    .report-title-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      padding: 14px 20px;
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-radius: 8px;
+    }
+
+    .report-banner-title {
+      color: var(--typo-orange, #ea580c) !important;
+      font-weight: 850;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Table styling tweaks */
+    .user-table th {
+      background: var(--app-bg, #f8fafc) !important;
+      color: var(--typo-primary) !important;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 750 !important;
+      font-size: 12px !important;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      padding: 12px 10px !important;
+    }
+
+    .user-table td {
+      font-size: 13px !important;
+      font-weight: 550 !important;
+      color: var(--typo-secondary) !important;
+      padding: 12px 10px !important;
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="../iso.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,PDR Report:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between pdr-report-content">
+
+      <div>
+        <!-- Selection Form Card matching pdr_sop_report.html layout -->
+        <div class="filter-panel-card">
+          <form id="pdr-report-form">
+            <div class="filter-row">
+              <!-- Plant selector -->
+              <div class="filter-group">
+                <label class="filter-label">Plant</label>
+                <select id="pdr-plant" class="filter-select">
+                  <option value="ACETIC ACID" selected>ACETIC ACID</option>
+                  <option value="BOILER">BOILER</option>
+                  <option value="CPP">CPP</option>
+                  <option value="AMMONIA">AMMONIA</option>
+                  <option value="CMS">CMS</option>
+                </select>
+              </div>
+
+              <!-- OCP selector -->
+              <div class="filter-group">
+                <label class="filter-label">OCP</label>
+                <select id="pdr-ocp" class="filter-select">
+                  <option value="7" selected>7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                </select>
+              </div>
+
+              <!-- View Report Action Button -->
+              <button type="submit" class="btn-orange-fill">
+                <i class="ph-bold ph-funnel" style="font-size: 14px;"></i> View Report
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Report Results Section (Dynamically shown on View click) -->
+        <div id="pdr-results-section" style="display: none;">
+          
+          <!-- Cohesive Control Banner for Results -->
+          <div class="report-title-banner">
+            <div class="flex items-center gap-10px">
+              <div class="flex items-center justify-center" style="width: 36px; height: 36px; border-radius: 6px; background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
+                <i class="ph-bold ph-file-text font-18px"></i>
+              </div>
+              <div style="text-align: left;">
+                <div class="report-banner-title" style="margin-bottom: 2px;">Procedure Deviation Register (PDR)</div>
+                <div style="font-size: 11px; font-weight: 750; color: #64748b;">Plant: <span id="pdr-res-plant-val" style="color: var(--typo-orange); text-transform: uppercase;">ACETIC ACID</span> | Year: 2026 | OCP No: <span id="pdr-res-ocp-val" style="color: var(--typo-orange);">7</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Corporate Table styled with user-table class -->
+          <div class="user-table-wrapper" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border-radius: 8px; border: 1px solid var(--app-border, #cbd5e1); overflow-x: auto; margin: 0;">
+            <table class="user-table" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th class="user-table-center w-120px">Date Of Deviation</th>
+                  <th class="user-table-left w-350px">Details Of Deviation<br><span class="font-11px fw-normal opacity-75">(In procedure or performance criteria)</span></th>
+                  <th class="user-table-left w-300px">Correcting Action<br><span class="font-11px fw-normal opacity-75">Corrective action taken</span></th>
+                  <th class="user-table-left w-300px">Preventive action taken</th>
+                  <th class="user-table-left">Remarks</th>
+                </tr>
+              </thead>
+              <tbody id="pdr-report-results-body">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(function() {
+      // Mock report records database based on plant & OCP
+      const reportDatabase = {
+        'ACETIC ACID': {
+          '7': [
+            { date: '12/05/2026', deviation: 'Bypass feed water control valve PV-4012 during auxiliary calibration.', corrective: 'Shift technician manually stabilized primary line valves.', preventive: 'Valve actuator seals replacement scheduled in weekend shutdown.', remarks: 'Load stabilized, compliance logs recorded.' }
+          ],
+          '9': [
+            { date: '15/05/2026', deviation: 'Minor steam leak in auxiliary bypass line observed during shift.', corrective: 'Isolated bypass steam line and replaced seal gaskets.', preventive: 'Scheduled bi-weekly physical inspection audits for auxiliary lines.', remarks: 'Bypass line returned to normal operation.' }
+          ]
+        },
+        'BOILER': {
+          '7': [
+            { date: '10/05/2026', deviation: 'Safety valve calibration check failed high threshold check.', corrective: 'Recalibrated pilot valve assembly and updated control registers.', preventive: 'Installed monthly verification task checks on main feed headers.', remarks: 'Certified safe for plant startup.' }
+          ]
+        },
+        'CPP': {
+          '7': [
+            { date: '08/05/2026', deviation: 'Condensate conductivity briefly spiked above 0.3 uS/cm limit.', corrective: 'Switched to backup Polishers and blew down steam condensate.', preventive: 'Configured automated limit warnings in central DCS system.', remarks: 'Returned to safe limits without operation delay.' }
+          ]
+        }
+      };
+
+      const defaultRecord = {
+        date: '02/05/2026',
+        deviation: 'Process parameter deviated slightly during load fluctuations.',
+        corrective: 'Manually controlled steam inlet bypass valves.',
+        preventive: 'Adjusted feed controller damping factors.',
+        remarks: 'Normal values returned within boundaries.'
+      };
+
+      // Form Submit handler
+      $('#pdr-report-form').on('submit', function(e) {
+        e.preventDefault();
+
+        const plant = $('#pdr-plant').val();
+        const ocp = $('#pdr-ocp').val();
+
+        // 1. Update text values in results header
+        $('#pdr-res-plant-val').text(plant);
+        $('#pdr-res-ocp-val').text(ocp);
+
+        // 2. Fetch mock records
+        const plantData = reportDatabase[plant] || {};
+        const records = plantData[ocp] || [defaultRecord];
+
+        // 3. Render table body
+        const $tbody = $('#pdr-report-results-body');
+        $tbody.empty();
+
+        records.forEach(row => {
+          $tbody.append(`
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">${row.date}</td>
+              <td class="fw-500">${row.deviation}</td>
+              <td>${row.corrective}</td>
+              <td>${row.preventive}</td>
+              <td>${row.remarks}</td>
+            </tr>
+          `);
+        });
+
+        // 4. Show results section with a nice fade-in
+        $('#pdr-results-section').fadeIn(300);
+
+        // Success pop alert
+        Swal.fire({
+          title: 'Success!',
+          text: `Report loaded for Plant: ${plant} and OCP: ${ocp}`,
+          icon: 'success',
+          timer: 1000,
+          showConfirmButton: false
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

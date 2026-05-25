@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDR & SOP Unified Dashboard | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .pdr-dashboard-wrapper {
+      min-height: calc(100vh - 120px);
+    }
+
+    /* Modern Glassmorphic Sub-Navigation Tabs */
+    .unified-tabs-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--app-border, #e2e8f0);
+      margin-bottom: 20px;
+      /* margin-top: 10px; */
+    }
+
+    .unified-tabs {
+      display: flex;
+      gap: 16px;
+      padding-left: 4px;
+    }
+
+    .unified-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0px 12px 12px 12px;
+      color: var(--typo-secondary, #64748b);
+      font-size: 13.5px;
+      font-weight: 700;
+      border: none;
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      bottom: -2px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .unified-tab-btn:hover {
+      color: var(--typo-orange, #ea580c);
+      background: rgba(234, 88, 12, 0.04);
+      border-radius: 6px 6px 0 0;
+    }
+
+    .unified-tab-btn.active {
+      color: var(--typo-orange, #ea580c);
+      border-bottom-color: var(--typo-orange, #ea580c);
+    }
+
+    .unified-tab-btn i {
+      font-size: 18px;
+    }
+
+    /* Red bar matching PDR/SOP standard separators */
+    .pdr-red-bar {
+      height: 4px;
+      background: linear-gradient(90deg, #cc0000 0%, #ff3333 100%);
+      width: 100%;
+      margin: 16px 0 24px 0;
+      border-radius: 2px;
+    }
+
+    /* Cards Layout Styles */
+    .config-block {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #e2e8f0);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+      margin-bottom: 24px;
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .premium-config-card {
+      background: var(--app-bg, #f8fafc);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 200px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .premium-config-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--typo-orange, #ea580c);
+      opacity: 0.8;
+    }
+
+    .premium-config-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+      border-color: var(--typo-orange, #ea580c);
+    }
+
+    .premium-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(234, 88, 12, 0.08);
+      color: var(--typo-orange, #ea580c);
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .premium-btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      border-top: 1px solid var(--app-border, #e2e8f0);
+      padding-top: 16px;
+    }
+
+    /* Buttons */
+    .btn-orange-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--typo-orange, #ea580c);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+    }
+
+    .btn-orange-fill:hover {
+      background: #f97316;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+    }
+
+    .btn-orange-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ffffff;
+      color: var(--typo-orange, #ea580c) !important;
+      border: 1.5px solid var(--typo-orange, #ea580c) !important;
+      border-radius: 6px;
+      padding: 9px 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-orange-outline:hover {
+      background: #fff7ed;
+      color: #c2410c !important;
+      border-color: #c2410c !important;
+      transform: translateY(-1.5px);
+    }
+
+    /* Glassmorphic Selector box */
+    .filter-panel-card {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 16px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      max-width: 240px;
+      min-width: 160px;
+    }
+
+    .filter-label {
+      color: var(--typo-orange, #ea580c);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .filter-select {
+      width: 100%;
+      padding: 8px 12px;
+      height: 38px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 6px;
+      background: var(--app-panel, #ffffff);
+      color: var(--typo-primary);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--typo-orange, #ea580c);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+    }
+
+    /* Report Title Banners */
+    .report-title-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      padding: 14px 20px;
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-radius: 8px;
+    }
+
+    .report-banner-title {
+      color: var(--typo-orange, #ea580c) !important;
+      font-weight: 850;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .report-banner-meta {
+      color: #c2410c !important;
+      font-weight: 800;
+      font-size: 14.5px;
+    }
+
+    /* Navigation mini circular buttons [ < ] [ o ] [ > ] */
+    .mini-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0px;
+    }
+
+    .mini-nav-btn {
+      width: 28px;
+      height: 28px;
+      background-color: var(--typo-orange, #ea580c);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(234, 88, 12, 0.15);
+    }
+
+    .mini-nav-btn:hover {
+      background-color: #f97316;
+      transform: scale(1.08);
+    }
+
+    /* Status Badges */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-badge.neutral {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+
+    .status-badge.success {
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1px solid #ffedd5;
+    }
+
+    /* Table visual overrides */
+    .user-table th {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      background: var(--app-panel-alt, #edf2f8) !important;
+      color: var(--typo-primary, #1e293b) !important;
+      font-weight: 700 !important;
+      font-size: 11.5px !important;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 14px 16px !important;
+    }
+    
+    .user-table td {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      vertical-align: middle !important;
+      font-size: 13.5px !important;
+      color: var(--typo-secondary, #334155);
+      padding: 12px 16px !important;
+    }
+
+    .user-table-wrapper {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--app-border, #cbd5e1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+
+    .section-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--typo-primary);
+      margin: 0;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .brand-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand-kpi-card {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #e2e8f0);
+      border-radius: 10px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+    }
+
+    .kpi-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(234, 88, 12, 0.06);
+      color: var(--typo-orange, #ea580c);
+      font-size: 20px;
+    }
+
+    .kpi-val {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--typo-primary);
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      color: var(--typo-hint, #64748b);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--typo-orange, #ea580c);
+      display: inline-block;
+      margin-left: 6px;
+      box-shadow: 0 0 6px rgba(234, 88, 12, 0.5);
+      animation: pulse-kpi 1.8s infinite;
+    }
+
+    @keyframes pulse-kpi {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="../iso.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Unified PDR/SOP Dashboard:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between pdr-dashboard-wrapper">
+
+      <div>
+        
+        <!-- Tab Navigation Row -->
+        <div class="unified-tabs-row">
+          <div class="unified-tabs">
+            <button class="unified-tab-btn active" data-tab="edit-configs">
+              <i class="ph-bold ph-pencil-simple-line"></i>
+              <span>Registers Configuration</span>
+            </button>
+            <button class="unified-tab-btn" data-tab="mir-panel">
+              <i class="ph-bold ph-clipboard-text"></i>
+              <span>Monthly Inspection (MIR)</span>
+            </button>
+            <button class="unified-tab-btn" data-tab="pdr-reports">
+              <i class="ph-bold ph-file-text"></i>
+              <span>PDR Report</span>
+            </button>
+            <button class="unified-tab-btn" data-tab="sop-reports">
+              <i class="ph-bold ph-files"></i>
+              <span>SOP Report</span>
+            </button>
+            <button class="unified-tab-btn" data-tab="sot-report">
+              <i class="ph-bold ph-target"></i>
+              <span>SOT Report</span>
+            </button>
+            <button class="unified-tab-btn" data-tab="consumption-reg">
+              <i class="ph-bold ph-drop"></i>
+              <span>Consumption Register</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ──────────────────────────────────────────────────────── -->
+        <!-- TAB 1: REGISTERS CONFIGURATION (EDIT PANELS) -->
+        <!-- ──────────────────────────────────────────────────────── -->
+        <div id="panel-edit-configs" class="unified-tab-panel">
+          <!-- Section 1: Procedure Deviation Register (PDR) Edit -->
+          <div class="config-block">
+            <div class="section-header-row">
+              <div class="flex items-center gap-8px">
+                <i class="ph-bold ph-list-dashes font-20px color-orange" style="color: var(--typo-orange);"></i>
+                <h3 class="section-title">Procedure Deviation Register (PDR) Edit Flow</h3>
+              </div>
+              <div class="flex items-center gap-12px">
+                <label for="plant-select-pdr" class="font-12px fw-700 color-hint uppercase">Select Plant:</label>
+                <select id="plant-select-pdr" class="filter-select w-160px pdr-plant-changer" style="padding: 4px 8px; height: 32px;">
+                  <option value="BOILER">BOILER</option>
+                  <option value="CPP" selected>CPP</option>
+                  <option value="AMMONIA">AMMONIA</option>
+                  <option value="CMS">CMS</option>
+                  <option value="ACETIC ACID">ACETIC ACID</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="config-grid">
+              <!-- Card: Static Fields -->
+              <div class="premium-config-card">
+                <div>
+                  <div class="premium-card-icon">
+                    <i class="ph-bold ph-database"></i>
+                  </div>
+                  <h4 class="font-15px fw-700 color-primary uppercase mb-6px">PDR Static Fields</h4>
+                  <p class="font-12px color-hint line-height-md">Configure core benchmarks, environmental impacts, and target limits for the process register.</p>
+                </div>
+                <div class="premium-btn-group">
+                  <button class="btn-orange-fill" onclick="handlePdrAction('Static', 'Add', '#plant-select-pdr')">
+                    <i class="ph-bold ph-plus"></i> Add
+                  </button>
+                  <button class="btn-orange-outline" onclick="handlePdrAction('Static', 'View', '#plant-select-pdr')">
+                    <i class="ph-bold ph-eye"></i> View
+                  </button>
+                </div>
+              </div>
+
+              <!-- Card: Monthly Status -->
+              <div class="premium-config-card">
+                <div>
+                  <div class="premium-card-icon">
+                    <i class="ph-bold ph-calendar-blank"></i>
+                  </div>
+                  <h4 class="font-15px fw-700 color-primary uppercase mb-6px">PDR Monthly Status</h4>
+                  <p class="font-12px color-hint line-height-md">Record, modify, and review monthly deviation observations, corrective updates and preventive action plans.</p>
+                </div>
+                <div class="premium-btn-group">
+                  <button class="btn-orange-fill" onclick="handlePdrAction('Monthly', 'Add', '#plant-select-pdr')">
+                    <i class="ph-bold ph-plus"></i> Add
+                  </button>
+                  <button class="btn-orange-outline" onclick="handlePdrAction('Monthly', 'View', '#plant-select-pdr')">
+                    <i class="ph-bold ph-eye"></i> View
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Procedure Deviation Register - SOP (PDR-SOP) Edit -->
+          <div class="config-block">
+            <div class="section-header-row">
+              <div class="flex items-center gap-8px">
+                <i class="ph-bold ph-book-open font-20px color-orange" style="color: var(--typo-orange);"></i>
+                <h3 class="section-title">Procedure Deviation Register (PDR-SOP) Edit Flow</h3>
+              </div>
+              <div class="flex items-center gap-12px">
+                <label for="plant-select-sop" class="font-12px fw-700 color-hint uppercase">Select Plant:</label>
+                <select id="plant-select-sop" class="filter-select w-160px sop-plant-changer" style="padding: 4px 8px; height: 32px;">
+                  <option value="BOILER">BOILER</option>
+                  <option value="CPP" selected>CPP</option>
+                  <option value="AMMONIA">AMMONIA</option>
+                  <option value="CMS">CMS</option>
+                  <option value="ACETIC ACID">ACETIC ACID</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="config-grid" style="grid-template-columns: 1fr;">
+              <!-- Card: SOP Monthly Status -->
+              <div class="premium-config-card">
+                <div>
+                  <div class="premium-card-icon">
+                    <i class="ph-bold ph-notebook"></i>
+                  </div>
+                  <h4 class="font-15px fw-700 color-primary uppercase mb-6px">SOP Monthly Status</h4>
+                  <p class="font-12px color-hint line-height-md">Track deviations directly linked to Standard Operating Procedures (SOPs). Update logs, analyze root causes, and submit preventive actions for validation.</p>
+                </div>
+                <div class="premium-btn-group" style="justify-content: flex-start; max-width: 320px;">
+                  <button class="btn-orange-fill" onclick="handleSopEditAction('Add', '#plant-select-sop')">
+                    <i class="ph-bold ph-plus"></i> Add SOP Status
+                  </button>
+                  <button class="btn-orange-outline" onclick="handleSopEditAction('View', '#plant-select-sop')">
+                    <i class="ph-bold ph-eye"></i> View SOP Status
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ──────────────────────────────────────────────────────── -->
+        <!-- TAB 2: MONTHLY INSPECTION REPORT (MIR) -->
+        <!-- ──────────────────────────────────────────────────────── -->
+        <div id="panel-mir-panel" class="unified-tab-panel" style="display: none;">
+          <!-- Report Header Title Bar with Timeline controls -->
+          <div class="report-title-banner">
+            <div>
+              <div class="report-banner-title" style="margin-bottom: 4px;">MONTHLY INSPECTION REPORT(MIR)</div>
+              <div class="report-banner-meta">Month: MAY 2026 | Status: ACTIVE</div>
+            </div>
+            <div class="mini-nav-row">
+              <span class="timeline-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
+              <button class="mini-nav-btn" onclick="handleTimeline('prev', 'MIR')"><i class="ph-bold ph-caret-left"></i></button>
+              <button class="mini-nav-btn" onclick="handleTimeline('reset', 'MIR')"><i class="ph-bold ph-circle"></i></button>
+              <button class="mini-nav-btn" onclick="handleTimeline('next', 'MIR')"><i class="ph-bold ph-caret-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Corporate Table -->
+          <div class="user-table-wrapper">
+            <table class="user-table">
+              <thead>
+                <!-- Row 1 Headers -->
+                <tr>
+                  <th rowspan="2" class="user-table-center w-100px">OCP NO</th>
+                  <th rowspan="2" class="user-table-left w-350px">OCP Purpose</th>
+                  <th rowspan="2" class="user-table-left w-300px">Performance Criteria</th>
+                  <th colspan="2" class="user-table-center">Measurement</th>
+                  <th class="user-table-left">Corrective Action</th>
+                </tr>
+                <!-- Row 2 Headers -->
+                <tr>
+                  <th class="user-table-center w-150px">Previous</th>
+                  <th class="user-table-center w-150px">Present</th>
+                  <th class="user-table-left">Preventive action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- OCP Entry 1 (Unregistered sections) -->
+                <tr class="user-table-row">
+                  <td rowspan="4" class="user-table-center font-14px fw-600 color-hint">-</td>
+                  <td rowspan="4" class="color-hint italic font-13px">No static parameters registered for this section</td>
+                  <td rowspan="4" class="color-hint italic font-13px">-</td>
+                  <td class="user-table-center"><span class="status-badge neutral">N L</span></td>
+                  <td class="user-table-center"><span class="status-badge success">NIL</span></td>
+                  <td>NIL</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center"><span class="status-badge neutral">N L</span></td>
+                  <td class="user-table-center"><span class="status-badge success">NIL</span></td>
+                  <td>NIL</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center"><span class="status-badge neutral">N L</span></td>
+                  <td class="user-table-center"><span class="status-badge success">NIL</span></td>
+                  <td>NIL</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center"><span class="status-badge neutral">N L</span></td>
+                  <td class="user-table-center"><span class="status-badge success">NIL</span></td>
+                  <td>NIL</td>
+                </tr>
+
+                <!-- OCP Entry 2 (OCP 8) -->
+                <tr class="user-table-row">
+                  <td rowspan="2" class="user-table-center font-14px fw-600">8</td>
+                  <td rowspan="2" class="fw-500">Safe disposal of used cotton waste, hand gloves, teflon/asbestos gaskets and S.S./M.S. scrap.</td>
+                  <td rowspan="2">To reduce land, water and air pollution</td>
+                  <td rowspan="2" class="user-table-center"><span class="status-badge neutral">N L</span></td>
+                  <td rowspan="2" class="user-table-center"><span class="status-badge success">NIL</span></td>
+                  <td>NIL</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td>NIL</td>
+                </tr>
+
+                <!-- OCP Entry 3 (OCP 9) -->
+                <tr class="user-table-row">
+                  <td rowspan="2" class="user-table-center font-14px fw-600">9</td>
+                  <td rowspan="2" class="fw-500">Safe disposal of chemical containers, hazardous fluids, and acidic wastewater streams.</td>
+                  <td rowspan="2">To prevent contamination of wastewater streams and soil</td>
+                  <td rowspan="2" class="user-table-center"><span class="status-badge neutral">N L</span></td>
+                  <td rowspan="2" class="user-table-center"><span class="status-badge success">NIL</span></td>
+                  <td>NIL</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td>NIL</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ──────────────────────────────────────────────────────── -->
+        <!-- TAB 3: PDR REPORT -->
+        <!-- ──────────────────────────────────────────────────────── -->
+        <div id="panel-pdr-reports" class="unified-tab-panel" style="display: none;">
+          <!-- Selection Form Card -->
+          <div class="filter-panel-card">
+            <form id="pdr-report-filter-form">
+              <div class="filter-row">
+                <div class="filter-group">
+                  <label class="filter-label">Plant</label>
+                  <select id="pdr-rep-plant" class="filter-select">
+                    <option value="BOILER">BOILER</option>
+                    <option value="CPP" selected>CPP</option>
+                    <option value="AMMONIA">AMMONIA</option>
+                    <option value="CMS">CMS</option>
+                    <option value="ACETIC ACID">ACETIC ACID</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label class="filter-label">OCP Number</label>
+                  <select id="pdr-rep-ocp" class="filter-select">
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn-orange-fill" style="height: 38px; padding: 0 32px;">
+                  <i class="ph-bold ph-funnel"></i> View Report
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Report Results Section -->
+          <div id="pdr-report-results">
+            <div class="report-title-banner">
+              <div>
+                <div class="report-banner-title" style="margin-bottom: 4px;">PROCEDURE DEVIATION REGISTER(PDR)</div>
+                <div class="report-banner-meta">Plant: <span id="pdr-res-plant">CPP</span> | Year: 2026 | OCP No: <span id="pdr-res-ocp">7</span></div>
+              </div>
+              <div class="mini-nav-row">
+                <span class="timeline-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
+                <button class="mini-nav-btn" onclick="handleTimeline('prev', 'PDR')"><i class="ph-bold ph-caret-left"></i></button>
+                <button class="mini-nav-btn" onclick="handleTimeline('reset', 'PDR')"><i class="ph-bold ph-circle"></i></button>
+                <button class="mini-nav-btn" onclick="handleTimeline('next', 'PDR')"><i class="ph-bold ph-caret-right"></i></button>
+              </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center w-120px">Date Of Deviation</th>
+                    <th class="user-table-left w-350px">Details Of Deviation<br><span class="font-11px fw-normal opacity-75">(In procedure or performance criteria)</span></th>
+                    <th class="user-table-left w-300px">Correcting Action<br><span class="font-11px fw-normal opacity-75">Corrective action taken</span></th>
+                    <th class="user-table-left w-300px">Preventive action taken</th>
+                    <th class="user-table-left">Remarks</th>
+                  </tr>
+                </thead>
+                <tbody id="pdr-report-tbody">
+                  <tr class="user-table-row" data-plant="BOILER" data-ocp="7">
+                    <td class="user-table-center font-14px fw-600">12/05/2026</td>
+                    <td class="fw-500">Bypass feed water control valve PV-4012 during auxiliary calibration.</td>
+                    <td>Shift technician manually stabilized primary line valves.</td>
+                    <td>Valve actuator seals replacement scheduled in weekend shutdown.</td>
+                    <td>Load stabilized, compliance logs recorded.</td>
+                  </tr>
+                  <tr class="user-table-row" data-plant="BOILER" data-ocp="8">
+                    <td class="user-table-center font-14px fw-600">19/05/2026</td>
+                    <td class="fw-500">Superheater outlet pressure gauge deviation of +0.4 bar.</td>
+                    <td>Re-zeroed pressure transmitters and verified line pressure.</td>
+                    <td>Calibrated secondary master gauge in next shift.</td>
+                    <td>Deviation cleared.</td>
+                  </tr>
+                  <tr class="user-table-row" data-plant="CPP" data-ocp="7">
+                    <td class="user-table-center font-14px fw-600">08/05/2026</td>
+                    <td class="fw-500">Condensate conductivity briefly spiked above 0.3 uS/cm limit.</td>
+                    <td>Switched to backup Polishers and blew down steam condensate.</td>
+                    <td>Configured automated limit warnings in central DCS system.</td>
+                    <td>Returned to safe limits without operation delay.</td>
+                  </tr>
+                  <tr class="user-table-row" data-plant="CPP" data-ocp="8">
+                    <td class="user-table-center font-14px fw-600">10/05/2026</td>
+                    <td class="fw-500">Turbine bearing temperature high alarm triggered due to oil flow lag.</td>
+                    <td>Cleaned lube oil filters and adjusted pressure controller.</td>
+                    <td>Added alarm setpoints validation in regular preventive checklist.</td>
+                    <td>Temperatures stabilized immediately.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ──────────────────────────────────────────────────────── -->
+        <!-- TAB 4: SOP REPORT -->
+        <!-- ──────────────────────────────────────────────────────── -->
+        <div id="panel-sop-reports" class="unified-tab-panel" style="display: none;">
+          <!-- Selection Form Card -->
+          <div class="filter-panel-card">
+            <form id="sop-report-filter-form">
+              <div class="filter-row">
+                <div class="filter-group">
+                  <label class="filter-label">Plant</label>
+                  <select id="sop-rep-plant" class="filter-select">
+                    <option value="BOILER">BOILER</option>
+                    <option value="CPP" selected>CPP</option>
+                    <option value="AMMONIA">AMMONIA</option>
+                    <option value="CMS">CMS</option>
+                    <option value="ACETIC ACID">ACETIC ACID</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label class="filter-label">SOP Number</label>
+                  <select id="sop-rep-no" class="filter-select">
+                    <option value="SOP-01">SOP-01</option>
+                    <option value="SOP-02">SOP-02</option>
+                    <option value="SOP-03">SOP-03</option>
+                    <option value="SOP-04">SOP-04</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn-orange-fill" style="height: 38px; padding: 0 32px;">
+                  <i class="ph-bold ph-funnel"></i> View Report
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Report Results Section -->
+          <div id="sop-report-results">
+            <div class="report-title-banner">
+              <div>
+                <div class="report-banner-title" style="margin-bottom: 4px;">PDR-SOP REPORT</div>
+                <div class="report-banner-meta">Plant: <span id="sop-res-plant">CPP</span> | Year: 2026 | SOP No: <span id="sop-res-no">SOP-01</span></div>
+              </div>
+              <div class="mini-nav-row">
+                <span class="timeline-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
+                <button class="mini-nav-btn" onclick="handleTimeline('prev', 'SOP')"><i class="ph-bold ph-caret-left"></i></button>
+                <button class="mini-nav-btn" onclick="handleTimeline('reset', 'SOP')"><i class="ph-bold ph-circle"></i></button>
+                <button class="mini-nav-btn" onclick="handleTimeline('next', 'SOP')"><i class="ph-bold ph-caret-right"></i></button>
+              </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center w-100px">SOP NO</th>
+                    <th class="user-table-left w-250px">SOP Purpose</th>
+                    <th class="user-table-left w-250px">Performance Criteria</th>
+                    <th class="user-table-left w-250px">Details of deviation</th>
+                    <th class="user-table-left w-250px">Root Cause of deviation</th>
+                    <th class="user-table-left w-250px">Corrective Action / Preventive action</th>
+                    <th class="user-table-left">Remarks</th>
+                  </tr>
+                </thead>
+                <tbody id="sop-report-tbody">
+                  <tr class="user-table-row" data-plant="CPP" data-sop="SOP-01">
+                    <td class="user-table-center font-14px fw-600">SOP-01</td>
+                    <td class="fw-500">Start-up of Boiler Feed Pump (BFP)</td>
+                    <td>Ensure lube oil pressure &gt; 1.5 kg/cm2 before main pump trigger.</td>
+                    <td>Lube oil pressure fell to 1.3 kg/cm2 during priming step.</td>
+                    <td>Clogged secondary suction screen strainer.</td>
+                    <td>Cleaned suction strainer, added pressure test to daily checklist.</td>
+                    <td>Pressure restored to 1.6 kg/cm2, BFP started safely.</td>
+                  </tr>
+                  <tr class="user-table-row" data-plant="CPP" data-sop="SOP-02">
+                    <td class="user-table-center font-14px fw-600">SOP-02</td>
+                    <td class="fw-500">Turbine Gland Sealing System operation</td>
+                    <td>Maintain gland steam header pressure at 0.15 to 0.25 bar.</td>
+                    <td>Gland pressure dropped to 0.08 bar for 15 minutes during start.</td>
+                    <td>Gland steam pressure regulator valve mechanical sticking.</td>
+                    <td>Manually operated regulator, applied high-temp lubricant on valve spindle.</td>
+                    <td>Gland vacuum restored, no turbine exhaust disturbance recorded.</td>
+                  </tr>
+                  <tr class="user-table-row" data-plant="BOILER" data-sop="SOP-01">
+                    <td class="user-table-center font-14px fw-600">SOP-01</td>
+                    <td class="fw-500">Boiler Hydro-Test procedure</td>
+                    <td>Hold drum test pressure at 125 kg/cm2 for 10 minutes.</td>
+                    <td>Hydro pressure decayed by 2 kg/cm2 during hold period.</td>
+                    <td>Minor valve passing at secondary blowdown valve inline seat.</td>
+                    <td>Re-tightened blowdown isolation valve gland, scheduled valve lapping.</td>
+                    <td>Lapping completed, re-test achieved steady 125 kg/cm2 pressure hold.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ──────────────────────────────────────────────────────── -->
+        <!-- TAB 5: SOT REPORT -->
+        <!-- ──────────────────────────────────────────────────────── -->
+        <div id="panel-sot-report" class="unified-tab-panel" style="display: none;">
+          <!-- Cohesive Control Banner for SOT -->
+          <div class="report-title-banner" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-radius: 8px; margin-bottom: 20px; background: rgba(234, 88, 12, 0.04); border: 1px solid rgba(234, 88, 12, 0.15);">
+            <div class="flex items-center gap-10px">
+              <div class="flex items-center justify-center" style="width: 36px; height: 36px; border-radius: 6px; background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
+                <i class="ph-bold ph-target font-18px"></i>
+              </div>
+              <div style="text-align: left;">
+                <div class="report-banner-title" style="margin-bottom: 2px; font-size: 13.5px; font-weight: 800; text-transform: uppercase;">Status of Objectives and Targets (SOT)</div>
+                <div class="report-banner-meta" style="font-size: 11px;">YEAR: <span id="sot-tab-active-year">2025 - 2026</span></div>
+              </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 24px;">
+              <!-- Timeline navigation -->
+              <div class="mini-nav-row" style="margin-bottom: 0;">
+                <span class="timeline-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
+                <button class="mini-nav-btn" onclick="handleSotTabTimeline('prev')"><i class="ph-bold ph-caret-left"></i></button>
+                <button class="mini-nav-btn" onclick="handleSotTabTimeline('reset')"><i class="ph-bold ph-circle"></i></button>
+                <button class="mini-nav-btn" onclick="handleSotTabTimeline('next')"><i class="ph-bold ph-caret-right"></i></button>
+              </div>
+
+              <!-- Search and count -->
+              <div class="flex items-center gap-12px">
+                <input type="text" id="sot-tab-search" class="filter-select" placeholder="Search objectives..." style="height: 34px; width: 200px; border-radius: 6px; padding: 0 10px; font-size: 12px; border: 1.5px solid var(--app-border, #cbd5e1);">
+                <div style="font-size: 12px; font-weight: 700; color: #64748b; white-space: nowrap;">
+                  Showing: <span id="sot-tab-count-badge" style="color: var(--typo-orange);">5</span> Records
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="sot-tab-results">
+
+            <!-- Results Table -->
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center w-50px">Sr</th>
+                    <th class="user-table-left" style="min-width: 160px;">Objective</th>
+                    <th class="user-table-center w-100px">Base Level</th>
+                    <th class="user-table-center w-110px">Target Value</th>
+                    <th class="user-table-center w-80px">Unit</th>
+                    <th class="user-table-center w-55px">Apr</th>
+                    <th class="user-table-center w-55px">May</th>
+                    <th class="user-table-center w-55px">Jun</th>
+                    <th class="user-table-center w-55px">Jul</th>
+                    <th class="user-table-center w-55px">Aug</th>
+                    <th class="user-table-center w-55px">Sep</th>
+                    <th class="user-table-center w-55px">Oct</th>
+                    <th class="user-table-center w-55px">Nov</th>
+                    <th class="user-table-center w-55px">Dec</th>
+                    <th class="user-table-center w-55px">Jan</th>
+                    <th class="user-table-center w-55px">Feb</th>
+                    <th class="user-table-center w-55px">Mar</th>
+                    <th class="user-table-center w-70px">Tot</th>
+                  </tr>
+                </thead>
+                <tbody id="sot-tab-tbody">
+                  <tr class="user-table-row" data-search-term="action 99">
+                    <td class="user-table-center">1</td>
+                    <td class="user-table-left fw-600" style="color: var(--typo-orange);">Action 99</td>
+                    <td class="user-table-center">380</td>
+                    <td class="user-table-center">368</td>
+                    <td class="user-table-center">ltr</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                  </tr>
+                  <tr class="user-table-row" data-search-term="canvas h/g">
+                    <td class="user-table-center">2</td>
+                    <td class="user-table-left fw-600" style="color: var(--typo-orange);">Canvas H/G</td>
+                    <td class="user-table-center">470</td>
+                    <td class="user-table-center">455</td>
+                    <td class="user-table-center">Pairs</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                  </tr>
+                  <tr class="user-table-row" data-search-term="cotton waste">
+                    <td class="user-table-center">3</td>
+                    <td class="user-table-left fw-600" style="color: var(--typo-orange);">Cotton Waste</td>
+                    <td class="user-table-center">390</td>
+                    <td class="user-table-center">378</td>
+                    <td class="user-table-center">Kgs</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                  </tr>
+                  <tr class="user-table-row" data-search-term="manapat">
+                    <td class="user-table-center">4</td>
+                    <td class="user-table-left fw-600" style="color: var(--typo-orange);">Manapat</td>
+                    <td class="user-table-center">495</td>
+                    <td class="user-table-center">480</td>
+                    <td class="user-table-center">meter</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                  </tr>
+                  <tr class="user-table-row" data-search-term="pvc sheet">
+                    <td class="user-table-center">5</td>
+                    <td class="user-table-left fw-600" style="color: var(--typo-orange);">PVC Sheet</td>
+                    <td class="user-table-center">350</td>
+                    <td class="user-table-center">339</td>
+                    <td class="user-table-center">Kgs.</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                    <td class="user-table-center">0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ──────────────────────────────────────────────────────── -->
+        <!-- TAB 6: CONSUMPTION REGISTER -->
+        <!-- ──────────────────────────────────────────────────────── -->
+        <div id="panel-consumption-reg" class="unified-tab-panel" style="display: none;">
+          <!-- Select plant dropdown / Header Bar -->
+          <div class="report-title-banner" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-radius: 8px; margin-bottom: 24px; background: rgba(234, 88, 12, 0.04); border: 1px solid rgba(234, 88, 12, 0.15);">
+            <div class="flex items-center gap-10px">
+              <div class="flex items-center justify-center" style="width: 36px; height: 36px; border-radius: 6px; background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
+                <i class="ph-bold ph-factory font-18px"></i>
+              </div>
+              <div style="text-align: left;">
+                <h3 style="font-size: 14px; font-weight: 800; color: var(--typo-primary); text-transform: uppercase; margin: 0; letter-spacing: 0.02em;">Consumption Parameters Setup</h3>
+                <p style="font-size: 11.5px; color: var(--typo-hint, #64748b); font-weight: 600; margin: 0; line-height: 1.3;">Configure parameters and view monthly updates for the selected plant registry</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-12px">
+              <label for="plant-select-cons-tab" class="filter-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-bottom: 0; letter-spacing: 0.05em;">Select Plant:</label>
+              <select id="plant-select-cons-tab" class="filter-select w-200px" style="cursor: pointer; height: 38px; border-radius: 6px; font-weight: 600; padding: 0 12px; border: 1.5px solid var(--app-border, #cbd5e1);">
+                <option value="BOILER">BOILER</option>
+                <option value="CPP">CPP</option>
+                <option value="AMMONIA">AMMONIA</option>
+                <option value="CMS">CMS</option>
+                <option value="ACETIC ACID" selected>ACETIC ACID</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Configuration Flow cards -->
+          <div class="config-grid">
+            <!-- Card 1: Static Fields -->
+            <div class="premium-config-card">
+              <div>
+                <div class="premium-card-icon">
+                  <i class="ph-bold ph-database"></i>
+                </div>
+                <h4 class="font-15px fw-700 color-primary uppercase mb-6px">Static Fields</h4>
+                <p class="font-12px color-hint line-height-md">Configure base materials, measurement formulas, baseline volumes, and active target units for the consumption registry.</p>
+              </div>
+              <div class="premium-btn-group">
+                <button class="btn-orange-fill" onclick="handleConsumptionTab('Static', 'Add')">
+                  <i class="ph-bold ph-plus"></i> Add
+                </button>
+                <button class="btn-orange-outline" onclick="handleConsumptionTab('Static', 'View')">
+                  <i class="ph-bold ph-eye"></i> View
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 2: Monthly Status -->
+            <div class="premium-config-card">
+              <div>
+                <div class="premium-card-icon">
+                  <i class="ph-bold ph-calendar-check"></i>
+                </div>
+                <h4 class="font-15px fw-700 color-primary uppercase mb-6px">Monthly Status</h4>
+                <p class="font-12px color-hint line-height-md">Review actual values entered, progressive totals, month-on-month resource performance ratios, and generate compliance graphs.</p>
+              </div>
+              <div class="premium-btn-group">
+                <button class="btn-orange-fill" onclick="handleConsumptionTab('Monthly', 'View')">
+                  <i class="ph-bold ph-eye"></i> View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ─── ADD SOP DEVIATION LOG MODAL ─── -->
+  <div id="add-sop-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h2 class="gnfc-modal-title">ADD SOP DEVIATION LOG</h2>
+        <button id="close-sop-modal" class="gnfc-modal-close" title="Close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
+          <div>
+            <label class="gnfc-modal-label">SOP NO *</label>
+            <input id="swal-sop-no" class="gnfc-modal-input" placeholder="Type SOP No...">
+          </div>
+          <div>
+            <label class="gnfc-modal-label">SOP PURPOSE *</label>
+            <input id="swal-sop-purpose" class="gnfc-modal-input" placeholder="Purpose of SOP...">
+          </div>
+          <div style="grid-column: span 2;">
+            <label class="gnfc-modal-label">DETAILS OF DEVIATION *</label>
+            <textarea id="swal-sop-deviation" class="gnfc-modal-input" placeholder="Detail any deviations..." style="height: 90px; resize: vertical;"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="cancel-sop-modal">Cancel</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="save-sop-modal">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── JAVASCRIPT CONTROL LOGIC ─── -->
+  <script>
+    $(function() {
+      // Close SOP modal
+      const closeSopModal = () => {
+        $('#add-sop-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      };
+      
+      $('#close-sop-modal, #cancel-sop-modal').on('click', closeSopModal);
+      
+      $('#add-sop-modal').on('click', function(e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) closeSopModal();
+      });
+      
+      $(document).on('keydown', function(e) {
+        if (e.key === 'Escape' && $('#add-sop-modal').hasClass('is-open')) closeSopModal();
+      });
+
+      // Save SOP Deviation Log
+      $('#save-sop-modal').on('click', function() {
+        const plant = $('#add-sop-modal').attr('data-plant') || '';
+        const sopNo = $('#swal-sop-no').val().trim();
+        const purpose = $('#swal-sop-purpose').val().trim();
+        const deviation = $('#swal-sop-deviation').val().trim();
+        
+        if (!sopNo || !purpose || !deviation) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Please fill all required fields.',
+            icon: 'error',
+            confirmButtonColor: '#ea580c'
+          });
+          return;
+        }
+        
+        closeSopModal();
+        
+        Swal.fire({
+          title: 'Saved!',
+          text: `SOP Deviation Log recorded successfully for Plant: ${plant}.`,
+          icon: 'success',
+          confirmButtonColor: '#ea580c'
+        });
+      });
+
+      // 1. Tab Navigation Logic
+      $('.unified-tab-btn').on('click', function() {
+        const targetTab = $(this).data('tab');
+        
+        // Remove active class from buttons and set current active
+        $('.unified-tab-btn').removeClass('active');
+        $(this).addClass('active');
+
+        // Hide all panels with fade transition and show target
+        $('.unified-tab-panel').fadeOut(150, function() {
+          if ($(`#panel-${targetTab}`).length) {
+            $(`#panel-${targetTab}`).fadeIn(200);
+          }
+        });
+      });
+
+      // 2. Synchronize active plant select box outputs
+      $('.pdr-plant-changer').on('change', function() {
+        const val = $(this).val();
+        $('#plant-select-sop').val(val);
+      });
+
+      $('.sop-plant-changer').on('change', function() {
+        const val = $(this).val();
+        $('#plant-select-pdr').val(val);
+      });
+
+      // 3. Handle PDR Report Filtering
+      $('#pdr-report-filter-form').on('submit', function(e) {
+        e.preventDefault();
+        const plant = $('#pdr-rep-plant').val();
+        const ocp = $('#pdr-rep-ocp').val();
+
+        // Update headers
+        $('#pdr-res-plant').text(plant);
+        $('#pdr-res-ocp').text(ocp);
+
+        // Filter rows
+        let matches = 0;
+        $('#pdr-report-tbody tr').each(function() {
+          const rowPlant = $(this).attr('data-plant');
+          const rowOcp = $(this).attr('data-ocp');
+          if (rowPlant === plant && rowOcp === ocp) {
+            $(this).show();
+            matches++;
+          } else {
+            $(this).hide();
+          }
+        });
+
+        Swal.fire({
+          title: 'Report Generated',
+          text: `Displaying PDR data for ${plant} - OCP No: ${ocp}`,
+          icon: 'success',
+          timer: 1200,
+          showConfirmButton: false
+        });
+      });
+
+      // 4. Handle SOP Report Filtering
+      $('#sop-report-filter-form').on('submit', function(e) {
+        e.preventDefault();
+        const plant = $('#sop-rep-plant').val();
+        const sopNo = $('#sop-rep-no').val();
+
+        // Update headers
+        $('#sop-res-plant').text(plant);
+        $('#sop-res-no').text(sopNo);
+
+        // Filter rows
+        let matches = 0;
+        $('#sop-report-tbody tr').each(function() {
+          const rowPlant = $(this).attr('data-plant');
+          const rowSop = $(this).attr('data-sop');
+          if (rowPlant === plant && rowSop === sopNo) {
+            $(this).show();
+            matches++;
+          } else {
+            $(this).hide();
+          }
+        });
+
+        Swal.fire({
+          title: 'SOP Report Loaded',
+          text: `Displaying SOP data for ${plant} - SOP No: ${sopNo}`,
+          icon: 'success',
+          timer: 1200,
+          showConfirmButton: false
+        });
+      });
+
+      // 5. Initialize filters on load
+      const initReportFilters = () => {
+        // PDR default
+        const pdrPlant = $('#pdr-rep-plant').val();
+        const pdrOcp = $('#pdr-rep-ocp').val();
+        $('#pdr-res-plant').text(pdrPlant);
+        $('#pdr-res-ocp').text(pdrOcp);
+        $('#pdr-report-tbody tr').each(function() {
+          const rowPlant = $(this).attr('data-plant');
+          const rowOcp = $(this).attr('data-ocp');
+          if (rowPlant === pdrPlant && rowOcp === pdrOcp) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+
+        // SOP default
+        const sopPlant = $('#sop-rep-plant').val();
+        const sopNo = $('#sop-rep-no').val();
+        $('#sop-res-plant').text(sopPlant);
+        $('#sop-res-no').text(sopNo);
+        $('#sop-report-tbody tr').each(function() {
+          const rowPlant = $(this).attr('data-plant');
+          const rowSop = $(this).attr('data-sop');
+          if (rowPlant === sopPlant && rowSop === sopNo) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      };
+      initReportFilters();
+    });
+
+    // 5. Navigation button actions inside tabs
+    function handlePdrAction(section, action, selectorId) {
+      const plant = $(selectorId).val();
+      
+      if (section === 'Static' && action === 'Add') {
+        window.location.href = `pdr_add_static.html?plant=${encodeURIComponent(plant)}`;
+      } else if (section === 'Static' && action === 'View') {
+        window.location.href = `pdr_view_static.html?plant=${encodeURIComponent(plant)}`;
+      } else if (section === 'Monthly' && action === 'Add') {
+        window.location.href = `pdr_add_monthly.html?plant=${encodeURIComponent(plant)}`;
+      } else if (section === 'Monthly' && action === 'View') {
+        window.location.href = `pdr_view_monthly.html?plant=${encodeURIComponent(plant)}`;
+      }
+    }
+
+    // SOP Edit configuration interactions
+    function handleSopEditAction(action, selectorId) {
+      const plant = $(selectorId).val();
+      
+      if (action === 'Add') {
+        // Reset inputs
+        $('#swal-sop-no').val('');
+        $('#swal-sop-purpose').val('');
+        $('#swal-sop-deviation').val('');
+        
+        // Store plant on modal
+        $('#add-sop-modal').attr('data-plant', plant);
+        
+        // Show modal
+        $('#add-sop-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      } else {
+        Swal.fire({
+          title: 'SOP Registers List',
+          text: `Opening deviation register logs list for SOPs under plant "${plant}"`,
+          icon: 'info',
+          confirmButtonColor: '#ea580c'
+        });
+      }
+    }
+
+    // Mini Navigation timeline interactions [ < ] [ o ] [ > ]
+    function handleTimeline(action, moduleName) {
+      let message = '';
+      if (action === 'prev') {
+        message = 'Navigated to previous log timeline (April 2026)';
+      } else if (action === 'next') {
+        message = 'Navigated to next log timeline (June 2026)';
+      } else {
+        message = 'Reset to current active audit timeline (May 2026)';
+      }
+
+      Swal.fire({
+        title: `${moduleName} Timeline Update`,
+        text: message,
+        icon: 'info',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      // SOT Tab Timeline logic
+      const sotYears = ["2024 - 2025", "2025 - 2026", "2026 - 2027"];
+      let activeSotIndex = 1;
+
+      window.handleSotTabTimeline = function(direction) {
+        if (direction === 'prev') {
+          if (activeSotIndex > 0) activeSotIndex--;
+        } else if (direction === 'next') {
+          if (activeSotIndex < sotYears.length - 1) activeSotIndex++;
+        } else if (direction === 'reset') {
+          activeSotIndex = 1;
+        }
+        $('#sot-tab-active-year').text(sotYears[activeSotIndex]);
+
+        Swal.fire({
+          icon: 'success',
+          title: `Timeline Changed`,
+          text: `Displaying records for Year ${sotYears[activeSotIndex]}`,
+          timer: 1200,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+      };
+
+      // SOT Tab Search logic
+      $('#sot-tab-search').on('input', function() {
+        const query = $(this).val().toLowerCase().trim();
+        let visibleCount = 0;
+
+        $('#sot-tab-tbody tr').each(function() {
+          const term = $(this).data('search-term') || '';
+          if (term.includes(query)) {
+            $(this).show();
+            visibleCount++;
+          } else {
+            $(this).hide();
+          }
+        });
+        $('#sot-tab-count-badge').text(visibleCount);
+      });
+
+      // Consumption Register tab actions redirect
+      window.handleConsumptionTab = function(section, action) {
+        const plant = $('#plant-select-cons-tab').val();
+        
+        Swal.fire({
+          title: `${action} ${section} Fields`,
+          text: `Navigating to config flow for Plant: ${plant}`,
+          icon: 'info',
+          timer: 1500,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+
+        setTimeout(() => {
+          if (section === 'Static' && action === 'Add') {
+            window.location.href = `consumption_add_static.html?plant=${encodeURIComponent(plant)}`;
+          } else if (section === 'Static' && action === 'View') {
+            window.location.href = `consumption_view_static.html?plant=${encodeURIComponent(plant)}`;
+          } else if (section === 'Monthly' && action === 'View') {
+            window.location.href = `consumption_view_monthly.html?plant=${encodeURIComponent(plant)}`;
+          }
+        }, 1000);
+      };
+    }
+  </script>
+</body>
+
+</html>

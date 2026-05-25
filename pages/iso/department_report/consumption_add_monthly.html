@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Monthly Consumption | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .cons-view-content {
+      min-height: calc(100vh - 120px);
+    }
+
+    .cons-view-card {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+      margin-top: 24px;
+    }
+    
+    .cons-monthly-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--app-border, #cbd5e1);
+      padding-bottom: 14px;
+    }
+    
+    .cons-plant-label {
+      color: var(--typo-orange, #ea580c) !important;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 850;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .cons-center-title {
+      color: var(--typo-primary) !important;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .cons-date-label {
+      color: var(--typo-secondary) !important;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 750;
+      font-size: 14px;
+      background: var(--app-bg, #f1f5f9);
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--app-border, #e2e8f0);
+    }
+
+    .pdr-table-input {
+      width: 100%;
+      height: 38px;
+      padding: 8px 12px;
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--typo-primary);
+      background: var(--app-panel, #ffffff);
+      transition: all 0.2s ease;
+    }
+    
+    .pdr-table-input:focus {
+      outline: none;
+      border-color: var(--typo-orange, #ea580c);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
+    }
+    
+    /* Buttons */
+    .cons-btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .btn-orange-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--typo-orange, #ea580c);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 24px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+    }
+
+    .btn-orange-fill:hover {
+      background: #f97316;
+      transform: translateY(-1.5px);
+    }
+
+    .btn-orange-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ffffff;
+      color: var(--typo-orange, #ea580c) !important;
+      border: 1.5px solid var(--typo-orange, #ea580c) !important;
+      border-radius: 6px;
+      padding: 9px 22px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-orange-outline:hover {
+      background: #fff7ed;
+      color: #c2410c !important;
+      border-color: #c2410c !important;
+      transform: translateY(-1.5px);
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="consumption_register.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Consumption Register:consumption_register.html,Add Monthly Status:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between cons-view-content">
+
+      <div>
+        <!-- Action Bar -->
+        <div class="action-bar-panel calib-action-bar">
+          <div class="calib-action-left">
+            <div class="calib-action-icon-box" style="background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
+              <i class="ph-fill ph-plus-circle"></i>
+            </div>
+            <div>
+              <div class="calib-action-title-group">
+                <h2 class="calib-action-title">Add Monthly Consumption Value</h2>
+                <span class="calib-action-badge" style="background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">IMS/F/INST/46</span>
+              </div>
+              <p class="calib-action-subtitle">Log resource actual consumption values for current calendar month</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modern Card Wrapper -->
+        <div class="cons-view-card">
+          <div class="cons-monthly-header-bar">
+            <div class="cons-plant-label">
+              <i class="ph-bold ph-buildings"></i> Plant: <span id="cons-plant-name">ACETIC ACID</span>
+            </div>
+            <div class="cons-center-title">Consumption register</div>
+            <div class="cons-date-label">May 2026</div>
+          </div>
+
+          <form id="cons-monthly-form">
+            <!-- Corporate Table system from style.css (class applied: user-table) -->
+            <div class="user-table-wrapper" style="margin: 0;">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center w-80px">Sr No</th>
+                    <th class="user-table-left">Parameter Name / Metric</th>
+                    <th class="user-table-center w-120px">Base Level</th>
+                    <th class="user-table-center w-120px">Target Budget</th>
+                    <th class="user-table-center w-100px">Unit</th>
+                    <th class="user-table-center w-200px">Actual Value *</th>
+                  </tr>
+                </thead>
+                <tbody id="cons-monthly-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="cons-btn-row">
+              <button type="submit" class="btn-orange-fill">
+                <i class="ph-bold ph-floppy-disk"></i> Save Value
+              </button>
+              <button type="button" class="btn-orange-outline" onclick="window.location.href='consumption_register.html'">
+                <i class="ph-bold ph-x"></i> Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(function() {
+      // 1. Read Plant from URL query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant') || 'ACETIC ACID';
+      $('#cons-plant-name').text(plant);
+
+      // 2. Mock parameters based on plant
+      const mockDatabase = {
+        'ACETIC ACID': [
+          { sr: '1', name: 'Specific Power Consumption', base: '260', target: '250', unit: 'kWh/MT' },
+          { sr: '2', name: 'Specific Steam Consumption', base: '1.45', target: '1.40', unit: 'MT/MT' }
+        ],
+        'BOILER': [
+          { sr: '1', name: 'Specific Fuel Consumption', base: '85', target: '80', unit: 'Kgs/MT' }
+        ],
+        'CPP': [
+          { sr: '1', name: 'Specific Coal Consumption', base: '0.62', target: '0.60', unit: 'Kgs/kWh' }
+        ],
+        'AMMONIA': [
+          { sr: '1', name: 'Specific Gas Consumption', base: '7.85', target: '7.70', unit: 'Gcal/MT' }
+        ]
+      };
+
+      const defaultParams = [
+        { sr: '1', name: 'Specific Power Consumption', base: '260', target: '250', unit: 'kWh/MT' }
+      ];
+
+      const params = mockDatabase[plant] || defaultParams;
+      const $tbody = $('#cons-monthly-tbody');
+      $tbody.empty();
+
+      params.forEach(p => {
+        $tbody.append(`
+          <tr class="user-table-row">
+            <td class="user-table-center font-14px fw-600">${p.sr}</td>
+            <td class="text-left font-14px fw-600">${p.name}</td>
+            <td class="user-table-center font-14px">${p.base}</td>
+            <td class="user-table-center font-14px">${p.target}</td>
+            <td class="user-table-center font-14px">${p.unit}</td>
+            <td class="user-table-center">
+              <input type="number" step="any" class="pdr-table-input w-150px" name="actual_${p.sr}" placeholder="e.g. 248" required>
+            </td>
+          </tr>
+        `);
+      });
+
+      // 3. Form Submit
+      $('#cons-monthly-form').on('submit', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+          title: 'Monthly Status Locked!',
+          text: `Monthly consumption records for ${plant} have been saved successfully for May 2026.`,
+          icon: 'success',
+          confirmButtonColor: '#ea580c',
+          confirmButtonText: 'Back to Register'
+        }).then(() => {
+          window.location.href = 'consumption_register.html';
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

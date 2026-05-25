@@ -499,186 +499,168 @@
     </div>
   </main>
 
-  <!-- Job Assignment Modal (Redesigned with Tables) -->
+  <!-- Job Assignment Modal (Redesigned with Merged Tables) -->
   <div id="technician-job-assign" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="gnfc-modal-shell gnfc-modal-shell--xl">
       <div class="gnfc-modal-header">
-        <h3 id="job-modal-title" class="gnfc-modal-title">Assign Job</h3>
-        <button type="button" onclick="setModalState('technician-job-assign', false)" class="gnfc-modal-close"><i
-            class="ph-bold ph-x text-lg"></i></button>
+        <h3 id="job-modal-title" class="gnfc-modal-title">Assign & Pending Jobs</h3>
+        <button type="button" onclick="setModalState('technician-job-assign', false)" class="gnfc-modal-close">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
       </div>
       <form id="job-modal-form">
-        <div class="gnfc-modal-body gnfc-modal-body--tight">
+        <div class="gnfc-modal-body gnfc-modal-body--tight" style="max-height: 75vh; overflow-y: auto;">
 
-          <!-- ISO14001/OHSAS18001 DUE JOBS -->
+          <!-- PENDING PM JOBS OF THIS MONTH -->
           <div class="mb-24px">
-            <h3 class="font-14px fw-700 mb-4px">ISO14001/OHSAS18001 DUE JOBS ()</h3>
+            <h3 class="font-14px fw-700 mb-6px uppercase color-blue">Pending PM Jobs of this month</h3>
             <div class="user-table-wrapper">
               <table class="user-table">
                 <thead>
-                    <table class="user-table">
-                      <thead>
-                        <tr>
-                          <th class="user-table-center w-50px">SR</th>
-                          <th class="w-120px">TAG</th>
-                          <th>EQUIPMENT</th>
-                          <th>CALI/CHECK PROCEDURE</th>
-                          <th class="w-180px">FREQ OF CHECK (DAYS)</th>
-                          <th class="w-120px">DUE DATE</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table>
-                  </div>
-            </div>
-
-            <!-- CPCB DUE JOBS -->
-            <div class="mb-24px">
-              <h3 class="font-14px fw-700 mb-4px uppercase">CPCB DUE JOBS ()</h3>
-              <div class="user-table-wrapper">
-                <table class="user-table">
-                  <thead>
-                    <tr>
-                      <th class="user-table-center w-50px">SR</th>
-                      <th class="w-120px">TAG</th>
-                      <th>CALI/CHECK PROCEDURE</th>
-                      <th class="w-180px">FREQ OF CHECK (DAYS)</th>
-                      <th class="w-120px">DUE DATE</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- JOB PLANNER -->
-            <div class="mb-24px">
-              <h3 class="font-14px fw-700 mb-4px uppercase">JOB PLANNER</h3>
-              <div class="user-table-wrapper">
-                <table class="user-table">
-                  <thead>
-                    <tr>
-                      <th class="user-table-center w-50px">SR</th>
-                      <th class="w-120px">TAG</th>
-                      <th>DESCRIPTION</th>
-                      <th class="w-180px">FREQ OF CHECK (DAYS)</th>
-                      <th class="user-table-center w-100px">ASSIGN</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="user-table-row">
-                      <td class="user-table-center">1</td>
-                      <td class="user-table-blue fw-600">NOTAG</td>
-                      <td class="user-table-primary">CPP / CPSU all DCS Panels, OCSs to be vacuum cleaned. FAN operation
-                        to be checked.</td>
-                      <td class="user-table-center user-table-secondary">180</td>
-                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
-                    </tr>
-                    <tr class="user-table-row">
-                      <td class="user-table-center">2</td>
-                      <td class="user-table-blue fw-600">NOTAG</td>
-                      <td class="user-table-primary">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.
-                      </td>
-                      <td class="user-table-center user-table-secondary">45</td>
-                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
-                    </tr>
-                    <tr class="user-table-row">
-                      <td class="user-table-center">3</td>
-                      <td class="user-table-blue fw-600">SILO_INTR_BAG</td>
-                      <td class="user-table-primary">Bag filter SOVs to be checked. SOV connection tightness to be
-                        checked.its timer JB and Radar LT cleaning to be done.</td>
-                      <td class="user-table-center user-table-secondary">30</td>
-                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
-                    </tr>
-                    <tr class="user-table-row">
-                      <td class="user-table-center">4</td>
-                      <td class="user-table-blue fw-600">NOTAG</td>
-                      <td class="user-table-primary">Control room document file to be updated. Boiler, CPP, CPSU, ASH
-                        and CHP control room.</td>
-                      <td class="user-table-center user-table-secondary">60</td>
-                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
-                    </tr>
-                    <tr class="user-table-row">
-                      <td class="user-table-center">5</td>
-                      <td class="user-table-blue fw-600">NOTAG</td>
-                      <td class="user-table-primary">BHEL BLR all DCS Panels, OCSs, Ash panel and Station to be vacuum
-                        cleaned. FAN operation to be checked.</td>
-                      <td class="user-table-center user-table-secondary">45</td>
-                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
-                    </tr>
-                    <tr class="user-table-row">
-                      <td class="user-table-center">6</td>
-                      <td class="user-table-blue fw-600">NOTAG</td>
-                      <td class="user-table-primary">CH4 gas cylinder (Code no 922000195D)expiry date to be check.</td>
-                      <td class="user-table-center user-table-secondary">330</td>
-                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
-                    </tr>
-                    <tr class="user-table-row">
-                      <td class="user-table-center">7</td>
-                      <td class="user-table-blue fw-600">NOTAG</td>
-                      <td class="user-table-primary">ATK data to be uploaded on Eserver.</td>
-                      <td class="user-table-center user-table-secondary">30</td>
-                      <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                  <tr>
+                    <th>TAG_NO</th>
+                    <th>Type Of Inst</th>
+                    <th>CRITICALITY</th>
+                    <th>MODE</th>
+                    <th>PM MONTH</th>
+                    <th class="user-table-center w-100px">ASSIGN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="user-table-row">
+                    <td class="user-table-primary fw-600">1FE1501C</td>
+                    <td>TX</td>
+                    <td>Critical</td>
+                    <td>RUNNING</td>
+                    <td>Apr</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <div class="gnfc-modal-footer">
-            <button type="button" onclick="setModalState('technician-job-assign', false)"
-              class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+          <!-- ISO14001/OHSAS18001 DUE JOBS -->
+          <div class="mb-24px">
+            <h3 class="font-14px fw-700 mb-6px uppercase color-blue">ISO14001/OHSAS18001 DUE JOBS</h3>
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center w-50px">SR</th>
+                    <th class="w-120px">TAG</th>
+                    <th>EQUIPMENT</th>
+                    <th>CALI/CHECK PROCEDURE</th>
+                    <th class="w-180px">FREQ OF CHECK (DAYS)</th>
+                    <th class="w-120px">DUE DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="user-table-row">
+                    <td colspan="6" class="user-table-center font-13px color-hint py-12px">No pending ISO/OHSAS jobs found.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+
+          <!-- CPCB DUE JOBS -->
+          <div class="mb-24px">
+            <h3 class="font-14px fw-700 mb-6px uppercase color-blue">CPCB DUE JOBS</h3>
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center w-50px">SR</th>
+                    <th class="w-120px">TAG</th>
+                    <th>CALI/CHECK PROCEDURE</th>
+                    <th class="w-180px">FREQ OF CHECK (DAYS)</th>
+                    <th class="w-120px">DUE DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="user-table-row">
+                    <td colspan="5" class="user-table-center font-13px color-hint py-12px">No pending CPCB calibration jobs found.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- JOB PLANNER -->
+          <div class="mb-24px">
+            <h3 class="font-14px fw-700 mb-6px uppercase color-blue">JOB PLANNER</h3>
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center w-50px">SR</th>
+                    <th class="w-120px">TAG</th>
+                    <th>DESCRIPTION</th>
+                    <th class="w-180px">FREQ OF CHECK (DAYS)</th>
+                    <th class="user-table-center w-100px">ASSIGN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="user-table-row">
+                    <td class="user-table-center">1</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">CPP / CPSU all DCS Panels, OCSs to be vacuum cleaned. FAN operation to be checked.</td>
+                    <td class="user-table-center user-table-secondary">180</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="user-table-center">2</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.</td>
+                    <td class="user-table-center user-table-secondary">45</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="user-table-center">3</td>
+                    <td class="user-table-blue fw-600">SILO_INTR_BAG</td>
+                    <td class="user-table-primary">Bag filter SOVs to be checked. SOV connection tightness to be checked.its timer JB and Radar LT cleaning to be done.</td>
+                    <td class="user-table-center user-table-secondary">30</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="user-table-center">4</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">Control room document file to be updated. Boiler, CPP, CPSU, ASH and CHP control room.</td>
+                    <td class="user-table-center user-table-secondary">60</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="user-table-center">5</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">BHEL BLR all DCS Panels, OCSs, Ash panel and Station to be vacuum cleaned. FAN operation to be checked.</td>
+                    <td class="user-table-center user-table-secondary">45</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="user-table-center">6</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">CH4 gas cylinder (Code no 922000195D)expiry date to be check.</td>
+                    <td class="user-table-center user-table-secondary">330</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                  </tr>
+                  <tr class="user-table-row">
+                    <td class="user-table-center">7</td>
+                    <td class="user-table-blue fw-600">NOTAG</td>
+                    <td class="user-table-primary">ATK data to be uploaded on Eserver.</td>
+                    <td class="user-table-center user-table-secondary">30</td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="button" onclick="setModalState('technician-job-assign', false)" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
+        </div>
       </form>
-    </div>
-  </div>
-
-  <!-- Pending PM Jobs Modal (New) -->
-  <div id="pending-pm-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
-      <div class="gnfc-modal-header">
-        <h3 class="gnfc-modal-title">Pending PM Jobs</h3>
-        <button type="button" onclick="setModalState('pending-pm-modal', false)" class="gnfc-modal-close"><i
-            class="ph-bold ph-x"></i></button>
-      </div>
-      <div class="gnfc-modal-body">
-        <div class="text-center">
-          <h3 class="font-18px fw-700 color-primary uppercase tracking-wider mb-8px">PENDING PM JOBS OF THIS MONTH
-          </h3>
-        </div>
-
-        <div class="user-table-wrapper">
-          <table class="user-table">
-            <thead>
-              <tr>
-                <th>TAG_NO</th>
-                <th>Type Of Inst</th>
-                <th>CRITICALITY</th>
-                <th>MODE</th>
-                <th>PM MONTH</th>
-                <th class="text-center">Asign</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="user-table-primary fw-600">1FE1501C</td>
-                <td class="text-right">TX</td>
-                <td>Critical</td>
-                <td>RUNNING</td>
-                <td>Apr</td>
-                <td class="text-center"><button type="button" class="btn-assign-ui">Assign</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="gnfc-modal-footer">
-        <button type="button" onclick="setModalState('pending-pm-modal', false)"
-          class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
-      </div>
     </div>
   </div>
 
@@ -907,15 +889,13 @@
       if (navEntries.length > 0) {
         const navType = navEntries[0].type;
         if (navType === 'navigate' || navType === 'back_forward') {
-          // Show modals on initial entry or back/forward navigation
+          // Show merged modal on initial entry or back/forward navigation
           setModalState('technician-job-assign', true);
-          setModalState('pending-pm-modal', true);
         }
       } else {
         // Fallback: if Performance API not supported, show once per session
         if (!sessionStorage.getItem('modalsShownToday')) {
           setModalState('technician-job-assign', true);
-          setModalState('pending-pm-modal', true);
           sessionStorage.setItem('modalsShownToday', 'true');
         }
       }

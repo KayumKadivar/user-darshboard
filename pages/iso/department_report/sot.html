@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status Of Objectives & Targets (SOT) | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .sot-dashboard-wrapper {
+      min-height: calc(100vh - 120px);
+    }
+
+
+    /* Navigation mini circular buttons [ < ] [ o ] [ > ] */
+    .mini-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0px;
+    }
+
+    .mini-nav-btn {
+      width: 28px;
+      height: 28px;
+      background-color: var(--typo-orange, #ea580c);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(234, 88, 12, 0.15);
+    }
+
+    .mini-nav-btn:hover {
+      background-color: #f97316;
+      transform: scale(1.08);
+    }
+
+    /* Table visual overrides matching original classes */
+    .user-table th {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      background: var(--app-panel-alt, #edf2f8) !important;
+      color: var(--typo-primary, #1e293b) !important;
+      font-weight: 700 !important;
+      font-size: 11.5px !important;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 12px 6px !important;
+      text-align: center;
+      white-space: nowrap;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .user-table td {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      vertical-align: middle !important;
+      font-size: 12.5px !important;
+      color: #334155;
+      padding: 12px 6px !important;
+      text-align: center;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .user-table td.text-left {
+      text-align: left;
+      font-weight: 600;
+      color: var(--typo-orange, #ea580c);
+    }
+
+    .user-table tbody tr:hover {
+      background-color: #f8fafc;
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="../iso.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,SOT Report:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between sot-dashboard-wrapper">
+
+      <div>
+        <!-- Action Bar -->
+        <div class="action-bar-panel calib-action-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px;">
+          <div class="calib-action-left" style="flex: 1; min-width: 250px;">
+            <div class="calib-action-icon-box" style="background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
+              <i class="ph-fill ph-target"></i>
+            </div>
+            <div>
+              <div class="calib-action-title-group">
+                <h2 class="calib-action-title">Status of Objectives and Targets (SOT)</h2>
+                <span class="calib-action-badge" style="background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">Year: <span id="sot-active-year">2025 - 2026</span></span>
+              </div>
+              <p class="calib-action-subtitle">Track resource parameters, performance levels, and compliance indicators</p>
+            </div>
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <!-- Timeline navigation -->
+            <div class="mini-nav-row">
+              <span style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em; font-family: 'Outfit', sans-serif;">Timeline:</span>
+              <button class="mini-nav-btn" onclick="changeTimeline('prev')"><i class="ph-bold ph-caret-left"></i></button>
+              <button class="mini-nav-btn" onclick="changeTimeline('reset')"><i class="ph-bold ph-circle"></i></button>
+              <button class="mini-nav-btn" onclick="changeTimeline('next')"><i class="ph-bold ph-caret-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report Results Section -->
+        <div id="sot-report-results">
+
+          <!-- Results Table -->
+          <div class="user-table-wrapper" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border-radius: 8px; border: 1px solid var(--app-border, #cbd5e1); overflow-x: auto;">
+            <table class="user-table" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">Sr</th>
+                  <th style="text-align: left; min-width: 160px;">Objective</th>
+                  <th style="width: 100px;">Base Level</th>
+                  <th style="width: 110px;">Target Value</th>
+                  <th style="width: 80px;">Unit</th>
+                  <th style="width: 55px;">Apr</th>
+                  <th style="width: 55px;">May</th>
+                  <th style="width: 55px;">Jun</th>
+                  <th style="width: 55px;">Jul</th>
+                  <th style="width: 55px;">Aug</th>
+                  <th style="width: 55px;">Sep</th>
+                  <th style="width: 55px;">Oct</th>
+                  <th style="width: 55px;">Nov</th>
+                  <th style="width: 55px;">Dec</th>
+                  <th style="width: 55px;">Jan</th>
+                  <th style="width: 55px;">Feb</th>
+                  <th style="width: 55px;">Mar</th>
+                  <th style="width: 70px;">Tot</th>
+                </tr>
+              </thead>
+              <tbody id="sot-tbody">
+                <tr class="user-table-row" data-search-term="action 99">
+                  <td>1</td>
+                  <td class="text-left">Action 99</td>
+                  <td>380</td>
+                  <td>368</td>
+                  <td>ltr</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="user-table-row" data-search-term="canvas h/g">
+                  <td>2</td>
+                  <td class="text-left">Canvas H/G</td>
+                  <td>470</td>
+                  <td>455</td>
+                  <td>Pairs</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="user-table-row" data-search-term="cotton waste">
+                  <td>3</td>
+                  <td class="text-left">Cotton Waste</td>
+                  <td>390</td>
+                  <td>378</td>
+                  <td>Kgs</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="user-table-row" data-search-term="manapat">
+                  <td>4</td>
+                  <td class="text-left">Manapat</td>
+                  <td>495</td>
+                  <td>480</td>
+                  <td>meter</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="user-table-row" data-search-term="pvc sheet">
+                  <td>5</td>
+                  <td class="text-left">PVC Sheet</td>
+                  <td>350</td>
+                  <td>339</td>
+                  <td>Kgs.</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    $(function () {
+      // Timeline data arrays
+      const years = ["2024 - 2025", "2025 - 2026", "2026 - 2027"];
+      let activeIndex = 1;
+
+      // Handle timeline shifts
+      window.changeTimeline = function(direction) {
+        if (direction === 'prev') {
+          if (activeIndex > 0) activeIndex--;
+        } else if (direction === 'next') {
+          if (activeIndex < years.length - 1) activeIndex++;
+        } else if (direction === 'reset') {
+          activeIndex = 1;
+        }
+        $('#sot-active-year').text(years[activeIndex]);
+
+        // Simple feedback alert to feel responsive
+        Swal.fire({
+          icon: 'success',
+          title: `Timeline Changed`,
+          text: `Displaying records for Year ${years[activeIndex]}`,
+          timer: 1200,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+      };
+
+    });
+  </script>
+</body>
+
+</html>

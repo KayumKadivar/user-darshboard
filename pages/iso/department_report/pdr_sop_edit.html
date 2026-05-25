@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procedure Deviation Register(SOP) - Edit | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .pdr-report-content {
+      min-height: calc(100vh - 120px);
+    }
+
+    /* Modern Card Panel for Table Container */
+    .pdr-view-card {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+      margin-top: 24px;
+    }
+    
+    .pdr-monthly-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--app-border, #cbd5e1);
+      padding-bottom: 14px;
+    }
+    
+    .pdr-plant-label {
+      color: var(--typo-orange, #ea580c) !important;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 850;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .pdr-center-title {
+      color: var(--typo-primary) !important;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .pdr-date-label {
+      color: var(--typo-secondary) !important;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 750;
+      font-size: 14px;
+      background: var(--app-bg, #f1f5f9);
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--app-border, #e2e8f0);
+    }
+
+    /* Premium table tweaks */
+    .user-table th {
+      background: var(--app-bg, #f8fafc) !important;
+      color: var(--typo-primary) !important;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 750 !important;
+      font-size: 12px !important;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      padding: 12px 10px !important;
+    }
+
+    .user-table td {
+      font-size: 13px !important;
+      font-weight: 550 !important;
+      color: var(--typo-secondary) !important;
+      padding: 12px 10px !important;
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+    }
+
+    .edit-action-link {
+      color: #7c3aed !important;
+      font-weight: 800;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    /* Buttons */
+    .btn-orange-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--typo-orange, #ea580c);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+    }
+
+    .btn-orange-fill:hover {
+      background: #f97316;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+    }
+
+    .filter-select {
+      padding: 8px 12px;
+      height: 38px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 6px;
+      background: var(--app-panel, #ffffff);
+      color: var(--typo-primary);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--typo-orange, #ea580c);
+    }
+
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="../iso.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,PDR-SOP Edit:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between pdr-report-content">
+
+      <div>
+        <!-- Action Bar -->
+        <div class="action-bar-panel calib-action-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <div class="calib-action-left" style="flex: 1; min-width: 250px;">
+            <div class="calib-action-icon-box" style="background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
+              <i class="ph-fill ph-file-text"></i>
+            </div>
+            <div>
+              <div class="calib-action-title-group">
+                <h2 class="calib-action-title">Procedure Deviation Register(SOP)/Edit</h2>
+                <span class="calib-action-badge" style="background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">IMS/F/INST/45</span>
+              </div>
+              <p class="calib-action-subtitle">Manage process deviations, root causes, and corrective action updates directly</p>
+            </div>
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <label for="pdr-plant-select" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-bottom: 0; letter-spacing: 0.05em; white-space: nowrap;">Select plant:</label>
+              <select id="pdr-plant-select" class="filter-select w-160px">
+                <option value="AA" selected>ACETIC ACID</option>
+                <option value="BOILER">BOILER</option>
+                <option value="CPP">CPP</option>
+                <option value="AMMONIA">AMMONIA</option>
+                <option value="CMS">CMS</option>
+              </select>
+            </div>
+            <button class="btn-orange-fill" id="btn-add-pdr">
+              <i class="ph-bold ph-plus"></i> Add Deviation
+            </button>
+          </div>
+        </div>
+
+        <!-- Modern Card Wrapper -->
+        <div class="pdr-view-card">
+          <div class="pdr-monthly-header-bar">
+            <div class="pdr-plant-label">
+              <i class="ph-bold ph-buildings"></i> Plant: <span id="pdr-plant-name">ACETIC ACID</span>
+            </div>
+            <div class="pdr-center-title">Procedure Deviation Register-SOP</div>
+            <div class="pdr-date-label">May 2026</div>
+          </div>
+
+          <!-- Corporate Table system from style.css (class applied: user-table) -->
+          <div class="user-table-wrapper" style="margin: 0; overflow-x: auto;">
+            <table class="user-table" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th class="user-table-center w-80px">OCP NO</th>
+                  <th class="user-table-left w-200px">Purpose</th>
+                  <th class="user-table-left w-200px">Performance Criteria</th>
+                  <th class="user-table-left w-200px">Details Of Deviation<br><span class="font-11px fw-normal opacity-75">(In procedure or performance criteria)</span></th>
+                  <th class="user-table-left w-200px">Root Cause of Deviation</th>
+                  <th class="user-table-left w-200px">Correcting Action<br><span class="font-11px fw-normal opacity-75">Corrective action taken</span></th>
+                  <th class="user-table-left w-200px">Preventive action taken</th>
+                  <th class="user-table-left w-150px">Remarks</th>
+                  <th class="user-table-center w-80px">Action</th>
+                </tr>
+              </thead>
+              <tbody id="pdr-report-results-body">
+                <tr class="user-table-row">
+                  <td class="user-table-center font-14px fw-600">9</td>
+                  <td class="fw-500">Safe disposal of used cotton waste, hand gloves, teflon/asbestos gaskets and S.S./M.S. scrap.</td>
+                  <td>To reduce land, water and air pollution</td>
+                  <td>Minor steam leak in auxiliary bypass line observed during shift.</td>
+                  <td>Corrosion on auxiliary bypass valve seat gasket.</td>
+                  <td>Isolated the bypass line and replaced gasket seals.</td>
+                  <td>Scheduled bi-weekly physical inspection audits for auxiliary lines.</td>
+                  <td>Bypass line returned to normal operation.</td>
+                  <td class="user-table-center">
+                    <a href="#" class="edit-action-link edit-pdr-btn" 
+                       data-ocp="9"
+                       data-purpose="Safe disposal of used cotton waste, hand gloves, teflon/asbestos gaskets and S.S./M.S. scrap."
+                       data-criteria="To reduce land, water and air pollution"
+                       data-deviation="Minor steam leak in auxiliary bypass line observed during shift." 
+                       data-rootcause="Corrosion on auxiliary bypass valve seat gasket."
+                       data-corrective="Isolated the bypass line and replaced gasket seals." 
+                       data-preventive="Scheduled bi-weekly physical inspection audits for auxiliary lines." 
+                       data-remarks="Bypass line returned to normal operation.">
+                      <i class="ph-bold ph-pencil-simple"></i> Edit
+                    </a>
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-center font-14px fw-600">1</td>
+                  <td class="fw-500">Safe startup sequence checks for auxiliary steam condenser systems.</td>
+                  <td>Avoid condensate contamination and ensure pressure limits</td>
+                  <td>Condensate conductivity briefly spiked above 0.3 uS/cm limit.</td>
+                  <td>Boiler steam carryover from overload spike.</td>
+                  <td>Switched to primary polishers unit and blew down excess boiler steam.</td>
+                  <td>Configured automated alarms for alarm limit pre-warnings.</td>
+                  <td>Polishing unit returned conductivity back to safe levels.</td>
+                  <td class="user-table-center">
+                    <a href="#" class="edit-action-link edit-pdr-btn" 
+                       data-ocp="1" 
+                       data-purpose="Safe startup sequence checks for auxiliary steam condenser systems."
+                       data-criteria="Avoid condensate contamination and ensure pressure limits"
+                       data-deviation="Condensate conductivity briefly spiked above 0.3 uS/cm limit." 
+                       data-rootcause="Boiler steam carryover from overload spike."
+                       data-corrective="Switched to primary polishers unit and blew down excess boiler steam." 
+                       data-preventive="Configured automated alarms for alarm limit pre-warnings." 
+                       data-remarks="Polishing unit returned conductivity back to safe levels.">
+                      <i class="ph-bold ph-pencil-simple"></i> Edit
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Modal Overlay -->
+  <div class="gnfc-modal-overlay" id="pdr-add-modal">
+    <!-- Modal Shell -->
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      
+      <!-- Modal Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Add Procedure Deviation</h3>
+          <p class="gnfc-modal-subtitle" style="font-size: 11px; margin-top: 4px; color: var(--typo-orange);">Create a new deviation log record</p>
+        </div>
+        <button class="gnfc-modal-close btn-close-add-modal" type="button">
+          <i class="ph ph-x" style="font-size: 18px;"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="gnfc-modal-body">
+        <form id="pdr-add-form">
+          <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+            <div style="flex: 1; display: flex; flex-direction: column; text-align: left;">
+              <label class="gnfc-modal-label">OCP NO *</label>
+              <input type="text" id="pdr-add-ocp" class="gnfc-modal-input" placeholder="e.g. 12" required>
+            </div>
+            <div style="flex: 2; display: flex; flex-direction: column; text-align: left;">
+              <label class="gnfc-modal-label">PURPOSE *</label>
+              <input type="text" id="pdr-add-purpose" class="gnfc-modal-input" placeholder="e.g. Safe disposal..." required>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">PERFORMANCE CRITERIA *</label>
+            <input type="text" id="pdr-add-criteria" class="gnfc-modal-input" placeholder="e.g. To reduce pollution..." required>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">DETAILS OF DEVIATION *</label>
+            <textarea id="pdr-add-deviation" class="gnfc-modal-input" style="height: 60px; resize: vertical;" placeholder="Enter details of deviation..." required></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">ROOT CAUSE OF DEVIATION *</label>
+            <textarea id="pdr-add-rootcause" class="gnfc-modal-input" style="height: 60px; resize: vertical;" placeholder="Enter root cause of deviation..." required></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">CORRECTING ACTION *</label>
+            <textarea id="pdr-add-corrective" class="gnfc-modal-input" style="height: 60px; resize: vertical;" placeholder="Enter correcting action taken..." required></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">PREVENTIVE ACTION TAKEN *</label>
+            <textarea id="pdr-add-preventive" class="gnfc-modal-input" style="height: 60px; resize: vertical;" placeholder="Enter preventive action taken..." required></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">REMARKS</label>
+            <textarea id="pdr-add-remarks" class="gnfc-modal-input" style="height: 50px; resize: vertical;" placeholder="Enter remarks..."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary btn-cancel-add-modal">Cancel</button>
+        <button type="submit" form="pdr-add-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Edit Modal Overlay -->
+  <div class="gnfc-modal-overlay" id="pdr-edit-modal">
+    <!-- Modal Shell -->
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      
+      <!-- Modal Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Edit Procedure Deviation</h3>
+          <p class="gnfc-modal-subtitle" style="font-size: 11px; margin-top: 4px; color: var(--typo-orange);">Modify existing deviation log record</p>
+        </div>
+        <button class="gnfc-modal-close btn-close-edit-modal" type="button">
+          <i class="ph ph-x" style="font-size: 18px;"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="gnfc-modal-body">
+        <form id="pdr-edit-form">
+          <input type="hidden" id="pdr-edit-original-ocp" value="">
+          
+          <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+            <div style="flex: 1; display: flex; flex-direction: column; text-align: left;">
+              <label class="gnfc-modal-label">OCP NO</label>
+              <input type="text" id="pdr-edit-ocp" class="gnfc-modal-input" readonly style="background: var(--app-bg, #f1f5f9); border-color: var(--app-border);">
+            </div>
+            <div style="flex: 2; display: flex; flex-direction: column; text-align: left;">
+              <label class="gnfc-modal-label">PURPOSE</label>
+              <input type="text" id="pdr-edit-purpose" class="gnfc-modal-input" readonly style="background: var(--app-bg, #f1f5f9); border-color: var(--app-border);">
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">PERFORMANCE CRITERIA</label>
+            <input type="text" id="pdr-edit-criteria" class="gnfc-modal-input" readonly style="background: var(--app-bg, #f1f5f9); border-color: var(--app-border);">
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">DETAILS OF DEVIATION *</label>
+            <textarea id="pdr-edit-deviation" class="gnfc-modal-input" style="height: 60px; resize: vertical;" placeholder="Enter details of deviation..." required></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">ROOT CAUSE OF DEVIATION *</label>
+            <textarea id="pdr-edit-rootcause" class="gnfc-modal-input" style="height: 60px; resize: vertical;" placeholder="Enter root cause of deviation..." required></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">CORRECTING ACTION *</label>
+            <textarea id="pdr-edit-corrective" class="gnfc-modal-input" style="height: 60px; resize: vertical;" placeholder="Enter correcting action taken..." required></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">PREVENTIVE ACTION TAKEN *</label>
+            <textarea id="pdr-edit-preventive" class="gnfc-modal-input" style="height: 60px; resize: vertical;" placeholder="Enter preventive action taken..." required></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; margin-bottom: 16px; text-align: left;">
+            <label class="gnfc-modal-label">REMARKS</label>
+            <textarea id="pdr-edit-remarks" class="gnfc-modal-input" style="height: 50px; resize: vertical;" placeholder="Enter remarks..."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary btn-cancel-edit-modal">Cancel</button>
+        <button type="submit" form="pdr-edit-form" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // Setup active plant from select dropdown
+      $('#pdr-plant-select').on('change', function() {
+        const plantVal = $(this).val();
+        const plantNames = {
+          'AA': 'ACETIC ACID',
+          'BOILER': 'BOILER',
+          'CPP': 'CPP',
+          'AMMONIA': 'AMMONIA',
+          'CMS': 'CMS'
+        };
+        $('#pdr-plant-name').text(plantNames[plantVal] || plantVal);
+      });
+
+      // --- ADD MODAL HANDLERS ---
+      function openAddModal() {
+        $('#pdr-add-form')[0].reset();
+        $('#pdr-add-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      }
+
+      function closeAddModal() {
+        $('#pdr-add-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      }
+
+      $('#btn-add-pdr').on('click', openAddModal);
+      $('.btn-close-add-modal, .btn-cancel-add-modal').on('click', closeAddModal);
+
+      // --- EDIT MODAL HANDLERS ---
+      function openEditModal(data) {
+        $('#pdr-edit-original-ocp').val(data.ocp);
+        $('#pdr-edit-ocp').val(data.ocp);
+        $('#pdr-edit-purpose').val(data.purpose);
+        $('#pdr-edit-criteria').val(data.criteria);
+        $('#pdr-edit-deviation').val(data.deviation);
+        $('#pdr-edit-rootcause').val(data.rootcause);
+        $('#pdr-edit-corrective').val(data.corrective);
+        $('#pdr-edit-preventive').val(data.preventive);
+        $('#pdr-edit-remarks').val(data.remarks);
+
+        $('#pdr-edit-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      }
+
+      function closeEditModal() {
+        $('#pdr-edit-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      }
+
+      $('.btn-close-edit-modal, .btn-cancel-edit-modal').on('click', closeEditModal);
+
+      // Bind Edit links
+      $(document).on('click', '.edit-pdr-btn', function(e) {
+        e.preventDefault();
+        const ocp = $(this).attr('data-ocp');
+        const purpose = $(this).attr('data-purpose');
+        const criteria = $(this).attr('data-criteria');
+        const deviation = $(this).attr('data-deviation');
+        const rootcause = $(this).attr('data-rootcause');
+        const corrective = $(this).attr('data-corrective');
+        const preventive = $(this).attr('data-preventive');
+        const remarks = $(this).attr('data-remarks');
+
+        openEditModal({ ocp, purpose, criteria, deviation, rootcause, corrective, preventive, remarks });
+      });
+
+      // Global overlay click & Escape close behavior for both modals
+      $('.gnfc-modal-overlay').on('click', function(e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          closeAddModal();
+          closeEditModal();
+        }
+      });
+
+      $(document).on('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeAddModal();
+          closeEditModal();
+        }
+      });
+
+      // Handle Add Form Submission
+      $('#pdr-add-form').on('submit', function(e) {
+        e.preventDefault();
+
+        const ocp = $('#pdr-add-ocp').val().trim();
+        const purpose = $('#pdr-add-purpose').val().trim();
+        const criteria = $('#pdr-add-criteria').val().trim();
+        const deviation = $('#pdr-add-deviation').val().trim();
+        const rootcause = $('#pdr-add-rootcause').val().trim();
+        const corrective = $('#pdr-add-corrective').val().trim();
+        const preventive = $('#pdr-add-preventive').val().trim();
+        const remarks = $('#pdr-add-remarks').val().trim();
+
+        // Append new row
+        $('#pdr-report-results-body').append(`
+          <tr class="user-table-row">
+            <td class="user-table-center font-14px fw-600">${ocp}</td>
+            <td class="fw-500">${purpose}</td>
+            <td>${criteria}</td>
+            <td>${deviation}</td>
+            <td>${rootcause}</td>
+            <td>${corrective}</td>
+            <td>${preventive}</td>
+            <td>${remarks}</td>
+            <td class="user-table-center">
+              <a href="#" class="edit-action-link edit-pdr-btn" 
+                 data-ocp="${ocp}"
+                 data-purpose="${purpose}"
+                 data-criteria="${criteria}"
+                 data-deviation="${deviation}" 
+                 data-rootcause="${rootcause}"
+                 data-corrective="${corrective}" 
+                 data-preventive="${preventive}" 
+                 data-remarks="${remarks}">
+                <i class="ph-bold ph-pencil-simple"></i> Edit
+              </a>
+            </td>
+          </tr>
+        `);
+
+        closeAddModal();
+
+        Swal.fire({
+          title: 'Added!',
+          text: 'New procedure deviation log entry has been added.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      });
+
+      // Handle Edit Form Submission
+      $('#pdr-edit-form').on('submit', function(e) {
+        e.preventDefault();
+
+        const originalOcp = $('#pdr-edit-original-ocp').val();
+        const deviation = $('#pdr-edit-deviation').val().trim();
+        const rootcause = $('#pdr-edit-rootcause').val().trim();
+        const corrective = $('#pdr-edit-corrective').val().trim();
+        const preventive = $('#pdr-edit-preventive').val().trim();
+        const remarks = $('#pdr-edit-remarks').val().trim();
+
+        // Find and update row
+        const $row = $('#pdr-report-results-body tr').filter(function() {
+          return $(this).find('.edit-pdr-btn').attr('data-ocp') === originalOcp;
+        });
+
+        if ($row.length > 0) {
+          $row.find('td:nth-child(4)').text(deviation);
+          $row.find('td:nth-child(5)').text(rootcause);
+          $row.find('td:nth-child(6)').text(corrective);
+          $row.find('td:nth-child(7)').text(preventive);
+          $row.find('td:nth-child(8)').text(remarks);
+
+          // Update data attributes on edit link
+          const $editBtn = $row.find('.edit-pdr-btn');
+          $editBtn.attr('data-deviation', deviation);
+          $editBtn.attr('data-rootcause', rootcause);
+          $editBtn.attr('data-corrective', corrective);
+          $editBtn.attr('data-preventive', preventive);
+          $editBtn.attr('data-remarks', remarks);
+        }
+
+        closeEditModal();
+
+        Swal.fire({
+          title: 'Updated!',
+          text: 'Procedure deviation entry updated successfully.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

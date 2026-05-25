@@ -7,20 +7,20 @@
   <title>Calibration Details | GNFC E-Logbook</title>
 
   <!-- CSS Dependencies -->
-  <link rel="stylesheet" href="../../css/phosphor.css">
-  <link rel="stylesheet" href="../../css/theme-vars.css">
-  <link rel="stylesheet" href="../../css/utilities.css">
-  <link rel="stylesheet" href="../../css/common.css">
-  <link rel="stylesheet" href="../../css/modal-ui.css">
-  <link rel="stylesheet" href="../../css/pages/style.css">
-  <link rel="stylesheet" href="iso.css">
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
 
   <!-- JS Dependencies -->
-  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
-  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
-  <script src="../../js/theme-control.js"></script>
-  <script src="../../js/sidebar.js" defer></script>
-  <script src="../../js/header.js" defer></script>
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
 
   <script>
     window.activePage = 'iso';
@@ -36,8 +36,8 @@
 
   <main class="main-wrapper">
     <!-- Header Container -->
-    <div id="header-container" data-back="iso.html" data-title="BOILER"
-      data-breadcrumb="ISO Dashboard:iso.html,CPCB Calibration Register:iso.html,BOILER:active">
+    <div id="header-container" data-back="../iso.html" data-title="BOILER"
+      data-breadcrumb="ISO Dashboard:../iso.html,CPCB Calibration Register:iso.html,BOILER:active">
     </div>
 
     <!-- Page Content Area -->
@@ -1009,12 +1009,45 @@
     $(function () {
       let activeEditRow = null;
 
-      // Click handler to open Calibration History Modal with clicked tag
-      $(document).on('click', '.clickable-tag', function () {
+      // Click handler to redirect to Calibration History Page instead of opening a modal
+      $(document).on('click', '.clickable-tag', function (e) {
+        e.preventDefault();
+        const $row = $(this).closest('tr');
         const clickedTag = $(this).text().trim();
-        $('#pm-records-tag-no').text(clickedTag);
-        $('#tag-pm-records').addClass('is-open');
-        $('body').css('overflow', 'hidden');
+        const type = $row.find('td').eq(2).text().trim();
+        const ocp = $row.find('td').eq(3).text().trim();
+        const app = $row.find('td').eq(4).text().trim();
+        const make = $row.find('td').eq(5).find('div div').eq(0).text().trim();
+        const model = $row.find('td').eq(5).find('div div').eq(1).text().trim();
+        const serial = $row.find('td').eq(6).text().trim();
+        const accuracy = $row.find('td').eq(7).text().trim();
+        const freq = $row.find('td').eq(9).text().trim();
+        
+        const due = $row.find('td').eq(10).find('div div').eq(0).text().trim();
+        const last = $row.find('td').eq(10).find('div div').eq(1).text().trim();
+        
+        // Get active plant from the header or query params
+        const urlParams = new URLSearchParams(window.location.search);
+        const plant = urlParams.get('plant') || 'BOILER';
+
+        // Store instrument details in sessionStorage to keep URL exceptionally clean
+        const specs = {
+          type: type,
+          ocp: ocp,
+          app: app,
+          make: make,
+          model: model,
+          serial: serial,
+          accuracy: accuracy,
+          freq: freq,
+          due: due,
+          last: last,
+          from: 'detail',
+          plant: plant
+        };
+        sessionStorage.setItem('specs_' + clickedTag, JSON.stringify(specs));
+          
+        window.location.href = `calibration_history.html?tag=${encodeURIComponent(clickedTag)}`;
       });
 
       // View Report click handler with dynamic parent row matching and data population

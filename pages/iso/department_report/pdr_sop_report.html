@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDR-SOP Report | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .sop-report-content {
+      min-height: calc(100vh - 120px);
+    }
+
+    /* Glassmorphic Selector box */
+    .filter-panel-card {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 16px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      max-width: 240px;
+      min-width: 160px;
+      text-align: left;
+    }
+
+    .filter-label {
+      color: var(--typo-orange, #ea580c);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .filter-select {
+      width: 100%;
+      padding: 8px 12px;
+      height: 38px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 6px;
+      background: var(--app-panel, #ffffff);
+      color: var(--typo-primary);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--typo-orange, #ea580c);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+    }
+
+    /* Report Title Banners */
+    .report-title-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      padding: 14px 20px;
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-radius: 8px;
+    }
+
+    .report-banner-title {
+      color: var(--typo-orange, #ea580c) !important;
+      font-weight: 850;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .report-banner-meta {
+      color: #c2410c !important;
+      font-weight: 800;
+      font-size: 14.5px;
+    }
+
+    /* Navigation mini circular buttons [ < ] [ o ] [ > ] */
+    .mini-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0px;
+    }
+
+    .mini-nav-btn {
+      width: 28px;
+      height: 28px;
+      background-color: var(--typo-orange, #ea580c);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(234, 88, 12, 0.15);
+    }
+
+    .mini-nav-btn:hover {
+      background-color: #f97316;
+      transform: scale(1.08);
+    }
+
+    .btn-orange-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--typo-orange, #ea580c);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+    }
+
+    .btn-orange-fill:hover {
+      background: #f97316;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+    }
+
+    /* Table visual overrides */
+    .user-table th {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      background: var(--app-panel-alt, #edf2f8) !important;
+      color: var(--typo-primary, #1e293b) !important;
+      font-weight: 700 !important;
+      font-size: 11.5px !important;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 12px 6px !important;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .user-table td {
+      border: 1px solid var(--app-border, #cbd5e1) !important;
+      vertical-align: middle !important;
+      font-size: 12.5px !important;
+      color: #334155;
+      padding: 12px 6px !important;
+      text-align: center;
+    }
+
+    .user-table td.text-left {
+      text-align: left;
+      font-weight: 600;
+      color: var(--typo-orange, #ea580c);
+    }
+
+    .user-table tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="pdr_sop_unified.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,PDR & SOP Unified:pdr_sop_unified.html,PDR-SOP Report:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between sop-report-content">
+
+      <div>
+        <!-- Selection Form Card -->
+        <div class="filter-panel-card">
+          <form id="sop-report-form">
+            <div class="filter-row">
+              <div class="filter-group">
+                <label class="filter-label">Plant</label>
+                <select id="sop-plant" class="filter-select w-200px">
+                  <option value="BOILER">BOILER</option>
+                  <option value="CPP" selected>CPP</option>
+                  <option value="AMMONIA">AMMONIA</option>
+                  <option value="CMS">CMS</option>
+                  <option value="ACETIC ACID">ACETIC ACID</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label class="filter-label">SOP Number</label>
+                <select id="sop-no" class="filter-select w-160px">
+                  <option value="SOP-01">SOP-01</option>
+                  <option value="SOP-02">SOP-02</option>
+                  <option value="SOP-03">SOP-03</option>
+                  <option value="SOP-04">SOP-04</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-orange-fill" style="height: 38px;">
+                <i class="ph-bold ph-funnel" style="font-size: 14px;"></i> View Report
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Report Results Section (Dynamically shown on View click) -->
+        <div id="sop-results-section" style="display: none;">
+          
+          <!-- Cohesive Control Banner for Results -->
+          <div class="report-title-banner">
+            <div class="flex items-center gap-10px">
+              <div class="flex items-center justify-center" style="width: 36px; height: 36px; border-radius: 6px; background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
+                <i class="ph-bold ph-file-text font-18px"></i>
+              </div>
+              <div style="text-align: left;">
+                <div class="report-banner-title" style="margin-bottom: 2px;">PDR-SOP REPORT</div>
+                <div style="font-size: 11px; font-weight: 700; color: #64748b;">Plant: <span id="sop-res-plant-val" style="color: var(--typo-orange); text-transform: uppercase;">BOILER</span> | Year: 2026 | SOP No: <span id="sop-res-no-val" style="color: var(--typo-orange);">SOP-01</span></div>
+              </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 24px;">
+              <!-- Timeline navigation -->
+              <div class="mini-nav-row">
+                <span style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
+                <button class="mini-nav-btn" title="Previous" onclick="changeSopTimeline('prev')"><i class="ph-bold ph-caret-left"></i></button>
+                <button class="mini-nav-btn" title="Reset" onclick="changeSopTimeline('reset')"><i class="ph-bold ph-circle"></i></button>
+                <button class="mini-nav-btn" title="Next" onclick="changeSopTimeline('next')"><i class="ph-bold ph-caret-right"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Corporate Table -->
+          <div class="user-table-wrapper" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border-radius: 8px; border: 1px solid var(--app-border, #cbd5e1); overflow-x: auto;">
+            <table class="user-table" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th class="user-table-center w-100px">SOP NO</th>
+                  <th class="user-table-left w-250px">SOP Purpose</th>
+                  <th class="user-table-left w-250px">Performance Criteria</th>
+                  <th class="user-table-left w-250px">Details of deviation</th>
+                  <th class="user-table-left w-250px">Root Cause of deviation</th>
+                  <th class="user-table-left w-250px">Corrective Action / Preventive action</th>
+                  <th class="user-table-left">Remarks</th>
+                </tr>
+              </thead>
+              <tbody id="sop-report-results-body">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(function() {
+      // Mock report records database based on plant & SOP
+      const reportDatabase = {
+        'CPP': {
+          'SOP-01': [
+            {
+              sopNo: 'SOP-01',
+              purpose: 'Start-up of Boiler Feed Pump (BFP)',
+              criteria: 'Ensure lube oil pressure > 1.5 kg/cm2 before main pump trigger.',
+              deviation: 'Lube oil pressure fell to 1.3 kg/cm2 during priming step.',
+              rootCause: 'Clogged secondary suction screen strainer.',
+              corrective: 'Cleaned suction strainer, added pressure test to daily checklist.',
+              remarks: 'Pressure restored to 1.6 kg/cm2, BFP started safely.'
+            }
+          ],
+          'SOP-02': [
+            {
+              sopNo: 'SOP-02',
+              purpose: 'Turbine Gland Sealing System operation',
+              criteria: 'Maintain gland steam header pressure at 0.15 to 0.25 bar.',
+              deviation: 'Gland pressure dropped to 0.08 bar for 15 minutes during start.',
+              rootCause: 'Gland steam pressure regulator valve mechanical sticking.',
+              corrective: 'Manually operated regulator, applied high-temp lubricant on valve spindle.',
+              remarks: 'Gland vacuum restored, no turbine exhaust disturbance recorded.'
+            }
+          ]
+        },
+        'BOILER': {
+          'SOP-01': [
+            {
+              sopNo: 'SOP-01',
+              purpose: 'Boiler Hydro-Test procedure',
+              criteria: 'Hold drum test pressure at 125 kg/cm2 for 10 minutes.',
+              deviation: 'Hydro pressure decayed by 2 kg/cm2 during hold period.',
+              rootCause: 'Minor valve passing at secondary blowdown valve inline seat.',
+              corrective: 'Re-tightened blowdown isolation valve gland, scheduled valve lapping.',
+              remarks: 'Lapping completed, re-test achieved steady 125 kg/cm2 pressure hold.'
+            }
+          ]
+        }
+      };
+
+      const defaultRecord = {
+        sopNo: 'SOP-01',
+        purpose: 'General operations and check criteria.',
+        criteria: 'Parameters must be held within design limits.',
+        deviation: 'Process parameter deviated slightly during load fluctuations.',
+        rootCause: 'Normal operational drift or grid variance.',
+        corrective: 'Adjusted feed controller damping factors.',
+        remarks: 'Normal values returned within boundaries.'
+      };
+
+      // Form Submit handler
+      $('#sop-report-form').on('submit', function(e) {
+        e.preventDefault();
+
+        const plant = $('#sop-plant').val();
+        const sopNo = $('#sop-no').val();
+
+        // 1. Update text values in results header
+        $('#sop-res-plant-val').text(plant);
+        $('#sop-res-no-val').text(sopNo);
+
+        // 2. Fetch mock records
+        const plantData = reportDatabase[plant] || {};
+        const records = plantData[sopNo] || [Object.assign({}, defaultRecord, { sopNo: sopNo })];
+
+        // 3. Render table body
+        const $tbody = $('#sop-report-results-body');
+        $tbody.empty();
+
+        records.forEach(row => {
+          $tbody.append(`
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">${row.sopNo}</td>
+              <td class="fw-500 text-left">${row.purpose}</td>
+              <td class="text-left">${row.criteria}</td>
+              <td class="text-left">${row.deviation}</td>
+              <td class="text-left">${row.rootCause}</td>
+              <td class="text-left">${row.corrective}</td>
+              <td class="text-left">${row.remarks}</td>
+            </tr>
+          `);
+        });
+
+        // 4. Show results section with a nice fade-in
+        $('#sop-results-section').fadeIn(300);
+
+        // Success pop alert
+        Swal.fire({
+          title: 'Success!',
+          text: `Report loaded for Plant: ${plant} and SOP No: ${sopNo}`,
+          icon: 'success',
+          timer: 1000,
+          showConfirmButton: false
+        });
+      });
+
+      // Interactive timeline shift feedback
+      window.changeSopTimeline = function(direction) {
+        let message = '';
+        if (direction === 'prev') {
+          message = 'Navigated to previous log timeline (April 2026)';
+        } else if (direction === 'next') {
+          message = 'Navigated to next log timeline (June 2026)';
+        } else {
+          message = 'Reset to current active audit timeline (May 2026)';
+        }
+
+        Swal.fire({
+          icon: 'success',
+          title: `Timeline Changed`,
+          text: message,
+          timer: 1200,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+      };
+    });
+  </script>
+</body>
+
+</html>

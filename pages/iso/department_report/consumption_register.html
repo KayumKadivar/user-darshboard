@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consumption Register | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .cons-dashboard-wrapper {
+      min-height: calc(100vh - 120px);
+    }
+
+    /* Config blocks & headers */
+    .config-block {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #e2e8f0);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .premium-config-card {
+      background: var(--app-bg, #f8fafc);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 200px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: left;
+    }
+
+    .premium-config-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--typo-orange, #ea580c);
+      opacity: 0.8;
+    }
+
+    .premium-config-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+      border-color: var(--typo-orange, #ea580c);
+    }
+
+    .premium-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(234, 88, 12, 0.08);
+      color: var(--typo-orange, #ea580c);
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn-orange-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--typo-orange, #ea580c);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+    }
+
+    .btn-orange-fill:hover {
+      background: #f97316;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+    }
+
+    .btn-orange-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ffffff;
+      color: var(--typo-orange, #ea580c) !important;
+      border: 1.5px solid var(--typo-orange, #ea580c) !important;
+      border-radius: 6px;
+      padding: 9px 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-orange-outline:hover {
+      background: #fff7ed;
+      color: #c2410c !important;
+      border-color: #c2410c !important;
+      transform: translateY(-1.5px);
+    }
+
+    .filter-select {
+      width: 100%;
+      padding: 8px 12px;
+      height: 38px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 6px;
+      background: var(--app-panel, #ffffff);
+      color: var(--typo-primary);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--typo-orange, #ea580c);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+    }
+
+    /* Custom CSS Classes replacing inline styles */
+    .header-title-icon {
+      color: var(--typo-orange);
+    }
+
+    .header-title-text {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--typo-primary);
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .header-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--typo-orange);
+      text-transform: uppercase;
+      margin-bottom: 0;
+      letter-spacing: 0.05em;
+    }
+
+    .header-dropdown {
+      cursor: pointer;
+      height: 38px;
+      border-radius: 6px;
+      font-weight: 600;
+      padding: 0 12px;
+      border: 1.5px solid #cbd5e1;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .premium-config-card.horizontal-card {
+      min-height: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 24px;
+    }
+
+    .card-left-flex {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .premium-card-icon.no-margin {
+      margin-bottom: 0;
+    }
+
+    .card-title-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--typo-primary);
+      text-transform: uppercase;
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .premium-btn-group.no-border {
+      display: flex;
+      gap: 12px;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="../iso.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Consumption Register:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between cons-dashboard-wrapper">
+
+      <div>
+        <div class="config-block">
+          <div class="flex items-center justify-between flex-wrap gap-12px">
+            <div class="flex items-center gap-8px">
+              <i class="ph-bold ph-list-dashes font-20px header-title-icon"></i>
+              <h3 class="header-title-text">Consumption Register Setup Flow</h3>
+            </div>
+            
+            <div class="flex items-center gap-12px">
+              <label for="plant-select-cons" class="header-label">Select plant:</label>
+              <select id="plant-select-cons" class="filter-select w-200px header-dropdown">
+                <option value="ACETIC ACID" selected>ACETIC ACID</option>
+                <option value="AAQM">AAQM</option>
+                <option value="AMMONIA">AMMONIA</option>
+                <option value="ANIP FILLING">ANIP FILLING</option>
+                <option value="ANITDI">ANITDI</option>
+                <option value="ASGP">ASGP</option>
+                <option value="BAGGING">BAGGING</option>
+                <option value="BOILER">BOILER</option>
+                <option value="CMS">CMS</option>
+                <option value="CPSU">CPSU</option>
+                <option value="DM">DM</option>
+                <option value="ETHYL ACETATE">ETHYL ACETATE</option>
+                <option value="FORMIC ACID">FORMIC ACID</option>
+                <option value="METHANOL-1">METHANOL-1</option>
+                <option value="METHANOL-2">METHANOL-2</option>
+                <option value="MINMAX">MINMAX</option>
+                <option value="NITRO PHOSPHATE">NITRO PHOSPHATE</option>
+                <option value="SPP">SPP</option>
+                <option value="UREA">UREA</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="config-grid">
+            <!-- Card 1: Static Fields -->
+            <div class="premium-config-card horizontal-card">
+              <div class="card-left-flex">
+                <div class="premium-card-icon no-margin">
+                  <i class="ph-bold ph-database"></i>
+                </div>
+                <h4 class="card-title-text">Static Fields</h4>
+              </div>
+              <div class="premium-btn-group no-border">
+                <button class="btn-orange-fill" onclick="handleConsumption('Static', 'Add')">
+                  <i class="ph-bold ph-plus"></i> Add
+                </button>
+                <button class="btn-orange-outline" onclick="handleConsumption('Static', 'View')">
+                  <i class="ph-bold ph-eye"></i> View
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 2: Monthly Status -->
+            <div class="premium-config-card horizontal-card">
+              <div class="card-left-flex">
+                <div class="premium-card-icon no-margin">
+                  <i class="ph-bold ph-calendar-blank"></i>
+                </div>
+                <h4 class="card-title-text">Monthly Status</h4>
+              </div>
+              <div class="premium-btn-group no-border">
+                <button class="btn-orange-outline" onclick="handleConsumption('Monthly', 'View')">
+                  <i class="ph-bold ph-eye"></i> View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add Static Parameters Modal -->
+  <div id="add-static-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Configure Static Parameters</h3>
+          <p class="gnfc-modal-subtitle">Plant: <span id="modal-plant-name">ACETIC ACID</span></p>
+        </div>
+        <button type="button" onclick="setModalState('add-static-modal', false)" class="gnfc-modal-close">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <form id="static-parameter-form">
+        <div class="gnfc-modal-body">
+          <div style="margin-bottom: 20px;">
+            <label class="gnfc-modal-label" for="param-objective">Objective *</label>
+            <input type="text" id="param-objective" class="gnfc-modal-input" placeholder="e.g. Specific Steam Consumption" required>
+          </div>
+          
+          <div class="form-flex-wrapper flex-cols-3">
+            <div>
+              <label class="gnfc-modal-label" for="param-base-level">Base Level *</label>
+              <input type="number" step="any" id="param-base-level" class="gnfc-modal-input" placeholder="e.g. 1.25" required>
+            </div>
+            <div>
+              <label class="gnfc-modal-label" for="param-target-value">Target Value *</label>
+              <input type="number" step="any" id="param-target-value" class="gnfc-modal-input" placeholder="e.g. 1.20" required>
+            </div>
+            <div>
+              <label class="gnfc-modal-label" for="param-unit">Unit *</label>
+              <input type="text" id="param-unit" class="gnfc-modal-input" placeholder="e.g. MT/MT" required>
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">
+            Save
+          </button>
+          <button type="button" onclick="setModalState('add-static-modal', false)" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function setModalState(modalId, isOpen) {
+      const $modal = $('#' + modalId);
+      if (isOpen) {
+        $modal.addClass('is-open').attr('aria-hidden', 'false');
+      } else {
+        $modal.removeClass('is-open').attr('aria-hidden', 'true');
+      }
+    }
+
+    function handleConsumption(section, action) {
+      const plant = $('#plant-select-cons').val();
+      
+      if (section === 'Static' && action === 'Add') {
+        $('#modal-plant-name').text(plant);
+        setModalState('add-static-modal', true);
+      } else if (section === 'Static' && action === 'View') {
+        window.location.href = `consumption_view_static.html?plant=${encodeURIComponent(plant)}`;
+      } else if (section === 'Monthly' && action === 'Add') {
+        window.location.href = `consumption_add_monthly.html?plant=${encodeURIComponent(plant)}`;
+      } else if (section === 'Monthly' && action === 'View') {
+        window.location.href = `consumption_view_monthly.html?plant=${encodeURIComponent(plant)}`;
+      }
+    }
+
+    $(function() {
+      // Close modal on overlay click
+      $('.gnfc-modal-overlay').on('click', function(e) {
+        if (e.target === this) {
+          setModalState($(this).attr('id'), false);
+        }
+      });
+
+      // Handle form submission
+      $('#static-parameter-form').on('submit', function(e) {
+        e.preventDefault();
+        const plant = $('#plant-select-cons').val();
+
+        Swal.fire({
+          title: 'Parameter Configured!',
+          text: `Static parameters for Plant: ${plant} have been updated successfully.`,
+          icon: 'success',
+          confirmButtonColor: '#ea580c',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          setModalState('add-static-modal', false);
+          $('#static-parameter-form')[0].reset();
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

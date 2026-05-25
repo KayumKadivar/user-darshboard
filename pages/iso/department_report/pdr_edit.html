@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procedure Deviation Register (PDR) - Edit | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+
+  <style>
+    .pdr-app-content {
+      min-height: calc(100vh - 120px);
+    }
+    
+    /* Config blocks & headers */
+    .config-block {
+      background: var(--app-panel, #ffffff);
+      border: 1px solid var(--app-border, #e2e8f0);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .premium-config-card {
+      background: var(--app-bg, #f8fafc);
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 200px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: left;
+    }
+
+    .premium-config-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--typo-orange, #ea580c);
+      opacity: 0.8;
+    }
+
+    .premium-config-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+      border-color: var(--typo-orange, #ea580c);
+    }
+
+    .premium-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(234, 88, 12, 0.08);
+      color: var(--typo-orange, #ea580c);
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+/* 
+    .premium-btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      border-top: 1px solid var(--app-border, #e2e8f0);
+      padding-top: 16px;
+    } */
+
+    /* Buttons */
+    .btn-orange-fill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--typo-orange, #ea580c);
+      color: #ffffff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+    }
+
+    .btn-orange-fill:hover {
+      background: #f97316;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+    }
+
+    .btn-orange-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ffffff;
+      color: var(--typo-orange, #ea580c) !important;
+      border: 1.5px solid var(--typo-orange, #ea580c) !important;
+      border-radius: 6px;
+      padding: 9px 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-orange-outline:hover {
+      background: #fff7ed;
+      color: #c2410c !important;
+      border-color: #c2410c !important;
+      transform: translateY(-1.5px);
+    }
+
+    .filter-select {
+      width: 100%;
+      padding: 8px 12px;
+      height: 38px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1px solid var(--app-border, #cbd5e1);
+      border-radius: 6px;
+      background: var(--app-panel, #ffffff);
+      color: var(--typo-primary);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--typo-orange, #ea580c);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+    }
+
+    .pdr-footer {
+      opacity: 0.65;
+    }
+  </style>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="../iso.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Edit PDR:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area flex flex-col justify-between pdr-app-content">
+
+      <div>
+    
+
+        <!-- Section 1: Procedure Deviation Register (PDR) Edit -->
+        <div class="config-block">
+          <div class="flex items-center justify-between flex-wrap gap-12px" >
+            <div class="flex items-center gap-8px">
+              <i class="ph-bold ph-list-dashes font-20px" style="color: var(--typo-orange);"></i>
+              <h3 style="font-size: 15px; font-weight: 800; color: var(--typo-primary); margin: 0; text-transform: uppercase; letter-spacing: 0.02em;">Procedure Deviation Register (PDR) Edit Flow</h3>
+            </div>
+
+             <div class="flex items-center gap-12px">
+            <label for="pdr-plant-select" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-bottom: 0; letter-spacing: 0.05em;">Select plant:</label>
+            <select id="pdr-plant-select" class="filter-select w-200px" style="cursor: pointer; height: 38px; border-radius: 6px; font-weight: 600; padding: 0 12px; border: 1.5px solid #cbd5e1; outline: none; transition: border-color 0.2s ease;">
+              <option value="ACETIC ACID" selected>ACETIC ACID</option>
+              <option value="AAQM">AAQM</option>
+              <option value="AMMONIA">AMMONIA</option>
+              <option value="ANIP FILLING">ANIP FILLING</option>
+              <option value="ANITDI">ANITDI</option>
+              <option value="ASGP">ASGP</option>
+              <option value="BAGGING">BAGGING</option>
+              <option value="BOILER">BOILER</option>
+              <option value="CMS">CMS</option>
+              <option value="CPSU">CPSU</option>
+              <option value="DM">DM</option>
+              <option value="ETHYL ACETATE">ETHYL ACETATE</option>
+              <option value="FORMIC ACID">FORMIC ACID</option>
+              <option value="METHANOL-1">METHANOL-1</option>
+              <option value="METHANOL-2">METHANOL-2</option>
+              <option value="MINMAX">MINMAX</option>
+              <option value="NITRO PHOSPHATE">NITRO PHOSPHATE</option>
+              <option value="SPP">SPP</option>
+              <option value="UREA">UREA</option>
+            </select>
+          </div>
+          </div>
+
+          <div class="config-grid">
+            <!-- Card: Static Fields -->
+            <div class="premium-config-card" style="min-height: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div class="premium-card-icon" style="margin-bottom: 0;">
+                  <i class="ph-bold ph-database"></i>
+                </div>
+                <h4 style="font-size: 15px; font-weight: 700; color: var(--typo-primary); text-transform: uppercase; margin: 0;">PDR Static Fields</h4>
+              </div>
+              <div class="premium-btn-group" style="display: flex; gap: 12px; margin-top: 0; padding-top: 0; border-top: none;">
+                <button class="btn-orange-fill" onclick="handleAction('Static', 'Add')">
+                  <i class="ph-bold ph-plus"></i> Add
+                </button>
+                <button class="btn-orange-outline" onclick="handleAction('Static', 'View')">
+                  <i class="ph-bold ph-eye"></i> View
+                </button>
+              </div>
+            </div>
+
+            <!-- Card: Monthly Status -->
+            <div class="premium-config-card" style="min-height: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div class="premium-card-icon" style="margin-bottom: 0;">
+                  <i class="ph-bold ph-calendar-blank"></i>
+                </div>
+                <h4 style="font-size: 15px; font-weight: 700; color: var(--typo-primary); text-transform: uppercase; margin: 0;">PDR Monthly Status</h4>
+              </div>
+              <div class="premium-btn-group" style="display: flex; gap: 12px; margin-top: 0; padding-top: 0; border-top: none;">
+                <button class="btn-orange-fill" onclick="handleAction('Monthly', 'Add')">
+                  <i class="ph-bold ph-plus"></i> Add
+                </button>
+                <button class="btn-orange-outline" onclick="handleAction('Monthly', 'View')">
+                  <i class="ph-bold ph-eye"></i> View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ─── ADD SOP DEVIATION LOG MODAL ─── -->
+  <div id="add-sop-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h2 class="gnfc-modal-title">ADD SOP DEVIATION LOG</h2>
+        <button id="close-sop-modal" class="gnfc-modal-close" title="Close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left;">
+          <div>
+            <label class="gnfc-modal-label">SOP NO *</label>
+            <input id="swal-sop-no" class="gnfc-modal-input" placeholder="Type SOP No...">
+          </div>
+          <div>
+            <label class="gnfc-modal-label">SOP PURPOSE *</label>
+            <input id="swal-sop-purpose" class="gnfc-modal-input" placeholder="Purpose of SOP...">
+          </div>
+          <div style="grid-column: span 2;">
+            <label class="gnfc-modal-label">DETAILS OF DEVIATION *</label>
+            <textarea id="swal-sop-deviation" class="gnfc-modal-input" placeholder="Detail any deviations..." style="height: 90px; resize: vertical;"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="cancel-sop-modal">Cancel</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="save-sop-modal">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ADD PDR STATIC PARAMETER MODAL ─── -->
+  <div id="add-pdr-static-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h2 class="gnfc-modal-title">ADD PDR STATIC PARAMETER</h2>
+        <button id="close-pdr-static-modal" class="gnfc-modal-close" title="Close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+          <div>
+            <label class="gnfc-modal-label">OCP NO *</label>
+            <input id="swal-static-ocp-no" class="gnfc-modal-input" placeholder="e.g. 9">
+          </div>
+          <div>
+            <label class="gnfc-modal-label">OCP PURPOSE *</label>
+            <textarea id="swal-static-purpose" class="gnfc-modal-input" placeholder="e.g. Safe disposal of used cotton waste..." style="height: 80px; resize: vertical;"></textarea>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">PERFORMANCE CRITERIA *</label>
+            <textarea id="swal-static-criteria" class="gnfc-modal-input" placeholder="e.g. To reduce land, water and air pollution" style="height: 80px; resize: vertical;"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="cancel-pdr-static-modal">Cancel</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="save-pdr-static-modal">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ADD PDR MONTHLY STATUS MODAL ─── -->
+  <div id="add-pdr-monthly-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h2 class="gnfc-modal-title">ADD PDR MONTHLY STATUS</h2>
+        <button id="close-pdr-monthly-modal" class="gnfc-modal-close" title="Close">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+          <div>
+            <label class="gnfc-modal-label">OCP NO *</label>
+            <select id="swal-monthly-ocp-no" class="gnfc-modal-input">
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+            </select>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">DETAILS OF DEVIATION *</label>
+            <textarea id="swal-monthly-deviation" class="gnfc-modal-input" placeholder="Details of deviation..." style="height: 80px; resize: vertical;"></textarea>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">CORRECTING ACTION *</label>
+            <textarea id="swal-monthly-corrective" class="gnfc-modal-input" placeholder="Corrective action taken..." style="height: 80px; resize: vertical;"></textarea>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">PREVENTIVE ACTION TAKEN *</label>
+            <textarea id="swal-monthly-preventive" class="gnfc-modal-input" placeholder="Preventive action taken..." style="height: 80px; resize: vertical;"></textarea>
+          </div>
+          <div>
+            <label class="gnfc-modal-label">REMARKS</label>
+            <textarea id="swal-monthly-remarks" class="gnfc-modal-input" placeholder="Remarks..." style="height: 60px; resize: vertical;"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="cancel-pdr-monthly-modal">Cancel</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-primary" id="save-pdr-monthly-modal">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // Close SOP modal
+      const closeSopModal = () => {
+        $('#add-sop-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      };
+      
+      $('#close-sop-modal, #cancel-sop-modal').on('click', closeSopModal);
+      
+      $('#add-sop-modal').on('click', function(e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) closeSopModal();
+      });
+
+      // Close Static modal
+      const closePdrStaticModal = () => {
+        $('#add-pdr-static-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      };
+      
+      $('#close-pdr-static-modal, #cancel-pdr-static-modal').on('click', closePdrStaticModal);
+      $('#add-pdr-static-modal').on('click', function(e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) closePdrStaticModal();
+      });
+
+      // Close Monthly modal
+      const closePdrMonthlyModal = () => {
+        $('#add-pdr-monthly-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      };
+      
+      $('#close-pdr-monthly-modal, #cancel-pdr-monthly-modal').on('click', closePdrMonthlyModal);
+      $('#add-pdr-monthly-modal').on('click', function(e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) closePdrMonthlyModal();
+      });
+      
+      $(document).on('keydown', function(e) {
+        if (e.key === 'Escape') {
+          if ($('#add-sop-modal').hasClass('is-open')) closeSopModal();
+          if ($('#add-pdr-static-modal').hasClass('is-open')) closePdrStaticModal();
+          if ($('#add-pdr-monthly-modal').hasClass('is-open')) closePdrMonthlyModal();
+        }
+      });
+
+      // Save SOP Deviation Log
+      $('#save-sop-modal').on('click', function() {
+        const plant = $('#add-sop-modal').attr('data-plant') || '';
+        const sopNo = $('#swal-sop-no').val().trim();
+        const purpose = $('#swal-sop-purpose').val().trim();
+        const deviation = $('#swal-sop-deviation').val().trim();
+        
+        if (!sopNo || !purpose || !deviation) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Please fill all required fields.',
+            icon: 'error',
+            confirmButtonColor: '#ea580c'
+          });
+          return;
+        }
+        
+        closeSopModal();
+        
+        Swal.fire({
+          title: 'Saved!',
+          text: `SOP Deviation Log recorded successfully for Plant: ${plant}.`,
+          icon: 'success',
+          confirmButtonColor: '#ea580c'
+        });
+      });
+
+      // Save PDR Static Parameter
+      $('#save-pdr-static-modal').on('click', function() {
+        const plant = $('#add-pdr-static-modal').attr('data-plant') || '';
+        const ocpNo = $('#swal-static-ocp-no').val().trim();
+        const purpose = $('#swal-static-purpose').val().trim();
+        const criteria = $('#swal-static-criteria').val().trim();
+        
+        if (!ocpNo || !purpose || !criteria) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Please fill all required fields.',
+            icon: 'error',
+            confirmButtonColor: '#ea580c'
+          });
+          return;
+        }
+        
+        closePdrStaticModal();
+        
+        Swal.fire({
+          title: 'Saved!',
+          text: `Static Parameter saved successfully for Plant: ${plant}.`,
+          icon: 'success',
+          confirmButtonColor: '#ea580c'
+        });
+      });
+
+      // Save PDR Monthly Status
+      $('#save-pdr-monthly-modal').on('click', function() {
+        const plant = $('#add-pdr-monthly-modal').attr('data-plant') || '';
+        const ocpNo = $('#swal-monthly-ocp-no').val();
+        const deviation = $('#swal-monthly-deviation').val().trim();
+        const corrective = $('#swal-monthly-corrective').val().trim();
+        const preventive = $('#swal-monthly-preventive').val().trim();
+        const remarks = $('#swal-monthly-remarks').val().trim();
+        
+        if (!deviation || !corrective || !preventive) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Please fill all required fields.',
+            icon: 'error',
+            confirmButtonColor: '#ea580c'
+          });
+          return;
+        }
+        
+        closePdrMonthlyModal();
+        
+        Swal.fire({
+          title: 'Saved!',
+          text: `Monthly PDR Deviation Log recorded successfully for Plant: ${plant} (OCP No: ${ocpNo}).`,
+          icon: 'success',
+          confirmButtonColor: '#ea580c'
+        });
+      });
+
+      window.handleAction = function(section, type) {
+        const selectedPlant = $('#pdr-plant-select').val();
+        
+        if (section === 'Static' && type === 'Add') {
+          $('#swal-static-ocp-no').val('');
+          $('#swal-static-purpose').val('');
+          $('#swal-static-criteria').val('');
+          $('#add-pdr-static-modal').attr('data-plant', selectedPlant);
+          $('#add-pdr-static-modal').addClass('is-open');
+          $('body').css('overflow', 'hidden');
+          return;
+        }
+        if (section === 'Static' && type === 'View') {
+          window.location.href = `pdr_view_static.html?plant=${encodeURIComponent(selectedPlant)}`;
+          return;
+        }
+        if (section === 'Monthly' && type === 'Add') {
+          $('#swal-monthly-deviation').val('');
+          $('#swal-monthly-corrective').val('');
+          $('#swal-monthly-preventive').val('');
+          $('#swal-monthly-remarks').val('');
+          $('#add-pdr-monthly-modal').attr('data-plant', selectedPlant);
+          $('#add-pdr-monthly-modal').addClass('is-open');
+          $('body').css('overflow', 'hidden');
+          return;
+        }
+        if (section === 'Monthly' && type === 'View') {
+          window.location.href = `pdr_view_monthly.html?plant=${encodeURIComponent(selectedPlant)}`;
+          return;
+        }
+      };
+
+      window.handleSopEditAction = function(action) {
+        const plant = $('#pdr-plant-select').val();
+        if (action === 'Add') {
+          $('#swal-sop-no').val('');
+          $('#swal-sop-purpose').val('');
+          $('#swal-sop-deviation').val('');
+          $('#add-sop-modal').attr('data-plant', plant);
+          $('#add-sop-modal').addClass('is-open');
+          $('body').css('overflow', 'hidden');
+        } else {
+          Swal.fire({
+            title: 'SOP Registers List',
+            text: `Opening deviation register logs list for SOPs under plant "${plant}"`,
+            icon: 'info',
+            confirmButtonColor: '#ea580c'
+          });
+        }
+      };
+    });
+  </script>
+</body>
+
+</html>
