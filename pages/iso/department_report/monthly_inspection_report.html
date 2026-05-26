@@ -26,77 +26,7 @@
     window.activePage = 'iso';
   </script>
 
-  <style>
-    .mir-content {
-      min-height: calc(100vh - 120px);
-    }
-    
-    /* Report Title Banners */
-    .report-title-banner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding: 14px 20px;
-      background: #fff7ed;
-      border: 1px solid #ffedd5;
-      border-radius: 8px;
-    }
 
-    .report-banner-title {
-      color: var(--typo-orange, #ea580c) !important;
-      font-weight: 850;
-      font-size: 15px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-
-    /* Navigation mini circular buttons [ < ] [ o ] [ > ] */
-    .mini-nav-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 0px;
-    }
-
-    .mini-nav-btn {
-      width: 28px;
-      height: 28px;
-      background-color: var(--typo-orange, #ea580c);
-      color: #ffffff;
-      border: none;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 4px rgba(234, 88, 12, 0.15);
-    }
-
-    .mini-nav-btn:hover {
-      background-color: #f97316;
-      transform: scale(1.08);
-    }
-    
-    /* Custom CSS adjustments for cell vertical division matching legacy image */
-    .user-table th {
-      border: 1px solid var(--app-border, #cbd5e1) !important;
-      background: var(--app-panel-alt, #edf2f8) !important;
-      color: var(--typo-primary, #1e293b) !important;
-    }
-    
-    .user-table td {
-      border: 1px solid var(--app-border, #cbd5e1) !important;
-      vertical-align: middle;
-    }
-    
-    .mir-footer {
-      opacity: 0.65;
-    }
-  </style>
 </head>
 
 <body class="dashboard-body">
@@ -116,20 +46,20 @@
       <div>
         <!-- Cohesive Control Banner for MIR -->
         <div class="report-title-banner">
-          <div class="flex items-center gap-10px">
-            <div class="flex items-center justify-center" style="width: 36px; height: 36px; border-radius: 6px; background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
-              <i class="ph-bold ph-clipboard-text font-18px"></i>
+          <div class="report-banner-left">
+            <div class="report-banner-icon-box">
+              <i class="ph-bold ph-clipboard-text"></i>
             </div>
-            <div style="text-align: left;">
-              <div class="report-banner-title" style="margin-bottom: 2px;">Monthly Inspection Report (MIR)</div>
-              <div style="font-size: 11px; font-weight: 700; color: #64748b;">Month: <span id="mir-active-month" style="color: var(--typo-orange);">MAY 2026</span> | Status: ACTIVE</div>
+            <div class="report-banner-info-wrap">
+              <div class="report-banner-title">Monthly Inspection Report (MIR)</div>
+              <div class="report-banner-subtitle">Month: <span id="mir-active-month" class="orange-val">MAY 2026</span> | Status: <span style="color: #16a34a;">ACTIVE</span></div>
             </div>
           </div>
           
-          <div style="display: flex; align-items: center; gap: 24px;">
+          <div class="report-banner-right-action">
             <!-- Timeline navigation -->
             <div class="mini-nav-row">
-              <span style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
+              <label class="filter-label" style="margin-bottom: 0 !important; margin-right: 8px; white-space: nowrap;">Timeline:</label>
               <button class="mini-nav-btn" title="Previous" onclick="changeMirTimeline('prev')"><i class="ph-bold ph-caret-left"></i></button>
               <button class="mini-nav-btn" title="Reset" onclick="changeMirTimeline('reset')"><i class="ph-bold ph-circle"></i></button>
               <button class="mini-nav-btn" title="Next" onclick="changeMirTimeline('next')"><i class="ph-bold ph-caret-right"></i></button>
@@ -137,7 +67,6 @@
           </div>
         </div>
 
-        <!-- Corporate Table styled with user-table class and colspan/rowspan structure -->
         <div class="user-table-wrapper">
           <table class="user-table">
             <thead>
@@ -240,16 +169,6 @@
           activeIndex = 1;
         }
         $('#mir-active-month').text(months[activeIndex]);
-
-        Swal.fire({
-          icon: 'success',
-          title: `Timeline Changed`,
-          text: `Displaying records for Month: ${months[activeIndex]}`,
-          timer: 1200,
-          showConfirmButton: false,
-          toast: true,
-          position: 'top-end'
-        });
       };
     });
   </script>

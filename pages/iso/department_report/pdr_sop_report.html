@@ -25,183 +25,6 @@
   <script>
     window.activePage = 'iso';
   </script>
-
-  <style>
-    .sop-report-content {
-      min-height: calc(100vh - 120px);
-    }
-
-    /* Glassmorphic Selector box */
-    .filter-panel-card {
-      background: var(--app-panel, #ffffff);
-      border: 1px solid var(--app-border, #cbd5e1);
-      border-radius: 12px;
-      padding: 16px 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-    }
-
-    .filter-row {
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .filter-group {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      max-width: 240px;
-      min-width: 160px;
-      text-align: left;
-    }
-
-    .filter-label {
-      color: var(--typo-orange, #ea580c);
-      font-weight: 700;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 8px;
-    }
-
-    .filter-select {
-      width: 100%;
-      padding: 8px 12px;
-      height: 38px;
-      font-size: 13.5px;
-      font-weight: 600;
-      border: 1px solid var(--app-border, #cbd5e1);
-      border-radius: 6px;
-      background: var(--app-panel, #ffffff);
-      color: var(--typo-primary);
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-
-    .filter-select:focus {
-      outline: none;
-      border-color: var(--typo-orange, #ea580c);
-      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
-    }
-
-    /* Report Title Banners */
-    .report-title-banner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 24px;
-      margin-bottom: 16px;
-      padding: 14px 20px;
-      background: #fff7ed;
-      border: 1px solid #ffedd5;
-      border-radius: 8px;
-    }
-
-    .report-banner-title {
-      color: var(--typo-orange, #ea580c) !important;
-      font-weight: 850;
-      font-size: 15px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-
-    .report-banner-meta {
-      color: #c2410c !important;
-      font-weight: 800;
-      font-size: 14.5px;
-    }
-
-    /* Navigation mini circular buttons [ < ] [ o ] [ > ] */
-    .mini-nav-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 0px;
-    }
-
-    .mini-nav-btn {
-      width: 28px;
-      height: 28px;
-      background-color: var(--typo-orange, #ea580c);
-      color: #ffffff;
-      border: none;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 4px rgba(234, 88, 12, 0.15);
-    }
-
-    .mini-nav-btn:hover {
-      background-color: #f97316;
-      transform: scale(1.08);
-    }
-
-    .btn-orange-fill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--typo-orange, #ea580c);
-      color: #ffffff !important;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 20px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 13.5px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
-    }
-
-    .btn-orange-fill:hover {
-      background: #f97316;
-      transform: translateY(-1.5px);
-      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
-    }
-
-    /* Table visual overrides */
-    .user-table th {
-      border: 1px solid var(--app-border, #cbd5e1) !important;
-      background: var(--app-panel-alt, #edf2f8) !important;
-      color: var(--typo-primary, #1e293b) !important;
-      font-weight: 700 !important;
-      font-size: 11.5px !important;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 12px 6px !important;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    .user-table td {
-      border: 1px solid var(--app-border, #cbd5e1) !important;
-      vertical-align: middle !important;
-      font-size: 12.5px !important;
-      color: #334155;
-      padding: 12px 6px !important;
-      text-align: center;
-    }
-
-    .user-table td.text-left {
-      text-align: left;
-      font-weight: 600;
-      color: var(--typo-orange, #ea580c);
-    }
-
-    .user-table tbody tr:hover {
-      background-color: #f8fafc;
-    }
-
-  </style>
 </head>
 
 <body class="dashboard-body">
@@ -211,8 +34,8 @@
 
   <main class="main-wrapper">
     <!-- Header Container -->
-    <div id="header-container" data-back="pdr_sop_unified.html"
-      data-breadcrumb="ISO Dashboard:../iso.html,PDR & SOP Unified:pdr_sop_unified.html,PDR-SOP Report:active">
+    <div id="header-container" data-back="../iso.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,PDR-SOP Report:active">
     </div>
 
     <!-- Page Content Area -->
@@ -223,9 +46,9 @@
         <div class="filter-panel-card">
           <form id="sop-report-form">
             <div class="filter-row">
-              <div class="filter-group">
-                <label class="filter-label">Plant</label>
-                <select id="sop-plant" class="filter-select w-200px">
+              <div class="filter-group" >
+                <label class="filter-label">PLANT</label>
+                <select id="sop-plant" class="filter-select">
                   <option value="BOILER">BOILER</option>
                   <option value="CPP" selected>CPP</option>
                   <option value="AMMONIA">AMMONIA</option>
@@ -233,16 +56,16 @@
                   <option value="ACETIC ACID">ACETIC ACID</option>
                 </select>
               </div>
-              <div class="filter-group">
-                <label class="filter-label">SOP Number</label>
-                <select id="sop-no" class="filter-select w-160px">
+              <div class="filter-group" >
+                <label class="filter-label">SOP NUMBER</label>
+                <select id="sop-no" class="filter-select">
                   <option value="SOP-01">SOP-01</option>
                   <option value="SOP-02">SOP-02</option>
                   <option value="SOP-03">SOP-03</option>
                   <option value="SOP-04">SOP-04</option>
                 </select>
               </div>
-              <button type="submit" class="btn-orange-fill" style="height: 38px;">
+              <button type="submit" class="btn-orange-fill">
                 <i class="ph-bold ph-funnel" style="font-size: 14px;"></i> View Report
               </button>
             </div>
@@ -410,16 +233,6 @@
         } else {
           message = 'Reset to current active audit timeline (May 2026)';
         }
-
-        Swal.fire({
-          icon: 'success',
-          title: `Timeline Changed`,
-          text: message,
-          timer: 1200,
-          showConfirmButton: false,
-          toast: true,
-          position: 'top-end'
-        });
       };
     });
   </script>

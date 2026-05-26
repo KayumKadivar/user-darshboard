@@ -27,12 +27,12 @@
   </script>
 </head>
 
-<body class="dashboard-body">
+<body class="iso-dashboard-body">
 
   <!-- Sidebar Container -->
   <div class="sidebar-container"></div>
 
-  <main class="main-wrapper">
+  <main class="iso-main-wrapper">
     <!-- Header Container -->
     <div id="header-container" data-back="../iso.html"
       data-breadcrumb="ISO Dashboard:../iso.html,LEVEL-2:active">
@@ -44,68 +44,79 @@
 
       <!-- Document Management System Card -->
       <div class="dms-container">
-        <!-- Badge & Path Info Row -->
-        <div class="dms-meta-row">
-          <div class="dms-code-badge">
-            ISO14000 DMS CODE: IMS/F/INST/10
+        <div class="iso-header-row">
+
+          <!-- Left side: Breadcrumb & DMS Code -->
+          <div class="iso-flex-col-gap-4">
+            <div class="iso-header-title-wrapper">
+              <i class="ph-fill ph-folder-open color-amber iso-icon-16"></i>
+              <span>ISO</span>
+              <span>/</span>
+              <span>DOC</span>
+              <span>/</span>
+              <span class="color-blue cursor-pointer" id="breadcrumb-level2">LEVEL-2</span>
+              <span class="sub-path-separator iso-hidden">/</span>
+              <span class="sub-path-name color-blue iso-hidden">ARCHIEVED DOCUMENTS</span>
+            </div>
+            <div class="fw-600">
+              <span>ISO14000 DMS CODE:</span>
+              <span>IMS/F/INST/10</span>
+            </div>
           </div>
-          <div class="dms-path-badge">
-            <i class="ph-fill ph-folder-open"></i>
-            <span>ISO/DOC/LEVEL-2/</span>
+
+          <!-- Right side: Toolbar controls -->
+          <div class="dms-toolbar mb-0px">
+            <button class="dms-toolbar-btn" onclick="history.back()" title="Up one folder">
+              <i class="ph-bold ph-arrow-u-up-left"></i>
+            </button>
+            <button class="dms-toolbar-btn" id="btn-create-folder" title="Create New Folder">
+              <i class="ph ph-folder-plus"></i>
+            </button>
+            <button class="dms-toolbar-btn" id="btn-upload-file" title="Upload document">
+              <i class="ph ph-upload-simple"></i>
+            </button>
           </div>
         </div>
+      </div>
 
-        <!-- Toolbar controls -->
-        <div class="dms-toolbar">
-          <button class="dms-toolbar-btn" onclick="history.back()" title="Up one folder">
-            <i class="ph-bold ph-arrow-u-up-left"></i>
-          </button>
-          <button class="dms-toolbar-btn" id="btn-create-folder" title="Create New Folder">
-            <i class="ph ph-folder-plus"></i>
-          </button>
-          <button class="dms-toolbar-btn" id="btn-upload-file" title="Upload document">
-            <i class="ph ph-upload-simple"></i>
-          </button>
-        </div>
-
-        <!-- Corporate Table system from style.css -->
-        <div class="user-table-wrapper">
-          <table class="user-table">
-            <thead>
-              <tr>
-                <th class="user-table-center w-50px cursor-pointer color-blue hover-underline btn-open-log" title="View Global Audit Log">SR</th>
-                <th class="sortable-header cursor-pointer" data-column="1">Name <i class="ph ph-caret-up-down font-12px"></i></th>
-                <th class="sortable-header cursor-pointer" data-column="2">Type <i class="ph ph-caret-up-down font-12px"></i></th>
-                <th class="sortable-header cursor-pointer" data-column="3">Size <i class="ph ph-caret-up-down font-12px"></i></th>
-                <th class="sortable-header cursor-pointer" data-column="4">Last Modified <i class="ph ph-caret-up-down font-12px"></i></th>
-                <th style="width: 120px;">Actions</th>
-              </tr>
-            </thead>
+      <!-- Corporate Table system from style.css -->
+      <div id="main-folder-table-wrapper" class="iso-table-wrapper card-shadow">
+        <table class="iso-table">
+          <thead>
+            <tr>
+              <th class="iso-btn-open-log iso-w-50px" title="View Global Audit Log">SR</th>
+              <th class="sortable-header cursor-pointer" data-column="1">Name <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+              <th class="sortable-header cursor-pointer" data-column="2">Type <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+              <th class="sortable-header cursor-pointer" data-column="3">Size <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+              <th class="sortable-header cursor-pointer" data-column="4">Last Modified <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+              <th style="width: 120px;">Actions</th>
+            </tr>
+          </thead>
             <tbody>
               <tr>
-                <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">1</td>
                 <td>
-                  <div class="file-name-cell">
+                  <div class="file-name-cell cursor-pointer" id="btn-open-archived-folder">
                     <i class="ph-fill ph-folder file-icon-folder"></i>
-                    <span>ARCHIEVED DOCUMENTS</span>
+                    <span class="hover-underline">ARCHIEVED DOCUMENTS</span>
                   </div>
                 </td>
                 <td>&lt;Folder&gt;</td>
                 <td>12363Kb</td>
                 <td>06/07/2016</td>
-                <td class="user-table-center">
-                  <div class="flex items-center justify-center gap-8px">
-                    <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                      <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
                     </button>
-                    <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                      <i class="ph-bold ph-trash font-18px"></i>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
                     </button>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">2</td>
                 <td>
                   <div class="file-name-cell">
                     <i class="ph-fill ph-folder file-icon-folder"></i>
@@ -115,41 +126,41 @@
                 <td>&lt;Folder&gt;</td>
                 <td>378Kb</td>
                 <td>07/07/2015</td>
-                <td class="user-table-center">
-                  <div class="flex items-center justify-center gap-8px">
-                    <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                      <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
                     </button>
-                    <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                      <i class="ph-bold ph-trash font-18px"></i>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
                     </button>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">3</td>
                 <td>
                   <div class="file-name-cell">
                     <i class="ph-fill ph-folder file-icon-folder"></i>
-                    <a href="emregencyplan.html" style="color: inherit; text-decoration: none;">ON SITE EMERGENCY PLAN (OEP)</a>
+                    <span>ON SITE EMERGENCY PLAN (OEP)</span>
                   </div>
                 </td>
                 <td>&lt;Folder&gt;</td>
                 <td>4923Kb</td>
                 <td>05/07/2014</td>
-                <td class="user-table-center">
-                  <div class="flex items-center justify-center gap-8px">
-                    <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                      <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
                     </button>
-                    <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                      <i class="ph-bold ph-trash font-18px"></i>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
                     </button>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">4</td>
                 <td>
                   <div class="file-name-cell">
                     <i class="ph-fill ph-folder file-icon-folder"></i>
@@ -159,19 +170,19 @@
                 <td>&lt;Folder&gt;</td>
                 <td>154Kb</td>
                 <td>05/07/2014</td>
-                <td class="user-table-center">
-                  <div class="flex items-center justify-center gap-8px">
-                    <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                      <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
                     </button>
-                    <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                      <i class="ph-bold ph-trash font-18px"></i>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
                     </button>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">5</td>
                 <td>
                   <div class="file-name-cell">
                     <i class="ph-fill ph-folder file-icon-folder"></i>
@@ -181,35 +192,35 @@
                 <td>&lt;Folder&gt;</td>
                 <td>40Kb</td>
                 <td>12/01/2018</td>
-                <td class="user-table-center">
-                  <div class="flex items-center justify-center gap-8px">
-                    <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                      <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
                     </button>
-                    <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                      <i class="ph-bold ph-trash font-18px"></i>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
                     </button>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">6</td>
                 <td>
                   <div class="file-name-cell">
                     <i class="ph-fill ph-folder file-icon-folder"></i>
-                    <a href="ror.html" style="color: inherit; text-decoration: none;">ROR</a>
+                    <span>ROR</span>
                   </div>
                 </td>
                 <td>&lt;Folder&gt;</td>
                 <td>151Kb</td>
                 <td>06/07/2016</td>
-                <td class="user-table-center">
-                  <div class="flex items-center justify-center gap-8px">
-                    <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                      <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
                     </button>
-                    <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                      <i class="ph-bold ph-trash font-18px"></i>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
                     </button>
                   </div>
                 </td>
@@ -217,63 +228,332 @@
             </tbody>
           </table>
         </div>
-      </div>
 
-    </div>
+        <!-- Archived Folder Table Wrapper -->
+        <div id="archived-folder-table-wrapper" class="iso-table-wrapper card-shadow iso-hidden">
+          <table class="iso-table">
+            <thead>
+              <tr>
+                <th class="iso-btn-open-log iso-w-50px" title="View Global Audit Log">SR</th>
+                <th class="sortable-header cursor-pointer" data-column="1">Name <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+                <th class="sortable-header cursor-pointer" data-column="2">Type <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+                <th class="sortable-header cursor-pointer" data-column="3">Size <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+                <th class="sortable-header cursor-pointer" data-column="4">Last Modified <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+                <th style="width: 120px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Row 1 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">1</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file-doc iso-icon-18" style="color: #2b579a;"></i>
+                    <span>22 gnfc - amdm - instrument rev-1.doc</span>
+                  </div>
+                </td>
+                <td>Microsoft Word Document</td>
+                <td>1925Kb</td>
+                <td>05/07/2014</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 2 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">2</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file iso-icon-18" style="color: #8b5cf6;"></i>
+                    <span>22 gnfc - amdm - instrument rev-1.lwp</span>
+                  </div>
+                </td>
+                <td>LWP File</td>
+                <td>2356Kb</td>
+                <td>18/05/2013</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 3 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">3</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file-doc iso-icon-18" style="color: #2b579a;"></i>
+                    <span>22 gnfc - amdm-instrument mar 14.doc</span>
+                  </div>
+                </td>
+                <td>Microsoft Word Document</td>
+                <td>1393Kb</td>
+                <td>07/07/2015</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 4 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">4</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file-doc iso-icon-18" style="color: #2b579a;"></i>
+                    <span>instrument ror revised.doc</span>
+                  </div>
+                </td>
+                <td>Microsoft Word Document</td>
+                <td>264Kb</td>
+                <td>05/07/2014</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 5 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">5</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file iso-icon-18" style="color: #8b5cf6;"></i>
+                    <span>instrument ror revised.lwp</span>
+                  </div>
+                </td>
+                <td>LWP File</td>
+                <td>650Kb</td>
+                <td>18/05/2013</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 6 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">6</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file-doc iso-icon-18" style="color: #2b579a;"></i>
+                    <span>onsite emergency plan plantwise.doc</span>
+                  </div>
+                </td>
+                <td>Microsoft Word Document</td>
+                <td>1210Kb</td>
+                <td>05/07/2014</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 7 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">7</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file iso-icon-18" style="color: #8b5cf6;"></i>
+                    <span>onsite emergency plan plantwise.lwp</span>
+                  </div>
+                </td>
+                <td>LWP File</td>
+                <td>1545Kb</td>
+                <td>18/05/2013</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 8 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">8</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file-doc iso-icon-18" style="color: #2b579a;"></i>
+                    <span>onsite emergency plan plantwise rev 2.doc</span>
+                  </div>
+                </td>
+                <td>Microsoft Word Document</td>
+                <td>1211Kb</td>
+                <td>05/07/2014</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 9 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">9</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file iso-icon-18" style="color: #8b5cf6;"></i>
+                    <span>onsite emergency plan plantwise rev 2.lwp</span>
+                  </div>
+                </td>
+                <td>LWP File</td>
+                <td>1545Kb</td>
+                <td>10/05/2013</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Row 10 -->
+              <tr class="iso-table-row">
+                <td class="iso-table-sr-link iso-btn-open-log" title="View Audit Log">10</td>
+                <td>
+                  <div class="file-name-cell">
+                    <i class="ph-fill ph-file-doc iso-icon-18" style="color: #2b579a;"></i>
+                    <span>ror-inst 13 may 13.doc</span>
+                  </div>
+                </td>
+                <td>Microsoft Word Document</td>
+                <td>274Kb</td>
+                <td>08/07/2016</td>
+                <td class="iso-table-center">
+                  <div class="iso-table-action-container">
+                    <button class="iso-table-action-btn btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-icon-18"></i>
+                    </button>
+                    <button class="iso-table-action-btn iso-table-action-btn-danger btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-icon-18"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
   </main>
 
   <!-- Rename Folder/File Modal -->
   <div id="rename-folder-modal" class="gnfc-modal-overlay">
-    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+    <div class="iso-modal-shell iso-modal-shell--narrow">
       <div class="gnfc-modal-header">
         <h3 class="gnfc-modal-title">RENAME FOLDER / FILE</h3>
         <button type="button" class="gnfc-modal-close" id="btn-close-rename-modal">
-          <i class="ph-bold ph-x text-lg"></i>
+          <i class="ph-bold ph-x iso-icon-lg"></i>
         </button>
       </div>
 
       <div class="gnfc-modal-body">
-        <form id="rename-folder-form" class="flex flex-col gap-10px">
+        <form id="rename-folder-form" class="iso-flex-col-gap-10">
           <!-- Information Display Panel -->
-          <div class="flex flex-col gap-12px border-bottom-dark-border pb-10px">
-            <div class="flex gap-2px">
+          <div class="iso-modal-info-panel">
+            <div class="iso-flex-gap-2">
               <span class="fw-500">Location :</span>
-              <span id="rename-location" class="fw-700 color-blue break-all">/ISODOC/LEVEL-2</span>
+              <span id="rename-location" class="fw-700 iso-color-blue break-all">/ISODOC/LEVEL-2</span>
             </div>
-            <div class="flex gap-2px">
+            <div class="iso-flex-gap-2">
               <span class="fw-500">Folder Name :</span>
               <span id="rename-current-name" class="fw-700 color-primary"></span>
             </div>
           </div>
 
           <!-- Action Input Section -->
-          <div class="flex flex-col gap-8px">
-            <label class="font-12px fw-700 color-secondary text-uppercase letter-spacing-1">Enter New Name</label>
-            <input type="text" id="rename-new-name" class="gnfc-modal-input uppercase font-15px fw-600" placeholder="TYPE NEW NAME..." required>
+          <div class="iso-flex-col-gap-8">
+            <label class="iso-label-primary">Enter New Name</label>
+            <input type="text" id="rename-new-name" class="gnfc-modal-input iso-modal-input-uppercase"
+              placeholder="TYPE NEW NAME..." required>
           </div>
         </form>
       </div>
 
       <div class="gnfc-modal-footer">
-        <button type="submit" form="rename-folder-form" class="gnfc-modal-btn gnfc-modal-btn-primary px-32px">Rename</button>
-        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px" id="btn-cancel-rename-modal">Cancel</button>
+        <button type="submit" form="rename-folder-form"
+          class="gnfc-modal-btn gnfc-modal-btn-primary iso-btn-submit">Rename</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px"
+          id="btn-cancel-rename-modal">Cancel</button>
       </div>
     </div>
   </div>
 
   <!-- Upload File Modal (Joblist Attachment Style) -->
   <div id="upload-file-modal" class="gnfc-modal-overlay">
-    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+    <div class="iso-modal-shell iso-modal-shell--medium">
       <div class="gnfc-modal-header">
         <h3 class="gnfc-modal-title">DMS ATTACHMENTS</h3>
         <button type="button" class="gnfc-modal-close" id="btn-close-upload-modal">
-          <i class="ph-bold ph-x text-lg"></i>
+          <i class="ph-bold ph-x iso-icon-lg"></i>
         </button>
       </div>
 
       <div class="gnfc-modal-body">
-        <div id="attachment-rows-container" class="flex flex-col gap-12px">
-          <!-- Rows injected here -->
+        <div id="attachment-rows-container" class="iso-flex-col-gap-12">
+          <div class="attachment-row">
+            <div class="attachment-file-info">
+              <i class="ph-bold ph-file iso-icon-18 iso-color-secondary"></i>
+              <span class="attachment-file-name">No file chosen...</span>
+            </div>
+            <label class="attachment-browse-label">
+              Browse..
+              <input type="file" class="hidden-file-input iso-hidden">
+            </label>
+          </div>
+          <div class="attachment-row">
+            <div class="attachment-file-info">
+              <i class="ph-bold ph-file iso-icon-18 iso-color-secondary"></i>
+              <span class="attachment-file-name">No file chosen...</span>
+            </div>
+            <label class="attachment-browse-label">
+              Browse..
+              <input type="file" class="hidden-file-input iso-hidden">
+            </label>
+          </div>
         </div>
 
         <button type="button" id="btn-add-attachment-row" class="attachment-add-btn">
@@ -282,12 +562,14 @@
         </button>
       </div>
 
-      <div class="gnfc-modal-footer flex items-center justify-between">
-        <span class="font-12px fw-600 text-red-500">Note: Max size 2GB at a time !!</span>
-        <div class="flex items-center gap-12px">
-          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-20px" id="btn-cancel-upload-modal">Cancel</button>
-          <button type="button" id="btn-save-attachments" class="gnfc-modal-btn gnfc-modal-btn-primary px-24px flex items-center gap-8px">
-            <i class="ph-fill ph-floppy-disk font-18px"></i>
+      <div class="gnfc-modal-footer iso-modal-footer-between">
+        <span class="iso-note-danger">Note: Max size 2GB at a time !!</span>
+        <div class="iso-flex-items-center-gap-12">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-20px"
+            id="btn-cancel-upload-modal">Cancel</button>
+          <button type="button" id="btn-save-attachments"
+            class="gnfc-modal-btn gnfc-modal-btn-primary iso-btn-submit-with-icon">
+            <i class="ph-fill ph-floppy-disk iso-icon-18"></i>
             Save Files
           </button>
         </div>
@@ -297,24 +579,24 @@
 
   <!-- Documentation Log Modal -->
   <div id="doc-log-modal" class="gnfc-modal-overlay">
-    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+    <div class="iso-modal-shell iso-modal-shell--wide">
       <div class="gnfc-modal-header">
         <h3 class="gnfc-modal-title">DOCUMENTATION LOG</h3>
         <button type="button" class="gnfc-modal-close" id="btn-close-log-modal">
-          <i class="ph-bold ph-x text-lg"></i>
+          <i class="ph-bold ph-x iso-icon-lg"></i>
         </button>
       </div>
 
       <div class="gnfc-modal-body">
         <!-- Filter Section -->
-        <div class="flex items-end gap-24px border-bottom-dark-border pb-20px mb-20px">
-          <div class="flex flex-col gap-6px">
-            <label class="font-13px fw-700 color-blue">Find By Item :</label>
-            <input type="text" class="gnfc-modal-input w-200px" placeholder="Search...">
+        <div class="iso-modal-filter-row">
+          <div>
+            <label class="gnfc-modal-label">Find By Item :</label>
+            <input type="text" class="gnfc-modal-input iso-w-200px" placeholder="Search...">
           </div>
-          <div class="flex flex-col gap-6px">
-            <label class="font-13px fw-700 color-blue">Find By Action :</label>
-            <select class="gnfc-modal-input w-200px">
+          <div>
+            <label class="gnfc-modal-label">Find By Action :</label>
+            <select class="gnfc-modal-input iso-w-200px">
               <option>NO CHOICE</option>
               <option>Save File</option>
               <option>Rename File</option>
@@ -327,25 +609,33 @@
         </div>
 
         <!-- Log Table -->
-        <div class="user-table-wrapper" style="max-height: 400px; overflow-y: auto;">
-          <table class="user-table">
+        <div class="iso-table-wrapper" style="max-height: 400px; overflow-y: auto;">
+          <table class="iso-table">
             <thead>
               <tr>
-                <th class="user-table-left">Item</th>
-                <th class="user-table-left">Location</th>
-                <th class="user-table-left">Action</th>
-                <th class="user-table-left">Date</th>
-                <th class="user-table-left">Time</th>
-                <th class="user-table-left">By</th>
+                <th class="iso-table-left">Item</th>
+                <th class="iso-table-left">Location</th>
+                <th class="iso-table-left">Action</th>
+                <th class="iso-table-left">Date</th>
+                <th class="iso-table-left">Time</th>
+                <th class="iso-table-left">By</th>
               </tr>
             </thead>
             <tbody id="doc-log-table-body">
-              <tr class="user-table-row">
-                <td class="fw-600 text-primary">GNFC DOCUMENTS</td>
+              <tr class="iso-table-row">
+                <td class="fw-600">SSR</td>
                 <td>/ISODOC/LEVEL-2/</td>
                 <td>Folder Created</td>
-                <td>12/01/2026</td>
-                <td>11:15:30</td>
+                <td>19/03/2026</td>
+                <td>15:24:52</td>
+                <td>HAS</td>
+              </tr>
+              <tr class="iso-table-row">
+                <td class="iso-fw-600-red">EMS.DOC</td>
+                <td>/ISODOC/LEVEL-2/</td>
+                <td>File Uploaded</td>
+                <td>05/07/2014</td>
+                <td>10:30:15</td>
                 <td>ADMIN</td>
               </tr>
             </tbody>
@@ -354,172 +644,127 @@
       </div>
 
       <div class="gnfc-modal-footer">
-        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px" id="btn-cancel-log-modal">Done</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px"
+          id="btn-cancel-log-modal">Done</button>
       </div>
     </div>
   </div>
 
   <!-- Create Folder Modal -->
   <div id="create-folder-modal" class="gnfc-modal-overlay">
-    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+    <div class="iso-modal-shell iso-modal-shell--narrow">
       <div class="gnfc-modal-header">
         <h3 class="gnfc-modal-title">CREATE NEW FOLDER</h3>
         <button type="button" class="gnfc-modal-close" id="btn-close-create-modal">
-          <i class="ph-bold ph-x text-lg"></i>
+          <i class="ph-bold ph-x iso-icon-lg"></i>
         </button>
       </div>
 
       <div class="gnfc-modal-body">
-        <form id="create-folder-form" class="flex flex-col gap-20px">
+        <form id="create-folder-form" class="iso-flex-col-gap-20">
           <!-- Path Display Panel -->
-          <div class="flex flex-col gap-10px border-bottom-dark-border pb-10px">
-            <div class="flex flex-col gap-4px">
-              <span class="font-11px fw-700 color-hint text-uppercase letter-spacing-1">Parent Path :</span>
-              <span id="create-parent-path" class="font-13px fw-700 color-blue break-all">/ISODOC/LEVEL-2/</span>
+          <div class="iso-modal-path-panel">
+            <div>
+              <span class="iso-label-secondary">Parent Path :</span>
+              <span id="create-parent-path" class="iso-modal-path-text">/ISODOC/LEVEL-2/</span>
             </div>
           </div>
 
           <!-- Input Section -->
-          <div class="flex flex-col gap-8px mt-8px">
-            <label class="font-12px fw-700 color-secondary text-uppercase letter-spacing-1">Enter Folder Name</label>
-            <input type="text" id="create-folder-name" class="gnfc-modal-input uppercase font-15px fw-600" placeholder="FOLDER NAME..." required>
+          <div class="iso-flex-col-gap-8-mt-8">
+            <label class="iso-label-primary">Enter Folder Name</label>
+            <input type="text" id="create-folder-name" class="gnfc-modal-input iso-modal-input-uppercase"
+              placeholder="FOLDER NAME..." required>
           </div>
         </form>
       </div>
 
       <div class="gnfc-modal-footer">
-        <button type="submit" form="create-folder-form" class="gnfc-modal-btn gnfc-modal-btn-primary px-32px">Create</button>
-        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px" id="btn-cancel-create-modal">Cancel</button>
+        <button type="submit" form="create-folder-form"
+          class="gnfc-modal-btn gnfc-modal-btn-primary iso-btn-submit">Create</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px"
+          id="btn-cancel-create-modal">Cancel</button>
       </div>
     </div>
   </div>
 
   <script>
-    $(function() {
+    $(function () {
       const $createOverlay = $('#create-folder-modal');
       const $renameOverlay = $('#rename-folder-modal');
       const $uploadOverlay = $('#upload-file-modal');
       const $logOverlay = $('#doc-log-modal');
       let $activeRenameRow = null;
 
-      reindexSR();
-
       // Create Folder Handlers
-      $('#btn-create-folder').on('click', function() {
+      $('#btn-create-folder').on('click', function () {
         $('#create-folder-name').val('');
         $createOverlay.addClass('is-open');
       });
 
-      $('#btn-close-create-modal, #btn-cancel-create-modal').on('click', function() {
+      $('#btn-close-create-modal, #btn-cancel-create-modal').on('click', function () {
         $createOverlay.removeClass('is-open');
       });
 
-      $('#create-folder-form').on('submit', function(e) {
+      $('#create-folder-form').on('submit', function (e) {
         e.preventDefault();
-        const folderName = $('#create-folder-name').val().trim().toUpperCase();
-        
-        // Mock add to table
-        const $tbody = $('.user-table tbody');
-        const today = new Date().toLocaleDateString('en-GB');
-        
-        const newRow = generateTableRow(folderName, 'Folder', '0Kb', today);
-        $tbody.prepend(newRow);
-        reindexSR();
         $createOverlay.removeClass('is-open');
 
         Swal.fire({
           title: 'Created!',
-          text: `Folder "${folderName}" has been created successfully.`,
+          text: 'Folder has been created successfully.',
           icon: 'success',
           timer: 1500,
           showConfirmButton: false
         });
       });
 
-      // New Row Generator for consistency
-      function generateTableRow(name, type, size, date) {
-        const isFolder = type === 'Folder' || type === '<Folder>';
-        const iconClass = isFolder ? 'ph-fill ph-folder file-icon-folder' : 'ph-fill ph-file file-icon-doc';
-        return `
-          <tr>
-            <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
-            <td>
-              <div class="file-name-cell">
-                <i class="${iconClass}"></i>
-                <span>${name}</span>
-              </div>
-            </td>
-            <td>${type}</td>
-            <td>${size}</td>
-            <td>${date}</td>
-            <td class="user-table-center">
-              <div class="flex items-center justify-center gap-8px">
-                <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                  <i class="ph-bold ph-pencil-simple-line font-18px"></i>
-                </button>
-                <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                  <i class="ph-bold ph-trash font-18px"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      function reindexSR() {
-        $('.user-table tbody tr').each(function(index) {
-          $(this).find('td:first').text(index + 1);
+      function resetUploadModal() {
+        $('#attachment-rows-container .attachment-row').each(function () {
+          $(this).find('.attachment-file-name').text('No file chosen...').removeClass('is-active');
+          $(this).find('i').removeClass('ph-check-circle iso-color-blue').addClass('ph-file iso-color-secondary');
+          $(this).find('.hidden-file-input').val('');
         });
+        $('#attachment-rows-container .attachment-row:gt(1)').remove();
       }
 
       // Upload Handlers
-      $('#btn-upload-file').on('click', function() {
-        const initialRow = `
-          <div class="attachment-row">
-            <div class="attachment-file-info">
-              <i class="ph-bold ph-file font-18px color-secondary"></i>
-              <span class="attachment-file-name">No file chosen...</span>
-            </div>
-            <label class="attachment-browse-label">
-              Browse..
-              <input type="file" class="hidden-file-input hidden">
-            </label>
-          </div>
-        `;
-        $('#attachment-rows-container').html(initialRow + initialRow);
+      $('#btn-upload-file').on('click', function () {
+        resetUploadModal();
         $uploadOverlay.addClass('is-open');
       });
 
-      $(document).on('change', '.hidden-file-input', function() {
+      $(document).on('change', '.hidden-file-input', function () {
         const fileName = this.files.length ? this.files[0].name : 'No file chosen...';
         const $row = $(this).closest('.attachment-row');
         $row.find('.attachment-file-name').text(fileName).addClass('is-active');
-        $row.find('i').removeClass('ph-file color-secondary').addClass('ph-check-circle color-blue');
+        $row.find('i').removeClass('ph-file iso-color-secondary').addClass('ph-check-circle iso-color-blue');
       });
 
-      $('#btn-add-attachment-row').on('click', function() {
+      $('#btn-add-attachment-row').on('click', function () {
         const newRow = `
           <div class="attachment-row">
             <div class="attachment-file-info">
-              <i class="ph-bold ph-file font-18px color-secondary"></i>
+              <i class="ph-bold ph-file iso-icon-18 iso-color-secondary"></i>
               <span class="attachment-file-name">No file chosen...</span>
             </div>
             <label class="attachment-browse-label">
               Browse..
-              <input type="file" class="hidden-file-input hidden">
+              <input type="file" class="hidden-file-input iso-hidden">
             </label>
           </div>
         `;
         $('#attachment-rows-container').append(newRow);
       });
 
-      $('#btn-close-upload-modal, #btn-cancel-upload-modal').on('click', function() {
+      $('#btn-close-upload-modal, #btn-cancel-upload-modal').on('click', function () {
         $uploadOverlay.removeClass('is-open');
+        resetUploadModal();
       });
 
-      $('#btn-save-attachments').on('click', function() {
+      $('#btn-save-attachments').on('click', function () {
         const filesToUpload = [];
-        $('.hidden-file-input').each(function() {
+        $('.hidden-file-input').each(function () {
           if (this.files.length) filesToUpload.push(this.files[0]);
         });
 
@@ -528,44 +773,30 @@
           return;
         }
 
-        const $tbody = $('.user-table tbody');
-        const today = new Date().toLocaleDateString('en-GB');
-
-        filesToUpload.forEach(file => {
-          const fileName = file.name;
-          const fileSize = (file.size / 1024).toFixed(0) + 'kb';
-          const type = fileName.split('.').pop().toUpperCase() + ' File';
-          const newRow = generateTableRow(fileName, type, fileSize, today);
-          $tbody.prepend(newRow);
-        });
-
-        reindexSR();
         $uploadOverlay.removeClass('is-open');
         Swal.fire({ title: 'Saved!', text: `${filesToUpload.length} files uploaded.`, icon: 'success', timer: 1500 });
       });
 
       // Rename Handlers
-      $(document).on('click', '.btn-rename', function() {
+      $(document).on('click', '.btn-rename', function () {
         $activeRenameRow = $(this).closest('tr');
-        const currentName = $activeRenameRow.find('.file-name-cell span').last().text();
+        const currentName = $activeRenameRow.find('.file-name-cell span').text();
         $('#rename-current-name').text(currentName);
         $('#rename-new-name').val(currentName);
         $renameOverlay.addClass('is-open');
       });
 
-      $('#btn-close-rename-modal, #btn-cancel-rename-modal').on('click', function() {
+      $('#btn-close-rename-modal, #btn-cancel-rename-modal').on('click', function () {
         $renameOverlay.removeClass('is-open');
       });
 
-      $('#rename-folder-form').on('submit', function(e) {
+      $('#rename-folder-form').on('submit', function (e) {
         e.preventDefault();
-        const newName = $('#rename-new-name').val().trim().toUpperCase();
-        $activeRenameRow.find('.file-name-cell span').last().text(newName);
         $renameOverlay.removeClass('is-open');
 
         Swal.fire({
           title: 'Renamed!',
-          text: `Name has been updated to "${newName}".`,
+          text: 'Name has been updated successfully.',
           icon: 'success',
           timer: 1500,
           showConfirmButton: false
@@ -573,10 +804,10 @@
       });
 
       // Delete Handlers
-      $(document).on('click', '.btn-delete', function() {
+      $(document).on('click', '.btn-delete', function () {
         const $row = $(this).closest('tr');
-        const itemName = $row.find('.file-name-cell span').last().text();
-        
+        const itemName = $row.find('.file-name-cell span').text();
+
         Swal.fire({
           title: 'Are you sure?',
           text: `You are about to delete "${itemName}". This action cannot be undone!`,
@@ -588,10 +819,6 @@
           cancelButtonText: 'Cancel'
         }).then((result) => {
           if (result.isConfirmed) {
-            $row.fadeOut(400, function() {
-              $(this).remove();
-              reindexSR();
-            });
             Swal.fire({
               title: 'Deleted!',
               text: 'The item has been deleted.',
@@ -604,43 +831,43 @@
       });
 
       // Log Handlers
-      $(document).on('click', '.btn-open-log', function() {
+      $(document).on('click', '.iso-btn-open-log', function () {
         $logOverlay.addClass('is-open');
       });
 
-      $('#btn-close-log-modal, #btn-cancel-log-modal').on('click', function() {
+      $('#btn-close-log-modal, #btn-cancel-log-modal').on('click', function () {
         $logOverlay.removeClass('is-open');
       });
 
       // Sorting Logic
-      $('.sortable-header').on('click', function() {
+      $('.sortable-header').on('click', function () {
         const column = $(this).data('column');
         const $table = $(this).closest('table');
         const rows = $table.find('tbody tr').get();
         const direction = $(this).data('sort-dir') === 'asc' ? 'desc' : 'asc';
-        
-        // Reset all icons and states
-        $('.sortable-header').data('sort-dir', '').find('i').attr('class', 'ph ph-caret-up-down font-12px');
-        $(this).data('sort-dir', direction);
-        $(this).find('i').attr('class', direction === 'asc' ? 'ph ph-caret-up font-12px color-primary' : 'ph ph-caret-down font-12px color-primary');
 
-        rows.sort(function(a, b) {
+        // Reset all icons and states
+        $('.sortable-header').data('sort-dir', '').find('i').attr('class', 'ph ph-caret-up-down iso-icon-12');
+        $(this).data('sort-dir', direction);
+        $(this).find('i').attr('class', direction === 'asc' ? 'ph ph-caret-up iso-icon-12 color-primary' : 'ph ph-caret-down iso-icon-12 color-primary');
+
+        rows.sort(function (a, b) {
           let valA = $(a).find('td').eq(column).text().trim().toLowerCase();
           let valB = $(b).find('td').eq(column).text().trim().toLowerCase();
 
-          // Handle Name column (Icon + Text/Link)
+          // Handle Name column (Icon + Text)
           if (column === 1) {
-            valA = $(a).find('.file-name-cell span, .file-name-cell a').last().text().trim().toLowerCase();
-            valB = $(b).find('.file-name-cell span, .file-name-cell a').last().text().trim().toLowerCase();
+            valA = $(a).find('.file-name-cell span').text().trim().toLowerCase();
+            valB = $(b).find('.file-name-cell span').text().trim().toLowerCase();
           }
 
-          // Handle Size column
+          // Handle Size column (e.g. "441Kb")
           if (column === 3) {
             valA = parseInt(valA.replace(/[^0-9]/g, '')) || 0;
             valB = parseInt(valB.replace(/[^0-9]/g, '')) || 0;
           }
 
-          // Handle Date column
+          // Handle Date column (DD/MM/YYYY)
           if (column === 4) {
             const partA = valA.split('/');
             const partB = valB.split('/');
@@ -653,11 +880,56 @@
           return 0;
         });
 
-        $.each(rows, function(index, row) {
+        $.each(rows, function (index, row) {
           $table.children('tbody').append(row);
         });
+      });
 
-        reindexSR();
+      // Sub-folder Navigation Logic
+      const $mainTableWrapper = $('#main-folder-table-wrapper');
+      const $archivedTableWrapper = $('#archived-folder-table-wrapper');
+      const $subPathSeparator = $('.sub-path-separator');
+      const $subPathName = $('.sub-path-name');
+      const $breadcrumbLevel2 = $('#breadcrumb-level2');
+      const $backBtn = $('.dms-toolbar-btn').first(); // The back arrow button in toolbar
+
+      // Remove onclick="history.back()" from backBtn, we will handle it programmatically
+      $backBtn.removeAttr('onclick');
+
+      function openSubfolder() {
+        $mainTableWrapper.addClass('iso-hidden');
+        $archivedTableWrapper.removeClass('iso-hidden');
+        $subPathSeparator.removeClass('iso-hidden');
+        $subPathName.removeClass('iso-hidden');
+      }
+
+      function closeSubfolder() {
+        $archivedTableWrapper.addClass('iso-hidden');
+        $mainTableWrapper.removeClass('iso-hidden');
+        $subPathSeparator.addClass('iso-hidden');
+        $subPathName.addClass('iso-hidden');
+      }
+
+      // Click on Archived Documents Row
+      $(document).on('click', '#btn-open-archived-folder', function (e) {
+        e.preventDefault();
+        openSubfolder();
+      });
+
+      // Click on LEVEL-2 breadcrumb to go back
+      $breadcrumbLevel2.on('click', function () {
+        if (!$archivedTableWrapper.hasClass('iso-hidden')) {
+          closeSubfolder();
+        }
+      });
+
+      // Handle Back Button click in toolbar
+      $backBtn.on('click', function () {
+        if (!$archivedTableWrapper.hasClass('iso-hidden')) {
+          closeSubfolder();
+        } else {
+          history.back();
+        }
       });
     });
   </script>

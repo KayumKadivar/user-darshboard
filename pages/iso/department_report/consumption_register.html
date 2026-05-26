@@ -25,213 +25,6 @@
   <script>
     window.activePage = 'iso';
   </script>
-
-  <style>
-    .cons-dashboard-wrapper {
-      min-height: calc(100vh - 120px);
-    }
-
-    /* Config blocks & headers */
-    .config-block {
-      background: var(--app-panel, #ffffff);
-      border: 1px solid var(--app-border, #e2e8f0);
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-    }
-
-    .config-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      margin-top: 16px;
-    }
-
-    .premium-config-card {
-      background: var(--app-bg, #f8fafc);
-      border: 1px solid var(--app-border, #cbd5e1);
-      border-radius: 12px;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 200px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      text-align: left;
-    }
-
-    .premium-config-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--typo-orange, #ea580c);
-      opacity: 0.8;
-    }
-
-    .premium-config-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.04);
-      border-color: var(--typo-orange, #ea580c);
-    }
-
-    .premium-card-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(234, 88, 12, 0.08);
-      color: var(--typo-orange, #ea580c);
-      font-size: 20px;
-      margin-bottom: 12px;
-    }
-
-    /* Buttons */
-    .btn-orange-fill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--typo-orange, #ea580c);
-      color: #ffffff !important;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 20px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 13.5px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
-    }
-
-    .btn-orange-fill:hover {
-      background: #f97316;
-      transform: translateY(-1.5px);
-      box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
-    }
-
-    .btn-orange-outline {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #ffffff;
-      color: var(--typo-orange, #ea580c) !important;
-      border: 1.5px solid var(--typo-orange, #ea580c) !important;
-      border-radius: 6px;
-      padding: 9px 18px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 13.5px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-orange-outline:hover {
-      background: #fff7ed;
-      color: #c2410c !important;
-      border-color: #c2410c !important;
-      transform: translateY(-1.5px);
-    }
-
-    .filter-select {
-      width: 100%;
-      padding: 8px 12px;
-      height: 38px;
-      font-size: 13.5px;
-      font-weight: 600;
-      border: 1px solid var(--app-border, #cbd5e1);
-      border-radius: 6px;
-      background: var(--app-panel, #ffffff);
-      color: var(--typo-primary);
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-
-    .filter-select:focus {
-      outline: none;
-      border-color: var(--typo-orange, #ea580c);
-      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
-    }
-
-    /* Custom CSS Classes replacing inline styles */
-    .header-title-icon {
-      color: var(--typo-orange);
-    }
-
-    .header-title-text {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--typo-primary);
-      margin: 0;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
-
-    .header-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--typo-orange);
-      text-transform: uppercase;
-      margin-bottom: 0;
-      letter-spacing: 0.05em;
-    }
-
-    .header-dropdown {
-      cursor: pointer;
-      height: 38px;
-      border-radius: 6px;
-      font-weight: 600;
-      padding: 0 12px;
-      border: 1.5px solid #cbd5e1;
-      outline: none;
-      transition: border-color 0.2s ease;
-    }
-
-    .premium-config-card.horizontal-card {
-      min-height: auto;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 20px 24px;
-    }
-
-    .card-left-flex {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .premium-card-icon.no-margin {
-      margin-bottom: 0;
-    }
-
-    .card-title-text {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--typo-primary);
-      text-transform: uppercase;
-      margin: 0;
-      font-family: 'Outfit', sans-serif;
-    }
-
-    .premium-btn-group.no-border {
-      display: flex;
-      gap: 12px;
-      margin-top: 0;
-      padding-top: 0;
-      border-top: none;
-    }
-  </style>
 </head>
 
 <body class="dashboard-body">
@@ -253,11 +46,11 @@
           <div class="flex items-center justify-between flex-wrap gap-12px">
             <div class="flex items-center gap-8px">
               <i class="ph-bold ph-list-dashes font-20px header-title-icon"></i>
-              <h3 class="header-title-text">Consumption Register Setup Flow</h3>
+              <h3 class="header-title-text">CONSUMPTION REGISTER SETUP FLOW</h3>
             </div>
             
             <div class="flex items-center gap-12px">
-              <label for="plant-select-cons" class="header-label">Select plant:</label>
+              <label for="plant-select-cons" class="header-label">SELECT PLANT:</label>
               <select id="plant-select-cons" class="filter-select w-200px header-dropdown">
                 <option value="ACETIC ACID" selected>ACETIC ACID</option>
                 <option value="AAQM">AAQM</option>
@@ -284,39 +77,45 @@
 
           <div class="config-grid">
             <!-- Card 1: Static Fields -->
-            <div class="premium-config-card horizontal-card">
-              <div class="card-left-flex">
-                <div class="premium-card-icon no-margin">
+            <div class="premium-config-card" style="min-height: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div class="premium-card-icon" style="margin-bottom: 0;">
                   <i class="ph-bold ph-database"></i>
                 </div>
-                <h4 class="card-title-text">Static Fields</h4>
+                <h4 style="font-size: 15px; font-weight: 700; color: var(--typo-primary); text-transform: uppercase; margin: 0; font-family: 'Outfit', sans-serif;">CONSUMPTION STATIC FIELDS</h4>
               </div>
-              <div class="premium-btn-group no-border">
+              <div class="premium-btn-group" style="display: flex; gap: 12px; margin-top: 0; padding-top: 0; border-top: none;">
                 <button class="btn-orange-fill" onclick="handleConsumption('Static', 'Add')">
                   <i class="ph-bold ph-plus"></i> Add
                 </button>
-                <button class="btn-orange-outline" onclick="handleConsumption('Static', 'View')">
+                <button class="btn-orange-outline" onclick="handleConsumption('Static', 'View', this)">
                   <i class="ph-bold ph-eye"></i> View
                 </button>
               </div>
             </div>
 
             <!-- Card 2: Monthly Status -->
-            <div class="premium-config-card horizontal-card">
-              <div class="card-left-flex">
-                <div class="premium-card-icon no-margin">
+            <div class="premium-config-card" style="min-height: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px;">
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <div class="premium-card-icon" style="margin-bottom: 0;">
                   <i class="ph-bold ph-calendar-blank"></i>
                 </div>
-                <h4 class="card-title-text">Monthly Status</h4>
+                <h4 style="font-size: 15px; font-weight: 700; color: var(--typo-primary); text-transform: uppercase; margin: 0; font-family: 'Outfit', sans-serif;">CONSUMPTION MONTHLY STATUS</h4>
               </div>
-              <div class="premium-btn-group no-border">
-                <button class="btn-orange-outline" onclick="handleConsumption('Monthly', 'View')">
+              <div class="premium-btn-group" style="display: flex; gap: 12px; margin-top: 0; padding-top: 0; border-top: none;">
+                <button class="btn-orange-fill" onclick="handleConsumption('Monthly', 'Add')">
+                  <i class="ph-bold ph-plus"></i> Add
+                </button>
+                <button class="btn-orange-outline" onclick="handleConsumption('Monthly', 'View', this)">
                   <i class="ph-bold ph-eye"></i> View
                 </button>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Inline view container for dynamic tables -->
+        <div id="cons-inline-view-container" style="display: none; margin-top: 24px;"></div>
       </div>
 
     </div>
@@ -368,7 +167,67 @@
     </div>
   </div>
 
+  <!-- Add Monthly Status Modal -->
+  <div id="add-monthly-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">ADD MONTHLY VALUE</h3>
+          <p class="gnfc-modal-subtitle">Plant: <span id="modal-monthly-plant-name">ACETIC ACID</span></p>
+        </div>
+        <button type="button" onclick="setModalState('add-monthly-modal', false)" class="gnfc-modal-close">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <form id="monthly-parameter-form">
+        <div class="gnfc-modal-body">
+          <div style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+            <div>
+              <label class="gnfc-modal-label" for="monthly-param-item">SELECT ITEM *</label>
+              <select id="monthly-param-item" class="gnfc-modal-input">
+                <!-- Will be populated dynamically -->
+              </select>
+            </div>
+            <div>
+              <label class="gnfc-modal-label" for="monthly-param-issued">ISSUED *</label>
+              <input type="number" step="any" id="monthly-param-issued" class="gnfc-modal-input" placeholder="e.g. 150" required>
+            </div>
+            <div>
+              <label class="gnfc-modal-label" for="monthly-param-consumed">CONSUMED *</label>
+              <input type="number" step="any" id="monthly-param-consumed" class="gnfc-modal-input" placeholder="e.g. 120" required>
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">
+            Save
+          </button>
+          <button type="button" onclick="setModalState('add-monthly-modal', false)" class="gnfc-modal-btn gnfc-modal-btn-secondary">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
+    // 1. Static flat databases that do not change dynamically per plant, behaving statically as per instructions
+    let staticData = [
+      { sr: '1', name: 'Action 99', base: '380', target: '368', unit: 'ltr' },
+      { sr: '2', name: 'Canvas H/G', base: '470', target: '456', unit: 'Pairs' },
+      { sr: '3', name: 'Cotton Waste', base: '390', target: '378', unit: 'Kgs' },
+      { sr: '4', name: 'Maderpat', base: '495', target: '480', unit: 'meter' },
+      { sr: '5', name: 'PVC Sheet', base: '350', target: '339', unit: 'Kgs' }
+    ];
+
+    let monthlyData = [
+      { sr: '1', name: 'Action 99', base: '380', target: '368', unit: 'ltr', issued: 15, consumed: 12, balance: 3 },
+      { sr: '2', name: 'Canvas H/G', base: '470', target: '456', unit: 'Pairs', issued: 50, consumed: 40, balance: 10 },
+      { sr: '3', name: 'Cotton Waste', base: '390', target: '378', unit: 'Kgs', issued: 30, consumed: 25, balance: 5 },
+      { sr: '4', name: 'Maderpat', base: '495', target: '480', unit: 'meter', issued: 20, consumed: 18, balance: 2 },
+      { sr: '5', name: 'PVC Sheet', base: '350', target: '339', unit: 'Kgs', issued: 10, consumed: 8, balance: 2 }
+    ];
+
     function setModalState(modalId, isOpen) {
       const $modal = $('#' + modalId);
       if (isOpen) {
@@ -378,22 +237,240 @@
       }
     }
 
-    function handleConsumption(section, action) {
+    let currentActiveType = null;
+    let currentInlineYear = '2026';
+
+    function renderStaticTable() {
+      const plant = $('#plant-select-cons').val();
+
+      let html = `
+        <div class="pdr-view-card">
+          <div class="pdr-table-title-bar">
+            <div class="pdr-plant-label">
+              <i class="ph-bold ph-buildings"></i> Plant: <span id="cons-inline-plant-name">${plant}</span>
+            </div>
+            <div class="pdr-static-title">Static Parameters</div>
+          </div>        
+
+          <div class="user-table-wrapper" style="margin: 0; overflow-x: auto;">
+            <table class="user-table" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th class="user-table-center w-80px">Sr No</th>
+                  <th class="user-table-left" style="text-align: left; padding-left: 16px;">Objective</th>
+                  <th class="user-table-center w-150px">Base Level</th>
+                  <th class="user-table-center w-150px">Target Value</th>
+                  <th class="user-table-center w-120px">Unit</th>
+                  <th class="user-table-center w-100px">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+      `;
+
+      staticData.forEach(row => {
+        html += `
+          <tr class="user-table-row">
+            <td class="user-table-center font-14px fw-600">${row.sr}</td>
+            <td class="text-left font-14px fw-600" style="text-align: left; padding-left: 16px;">${row.name}</td>
+            <td class="user-table-center font-14px">${row.base}</td>
+            <td class="user-table-center font-14px">${row.target}</td>
+            <td class="user-table-center font-14px">${row.unit}</td>
+            <td class="user-table-center">
+              <a href="#" class="edit-action-link edit-inline-static-btn" onclick="editSingleStaticRecord('${row.sr}'); return false;">
+                <i class="ph-bold ph-pencil-simple"></i> Edit
+              </a>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += `
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      $('#cons-inline-view-container').html(html);
+    }
+
+    window.editSingleStaticRecord = function(sr) {
+      const record = staticData.find(r => r.sr === sr);
+      if (!record) return;
+
+      const plant = $('#plant-select-cons').val();
+      $('#modal-plant-name').text(plant);
+      
+      // Populate fields
+      $('#param-objective').val(record.name);
+      $('#param-base-level').val(record.base);
+      $('#param-target-value').val(record.target);
+      $('#param-unit').val(record.unit);
+      
+      // Set mode
+      $('#static-parameter-form').attr('data-mode', 'edit');
+      $('#static-parameter-form').attr('data-sr', sr);
+      
+      setModalState('add-static-modal', true);
+    };
+
+    function renderMonthlyTable(selectedYear = currentInlineYear) {
+      currentInlineYear = selectedYear;
+      const plant = $('#plant-select-cons').val();
+
+      let html = `
+        <div class="pdr-view-card">
+          <div class="pdr-monthly-header-bar">
+            <div class="pdr-plant-label">
+              <i class="ph-bold ph-buildings"></i> Plant: <span id="cons-inline-plant-name">${plant}</span>
+            </div>
+            <div class="pdr-center-title">Monthly Status</div>
+            
+            <div class="pdr-inline-year-wrap">
+              <label class="filter-label">Active Year:</label>
+              <select id="cons-inline-year-select" class="filter-select pdr-header-select" onchange="renderMonthlyTable(this.value)">
+                <option value="2026" ${selectedYear === '2026' ? 'selected' : ''}>2026</option>
+                <option value="2025" ${selectedYear === '2025' ? 'selected' : ''}>2025</option>
+                <option value="2024" ${selectedYear === '2024' ? 'selected' : ''}>2024</option>
+              </select>
+              <div class="pdr-date-label">May</div>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper" style="margin: 0; overflow-x: auto;">
+            <table class="user-table" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">Sr</th>
+                  <th style="text-align: left; padding-left: 16px; min-width: 160px;">Item Description</th>
+                  <th style="width: 100px;">Base Level</th>
+                  <th style="width: 110px;">Target Value</th>
+                  <th style="width: 80px;">Unit</th>
+                  <th style="width: 80px;">Issued</th>
+                  <th style="width: 80px;">Consumed</th>
+                  <th style="width: 80px;">Balance</th>
+                  <th style="width: 100px;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+      `;
+
+      monthlyData.forEach(row => {
+        html += `
+          <tr class="user-table-row">
+            <td>${row.sr}</td>
+            <td class="text-left" style="text-align: left; padding-left: 16px;">${row.name}</td>
+            <td>${row.base}</td>
+            <td>${row.target}</td>
+            <td>${row.unit}</td>
+            <td>${row.issued}</td>
+            <td>${row.consumed}</td>
+            <td>${row.balance}</td>
+            <td class="user-table-center">
+              <a href="#" class="edit-action-link edit-inline-monthly-btn" onclick="editSingleMonthlyRecord('${row.sr}'); return false;">
+                <i class="ph-bold ph-pencil-simple"></i> Edit
+              </a>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += `
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      $('#cons-inline-view-container').html(html);
+    }
+
+    window.editSingleMonthlyRecord = function(sr) {
+      const record = monthlyData.find(r => r.sr === sr);
+      if (!record) return;
+
+      const plant = $('#plant-select-cons').val();
+      $('#modal-monthly-plant-name').text(plant);
+      
+      populateMonthlyItemDropdown();
+      $('#monthly-param-item').val(sr);
+      $('#monthly-param-issued').val(record.issued);
+      $('#monthly-param-consumed').val(record.consumed);
+      
+      // Set mode
+      $('#monthly-parameter-form').attr('data-mode', 'edit');
+      $('#monthly-parameter-form').attr('data-sr', sr);
+      
+      setModalState('add-monthly-modal', true);
+    };
+
+    function populateMonthlyItemDropdown() {
+      const $dropdown = $('#monthly-param-item');
+      $dropdown.empty();
+      staticData.forEach(item => {
+        $dropdown.append(`<option value="${item.sr}">${item.name}</option>`);
+      });
+    }
+
+    function toggleInlineView(type, btnEl) {
+      const $btn = $(btnEl);
+      const $container = $('#cons-inline-view-container');
+      
+      if (currentActiveType === type) {
+        $btn.removeClass('active-view-btn');
+        $container.slideUp(300, function() {
+          $container.empty();
+        });
+        currentActiveType = null;
+        return;
+      }
+      
+      $('.btn-orange-outline').removeClass('active-view-btn');
+      $btn.addClass('active-view-btn');
+      
+      if (type === 'Static') {
+        renderStaticTable();
+      } else if (type === 'Monthly') {
+        renderMonthlyTable();
+      }
+      
+      if (currentActiveType === null) {
+        $container.hide().slideDown(300);
+      }
+      currentActiveType = type;
+    }
+
+    function handleConsumption(section, action, btnEl) {
       const plant = $('#plant-select-cons').val();
       
       if (section === 'Static' && action === 'Add') {
         $('#modal-plant-name').text(plant);
+        $('#static-parameter-form').attr('data-mode', 'add');
+        $('#static-parameter-form')[0].reset();
         setModalState('add-static-modal', true);
       } else if (section === 'Static' && action === 'View') {
-        window.location.href = `consumption_view_static.html?plant=${encodeURIComponent(plant)}`;
+        toggleInlineView('Static', btnEl);
       } else if (section === 'Monthly' && action === 'Add') {
-        window.location.href = `consumption_add_monthly.html?plant=${encodeURIComponent(plant)}`;
+        $('#modal-monthly-plant-name').text(plant);
+        populateMonthlyItemDropdown();
+        $('#monthly-parameter-form').attr('data-mode', 'add');
+        $('#monthly-parameter-form')[0].reset();
+        setModalState('add-monthly-modal', true);
       } else if (section === 'Monthly' && action === 'View') {
-        window.location.href = `consumption_view_monthly.html?plant=${encodeURIComponent(plant)}`;
+        toggleInlineView('Monthly', btnEl);
       }
     }
 
     $(function() {
+      // Auto-refresh active inline view when plant changes
+      $('#plant-select-cons').on('change', function() {
+        if (currentActiveType === 'Static') {
+          renderStaticTable();
+        } else if (currentActiveType === 'Monthly') {
+          renderMonthlyTable();
+        }
+      });
+
       // Close modal on overlay click
       $('.gnfc-modal-overlay').on('click', function(e) {
         if (e.target === this) {
@@ -401,21 +478,106 @@
         }
       });
 
-      // Handle form submission
+      // Handle Static form submission
       $('#static-parameter-form').on('submit', function(e) {
         e.preventDefault();
         const plant = $('#plant-select-cons').val();
-
-        Swal.fire({
-          title: 'Parameter Configured!',
-          text: `Static parameters for Plant: ${plant} have been updated successfully.`,
-          icon: 'success',
-          confirmButtonColor: '#ea580c',
-          confirmButtonText: 'OK'
-        }).then(() => {
+        const name = $('#param-objective').val().trim();
+        const base = $('#param-base-level').val().trim();
+        const target = $('#param-target-value').val().trim();
+        const unit = $('#param-unit').val().trim();
+        
+        const mode = $(this).attr('data-mode');
+        if (mode === 'edit') {
+          const sr = $(this).attr('data-sr');
+          const record = staticData.find(r => r.sr === sr);
+          if (record) {
+            record.name = name;
+            record.base = base;
+            record.target = target;
+            record.unit = unit;
+          }
+          if (currentActiveType === 'Static') {
+            renderStaticTable();
+          }
           setModalState('add-static-modal', false);
-          $('#static-parameter-form')[0].reset();
-        });
+          Swal.fire({
+            title: 'Updated!',
+            text: 'Static Parameter updated successfully.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        } else {
+          const newSr = staticData.length ? String(Math.max(...staticData.map(r => parseInt(r.sr))) + 1) : '1';
+          staticData.push({ sr: newSr, name: name, base: base, target: target, unit: unit });
+          
+          // Also sync with monthlyData so they match!
+          monthlyData.push({ sr: newSr, name: name, base: base, target: target, unit: unit, issued: 0, consumed: 0, balance: 0 });
+          
+          if (currentActiveType === 'Static') {
+            renderStaticTable();
+          }
+          setModalState('add-static-modal', false);
+          Swal.fire({
+            title: 'Saved!',
+            text: `Static Parameter saved successfully for Plant: ${plant}.`,
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
+      });
+
+      // Handle Monthly form submission
+      $('#monthly-parameter-form').on('submit', function(e) {
+        e.preventDefault();
+        const plant = $('#plant-select-cons').val();
+        const sr = $('#monthly-param-item').val();
+        const issued = parseFloat($('#monthly-param-issued').val()) || 0;
+        const consumed = parseFloat($('#monthly-param-consumed').val()) || 0;
+        const balance = issued - consumed;
+        
+        const mode = $(this).attr('data-mode');
+        if (mode === 'edit') {
+          const editSr = $(this).attr('data-sr');
+          const record = monthlyData.find(r => r.sr === editSr);
+          if (record) {
+            record.issued = issued;
+            record.consumed = consumed;
+            record.balance = balance;
+          }
+          if (currentActiveType === 'Monthly') {
+            renderMonthlyTable();
+          }
+          setModalState('add-monthly-modal', false);
+          Swal.fire({
+            title: 'Updated!',
+            text: 'Monthly values updated successfully.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        } else {
+          // Add mode
+          const record = monthlyData.find(r => r.sr === sr);
+          if (record) {
+            record.issued = issued;
+            record.consumed = consumed;
+            record.balance = balance;
+          }
+          if (currentActiveType === 'Monthly') {
+            renderMonthlyTable();
+          }
+          setModalState('add-monthly-modal', false);
+          Swal.fire({
+            title: 'Saved!',
+            text: `Monthly values recorded successfully for Plant: ${plant}.`,
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
       });
     });
   </script>
