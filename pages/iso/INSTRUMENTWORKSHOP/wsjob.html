@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inst WS Log Book | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+  <link rel="stylesheet" href="inst-ws.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'inst_ws';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="job_register.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Instrument Workshop:instrumentworkshop.html,Job Register:job_register.html,Job Details:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Results Screen -->
+      <div id="results-screen" class="results-section">
+        <div class="results-header-bar">
+          <div class="results-header-info">
+            <p>FFDNO : OHSDM - INST - 5.2</p>
+            <h2 id="job-details-title">INST WS Log Book</h2>
+            <div id="selected-plant-tag" class="meta-tag">PLANTCODE : BOILER</div>
+          </div>
+        </div>
+
+        <!-- Table Section: Job Details -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1000px">
+            <thead>
+              <tr>
+                <th class="user-table-center w-60px">Sr</th>
+                <th class="user-table-center w-80px">JobNo</th>
+                <th class="w-280px p-0">
+                  <div class="split-cell">
+                    <div class="split-top" style="border-bottom: 1px solid var(--app-border);">Title</div>
+                    <div class="split-bottom">Job</div>
+                  </div>
+                </th>
+                <th class="user-table-center w-100px">Plant</th>
+                <th class="user-table-center w-80px">Tech</th>
+                <th>Description</th>
+                <th class="user-table-center w-80px">Tech</th>
+                <th class="w-140px p-0">
+                  <div class="split-cell">
+                    <div class="split-top" style="border-bottom: 1px solid var(--app-border);">Status</div>
+                    <div class="split-bottom">Date</div>
+                  </div>
+                </th>
+                <th class="w-150px">Remarks</th>
+              </tr>
+            </thead>
+            <tbody id="wsjob-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    $(function() {
+      // Complete Job list database supporting multiple updates per job number
+      const jobsData = {
+        "17017": [
+          {
+            sr: "1",
+            title: "Power supply",
+            defect: "BNC power supply is not getting ON",
+            by: "JWS",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "checking of discrete components are under progress.",
+            status: "U/P",
+            completed: "30/01/2026",
+            remarks: ""
+          },
+          {
+            sr: "2",
+            title: "Power supply",
+            defect: "BNC power supply is not getting ON",
+            by: "JWS",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "checking of discrete components are under progress.",
+            status: "U/P",
+            completed: "31/01/2026",
+            remarks: ""
+          },
+          {
+            sr: "3",
+            title: "Power supply",
+            defect: "BNC power supply is not getting ON",
+            by: "JWS",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "check it found all discrete components o.k. hence it cannot repaired.",
+            status: "NOT REPARABLE",
+            completed: "02/02/2026",
+            remarks: ""
+          }
+        ],
+        "17129": [
+          {
+            sr: "1",
+            title: "Flame ignitor JB",
+            defect: "Flame ignitor JB PCB track found in open condition. PCB track repairing related work.",
+            by: "TRC",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "provide jumper where the pcb tracks are damaged.",
+            status: "OVER",
+            completed: "13/05/2026",
+            remarks: ""
+          }
+        ],
+        "17125": [
+          {
+            sr: "2",
+            title: "Flame scanner",
+            defect: "Flame Scanner not sensing flame",
+            by: "TRC",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Cleaned scanner glass and adjusted sensitivity.",
+            status: "OVER",
+            completed: "12/05/2026",
+            remarks: ""
+          }
+        ],
+        "17124": [
+          {
+            sr: "3",
+            title: "Flame Scanner",
+            defect: "Flame scanner not sensing flame",
+            by: "TRC",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Cleaned scanner glass and adjusted sensitivity.",
+            status: "OVER",
+            completed: "12/05/2026",
+            remarks: ""
+          }
+        ],
+        "17091": [
+          {
+            sr: "4",
+            title: "Ignition Flame Relay",
+            defect: "Ignition Flame Relay not working, relay NO contacts 3-4, 4-5-6 not change in relay pick up condition.",
+            by: "ARP",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Replaced faulty relay contacts.",
+            status: "OVER",
+            completed: "05/04/2026",
+            remarks: ""
+          }
+        ],
+        "17090": [
+          {
+            sr: "5",
+            title: "Ignition Flame Relay",
+            defect: "Ignition Flame Relay not working, contact no 3-4, 5-6 not change over",
+            by: "ARP",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Relay coil open, not reparable.",
+            status: "NOT REPARABLE",
+            completed: "",
+            remarks: ""
+          }
+        ],
+        "17089": [
+          {
+            sr: "6",
+            title: "Flame scanner",
+            defect: "Flame scanner not sensing flame.",
+            by: "TRC",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Adjusted alignment of scanner.",
+            status: "OVER",
+            completed: "30/03/2026",
+            remarks: ""
+          }
+        ],
+        "17088": [
+          {
+            sr: "7",
+            title: "Flame scanner",
+            defect: "Flame scanner not sensing flame",
+            by: "TRC",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Sensor element damaged, not reparable.",
+            status: "NOT REPARABLE",
+            completed: "",
+            remarks: ""
+          }
+        ],
+        "17087": [
+          {
+            sr: "8",
+            title: "Flame scanner",
+            defect: "Flame scanner not sensing flame.",
+            by: "TRC",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Cleaned lens.",
+            status: "OVER",
+            completed: "30/03/2026",
+            remarks: ""
+          }
+        ],
+        "17086": [
+          {
+            sr: "9",
+            title: "Flame scanner",
+            defect: "Flames scanner is not sensing flame.",
+            by: "TRC",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Cleaned and tested scanner.",
+            status: "OVER",
+            completed: "31/03/2026",
+            remarks: ""
+          }
+        ],
+        "17076": [
+          {
+            sr: "10",
+            title: "Ignitor IFM card",
+            defect: "Ignitor IFM card, flame ON contact remains close continuously.",
+            by: "ARP",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Replaced transistor on IFM card.",
+            status: "OVER",
+            completed: "18/03/2026",
+            remarks: ""
+          }
+        ],
+        "17075": [
+          {
+            sr: "11",
+            title: "Visible Flame Scanner Power Supply Card",
+            defect: "Visible Flame Scanner Power Supply Card not working in Rack.",
+            by: "ARP",
+            plant: "BOILER",
+            tech: "ALD",
+            description: "Replaced filter capacitor in power supply card.",
+            status: "OVER",
+            completed: "20/03/2026",
+            remarks: ""
+          }
+        ]
+      };
+
+      // Extract parameter from URL query string
+      const urlParams = new URLSearchParams(window.location.search);
+      const insttag = urlParams.get('insttag');
+
+      const $tbody = $('#wsjob-tbody');
+
+      if (!insttag || !jobsData[insttag]) {
+        // Fallback display if job number not found
+        $tbody.html(`
+          <tr class="user-table-row">
+            <td colspan="9" class="user-table-center py-5 font-weight-bold" style="color: var(--typo-red);">
+              <i class="ph-bold ph-warning" style="font-size: 24px; display: block; margin-bottom: 10px;"></i>
+              Job Record not found for JobNo: ${insttag || 'None'}
+            </td>
+          </tr>
+        `);
+      } else {
+        const jobsList = jobsData[insttag];
+        
+        // Dynamically update plant tag using first entry's plant
+        $('#selected-plant-tag').text('PLANTCODE : ' + jobsList[0].plant);
+        
+        let rowsHtml = '';
+        jobsList.forEach((job) => {
+          const byLine = job.completed ? `(By:${job.by} : ${job.completed})` : `(By:${job.by})`;
+          rowsHtml += `
+            <tr class="user-table-row">
+              <td class="user-table-center font-14px fw-600">${job.sr}</td>
+              <td class="user-table-center"><a href="wsjob.html?insttag=${insttag}" class="job-no-link">${insttag}</a></td>
+              <td class="p-0">
+                <div class="split-cell">
+                  <div class="split-top">${job.title}</div>
+                  <div class="split-bottom" style="flex-direction: column; align-items: flex-start; gap: 4px; padding: 6px 12px;">
+                    <span style="color: var(--typo-primary); text-align: left; display: block; line-height: 1.4;">${job.defect}</span>
+                    <span style="font-size: 11px; color: var(--typo-hint); display: block; margin-top: 2px;">${byLine}</span>
+                  </div>
+                </div>
+              </td>
+              <td class="user-table-center">${job.plant}</td>
+              <td class="user-table-center">${job.tech}</td>
+              <td>${job.description}</td>
+              <td class="user-table-center">${job.tech}</td>
+              <td class="p-0">
+                <div class="split-cell">
+                  <div class="split-top" style="font-weight: 700;">${job.status}</div>
+                  <div class="split-bottom">${job.completed || ''}</div>
+                </div>
+              </td>
+              <td>${job.remarks || ''}</td>
+            </tr>
+          `;
+        });
+        
+        $tbody.html(rowsHtml);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

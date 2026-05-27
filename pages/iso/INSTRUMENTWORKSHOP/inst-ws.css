@@ -1,0 +1,340 @@
+.inst-ws-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 24px;
+  min-height: calc(100vh - 160px);
+}
+
+.inst-ws-container {
+  width: 100%;
+  max-width: 850px;
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.inst-ws-header {
+  border-bottom: 1px solid var(--app-border);
+  padding: 20px;
+  text-align: center;
+  background: rgba(255, 153, 0, 0.02);
+}
+
+.inst-ws-header h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--typo-orange);
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.inst-ws-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--app-panel);
+}
+
+.inst-ws-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  min-height: 70px;
+  text-align: center;
+  text-decoration: none !important;
+  color: var(--typo-primary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--app-border);
+  border-right: 1px solid var(--app-border);
+  transition: all 0.2s ease;
+}
+
+/* Grid borders logic to match table border structure */
+.inst-ws-cell:nth-child(2n) {
+  border-right: none;
+}
+
+.inst-ws-cell:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+/* Hover effect for clickable cells */
+a.inst-ws-cell:hover {
+  background: rgba(255, 153, 0, 0.04);
+  color: var(--typo-orange);
+}
+
+.inst-ws-cell.empty-cell {
+  background: transparent;
+  cursor: default;
+}
+
+/* Responsive Grid styling */
+@media (max-width: 768px) {
+  .inst-ws-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inst-ws-cell {
+    border-right: none !important;
+  }
+
+  .inst-ws-cell:not(:last-child) {
+    border-bottom: 1px solid var(--app-border) !important;
+  }
+}
+
+/* ── Test Equipment Calibration Register Page Styles ── */
+.results-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  padding: 16px 24px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.results-header-info h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--typo-orange);
+  margin: 0 0 4px 0;
+}
+
+.results-header-info p {
+  font-size: 12px;
+  color: var(--typo-secondary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.results-header-info .meta-tag {
+  display: inline-block;
+  background: rgba(255, 153, 0, 0.1);
+  color: var(--typo-orange);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.results-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.plant-selector-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.plant-selector-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--typo-primary);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.selector-select {
+  min-width: 180px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--app-panel-alt);
+  border: 1px solid var(--app-border);
+  color: var(--typo-primary);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.selector-select:focus {
+  border-color: var(--typo-orange);
+}
+
+.selector-btn {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.selector-btn-primary {
+  background: var(--typo-orange);
+  color: #fff;
+}
+
+.selector-btn-primary:hover {
+  background: #e68a00;
+}
+
+.selector-btn-secondary {
+  background: transparent;
+  border-color: var(--app-border);
+  color: var(--typo-secondary);
+}
+
+.selector-btn-secondary:hover {
+  background: var(--app-hover);
+  color: var(--typo-primary);
+}
+
+.table-section-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--typo-primary);
+  margin: 32px 0 16px 0;
+  border-left: 4px solid var(--typo-orange);
+  padding-left: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Split column cell styles */
+.split-cell {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  height: 100%;
+  min-height: 52px;
+  justify-content: center;
+}
+
+.split-top,
+.split-bottom {
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.split-top {
+  border-bottom: 1px solid var(--app-border);
+}
+
+.split-bottom {
+  font-size: 12px;
+}
+
+.cal-report-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+}
+
+.cal-report-link {
+  color: var(--typo-secondary);
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.cal-report-link:hover {
+  color: var(--typo-orange);
+}
+
+/* Custom Form Table Styles in Modal using standard Theme variables */
+.modal-form-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--gnfc-modal-shell-border);
+  background: var(--gnfc-modal-shell-bg);
+  margin: 0 auto;
+}
+
+.modal-form-table th, 
+.modal-form-table td {
+  border: 1px solid var(--gnfc-modal-shell-border);
+  padding: 0;
+  vertical-align: middle;
+}
+
+.form-main-header {
+  background: var(--gnfc-modal-header-bg) !important;
+  color: var(--gnfc-modal-title-color) !important;
+  font-weight: 800;
+  font-size: 15px;
+  text-align: center;
+  padding: 10px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-cell {
+  background: var(--gnfc-modal-body-bg);
+}
+
+.form-cell-label {
+  background: var(--gnfc-modal-header-bg);
+  color: var(--gnfc-modal-subtitle-color);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--gnfc-modal-shell-border);
+  letter-spacing: 0.03em;
+}
+
+.form-cell-content {
+  padding: 10px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--gnfc-modal-body-bg);
+}
+
+/* Actions cell customization */
+.form-actions-cell {
+  padding: 16px !important;
+  text-align: center;
+  background: var(--gnfc-modal-footer-bg);
+  border-top: 1px solid var(--gnfc-modal-shell-border);
+}
+
+/* Custom Dropdown select indicator inside modal forms */
+select.form-cell-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff9900' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 14px !important;
+  padding-right: 28px !important;
+  cursor: pointer;
+}
+
+html[data-theme="dark"] select.form-cell-input option {
+  background-color: #1a1d21;
+  color: #ffffff;
+}
+
+/* Job number link styling to avoid inline CSS */
+.job-no-link {
+  font-weight: 700;
+  color: var(--typo-blue);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.job-no-link:hover {
+  color: var(--typo-orange);
+}

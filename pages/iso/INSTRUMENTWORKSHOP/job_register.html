@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instrument Lab Job Register | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+  <link rel="stylesheet" href="inst-ws.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'inst_ws';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="instrumentworkshop.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Instrument Workshop:instrumentworkshop.html,Job Register:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Results Screen -->
+      <div id="results-screen" class="results-section">
+        <div class="results-header-bar">
+          <div class="results-header-info">
+            <p>FFDNO : OHSDM - INST - 5.2</p>
+            <h2>Instrument Lab Job Register</h2>
+            <div id="selected-plant-tag" class="meta-tag">PLANTCODE : BOILER</div>
+          </div>
+          
+          <div class="results-header-actions">
+            <!-- Plant Selector Dropdown embedded directly in the header -->
+            <div class="plant-selector-wrapper">
+              <label for="plant-select" class="plant-selector-label">Select Plant :</label>
+              <select id="plant-select" class="selector-select">
+                <option value="BOILER" selected>BOILER</option>
+                <option value="ACETIC ACID">ACETIC ACID</option>
+                <option value="METHANOL-1">METHANOL-1</option>
+                <option value="METHANOL-2">METHANOL-2</option>
+                <option value="FORMIC ACID">FORMIC ACID</option>
+                <option value="AMMONIA">AMMONIA</option>
+                <option value="NITRO PHOSPHATE">NITRO PHOSPHATE</option>
+                <option value="DM">DM</option>
+                <option value="INST_WS">INST_WS</option>
+                <option value="UREA">UREA</option>
+                <option value="CMS">CMS</option>
+                <option value="BAGGING">BAGGING</option>
+                <option value="STORE">STORE</option>
+                <option value="CLAB">CLAB</option>
+                <option value="R&D">R&D</option>
+                <option value="SPP">SPP</option>
+                <option value="ISO">ISO</option>
+                <option value="INCS">INCS</option>
+                <option value="ANITDI">ANITDI</option>
+                <option value="CPSU">CPSU</option>
+                <option value="ANIP FILLING">ANIP FILLING</option>
+                <option value="ASGP">ASGP</option>
+                <option value="ETHYL ACETATE">ETHYL ACETATE</option>
+                <option value="MINMAX">MINMAX</option>
+                <option value="AAQM">AAQM</option>
+                <option value="ALL">ALL</option>
+              </select>
+            </div>
+            
+            <button type="button" class="selector-btn selector-btn-primary" data-open-modal="add-job-modal">Add</button>
+            <!-- <button type="button" id="btn-close-report" class="selector-btn selector-btn-secondary">Close</button> -->
+          </div>
+        </div>
+
+        <!-- Table Section: Job Register -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th class="user-table-center w-60px">SrNo</th>
+                <th class="w-80px">Job</th>
+                <th class="w-160px p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Date</div>
+                    <div class="split-bottom">Prio</div>
+                  </div>
+                </th>
+                <th class="w-200px p-0">
+                  <div class="split-cell">
+                    <div class="split-top">INST NAME</div>
+                    <div class="split-bottom">SerialNo</div>
+                  </div>
+                </th>
+                <th>Defect</th>
+                <th class="w-90px">EnteredBy</th>
+                <th class="w-80px">Tech</th>
+                <th class="w-120px">Status</th>
+                <th class="w-110px">Completed</th>
+                <th class="w-200px">Remark</th>
+                <th class="w-160px">Delivery</th>
+                <th class="w-80px">Engr</th>
+                <th class="user-table-center w-80px">Action</th>
+              </tr>
+            </thead>
+            <tbody id="job-register-tbody">
+              <!-- Row 1 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">1</td>
+                <td><a href="wsjob.html?insttag=17129" class="job-no-link">17129</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">12/05/2026</div>
+                    <div class="split-bottom" style="font-weight: 700;">URGENT</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Flame ignitor JB</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td>Flame ignitor JB PCB track found in open condition. PCB track repairing related work.</td>
+                <td>TRC</td>
+                <td>ALD</td>
+                <td>OVER</td>
+                <td>13/05/2026</td>
+                <td></td>
+                <td>May 23 2026 1:09PM</td>
+                <td>ARP</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 2 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">2</td>
+                <td><a href="wsjob.html?insttag=17125" class="job-no-link">17125</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">07/05/2026</div>
+                    <div class="split-bottom" style="font-weight: 700;">URGENT</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Flame scanner</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td>Flame Scanner not sensing flame</td>
+                <td>TRC</td>
+                <td>ALD</td>
+                <td>OVER</td>
+                <td>12/05/2026</td>
+                <td></td>
+                <td>May 13 2026 2:34PM</td>
+                <td>ARP</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 3 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">3</td>
+                <td><a href="wsjob.html?insttag=17124" class="job-no-link">17124</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">07/05/2026</div>
+                    <div class="split-bottom" style="font-weight: 700;">URGENT</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Flame Scanner</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td>Flame scanner not sensing flame</td>
+                <td>TRC</td>
+                <td>ALD</td>
+                <td>OVER</td>
+                <td>12/05/2026</td>
+                <td></td>
+                <td>May 13 2026 2:34PM</td>
+                <td>ARP</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 4 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">4</td>
+                <td><a href="wsjob.html?insttag=17091" class="job-no-link">17091</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">28/03/2026</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Ignition Flame Relay</div>
+                    <div class="split-bottom">2</div>
+                  </div>
+                </td>
+                <td>Ignition Flame Relay not working, relay NO contacts 3-4, 4-5-6 not change in relay pick up condition.</td>
+                <td>ARP</td>
+                <td>ALD</td>
+                <td>OVER</td>
+                <td>05/04/2026</td>
+                <td></td>
+                <td>Apr 7 2026 8:40AM</td>
+                <td>ARP</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 5 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">5</td>
+                <td><a href="wsjob.html?insttag=17090" class="job-no-link">17090</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">28/03/2026</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Ignition Flame Relay</div>
+                    <div class="split-bottom">1</div>
+                  </div>
+                </td>
+                <td>Ignition Flame Relay not working, contact no 3-4, 5-6 not change over</td>
+                <td>ARP</td>
+                <td>ALD</td>
+                <td>NOT REPARABLE</td>
+                <td></td>
+                <td></td>
+                <td>Apr 7 2026 8:40AM</td>
+                <td>ARP</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 6 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">6</td>
+                <td><a href="wsjob.html?insttag=17089" class="job-no-link">17089</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">20/03/2026</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Flame scanner</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td>Flame scanner not sensing flame.</td>
+                <td>TRC</td>
+                <td>ALD</td>
+                <td>OVER</td>
+                <td>30/03/2026</td>
+                <td></td>
+                <td>Mar 31 2026 9:20AM</td>
+                <td>TRC</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 7 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">7</td>
+                <td><a href="wsjob.html?insttag=17088" class="job-no-link">17088</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">20/03/2026</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Flame scanner</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td>Flame scanner not sensing flame</td>
+                <td>TRC</td>
+                <td>ALD</td>
+                <td>NOT REPARABLE</td>
+                <td></td>
+                <td></td>
+                <td>Mar 31 2026 9:20AM</td>
+                <td>TRC</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 8 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">8</td>
+                <td><a href="wsjob.html?insttag=17087" class="job-no-link">17087</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">20/03/2026</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Flame scanner</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td>Flame scanner not sensing flame.</td>
+                <td>TRC</td>
+                <td>ALD</td>
+                <td>OVER</td>
+                <td>30/03/2026</td>
+                <td></td>
+                <td>Mar 31 2026 9:20AM</td>
+                <td>TRC</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 9 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">9</td>
+                <td><a href="wsjob.html?insttag=17086" class="job-no-link">17086</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">20/03/2026</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Flame scanner</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td>Flames scanner is not sensing flame.</td>
+                <td>TRC</td>
+                <td>ALD</td>
+                <td>OVER</td>
+                <td>31/03/2026</td>
+                <td></td>
+                <td>Apr 1 2026 10:00AM</td>
+                <td>ARP</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 10 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">10</td>
+                <td><a href="wsjob.html?insttag=17076" class="job-no-link">17076</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">17/03/2026</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Ignitor IFM card</div>
+                    <div class="split-bottom">2</div>
+                  </div>
+                </td>
+                <td>Ignitor IFM card, flame ON contact remains close continuously.</td>
+                <td>ARP</td>
+                <td>ALD</td>
+                <td>OVER</td>
+                <td>18/03/2026</td>
+                <td></td>
+                <td>Mar 20 2026 1:15PM</td>
+                <td>TRC</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+              <!-- Row 11 -->
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">11</td>
+                <td><a href="wsjob.html?insttag=17075" class="job-no-link">17075</a></td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">17/03/2026</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Visible Flame Scanner Power Supply Card</div>
+                    <div class="split-bottom"></div>
+                  </div>
+                </td>
+                <td>Visible Flame Scanner Power Supply Card not working in Rack.</td>
+                <td>ARP</td>
+                <td>ALD</td>
+                <td>OVER</td>
+                <td>20/03/2026</td>
+                <td></td>
+                <td>Mar 24 2026 3:33PM</td>
+                <td>ARP</td>
+                <td class="user-table-center">
+                  <a href="#" class="cal-report-link" title="Edit Job" data-open-modal="add-job-modal"><i class="ph-bold ph-pencil-simple"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add Job Modal -->
+  <div id="add-job-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl" style="border: none; overflow: hidden; border-radius: 8px;">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">INSTRUMENT LAB JOB REGISTER</h3>
+          <p class="gnfc-modal-subtitle" id="modal-plant-subtitle">BOILER</p>
+        </div>
+        <button type="button" data-close-modal="add-job-modal" class="gnfc-modal-close"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="add-job-form" style="margin: 0;">
+        <div class="gnfc-modal-body gnfc-modal-body--tight" style="overflow-y: auto; max-height: 70vh; padding: 20px;">
+          <div class="form-grid grid-cols-12">
+
+            <!-- JOB NO -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="add-jobno">JOB NO</label>
+              <input type="text" id="add-jobno" class="gnfc-modal-input" placeholder="e.g. 17129">
+            </div>
+
+            <!-- PLANT -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="add-plant">PLANT</label>
+              <input type="text" id="add-plant" class="gnfc-modal-input readonly-input" value="BOILER" readonly>
+            </div>
+
+            <!-- Entered By -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="add-enteredby">Entered By</label>
+              <input type="text" id="add-enteredby" class="gnfc-modal-input" placeholder="e.g. TRC">
+            </div>
+
+            <!-- DATE -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="add-date">DATE</label>
+              <input type="text" id="add-date" class="gnfc-modal-input" value="27/5/2026" required>
+            </div>
+
+            <!-- INST NAME -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="add-instname">INST NAME</label>
+              <input type="text" id="add-instname" class="gnfc-modal-input" placeholder="e.g. Flame ignitor JB" required>
+            </div>
+
+            <!-- SERIAL NO -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="add-serialno">SERIAL NO</label>
+              <input type="text" id="add-serialno" class="gnfc-modal-input" placeholder="e.g. 2">
+            </div>
+
+            <!-- TYPE -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="add-type">TYPE</label>
+              <select id="add-type" class="gnfc-modal-input form-cell-input">
+                <option value="" selected>-</option>
+                <option value="OTHER">OTHER</option>
+                <option value="DCS">DCS</option>
+                <option value="ESD">ESD</option>
+                <option value="CONTROLLER/INDICATOR">CONTROLLER/INDICATOR</option>
+                <option value="RECORDER/PRINTER">RECORDER/PRINTER</option>
+                <option value="MONITOR/CRT">MONITOR/CRT</option>
+                <option value="SPEED SYSTEM">SPEED SYSTEM</option>
+                <option value="VIBRATION SYSTEM">VIBRATION SYSTEM</option>
+                <option value="FLAME/TEMP SCANNER">FLAME/TEMP SCANNER</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="TEST EQUIPMENT">TEST EQUIPMENT</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="WEIGHING SYSTEM">WEIGHING SYSTEM</option>
+              </select>
+            </div>
+
+            <!-- SUBTYPE -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="add-subtype">SUBTYPE</label>
+              <input type="text" id="add-subtype" class="gnfc-modal-input" placeholder="e.g. Flame ignitor JB">
+            </div>
+
+            <!-- DEFECT -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label" for="add-defect">DEFECT</label>
+              <input type="text" id="add-defect" class="gnfc-modal-input" placeholder="Specify instrument defect description" required>
+            </div>
+
+            <!-- TO BE FILLED BY INST LAB SECTION HEADER -->
+            <div class="col-span-12" style="background: var(--app-panel-alt); border: 1px solid var(--gnfc-modal-shell-border); border-radius: 4px; padding: 6px 12px; font-weight: 700; text-align: center; font-size: 12px; color: var(--typo-primary); text-transform: uppercase; margin-top: 10px; margin-bottom: 10px; letter-spacing: 0.05em;">
+              TO BE FILLED BY INST LAB
+            </div>
+
+            <!-- TECH -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="add-tech">TECH</label>
+              <input type="text" id="add-tech" class="gnfc-modal-input" placeholder="e.g. ALD" required>
+            </div>
+
+            <!-- COMPLETED ON -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="add-completed">COMPLETED ON</label>
+              <input type="text" id="add-completed" class="gnfc-modal-input" placeholder="e.g. 13/05/2026">
+            </div>
+
+            <!-- STATUS -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="add-status">STATUS</label>
+              <input type="text" id="add-status" class="gnfc-modal-input" placeholder="e.g. OVER" required>
+            </div>
+
+            <!-- DELIVERED BY -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="add-delivered">DELIVERED BY</label>
+              <input type="text" id="add-delivered" class="gnfc-modal-input" placeholder="e.g. ARP">
+            </div>
+
+            <!-- REMARK -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label" for="add-remark">REMARK</label>
+              <input type="text" id="add-remark" class="gnfc-modal-input" placeholder="Optional remark">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <!-- Left side Totals -->
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--typo-primary);">
+              <span>Total Record</span>
+              <input type="text" class="gnfc-modal-input" style="width: 40px; height: 32px; padding: 2px 4px; text-align: center; font-weight: 700;" value="1">
+              <span>/</span>
+              <input type="text" class="gnfc-modal-input" style="width: 40px; height: 32px; padding: 2px 4px; text-align: center; font-weight: 700;" value="11">
+            </div>
+            <!-- Right side buttons -->
+            <div style="display: flex; gap: 8px;">
+              <button type="button" id="btn-delete-job" class="gnfc-modal-btn gnfc-modal-btn-danger" style="margin: 0; display: none;">Delete</button>
+              <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary" style="margin: 0;">Save</button>
+              <button type="button" data-close-modal="add-job-modal" class="gnfc-modal-btn gnfc-modal-btn-secondary" style="margin: 0;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // Modal controls
+      $(document).on('click', '[data-open-modal]', function() {
+        const targetModal = $(this).data('open-modal');
+        if (targetModal === 'add-job-modal') {
+          // Reset inputs and keep static values
+          $('#add-job-form')[0].reset();
+          const currentPlant = $('#plant-select').val() || 'BOILER';
+          $('#add-plant').val(currentPlant);
+          $('#modal-plant-subtitle').text(currentPlant);
+
+          // Check if edit button was clicked
+          const $btn = $(this);
+          if ($btn.hasClass('cal-report-link') || $btn.closest('td').hasClass('user-table-center')) {
+            // Edit mode: populate data from row and show delete button
+            const $row = $btn.closest('tr');
+            const jobNo = $row.find('td').eq(1).text().trim();
+            const date = $row.find('td').eq(2).find('.split-top').text().trim();
+            const instName = $row.find('td').eq(3).find('.split-top').text().trim();
+            const serialNo = $row.find('td').eq(3).find('.split-bottom').text().trim();
+            const defect = $row.find('td').eq(4).text().trim();
+            const enteredBy = $row.find('td').eq(5).text().trim();
+            const tech = $row.find('td').eq(6).text().trim();
+            const status = $row.find('td').eq(7).text().trim();
+            const completed = $row.find('td').eq(8).text().trim();
+            const remark = $row.find('td').eq(9).text().trim();
+            const delivery = $row.find('td').eq(10).text().trim();
+
+            $('#add-jobno').val(jobNo);
+            $('#add-enteredby').val(enteredBy);
+            $('#add-date').val(date);
+            $('#add-instname').val(instName);
+            $('#add-serialno').val(serialNo === '-' ? '' : serialNo);
+            $('#add-type').val('OTHER'); // Default type to OTHER
+            $('#add-subtype').val(instName); // Subtype is instName in the legacy form
+            $('#add-defect').val(defect);
+            $('#add-tech').val(tech);
+            $('#add-completed').val(completed);
+            $('#add-status').val(status);
+            $('#add-delivered').val(delivery);
+            $('#add-remark').val(remark);
+
+            $('#btn-delete-job').show();
+          } else {
+            // Add mode: default values and hide delete button
+            $('#add-date').val('27/5/2026');
+            $('#btn-delete-job').hide();
+          }
+        }
+        $('#' + targetModal).addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      $(document).on('click', '[data-close-modal]', function() {
+        const targetModal = $(this).data('close-modal');
+        $('#' + targetModal).removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      // Delete button confirmation dialog
+      $('#btn-delete-job').on('click', function() {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc2626',
+          cancelButtonColor: '#475569',
+          confirmButtonText: 'Yes, delete it!',
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('#add-job-modal').removeClass('is-open');
+            $('body').css('overflow', '');
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'The record has been successfully deleted.',
+              showConfirmButton: false,
+              timer: 1500,
+              background: 'var(--app-panel)',
+              color: 'var(--typo-primary)'
+            });
+          }
+        });
+      });
+
+      // Close button goes back to workshop menu
+      $('#btn-close-report').on('click', function() {
+        window.location.href = 'instrumentworkshop.html';
+      });
+
+      // Selection change handles tag label only in static mode
+      $('#plant-select').on('change', function() {
+        const selectedPlant = $(this).val();
+        $('#selected-plant-tag').text('PLANTCODE : ' + selectedPlant);
+        $('#modal-plant-subtitle').text(selectedPlant);
+      });
+
+      // Add Job form handler
+      $('#add-job-form').on('submit', function(e) {
+        e.preventDefault();
+
+        // Reset and Close Modal
+        $('#add-job-form')[0].reset();
+        $('#add-job-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Job Register Record Saved',
+          showConfirmButton: false,
+          timer: 1500,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

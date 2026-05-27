@@ -26,84 +26,7 @@
     window.activePage = 'inst_ws';
   </script>
 
-  <style>
-    .inst-ws-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 24px;
-      min-height: calc(100vh - 160px);
-    }
-
-    .inst-ws-container {
-      width: 100%;
-      max-width: 800px;
-      background: var(--app-panel);
-      border: 1px solid var(--app-border);
-      border-radius: 12px;
-      padding: 32px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-    }
-
-    .inst-ws-header {
-      border-bottom: 1px solid var(--app-border);
-      padding-bottom: 20px;
-      margin-bottom: 28px;
-      text-align: center;
-    }
-
-    .inst-ws-header h2 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--typo-orange);
-      letter-spacing: 0.05em;
-      margin: 0;
-    }
-
-    .inst-ws-menu-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-
-    /* Make the 5th item (JOB HISTORY) span full width for visual balance */
-    .inst-ws-menu-grid a:nth-child(5) {
-      grid-column: span 2;
-    }
-
-    .inst-ws-menu-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 24px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--app-border);
-      border-radius: 8px;
-      color: var(--typo-primary);
-      text-decoration: none !important;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      transition: all 0.25s ease;
-    }
-
-    .inst-ws-menu-item i {
-      font-size: 18px;
-      color: var(--typo-secondary);
-      transition: transform 0.25s ease, color 0.25s ease;
-    }
-
-    .inst-ws-menu-item:hover {
-      background: rgba(255, 153, 0, 0.04);
-      border-color: var(--typo-orange);
-      color: var(--typo-orange);
-    }
-
-    .inst-ws-menu-item:hover i {
-      color: var(--typo-orange);
-      transform: translateX(4px);
-    }
-  </style>
+  <link rel="stylesheet" href="inst-ws.css">
 </head>
 
 <body class="dashboard-body">
@@ -126,27 +49,29 @@
             <h2>INSTRUMENT WORK SHOP</h2>
           </div>
 
-          <div class="inst-ws-menu-grid">
-            <a href="cd_library.html" class="inst-ws-menu-item">
-              <span>INST LAB CD LIBRARY</span>
-              <i class="ph-bold ph-arrow-right"></i>
+          <div class="inst-ws-grid">
+            <a href="cd_library.html" class="inst-ws-cell">
+              INST LAB CD LIBRARY
             </a>
-            <a href="#" class="inst-ws-menu-item">
-              <span>INST LAB TEST EQUIPMENT</span>
-              <i class="ph-bold ph-arrow-right"></i>
+
+            <a href="test_equipment.html" class="inst-ws-cell">
+              INST LAB TEST EQUIPMENT
             </a>
-            <a href="book_library.html" class="inst-ws-menu-item">
-              <span>INST LAB BOOK LIBRARY</span>
-              <i class="ph-bold ph-arrow-right"></i>
+
+            <a href="book_library.html" class="inst-ws-cell">
+              INST LAB BOOK LIBRARY
             </a>
-            <a href="#" class="inst-ws-menu-item">
-              <span>INST LAB JOB REGISTER</span>
-              <i class="ph-bold ph-arrow-right"></i>
+
+            <a href="job_register.html" class="inst-ws-cell">
+              INST LAB JOB REGISTER
             </a>
-            <a href="#" class="inst-ws-menu-item">
-              <span>JOB HISTORY</span>
-              <i class="ph-bold ph-arrow-right"></i>
+
+            <a href="#" class="inst-ws-cell">
+              JOB HISTORY
             </a>
+
+            <div class="inst-ws-cell empty-cell">
+            </div>
           </div>
         </div>
       </div>

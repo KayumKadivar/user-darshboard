@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Equipment Calibration Register | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+  <link rel="stylesheet" href="inst-ws.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'inst_ws';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="instrumentworkshop.html"
+      data-breadcrumb="ISO Dashboard:../iso.html,Instrument Workshop:instrumentworkshop.html,Test Equipment:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <!-- Results Screen -->
+      <div id="results-screen" class="results-section">
+        <div class="results-header-bar">
+          <div class="results-header-info">
+            <p>FFDNO : OHSDM - INST - 5.1</p>
+            <h2>Test Equipment Calibration Register</h2>
+            <div id="selected-plant-tag" class="meta-tag">PLANTCODE : BOILER</div>
+          </div>
+          
+          <div class="results-header-actions">
+            <!-- Plant Selector Dropdown embedded directly in the header -->
+            <div class="plant-selector-wrapper">
+              <label for="plant-select" class="plant-selector-label">Select Plant :</label>
+              <select id="plant-select" class="selector-select">
+                <option value="BOILER" selected>BOILER</option>
+                <option value="ACETIC ACID">ACETIC ACID</option>
+                <option value="METHANOL-1">METHANOL-1</option>
+                <option value="METHANOL-2">METHANOL-2</option>
+                <option value="FORMIC ACID">FORMIC ACID</option>
+                <option value="AMMONIA">AMMONIA</option>
+                <option value="NITRO PHOSPHATE">NITRO PHOSPHATE</option>
+                <option value="DM">DM</option>
+                <option value="INST_WS">INST_WS</option>
+                <option value="UREA">UREA</option>
+                <option value="CMS">CMS</option>
+                <option value="BAGGING">BAGGING</option>
+                <option value="STORE">STORE</option>
+                <option value="CLAB">CLAB</option>
+                <option value="R&D">R&D</option>
+                <option value="SPP">SPP</option>
+                <option value="ISO">ISO</option>
+                <option value="INCS">INCS</option>
+                <option value="ANITDI">ANITDI</option>
+                <option value="CPSU">CPSU</option>
+                <option value="ANIP FILLING">ANIP FILLING</option>
+                <option value="ASGP">ASGP</option>
+                <option value="ETHYL ACETATE">ETHYL ACETATE</option>
+                <option value="MINMAX">MINMAX</option>
+                <option value="AAQM">AAQM</option>
+                <option value="ALL">ALL</option>
+              </select>
+            </div>
+            
+            <button type="button" class="selector-btn selector-btn-primary" data-open-modal="add-calib-modal">Add</button>
+            <button type="button" id="btn-close-report" class="selector-btn selector-btn-secondary">Close</button>
+          </div>
+        </div>
+
+        <!-- Section 1: Due Date Reached -->
+        <div class="table-section-title">Due Date Reached</div>
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1000px">
+            <thead>
+              <tr>
+                <th class="user-table-center w-60px">NO</th>
+                <th>ITEM</th>
+                <th class="w-120px">PLANT</th>
+                <th class="w-120px">INST C/N</th>
+                <th class="w-200px p-0">
+                  <div class="split-cell">
+                    <div class="split-top" style="border-bottom: 1px solid var(--app-sidebar-border);">MAKE</div>
+                    <div class="split-bottom">MODELNO</div>
+                  </div>
+                </th>
+                <th class="w-140px">SRNO</th>
+                <th class="w-140px">LAST CALIBRATED</th>
+                <th class="w-140px">CAL DUE DATE</th>
+                <th class="w-140px">REMARK</th>
+                <th class="w-80px">By</th>
+                <th class="user-table-center w-100px">Cal Report</th>
+              </tr>
+            </thead>
+            <tbody id="due-reached-tbody">
+              <tr class="user-table-row">
+                <td colspan="11" class="user-table-center color-gray py-4">No records found for this plant.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Section 2: Due Date Not Reached -->
+        <div class="table-section-title">Due Date Not Reached</div>
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1000px">
+            <thead>
+              <tr>
+                <th class="user-table-center w-60px">NO</th>
+                <th>ITEM</th>
+                <th class="w-120px">PLANT</th>
+                <th class="w-120px">INST C/N</th>
+                <th class="w-200px p-0">
+                  <div class="split-cell">
+                    <div class="split-top" style="border-bottom: 1px solid var(--app-sidebar-border);">MAKE</div>
+                    <div class="split-bottom">MODELNO</div>
+                  </div>
+                </th>
+                <th class="w-140px">SRNO</th>
+                <th class="w-140px">LAST CALIBRATED</th>
+                <th class="w-140px">CAL DUE DATE</th>
+                <th class="w-140px">REMARK</th>
+                <th class="w-80px">By</th>
+                <th class="user-table-center w-100px">Cal Report</th>
+              </tr>
+            </thead>
+            <tbody id="due-not-reached-tbody">
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">1</td>
+                <td>BLR-001 (PRESSURE CALIBRATOR)</td>
+                <td>BOILER</td>
+                <td>BLR-001</td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">DRUCK</div>
+                    <div class="split-bottom">DPI512 p-flex</div>
+                  </div>
+                </td>
+                <td>5877129</td>
+                <td>22/01/2026</td>
+                <td>22/01/2027</td>
+                <td></td>
+                <td>HAS</td>
+                <td class="user-table-center">
+                  <div class="cal-report-cell">
+                    <a href="#" class="cal-report-link" title="Download PDF"><i class="ph-bold ph-file-pdf"></i></a>
+                    <a href="#" class="cal-report-link" title="Print calibration"><i class="ph-bold ph-printer"></i></a>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">2</td>
+                <td>BLR-002 (Digital Multimeter)</td>
+                <td>BOILER</td>
+                <td>BLR-002</td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">MOTWANE</div>
+                    <div class="split-bottom">M83</div>
+                  </div>
+                </td>
+                <td>A04071D14</td>
+                <td>03/03/2026</td>
+                <td>03/03/2027</td>
+                <td></td>
+                <td>HAS</td>
+                <td class="user-table-center">
+                  <div class="cal-report-cell">
+                    <a href="#" class="cal-report-link" title="Download PDF"><i class="ph-bold ph-file-pdf"></i></a>
+                    <a href="#" class="cal-report-link" title="Print calibration"><i class="ph-bold ph-printer"></i></a>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">3</td>
+                <td>BLR-003 (Temp Simulator)</td>
+                <td>BOILER</td>
+                <td>BLR-003</td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Fluke</div>
+                    <div class="split-bottom">724</div>
+                  </div>
+                </td>
+                <td>5749397</td>
+                <td>03/03/2026</td>
+                <td>03/03/2027</td>
+                <td></td>
+                <td>HAS</td>
+                <td class="user-table-center">
+                  <div class="cal-report-cell">
+                    <a href="#" class="cal-report-link" title="Download PDF"><i class="ph-bold ph-file-pdf"></i></a>
+                    <a href="#" class="cal-report-link" title="Print calibration"><i class="ph-bold ph-printer"></i></a>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600">4</td>
+                <td>BLR-027 (mA/mV Simulator)</td>
+                <td>BOILER</td>
+                <td>BLR-027</td>
+                <td class="p-0">
+                  <div class="split-cell">
+                    <div class="split-top">Fluke</div>
+                    <div class="split-bottom">715</div>
+                  </div>
+                </td>
+                <td>7144602</td>
+                <td>19/01/2026</td>
+                <td>19/01/2027</td>
+                <td></td>
+                <td>KND</td>
+                <td class="user-table-center">
+                  <div class="cal-report-cell">
+                    <a href="#" class="cal-report-link" title="Download PDF"><i class="ph-bold ph-file-pdf"></i></a>
+                    <a href="#" class="cal-report-link" title="Print calibration"><i class="ph-bold ph-printer"></i></a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add Mock Calibration Modal -->
+  <div id="add-calib-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl" style="border: none; overflow: hidden; border-radius: 8px;">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">TEST EQUIPMENT</h3>
+          <p class="gnfc-modal-subtitle" id="modal-plant-subtitle">BOILER</p>
+        </div>
+        <button type="button" data-close-modal="add-calib-modal" class="gnfc-modal-close"><i class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="add-calib-form" style="margin: 0;">
+        <div class="gnfc-modal-body gnfc-modal-body--tight" style="overflow-y: auto; max-height: 70vh; padding: 20px;">
+          <div class="form-grid grid-cols-12">
+
+            <!-- ITEM -->
+            <div class="col-span-8">
+              <label class="gnfc-modal-label" for="add-item">ITEM</label>
+              <input type="text" id="add-item" class="gnfc-modal-input" placeholder="e.g. BLR-001 (PRESSURE CALIBRATOR)" required>
+            </div>
+
+            <!-- INST CONTROL NO -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="add-cn">INST CONTROL NO</label>
+              <input type="text" id="add-cn" class="gnfc-modal-input" placeholder="e.g. BLR-001" required>
+            </div>
+
+            <!-- MAKE -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="add-make">MAKE</label>
+              <input type="text" id="add-make" class="gnfc-modal-input" placeholder="e.g. DRUCK" required>
+            </div>
+
+            <!-- MODEL -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="add-model">MODEL</label>
+              <input type="text" id="add-model" class="gnfc-modal-input" placeholder="e.g. DPI512 p-flex">
+            </div>
+
+            <!-- PLANT -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="add-plant">PLANT</label>
+              <input type="text" id="add-plant" class="gnfc-modal-input readonly-input" value="BOILER" readonly>
+            </div>
+
+            <!-- SRNO -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="add-srno">SRNO</label>
+              <input type="text" id="add-srno" class="gnfc-modal-input" placeholder="e.g. 5877129" required>
+            </div>
+
+            <!-- LAST CAL DATE -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="add-lastcal">LAST CAL DATE</label>
+              <input type="text" id="add-lastcal" class="gnfc-modal-input" placeholder="e.g. 22/01/2026" required>
+            </div>
+
+            <!-- CAL DUE DATE -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="add-duedate">CAL DUE DATE</label>
+              <input type="text" id="add-duedate" class="gnfc-modal-input" placeholder="e.g. 365" value="365" required>
+            </div>
+
+            <!-- REMARK -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label" for="add-remark">REMARK</label>
+              <input type="text" id="add-remark" class="gnfc-modal-input" placeholder="Optional remark">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <!-- Left side Totals -->
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--typo-primary);">
+              <span>Total Record</span>
+              <input type="text" class="gnfc-modal-input" style="width: 40px; height: 32px; padding: 2px 4px; text-align: center; font-weight: 700;" value="1">
+              <span>/</span>
+              <input type="text" class="gnfc-modal-input" style="width: 40px; height: 32px; padding: 2px 4px; text-align: center; font-weight: 700;" value="4">
+            </div>
+            <!-- Right side buttons -->
+            <div style="display: flex; gap: 8px;">
+              <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary" style="margin: 0;">Save</button>
+              <button type="button" data-close-modal="add-calib-modal" class="gnfc-modal-btn gnfc-modal-btn-secondary" style="margin: 0;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // Modal controls
+      $(document).on('click', '[data-open-modal]', function() {
+        const targetModal = $(this).data('open-modal');
+        if (targetModal === 'add-calib-modal') {
+          // Clear inputs but maintain static values
+          $('#add-calib-form')[0].reset();
+          const currentPlant = $('#plant-select').val() || 'BOILER';
+          $('#add-plant').val(currentPlant);
+          $('#modal-plant-subtitle').text(currentPlant);
+          $('#add-duedate').val('365');
+        }
+        $('#' + targetModal).addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      $(document).on('click', '[data-close-modal]', function() {
+        const targetModal = $(this).data('close-modal');
+        $('#' + targetModal).removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      // Close button goes back to workshop menu
+      $('#btn-close-report').on('click', function() {
+        window.location.href = 'instrumentworkshop.html';
+      });
+
+      // Selection change handles tag label only in static mode
+      $('#plant-select').on('change', function() {
+        const selectedPlant = $(this).val();
+        $('#selected-plant-tag').text('PLANTCODE : ' + selectedPlant);
+        $('#modal-plant-subtitle').text(selectedPlant);
+      });
+
+      // Add Record form handler (statically closes and signals success)
+      $('#add-calib-form').on('submit', function(e) {
+        e.preventDefault();
+
+        // Reset and Close Modal
+        $('#add-calib-form')[0].reset();
+        $('#add-calib-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Calibration Record Saved',
+          showConfirmButton: false,
+          timer: 1500,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
