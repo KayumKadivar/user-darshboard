@@ -314,28 +314,28 @@
         
         switch (selectedFilter) {
           case 'Radioactive Measurement Register':
-            window.location.href = `calibration_register/radioactive_magereemnt.html?plant=${unit}`;
+            window.location.href = `calibration_register/radioactive_magereemnt.html`;
             break;
           case 'Radioactive Source Replacement Records':
-            window.location.href = `calibration_register/radioactive_source_replacement.html?plant=${unit}`;
+            window.location.href = `calibration_register/radioactive_source_replacement.html`;
             break;
           case 'Lead Acid Batteries Maintenance Register':
-            window.location.href = `calibration_register/lead_acid_batteries_maintenance.html?plant=${unit}`;
+            window.location.href = `calibration_register/lead_acid_batteries_maintenance.html`;
             break;
           case 'Lead Acid Batteries Replacement Register':
-            window.location.href = `calibration_register/lead_acid_batteries_replacement.html?plant=${unit}`;
+            window.location.href = `calibration_register/lead_acid_batteries_replacement.html`;
             break;
           case 'Test Equipment Calibration Register':
-            window.location.href = `calibration_register/test_equipment_calibration.html?plant=${unit}`;
+            window.location.href = `calibration_register/test_equipment_calibration.html`;
             break;
           case 'Lifting/Logistic Equipment Checking Record':
-            window.location.href = `calibration_register/lifting_logistic_equipment.html?plant=${unit}`;
+            window.location.href = `calibration_register/lifting_logistic_equipment.html`;
             break;
           case 'Instrument Maintenance Register':
-            window.location.href = `calibration_register/instrument_maintenance_register.html?plant=${unit}`;
+            window.location.href = `calibration_register/instrument_maintenance_register.html`;
             break;
           default:
-            window.location.href = `calibration_register/calibration_detail.html?plant=${unit}`;
+            window.location.href = `calibration_register/calibration_detail.html`;
             break;
         }
       };
@@ -348,16 +348,13 @@
       const $wrapper = $btn.closest('.iso-dropdown-wrapper');
       const $menu = $wrapper.find('.iso-floating-menu');
 
-      // Close all other open dropdowns
       $('.iso-floating-menu').not($menu).removeClass('is-open');
       $('.trigger-btn').not($btn).removeClass('is-active');
 
-      // Toggle current menu
       $btn.toggleClass('is-active');
       $menu.toggleClass('is-open');
     }
 
-    // Passive navigation function that you can link to new pages later
     function handleNavigation(targetName, event) {
       if (event) event.preventDefault();
 
@@ -365,7 +362,6 @@
       $('.iso-floating-menu').removeClass('is-open');
       $('.trigger-btn').removeClass('is-active');
 
-      console.log(`Navigation clicked for target: ${targetName}`);
 
       if (targetName === 'LEVEL-1') {
         window.location.href = 'documents/level_1.html';

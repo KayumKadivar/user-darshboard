@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calibration Report | GNFC E-Logbook</title>
+  
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="inst-ws.css">
+  <link rel="stylesheet" href="../iso.css">
+
+  <style>
+    .report-card {
+      background-color: var(--app-panel);
+      border: 1px solid var(--app-sidebar-border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 16px;
+    }
+    
+    .report-header-sec {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--app-sidebar-border);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .report-item-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-blue);
+    }
+
+    .report-sub-info {
+      display: flex;
+      gap: 40px;
+      margin-top: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-blue);
+    }
+    
+    .report-plant-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--typo-primary);
+    }
+  </style>
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'iso';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="test_equipment.html" data-title="CALIBRATION REPORT"
+      data-breadcrumb="ISO Dashboard:../iso.html,INSTRUMENT WORKSHOP:instrumentworkshop.html,TEST EQUIPMENT:test_equipment.html,Calibration Report:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="app-content-area">
+
+      <div class="dms-container">
+        <div class="iso-header-row" style="align-items: flex-start;">
+
+          <!-- Left side: Item, Model, Serial -->
+          <div class="iso-flex-col-gap-4">
+            <div class="iso-header-title-wrapper" style="font-size: 20px; color: var(--color-blue); border-bottom: none; margin-bottom: 0;">
+              <span id="rep-item" class="fw-700">Item: BLR-001 (PRESSURE CALIBRATOR)</span>
+            </div>
+            <div class="fw-600 iso-flex-gap-2" style="gap: 40px;">
+              <span id="rep-model" class="color-blue" style="font-size: 16px;">Model: DPI612 pFlex</span>
+              <span id="rep-serial" class="color-blue" style="font-size: 16px;">Serial No: 5877129</span>
+            </div>
+          </div>
+
+          <!-- Right side: Plantcode and Toolbar controls -->
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+            <div class="fw-700" id="rep-plant" style="font-size: 16px; color: var(--typo-primary);">Plantcode: BOILER</div>
+            <div class="dms-toolbar mb-0px" style="margin-top: 4px;">
+              <button class="dms-toolbar-btn" id="btn-save-doc" title="Save Document to Server">
+                <i class="ph-bold ph-folder-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Corporate Table system from style.css -->
+      <div class="iso-table-wrapper card-shadow" style="margin-top: 16px;">
+        <table class="iso-table">
+          <thead>
+            <tr>
+              <th class="sortable-header cursor-pointer" data-column="0">Name <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+              <th class="sortable-header cursor-pointer" data-column="1">Type <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+              <th class="sortable-header cursor-pointer" data-column="2">Size <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+              <th class="sortable-header cursor-pointer" data-column="3">Last Modified <i class="ph ph-caret-up-down iso-icon-12"></i></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="file-name-cell">
+                  <i class="ph-fill ph-file-xls file-icon-doc" style="color: #10b981;"></i>
+                  <a href="#" class="color-blue hover-underline fw-600" id="file-name-1">blr 001.xlsx</a>
+                </div>
+              </td>
+              <td>XLSX File</td>
+              <td>11kb</td>
+              <td>18/01/2025</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="file-name-cell">
+                  <i class="ph-fill ph-file-xls file-icon-doc" style="color: #10b981;"></i>
+                  <a href="#" class="color-blue hover-underline fw-600" id="file-name-2">cal1-blr 001.xlsx</a>
+                </div>
+              </td>
+              <td>XLSX File</td>
+              <td>11kb</td>
+              <td>22/01/2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Upload File Modal -->
+  <div id="upload-file-modal" class="gnfc-modal-overlay">
+    <div class="iso-modal-shell iso-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">CALIBRATION REPORT OF TEST EQUIPMENT</h3>
+        <button type="button" class="gnfc-modal-close" id="btn-close-upload-modal">
+          <i class="ph-bold ph-x iso-icon-lg"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <div class="flex justify-between items-center mb-16px border-bottom pb-8px">
+          <span class="fw-600 color-typo-primary font-16px">Save File(s)</span>
+          <span class="fw-700 color-blue font-16px" id="modal-plant-name">BOILER</span>
+        </div>
+
+        <div id="attachment-rows-container" class="iso-flex-col-gap-12 mb-20px">
+          <div class="attachment-row">
+            <div class="attachment-file-info">
+              <i class="ph-bold ph-file iso-icon-18 iso-color-secondary"></i>
+              <span class="attachment-file-name">No file chosen...</span>
+            </div>
+            <label class="attachment-browse-label">
+              Browse..
+              <input type="file" class="hidden-file-input iso-hidden">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer iso-modal-footer-between">
+        <span class="iso-note-danger">Note : Max size 10Mb at a time !!</span>
+        <div class="iso-flex-items-center-gap-12">
+          <button type="button" id="btn-save-attachments" class="gnfc-modal-btn gnfc-modal-btn-primary px-24px">Save</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px" id="btn-cancel-upload-modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // Parse parameters from query string
+      const urlParams = new URLSearchParams(window.location.search);
+      const item = urlParams.get('item');
+      const model = urlParams.get('model');
+      const serial = urlParams.get('serial');
+      const plant = urlParams.get('plant');
+      const tag = urlParams.get('tag');
+      
+      // Update fields dynamically only if params exist
+      if (item) $('#rep-item').text('Item: ' + item);
+      if (model) $('#rep-model').text('Model: ' + model);
+      if (serial) $('#rep-serial').text('Serial No: ' + serial);
+      if (plant) $('#rep-plant').text('Plantcode: ' + plant);
+      
+      // Filenames
+      if (tag) {
+        const cleanTag = tag.replace('-', ' ');
+        $('#file-name-1').text(cleanTag + '.xlsx');
+        $('#file-name-2').text('cal1-' + cleanTag + '.xlsx');
+      }
+
+      // Upload Modal Logic
+      const $uploadOverlay = $('#upload-file-modal');
+      
+      $('#btn-save-doc').on('click', function(e) {
+        e.preventDefault();
+        $('#modal-plant-name').text(plant || 'BOILER');
+        
+        // Reset file input
+        $('#attachment-rows-container .attachment-row').each(function () {
+          $(this).find('.attachment-file-name').text('No file chosen...').removeClass('is-active');
+          $(this).find('i').removeClass('ph-check-circle iso-color-blue').addClass('ph-file iso-color-secondary');
+          $(this).find('.hidden-file-input').val('');
+        });
+        
+        $uploadOverlay.addClass('is-open');
+      });
+
+      $('#btn-close-upload-modal, #btn-cancel-upload-modal').on('click', function() {
+        $uploadOverlay.removeClass('is-open');
+      });
+
+      $(document).on('change', '.hidden-file-input', function () {
+        const fileName = this.files.length ? this.files[0].name : 'No file chosen...';
+        const $row = $(this).closest('.attachment-row');
+        $row.find('.attachment-file-name').text(fileName).addClass('is-active');
+        $row.find('i').removeClass('ph-file iso-color-secondary').addClass('ph-check-circle iso-color-blue');
+      });
+
+      $('#btn-save-attachments').on('click', function() {
+        let hasFile = false;
+        $('.hidden-file-input').each(function () {
+          if (this.files.length) hasFile = true;
+        });
+
+        if (!hasFile) {
+          Swal.fire({ title: 'No File!', text: 'Please browse and select a file to upload.', icon: 'info', timer: 1500 });
+          return;
+        }
+
+        $uploadOverlay.removeClass('is-open');
+        Swal.fire({
+          title: 'Saved!',
+          text: 'Document uploaded successfully.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

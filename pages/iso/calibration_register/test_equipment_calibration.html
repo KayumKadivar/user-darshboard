@@ -61,130 +61,165 @@
         </button>
       </div>
 
-      <!-- Main Data Table -->
-      <div class="user-table-wrapper">
-        <table class="user-table min-w-1600px">
-          <thead>
-            <tr>
-              <th class="user-table-center w-50px">NO</th>
-              <th class="user-table-left w-300px">ITEM</th>
-              <th class="user-table-left w-100px">PLANT</th>
-              <th class="user-table-left w-120px">INST C/H</th>
-              <th class="user-table-left w-200px">MAKE / MODELNO</th>
-              <th class="user-table-left w-120px">SRNO</th>
-              <th class="user-table-center w-140px">LAST CALIBRATED</th>
-              <th class="user-table-center w-140px">CAL DUE DATE</th>
-              <th class="user-table-left">REMARK</th>
-              <th class="user-table-center w-60px">BY</th>
-              <th class="user-table-center w-100px">CAL REPORT</th>
-            </tr>
-          </thead>
-          <tbody id="equipment-calibration-table-body">
-            <!-- Section: Due Date Reached -->
-            <tr class="user-table-date-row">
-              <td colspan="11" class="user-table-date text-center fw-700 color-red bg-red-50">DUE DATE REACHED</td>
-            </tr>
-            <tr class="user-table-row">
-            </tr>
+      <!-- Main Data Tables -->
+      <div class="user-table-wrapper flex flex-col gap-24px">
+        
+        <!-- Due Date Reached Section -->
+        <div>
+          <div >Due Date Reached</div>
+          <table class="user-table calib-ui-table min-w-1600px" id="table-due-date-reached">
+            <thead>
+              <tr>
+                <th rowspan="2" class="w-40px">NO</th>
+                <th rowspan="2" class="w-300px">ITEM</th>
+                <th rowspan="2" class="w-100px">PLANT</th>
+                <th rowspan="2" class="w-120px">INST C/N</th>
+                <th class="w-200px" style="border-bottom: 1px solid #a9a9a9 !important;">MAKE</th>
+                <th rowspan="2" class="w-120px">SRNO</th>
+                <th rowspan="2" class="w-120px">LAST CALIBRATED</th>
+                <th rowspan="2" class="w-120px">CAL DUE DATE</th>
+                <th rowspan="2">REMARK</th>
+                <th rowspan="2" class="w-60px">By</th>
+                <th rowspan="2" class="w-80px">Cal Report</th>
+              </tr>
+              <tr>
+                <th>MODELNO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Empty row as in the image -->
+              <tr class="user-table-row">
+                <td colspan="11" class="text-center" style="height: 30px;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-            <!-- Section: Due Date Not Reached -->
-            <tr class="user-table-date-row">
-              <td colspan="11" class="user-table-date text-center fw-700 color-blue bg-blue-50">DUE DATE NOT REACHED</td>
-            </tr>
-
-            <!-- Row 1 -->
+        <!-- Due Date Not Reached Section -->
+        <div>
+          <div style="background-color: #fff; color: #000; font-weight: 700; text-align: center; padding: 8px 10px; font-size: 13px; border: 1px solid #a9a9a9; border-bottom: none;">Due Date Not Reached</div>
+          <table class="user-table calib-ui-table min-w-1600px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="w-40px">NO</th>
+                <th rowspan="2" class="w-300px">ITEM</th>
+                <th rowspan="2" class="w-100px">PLANT</th>
+                <th rowspan="2" class="w-120px">INST C/N</th>
+                <th class="w-200px" style="border-bottom: 1px solid #a9a9a9 !important;">MAKE</th>
+                <th rowspan="2" class="w-120px">SRNO</th>
+                <th rowspan="2" class="w-120px">LAST CALIBRATED</th>
+                <th rowspan="2" class="w-120px">CAL DUE DATE</th>
+                <th rowspan="2">REMARK</th>
+                <th rowspan="2" class="w-60px">By</th>
+                <th rowspan="2" class="w-80px">Cal Report</th>
+              </tr>
+              <tr>
+                <th>MODELNO</th>
+              </tr>
+            </thead>
+            <tbody id="equipment-calibration-table-body">
+              <!-- Row 1 -->
             <tr class="user-table-row">
-              <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">1</td>
-              <td class="fw-600 color-primary item-name-iso">BLR-001 (PRESSURE CALIBRATOR)</td>
+              <td class="user-table-center cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">1</td>
+              <td class="item-name-iso">BLR-001 (PRESSURE CALIBRATOR)</td>
               <td class="plant-name">BOILER</td>
-              <td class="fw-500 inst-control">BLR-001</td>
-              <td class="make-model">
-                <div class="fw-600 make-val">DRUCK</div>
-                <div class="font-11px color-secondary model-val">DPI812 pFlex</div>
+              <td class="inst-control">BLR-001</td>
+              <td class="make-model split-cell">
+                <div class="make-val split-cell-top">DRUCK</div>
+                <div class="model-val split-cell-bottom">DPI612 pFlex</div>
               </td>
-              <td class="font-13px sr-no">5877129</td>
-              <td class="user-table-center font-13px last-cal">22/01/2026</td>
-              <td class="user-table-center font-13px fw-600 color-emerald next-due">23/01/2027</td>
+              <td class="sr-no">5977129</td>
+              <td class="user-table-center last-cal">22/01/2026</td>
+              <td class="user-table-center next-due">22/01/2027</td>
               <td class="remark-val"></td>
-              <td class="user-table-center fw-600">HAS</td>
-              <td class="user-table-center">
-                <div class="flex items-center justify-center gap-8px">
-                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
-                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+              <td class="user-table-center">HAS</td>
+              <td class="user-table-center split-cell">
+                <div class="split-cell-top cal-report-cell">
+                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-16px"></i></button>
+                </div>
+                <div class="split-cell-bottom cal-report-cell">
+                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-16px"></i></button>
                 </div>
               </td>
             </tr>
 
             <!-- Row 2 -->
             <tr class="user-table-row">
-              <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">2</td>
-              <td class="fw-600 color-primary item-name-iso">BLR-002 (Digital Multimeter)</td>
+              <td class="user-table-center cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">2</td>
+              <td class="item-name-iso">BLR-002 (Digital Multimeter)</td>
               <td class="plant-name">BOILER</td>
-              <td class="fw-500 inst-control">BLR-002</td>
-              <td class="make-model">
-                <div class="fw-600 make-val">FLUKE</div>
-                <div class="font-11px color-secondary model-val">FLUKE-28II</div>
+              <td class="inst-control">BLR-002</td>
+              <td class="make-model split-cell">
+                <div class="make-val split-cell-top">MOTWANE</div>
+                <div class="model-val split-cell-bottom">M63</div>
               </td>
-              <td class="font-13px sr-no">A04071D14</td>
-              <td class="user-table-center font-13px last-cal">02/03/2026</td>
-              <td class="user-table-center font-13px fw-600 color-emerald next-due">02/03/2027</td>
+              <td class="sr-no">A04071D14</td>
+              <td class="user-table-center last-cal">03/03/2026</td>
+              <td class="user-table-center next-due">03/03/2027</td>
               <td class="remark-val"></td>
-              <td class="user-table-center fw-600">HAS</td>
-              <td class="user-table-center">
-                <div class="flex items-center justify-center gap-8px">
-                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
-                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+              <td class="user-table-center">HAS</td>
+              <td class="user-table-center split-cell">
+                <div class="split-cell-top cal-report-cell">
+                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-16px"></i></button>
+                </div>
+                <div class="split-cell-bottom cal-report-cell">
+                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-16px"></i></button>
                 </div>
               </td>
             </tr>
 
             <!-- Row 3 -->
             <tr class="user-table-row">
-              <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">3</td>
-              <td class="fw-600 color-primary item-name-iso">BLR-003 (Temp Simulator)</td>
+              <td class="user-table-center cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">3</td>
+              <td class="item-name-iso">BLR-003 (Temp Simulator)</td>
               <td class="plant-name">BOILER</td>
-              <td class="fw-500 inst-control">BLR-003</td>
-              <td class="make-model">
-                <div class="fw-600 make-val">FLUKE</div>
-                <div class="font-11px color-secondary model-val">724</div>
+              <td class="inst-control">BLR-003</td>
+              <td class="make-model split-cell">
+                <div class="make-val split-cell-top">Fluke</div>
+                <div class="model-val split-cell-bottom">724</div>
               </td>
-              <td class="font-13px sr-no">5745387</td>
-              <td class="user-table-center font-13px last-cal">03/03/2026</td>
-              <td class="user-table-center font-13px fw-600 color-emerald next-due">03/03/2027</td>
+              <td class="sr-no">5745387</td>
+              <td class="user-table-center last-cal">03/03/2026</td>
+              <td class="user-table-center next-due">03/03/2027</td>
               <td class="remark-val"></td>
-              <td class="user-table-center fw-600">HAS</td>
-              <td class="user-table-center">
-                <div class="flex items-center justify-center gap-8px">
-                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
-                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+              <td class="user-table-center">HAS</td>
+              <td class="user-table-center split-cell">
+                <div class="split-cell-top cal-report-cell">
+                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-16px"></i></button>
+                </div>
+                <div class="split-cell-bottom cal-report-cell">
+                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-16px"></i></button>
                 </div>
               </td>
             </tr>
 
             <!-- Row 4 -->
             <tr class="user-table-row">
-              <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">4</td>
-              <td class="fw-600 color-primary item-name-iso">BLR-027 (mv/mA Simulator)</td>
+              <td class="user-table-center cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record">4</td>
+              <td class="item-name-iso">BLR-027 (mv/mA Simulator)</td>
               <td class="plant-name">BOILER</td>
-              <td class="fw-500 inst-control">BLR-027</td>
-              <td class="make-model">
-                <div class="fw-600 make-val">FLUKE</div>
-                <div class="font-11px color-secondary model-val">715</div>
+              <td class="inst-control">BLR-027</td>
+              <td class="make-model split-cell">
+                <div class="make-val split-cell-top">Fluke</div>
+                <div class="model-val split-cell-bottom">715</div>
               </td>
-              <td class="font-13px sr-no">7144602</td>
-              <td class="user-table-center font-13px last-cal">19/01/2026</td>
-              <td class="user-table-center font-13px fw-600 color-emerald next-due">19/01/2027</td>
+              <td class="sr-no">7144602</td>
+              <td class="user-table-center last-cal">19/01/2026</td>
+              <td class="user-table-center next-due">19/01/2027</td>
               <td class="remark-val"></td>
-              <td class="user-table-center fw-600">MMD</td>
-              <td class="user-table-center">
-                <div class="flex items-center justify-center gap-8px">
-                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
-                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+              <td class="user-table-center">MMD</td>
+              <td class="user-table-center split-cell">
+                <div class="split-cell-top cal-report-cell">
+                  <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-16px"></i></button>
+                </div>
+                <div class="split-cell-bottom cal-report-cell">
+                  <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-16px"></i></button>
                 </div>
               </td>
             </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </main>
@@ -574,23 +609,25 @@
 
         const newRowHtml = `
           <tr class="user-table-row">
-            <td class="user-table-center fw-600 cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record"></td>
-            <td class="fw-600 color-primary item-name-iso">${tagVal}</td>
+            <td class="user-table-center cursor-pointer color-blue hover-underline btn-edit-record" title="Edit Record"></td>
+            <td class="item-name-iso">${tagVal}</td>
             <td class="plant-name">${plantVal}</td>
-            <td class="fw-500 inst-control">${instControlVal}</td>
-            <td class="make-model">
-              <div class="fw-600 make-val">${makeVal}</div>
-              <div class="font-11px color-secondary model-val">${modelVal}</div>
+            <td class="inst-control">${instControlVal}</td>
+            <td class="make-model split-cell">
+              <div class="make-val split-cell-top">${makeVal}</div>
+              <div class="model-val split-cell-bottom">${modelVal}</div>
             </td>
-            <td class="font-13px sr-no">${serialVal}</td>
-            <td class="user-table-center font-13px last-cal">${formattedLastCali}</td>
-            <td class="user-table-center font-13px fw-600 color-emerald next-due">${formattedNextCali}</td>
+            <td class="sr-no">${serialVal}</td>
+            <td class="user-table-center last-cal">${formattedLastCali}</td>
+            <td class="user-table-center next-due">${formattedNextCali}</td>
             <td class="remark-val">${remarkVal}</td>
-            <td class="user-table-center fw-600">ADMIN</td>
-            <td class="user-table-center">
-              <div class="flex items-center justify-center gap-8px">
-                <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-18px"></i></button>
-                <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-18px"></i></button>
+            <td class="user-table-center">ADMIN</td>
+            <td class="user-table-center split-cell">
+              <div class="split-cell-top cal-report-cell">
+                <button class="table-action-btn color-blue" title="Adobe Report"><i class="ph-bold ph-file-pdf font-16px"></i></button>
+              </div>
+              <div class="split-cell-bottom cal-report-cell">
+                <button class="table-action-btn color-secondary btn-view-report" title="View Folder"><i class="ph-bold ph-folder font-16px"></i></button>
               </div>
             </td>
           </tr>
@@ -624,9 +661,8 @@
       });
 
       function reindexSerialNumbers() {
-        const $tbody = $('#equipment-calibration-table-body');
         let srCount = 1;
-        $tbody.find('.user-table-row').each(function() {
+        $('.user-table-row').each(function() {
           const $srCell = $(this).find('td:first-child');
           if ($srCell.hasClass('user-table-center')) {
              $srCell.text(srCount++);
