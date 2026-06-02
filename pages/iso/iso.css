@@ -3451,3 +3451,82 @@ html[data-theme-mode="light"] .gnfc-modal-shell .user-table td:last-child {
 .header-filter-group .filter-label {
   margin-bottom: 0;
 }
+
+/* Day Chips for Weekly Frequency */
+.day-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.day-chip {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--app-border);
+  background: var(--app-bg);
+  color: var(--typo-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.day-chip:hover {
+  border-color: var(--typo-blue);
+  color: var(--typo-blue);
+  transform: translateY(-2px);
+  background: rgba(87, 148, 242, 0.05);
+}
+
+.day-chip.is-selected {
+  background: var(--typo-blue);
+  border-color: var(--typo-blue);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(87, 148, 242, 0.35);
+}
+
+.day-chip.is-selected:hover {
+  background: #4a85e2;
+  transform: translateY(-1px);
+}
+
+/* Animation for selection */
+.day-chip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.day-chip:active::after {
+  opacity: 1;
+}
+
+/* Blue color for Sr and Tag columns in tbody */
+#calibration-table-body td.clickable-cell {
+  color: var(--typo-blue, #2563eb) !important;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+#calibration-table-body td.clickable-tag {
+  color: var(--typo-blue, #2563eb) !important;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+#calibration-table-body td.clickable-cell:hover,
+#calibration-table-body td.clickable-tag:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}

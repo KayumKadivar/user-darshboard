@@ -26,7 +26,6 @@
     window.activePage = 'iso';
   </script>
 
-
 </head>
 
 <body class="dashboard-body">
@@ -328,7 +327,7 @@
         <div class="gnfc-modal-body gnfc-modal-body--tight modal-body-scroll-y">
           <div class="form-grid grid-cols-12">
 
-            <div class="col-span-8">
+            <div class="col-span-6">
               <label class="gnfc-modal-label">Tag No</label>
               <div class="flex gap-4px">
                 <input id="modal-field-tag-input" type="text" placeholder="Tag No..."
@@ -351,33 +350,28 @@
               </div>
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Application</label>
               <input id="modal-field-application" type="text" class="gnfc-modal-input"
                 placeholder="Enter application details">
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Process OCP No</label>
               <input id="modal-field-ocp" type="text" class="gnfc-modal-input" placeholder="Enter process OCP">
             </div>
 
-            <div class="col-span-4">
-              <label class="gnfc-modal-label">Frequency of check (Days) </label>
-              <input id="modal-field-freq" type="number" class="gnfc-modal-input">
-            </div>
-
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Last Done On </label>
               <input id="modal-field-last-done" type="date" class="gnfc-modal-input">
-            </div>
+            </div>        
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Quoted Accuracy</label>
               <input id="modal-field-accuracy" type="text" class="gnfc-modal-input">
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Format</label>
               <select id="modal-field-format" class="gnfc-modal-input">
                 <option value="">-- Select --</option>
@@ -392,18 +386,98 @@
               </select>
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">ISO</label>
               <select id="modal-field-esd-ohsas" class="gnfc-modal-input" required>
                 <option value="ISO">ISO</option>
               </select>
             </div>
 
+                <div class="col-span-12">
+              <label class="gnfc-modal-label">Frequency Of Check <span class="required">*</span></label>
+
+              <!-- Tab Selector -->
+              <div class="schedule-mode-tabs mb-10px" id="mode-tabs-add">
+                <div class="mode-tab is-active" data-mode="interval">Interval (Days)</div>
+                <div class="mode-tab" data-mode="monthly">Monthly Date</div>
+                <div class="mode-tab" data-mode="weekly">Weekly Days</div>
+                <div class="mode-tab" data-mode="specific">Specific Date</div>
+              </div>
+
+              <!-- Mode: Interval -->
+              <div id="content-interval-add" class="mode-content is-active">
+                <div class="flex items-center gap-8px font-14px fw-600" style="color: var(--typo-secondary);">
+                  <span>Run job every</span>
+                  <input type="number" id="freqDaysAdd" class="gnfc-modal-input" style="width: 100px;" placeholder="365"
+                    value="365">
+                  <span>Days.</span>
+                </div>
+              </div>
+
+              <!-- Mode: Monthly -->
+              <div id="content-monthly-add" class="mode-content">
+                <div class="flex items-center gap-8px font-14px fw-600" style="color: var(--typo-secondary);">
+                  <span>Run job every month on the</span>
+                  <select id="monthlyDateAdd" class="gnfc-modal-input" style="width: 100px;"></select>
+                  <span>Date.</span>
+                </div>
+              </div>
+
+              <!-- Mode: Weekly -->
+              <div id="content-weekly-add" class="mode-content">
+                <div class="flex flex-col gap-8px font-14px fw-600">
+                  <span style="color: var(--typo-secondary);">Run job on selected days of the week:</span>
+                  <div class="day-chips-container">
+                    <div class="day-chip" data-day="Mon">MON</div>
+                    <div class="day-chip" data-day="Tue">TUE</div>
+                    <div class="day-chip" data-day="Wed">WED</div>
+                    <div class="day-chip" data-day="Thu">THU</div>
+                    <div class="day-chip" data-day="Fri">FRI</div>
+                    <div class="day-chip" data-day="Sat">SAT</div>
+                    <div class="day-chip" data-day="Sun">SUN</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mode: Specific -->
+              <div id="content-specific-add" class="mode-content">
+                <div class="flex flex-col gap-8px font-14px fw-600">
+                  <span style="color: var(--typo-secondary);">Schedule a one-time job for:</span>
+                  <div class="flex items-center gap-8px">
+                    <select id="specDayAdd" class="gnfc-modal-input flex-1"></select>
+                    <select id="specMonthAdd" class="gnfc-modal-input flex-1">
+                      <option value="">Month</option>
+                      <option value="1">JAN</option>
+                      <option value="2">FEB</option>
+                      <option value="3">MAR</option>
+                      <option value="4">APR</option>
+                      <option value="5">MAY</option>
+                      <option value="6">JUN</option>
+                      <option value="7">JUL</option>
+                      <option value="8">AUG</option>
+                      <option value="9">SEP</option>
+                      <option value="10">OCT</option>
+                      <option value="11">NOV</option>
+                      <option value="12">DEC</option>
+                    </select>
+                    <select id="specYearAdd" class="gnfc-modal-input flex-1">
+                      <option value="">Year</option>
+                      <option>2026</option>
+                      <option>2027</option>
+                      <option>2028</option>
+                      <option>2029</option>
+                      <option>2030</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Row 4: Calibration/Check Procedure -->
             <div class="col-span-12">
               <label class="gnfc-modal-label">CALIBRATION / CHECK PROCEDURE </label>
               <textarea id="modal-field-procedure" rows="4" class="gnfc-modal-input w-full"
-                placeholder="Enter detailed calibration and check procedure guidelines..." required></textarea>
+                placeholder="Enter detailed calibration and check procedure guidelines..." style="min-height: 100px; resize: vertical;" required></textarea>
             </div>
 
           </div>
@@ -430,7 +504,7 @@
         <div class="gnfc-modal-body gnfc-modal-body--tight modal-body-scroll-y">
           <div class="form-grid grid-cols-12">
 
-            <div class="col-span-8">
+            <div class="col-span-6">
               <label class="gnfc-modal-label">Tag No</label>
               <div class="flex gap-4px">
                 <input id="edit-field-tag-input" type="text" placeholder="Tag No..."
@@ -453,33 +527,28 @@
               </div>
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Application</label>
               <input id="edit-field-application" type="text" class="gnfc-modal-input"
                 placeholder="Enter application details">
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Reference No</label>
               <input id="edit-field-ocp" type="text" class="gnfc-modal-input" placeholder="Enter Reference No">
             </div>
 
-            <div class="col-span-4">
-              <label class="gnfc-modal-label">Frequency of Check (Days)</label>
-              <input id="edit-field-freq" type="number" class="gnfc-modal-input">
-            </div>
-
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Last Done On</label>
               <input id="edit-field-last-done" type="date" class="gnfc-modal-input">
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Quoted Accuracy</label>
               <input id="edit-field-accuracy" type="text" class="gnfc-modal-input">
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">Format </label>
               <select id="edit-field-format" class="gnfc-modal-input">
                 <option value="GAS">GAS</option>
@@ -493,17 +562,98 @@
               </select>
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-3">
               <label class="gnfc-modal-label">ISO</label>
               <select id="edit-field-esd-ohsas" class="gnfc-modal-input">
                 <option value="ISO">ISO</option>
               </select>
             </div>
 
+            <!-- Frequency of check via tabs -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">Frequency Of Check <span class="required">*</span></label>
+
+              <!-- Tab Selector -->
+              <div class="schedule-mode-tabs mb-10px" id="mode-tabs-edit">
+                <div class="mode-tab is-active" data-mode="interval">Interval (Days)</div>
+                <div class="mode-tab" data-mode="monthly">Monthly Date</div>
+                <div class="mode-tab" data-mode="weekly">Weekly Days</div>
+                <div class="mode-tab" data-mode="specific">Specific Date</div>
+              </div>
+
+              <!-- Mode: Interval -->
+              <div id="content-interval-edit" class="mode-content is-active">
+                <div class="flex items-center gap-8px font-14px fw-600" style="color: var(--typo-secondary);">
+                  <span>Run job every</span>
+                  <input type="number" id="freqDaysEdit" class="gnfc-modal-input" style="width: 100px;" placeholder="365"
+                    value="365">
+                  <span>Days.</span>
+                </div>
+              </div>
+
+              <!-- Mode: Monthly -->
+              <div id="content-monthly-edit" class="mode-content">
+                <div class="flex items-center gap-8px font-14px fw-600" style="color: var(--typo-secondary);">
+                  <span>Run job every month on the</span>
+                  <select id="monthlyDateEdit" class="gnfc-modal-input" style="width: 100px;"></select>
+                  <span>Date.</span>
+                </div>
+              </div>
+
+              <!-- Mode: Weekly -->
+              <div id="content-weekly-edit" class="mode-content">
+                <div class="flex flex-col gap-8px font-14px fw-600">
+                  <span style="color: var(--typo-secondary);">Run job on selected days of the week:</span>
+                  <div class="day-chips-container">
+                    <div class="day-chip" data-day="Mon">MON</div>
+                    <div class="day-chip" data-day="Tue">TUE</div>
+                    <div class="day-chip" data-day="Wed">WED</div>
+                    <div class="day-chip" data-day="Thu">THU</div>
+                    <div class="day-chip" data-day="Fri">FRI</div>
+                    <div class="day-chip" data-day="Sat">SAT</div>
+                    <div class="day-chip" data-day="Sun">SUN</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mode: Specific -->
+              <div id="content-specific-edit" class="mode-content">
+                <div class="flex flex-col gap-8px font-14px fw-600">
+                  <span style="color: var(--typo-secondary);">Schedule a one-time job for:</span>
+                  <div class="flex items-center gap-8px">
+                    <select id="specDayEdit" class="gnfc-modal-input flex-1"></select>
+                    <select id="specMonthEdit" class="gnfc-modal-input flex-1">
+                      <option value="">Month</option>
+                      <option value="1">JAN</option>
+                      <option value="2">FEB</option>
+                      <option value="3">MAR</option>
+                      <option value="4">APR</option>
+                      <option value="5">MAY</option>
+                      <option value="6">JUN</option>
+                      <option value="7">JUL</option>
+                      <option value="8">AUG</option>
+                      <option value="9">SEP</option>
+                      <option value="10">OCT</option>
+                      <option value="11">NOV</option>
+                      <option value="12">DEC</option>
+                    </select>
+                    <select id="specYearEdit" class="gnfc-modal-input flex-1">
+                      <option value="">Year</option>
+                      <option>2026</option>
+                      <option>2027</option>
+                      <option>2028</option>
+                      <option>2029</option>
+                      <option>2030</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-span-12">
               <label class="gnfc-modal-label">CALIBRATION / CHECK PROCEDURE </label>
               <textarea id="edit-field-procedure" rows="4" class="gnfc-modal-input w-full"
-                placeholder="Enter detailed calibration and check procedure guidelines..."></textarea>
+                placeholder="Enter detailed calibration and check procedure guidelines..." style="min-height: 100px; resize: vertical;"></textarea>
             </div>
 
           </div>
@@ -738,7 +888,7 @@
                   </tr>
                   <tr>
                     <td class="fw-700 bg-light-panel text-left">CALIBRATION NEXT DUE DATE :</td>
-                    <td colspan="3">
+                    <td>
                       <input type="text" class="pm-form-input w-full" id="calib-next-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
@@ -792,51 +942,51 @@
                     <td colspan="2" class="bg-light-panel fw-700" style="width: 50%;">After Calibration</td>
                   </tr>
                   <tr>
-                    <td class="text-center fw-600">0.0</td>
+                    <td class="text-center fw-600">0%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center" id="calib-before-0" placeholder="value...">
                     </td>
-                    <td class="text-center fw-600">0.0</td>
+                    <td class="text-center fw-600">0%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="calib-after-0" placeholder="value...">
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-center fw-600">0.25</td>
+                    <td class="text-center fw-600">25%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center" id="calib-before-25" placeholder="value...">
                     </td>
-                    <td class="text-center fw-600">0.25</td>
+                    <td class="text-center fw-600">25%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="calib-after-25" placeholder="value...">
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-center fw-600">0.5</td>
+                    <td class="text-center fw-600">50%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center" id="calib-before-50" placeholder="value...">
                     </td>
-                    <td class="text-center fw-600">0.5</td>
+                    <td class="text-center fw-600">50%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="calib-after-50" placeholder="value...">
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-center fw-600">0.75</td>
+                    <td class="text-center fw-600">75%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center" id="calib-before-75" placeholder="value...">
                     </td>
-                    <td class="text-center fw-600">0.75</td>
+                    <td class="text-center fw-600">75%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="calib-after-75" placeholder="value...">
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-center fw-600">1.0</td>
+                    <td class="text-center fw-600">100%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center" id="calib-before-100" placeholder="value...">
                     </td>
-                    <td class="text-center fw-600">1.0</td>
+                    <td class="text-center fw-600">100%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="calib-after-100" placeholder="value...">
                     </td>
@@ -852,7 +1002,7 @@
                         <option value="FLUKE-87-V">FLUKE-87-V</option>
                       </select>
                     </td>
-                    <td colspan="2" rowspan="4" class="text-center" style="vertical-align: middle;">
+                    <td colspan="2" rowspan="4" class="text-center">
                       <a href="#" class="user-table-blue-link" id="calib-report-link-1">Report Link</a>
                     </td>
                   </tr>
@@ -885,7 +1035,7 @@
                         <option value="FLUKE-87-V">FLUKE-87-V</option>
                       </select>
                     </td>
-                    <td colspan="2" rowspan="4" class="text-center" style="vertical-align: middle;">
+                    <td colspan="2" rowspan="4" class="text-center">
                       <a href="#" class="user-table-blue-link" id="calib-report-link-2">Report Link</a>
                     </td>
                   </tr>
@@ -1068,7 +1218,7 @@
                     <td>
                       <input type="text" class="pm-form-input w-full" id="ph-calib-range" placeholder="Calibration Range...">
                     </td>
-                    <td colspan="3" rowspan="3" style="vertical-align: middle;" class="text-center">
+                    <td colspan="3" rowspan="3" class="text-center">
                       <div class="fw-600 font-12px color-text-secondary">Standard Buffer Solutions used for pH calibration</div>
                     </td>
                   </tr>
@@ -1154,13 +1304,10 @@
                 <tbody>
                   <!-- Header row: Logo, Title, Empty -->
                   <tr>
-                    <td class="text-center" style="width: 15%; vertical-align: middle;">
-                      <img src="../../assets/images/gnfc-sidebar-logo-short.png" alt="GNFC Logo" style="height: 36px; object-fit: contain;">
-                    </td>
-                    <td colspan="3" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
+               
+                    <td colspan="5" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
                       ANALYZER CALIBRATION REPORT OF
                     </td>
-                    <td style="width: 15%;"></td>
                   </tr>
 
                   <!-- Date Rows & Format Code (right side) -->
@@ -1191,7 +1338,7 @@
                     <td colspan="2" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-left" style="width: 50%;">
                       ANALYZER UNDER CALIBRATION
                     </td>
-                    <td colspan="3" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-left" style="width: 50%;">
+                    <td colspan="3" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center" style="width: 50%;">
                       STANDARD GAS(CALIBRATION GAS) DETAIL
                     </td>
                   </tr>
@@ -1202,7 +1349,7 @@
                     <td>
                       <input type="text" class="pm-form-input w-full" id="analyzer-tag-no" placeholder="Tag No...">
                     </td>
-                    <td class="fw-700 text-center bg-light-panel" style="width: 18%;">DESCRIPTION</td>
+                    <td class="fw-700 text-left bg-light-panel" style="width: 18%;">DESCRIPTION</td>
                     <td class="fw-700 text-center bg-light-panel" style="width: 16%;">ZERO GAS</td>
                     <td class="fw-700 text-center bg-light-panel" style="width: 16%;">SPANGAS</td>
                   </tr>
@@ -1273,11 +1420,11 @@
                     <td>
                       <input type="text" class="pm-form-input w-full" id="analyzer-eng-range" placeholder="Engineering Range...">
                     </td>
-                    <td class="fw-700 text-left" rowspan="2" style="vertical-align: middle;">CERTIFICATE VALIDITY DATE</td>
-                    <td rowspan="2" style="vertical-align: middle;">
+                    <td class="fw-700 text-left" rowspan="2">CERTIFICATE VALIDITY DATE</td>
+                    <td rowspan="2">
                       <input type="text" class="pm-form-input w-full text-center" id="gas-zero-valid-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td rowspan="2" style="vertical-align: middle;">
+                    <td rowspan="2">
                       <input type="text" class="pm-form-input w-full text-center" id="gas-span-valid-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
@@ -1303,7 +1450,11 @@
                     <td class="fw-700 text-center bg-light-panel" colspan="2">RESPONSE IN DCS/RECORDER/SYSTEM</td>
                   </tr>
                   <tr>
-                    <td class="text-left fw-600">ZERO</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2"></td>
+                    <!-- <td class="text-left fw-600">ZERO</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="obs-zero-input" placeholder="Value...">
                     </td>
@@ -1312,10 +1463,15 @@
                     </td>
                     <td colspan="2">
                       <input type="text" class="pm-form-input w-full text-center" id="obs-zero-response" placeholder="Response...">
-                    </td>
+                    </td> -->
                   </tr>
                   <tr>
-                    <td class="text-left fw-600">SPAN</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2"></td>
+
+                    <!-- <td class="text-left fw-600">SPAN</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="obs-span-input" placeholder="Value...">
                     </td>
@@ -1324,7 +1480,7 @@
                     </td>
                     <td colspan="2">
                       <input type="text" class="pm-form-input w-full text-center" id="obs-span-response" placeholder="Response...">
-                    </td>
+                    </td> -->
                   </tr>
 
                   <!-- Section: Response of unit during bump test -->
@@ -1333,8 +1489,20 @@
                       RESPONSE OF UNIT DURING BUMP TEST :
                     </td>
                     <td class="fw-700 text-center bg-light-panel">
-                      OK/NOT OK
+                    <select class="pm-form-input gnfc-modal-input w-full text-center" id="bump-span-ok-nok">
+                        <option value="OK">OK</option>
+                        <option value="NOT OK">NOT OK</option>
+                      </select>
                     </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <span class="font-10px fw-700">ALARM STATUS IN DCS</span>
+                    </td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td class="text-left fw-600">ZERO:</td>
@@ -1344,20 +1512,19 @@
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="bump-zero-output" placeholder="Value...">
                     </td>
-                    <td style="vertical-align: middle;" class="text-center">
+                    <td class="text-center">
                       <div class="flex flex-col items-center gap-2px">
-                        <span class="font-10px fw-700" style="color: var(--typo-orange);">ALARM STATUS IN DCS</span>
-                        <select class="pm-form-input gnfc-modal-input w-full text-center" id="bump-zero-alarm" style="height: 24px !important; padding: 2px !important; font-size: 11px !important;">
+                        <select class="pm-form-input gnfc-modal-input w-full text-center" id="bump-zero-alarm" >
                           <option value="YES">YES</option>
                           <option value="NO">NO</option>
                         </select>
                       </div>
                     </td>
-                    <td style="vertical-align: middle;">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="bump-zero-ok-nok">
+                    <td>
+                      <!-- <select class="pm-form-input gnfc-modal-input w-full text-center" id="bump-zero-ok-nok">
                         <option value="OK">OK</option>
                         <option value="NOT OK">NOT OK</option>
-                      </select>
+                      </select> -->
                     </td>
                   </tr>
                   <tr>
@@ -1368,17 +1535,14 @@
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="bump-span-output" placeholder="Value...">
                     </td>
-                    <td style="vertical-align: middle;" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="bump-span-alarm" style="height: 24px !important; padding: 2px !important; font-size: 11px !important;">
+                    <td class="text-center">
+                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="bump-span-alarm" >
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
                     </td>
-                    <td style="vertical-align: middle;">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="bump-span-ok-nok">
-                        <option value="OK">OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select>
+                    <td>
+                     
                     </td>
                   </tr>
 
@@ -1388,9 +1552,13 @@
                       ACTUAL RESPONSE AFTER CALIBRATION/ADJUSTMENT :
                     </td>
                     <td class="fw-700 text-center bg-light-panel">
-                      OK/NOT OK
+                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-span-ok-nok">
+                        <option value="OK">OK</option>
+                        <option value="NOT OK">NOT OK</option>
+                      </select>
                     </td>
                   </tr>
+              
                   <tr>
                     <td class="text-left fw-600">ZERO:</td>
                     <td>
@@ -1399,17 +1567,17 @@
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="actual-zero-output" placeholder="Value...">
                     </td>
-                    <td style="vertical-align: middle;" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-zero-alarm" style="height: 24px !important; padding: 2px !important; font-size: 11px !important;">
+                    <td class="text-center">
+                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-zero-alarm" >
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
                     </td>
-                    <td style="vertical-align: middle;">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-zero-ok-nok">
+                    <td>
+                      <!-- <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-zero-ok-nok">
                         <option value="OK">OK</option>
                         <option value="NOT OK">NOT OK</option>
-                      </select>
+                      </select> -->
                     </td>
                   </tr>
                   <tr>
@@ -1420,17 +1588,17 @@
                     <td>
                       <input type="text" class="pm-form-input w-full text-center" id="actual-span-output" placeholder="Value...">
                     </td>
-                    <td style="vertical-align: middle;" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-span-alarm" style="height: 24px !important; padding: 2px !important; font-size: 11px !important;">
+                    <td class="text-center">
+                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-span-alarm" >
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
                     </td>
-                    <td style="vertical-align: middle;">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-span-ok-nok">
+                    <td>
+                      <!-- <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-span-ok-nok">
                         <option value="OK">OK</option>
                         <option value="NOT OK">NOT OK</option>
-                      </select>
+                      </select> -->
                     </td>
                   </tr>
 
@@ -1557,13 +1725,10 @@
                 <tbody>
                   <!-- Header row: Logo, Title, Empty -->
                   <tr>
-                    <td class="text-center" style="width: 20%; vertical-align: middle;">
-                      <img src="../../assets/images/gnfc-sidebar-logo-short.png" alt="GNFC Logo" style="height: 36px; object-fit: contain;">
-                    </td>
-                    <td colspan="3" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
+                   
+                    <td colspan="5" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
                       GAS SENSOR CALIBRATION REPORT OF
                     </td>
-                    <td style="width: 20%;"></td>
                   </tr>
 
                   <!-- Date Rows & Format Code (right side) -->
@@ -1591,10 +1756,10 @@
 
                   <!-- Section Headers: Parallel Blocks -->
                   <tr>
-                    <td colspan="2" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-left" style="width: 50%;">
+                    <td colspan="2" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center" style="width: 50%;">
                       GAS SENSOR UNDER CALIBRATION
                     </td>
-                    <td colspan="3" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-left" style="width: 50%;">
+                    <td colspan="3" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center" style="width: 50%;">
                       STANDARD GAS(CALIBRATION GAS) DETAIL
                     </td>
                   </tr>
@@ -1605,7 +1770,7 @@
                     <td>
                       <input type="text" class="pm-form-input w-full" id="gas-sensor-tag-no" placeholder="Tag No...">
                     </td>
-                    <td class="fw-700 text-center bg-light-panel" style="width: 18%;">DESCRIPTION</td>
+                    <td class="fw-700 text-left bg-light-panel" style="width: 18%;">DESCRIPTION</td>
                     <td class="fw-700 text-center bg-light-panel" style="width: 16%;">ZERO GAS</td>
                     <td class="fw-700 text-center bg-light-panel" style="width: 24%;">SPAN GAS</td>
                   </tr>
@@ -1676,11 +1841,11 @@
                     <td>
                       <input type="text" class="pm-form-input w-full" id="gas-sensor-eng-range" placeholder="Engineering Range...">
                     </td>
-                    <td class="fw-700 text-left" rowspan="2" style="vertical-align: middle;">CERTIFICATE VALIDITY DATE</td>
-                    <td rowspan="2" style="vertical-align: middle;">
+                    <td class="fw-700 text-left" rowspan="2">CERTIFICATE VALIDITY DATE</td>
+                    <td rowspan="2">
                       <input type="text" class="pm-form-input w-full text-center" id="gas-sensor-zero-valid-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td rowspan="2" style="vertical-align: middle;">
+                    <td rowspan="2">
                       <input type="text" class="pm-form-input w-full text-center" id="gas-sensor-span-valid-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
@@ -1695,67 +1860,61 @@
 
                   <!-- Section: Response of unit during bump test -->
                   <tr>
-                    <td colspan="3" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-left" style="width: 45%;">
-                      RESPONSE OF UNIT DURING BUMP TEST :
+                    <td colspan="2" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center" style="width: 45%;">
+                      REMARK
                     </td>
-                    <td class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center" style="width: 15%;">
+                    <td class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center" style="width: 20%;">
                       ALARM STATUS IN DCS
                     </td>
-                    <td class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center" style="width: 40%;">
-                      REMARK
+                    <td colspan="2" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-left" style="width: 35%;">
+                      RESPONSE OF UNIT DURING BUMP TEST :
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="3" class="text-center">
-                      <div class="flex items-center justify-between w-full px-8px">
-                        <span>OK/NOT OK</span>
-                        <select class="pm-form-input gnfc-modal-input text-center" id="gas-bump-ok-nok" style="width: 60%;">
-                          <option value="OK">OK</option>
-                          <option value="NOT OK">NOT OK</option>
-                        </select>
-                      </div>
+                    <td colspan="2">
+                      <input type="text" class="pm-form-input w-full" id="gas-bump-remark" placeholder="Remark..." style="min-height: 80px; resize: vertical;">
                     </td>
-                    <td style="vertical-align: middle;" class="text-center">
+                    <td class="text-center">
                       <select class="pm-form-input gnfc-modal-input w-full text-center" id="gas-bump-alarm">
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
                     </td>
-                    <td style="vertical-align: middle;">
-                      <input type="text" class="pm-form-input w-full" id="gas-bump-remark" placeholder="Remark...">
+                    <td colspan="2" class="text-center" >
+                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="gas-bump-ok-nok">
+                        <option value="OK">OK</option>
+                        <option value="NOT OK">NOT OK</option>
+                      </select>
                     </td>
                   </tr>
 
                   <!-- Section: Actual Response After Calibration / Adjustment -->
                   <tr>
-                    <td colspan="3" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-left">
-                      ACTUAL RESPONSE AFTER CALIBRATION/ADJUSTMENT :
+                    <td colspan="2" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center" style="width: 45%;">
+                      REMARK
                     </td>
-                    <td class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center">
+                    <td class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center" style="width: 20%;">
                       ALARM STATUS IN DCS
                     </td>
-                    <td class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-center">
-                      REMARK
+                    <td colspan="2" class="fw-800 bg-light-panel color-text font-13px py-8px uppercase ls-wide text-left" style="width: 35%;">
+                      ACTUAL RESPONSE AFTER CALIBRATION/ADJUSTMENT :
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="3" class="text-center">
-                      <div class="flex items-center justify-between w-full px-8px">
-                        <span>OK/NOT OK</span>
-                        <select class="pm-form-input gnfc-modal-input text-center" id="gas-actual-ok-nok" style="width: 60%;">
-                          <option value="OK">OK</option>
-                          <option value="NOT OK">NOT OK</option>
-                        </select>
-                      </div>
+                    <td colspan="2">
+                      <input type="text" class="pm-form-input w-full" id="gas-actual-remark" placeholder="Remark..." style="min-height: 80px; resize: vertical;">
                     </td>
-                    <td style="vertical-align: middle;" class="text-center">
+                    <td class="text-center">
                       <select class="pm-form-input gnfc-modal-input w-full text-center" id="gas-actual-alarm">
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
                     </td>
-                    <td style="vertical-align: middle;">
-                      <input type="text" class="pm-form-input w-full" id="gas-actual-remark" placeholder="Remark...">
+                    <td colspan="2" class="text-center">
+                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="gas-actual-ok-nok">
+                        <option value="OK">OK</option>
+                        <option value="NOT OK">NOT OK</option>
+                      </select>
                     </td>
                   </tr>
 
@@ -1828,15 +1987,10 @@
             <div class="user-table-wrapper">
               <table class="user-table font-14px" style="min-width: auto; width: 100%;">
                 <tbody>
-                  <!-- Header row: Logo, Title, Empty -->
                   <tr>
-                    <td class="text-center" style="width: 15%; vertical-align: middle;">
-                      <img src="../../assets/images/gnfc-sidebar-logo-short.png" alt="GNFC Logo" style="height: 36px; object-fit: contain;">
-                    </td>
-                    <td colspan="2" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <td colspan="5" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
                       CONTROL VALVE CALIBRATION REPORT OF
                     </td>
-                    <td style="width: 15%;"></td>
                   </tr>
 
                   <!-- Date Rows & Format Code (right side) -->
@@ -2118,51 +2272,51 @@
 
                   <!-- Calibration Point Rows -->
                   <tr>
-                    <td class="fw-700 text-center bg-light-panel" style="width: 15%;">0.0</td>
+                    <td class="fw-700 text-center bg-light-panel" style="width: 15%;">0%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-before-0" placeholder="Value...">
                     </td>
-                    <td class="fw-700 text-center bg-light-panel" style="width: 15%;">0.0</td>
+                    <td class="fw-700 text-center bg-light-panel" style="width: 15%;">0%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-after-0" placeholder="Value...">
                     </td>
                   </tr>
                   <tr>
-                    <td class="fw-700 text-center bg-light-panel">0.25</td>
+                    <td class="fw-700 text-center bg-light-panel">25%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-before-25" placeholder="Value...">
                     </td>
-                    <td class="fw-700 text-center bg-light-panel">0.25</td>
+                    <td class="fw-700 text-center bg-light-panel">25%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-after-25" placeholder="Value...">
                     </td>
                   </tr>
                   <tr>
-                    <td class="fw-700 text-center bg-light-panel">0.5</td>
+                    <td class="fw-700 text-center bg-light-panel">50%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-before-50" placeholder="Value...">
                     </td>
-                    <td class="fw-700 text-center bg-light-panel">0.5</td>
+                    <td class="fw-700 text-center bg-light-panel">50%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-after-50" placeholder="Value...">
                     </td>
                   </tr>
                   <tr>
-                    <td class="fw-700 text-center bg-light-panel">0.75</td>
+                    <td class="fw-700 text-center bg-light-panel">75%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-before-75" placeholder="Value...">
                     </td>
-                    <td class="fw-700 text-center bg-light-panel">0.75</td>
+                    <td class="fw-700 text-center bg-light-panel">75%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-after-75" placeholder="Value...">
                     </td>
                   </tr>
                   <tr>
-                    <td class="fw-700 text-center bg-light-panel">1.0</td>
+                    <td class="fw-700 text-center bg-light-panel">100%</td>
                     <td class="border-r">
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-before-100" placeholder="Value...">
                     </td>
-                    <td class="fw-700 text-center bg-light-panel">1.0</td>
+                    <td class="fw-700 text-center bg-light-panel">100%</td>
                     <td>
                       <input type="text" class="pm-form-input w-full text-center font-13px" id="cv-after-100" placeholder="Value...">
                     </td>
@@ -2178,7 +2332,7 @@
                         <option value="STD-02">STD-02 (Rosemount Hart 475)</option>
                       </select>
                     </td>
-                    <td rowspan="4" class="text-center bg-light-panel" style="vertical-align: middle;">
+                    <td rowspan="4" class="text-center bg-light-panel">
                       <a href="#" class="user-table-blue-link font-13px fw-700">Report Link</a>
                     </td>
                   </tr>
@@ -2266,13 +2420,10 @@
                 <tbody>
                   <!-- Header row: Logo, Title, Empty -->
                   <tr>
-                    <td class="text-center" style="width: 15%; vertical-align: middle;">
-                      <img src="../../assets/images/gnfc-sidebar-logo-short.png" alt="GNFC Logo" style="height: 36px; object-fit: contain;">
-                    </td>
-                    <td colspan="2" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
+                
+                    <td colspan="5" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
                       TC / RTD MAINTENANCE REPORT
                     </td>
-                    <td style="width: 15%;"></td>
                   </tr>
 
                   <!-- Date Rows -->
@@ -2353,7 +2504,7 @@
                     <td colspan="3" class="text-left font-13px py-8px">
                       Check physical condition of primary element . Tight electrical connection if required. Clean dust ,corrosion around element , head cable etc. In case of any abnormality replace the element.
                     </td>
-                    <td style="vertical-align: middle;">
+                    <td>
                       <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-physical">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
@@ -2364,7 +2515,7 @@
                     <td colspan="3" class="text-left font-13px py-8px">
                       Indication at DCS / PLC
                     </td>
-                    <td style="vertical-align: middle;">
+                    <td>
                       <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-indication">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
@@ -2382,7 +2533,7 @@
                         <option value="STD-02">STD-02 (Rosemount Hart 475)</option>
                       </select>
                     </td>
-                    <td rowspan="4" class="text-center bg-light-panel" style="vertical-align: middle;">
+                    <td rowspan="4" class="text-center bg-light-panel">
                       <a href="#" class="user-table-blue-link font-13px fw-700">Report Link</a>
                     </td>
                   </tr>
@@ -2818,7 +2969,7 @@
                         <option value="STD-02">STD-02 (Rosemount Hart 475)</option>
                       </select>
                     </td>
-                    <td rowspan="4" class="text-center bg-light-panel" style="vertical-align: middle;">
+                    <td rowspan="4" class="text-center bg-light-panel">
                       <a href="#" class="user-table-blue-link font-13px fw-700">Report Link</a>
                     </td>
                   </tr>
@@ -2993,7 +3144,7 @@
                     <td colspan="3" class="text-left font-13px py-8px">
                       Check physical condition of primary element . Tight electrical connection if required. Clean dust ,corrosion around element , head cable etc. In case of any abnormality replace the element.
                     </td>
-                    <td style="vertical-align: middle;">
+                    <td>
                       <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-physical">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
@@ -3004,7 +3155,7 @@
                     <td colspan="3" class="text-left font-13px py-8px">
                       Indication at DCS / PLC
                     </td>
-                    <td style="vertical-align: middle;">
+                    <td>
                       <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-indication">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
@@ -3022,7 +3173,7 @@
                         <option value="STD-02">STD-02 (Rosemount Hart 475)</option>
                       </select>
                     </td>
-                    <td rowspan="4" class="text-center bg-light-panel" style="vertical-align: middle;">
+                    <td rowspan="4" class="text-center bg-light-panel">
                       <a href="#" class="user-table-blue-link font-13px fw-700">Report Link</a>
                     </td>
                   </tr>
@@ -3110,13 +3261,10 @@
                 <tbody>
                   <!-- Header row: Logo, Title, Empty -->
                   <tr>
-                    <td class="text-center" style="width: 15%; vertical-align: middle;">
-                      <img src="../../assets/images/gnfc-sidebar-logo-short.png" alt="GNFC Logo" style="height: 36px; object-fit: contain;">
-                    </td>
-                    <td colspan="2" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
+                  
+                    <td colspan="5" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
                       SWITCH CALIBRATION REPORT
                     </td>
-                    <td style="width: 15%;"></td>
                   </tr>
 
                   <!-- Date Rows & Format Code (right side) -->
@@ -3221,7 +3369,7 @@
                     <td colspan="3" class="text-left font-13px py-8px">
                       Check physical condition of switch. Remove dust or corrosion if found. Check and Tighten connections if required. Carry out response checking after process permission Examples : Level switches ,PS etc
                     </td>
-                    <td style="vertical-align: middle;">
+                    <td>
                       <select class="pm-form-input gnfc-modal-input w-full text-center" id="switch-chk-physical">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
@@ -3232,7 +3380,7 @@
                     <td colspan="3" class="text-left font-13px py-8px">
                       Indication at DCS / PLC
                     </td>
-                    <td style="vertical-align: middle;">
+                    <td>
                       <select class="pm-form-input gnfc-modal-input w-full text-center" id="switch-chk-indication">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
@@ -3250,7 +3398,7 @@
                         <option value="STD-02">STD-02 (Rosemount Hart 475)</option>
                       </select>
                     </td>
-                    <td rowspan="4" class="text-center bg-light-panel" style="vertical-align: middle;">
+                    <td rowspan="4" class="text-center bg-light-panel">
                       <a href="#" class="user-table-blue-link font-13px fw-700">Report Link</a>
                     </td>
                   </tr>
@@ -3283,7 +3431,7 @@
                         <option value="STD-02">STD-02 (Rosemount Hart 475)</option>
                       </select>
                     </td>
-                    <td rowspan="4" class="text-center bg-light-panel" style="vertical-align: middle;">
+                    <td rowspan="4" class="text-center bg-light-panel">
                       <a href="#" class="user-table-blue-link font-13px fw-700">Report Link</a>
                     </td>
                   </tr>
@@ -3371,13 +3519,10 @@
                 <tbody>
                   <!-- Header row: Logo, Title, Empty -->
                   <tr>
-                    <td class="text-center" style="width: 15%; vertical-align: middle;">
-                      <img src="../../assets/images/gnfc-sidebar-logo-short.png" alt="GNFC Logo" style="height: 36px; object-fit: contain;">
-                    </td>
-                    <td colspan="2" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
+             
+                    <td colspan="5" class="text-center fw-800 font-16px" style="vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px;">
                       FLARES SPARK PLUG MAINTENANCE REPORT
                     </td>
-                    <td style="width: 15%;"></td>
                   </tr>
 
                   <!-- Date Rows -->
@@ -3452,7 +3597,7 @@
                     <td colspan="3" class="text-left font-13px py-8px">
                       Function checking of Spark plug for Flares
                     </td>
-                    <td style="vertical-align: middle;">
+                    <td>
                       <select class="pm-form-input gnfc-modal-input w-full text-center" id="spark-plug-chk-function">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
@@ -3550,6 +3695,56 @@
   <script>
     $(function () {
       let activeEditRow = null;
+
+      // Initialize Selector Options for Days (1-31)
+      function initModalDaySelectors() {
+        let d31 = '<option value="">Date</option>';
+        for (let i = 1; i <= 31; i++) d31 += `<option value="${i}">${i}</option>`;
+        $('#monthlyDateAdd, #specDayAdd, #monthlyDateEdit, #specDayEdit').html(d31);
+      }
+      initModalDaySelectors();
+
+      // Mode Switch tab logic
+      $(document).on('click', '.schedule-mode-tabs .mode-tab', function () {
+        const $tabsContainer = $(this).parent();
+        $tabsContainer.find('.mode-tab').removeClass('is-active');
+        $(this).addClass('is-active');
+
+        const mode = $(this).data('mode');
+        const $wrapper = $tabsContainer.parent();
+        $wrapper.find('.mode-content').removeClass('is-active');
+
+        const suffix = $tabsContainer.attr('id').endsWith('-add') ? '-add' : '-edit';
+        $wrapper.find('[id="content-' + mode + suffix + '"]').addClass('is-active');
+      });
+
+      // Day Chip Toggle
+      $(document).on('click', '.day-chip', function () {
+        $(this).toggleClass('is-selected');
+      });
+
+      // Get selected frequency value based on active tab
+      function getSelectedFrequency(suffix) {
+        const activeTab = $(`#mode-tabs${suffix} .mode-tab.is-active`).data('mode');
+        if (activeTab === 'interval') {
+          return $(`#freqDays${suffix === '-add' ? 'Add' : 'Edit'}`).val() || '365';
+        } else if (activeTab === 'monthly') {
+          const dateVal = $(`#monthlyDate${suffix === '-add' ? 'Add' : 'Edit'}`).val();
+          return dateVal ? `Monthly: ${dateVal}` : 'Monthly';
+        } else if (activeTab === 'weekly') {
+          let selectedDays = [];
+          $(`#content-weekly${suffix} .day-chip.is-selected`).each(function () {
+            selectedDays.push($(this).data('day'));
+          });
+          return selectedDays.length > 0 ? `Weekly: ${selectedDays.join(', ')}` : 'Weekly';
+        } else if (activeTab === 'specific') {
+          const day = $(`#specDay${suffix === '-add' ? 'Add' : 'Edit'}`).val();
+          const month = $(`#specMonth${suffix === '-add' ? 'Add' : 'Edit'}`).val();
+          const year = $(`#specYear${suffix === '-add' ? 'Add' : 'Edit'}`).val();
+          return day && month && year ? `Specific: ${day}/${month}/${year}` : 'Specific';
+        }
+        return '365';
+      }
 
       // Click handler to redirect to Calibration History Page instead of opening a modal
       $(document).on('click', '.clickable-tag', function (e) {
@@ -3842,7 +4037,6 @@
         $('#edit-field-tag-select').val(tag);
         $('#edit-field-application').val(application);
         $('#edit-field-ocp').val(ocp);
-        $('#edit-field-freq').val(freq);
         if (lastDoneDate) {
           $('#edit-field-last-done').val(lastDoneDate);
         }
@@ -3852,6 +4046,59 @@
         // Formats and defaults
         $('#edit-field-format').val('IMS/F/INST/01');
         $('#edit-field-esd-ohsas').val('ISO');
+
+        // Handle schedule logic mapping in Edit
+        // Default to interval tab first
+        $('#mode-tabs-edit .mode-tab').removeClass('is-active');
+        $('#mode-tabs-edit .mode-tab[data-mode="interval"]').addClass('is-active');
+        $('#technician-job-edit .mode-content').removeClass('is-active');
+        $('#content-interval-edit').addClass('is-active');
+
+        $('#freqDaysEdit').val(365);
+        $('#monthlyDateEdit').val('');
+        $('#specDayEdit').val('');
+        $('#specMonthEdit').val('');
+        $('#specYearEdit').val('');
+        $('#content-weekly-edit .day-chip').removeClass('is-selected');
+
+        if (freq) {
+          if (freq.toLowerCase().includes('monthly')) {
+            // Map monthly
+            $('#mode-tabs-edit .mode-tab').removeClass('is-active');
+            $('#mode-tabs-edit .mode-tab[data-mode="monthly"]').addClass('is-active');
+            $('#technician-job-edit .mode-content').removeClass('is-active');
+            $('#content-monthly-edit').addClass('is-active');
+            const dateVal = freq.replace(/\D/g, ''); // Extract digits
+            $('#monthlyDateEdit').val(dateVal || '');
+          } else if (freq.toLowerCase().includes('weekly') || freq.includes('Mon') || freq.includes('Tue') || freq.includes('Wed')) {
+            // Map weekly
+            $('#mode-tabs-edit .mode-tab').removeClass('is-active');
+            $('#mode-tabs-edit .mode-tab[data-mode="weekly"]').addClass('is-active');
+            $('#technician-job-edit .mode-content').removeClass('is-active');
+            $('#content-weekly-edit').addClass('is-active');
+            // Parse days e.g. "Weekly: Mon, Wed"
+            const days = freq.replace('Weekly:', '').replace('Weekly', '').split(',').map(s => s.trim());
+            days.forEach(day => {
+              $(`#content-weekly-edit .day-chip[data-day="${day}"]`).addClass('is-selected');
+            });
+          } else if (freq.toLowerCase().includes('specific') || freq.includes('-') || freq.includes('/')) {
+            // Map specific date
+            $('#mode-tabs-edit .mode-tab').removeClass('is-active');
+            $('#mode-tabs-edit .mode-tab[data-mode="specific"]').addClass('is-active');
+            $('#technician-job-edit .mode-content').removeClass('is-active');
+            $('#content-specific-edit').addClass('is-active');
+            // Specific: DD/MM/YYYY
+            const dateParts = freq.replace('Specific:', '').trim().split('/');
+            if (dateParts.length === 3) {
+              $('#specDayEdit').val(parseInt(dateParts[0]));
+              $('#specMonthEdit').val(parseInt(dateParts[1]));
+              $('#specYearEdit').val(dateParts[2]);
+            }
+          } else {
+            // Numeric interval
+            $('#freqDaysEdit').val(freq);
+          }
+        }
       });
 
       // Delete Click Handler
@@ -4080,10 +4327,60 @@
           icon: 'question',
           showCancelButton: true,
           confirmButtonColor: '#ff9900',
-
           confirmButtonText: 'Yes, save it!'
         }).then((result) => {
           if (result.isConfirmed) {
+            // Add new row dynamic values
+            const tag = $('#modal-field-tag-input').val();
+            const type = $('#modal-field-format').val() || 'TRANSMITTER';
+            const ocp = $('#modal-field-ocp').val();
+            const application = $('#modal-field-application').val();
+            const accuracy = $('#modal-field-accuracy').val();
+            const procedure = $('#modal-field-procedure').val();
+            const freq = getSelectedFrequency('-add');
+            
+            const lastDone = $('#modal-field-last-done').val();
+            let lastDoneStr = "—";
+            let dueDateStr = "—";
+            if (lastDone) {
+              const dateParts = lastDone.split('-');
+              if (dateParts.length === 3) {
+                lastDoneStr = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+                // estimate due date
+                const d = new Date(lastDone);
+                d.setDate(d.getDate() + 365);
+                dueDateStr = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+              }
+            }
+
+            const nextIndex = $('#calibration-table-body tr').length + 1;
+            const newRow = `
+              <tr class="user-table-row">
+                <td class="user-table-center font-14px fw-600 clickable-cell" data-open-modal="technician-job-edit">${nextIndex}</td>
+                <td class="clickable-tag">${tag}</td>
+                <td>${type}</td>
+                <td>${ocp}</td>
+                <td>${application}</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>ROSEMOUNT</div>
+                    <div>3051S</div>
+                  </div>
+                </td>
+                <td>SR-${Math.floor(Math.random() * 900000 + 100000)}</td>
+                <td>${accuracy}</td>
+                <td>${procedure}</td>
+                <td class="user-table-center">${freq}</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>${dueDateStr}</div>
+                    <div>${lastDoneStr}</div>
+                  </div>
+                </td>
+              </tr>
+            `;
+            $('#calibration-table-body').append(newRow);
+
             Swal.fire({
               title: 'Saved!',
               text: 'New calibration entry registered successfully.',
@@ -4101,6 +4398,32 @@
       // Edit Form Submit Handler
       $('#job-edit-modal-form').on('submit', function (e) {
         e.preventDefault();
+
+        if (activeEditRow) {
+          const tag = $('#edit-field-tag-input').val();
+          const application = $('#edit-field-application').val();
+          const ocp = $('#edit-field-ocp').val();
+          const freq = getSelectedFrequency('-edit');
+          const accuracy = $('#edit-field-accuracy').val();
+          const procedure = $('#edit-field-procedure').val();
+          const lastDone = $('#edit-field-last-done').val();
+
+          activeEditRow.find('td').eq(1).text(tag);
+          activeEditRow.find('td').eq(3).text(ocp);
+          activeEditRow.find('td').eq(4).text(application);
+          activeEditRow.find('td').eq(7).text(accuracy);
+          activeEditRow.find('td').eq(8).text(procedure);
+          activeEditRow.find('td').eq(9).text(freq);
+
+          if (lastDone) {
+            const dateParts = lastDone.split('-');
+            if (dateParts.length === 3) {
+              const lastDoneStr = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+              // Update last done date
+              activeEditRow.find('td').eq(10).find('div div').eq(1).text(lastDoneStr);
+            }
+          }
+        }
 
         Swal.fire({
           title: 'Updated!',
