@@ -41,7 +41,7 @@
     }
 
     /* Buttons */
-    .btn-orange-fill {
+    .iso-btn-orange {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -59,13 +59,13 @@
       box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
     }
 
-    .btn-orange-fill:hover {
+    .iso-btn-orange:hover {
       background: #f97316;
       transform: translateY(-1.5px);
       box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
     }
 
-    .btn-orange-outline {
+    .iso-btn-orange-1 {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -82,7 +82,7 @@
       transition: all 0.2s ease;
     }
 
-    .btn-orange-outline:hover {
+    .iso-btn-orange-1:hover {
       background: #fff7ed;
       color: #c2410c !important;
       border-color: #c2410c !important;
@@ -141,8 +141,8 @@
       gap: 16px;
     }
 
-    .setup-flow-header .btn-orange-fill,
-    .setup-flow-header .btn-orange-outline {
+    .setup-flow-header .iso-btn-orange,
+    .setup-flow-header .iso-btn-orange-1 {
       height: 36px;
       padding: 0 16px;
       font-size: 13px;
@@ -233,11 +233,11 @@
     </div>
 
     <!-- Page Content Area -->
-    <div class="app-content-area flex flex-col justify-between tbt-dashboard-wrapper">
+    <div class="iso-app-content flex flex-col justify-between tbt-dashboard-wrapper">
       <div>
 
         <!-- Setup Flow / Dashboard Block -->
-        <div class="config-block setup-flow-block">
+        <div class="iso-config-block setup-flow-block">
           <div class="setup-flow-header">
             <div>
               <div class="document-no-badge">Form and Format Document No : IMS/T/INST/06</div>
@@ -249,12 +249,12 @@
               </div>
             </div>
             <div class="flex-align-center-gap-16">
-              <button class="btn-orange-fill" onclick="setModalState('add-tbt-modal', true)">
+              <button class="iso-btn-orange" onclick="setModalState('add-tbt-modal', true)">
                 <i class="ph-bold ph-plus"></i> Add
               </button>
               <div class="flex-align-center-gap-8">
                 <span class="select-plant-label">SELECT PLANT:</span>
-                <select id="plant-selector" class="filter-select plant-selector-dropdown">
+                <select id="plant-selector" class="iso-filter-select plant-selector-dropdown">
                   <option value="ACETIC ACID">ACETIC ACID</option>
                   <option value="BOILER">BOILER</option>
                   <option value="CPP">CPP</option>
@@ -266,7 +266,7 @@
         </div>
 
         <!-- Records Table Section -->
-        <div class="config-block table-section" id="records-table-container">
+        <div class="iso-config-block table-section" id="records-table-container">
           <div class="table-header-row">
             <div class="table-active-plant">
               <i class="ph-bold ph-buildings"></i> Plant: <span id="table-plant-name">ACETIC ACID</span>
@@ -386,7 +386,7 @@
     }
 
     $(function () {
-      // Shared Static Database loaded with legacy user-table data
+      // Shared Static Database loaded with legacy user-table-1 data
       const mockDatabase = [
         { sr: 1, date: '08/07/2015', plant: 'M3', conducted: 'VES', topics: 'Guidelines for working at chemical leakage, splash prone areas.', tech: 'RAT, SBP, HRK', helpers: '1', labours: '0' },
         { sr: 2, date: '21/07/2015', plant: 'M1', conducted: 'BPB', topics: 'Guidelines while working in Analyzer house.', tech: 'A.M.VITHLANI', helpers: '1', labours: '0' },
@@ -417,10 +417,10 @@
         records.forEach(row => {
           $tbody.append(`
             <tr class="user-table-row">
-              <td class="user-table-center font-14px fw-600">${row.sr}</td>
+              <td class="user-table-center font-14pxfw-600">${row.sr}</td>
               <td class="user-table-center">${row.date}</td>
               <td class="user-table-center fw-600 color-hint">${row.plant}</td>
-              <td class="text-left font-14px fw-600 orange-text">${row.conducted}</td>
+              <td class="text-left font-14pxfw-600 orange-text">${row.conducted}</td>
               <td class="text-left">${row.topics}</td>
               <td class="text-left">${row.tech}</td>
               <td class="user-table-center">${row.helpers}</td>
@@ -458,7 +458,7 @@
         const plant = $('#tbt-plant-input').val();
         const conducted = $('#tbt-conducted').val();
         const topics = $('#tbt-topics').val();
-        const tech = $('#tbt-tech').val();
+        const iso-tech = $('#tbt-tech').val();
         const helpers = $('#tbt-helpers').val() || '0';
         const labours = $('#tbt-labours').val() || '0';
 

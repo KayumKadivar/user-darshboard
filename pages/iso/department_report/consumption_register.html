@@ -39,10 +39,10 @@
     </div>
 
     <!-- Page Content Area -->
-    <div class="app-content-area flex flex-col justify-between cons-dashboard-wrapper">
+    <div class="iso-app-content flex flex-col justify-between cons-dashboard-wrapper">
 
       <div>
-        <div class="config-block">
+        <div class="iso-config-block">
           <div class="flex items-center justify-between flex-wrap gap-12px">
             <div class="flex items-center gap-8px">
               <i class="ph-bold ph-list-dashes font-20px header-title-icon"></i>
@@ -51,7 +51,7 @@
             
             <div class="flex items-center gap-12px">
               <label for="plant-select-cons" class="header-label">SELECT PLANT:</label>
-              <select id="plant-select-cons" class="filter-select w-200px header-dropdown">
+              <select id="plant-select-cons" class="iso-filter-select w-200px header-dropdown">
                 <option value="ACETIC ACID" selected>ACETIC ACID</option>
                 <option value="AAQM">AAQM</option>
                 <option value="AMMONIA">AMMONIA</option>
@@ -75,38 +75,38 @@
             </div>
           </div>
 
-          <div class="config-grid">
+          <div class="iso-config-grid">
             <!-- Card 1: Static Fields -->
-            <div class="premium-config-card" style="min-height: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px;">
+            <div class="iso-premium-config" style="min-height: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px;">
               <div style="display: flex; align-items: center; gap: 16px;">
-                <div class="premium-card-icon" style="margin-bottom: 0;">
+                <div class="iso-premium-card" style="margin-bottom: 0;">
                   <i class="ph-bold ph-database"></i>
                 </div>
                 <h4 style="font-size: 15px; font-weight: 700; color: var(--typo-primary); text-transform: uppercase; margin: 0; font-family: 'Outfit', sans-serif;">CONSUMPTION STATIC FIELDS</h4>
               </div>
               <div class="premium-btn-group" style="display: flex; gap: 12px; margin-top: 0; padding-top: 0; border-top: none;">
-                <button class="btn-orange-fill" onclick="handleConsumption('Static', 'Add')">
+                <button class="iso-btn-orange" onclick="handleConsumption('Static', 'Add')">
                   <i class="ph-bold ph-plus"></i> Add
                 </button>
-                <button class="btn-orange-outline" onclick="handleConsumption('Static', 'View', this)">
+                <button class="iso-btn-orange-1" onclick="handleConsumption('Static', 'View', this)">
                   <i class="ph-bold ph-eye"></i> View
                 </button>
               </div>
             </div>
 
             <!-- Card 2: Monthly Status -->
-            <div class="premium-config-card" style="min-height: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px;">
+            <div class="iso-premium-config" style="min-height: auto; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px;">
               <div style="display: flex; align-items: center; gap: 16px;">
-                <div class="premium-card-icon" style="margin-bottom: 0;">
+                <div class="iso-premium-card" style="margin-bottom: 0;">
                   <i class="ph-bold ph-calendar-blank"></i>
                 </div>
                 <h4 style="font-size: 15px; font-weight: 700; color: var(--typo-primary); text-transform: uppercase; margin: 0; font-family: 'Outfit', sans-serif;">CONSUMPTION MONTHLY STATUS</h4>
               </div>
               <div class="premium-btn-group" style="display: flex; gap: 12px; margin-top: 0; padding-top: 0; border-top: none;">
-                <button class="btn-orange-fill" onclick="handleConsumption('Monthly', 'Add')">
+                <button class="iso-btn-orange" onclick="handleConsumption('Monthly', 'Add')">
                   <i class="ph-bold ph-plus"></i> Add
                 </button>
-                <button class="btn-orange-outline" onclick="handleConsumption('Monthly', 'View', this)">
+                <button class="iso-btn-orange-1" onclick="handleConsumption('Monthly', 'View', this)">
                   <i class="ph-bold ph-eye"></i> View
                 </button>
               </div>
@@ -244,16 +244,16 @@
       const plant = $('#plant-select-cons').val();
 
       let html = `
-        <div class="pdr-view-card">
-          <div class="pdr-table-title-bar">
-            <div class="pdr-plant-label">
+        <div class="iso-pdr-view">
+          <div class="iso-pdr-table">
+            <div class="iso-pdr-plant">
               <i class="ph-bold ph-buildings"></i> Plant: <span id="cons-inline-plant-name">${plant}</span>
             </div>
-            <div class="pdr-static-title">Static Parameters</div>
+            <div class="iso-pdr-static">Static Parameters</div>
           </div>        
 
-          <div class="user-table-wrapper" style="margin: 0; overflow-x: auto;">
-            <table class="user-table" style="width: 100%; border-collapse: collapse;">
+          <div class="user-table" style="margin: 0; overflow-x: auto;">
+            <table class="user-table-1" style="width: 100%; border-collapse: collapse;">
               <thead>
                 <tr>
                   <th class="user-table-center w-80px">Sr No</th>
@@ -270,13 +270,13 @@
       staticData.forEach(row => {
         html += `
           <tr class="user-table-row">
-            <td class="user-table-center font-14px fw-600">${row.sr}</td>
-            <td class="text-left font-14px fw-600" style="text-align: left; padding-left: 16px;">${row.name}</td>
-            <td class="user-table-center font-14px">${row.base}</td>
-            <td class="user-table-center font-14px">${row.target}</td>
-            <td class="user-table-center font-14px">${row.unit}</td>
+            <td class="user-table-center font-14pxfw-600">${row.sr}</td>
+            <td class="text-left font-14pxfw-600" style="text-align: left; padding-left: 16px;">${row.name}</td>
+            <td class="user-table-center iso-font-14px">${row.base}</td>
+            <td class="user-table-center iso-font-14px">${row.target}</td>
+            <td class="user-table-center iso-font-14px">${row.unit}</td>
             <td class="user-table-center">
-              <a href="#" class="edit-action-link edit-inline-static-btn" onclick="editSingleStaticRecord('${row.sr}'); return false;">
+              <a href="#" class="iso-edit-action edit-inline-static-btn" onclick="editSingleStaticRecord('${row.sr}'); return false;">
                 <i class="ph-bold ph-pencil-simple"></i> Edit
               </a>
             </td>
@@ -319,26 +319,26 @@
       const plant = $('#plant-select-cons').val();
 
       let html = `
-        <div class="pdr-view-card">
-          <div class="pdr-monthly-header-bar">
-            <div class="pdr-plant-label">
+        <div class="iso-pdr-view">
+          <div class="iso-pdr-monthly">
+            <div class="iso-pdr-plant">
               <i class="ph-bold ph-buildings"></i> Plant: <span id="cons-inline-plant-name">${plant}</span>
             </div>
-            <div class="pdr-center-title">Monthly Status</div>
+            <div class="iso-pdr-center">Monthly Status</div>
             
-            <div class="pdr-inline-year-wrap">
-              <label class="filter-label">Active Year:</label>
-              <select id="cons-inline-year-select" class="filter-select pdr-header-select" onchange="renderMonthlyTable(this.value)">
+            <div class="iso-pdr-inline">
+              <label class="gnfc-modal-label">Active Year:</label>
+              <select id="cons-inline-year-select" class="iso-filter-select iso-pdr-header" onchange="renderMonthlyTable(this.value)">
                 <option value="2026" ${selectedYear === '2026' ? 'selected' : ''}>2026</option>
                 <option value="2025" ${selectedYear === '2025' ? 'selected' : ''}>2025</option>
                 <option value="2024" ${selectedYear === '2024' ? 'selected' : ''}>2024</option>
               </select>
-              <div class="pdr-date-label">May</div>
+              <div class="iso-pdr-date">May</div>
             </div>
           </div>
 
-          <div class="user-table-wrapper" style="margin: 0; overflow-x: auto;">
-            <table class="user-table" style="width: 100%; border-collapse: collapse;">
+          <div class="user-table" style="margin: 0; overflow-x: auto;">
+            <table class="user-table-1" style="width: 100%; border-collapse: collapse;">
               <thead>
                 <tr>
                   <th style="width: 50px;">Sr</th>
@@ -367,7 +367,7 @@
             <td>${row.consumed}</td>
             <td>${row.balance}</td>
             <td class="user-table-center">
-              <a href="#" class="edit-action-link edit-inline-monthly-btn" onclick="editSingleMonthlyRecord('${row.sr}'); return false;">
+              <a href="#" class="iso-edit-action edit-inline-monthly-btn" onclick="editSingleMonthlyRecord('${row.sr}'); return false;">
                 <i class="ph-bold ph-pencil-simple"></i> Edit
               </a>
             </td>
@@ -417,7 +417,7 @@
       const $container = $('#cons-inline-view-container');
       
       if (currentActiveType === type) {
-        $btn.removeClass('active-view-btn');
+        $btn.removeClass('iso-active-view');
         $container.slideUp(300, function() {
           $container.empty();
         });
@@ -425,8 +425,8 @@
         return;
       }
       
-      $('.btn-orange-outline').removeClass('active-view-btn');
-      $btn.addClass('active-view-btn');
+      $('.iso-btn-orange-1').removeClass('iso-active-view');
+      $btn.addClass('iso-active-view');
       
       if (type === 'Static') {
         renderStaticTable();

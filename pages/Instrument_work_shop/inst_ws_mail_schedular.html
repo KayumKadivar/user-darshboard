@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mail Schedule | GNFC</title>
+
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
+  <script>window.activePage = 'inst_ws';</script>
+
+
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <div id="header-container" data-title="Mail Schedule" data-breadcrumb="Instument Work Shop:Instrumentworkshop.html,Inst WS Mail Schedul:active" data-back="Instrumentworkshop.html"></div>
+
+    <div class="dashboard-content dashboard-scroll">
+
+      <!-- ══════ Schedule List Table ══════ -->
+      <div class="jt-table-card">
+        <div class="jbd-card-header flex justify-between items-center px-16px py-10px shrink-0">
+          <div class="flex items-center gap-8px">
+            <span class="jbd-card-header-title">Mail Schedule List</span>
+          </div>
+          <div class="flex items-center gap-12px">
+            <span id="record-count"
+              class="record-count">5
+              Records</span>
+            <button class="pm-btn pm-btn--primary px-16px py-10px font-12px" id="btn-add-schedule">
+              <i class="ph-bold ph-plus"></i> Add New
+            </button>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper radius-0px border-0">
+          <table class="user-table" id="schedule-table">
+            <thead>
+              <tr>
+                <th style="width: 45px;">Sr</th>
+                <th style="width: 150px;" class="user-table-left">Plant</th>
+                <th style="width: 280px;" class="user-table-left">Recipients</th>
+                <th style="width: 160px;" class="user-table-left">Sender</th>
+                <th style="width: 160px;">Frequency / Logic</th>
+                <th style="min-width: 250px;" class="user-table-left">Subject</th>
+                <th style="width: 110px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-body">
+
+              <!-- Row 1 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-bold user-table-secondary">1</td>
+
+                <td class="user-table-bold">BOILER</td>
+                <td>
+                  <div class="flex flex-wrap gap-4px">
+                    <span class="recipient-chip">admin@gnfc.in</span>
+                    <span class="recipient-chip">boiler_eng@gnfc.in</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="flex items-center gap-8px">
+
+                    <span class="user-table-bold font-12px">System Admin</span>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="flex flex-col gap-2px items-center">
+                    <span class="freq-badge freq-badge--monthly">
+                      <i class="ph-bold ph-calendar-check"></i> MONTHLY: 1st
+                    </span>
+                    <span class="freq-next">Next: 01/05/2026</span>
+                  </div>
+                </td>
+                <td class="user-table-bold font-12px">Boiler Monthly Efficiency Report</td>
+                <td class="user-table-center">
+                  <div class="flex gap-6px justify-center">
+                    <button class="icon-btn btn-view-detail color-blue" title="View Details">
+                      <i class="ph-bold ph-eye font-14px"></i>
+                    </button>
+                    <button class="icon-btn btn-edit-row color-orange" title="Edit">
+                      <i class="ph-bold ph-pencil-simple font-14px"></i>
+                    </button>
+                    <!-- <button class="icon-btn btn-delete-row color-red" title="Delete">
+                      <i class="ph-bold ph-trash font-14px"></i>
+                    </button> -->
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-bold user-table-secondary">2</td>
+
+                <td class="user-table-bold">UREA</td>
+                <td>
+                  <div class="flex flex-wrap gap-4px">
+                    <span class="recipient-chip">manager_plant@gnfc.in</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="flex items-center gap-8px">
+
+                    <span class="user-table-bold font-12px">Shift Incharge</span>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="flex flex-col gap-2px items-center">
+                    <span class="freq-badge freq-badge--interval">
+                      <i class="ph-bold ph-clock"></i> EVERY 7 DAYS
+                    </span>
+                    <span class="freq-next">Next: 21/04/2026</span>
+                  </div>
+                </td>
+                <td class="user-table-bold font-12px">Weekly Production Summary</td>
+                <td class="user-table-center">
+                  <div class="flex gap-6px justify-center">
+                    <button class="icon-btn btn-view-detail color-blue" title="View Details">
+                      <i class="ph-bold ph-eye font-14px"></i>
+                    </button>
+                    <button class="icon-btn btn-edit-row color-orange" title="Edit">
+                      <i class="ph-bold ph-pencil-simple font-14px"></i>
+                    </button>
+                    <!-- <button class="icon-btn btn-delete-row color-red" title="Delete">
+                      <i class="ph-bold ph-trash font-14px"></i>
+                    </button> -->
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-bold user-table-secondary">3</td>
+
+                <td class="user-table-bold">AMMONIA</td>
+                <td>
+                  <div class="flex flex-wrap gap-4px">
+                    <span class="recipient-chip">safety_insp@gnfc.in</span>
+                    <span class="recipient-chip">reliability_cell@gnfc.in</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="flex items-center gap-8px">
+
+                    <span class="user-table-bold font-12px">Plant Manager</span>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="flex flex-col gap-2px items-center">
+                    <span class="freq-badge freq-badge--monthly">
+                      <i class="ph-bold ph-calendar-check"></i> MONTHLY: 15th
+                    </span>
+                    <span class="freq-next">Next: 15/05/2026</span>
+                  </div>
+                </td>
+                <td class="user-table-bold font-12px">Safety Compliance Audit Report</td>
+                <td class="user-table-center">
+                  <div class="flex gap-6px justify-center">
+                    <button class="icon-btn btn-view-detail color-blue" title="View Details">
+                      <i class="ph-bold ph-eye font-14px"></i>
+                    </button>
+                    <button class="icon-btn btn-edit-row color-orange" title="Edit">
+                      <i class="ph-bold ph-pencil-simple font-14px"></i>
+                    </button>
+                    <!-- <button class="icon-btn btn-delete-row color-red" title="Delete">
+                      <i class="ph-bold ph-trash font-14px"></i>
+                    </button> -->
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 4 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-bold user-table-secondary">4</td>
+
+                <td class="user-table-bold">METHANOL-1</td>
+                <td>
+                  <div class="flex flex-wrap gap-4px">
+                    <span class="recipient-chip">maint_team@gnfc.in</span>
+                    <span class="recipient-chip">instrument_ws@gnfc.in</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="flex items-center gap-8px">
+
+                    <span class="user-table-bold font-12px">Maint. Head</span>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="flex flex-col gap-2px items-center">
+                    <span class="freq-badge freq-badge--specific">
+                      <i class="ph-bold ph-calendar"></i> ON 30/06/2026
+                    </span>
+                  </div>
+                </td>
+                <td class="user-table-bold font-12px">Shutdown Maintenance Checklist</td>
+                <td class="user-table-center">
+                  <div class="flex gap-6px justify-center">
+                    <button class="icon-btn btn-view-detail color-blue" title="View Details">
+                      <i class="ph-bold ph-eye font-14px"></i>
+                    </button>
+                    <button class="icon-btn btn-edit-row color-orange" title="Edit">
+                      <i class="ph-bold ph-pencil-simple font-14px"></i>
+                    </button>
+                    <!-- <button class="icon-btn btn-delete-row color-red" title="Delete">
+                      <i class="ph-bold ph-trash font-14px"></i>
+                    </button> -->
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 5 -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-bold user-table-secondary">5</td>
+
+                <td class="user-table-bold">DM</td>
+                <td>
+                  <div class="flex flex-wrap gap-4px">
+                    <span class="recipient-chip">hr_team@gnfc.in</span>
+                    <span class="recipient-chip">it_dept@gnfc.in</span>
+                    <span class="recipient-chip">shift.incharge@gnfc.in</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="flex items-center gap-8px">
+
+                    <span class="user-table-bold font-12px">IE/SIE(DM)</span>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="flex flex-col gap-2px items-center">
+                    <span class="freq-badge freq-badge--interval">
+                      <i class="ph-bold ph-clock"></i> EVERY 14 DAYS
+                    </span>
+                    <span class="freq-next">Next: 28/04/2026</span>
+                  </div>
+                </td>
+                <td class="user-table-bold font-12px">DM Water Quality Bi-Weekly Report</td>
+                <td class="user-table-center">
+                  <div class="flex gap-6px justify-center">
+                    <button class="icon-btn btn-view-detail color-blue" title="View Details">
+                      <i class="ph-bold ph-eye font-14px"></i>
+                    </button>
+                    <button class="icon-btn btn-edit-row color-orange" title="Edit">
+                      <i class="ph-bold ph-pencil-simple font-14px"></i>
+                    </button>
+                    <!-- <button class="icon-btn btn-delete-row color-red" title="Delete">
+                      <i class="ph-bold ph-trash font-14px"></i>
+                    </button> -->
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <div id="empty-state" class="hidden p-48px text-center">
+          <div class="flex flex-col items-center gap-12px">
+            <i class="ph-duotone ph-envelope-simple-open font-48px color-secondary opacity-20"></i>
+            <p class="color-secondary font-14px">No mail schedules found. Click <strong>Add New</strong> to create one.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add Mail modal -->
+  <div id="add-mail-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell" style="max-width: 680px;">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Add New Schedule</h3>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll">
+        <div class="grid grid-cols-2 gap-20px">
+
+          <!-- 1. Plant -->
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">1. Select Plant</label>
+            <select id="f-plant" class="gnfc-modal-input">
+              <option value="">Choose Plant...</option>
+              <option>ACETIC ACID</option>
+              <option>METHANOL-1</option>
+              <option>METHANOL-2</option>
+              <option>FORMIC ACID</option>
+              <option>AMMONIA</option>
+              <option>NITRO PHOSPHATE</option>
+              <option>DM</option>
+              <option>BOILER</option>
+              <option>INST_WS</option>
+              <option>UREA</option>
+              <option>CMS</option>
+              <option>BAGGING</option>
+              <option>STORE</option>
+              <option>SPP</option>
+              <option>ISO</option>
+              <option>PURCHASE</option>
+              <option>ANITDI</option>
+              <option>CPSU</option>
+              <option>ANIP FILLING</option>
+              <option>ASGP</option>
+              <option>ETHYL ACETATE</option>
+              <option>MINMAX</option>
+              <option>AAQM</option>
+            </select>
+          </div>
+
+          <!-- 2. Sender -->
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">2. Sender Info</label>
+            <input type="text" id="f-sender" class="gnfc-modal-input" placeholder="Enter sender name...">
+          </div>
+
+          <!-- 3. Recipients -->
+          <div class="col-span-2 flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">3. Recipients (Emails)</label>
+            <div class="gnfc-multi-select" id="mail-multi-select">
+              <div class="ms-display" id="ms-display">
+                <span class="ms-placeholder">Select recipients...</span>
+              </div>
+              <div class="ms-dropdown" id="ms-dropdown">
+                <div class="ms-search-bar">
+                  <div class="flex items-center gap-8px">
+                    <div class="flex-1" style="position:relative;">
+                      <input type="text" id="ms-search-input" class="gnfc-modal-input" placeholder="Search mail...">
+                    </div>
+                    <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-ms-select-all">ALL</button>
+                    <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-ms-clear">CLEAR</button>
+                  </div>
+                </div>
+                <div class="ms-list" id="ms-list">
+                  <div class="ms-option" data-email="admin@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>admin@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="manager_plant@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>manager_plant@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="shift.incharge@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>shift.incharge@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="boiler_eng@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>boiler_eng@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="urea_supervisor@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>urea_supervisor@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="maint_team@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>maint_team@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="reliability_cell@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>reliability_cell@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="instrument_ws@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>instrument_ws@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="it_dept@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>it_dept@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="user_dashboard@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>user_dashboard@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="hr_team@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>hr_team@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="safety_insp@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>safety_insp@gnfc.in</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Frequency -->
+          <div class="col-span-2 flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">4. Frequency Logic</label>
+            <div class="schedule-mode-tabs" id="mode-tabs">
+              <div class="mode-tab is-active" data-mode="interval">INTERVAL (DAYS)</div>
+              <div class="mode-tab" data-mode="monthly">MONTHLY DATE</div>
+              <div class="mode-tab" data-mode="weekly">WEEKLY DAYS</div>
+              <div class="mode-tab" data-mode="specific">SPECIFIC DATE</div>
+            </div>
+
+            <!-- Mode: Interval -->
+            <div id="content-interval" class="mode-content is-active">
+              <div class="mode-input-row">
+                <span class="mode-input-label">Run mail job every</span>
+                <div class="mode-input-field">
+                  <input type="number" id="f-interval-days" placeholder="7" value="7">
+                </div>
+                <span class="mode-input-label">days from now.</span>
+              </div>
+
+            </div>
+
+            <!-- Mode: Monthly -->
+            <div id="content-monthly" class="mode-content">
+              <div class="mode-input-row">
+                <span class="mode-input-label">Send mail every month on the</span>
+                <div class="mode-input-field" style="width: 140px; flex: none;">
+                  <select id="f-monthly-date"></select>
+                </div>
+                <span class="mode-input-label">day of the month.</span>
+              </div>
+
+            </div>
+
+            <!-- Mode: Weekly -->
+            <div id="content-weekly" class="mode-content">
+              <div class="flex flex-col gap-12px">
+                <span class="mode-input-label">Send mail every week on selected days:</span>
+                <div class="day-chips-container">
+                  <div class="day-chip" data-day="Mon">MON</div>
+                  <div class="day-chip" data-day="Tue">TUE</div>
+                  <div class="day-chip" data-day="Wed">WED</div>
+                  <div class="day-chip" data-day="Thu">THU</div>
+                  <div class="day-chip" data-day="Fri">FRI</div>
+                  <div class="day-chip" data-day="Sat">SAT</div>
+                  <div class="day-chip" data-day="Sun">SUN</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mode: Specific -->
+            <div id="content-specific" class="mode-content">
+              <div class="flex flex-col gap-12px">
+                <span class="mode-input-label">Schedule a one-time mail for:</span>
+                <div class="flex items-center gap-12px">
+                  <div class="flex-1 flex flex-col gap-6px">
+                    <label class="font-14px color-label text-uppercase ls-wide">Day</label>
+                    <select id="f-spec-day" class="gnfc-modal-input h-40px"></select>
+                  </div>
+                  <div class="flex-1 flex flex-col gap-6px">
+                    <label class="font-14px color-label text-uppercase ls-wide">Month</label>
+                    <select id="f-spec-month" class="gnfc-modal-input h-40px">
+                      <option value="">—</option>
+                      <option value="1">JAN</option>
+                      <option value="2">FEB</option>
+                      <option value="3">MAR</option>
+                      <option value="4">APR</option>
+                      <option value="5">MAY</option>
+                      <option value="6">JUN</option>
+                      <option value="7">JUL</option>
+                      <option value="8">AUG</option>
+                      <option value="9">SEP</option>
+                      <option value="10">OCT</option>
+                      <option value="11">NOV</option>
+                      <option value="12">DEC</option>
+                    </select>
+                  </div>
+                  <div class="flex-1 flex flex-col gap-6px">
+                    <label class="font-14px color-label text-uppercase ls-wide">Year</label>
+                    <select id="f-spec-year" class="gnfc-modal-input h-40px">
+                      <option value="">—</option>
+                      <option>2025</option>
+                      <option>2026</option>
+                      <option>2027</option>
+                      <option>2028</option>
+                      <option>2029</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 5. Subject & Message -->
+          <div class="col-span-2 flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">5. Mail Content</label>
+            <input type="text" id="f-subject" class="gnfc-modal-input" placeholder="Email subject line...">
+            <textarea id="f-message" class="gnfc-modal-input" rows="4"
+              style="height: 100px; resize: vertical; padding-top: 10px;"
+              placeholder="Type your automated message here..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Cancel</button>
+        <button type="button" id="btn-submit" class="gnfc-modal-btn gnfc-modal-btn-primary px-32px">Schedule
+          Job</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edi Mail Modal -->
+  <div id="edit-mail-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell" style="max-width: 680px;">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Edit Mail</h3>
+        </div>
+        <button class="gnfc-modal-close btn-close-modal">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll">
+        <div class="grid grid-cols-2 gap-20px">
+
+          <!-- 1. Plant -->
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">1. Select Plant</label>
+            <select id="f-plant" class="gnfc-modal-input">
+              <option value="">Choose Plant...</option>
+              <option>ACETIC ACID</option>
+              <option>METHANOL-1</option>
+              <option>METHANOL-2</option>
+              <option>FORMIC ACID</option>
+              <option>AMMONIA</option>
+              <option>NITRO PHOSPHATE</option>
+              <option>DM</option>
+              <option>BOILER</option>
+              <option>INST_WS</option>
+              <option>UREA</option>
+              <option>CMS</option>
+              <option>BAGGING</option>
+              <option>STORE</option>
+              <option>SPP</option>
+              <option>ISO</option>
+              <option>PURCHASE</option>
+              <option>ANITDI</option>
+              <option>CPSU</option>
+              <option>ANIP FILLING</option>
+              <option>ASGP</option>
+              <option>ETHYL ACETATE</option>
+              <option>MINMAX</option>
+              <option>AAQM</option>
+            </select>
+          </div>
+
+          <!-- 2. Sender -->
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">2. Sender Info</label>
+            <input type="text" id="f-sender" class="gnfc-modal-input" placeholder="Enter sender name...">
+          </div>
+
+          <!-- 3. Recipients -->
+          <div class="col-span-2 flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">3. Recipients (Emails)</label>
+            <div class="gnfc-multi-select" id="mail-multi-select">
+              <div class="ms-display" id="ms-display">
+                <span class="ms-placeholder">Select recipients...</span>
+              </div>
+              <div class="ms-dropdown" id="ms-dropdown">
+                <div class="ms-search-bar">
+                  <div class="flex items-center gap-8px">
+                    <div class="flex-1" style="position:relative;">
+                      <input type="text" id="ms-search-input" class="gnfc-modal-input" placeholder="Search mail...">
+                    </div>
+                    <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-ms-select-all">ALL</button>
+                    <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-ms-clear">CLEAR</button>
+                  </div>
+                </div>
+                <div class="ms-list" id="ms-list">
+                  <div class="ms-option" data-email="admin@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>admin@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="manager_plant@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>manager_plant@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="shift.incharge@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>shift.incharge@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="boiler_eng@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>boiler_eng@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="urea_supervisor@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>urea_supervisor@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="maint_team@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>maint_team@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="reliability_cell@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>reliability_cell@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="instrument_ws@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>instrument_ws@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="it_dept@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>it_dept@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="user_dashboard@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>user_dashboard@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="hr_team@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>hr_team@gnfc.in</span>
+                  </div>
+                  <div class="ms-option" data-email="safety_insp@gnfc.in">
+                    <div class="ms-checkbox"><i class="ph-bold ph-check"></i></div>
+                    <span>safety_insp@gnfc.in</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Frequency -->
+          <div class="col-span-2 flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">4. Frequency Logic</label>
+            <div class="schedule-mode-tabs" id="mode-tabs">
+              <div class="mode-tab is-active" data-mode="interval">INTERVAL (DAYS)</div>
+              <div class="mode-tab" data-mode="monthly">MONTHLY DATE</div>
+              <div class="mode-tab" data-mode="weekly">WEEKLY DAYS</div>
+              <div class="mode-tab" data-mode="specific">SPECIFIC DATE</div>
+            </div>
+
+            <!-- Mode: Interval -->
+            <div id="content-interval" class="mode-content is-active">
+              <div class="mode-input-row">
+                <span class="mode-input-label">Run mail job every</span>
+                <div class="mode-input-field">
+                  <input type="number" id="f-interval-days" placeholder="7" value="7">
+                </div>
+                <span class="mode-input-label">days from now.</span>
+              </div>
+
+            </div>
+
+            <!-- Mode: Monthly -->
+            <div id="content-monthly" class="mode-content">
+              <div class="mode-input-row">
+                <span class="mode-input-label">Send mail every month on the</span>
+                <div class="mode-input-field" style="width: 140px; flex: none;">
+                  <select id="f-monthly-date"></select>
+                </div>
+                <span class="mode-input-label">day of the month.</span>
+              </div>
+
+            </div>
+
+            <!-- Mode: Weekly -->
+            <div id="content-weekly" class="mode-content">
+              <div class="flex flex-col gap-12px">
+                <span class="mode-input-label">Send mail every week on selected days:</span>
+                <div class="day-chips-container">
+                  <div class="day-chip" data-day="Mon">MON</div>
+                  <div class="day-chip" data-day="Tue">TUE</div>
+                  <div class="day-chip" data-day="Wed">WED</div>
+                  <div class="day-chip" data-day="Thu">THU</div>
+                  <div class="day-chip" data-day="Fri">FRI</div>
+                  <div class="day-chip" data-day="Sat">SAT</div>
+                  <div class="day-chip" data-day="Sun">SUN</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mode: Specific -->
+            <div id="content-specific" class="mode-content">
+              <div class="flex flex-col gap-12px">
+                <span class="mode-input-label">Schedule a one-time mail for:</span>
+                <div class="flex items-center gap-12px">
+                  <div class="flex-1 flex flex-col gap-6px">
+                    <label class="font-14px color-label text-uppercase ls-wide">Day</label>
+                    <select id="f-spec-day" class="gnfc-modal-input h-40px"></select>
+                  </div>
+                  <div class="flex-1 flex flex-col gap-6px">
+                    <label class="font-14px color-label text-uppercase ls-wide">Month</label>
+                    <select id="f-spec-month" class="gnfc-modal-input h-40px">
+                      <option value="">—</option>
+                      <option value="1">JAN</option>
+                      <option value="2">FEB</option>
+                      <option value="3">MAR</option>
+                      <option value="4">APR</option>
+                      <option value="5">MAY</option>
+                      <option value="6">JUN</option>
+                      <option value="7">JUL</option>
+                      <option value="8">AUG</option>
+                      <option value="9">SEP</option>
+                      <option value="10">OCT</option>
+                      <option value="11">NOV</option>
+                      <option value="12">DEC</option>
+                    </select>
+                  </div>
+                  <div class="flex-1 flex flex-col gap-6px">
+                    <label class="font-14px color-label text-uppercase ls-wide">Year</label>
+                    <select id="f-spec-year" class="gnfc-modal-input h-40px">
+                      <option value="">—</option>
+                      <option>2025</option>
+                      <option>2026</option>
+                      <option>2027</option>
+                      <option>2028</option>
+                      <option>2029</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 5. Subject & Message -->
+          <div class="col-span-2 flex flex-col gap-8px">
+            <label class="gnfc-modal-label text-uppercase ls-wide">5. Mail Content</label>
+            <input type="text" id="f-subject" class="gnfc-modal-input" placeholder="Email subject line...">
+            <textarea id="f-message" class="gnfc-modal-input" rows="4"
+              style="height: 100px; resize: vertical; padding-top: 10px;"
+              placeholder="Type your automated message here..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-modal">Cancel</button>
+        <button type="button" id="btn-submit" class="gnfc-modal-btn gnfc-modal-btn-primary px-32px">Schedule
+          Job</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       VIEW DETAIL MODAL
+       ══════════════════════════════════════════════════════════ -->
+  <div id="modal-detail" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Schedule Details</h3>
+          <p class="gnfc-modal-subtitle">Automation Job Overview</p>
+        </div>
+        <button class="gnfc-modal-close btn-close-detail">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="flex flex-col gap-10px">
+
+          <!-- Plant -->
+          <div class="detail-info-row">
+            <i class="ph-bold ph-factory detail-info-icon detail-info-icon--blue"></i>
+            <div class="detail-info-content">
+              <div class="detail-info-label">Plant</div>
+              <div id="detail-plant" class="detail-info-value detail-info-value--bold">BOILER</div>
+            </div>
+          </div>
+
+          <!-- Subject -->
+          <div class="detail-info-row">
+            <i class="ph-bold ph-envelope-simple detail-info-icon detail-info-icon--purple"></i>
+            <div class="detail-info-content">
+              <div class="detail-info-label">Subject</div>
+              <div id="detail-subject" class="detail-info-value">Boiler Monthly Efficiency Report</div>
+            </div>
+          </div>
+
+          <!-- Sender -->
+          <div class="detail-info-row">
+            <i class="ph-bold ph-user-circle detail-info-icon detail-info-icon--green"></i>
+            <div class="detail-info-content">
+              <div class="detail-info-label">Sender</div>
+              <div id="detail-sender" class="detail-info-value">System Admin</div>
+            </div>
+          </div>
+
+          <!-- Frequency -->
+          <div class="detail-info-row">
+            <i class="ph-bold ph-clock-countdown detail-info-icon detail-info-icon--amber"></i>
+            <div class="detail-info-content">
+              <div class="detail-info-label">Frequency</div>
+              <div class="detail-info-value--spaced">
+                <span class="freq-badge freq-badge--monthly">
+                  <i class="ph-bold ph-calendar-check"></i> MONTHLY: 1st
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recipients -->
+          <div class="detail-info-row detail-info-row--top">
+            <i class="ph-bold ph-users-three detail-info-icon detail-info-icon--red"></i>
+            <div class="detail-info-content">
+              <div class="detail-info-label">Recipients</div>
+              <div id="detail-recipients">
+                <span class="recipient-chip">admin@gnfc.in</span>
+                <span class="recipient-chip">boiler_eng@gnfc.in</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary btn-close-detail">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    $(document).ready(function () {
+      let editingRow = null;
+
+      const EMAIL_LIST = [
+        "admin@gnfc.in", "manager_plant@gnfc.in", "shift.incharge@gnfc.in",
+        "boiler_eng@gnfc.in", "urea_supervisor@gnfc.in", "maint_team@gnfc.in",
+        "reliability_cell@gnfc.in", "instrument_ws@gnfc.in", "it_dept@gnfc.in",
+        "user_dashboard@gnfc.in", "hr_team@gnfc.in", "safety_insp@gnfc.in"
+      ];
+      let selectedEmails = [];
+
+      // --- Init Selectors ---
+      function initSelectors() {
+        let d31 = '<option value="">—</option>';
+        for (let i = 1; i <= 31; i++) d31 += `<option value="${i}">${i}</option>`;
+        $('#f-monthly-date, #f-spec-day').html(d31);
+      }
+      initSelectors();
+
+      // --- Multi-Select Logic ---
+      $('#ms-display').on('click', function (e) {
+        e.stopPropagation();
+        $('#ms-dropdown').toggleClass('is-open');
+      });
+
+      $(document).on('click', function () {
+        $('#ms-dropdown').removeClass('is-open');
+      });
+
+      $('#ms-dropdown').on('click', function (e) { e.stopPropagation(); });
+
+      function updateMSDisplay() {
+        if (selectedEmails.length === 0) {
+          $('#ms-display').html('<span class="ms-placeholder">Select recipients...</span>');
+        } else {
+          let tagsHtml = '';
+          selectedEmails.forEach(email => {
+            tagsHtml += `<span class="ms-tag">${email} <i class="ph-bold ph-x" data-email="${email}"></i></span>`;
+          });
+          $('#ms-display').html(tagsHtml);
+        }
+
+        $('.ms-option').removeClass('is-selected');
+        selectedEmails.forEach(email => {
+          $(`.ms-option[data-email="${email}"]`).addClass('is-selected');
+        });
+      }
+
+      $('#ms-list').on('click', '.ms-option', function () {
+        const email = $(this).data('email');
+        const idx = selectedEmails.indexOf(email);
+        if (idx > -1) selectedEmails.splice(idx, 1);
+        else selectedEmails.push(email);
+        updateMSDisplay();
+      });
+
+      $('#ms-display').on('click', '.ph-x', function (e) {
+        e.stopPropagation();
+        const email = $(this).data('email');
+        selectedEmails = selectedEmails.filter(e => e !== email);
+        updateMSDisplay();
+      });
+
+      $('#btn-ms-select-all').on('click', function () {
+        selectedEmails = [...EMAIL_LIST];
+        updateMSDisplay();
+      });
+
+      $('#btn-ms-clear').on('click', function () {
+        selectedEmails = [];
+        updateMSDisplay();
+      });
+
+      $('#ms-search-input').on('input', function () {
+        const val = $(this).val().toLowerCase();
+        $('.ms-option').each(function () {
+          const email = $(this).data('email').toLowerCase();
+          $(this).toggle(email.includes(val));
+        });
+      });
+
+      // --- Mode Switching ---
+      $('.mode-tab').on('click', function () {
+        const $tabsContainer = $(this).parent();
+        $tabsContainer.find('.mode-tab').removeClass('is-active');
+        $(this).addClass('is-active');
+
+        const mode = $(this).data('mode');
+        const $wrapper = $tabsContainer.parent();
+        $wrapper.find('.mode-content').removeClass('is-active');
+        $wrapper.find('[id="content-' + mode + '"]').addClass('is-active');
+      });
+
+      // Day Chip Toggle
+      $(document).on('click', '.day-chip', function () {
+        $(this).toggleClass('is-selected');
+      });
+
+      // --- Modal Open ---
+      $('#btn-add-schedule').on('click', function () {
+        editingRow = null;
+        $('#btn-submit').text('Schedule Job');
+        $('#add-mail-modal input, #add-mail-modal select, #add-mail-modal textarea').val('');
+        selectedEmails = [];
+        updateMSDisplay();
+        $('#add-mail-modal .mode-tab[data-mode="interval"]').click();
+        $('.day-chip').removeClass('is-selected');
+        $('#add-mail-modal').addClass('is-open');
+      });
+
+      $('.btn-close-modal').on('click', function () { $('#add-mail-modal').removeClass('is-open'); });
+      $('.btn-close-modal').on('click', function () { $('#edit-mail-modal').removeClass('is-open'); });
+      $('.btn-close-detail').on('click', function () { $('#modal-detail').removeClass('is-open'); });
+
+      $(window).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+          $('.gnfc-modal-overlay.is-open').removeClass('is-open');
+        }
+      });
+
+      // --- View Detail ---
+      $('#schedule-body').on('click', '.btn-view-detail', function () {
+        const row = $(this).closest('tr');
+        const cells = row.find('td');
+        $('#detail-plant').text(cells.eq(1).text());
+        $('#detail-subject').text(cells.eq(5).text());
+        $('#detail-sender').text(cells.eq(3).find('.user-table-bold').text());
+        $('#detail-frequency').html(cells.eq(4).html());
+        $('#detail-recipients').html(cells.eq(2).html());
+        $('#modal-detail').addClass('is-open');
+      });
+
+      // --- Edit Row ---
+      $('#schedule-body').on('click', '.btn-edit-row', function () {
+        editingRow = $(this).closest('tr');
+
+        const $cells = editingRow.find('td');
+
+        const plant = $cells.eq(1).text().trim();
+        const sender = $cells.eq(3).find('.user-table-bold').text().trim();
+        const subject = $cells.eq(5).text().trim();
+
+        // fill form
+        $('#edit-mail-modal #f-plant').val(plant);
+        $('#edit-mail-modal #f-sender').val(sender);
+        $('#edit-mail-modal #f-subject').val(subject);
+
+        $('#edit-mail-modal').addClass('is-open');
+      });
+      // --- Delete Row ---
+      $('#schedule-body').on('click', '.btn-delete-row', function () {
+        const row = $(this).closest('tr');
+        Swal.fire({
+          title: 'Terminate Job?',
+          text: "This automation will stop immediately.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#f2495c',
+          cancelButtonColor: '#475569',
+          confirmButtonText: 'Yes, terminate'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            row.fadeOut(400, function () {
+              $(this).remove();
+              syncMeta();
+            });
+            Swal.fire({ icon: 'success', title: 'Terminated!', text: 'Schedule removed.', timer: 1200, showConfirmButton: false });
+          }
+        });
+      });
+
+      function syncMeta() {
+        const rowCount = $('#schedule-body tr').length;
+        $('#record-count').text(rowCount + ' Records');
+        if (rowCount === 0) {
+          $('#empty-state').removeClass('hidden');
+          $('#schedule-table').addClass('hidden');
+        } else {
+          $('#empty-state').addClass('hidden');
+          $('#schedule-table').removeClass('hidden');
+          $('#schedule-body tr').each(function (i) { $(this).find('td').first().text(i + 1); });
+        }
+      }
+      syncMeta();
+    });
+  </script>
+</body>
+
+</html>

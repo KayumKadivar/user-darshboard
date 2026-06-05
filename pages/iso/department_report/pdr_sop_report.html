@@ -39,16 +39,16 @@
     </div>
 
     <!-- Page Content Area -->
-    <div class="app-content-area flex flex-col justify-between sop-report-content">
+    <div class="iso-app-content flex flex-col justify-between sop-report-content">
 
       <div>
         <!-- Selection Form Card -->
-        <div class="filter-panel-card">
+        <div class="iso-filter-panel">
           <form id="sop-report-form">
-            <div class="filter-row">
-              <div class="filter-group" >
-                <label class="filter-label">PLANT</label>
-                <select id="sop-plant" class="filter-select">
+            <div class="iso-filter-row">
+              <div class="iso-filter-group" >
+                <label class="gnfc-modal-label">PLANT</label>
+                <select id="sop-plant" class="iso-filter-select">
                   <option value="BOILER">BOILER</option>
                   <option value="CPP" selected>CPP</option>
                   <option value="AMMONIA">AMMONIA</option>
@@ -56,16 +56,16 @@
                   <option value="ACETIC ACID">ACETIC ACID</option>
                 </select>
               </div>
-              <div class="filter-group" >
-                <label class="filter-label">SOP NUMBER</label>
-                <select id="sop-no" class="filter-select">
+              <div class="iso-filter-group" >
+                <label class="gnfc-modal-label">SOP NUMBER</label>
+                <select id="sop-no" class="iso-filter-select">
                   <option value="SOP-01">SOP-01</option>
                   <option value="SOP-02">SOP-02</option>
                   <option value="SOP-03">SOP-03</option>
                   <option value="SOP-04">SOP-04</option>
                 </select>
               </div>
-              <button type="submit" class="btn-orange-fill">
+              <button type="submit" class="iso-btn-orange">
                 <i class="ph-bold ph-funnel" style="font-size: 14px;"></i> View Report
               </button>
             </div>
@@ -76,31 +76,31 @@
         <div id="sop-results-section" style="display: none;">
           
           <!-- Cohesive Control Banner for Results -->
-          <div class="report-title-banner">
+          <div class="iso-report-title">
             <div class="flex items-center gap-10px">
               <div class="flex items-center justify-center" style="width: 36px; height: 36px; border-radius: 6px; background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
-                <i class="ph-bold ph-file-text font-18px"></i>
+                <i class="ph-bold ph-file-text iso-font-18px"></i>
               </div>
               <div style="text-align: left;">
-                <div class="report-banner-title" style="margin-bottom: 2px;">PDR-SOP REPORT</div>
+                <div class="iso-report-banner" style="margin-bottom: 2px;">PDR-SOP REPORT</div>
                 <div style="font-size: 11px; font-weight: 700; color: #64748b;">Plant: <span id="sop-res-plant-val" style="color: var(--typo-orange); text-transform: uppercase;">BOILER</span> | Year: 2026 | SOP No: <span id="sop-res-no-val" style="color: var(--typo-orange);">SOP-01</span></div>
               </div>
             </div>
             
             <div style="display: flex; align-items: center; gap: 24px;">
               <!-- Timeline navigation -->
-              <div class="mini-nav-row">
+              <div class="iso-mini-nav">
                 <span style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
-                <button class="mini-nav-btn" title="Previous" onclick="changeSopTimeline('prev')"><i class="ph-bold ph-caret-left"></i></button>
-                <button class="mini-nav-btn" title="Reset" onclick="changeSopTimeline('reset')"><i class="ph-bold ph-circle"></i></button>
-                <button class="mini-nav-btn" title="Next" onclick="changeSopTimeline('next')"><i class="ph-bold ph-caret-right"></i></button>
+                <button class="iso-mini-nav-1" title="Previous" onclick="changeSopTimeline('prev')"><i class="ph-bold ph-caret-left"></i></button>
+                <button class="iso-mini-nav-1" title="Reset" onclick="changeSopTimeline('reset')"><i class="ph-bold ph-circle"></i></button>
+                <button class="iso-mini-nav-1" title="Next" onclick="changeSopTimeline('next')"><i class="ph-bold ph-caret-right"></i></button>
               </div>
             </div>
           </div>
 
           <!-- Corporate Table -->
-          <div class="user-table-wrapper" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border-radius: 8px; border: 1px solid var(--app-border, #cbd5e1); overflow-x: auto;">
-            <table class="user-table" style="width: 100%; border-collapse: collapse;">
+          <div class="user-table" style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border-radius: 8px; border: 1px solid var(--app-border, #cbd5e1); overflow-x: auto;">
+            <table class="user-table-1" style="width: 100%; border-collapse: collapse;">
               <thead>
                 <tr>
                   <th class="user-table-center w-100px">SOP NO</th>
@@ -199,7 +199,7 @@
         records.forEach(row => {
           $tbody.append(`
             <tr class="user-table-row">
-              <td class="user-table-center font-14px fw-600">${row.sopNo}</td>
+              <td class="user-table-center font-14pxfw-600">${row.sopNo}</td>
               <td class="fw-500 text-left">${row.purpose}</td>
               <td class="text-left">${row.criteria}</td>
               <td class="text-left">${row.deviation}</td>

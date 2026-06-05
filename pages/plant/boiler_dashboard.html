@@ -12,10 +12,154 @@
     <link rel="stylesheet" href="../../css/pages/plant.css">
     <link rel="stylesheet" href="../../css/utilities.css">
 
+    <style>
+        /* --- Floating Navigation Menu Styles --- */
+        .main-wrapper {
+            position: relative;
+        }
+
+        .floating-nav-menu {
+            position: absolute;
+            top: 150px;
+            left: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: stretch;
+            transform: translateX(-202px); /* Hide panel width + border */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .floating-nav-menu:hover,
+        .floating-nav-menu.is-open {
+            transform: translateX(0);
+        }
+
+        .nav-menu-panel {
+            width: 200px;
+            background: #ffffff;
+            border: 2px solid #000000;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
+        }
+
+        .nav-menu-header {
+            height: 40px;
+            background: #3366cc;
+            border-bottom: 2px solid #000000;
+        }
+
+        .nav-menu-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-menu-list li {
+            display: flex;
+        }
+
+        .nav-menu-list li a {
+            flex: 1;
+            display: block;
+            padding: 10px 15px;
+            background: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 13.5px;
+            font-weight: bold;
+            border-bottom: 1.5px solid #000000;
+            transition: background-color 0.2s, color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .nav-menu-list li a:hover {
+            background-color: #f3f4f6;
+        }
+
+        .nav-menu-list li a.active {
+            background-color: #ffff00 !important;
+            color: #000000 !important;
+            font-weight: bold;
+        }
+
+        .nav-menu-list li:last-child a {
+            border-bottom: none;
+        }
+
+        .nav-menu-footer {
+            height: 40px;
+            background: #3366cc;
+            border-top: 2px solid #000000;
+        }
+
+        .nav-menu-toggle {
+            width: 32px;
+            background: #0f2240;
+            color: #ffffff;
+            border: 2px solid #000000;
+            border-left: none;
+            box-sizing: border-box;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 1.25;
+            text-align: center;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 0 4px 4px 0;
+            padding: 15px 0;
+            user-select: none;
+        }
+
+        /* --- Dashboard Action Grid Overrides --- */
+ 
+
+        .boiler-full-width {
+            grid-column: span 4 !important;
+        }
+
+        @media (max-width: 1300px) {
+            .boiler-action-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            }
+            .boiler-full-width {
+                grid-column: span 3 !important;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .boiler-action-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+            .boiler-full-width {
+                grid-column: span 2 !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .boiler-action-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .boiler-full-width {
+                grid-column: span 1 !important;
+            }
+        }
+    </style>
+
     <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
     <script src="../../js/theme-control.js"></script>
     <script src="../../js/sidebar.js" defer></script>
     <script src="../../js/header.js" defer></script>
+    <script src="../../js/vendor/sweetalert2.all.min.js"></script>
 
     <script>window.activePage = 'plants';</script>
 </head>
@@ -91,11 +235,13 @@
                     <span class="boiler-action-label">General Job History</span>
                 </a>
 
-                <a href="boiler_trip_report.html" class="boiler-action-card">
+                <a href="#" class="boiler-action-card">
                     <div class="boiler-action-icon"><i class="ph-fill ph-warning-circle"></i></div>
                     <span class="boiler-action-label">Alarm Trip Setting Report</span>
                 </a>
+            </div>
 
+            <div class="boiler-action-grid" i>
                 <a href="system_job_history.html" class="boiler-action-card">
                     <div class="boiler-action-icon"><i class="ph-fill ph-desktop"></i></div>
                     <span class="boiler-action-label">System Job History</span>
@@ -105,10 +251,47 @@
                     <div class="boiler-action-icon"><i class="ph-fill ph-calendar-plus"></i></div>
                     <span class="boiler-action-label">Mail Scheduler</span>
                 </a>
+            </div>
 
+            <div class="boiler-action-grid">
                 <a href="#" class="boiler-action-card boiler-full-width">
                     <div class="boiler-action-icon"><i class="ph-fill ph-file-dashed"></i></div>
                     <span class="boiler-action-label">Circular Log File</span>
+                </a>
+
+                <a href="nest_loading_esd.html" class="boiler-action-card">
+                    <div class="boiler-action-icon"><i class="ph-fill ph-shield"></i></div>
+                    <span class="boiler-action-label">Nest Loading ESD</span>
+                </a>
+
+                <a href="nest_loading_dcs.html" class="boiler-action-card">
+                    <div class="boiler-action-icon"><i class="ph-fill ph-cpu"></i></div>
+                    <span class="boiler-action-label">Nest Loading DCS</span>
+                </a>
+
+                <a href="calibration_format.html" class="boiler-action-card">
+                    <div class="boiler-action-icon"><i class="ph-fill ph-sliders"></i></div>
+                    <span class="boiler-action-label">Calibration Format</span>
+                </a>
+
+                <a href="change_password.html" class="boiler-action-card">
+                    <div class="boiler-action-icon"><i class="ph-fill ph-key"></i></div>
+                    <span class="boiler-action-label">Change Password</span>
+                </a>
+
+                <a href="#" class="boiler-action-card dev-link">
+                    <div class="boiler-action-icon"><i class="ph-fill ph-book-open"></i></div>
+                    <span class="boiler-action-label">MAINTENANCE MANUAL</span>
+                </a>
+
+                <a href="boiler_doc_explorer.html" class="boiler-action-card">
+                    <div class="boiler-action-icon"><i class="ph-fill ph-file-search"></i></div>
+                    <span class="boiler-action-label">File Index</span>
+                </a>
+
+                <a href="boiler_other_doc.html" class="boiler-action-card">
+                    <div class="boiler-action-icon"><i class="ph-fill ph-files"></i></div>
+                    <span class="boiler-action-label">Soft Doc Index</span>
                 </a>
             </div>
 
@@ -123,6 +306,18 @@
 
             $areaDropdown.on('change', function() {
                 localStorage.setItem('gnfc_selected_area', $(this).val());
+            });
+
+            // Under development alert for dashboard shortcut action cards
+            $('.boiler-action-card.dev-link, .boiler-action-card[href="#"]').on('click', function(e) {
+                e.preventDefault();
+                const cardName = $(this).find('.boiler-action-label').text();
+                Swal.fire({
+                    icon: 'info',
+                    title: cardName,
+                    text: `You have selected ${cardName}. This module is currently under development.`,
+                    confirmButtonColor: '#2563eb'
+                });
             });
         });
     </script>

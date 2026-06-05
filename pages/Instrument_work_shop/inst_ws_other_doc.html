@@ -1,0 +1,2456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Explorer | GNFC</title>
+
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+
+  <!-- Vendor Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
+  <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+  <script src="../../js/theme-control.js"></script>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper explorer-main">
+    <div id="header-container" data-title="Document Explorer" data-breadcrumb="Instument Work Shop:Instrumentworkshop.html,Doc Explorer:active" data-back="inst_ws_dms.html"></div>
+
+    <div class="explorer-content dashboard-scroll">
+
+      <!-- Main Data Table Container -->
+      <div class="explorer-table-card">
+
+        <!-- Top Information/Breadcrumb Strip -->
+        <div class="explorer-stats-strip">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-8px">
+              <i class="ph-fill ph-folder text-amber-500 font-20px"></i>
+              <h3 class="font-14px fw-800 text-uppercase">Boiler</h3>
+            </div>
+            <div id="path-breadcrumb" class="font-14px fw-700 text-uppercase color-secondary">Other_Doc/Boiler/</div>
+          </div>
+
+          <div class="stats-group">
+            <div class="stat-item"><b>Total Content:</b> <span id="stat-total-cnt">5</span> (<span
+                id="stat-total-kb">36,155</span> Kb)</div>
+            <div class="stat-item"><b>Folders:</b> <span id="stat-folder-cnt">5</span> (<span
+                id="stat-folder-kb">36,155</span> Kb)</div>
+            <div class="stat-item"><b>Files:</b> <span id="stat-file-cnt">0</span> (0 Kb)</div>
+          </div>
+        </div>
+
+        <!-- Toolbar Strip -->
+        <div class="explorer-toolbar">
+          <button id="btn-up-level" class="action-icon" title="Up One Level">
+            <i class="ph-bold ph-arrow-bend-left-up font-18px"></i>
+          </button>
+          <div class="toolbar-divider"></div>
+
+          <button id="btn-new-folder" class="toolbar-btn">
+            <i class="ph-fill ph-folder-plus font-18px"></i>
+            <span>New Folder</span>
+          </button>
+
+          <button id="btn-upload" class="toolbar-btn">
+            <i class="ph-bold ph-upload-simple font-18px"></i>
+            <span>Upload</span>
+          </button>
+
+          <button id="btn-sent-items" class="toolbar-btn" title="View Sent Items">
+            <i class="ph-bold ph-envelope-open font-18px"></i>
+            <span>Sent Items</span>
+          </button>
+
+          <button id="btn-delete-all" class="toolbar-btn hidden ml-12px">
+            <i class="ph-bold ph-trash font-18px"></i>
+            <span>Delete All Files</span>
+          </button>
+
+          <button id="btn-paste" class="toolbar-btn hidden animate-pulse">
+            <i class="ph-bold ph-clipboard-text font-18px"></i>
+            <span>Paste Here</span>
+          </button>
+
+          <button id="btn-move-buffer" class="explorer-btn">
+            <i class="ph-bold ph-tray font-18px"></i>
+            <span>Move From Buffer</span>
+          </button>
+
+          <button id="btn-register" class="toolbar-btn" title="Register documents for tracking">
+            <i class="ph-bold ph-calendar-check font-18px"></i>
+            <span>Register</span>
+          </button>
+
+          <button id="btn-unregister" class="toolbar-btn" title="Un-Register documents">
+            <i class="ph-bold ph-prohibit font-18px"></i>
+            <span>Un-Register</span>
+          </button>
+
+          <button id="btn-cleanup-unlock" class="toolbar-btn" title="Clean-up and unlock">
+            <i class="ph-bold ph-broom font-18px"></i>
+            <span>Clean-up</span>
+          </button>
+
+
+          <button id="btn-search-open" class="toolbar-btn">
+            <i class="ph-bold ph-magnifying-glass font-18px"></i>
+            <span>Search File</span>
+          </button>
+
+
+          <button id="btn-recycle-bin" class="toolbar-btn relative"
+            onclick="window.location.href='boiler_recycle_bin.html'">
+
+            <i class="ph-bold ph-recycle font-18px"></i>
+            <span>Recycle Bin</span>
+            
+          </button>
+        </div>
+
+        <!-- Scrollable Table Body -->
+        <div class="user-table-wrapper">
+          <table id="explorer-table" class="user-table" style="min-width: auto;">
+            <thead>
+              <tr>
+                <th style="width: 40px;" class=" text-center btn-doc-log" title="Logs"><i
+                    class="ph-bold ph-notebook font-18px action-icon "></i></th>
+                <th style="width: auto; min-width: 250px;" class=" text-left">Name </th>
+                <th style="width: 140px;" class=" text-left">Type</th>
+                <th style="width: 120px;" class=" text-left">Size</th>
+                <th style="width: 180px;" class=" text-left">Last Modified</th>
+
+                <th style="width: 180px;" class=" text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="explorer-tbody">
+              <tr class="user-table-row" data-type="Folder" data-name="APPROVAL" data-size="12148"
+                data-date="27/06/2020">
+                <td class="user-table-cell text-center">
+                  <i class="ph-bold ph-notebook action-icon btn-doc-log"></i>
+                </td>
+                <td class="user-table-cell text-left">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500 font-18px"></i>
+                    <span class="item-name">APPROVAL</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-left"><span>&lt;Folder&gt;</span></td>
+                <td class="user-table-cell text-left"><span class="">12148 Kb</span></td>
+                <td class="user-table-cell text-left"><span>27/06/2020</span></td>
+                <td class="user-table-cell text-center"></td>
+                <td class="user-table-cell text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
+
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-type="Folder" data-name="CORRESPONDANCE" data-size="8680"
+                data-date="25/08/2021">
+                <td class="user-table-cell text-center">
+                  <i class="ph-bold ph-notebook action-icon btn-doc-log"></i>
+                </td>
+                <td class="user-table-cell text-left">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500 font-18px"></i>
+                    <span class="item-name">CORRESPONDANCE</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-left"><span>&lt;Folder&gt;</span></td>
+                <td class="user-table-cell text-left"><span class="">8680 Kb</span></td>
+                <td class="user-table-cell text-left"><span>25/08/2021</span></td>
+                <td class="user-table-cell text-center"></td>
+                <td class="user-table-cell text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
+
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-type="Folder" data-name="REPORTS" data-size="8040" data-date="04/11/2024">
+                <td class="user-table-cell text-center">
+                  <i class="ph-bold ph-notebook action-icon btn-doc-log"></i>
+                </td>
+                <td class="user-table-cell text-left">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500 font-18px"></i>
+                    <span class="item-name">REPORTS</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-left"><span>&lt;Folder&gt;</span></td>
+                <td class="user-table-cell text-left"><span class="">8040 Kb</span></td>
+                <td class="user-table-cell text-left"><span>04/11/2024</span></td>
+                <td class="user-table-cell text-center"></td>
+                <td class="user-table-cell text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
+
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-type="Folder" data-name="MDM" data-size="7033" data-date="15/07/2018">
+                <td class="user-table-cell text-center">
+                  <i class="ph-bold ph-notebook action-icon btn-doc-log"></i>
+                </td>
+                <td class="user-table-cell text-left">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500 font-18px"></i>
+                    <span class="item-name">MDM</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-left"><span>&lt;Folder&gt;</span></td>
+                <td class="user-table-cell text-left"><span class="">7033 Kb</span></td>
+                <td class="user-table-cell text-left"><span>15/07/2018</span></td>
+                <td class="user-table-cell text-center"></td>
+                <td class="user-table-cell text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
+
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row" data-type="Folder" data-name="PAYMENT" data-size="254" data-date="14/06/2019">
+                <td class="user-table-cell text-center">
+                  <i class="ph-bold ph-notebook action-icon btn-doc-log"></i>
+                </td>
+                <td class="user-table-cell text-left">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500 font-18px"></i>
+                    <span class="item-name">PAYMENT</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-left"><span>&lt;Folder&gt;</span></td>
+                <td class="user-table-cell text-left"><span class="">254 Kb</span></td>
+                <td class="user-table-cell text-left"><span>14/06/2019</span></td>
+                <td class="user-table-cell text-center"></td>
+                <td class="user-table-cell text-center">
+                  <div class="row-actions">
+                    <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
+                    <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
+
+                    <i class="ph-bold ph-scissors action-icon btn-cut"></i>
+                    <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- New Folder Modal -->
+  <div id="modal-new-folder" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Create New Folder</h3>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <!-- <div class="mb-16px flex flex-row">
+          <label class="gnfc-modal-label font-16px mr-4px">Parent Path : </label>
+          <div id="modal-parent-display" class="color-blue font-16 fw-700"> /BOILER_INST/</div>
+        </div> -->
+        <div>
+          <label class="gnfc-modal-label">Folder Name: </label>
+          <input type="text" id="input-folder-name" class="gnfc-modal-input w-auto" placeholder="Enter folder name...">
+          <p id="folder-error" class="color-red mt-4px hidden italic">Invalid characters (', ~, /, \, >, <, !, #, ., %)
+              are not allowed.</p>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-new-folder').removeClass('is-open')">Cancel</button>
+        <button id="btn-confirm-new-folder" class="gnfc-modal-btn gnfc-modal-btn-primary">Create Folder</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Modal -->
+  <div id="modal-upload" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header border-bottom-dark-border">
+        <div class="flex flex-col">
+          <h3 class="gnfc-modal-title">Document Browser</h3>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+
+      <div class="gnfc-modal-body">
+        <div class="bg-dark-subtle p-8px radius-4px mb-16px">
+          <p class="font-14px fw-700 text-uppercase">
+            File(s) will be saved to :
+            <span id="upload-path-display" class="color-blue ml-4px">/BOILER_INST/</span>
+          </p>
+        </div>
+
+        <!-- Slot Column Headers -->
+        <div class="flex gap-12px mb-8px px-4px">
+          <div class="flex-1 font-14px fw-800 text-uppercase">File</div>
+          <div style="width: 80px;" class="font-14px fw-800 text-uppercase text-center">Action</div>
+        </div>
+
+        <!-- Dynamic Slots Container -->
+        <div id="upload-slots-container"
+          class="max-h-350px overflow-y-auto custom-scrollbar-thin flex flex-col gap-12px p-4px">
+          <!-- Static Slots -->
+          <div class="flex items-center gap-12px bg-dark-card border-dark-border p-4px radius-4px slot-row-container">
+            <div class="flex-1 bg-dark-subtle border-dark-border p-8px radius-4px overflow-hidden text-nowrap">
+              <span class="font-14px slot-filename  italic">No file selected</span>
+            </div>
+            <div style="width: 80px;" class="flex justify-center">
+              <input type="file" class="hidden slot-input">
+              <button
+                class="gnfc-modal-btn gnfc-modal-btn-secondary btn-slot-browse w-full text-nowrap py-4px font-14px">Browse..</button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-12px bg-dark-card border-dark-border p-4px radius-4px slot-row-container">
+            <div class="flex-1 bg-dark-subtle border-dark-border p-8px radius-4px overflow-hidden text-nowrap">
+              <span class="font-14px slot-filename  italic">No file selected</span>
+            </div>
+            <div style="width: 80px;" class="flex justify-center">
+              <input type="file" class="hidden slot-input">
+              <button
+                class="gnfc-modal-btn gnfc-modal-btn-secondary btn-slot-browse w-full text-nowrap py-4px font-14px">Browse..</button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-12px bg-dark-card border-dark-border p-4px radius-4px slot-row-container">
+            <div class="flex-1 bg-dark-subtle border-dark-border p-8px radius-4px overflow-hidden text-nowrap">
+              <span class="font-14px slot-filename  italic">No file selected</span>
+            </div>
+            <div style="width: 80px;" class="flex justify-center">
+              <input type="file" class="hidden slot-input">
+              <button
+                class="gnfc-modal-btn gnfc-modal-btn-secondary btn-slot-browse w-full text-nowrap py-4px font-14px">Browse..</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer justify-between">
+        <button id="btn-add-more-slots" class="explorer-btn btn-action-blue btn-sm">
+          <i class="ph-bold ph-plus-circle font-16px"></i>
+          <span>More..</span>
+        </button>
+        <div class="flex gap-12px">
+          <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            onclick="$('#modal-upload').removeClass('is-open')">Cancel</button>
+          <button id="btn-confirm-upload" class="gnfc-modal-btn gnfc-modal-btn-primary">Start Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Send Email Modal -->
+  <div id="modal-send-email" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <div class="flex items-center gap-12px">
+          <div>
+            <h3 class="gnfc-modal-title">Send Mail</h3>
+          </div>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body bg-dark-bg">
+        <div class="flex flex-col gap-24px p-8px">
+
+          <!-- Search & Select Receiver -->
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label">Search / Select Receiver :</label>
+            <div class="flex items-center gap-12px">
+              <input id="email-search-input" type="text" placeholder="Type email or name..."
+                class="gnfc-modal-input flex-1 font-14px uppercase">
+
+              <select id="email-to-select" class="gnfc-modal-input flex-1">
+                <option value="">-- Select Contact --</option>
+                <option value="kayum.kadivar@gnfc.in">Kayum Kadivar</option>
+                <option value="admin@gnfc.in">GNFC Admin</option>
+                <option value="safety.dept@gnfc.in">Safety Department</option>
+                <option value="boiler.ops@gnfc.in">Boiler Operations</option>
+                <option value="inst.team@gnfc.in">Instrumentation Team</option>
+                <option value="maintenance.head@gnfc.in">Maintenance Head</option>
+                <option value="plant.manager@gnfc.in">Plant Manager</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-20px">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">Subject</label>
+              <input id="email-subject" type="text" class="gnfc-modal-input" placeholder="Document Sharing">
+            </div>
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label">File to attach</label>
+              <select id="email-file-select" class="gnfc-modal-input font-14px"></select>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-6px">
+            <div class="flex items-center gap-12px">
+              <i class="ph-bold ph-paperclip color-blue font-20px"></i>
+              <label class="gnfc-modal-label m-0">Attachment Options</label>
+            </div>
+            <label class="flex items-center justify-end gap-10px font-13px fw-700 cursor-pointer color-blue">
+              <input id="email-link-only" type="checkbox" class="gnfc-checkbox">
+              <span>As a link only <span class="opacity-60 font-11px">(If file > 1 MB)</span></span>
+            </label>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label">Message / Comments</label>
+            <textarea id="email-message" rows="5" class="gnfc-modal-input resize-none"
+              placeholder="Provide context or instructions for the recipient..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <div class="flex gap-16px">
+          <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            onclick="$('#modal-send-email').removeClass('is-open')">Cancel</button>
+          <button id="btn-send-email-submit" class="gnfc-modal-btn gnfc-modal-btn-primary px-32px">
+            <i class="ph-bold ph-paper-plane-right"></i> Send
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sent Items Modal -->
+  <div id="modal-sent-items" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+      <div class="gnfc-modal-header border-b-2">
+        <div class="flex items-center gap-12px">
+          <h3 class="gnfc-modal-title color-blue">Sent Items (email)</h3>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body bg-dark-bg p-0">
+        <div class="user-table-wrapper">
+          <table class="user-table" style="min-width: 1100px;">
+            <thead class="bg-muted-bg sticky top-0 z-10">
+              <tr>
+                <th class="user-table-cell text-left" style="width: 180px;">From</th>
+                <th class="user-table-cell text-left" style="width: 180px;">To</th>
+                <th class="user-table-cell text-left">Subject</th>
+                <th class="user-table-cell text-center" style="width: 60px;">Attach</th>
+                <th class="user-table-cell text-center" style="width: 190px;">Date / Time</th>
+                <th class="user-table-cell text-center" style="width: 120px;">By</th>
+                <th class="user-table-cell text-center" style="width: 100px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="sent-items-tbody">
+              <tr class="user-table-row">
+                <td class="user-table-cell font-13px">pankajpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px text-blue fw-600">pankajpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px">test</td>
+                <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip opacity-50"></i></td>
+                <td class="user-table-cell gap-8px flex ">
+                  <p class="block">02/04/2019</p>
+                  <p class="block">09:36:29</p>
+                </td>
+                <td class="user-table-cell text-center fw-800 color-blue">M(PMP)</td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-8px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
+                      title="Send again"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-cell font-13px">mmdava@gnfc.in</td>
+                <td class="user-table-cell font-13px text-blue fw-600">pankajpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px">FCV1501</td>
+                <td class="user-table-cell text-center text-muted">-</td>
+                <td class="user-table-cell gap-8px flex ">
+                  <p class="block">02/04/2019</p>
+                  <p class="block">09:36:29</p>
+                </td>
+                <td class="user-table-cell text-center fw-800 color-blue">IE/SIE(MMD)</td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-8px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
+                      title="Send again"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-cell font-13px">anpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px text-blue fw-600">mmdava@gnfc.in</td>
+                <td class="user-table-cell font-13px">DCEM 2100 O&M Manual</td>
+                <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip opacity-50"></i></td>
+                <td class="user-table-cell gap-8px flex ">
+                  <p class="block">02/04/2019</p>
+                  <p class="block">09:36:29</p>
+                </td>
+                <td class="user-table-cell text-center fw-800 color-blue">IE/SIE(ANP)</td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-8px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
+                      title="Send again"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-cell font-13px">rb_limbasiya@gnfc.in</td>
+                <td class="user-table-cell font-13px text-blue fw-600">anpatel@gnfc.in</td>
+                <td class="user-table-cell font-13px">Weigh scale totalizer manual</td>
+                <td class="user-table-cell text-center"><i class="ph-bold ph-paperclip opacity-50"></i></td>
+                <td class="user-table-cell gap-8px flex ">
+                  <p class="block">02/04/2019</p>
+                  <p class="block">09:36:29</p>
+                </td>
+                <td class="user-table-cell text-center fw-800 color-blue">IE/SIE(RBL)</td>
+                <td class="user-table-cell text-center">
+                  <div class="flex justify-center gap-8px">
+                    <i class="ph-bold ph-arrow-counter-clockwise action-icon color-blue cursor-pointer"
+                      title="Send again"></i>
+                    <i class="ph-bold ph-x-circle action-icon color-red cursor-pointer" title="Delete"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer justify-end">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-sent-items').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Documentation Log Modal -->
+  <div id="modal-doc-log" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Documentation Log</h3>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <!-- Filter Bar -->
+      <div class="flex items-center gap-16px p-12px px-16px border-bottom-dark-border">
+        <div class="flex items-center gap-8px">
+          <label class="gnfc-modal-label">Find By Item :</label>
+          <input type="text" id="log-filter-item" class="gnfc-modal-input" placeholder="address">
+        </div>
+        <div class="flex items-center gap-8px">
+          <label class="gnfc-modal-label">Find By Action :</label>
+          <select id="log-filter-action" class="gnfc-modal-input">
+            <option value="ALL">NO CHOICE</option>
+            <option value="Save File">Save File</option>
+            <option value="Rename">Rename</option>
+            <option value="Delete">Delete</option>
+            <option value="Create Folder">Create Folder</option>
+            <option value="Send Email">Send Email</option>
+          </select>
+        </div>
+      </div>
+      <div class="gnfc-modal-body gnfc-modal-body--flush p-8px">
+        <div class="user-table-wrapper">
+          <table class=" w-auto user-table">
+            <thead>
+              <tr>
+                <th class=" text-center" style="width:50px;">Rev</th>
+                <th class=" text-left">Item</th>
+                <th class=" text-left" style="width:160px;">Location</th>
+                <th class=" text-left" style="width:120px;">Action</th>
+                <th class=" text-left">Comment</th>
+                <th class=" text-center" style="width:100px;">Date</th>
+                <th class=" text-center" style="width:70px;">Time</th>
+                <th class=" text-center" style="width:70px;">By</th>
+              </tr>
+            </thead>
+            <tbody id="log-tbody">
+              <tr class="user-table-row" data-item="approval" data-action="Create Folder">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">APPROVAL</td>
+                <td class="user-table-cell text-left">BOILER_INST</td>
+                <td class="user-table-cell text-left"><span>Create Folder</span></td>
+                <td class="user-table-cell text-left">Project root approval</td>
+                <td class="user-table-cell text-center">27/06/2020</td>
+                <td class="user-table-cell text-center">09:00</td>
+                <td class="user-table-cell text-center">SYSTEM</td>
+              </tr>
+              <tr class="user-table-row" data-item="boiler_approval_reva.pdf" data-action="Save File">
+                <td class="user-table-cell text-center fw-800 ">1</td>
+                <td class="user-table-cell text-left">Boiler_Approval_RevA.pdf</td>
+                <td class="user-table-cell text-left">BOILER_INST/APPROVAL</td>
+                <td class="user-table-cell text-left"><span>Save File</span></td>
+                <td class="user-table-cell text-left">Initial approval doc</td>
+                <td class="user-table-cell text-center">27/06/2020</td>
+                <td class="user-table-cell text-center">10:30</td>
+                <td class="user-table-cell text-center">ADMIN</td>
+              </tr>
+              <tr class="user-table-row" data-item="reports" data-action="Create Folder">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">REPORTS</td>
+                <td class="user-table-cell text-left">BOILER_INST</td>
+                <td class="user-table-cell text-left"><span>Create Folder</span></td>
+                <td class="user-table-cell text-left">Reports directory</td>
+                <td class="user-table-cell text-center">04/11/2024</td>
+                <td class="user-table-cell text-center">10:00</td>
+                <td class="user-table-cell text-center">SYSTEM</td>
+              </tr>
+              <tr class="user-table-row" data-item="shutdown_report_oct_2024.pdf" data-action="Save File">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">Shutdown_Report_Oct_2024.pdf</td>
+                <td class="user-table-cell text-left">BOILER_INST/REPORTS/2024</td>
+                <td class="user-table-cell text-left"><span>Save File</span></td>
+                <td class="user-table-cell text-left">Monthly safety update</td>
+                <td class="user-table-cell text-center">04/11/2024</td>
+                <td class="user-table-cell text-center">14:15</td>
+                <td class="user-table-cell text-center">KAYUM</td>
+              </tr>
+              <tr class="user-table-row" data-item="shutdown_report_oct_2024.pdf" data-action="Save File">
+                <td class="user-table-cell text-center fw-800 ">1</td>
+                <td class="user-table-cell text-left">Shutdown_Report_Oct_2024.pdf</td>
+                <td class="user-table-cell text-left">BOILER_INST/REPORTS/2024</td>
+                <td class="user-table-cell text-left"><span>Save File</span></td>
+                <td class="user-table-cell text-left">Revised with corrections</td>
+                <td class="user-table-cell text-center">10/11/2024</td>
+                <td class="user-table-cell text-center">11:20</td>
+                <td class="user-table-cell text-center">ADMIN</td>
+              </tr>
+              <tr class="user-table-row" data-item="mdm" data-action="Create Folder">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">MDM</td>
+                <td class="user-table-cell text-left">BOILER_INST</td>
+                <td class="user-table-cell text-left"><span>Create Folder</span></td>
+                <td class="user-table-cell text-left">MDM directory</td>
+                <td class="user-table-cell text-center">15/07/2018</td>
+                <td class="user-table-cell text-center">09:00</td>
+                <td class="user-table-cell text-center">SYSTEM</td>
+              </tr>
+              <tr class="user-table-row" data-item="payment" data-action="Create Folder">
+                <td class="user-table-cell text-center fw-800 ">0</td>
+                <td class="user-table-cell text-left">PAYMENT</td>
+                <td class="user-table-cell text-left">BOILER_INST</td>
+                <td class="user-table-cell text-left"><span>Create Folder</span></td>
+                <td class="user-table-cell text-left">Payment docs</td>
+                <td class="user-table-cell text-center">14/06/2019</td>
+                <td class="user-table-cell text-center">08:00</td>
+                <td class="user-table-cell text-center">SYSTEM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer justify-between">
+        <p class="font-10px  italic">Historical records are permanent and cannot be deleted.</p>
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-doc-log').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rename Modal -->
+  <div id="modal-rename" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h3 id="rename-modal-title" class="gnfc-modal-title">Rename Folder</h3>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body">
+        <div class="mb-12px flex flex-row  gap-8px">
+          <label>Location :</label>
+          <div id="rename-location" class="color-blue font-14px fw-700">/BOILER_INST/</div>
+        </div>
+        <div class="mb-12px flex flex-row items-center gap-8px">
+          <label id="rename-label-current">Current Name :</label>
+          <div id="rename-current-name">APPROVAL</div>
+        </div>
+        <div class="flex items-center gap-8px">
+          <label class="gnfc-modal-label">Enter New Name :</label>
+          <input type="text" id="rename-input" class="gnfc-modal-input" placeholder="New Name">
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-rename').removeClass('is-open')">Cancel</button>
+        <button id="btn-rename-submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Rename</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="modal-revision-history" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="revision-header-panel flex justify-between items-center">
+        <div class="flex items-center gap-12px">
+          <h3 class="revision-title-main">Engineering Documents Revision Detail</h3>
+        </div>
+        <div class="flex items-center gap-12px">
+          <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-body gnfc-modal-body--flush bg-dark-bg p-10px">
+        <!-- History Section -->
+        <div class="revision-section-label">
+          <i class="ph-bold ph-clock-counter-clockwise"></i>
+          <span>Revision History</span>
+        </div>
+        <div class="user-table-wrapper ">
+          <table class="user-table " style="min-width: auto;">
+            <thead>
+              <tr>
+                <th class="user-table-cell" style="width:60px;">REV</th>
+                <th class="user-table-cell text-left">DOCUMENT</th>
+                <th class="user-table-cell text-left">COMMENT</th>
+                <th class="user-table-cell" style="width:110px;">DATE</th>
+                <th class="user-table-cell" style="width:90px;">TIME</th>
+                <th class="user-table-cell" style="width:70px;">BY</th>
+                <th class="user-table-cell" style="width:50px;"></th>
+              </tr>
+            </thead>
+            <tbody id="history-tbody">
+              <tr>
+                <td class="text-center">0</td>
+                <td class="text-left fw-600 color-blue font-16px">Boiler_Side_View.pdf</td>
+                <td class="text-left">Initial release for review</td>
+                <td class="text-center">10/01/2021</td>
+                <td class="text-center">10:00</td>
+                <td class="text-center color-blue fw-700">KAYUM</td>
+                <td class="text-center">
+                  <i class="ph-bold ph-trash btn-delete-revision"></i>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">1</td>
+                <td class="text-left fw-600 color-blue font-16px">Boiler_Side_View.pdf</td>
+                <td class="text-left">Revised as per consultant comments</td>
+                <td class="text-center">25/08/2021</td>
+                <td class="text-center">14:30</td>
+                <td class="text-center color-blue fw-700">ADMIN</td>
+                <td class="text-center">
+                  <i class="ph-bold ph-trash btn-delete-revision"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Current Revision Section -->
+        <div class="revision-section-label mt-10px">
+          <i class="ph-bold ph-check-circle"></i>
+          <span>Current Revision</span>
+        </div>
+        <div class="user-table-wrapper">
+          <table class="user-table" style="min-width: auto;">
+            <thead class="current-rev-header">
+              <tr>
+                <th class="user-table-cell" style="width:60px;">REV</th>
+                <th class="user-table-cell text-left">DOCUMENT</th>
+                <th class="user-table-cell text-left">COMMENT</th>
+                <th class="user-table-cell" style="width:110px;">DATE</th>
+                <th class="user-table-cell" style="width:90px;">TIME</th>
+                <th class="user-table-cell" style="width:70px;">BY</th>
+                <th class="user-table-cell" style="width:50px;"></th>
+              </tr>
+            </thead>
+            <tbody id="current-rev-tbody">
+              <tr>
+                <td class="text-center">2</td>
+                <td class="text-left fw-600 color-blue font-16px">Boiler_Side_View.pdf</td>
+                <td class="text-left">Final approved for construction</td>
+                <td class="text-center">12/04/2026</td>
+                <td class="text-center">11:15</td>
+                <td class="text-center color-blue fw-700">AMS</td>
+                <td class="text-center">
+                  <i class="ph-bold ph-trash btn-delete-revision"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-revision-history').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-delete-doc" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header border-b-2 bg-red-bg" style="border-bottom-color: var(--red);">
+        <div class="flex items-center gap-12px">
+          <h3 class="gnfc-modal-title color-red fw-900 tracking-wider font-mont">DELETE FILE !!!</h3>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body bg-dark-bg p-24px">
+        <div class="flex flex-col gap-20px">
+          <div class="flex flex-row gap-8px">
+            <label class="fw-800 font-14px color-blue" style="min-width: 90px;">File Name :</label>
+            <div id="delete-doc-path" class="color-blue fw-700 font-14px break-all">
+              /BOILER_INST/engineering_doc/Boiler_Side_View.pdf</div>
+          </div>
+
+          <div class="flex flex-row gap-8px">
+            <label class="fw-800 font-14px color-blue" style="min-width: 90px;">Revision :</label>
+            <div id="delete-doc-rev" class="fw-900 font-14px color-secondary">0</div>
+          </div>
+
+          <div class="p-12px radius-8px bg-red-bg border-1 border-dashed" style="border-color: var(--red);">
+            <div class="flex gap-10px">
+              <span class="fw-800 color-red font-14px">Alert &rarr;</span>
+              <p class="color-red font-13px fw-700 m-0 leading-relaxed">
+                Revisions of the document will be deleted along with this delete !! Check and save revisions of the
+                document. To view revision click
+                <a href="javascript:void(0)" id="link-view-rev-from-delete" class="color-blue underline fw-800">Here</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="text-center italic color-green fw-700 font-13px mt-10px">
+            You can still retrieve deleted documents from recycle bin...
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer bg-dark-bg border-0 flex justify-center gap-16px pb-24px">
+        <button id="btn-delete-doc-confirm" class="explorer-btn btn-action-red"
+          style="padding: 6px 24px;">Delete</button>
+        <button class="explorer-btn btn-action-blue bg-muted-bg border-muted" style="padding: 6px 24px;"
+          onclick="$('#modal-delete-doc').removeClass('is-open')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Move From Buffer Modal -->
+  <div id="modal-move-from-buffer" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header border-b-2">
+        <div class="flex items-center gap-12px">
+          <h3 class="gnfc-modal-title">Move From Buffer</h3>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body bg-dark-bg p-0">
+        <div class="user-table-wrapper ">
+          <table class="user-table" style="min-width: auto;">
+            <thead class="bg-muted-bg">
+              <tr>
+                <th class="user-table-cell text-left">Item Name</th>
+                <th class="user-table-cell text-center" style="width: 100px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="buffer-tbody">
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500"></i>
+                    <span>ADMIN</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="0">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500"></i>
+                    <span>ASP FILES</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="1">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500"></i>
+                    <span>BHEL AUX LOGIC</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="2">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500"></i>
+                    <span>ENGG_DOC</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="3">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500"></i>
+                    <span>HAIL DCS GRAPHICS SNAPSHOT</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="4">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-folder text-amber-500"></i>
+                    <span>HDD</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="5">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file color-blue"></i>
+                    <span>ask_urms_local_clouds.html</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="6">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file color-blue"></i>
+                    <span>ask_urms_local_meta.html</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="7">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-xls color-green"></i>
+                    <span>blr po.xls</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="8">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-xls color-green"></i>
+                    <span>blr.xls</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="9">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-xls color-green"></i>
+                    <span>boiler lims tags.xls</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="10">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-xls color-green"></i>
+                    <span>boiler logbook.xls</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="11">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-xls color-green"></i>
+                    <span>boiler.xls</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="12">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file color-blue"></i>
+                    <span>com02c_opic1547_com sbn pr 1.dwg</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="13">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-xls color-green"></i>
+                    <span>cpsu po.xls</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="14">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file color-blue"></i>
+                    <span>cylinder specification.fwp</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="15">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file color-blue"></i>
+                    <span>flowcheck31b.rar.enc</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="16">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-xls color-green"></i>
+                    <span>loginhist.xls</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="17">Move</span>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell font-14px">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-xls color-green"></i>
+                    <span>testaga.xls</span>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">
+                  <span class="color-blue fw-800 cursor-pointer btn-move-item" data-index="18">Move</span>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-move-from-buffer').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Move Confirmation Modal (2nd Step) -->
+  <div id="modal-move-buffer-confirm" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div class="flex items-center gap-12px">
+          <div>
+            <h3 class="gnfc-modal-title">Move From Buffer</h3>
+          </div>
+        </div>
+        <button class="gnfc-modal-close" onclick="$('#modal-move-buffer-confirm').removeClass('is-open')">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="gnfc-modal-body">
+        <div class="flex flex-col gap-16px">
+
+          <!-- Move info rows -->
+          <div class="flex flex-col gap-8px">
+            <div class="flex items-center gap-12px p-10px radius-4px bg-dark-subtle border-dark-border">
+              <i class="ph-fill ph-folder text-amber-500 font-20px"></i>
+              <div class="flex flex-col gap-2px flex-1">
+                <span class="font-11px text-uppercase color-muted">Item to Move</span>
+                <span id="confirm-selected-folder" class="font-14px ">ADMIN</span>
+              </div>
+              <span
+                class="font-11px  text-uppercase color-muted px-8px py-3px bg-dark-card radius-4px border-dark-border">FOLDER</span>
+            </div>
+
+            <div class="flex justify-center">
+              <i class="ph-bold ph-arrow-down color-blue font-16px"></i>
+            </div>
+
+            <div class="flex items-center gap-12px p-10px radius-4px bg-dark-subtle border-dark-border">
+              <i class="ph-bold ph-hard-drives color-blue font-20px"></i>
+              <div class="flex flex-col gap-2px flex-1">
+                <span class="font-11px text-uppercase color-muted">Destination</span>
+                <span id="confirm-server-location" class="font-14px color-blue ">/BOILER_INST/</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Warning -->
+          <div class="flex gap-10px p-12px radius-4px bg-red-bg border-dark-border"
+            style="border-left: 3px solid var(--red);">
+            <i class="ph-bold ph-warning color-red font-16px mt-2px flex-shrink-0"></i>
+            <p class="font-13px fw-600 m-0 color-red leading-relaxed">
+              Ensure the item is not open in the FTP page before proceeding. The move may fail if the item is currently
+              in use.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer justify-between">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-move-buffer-confirm').removeClass('is-open'); $('#modal-move-from-buffer').addClass('is-open')">
+          <i class="ph-bold ph-arrow-left"></i> Back
+        </button>
+        <div class="flex gap-10px">
+          <button id="btn-cancel-move" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            onclick="$('#modal-move-buffer-confirm').removeClass('is-open')">
+            Cancel
+          </button>
+          <button id="btn-confirm-move-final" class="gnfc-modal-btn gnfc-modal-btn-primary">
+            <i class="ph-bold ph-arrows-left-right"></i> Confirm Move
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Clean-up Modal -->
+  <div id="modal-cleanup-tracking" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+      <div class="gnfc-modal-header border-b-2">
+        <div class="flex items-center gap-12px">
+          <h3 class="gnfc-modal-title">Document traceability system: IIMS</h3>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body p-0px" style="background: var(--app-bg);">
+        <div class="flex flex-col p-10px">
+
+          <!-- ═══ Advanced Dashboard Header ═══ -->
+          <div class="items-start gap-24px p-20px">
+              <p class="m-0px font-14px fw-500">
+               This tool will clean-up all bad entries which does not exist in the document structre and are locked. All locked documents will bi unloacked
+              </p>
+              <p class="color-red fw-500 mt-6px">
+                Following documents along with all revisions will be deleted  and shifted to recyle-bin
+              </p>
+            </div>
+
+          <!-- ═══ High Fidelity Table ═══ -->
+          <div class="user-table-wrapper">
+            <table class="user-table" style="min-width: 1000px;">
+              <thead >
+                <tr>
+                  <th class="user-table-cell" style="width: 60px;">#</th>
+                  <th class="user-table-cell text-left">Document Repository Path & Metadata</th>
+                  <th class="user-table-cell text-center" style="width: 150px;">Owner / Dept</th>
+                  <th class="user-table-cell text-center" style="width: 140px;">Lock Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center opacity-40 font-12px fw-800">1021</td>
+                  <td class="user-table-cell text-left">
+                    <div class="flex items-center gap-12px">
+                      <i class="ph-fill ph-file-doc color-blue font-24px"></i>
+                      <div class="flex flex-col gap-2px">
+                        <span class="font-14px fw-700 text-blue">Settings of Pulse to Current conv..doc</span>
+                        <span class="font-11px opacity-50 tracking-wide fw-600">/ENGG_DOC/BOILER/PROCEDURES/</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center">
+                    <div class="inline-flex flex-col items-center">
+                      <span class="font-13px fw-800 color-blue">BHD</span>
+                      <span class="font-10px opacity-50 fw-700 text-uppercase">Instrumentation</span>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center font-13px fw-700 opacity-80">13 Sep 2008</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center opacity-40 font-12px fw-800">2145</td>
+                  <td class="user-table-cell text-left">
+                    <div class="flex items-center gap-12px">
+                      <i class="ph-fill ph-file-xls color-green font-24px"></i>
+                      <div class="flex flex-col gap-2px">
+                        <span class="font-14px fw-700 text-blue">btn blr and b#4.xlsx</span>
+                        <span class="font-11px opacity-50 tracking-wide fw-600">/ENGG_DOC/BOILER/INSTALLATION
+                          DOCUMENTS/JB SCHEDULE/...</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center">
+                    <div class="inline-flex flex-col items-center">
+                      <span class="font-13px fw-800 color-blue">RBL</span>
+                      <span class="font-10px opacity-50 fw-700 text-uppercase">Miscellaneous</span>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center font-13px fw-700 opacity-80">07 Nov 2019</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center opacity-40 font-12px fw-800">3098</td>
+                  <td class="user-table-cell text-left">
+                    <div class="flex items-center gap-12px">
+                      <i class="ph-fill ph-file-pdf color-red font-24px"></i>
+                      <div class="flex flex-col gap-2px">
+                        <span class="font-14px fw-700 text-blue">bfw 100% cv_il.pdf</span>
+                        <span class="font-11px opacity-50 tracking-wide fw-600">/ENGG_DOC/BOILER/INSTRUMENTS
+                          DOCUMENTS/CONTROL VALVE/...</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center">
+                    <div class="inline-flex flex-col items-center">
+                      <span class="font-13px fw-800 color-blue">AMD</span>
+                      <span class="font-10px opacity-50 fw-700 text-uppercase">Instrumentation</span>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center font-13px fw-700 opacity-80">21 Sep 2019</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center opacity-40 font-12px fw-800">4512</td>
+                  <td class="user-table-cell text-left">
+                    <div class="flex items-center gap-12px">
+                      <i class="ph-fill ph-database color-blue font-24px"></i>
+                      <div class="flex flex-col gap-2px">
+                        <span class="font-14px fw-700 text-blue">boiler1_2024121205001523.mdb</span>
+                        <span class="font-11px opacity-50 tracking-wide fw-600">/ENGG_DOC/BOILER/MAJOR REVAMP/VIBRATION
+                          SYSTEM/</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center">
+                    <div class="inline-flex flex-col items-center">
+                      <span class="font-13px fw-800 color-blue">PMP</span>
+                      <span class="font-10px opacity-50 fw-700 text-uppercase">Civil Repair</span>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center font-13px fw-700 opacity-80">13 Dec 2024</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center opacity-40 font-12px fw-800">5567</td>
+                  <td class="user-table-cell text-left">
+                    <div class="flex items-center gap-12px">
+                      <i class="ph-fill ph-file-pdf color-red font-24px"></i>
+                      <div class="flex flex-col gap-2px">
+                        <span class="font-14px fw-700 text-blue">gail hp ng new connectivity.pdf</span>
+                        <span class="font-11px opacity-50 tracking-wide fw-600">/ENGG_DOC/BOILER/ENG DRAWING/NG
+                          STATION/...</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center">
+                    <div class="inline-flex flex-col items-center">
+                      <span class="font-13px fw-800 color-blue">RBL</span>
+                      <span class="font-10px opacity-50 fw-700 text-uppercase">Engineering</span>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center font-13px fw-700 opacity-80">09 Jan 2020</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center opacity-40 font-12px fw-800">6612</td>
+                  <td class="user-table-cell text-left">
+                    <div class="flex items-center gap-12px">
+                      <i class="ph-fill ph-file-txt color-blue font-24px"></i>
+                      <div class="flex flex-col gap-2px">
+                        <span class="font-14px fw-700 text-blue">ADMIN.txt</span>
+                        <span class="font-11px opacity-50 tracking-wide fw-600">/ENGG_DOC/BOILER/MAJOR
+                          REVAMP/IIMS/</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center">
+                    <div class="inline-flex flex-col items-center">
+                      <span class="font-13px fw-800 color-blue">PMP</span>
+                      <span class="font-10px opacity-50 fw-700 text-uppercase">Administration</span>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center font-13px fw-700 opacity-80">27 Jan 2020</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-cell text-center opacity-40 font-12px fw-800">7789</td>
+                  <td class="user-table-cell text-left">
+                    <div class="flex items-center gap-12px">
+                      <i class="ph-fill ph-file-lock color-amber font-24px"></i>
+                      <div class="flex flex-col gap-2px">
+                        <span class="font-14px fw-700 text-blue">wan.ldb</span>
+                        <span class="font-11px opacity-50 tracking-wide fw-600">/ENGG_DOC/BOILER/MAJOR
+                          REVAMP/IIMS/IIMS/</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center">
+                    <div class="inline-flex flex-col items-center">
+                      <span class="font-13px fw-800 color-blue">PMP</span>
+                      <span class="font-10px opacity-50 fw-700 text-uppercase">IIMS Database</span>
+                    </div>
+                  </td>
+                  <td class="user-table-cell text-center font-13px fw-700 opacity-80">21 Oct 2022</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer gap-12px">
+        <button id="btn-cleanup-submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Clean</button>
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-cleanup-tracking').removeClass('is-open')">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!--  -->
+  <div id="modal-search-file" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide">
+      <div class="gnfc-modal-header">
+        <div class="flex items-center justify-between w-full pr-40px">
+          <div class="flex items-center gap-12px">
+            <h3 class="gnfc-modal-title">Search File</h3>
+          </div>
+        </div>
+        <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="gnfc-modal-body bg-dark-bg p-0">
+        <div class="flex items-center gap-12px mb-10px">
+          <span class="fw-800 color-blue">Search :</span>
+          <input type="text" id="modal-search-input" class="gnfc-modal-input w-400px" placeholder="Search keywords...">
+          <button id="btn-modal-search-go" class="explorer-btn btn-action-blue">Go</button>
+        </div>
+        <div class="user-table-wrapper">
+          <table class="user-table" style="min-width: 1000px;">
+            <thead class="bg-muted-bg">
+              <tr>
+                <th class="user-table-cell text-center" style="width: 60px;">Rev</th>
+                <th class="user-table-cell text-left">Document</th>
+                <th class="user-table-cell text-center" style="width: 110px;">Date</th>
+                <th class="user-table-cell text-center" style="width: 90px;">Time</th>
+                <th class="user-table-cell text-center" style="width: 80px;">By</th>
+                <th class="user-table-cell text-center" style="width: 80px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="search-tbody">
+
+              <tr class="user-table-row">
+                <td class="user-table-cell text-center fw-800 color-blue">0</td>
+                <td class="user-table-cell text-left">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-pdf font-18px"></i>
+                    <a href="javascript:void(0)" class="item-name">Boiler Layout.pdf</a>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">10/01/2021</td>
+                <td class="user-table-cell text-center">10:00</td>
+                <td class="user-table-cell text-center fw-700 color-blue">KAYUM</td>
+                <td class="user-table-cell text-center">
+                  <i class="ph-fill ph-folder action-icon color-amber"></i>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell text-center fw-800 color-blue">1</td>
+                <td class="user-table-cell text-left">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file-doc font-18px"></i>
+                    <a href="#" class="item-name">Pressure Report.docx</a>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">25/08/2021</td>
+                <td class="user-table-cell text-center">14:30</td>
+                <td class="user-table-cell text-center fw-700 color-blue">ADMIN</td>
+                <td class="user-table-cell text-center">
+                  <i class="ph-fill ph-folder action-icon color-amber"></i>
+                </td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-cell text-center fw-800 color-blue">2</td>
+                <td class="user-table-cell text-left">
+                  <div class="flex items-center gap-8px">
+                    <i class="ph-fill ph-file font-18px"></i>
+                    <a href="#" class="item-name">Final Drawing.dwg</a>
+                  </div>
+                </td>
+                <td class="user-table-cell text-center">12/04/2026</td>
+                <td class="user-table-cell text-center">11:15</td>
+                <td class="user-table-cell text-center fw-700 color-blue">AMS</td>
+                <td class="user-table-cell text-center">
+                  <i class="ph-fill ph-folder action-icon color-amber"></i>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="$('#modal-search-file').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    const INVALID_FOLDER_CHARS = /[\\/:*?"<>|'~!#.%]/;
+    let CURRENT_PATH = ['BOILER_INST'];
+    let CLIPBOARD = null;
+    const SENT_ITEMS = [];
+
+    const FOLDER_DATA = {
+      'BOILER_INST': [
+        { name: 'APPROVAL', type: 'Folder', size: 12148, date: '27/06/2020 RMP', rev: '' },
+        { name: 'CORRESPONDANCE', type: 'Folder', size: 8680, date: '25/08/2021 RMP', rev: '' },
+        { name: 'REPORTS', type: 'Folder', size: 8040, date: '04/11/2024 RMP', rev: '' },
+        { name: 'MDM', type: 'Folder', size: 7033, date: '15/07/2018 RMP', rev: '' },
+        { name: 'PAYMENT', type: 'Folder', size: 254, date: '14/06/2019 RMP', rev: '' }
+      ],
+      'APPROVAL': [
+        { name: 'DRAWINGS', type: 'Folder', size: 5000, date: '10/01/2021 RMP', rev: '' },
+        { name: 'CERTIFICATES', type: 'Folder', size: 7148, date: '27/06/2020 RMP', rev: '' }
+      ],
+      'DRAWINGS': [
+        { name: 'Boiler_Side_View.pdf', type: 'File', size: 2500, date: '10/01/2021 RMP', rev: '0' },
+        { name: 'Foundation_Plan.dwg', type: 'File', size: 2500, date: '11/01/2021 RMP', rev: '1' }
+      ],
+      'CERTIFICATES': [
+        { name: 'Boiler_Approval_RevA.pdf', type: 'File', size: 5180, date: '27/06/2020 RMP', rev: '0' },
+        { name: 'Vendor_Certificates.zip', type: 'File', size: 1968, date: '05/02/2021 RMP', rev: '1' }
+      ],
+      'REPORTS': [
+        { name: '2024', type: 'Folder', size: 4000, date: '01/01/2024 RMP', rev: '' },
+        { name: '2023', type: 'Folder', size: 4040, date: '01/01/2023 RMP', rev: '' }
+      ],
+      '2024': [
+        { name: 'Monthly_Summary_Jan.pdf', type: 'File', size: 2000, date: '31/01/2024 RMP', rev: '0' },
+        { name: 'Monthly_Summary_Feb.pdf', type: 'File', size: 2000, date: '28/02/2024 RMP', rev: '0' }
+      ]
+    };
+
+    let BUFFER_DATA = [
+      { name: 'ADMIN', type: 'Folder' },
+      { name: 'ASP FILES', type: 'Folder' },
+      { name: 'BHEL AUX LOGIC', type: 'Folder' },
+      { name: 'ENGG_DOC', type: 'Folder' },
+      { name: 'HAIL DCS GRAPHICS SNAPSHOT', type: 'Folder' },
+      { name: 'HDD', type: 'Folder' },
+      { name: 'ask_urms_local_clouds.html', type: 'File' },
+      { name: 'ask_urms_local_meta.html', type: 'File' },
+      { name: 'blr po.xls', type: 'File' },
+      { name: 'blr.xls', type: 'File' },
+      { name: 'boiler lims tags.xls', type: 'File' },
+      { name: 'boiler logbook.xls', type: 'File' },
+      { name: 'boiler.xls', type: 'File' },
+      { name: 'com02c_opic1547_com sbn pr 1.dwg', type: 'File' },
+      { name: 'cpsu po.xls', type: 'File' },
+      { name: 'cylinder specification.fwp', type: 'File' },
+      { name: 'flowcheck31b.rar.enc', type: 'File' },
+      { name: 'loginhist.xls', type: 'File' },
+      { name: 'testaga.xls', type: 'File' }
+    ];
+
+
+    // ── Utility Functions ──
+    function escapeHtml(val) {
+      return $('<div>').text(val || '').html();
+    }
+
+    function getTodayDisplay() {
+      return new Intl.DateTimeFormat('en-GB').format(new Date());
+    }
+
+    function getNowTime() {
+      const d = new Date();
+      return d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
+    }
+
+    function formatPath() {
+      const displayPath = CURRENT_PATH.filter(p => p !== 'BOILER_INST');
+      return 'Other_Doc/Boiler/' + (displayPath.length > 0 ? displayPath.join('/') + '/' : '');
+    }
+
+    function getFileTypeLabel(fileName) {
+      if (!fileName.includes('.')) return 'File';
+      const ext = fileName.split('.').pop().toLowerCase();
+      switch (ext) {
+        case 'pdf': return 'PDF File';
+        case 'xlsx': case 'xls': case 'csv': return 'Microsoft Excel Worksheet';
+        case 'docx': case 'doc': return 'Microsoft Word Document';
+        case 'msg': return 'Outlook Message File';
+        case 'png': case 'jpg': case 'jpeg': return 'Image File';
+        default: return ext.toUpperCase() + ' File';
+      }
+    }
+
+    function getFileIcon(fileName, isFolder) {
+      if (isFolder) return 'ph-fill ph-folder text-amber-500';
+      if (!fileName.includes('.')) return 'ph-fill ph-file color-blue';
+      const ext = fileName.split('.').pop().toLowerCase();
+      switch (ext) {
+        case 'pdf': return 'ph-fill ph-file-pdf color-red';
+        case 'xlsx': case 'xls': case 'csv': return 'ph-fill ph-file-xls color-green';
+        case 'docx': case 'doc': return 'ph-fill ph-file-doc color-blue';
+        case 'msg': return 'ph-fill ph-envelope-simple color-amber';
+        case 'png': case 'jpg': case 'jpeg': return 'ph-fill ph-image color-purple';
+        default: return 'ph-fill ph-file color-blue';
+      }
+    }
+
+    function hasFolders() {
+      return $('#explorer-tbody tr[data-type="Folder"]').length > 0;
+    }
+
+    function hasFiles() {
+      return $('#explorer-tbody tr[data-type="File"]').length > 0;
+    }
+
+    function resetClipboardState() {
+      CLIPBOARD = null;
+      $('#btn-paste').addClass('hidden').removeClass('flex');
+      $('#explorer-table tbody tr').css('opacity', 1);
+    }
+
+    function showRestriction(message) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Action Restricted',
+        text: message,
+        confirmButtonColor: 'var(--typo-blue)'
+      });
+    }
+
+    // ── Stats Update ──
+    function updateStats() {
+      const rows = $('#explorer-tbody tr.user-table-row');
+      const folderRows = rows.filter('[data-type="Folder"]');
+      const fileRows = rows.filter('[data-type="File"]');
+      let totalKb = 0;
+      rows.each(function () { totalKb += parseInt($(this).data('size') || 0); });
+      let folderKb = 0;
+      folderRows.each(function () { folderKb += parseInt($(this).data('size') || 0); });
+
+      $('#stat-total-cnt').text(rows.length);
+      $('#stat-total-kb').text(totalKb.toLocaleString('en-IN'));
+      $('#stat-folder-cnt').text(folderRows.length);
+      $('#stat-folder-kb').text(folderKb.toLocaleString('en-IN'));
+      $('#stat-file-cnt').text(fileRows.length);
+    }
+
+    // ── Navigation Engine ──
+    function renderFolderContents() {
+      const currentFolderName = CURRENT_PATH[CURRENT_PATH.length - 1];
+      const items = FOLDER_DATA[currentFolderName] || [];
+
+      $('#current-folder-display').text(currentFolderName);
+      $('#path-breadcrumb').text(formatPath());
+
+      // Dynamically build table rows
+      const $tbody = $('#explorer-tbody');
+      $tbody.empty();
+
+      if (items.length === 0) {
+        $tbody.append('<tr><td colspan="7" class="user-table-cell text-center italic py-24px opacity-60">This folder is empty</td></tr>');
+      } else {
+        items.forEach(function (item) {
+          const isFolder = item.type === 'Folder';
+          const iconClass = getFileIcon(item.name, isFolder);
+          const typeLabel = isFolder ? '&lt;Folder&gt;' : getFileTypeLabel(item.name);
+          const sizeText = item.size ? item.size.toLocaleString('en-IN') + ' Kb' : '0 Kb';
+          const dateText = (item.date || '').replace(' RMP', '');
+          const revDisplay = (!isFolder && item.rev !== undefined && item.rev !== '') ? item.rev : '';
+
+          const row = '<tr class="user-table-row" data-type="' + escapeHtml(item.type) + '" data-name="' + escapeHtml(item.name) + '" data-size="' + (item.size || 0) + '" data-date="' + escapeHtml(dateText) + '" data-rev="' + escapeHtml(String(item.rev || '')) + '">' +
+            '<td class="user-table-cell text-center"><i class="ph-bold ph-notebook action-icon btn-doc-log"></i></td>' +
+            '<td class="user-table-cell text-left"><div class="flex items-center gap-8px"><i class="' + iconClass + ' font-18px"></i><span class="item-name">' + escapeHtml(item.name) + '</span></div></td>' +
+            '<td class="user-table-cell text-left"><span>' + typeLabel + '</span></td>' +
+            '<td class="user-table-cell text-left"><span class="">' + sizeText + '</span></td>' +
+            '<td class="user-table-cell text-left"><span>' + escapeHtml(dateText) + '</span></td>' +
+            '<td class="user-table-cell text-center"><div class="row-actions">' +
+              '<i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>' +
+              '<i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>' +
+              '<i class="ph-bold ph-scissors action-icon btn-cut"></i>' +
+              '<i class="ph-bold ph-trash action-icon delete btn-delete"></i>' +
+            '</div></td>' +
+          '</tr>';
+
+          $tbody.append(row);
+        });
+      }
+
+      updateStats();
+      updateToolbarState();
+    }
+
+    function goToParentFolder() {
+      if (CURRENT_PATH.length > 1) {
+        CURRENT_PATH.pop();
+        renderFolderContents();
+      }
+    }
+
+    function updateToolbarState() {
+      const canGoUp = CURRENT_PATH.length > 1;
+      const currentFolderName = CURRENT_PATH[CURRENT_PATH.length - 1];
+      const items = FOLDER_DATA[currentFolderName] || [];
+
+      const folderCount = items.filter(i => i.type === 'Folder').length;
+      const fileCount = items.filter(i => i.type === 'File').length;
+
+      // Show "Delete All Files" only if there are files and ZERO folders
+      if (fileCount > 0 && folderCount === 0) {
+        $('#btn-delete-all').removeClass('hidden');
+      } else {
+        $('#btn-delete-all').addClass('hidden');
+      }
+
+      $('#btn-up-level')
+        .prop('disabled', !canGoUp)
+        .attr('title', canGoUp ? 'Up One Level' : 'Already at root folder');
+    }
+
+
+    // ── Email Helpers ──
+    function populateEmailFileSelect(selectedName) {
+      const $sel = $('#email-file-select');
+      $sel.empty();
+      const files = $('#explorer-tbody tr[data-type="File"]');
+      if (!files.length) {
+        $sel.append('<option value="">No files in current folder</option>');
+        return;
+      }
+      files.each(function () {
+        const name = $(this).data('name');
+        const sel = (selectedName && name === selectedName) ? ' selected' : '';
+        $sel.append('<option value="' + escapeHtml(name) + '"' + sel + '>' + escapeHtml(name) + '</option>');
+      });
+    }
+
+    function renderLogTable() {
+      const itemFilter = ($('#log-filter-item').val() || '').toLowerCase();
+      const actionFilter = $('#log-filter-action').val();
+      const rows = $('#log-tbody tr.user-table-row');
+
+      rows.each(function () {
+        const $row = $(this);
+        const item = ($row.data('item') || '').toLowerCase();
+        const loc = ($row.find('.user-table-cell:nth-child(3)').text() || '').toLowerCase();
+        const action = $row.data('action');
+
+        const matchItem = item.indexOf(itemFilter) >= 0 || loc.indexOf(itemFilter) >= 0;
+        const matchAction = actionFilter === 'ALL' || action === actionFilter;
+
+        if (matchItem && matchAction) $row.show();
+        else $row.hide();
+      });
+    }
+
+    function renderRevisionHistory(fileName) {
+      // Static HTML is already rendered in the revision history modal.
+      // No dynamic rendering needed.
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const docType = urlParams.get('type') || 'eng';
+    const title = docType === 'eng' ? 'Engineering Documentation' : 'Communication And Other Records';
+
+    if (typeof renderHeader === 'function') {
+      renderHeader({
+        title: title,
+        breadcrumbs: [
+          { label: 'Plant', href: '../plant_status.html' },
+          { label: 'Boiler Dashboard', href: 'boiler_dashboard.html' },
+          { label: 'Documents', href: 'boiler_doc_management.html' },
+          { label: 'Explorer' }
+        ],
+      });
+    }
+
+    // Initial Render
+    renderFolderContents();
+
+    // ── Row Click Navigation (scoped to explorer table only) ──
+    $(document).on('click', '#explorer-tbody .user-table-row', function (e) {
+      // Prevent navigation if clicking on action icons or checkboxes
+      if ($(e.target).closest('.row-actions, .action-icon, .btn-doc-log, .revision-cell').length) return;
+
+      const type = $(this).data('type');
+      const name = $(this).data('name');
+
+      // Guard: ignore rows without valid data (e.g. modal rows)
+      if (!type || !name) return;
+
+      if (type === 'Folder') {
+        CURRENT_PATH.push(name);
+        renderFolderContents();
+      } else {
+        // Files: Open Revision History by default on row click
+        renderRevisionHistory(name);
+        $('#modal-revision-history').addClass('is-open');
+      }
+    });
+
+
+    // ── Upload Slot Browse ──
+    $(document).on('click', '.btn-slot-browse', function () {
+      $(this).siblings('.slot-input').click();
+    });
+
+    $(document).on('change', '.slot-input', function () {
+      const fileName = this.files[0] ? this.files[0].name : 'No file selected';
+      $(this).closest('.flex').siblings('.bg-dark-subtle').find('.slot-filename').text(fileName).removeClass('italic ');
+    });
+
+    // ── Toolbar Actions ──
+
+    // ── Cut (to Clipboard) ──
+    $(document).on('click', '.btn-cut', function (e) {
+      e.stopPropagation();
+      const row = $(this).closest('tr');
+      const name = row.data('name');
+      const type = row.data('type');
+      const item = { name, type, size: row.data('size'), date: row.data('date'), rev: row.data('rev') || '' };
+      CLIPBOARD = { item: item, type: type };
+      $('#explorer-table tbody tr').css('opacity', 0.4);
+      row.css('opacity', 1);
+      $('#btn-paste').removeClass('hidden').addClass('flex');
+      Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: '"' + name + '" cut to clipboard', showConfirmButton: false, timer: 1500 });
+    });
+
+    $('#btn-up-level').click(function () {
+      goToParentFolder();
+    });
+
+    $('#btn-new-folder').click(function () {
+      if (hasFiles()) {
+        return Swal.fire({ title: 'Error message !!', text: 'Can not create folder at this location. Folders and Files can not co-exist', icon: 'error', confirmButtonColor: 'var(--typo-blue)' });
+      }
+      $('#modal-parent-display').text(formatPath());
+      $('#input-folder-name').val('').removeClass('border-red');
+      $('#folder-error').addClass('hidden');
+      $('#modal-new-folder').addClass('is-open');
+    });
+
+    $('#btn-confirm-new-folder').click(function () {
+      var name = $('#input-folder-name').val().trim();
+      if (!name) { $('#input-folder-name').addClass('border-red'); return; }
+      if (INVALID_FOLDER_CHARS.test(name)) { $('#folder-error').removeClass('hidden'); $('#input-folder-name').addClass('border-red'); return; }
+      $('#modal-new-folder').removeClass('is-open');
+      Swal.fire('Success', 'Folder "' + name + '" create request initiated.', 'success');
+    });
+
+    $('#btn-upload').click(function () {
+      if (hasFolders()) {
+        return Swal.fire({ title: 'Error message !!', text: 'Can not save file at this location. Folders and Files can not co-exist', icon: 'error', confirmButtonColor: 'var(--typo-blue)' });
+      }
+      $('#upload-path-display').text(formatPath());
+      $('#modal-upload').addClass('is-open');
+    });
+
+    $('#btn-confirm-upload').click(function () {
+      const currentFolderName = CURRENT_PATH[CURRENT_PATH.length - 1];
+      const existingItems = FOLDER_DATA[currentFolderName] || [];
+      const existingFileNames = existingItems
+        .filter(item => item.type === 'File')
+        .map(item => item.name.toUpperCase());
+
+      // Collect all selected file names from upload slots
+      const duplicates = [];
+      let hasAnyFile = false;
+      let hasError = false;
+      let hasLengthError = false;
+
+      $('.slot-comment').removeClass('border-red');
+
+      $('.slot-row-container').each(function () {
+        const fileInput = $(this).find('.slot-input')[0];
+        const commentInput = $(this).find('.slot-comment');
+
+        if (fileInput && fileInput.files && fileInput.files.length > 0) {
+          hasAnyFile = true;
+          const fileName = fileInput.files[0].name;
+          if (existingFileNames.indexOf(fileName.toUpperCase()) >= 0) {
+            duplicates.push(fileName);
+          }
+
+          const commentVal = commentInput.val().trim();
+          if (!commentVal) {
+            commentInput.addClass('border-red');
+            hasError = true;
+          } else if (commentVal.length < 6) {
+            commentInput.addClass('border-red');
+            hasLengthError = true;
+          }
+        }
+      });
+
+      if (!hasAnyFile) {
+        return Swal.fire({ icon: 'warning', title: 'No File Selected', text: 'Please select at least one file to upload.', confirmButtonColor: 'var(--typo-blue)' });
+      }
+
+      if (duplicates.length > 0) {
+        return Swal.fire({
+          icon: 'error',
+          title: 'Duplicate File(s) Found!',
+          html: 'The following file(s) already exist in <b>' + escapeHtml(currentFolderName) + '</b>:<br><br>' +
+            '<ul style="text-align:left; padding-left:20px;">' +
+            duplicates.map(f => '<li class="color-red fw-700">' + escapeHtml(f) + '</li>').join('') +
+            '</ul><br>Same file cannot be saved in the same folder. Please rename or remove the duplicate file(s).',
+          confirmButtonColor: 'var(--typo-blue)'
+        });
+      }
+
+      if (hasError) {
+        return Swal.fire({ icon: 'error', title: 'Comment Required', text: 'Please add a comment for all selected files.', confirmButtonColor: 'var(--typo-red)' });
+      }
+      
+      if (hasLengthError) {
+        return Swal.fire({ icon: 'error', title: 'Invalid Comment', text: 'Comments must be at least 6 characters.', confirmButtonColor: 'var(--typo-red)' });
+      }
+
+      $('#modal-upload').removeClass('is-open');
+      Swal.fire({ icon: 'success', title: 'Upload Initiated', text: 'File upload request initiated successfully.', showConfirmButton: false, timer: 1500 });
+    });
+
+    // ── Send Mail ──
+    $('#btn-send-mail').click(function () {
+      populateEmailFileSelect('');
+      $('#email-search-input').val('');
+      $('#email-to-select').val('');
+      $('#email-subject').val('');
+      $('#email-message').val('');
+      $('#email-link-only').prop('checked', false);
+      $('#modal-send-email').addClass('is-open');
+    });
+
+    $(document).on('click', '.btn-email-row', function (e) {
+      e.stopPropagation();
+      var row = $(this).closest('tr');
+      var type = row.data('type');
+      var name = row.data('name');
+      if (type !== 'File') {
+        return Swal.fire({ icon: 'info', title: 'Select File', text: 'Email can be sent for files only.' });
+      }
+      populateEmailFileSelect(name);
+      $('#modal-send-email').addClass('is-open');
+    });
+
+    $('#btn-send-email-submit').click(function () {
+      const email = $('#email-to-select').val();
+      if (!email) {
+        $('#email-search-input').addClass('is-invalid-tag');
+        return Swal.fire({ icon: 'error', title: 'Recipent Required', text: 'Please select a valid email address.' });
+      }
+      $('#modal-send-email').removeClass('is-open');
+      Swal.fire({ icon: 'success', title: 'Sent', text: 'Mail sent successfully. CC sent to sender email.' });
+    });
+
+    $('#btn-open-sent-items').on('click', function () {
+      $('#modal-send-email').removeClass('is-open');
+      $('#modal-sent-items').addClass('is-open');
+    });
+
+    // ── Searchable Dropdown Helper (Pattern from pm_master.html) ──
+    function initSearchableDropdown(inputSelector, selectSelector, onMatch) {
+      const $input = $(inputSelector);
+      const $select = $(selectSelector);
+      let snapBackTimeout = null;
+      let snapBackInterval = null;
+      let isAutoRemoving = false;
+
+      function getAvailableOptions() {
+        let options = [];
+        $select.find('option').each(function () {
+          if ($(this).val()) options.push({ val: $(this).val(), text: $(this).text().toUpperCase() });
+        });
+        return options;
+      }
+
+      function stopAutoRemove() {
+        clearTimeout(snapBackTimeout);
+        clearInterval(snapBackInterval);
+        isAutoRemoving = false;
+      }
+
+      const options = getAvailableOptions();
+
+      $input.on('input', function (e) {
+        const cursorStart = this.selectionStart;
+        const cursorEnd = this.selectionEnd;
+        const rawVal = $(this).val();
+        const upperVal = rawVal.toUpperCase();
+        if (rawVal !== upperVal) {
+          $(this).val(upperVal);
+          this.setSelectionRange(cursorStart, cursorEnd);
+        }
+
+        const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+        const isDeleting = inputType && inputType.startsWith('delete');
+
+        if (isDeleting) stopAutoRemove();
+
+        let inputVal = $(this).val().toUpperCase();
+
+        if (isDeleting) {
+          let hasMatch = inputVal.length === 0 || options.some(opt => opt.val.toUpperCase().startsWith(inputVal) || opt.text.startsWith(inputVal));
+          if (hasMatch) $input.removeClass('is-invalid-tag');
+          else $input.addClass('is-invalid-tag');
+
+          let exactMatch = options.find(opt => opt.val.toUpperCase() === inputVal || opt.text === inputVal);
+          $select.val(exactMatch ? exactMatch.val : '');
+          if (onMatch) onMatch(exactMatch ? exactMatch.val : '');
+          return;
+        }
+
+        // Forward typing
+        let longestValidPrefix = "";
+        for (let i = inputVal.length; i >= 0; i--) {
+          let sub = inputVal.substring(0, i);
+          if (options.some(opt => opt.val.toUpperCase().startsWith(sub) || opt.text.startsWith(sub))) {
+            longestValidPrefix = sub;
+            break;
+          }
+        }
+
+        if (inputVal.length > longestValidPrefix.length + 3) {
+          inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+          $input.val(inputVal);
+        }
+
+        if (inputVal.length > longestValidPrefix.length) {
+          $input.addClass('is-invalid-tag');
+          $select.val('');
+          if (onMatch) onMatch('');
+
+          stopAutoRemove();
+          snapBackTimeout = setTimeout(() => {
+            isAutoRemoving = true;
+            snapBackInterval = setInterval(() => {
+              let currentVal = $input.val();
+              if (currentVal.length > longestValidPrefix.length) {
+                currentVal = currentVal.substring(0, currentVal.length - 1);
+                $input.val(currentVal);
+              } else {
+                stopAutoRemove();
+                $input.removeClass('is-invalid-tag');
+              }
+            }, 100);
+          }, 800);
+        } else {
+          $input.removeClass('is-invalid-tag');
+          let exactMatch = options.find(opt => opt.val.toUpperCase() === inputVal || opt.text === inputVal);
+          $select.val(exactMatch ? exactMatch.val : '');
+          if (onMatch) onMatch(exactMatch ? exactMatch.val : '');
+        }
+      });
+
+      $select.on('change', function () {
+        $input.val($(this).val().toUpperCase());
+        $input.removeClass('is-invalid-tag');
+      });
+    }
+
+    // Initialize Email Searchable Dropdown
+    initSearchableDropdown('#email-search-input', '#email-to-select');
+
+    // ── Doc Log ──
+    $(document).on('click', '.btn-doc-log', function (e) {
+      e.stopPropagation();
+      const name = $(this).closest('tr').find('.item-name').text() || $('#current-folder-display').text();
+      $('#log-filter-item').val(name.toLowerCase());
+      $('#log-filter-action').val('ALL');
+      renderLogTable();
+      $('#modal-doc-log').addClass('is-open');
+    });
+
+    $('#log-filter-item, #log-filter-action').on('input change', renderLogTable);
+
+    // ── Delete All ──
+    $('#btn-delete-all').click(function () {
+      const currentFolderName = CURRENT_PATH[CURRENT_PATH.length - 1];
+
+      Swal.fire({
+        title: 'Delete All Files?',
+        text: 'Are you sure you want to delete all documents in "' + currentFolderName + '"? This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'var(--red)',
+        confirmButtonText: 'Yes, Delete All',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          FOLDER_DATA[currentFolderName] = FOLDER_DATA[currentFolderName].filter(item => item.type !== 'File');
+          renderFolderContents();
+          Swal.fire('Deleted!', 'All documents deleted successfully', 'success');
+        }
+      });
+    });
+
+    $(document).on('click', '.btn-rename', function (e) {
+      e.stopPropagation();
+      const row = $(this).closest('tr');
+      const name = row.data('name');
+      const type = row.data('type');
+
+      $('#rename-modal-title').text('Rename ' + type);
+      $('#rename-location').text(formatPath());
+      $('#rename-current-name').text(name);
+      $('#rename-label-current').text(type + ' Name :');
+      $('#rename-input').val(name).data('old-name', name).data('row', row);
+      $('#modal-rename').addClass('is-open');
+    });
+
+    $('#btn-rename-submit').click(function () {
+      $('#modal-rename').removeClass('is-open');
+      Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Renamed successfully', showConfirmButton: false, timer: 1500 });
+    });
+
+    // ── Delete ──
+    $(document).on('click', '.btn-delete', function (e) {
+      e.stopPropagation();
+      const tr = $(this).closest('tr');
+      const name = tr.data('name');
+      const type = tr.data('type');
+      const rev = tr.data('rev') || '0';
+
+      if (type === 'File') {
+        $('#delete-doc-path').text(formatPath() + '/' + name);
+        $('#delete-doc-rev').text(rev);
+        $('#btn-delete-doc-confirm').data('row', tr);
+        $('#link-view-rev-from-delete').off('click').on('click', function () {
+          $('#modal-delete-doc').removeClass('is-open');
+          renderRevisionHistory(name);
+          $('#modal-revision-history').addClass('is-open');
+        });
+        $('#modal-delete-doc').addClass('is-open');
+        return;
+      }
+
+      if (type === 'Folder') {
+        const contents = FOLDER_DATA[name] || [];
+        if (contents.length > 0) {
+          return Swal.fire({
+            title: 'Action Restricted',
+            text: 'Only empty folders can be deleted. "' + name + '" contains content and cannot be removed.',
+            icon: 'info',
+            confirmButtonColor: 'var(--typo-blue)'
+          });
+        }
+      }
+
+      Swal.fire({
+        title: 'Confirm Delete?',
+        text: 'Are you sure you want to delete "' + name + '"?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'var(--typo-red)',
+        confirmButtonText: 'Yes, Delete'
+      }).then(function (result) {
+        if (!result.isConfirmed) return;
+        tr.fadeOut(300, function () {
+          $(this).remove();
+          updateStats();
+          updateToolbarState();
+        });
+        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Deleted successfully', showConfirmButton: false, timer: 1500 });
+      });
+    });
+
+    $('#btn-delete-doc-confirm').click(function () {
+      const tr = $(this).data('row');
+      const name = tr.data('name');
+      const currentFolderName = CURRENT_PATH[CURRENT_PATH.length - 1];
+      FOLDER_DATA[currentFolderName] = FOLDER_DATA[currentFolderName].filter(item => item.name !== name);
+
+      $('#modal-delete-doc').removeClass('is-open');
+      tr.fadeOut(300, function () {
+        $(this).remove();
+        updateStats();
+        updateToolbarState();
+        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Deleted successfully', showConfirmButton: false, timer: 1500 });
+      });
+    });
+
+    $(document).on('click', '.btn-delete-revision', function (e) {
+      e.stopPropagation();
+      const tr = $(this).closest('tr');
+      const rev = tr.find('td:first').text();
+
+      Swal.fire({
+        title: 'Delete Revision?',
+        text: 'Are you sure you want to delete Revision ' + rev + '? This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'var(--red)',
+        confirmButtonText: 'Yes, Delete',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          tr.fadeOut(300, function () {
+            $(this).remove();
+            Swal.fire('Deleted!', 'Revision deleted successfully.', 'success');
+          });
+        }
+      });
+    });
+
+
+
+    $(document).on('click', '.revision-cell', function (e) {
+      e.stopPropagation();
+      const row = $(this).closest('.user-table-row');
+      const fileName = row.data('name');
+      const type = row.data('type');
+      if (type !== 'File') return;
+      renderRevisionHistory(fileName);
+      $('#modal-revision-history').addClass('is-open');
+    });
+
+
+    // ── Close Modals ──
+    $('.gnfc-modal-close').click(function () {
+      $(this).closest('.gnfc-modal-overlay').removeClass('is-open');
+    });
+
+    $(window).on('keydown', function (e) {
+      if (e.key === 'Escape') $('.gnfc-modal-overlay.is-open').removeClass('is-open');
+    });
+
+    $('#btn-move-buffer').click(function () {
+      // Buffer items are already static HTML, just open the modal
+      $('#modal-move-from-buffer').addClass('is-open');
+    });
+
+    // ── Search Logic ──
+    function performGlobalSearch(query) {
+      const q = (query || '').toLowerCase().trim();
+      const results = [];
+      if (!q) return results;
+
+      Object.keys(FOLDER_DATA).forEach(folderName => {
+        const items = FOLDER_DATA[folderName];
+        items.forEach(item => {
+          if (item.type === 'File' && item.name.toLowerCase().indexOf(q) >= 0) {
+            results.push({ ...item, folder: folderName });
+          }
+        });
+      });
+      return results;
+    }
+
+    // Since our mock FOLDER_DATA keys are unique names, we can "find" the path by traversing
+    function findPathToFolder(target, currentPath = ['BOILER_INST']) {
+      const folderName = currentPath[currentPath.length - 1];
+      if (folderName === target) return currentPath;
+
+      const items = FOLDER_DATA[folderName] || [];
+      for (let item of items) {
+        if (item.type === 'Folder') {
+          const result = findPathToFolder(target, [...currentPath, item.name]);
+          if (result) return result;
+        }
+      }
+      return null;
+    }
+
+    function openLocation(folderName) {
+      const newPath = findPathToFolder(folderName);
+      if (newPath) {
+        CURRENT_PATH = newPath;
+        renderFolderContents();
+        $('#modal-search-file').removeClass('is-open');
+        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Navigated to ' + folderName, showConfirmButton: false, timer: 1500 });
+      } else {
+        Swal.fire('Error', 'Could not locate folder: ' + folderName, 'error');
+      }
+    }
+
+    $('#btn-search-open').click(function () {
+      // Search results are already static HTML, just open the modal
+      $('#modal-search-input').val('');
+      $('#modal-search-file').addClass('is-open');
+      setTimeout(() => $('#modal-search-input').focus(), 100);
+    });
+
+    $('#modal-search-input').on('keypress', function (e) {
+      if (e.which === 13) $('#btn-modal-search-go').click();
+    });
+
+    $('#btn-modal-search-go').click(function () {
+      const q = $('#modal-search-input').val();
+      const results = performGlobalSearch(q);
+      renderSearchResults(results);
+    });
+
+
+    $('#btn-sent-items').click(function () {
+      $('#modal-sent-items').addClass('is-open');
+    });
+
+    // ── Paste (Cut item) ──
+    $('#btn-paste').click(function () {
+      if (!CLIPBOARD) return;
+      if (hasFolders() && CLIPBOARD.type === 'File') {
+        return Swal.fire({ title: 'Error message !!', text: 'Can not save file at this location. Folders and Files can not co-exist', icon: 'error', confirmButtonColor: 'var(--typo-blue)' });
+      }
+      if (hasFiles() && CLIPBOARD.type === 'Folder') {
+        return Swal.fire({ title: 'Error message !!', text: 'Can not paste folder here. Folders and Files can not co-exist', icon: 'error', confirmButtonColor: 'var(--typo-blue)' });
+      }
+      const currentFolderName = CURRENT_PATH[CURRENT_PATH.length - 1];
+      if (!FOLDER_DATA[currentFolderName]) FOLDER_DATA[currentFolderName] = [];
+
+      // Duplicate check: same name cannot exist in the same folder
+      const existingNames = FOLDER_DATA[currentFolderName].map(i => i.name.toUpperCase());
+      if (existingNames.indexOf(CLIPBOARD.item.name.toUpperCase()) >= 0) {
+        return Swal.fire({ icon: 'error', title: 'Duplicate Found!', text: '"' + CLIPBOARD.item.name + '" already exists in "' + currentFolderName + '". Same file cannot be saved in the same folder.', confirmButtonColor: 'var(--typo-blue)' });
+      }
+
+      FOLDER_DATA[currentFolderName].push(CLIPBOARD.item);
+      resetClipboardState();
+      renderFolderContents();
+      Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Pasted successfully', showConfirmButton: false, timer: 1500 });
+    });
+
+    // ── Register ──
+    $('#btn-register').click(function () {
+      $('#register-path-display').text(formatPath());
+      $('#register-date').val(getTodayDisplay());
+      $('#register-remarks').val('');
+      $('#modal-register').addClass('is-open');
+    });
+
+    $('#btn-register-submit').click(function () {
+      $('#modal-register').removeClass('is-open');
+      Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Documents registered successfully', showConfirmButton: false, timer: 2000 });
+    });
+
+    // ── Un-Register ──
+    $('#btn-unregister').click(function () {
+      $('#unregister-path-display').text(formatPath());
+      $('#unregister-reason').val('');
+      $('#modal-unregister').addClass('is-open');
+    });
+
+    $('#btn-unregister-submit').click(function () {
+      const reason = $('#unregister-reason').val().trim();
+      if (!reason) {
+        $('#unregister-reason').addClass('border-red');
+        return Swal.fire({ icon: 'warning', title: 'Reason Required', text: 'Please provide a reason for un-registering.' });
+      }
+      $('#modal-unregister').removeClass('is-open');
+      Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Documents un-registered', showConfirmButton: false, timer: 2000 });
+    });
+
+    // ── Clean-up ──
+    $('#btn-cleanup-unlock').click(function () {
+      $('#modal-cleanup-tracking').addClass('is-open');
+    });
+
+    $(document).on('click', '.ph-arrow-counter-clockwise.action-icon', function () {
+      Swal.fire({
+        title: 'Resend this email?',
+        text: 'This will send the document again to the original recipient.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'var(--blue)',
+        confirmButtonText: 'Yes, Send Now',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Resent Successfully!',
+            text: 'The document has been resent successfully.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        }
+      });
+    });
+
+
+    $(document).on('click', '.btn-delete-sent', function () {
+      Swal.fire({
+        title: 'Delete from Sent Items?',
+        text: 'This record will be permanently removed from your history.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'var(--red)',
+        confirmButtonText: 'Yes, Delete It',
+        cancelButtonText: 'Keep it'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $(this).closest('tr').fadeOut(400, function () { $(this).remove(); });
+          Swal.fire({ title: 'Deleted!', icon: 'success', timer: 1500, showConfirmButton: false });
+        }
+      });
+    });
+
+    $('#btn-cleanup-submit').click(function () {
+      Swal.fire({
+        title: 'Start Cleanup?',
+        text: 'This will unlock 7 documents and move them to the Recycle Bin. Continue?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'var(--blue)',
+        confirmButtonText: 'Yes, Clean Now',
+        cancelButtonText: 'Wait'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Cleaned!',
+            text: 'System maintenance completed successfully.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          $('#modal-cleanup-tracking').removeClass('is-open');
+        }
+      });
+    });
+
+
+
+    $(document).on('click', '.btn-move-item', function () {
+      const index = $(this).data('index');
+      const item = BUFFER_DATA[index];
+      const currentFolderPath = formatPath();
+
+      // Step 2: Show confirmation modal instead of direct move
+      $('#confirm-selected-folder').text(item.name);
+      $('#confirm-server-location').text(currentFolderPath);
+
+      $('#modal-move-from-buffer').removeClass('is-open');
+      $('#modal-move-buffer-confirm').addClass('is-open');
+
+      // Store the index for the final move action if needed
+      $('#btn-cancel-move').data('item-index', index);
+    });
+
+    $('#btn-confirm-move-final').click(function () {
+      const index = $('#btn-cancel-move').data('item-index');
+      if (index === undefined) return;
+
+      const item = BUFFER_DATA[index];
+      const currentFolderName = CURRENT_PATH[CURRENT_PATH.length - 1];
+
+      // Add to FOLDER_DATA
+      if (!FOLDER_DATA[currentFolderName]) FOLDER_DATA[currentFolderName] = [];
+
+      // Duplicate check: same name cannot exist in the same folder
+      const existingNames = FOLDER_DATA[currentFolderName].map(i => i.name.toUpperCase());
+      if (existingNames.indexOf(item.name.toUpperCase()) >= 0) {
+        $('#modal-move-buffer-confirm').removeClass('is-open');
+        return Swal.fire({ icon: 'error', title: 'Duplicate Found!', text: '"' + item.name + '" already exists in "' + currentFolderName + '". Same file cannot be saved in the same folder.', confirmButtonColor: 'var(--typo-blue)' });
+      }
+
+      const newItem = {
+        name: item.name,
+        type: item.type,
+        size: Math.floor(Math.random() * 5000) + 100,
+        date: getTodayDisplay() + ' RMP',
+        rev: item.type === 'File' ? '0' : ''
+      };
+
+      FOLDER_DATA[currentFolderName].push(newItem);
+
+      // Remove from Buffer
+      BUFFER_DATA.splice(index, 1);
+
+      // Refresh UI
+      renderBufferList();
+      renderFolderContents();
+      updateStats();
+
+      $('#modal-move-buffer-confirm').removeClass('is-open');
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Moved: ' + item.name,
+        showConfirmButton: false,
+      });
+    });
+
+  </script>
+
+</body>
+
+</html>

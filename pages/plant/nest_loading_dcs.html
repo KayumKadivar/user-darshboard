@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nest Loading DCS | GNFC</title>
+    <link rel="stylesheet" href="../../css/phosphor.css">
+    <link rel="stylesheet" href="../../css/theme-vars.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/style.css">
+    <link rel="stylesheet" href="../../css/pages/plant.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+    <link rel="stylesheet" href="../../css/modal-ui.css">
+
+    <style>
+        /* --- Custom DCS styles --- */
+
+
+        /* Tag links */
+        .dcs-tag-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .dcs-tag-link:hover {
+            text-decoration: underline;
+        }
+
+        .dark-theme .dcs-tag-link {
+            color: #60a5fa;
+        }
+
+        .spare-text {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        /* Highlighted row */
+        .user-table tr.highlighted-row {
+            background-color: rgba(250, 204, 21, 0.3) !important;
+            outline: 2px solid #eab308;
+        }
+    </style>
+
+    <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="../../js/theme-control.js"></script>
+    <script src="../../js/sidebar.js" defer></script>
+    <script src="../../js/header.js" defer></script>
+    <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
+    <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+
+    <div class="sidebar-container"></div>
+
+    <main class="main-wrapper">
+
+        <div id="header-container" data-title="Nest Loading DCS"
+            data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,Nest Loading DCS:active"
+            data-back="boiler_dashboard.html"></div>
+
+        <div class="dashboard-content dashboard-scroll">
+
+            <!-- ── FILTER CARD ── -->
+            <div class="jt-filter-card">
+                <div class="jt-filter-header">
+                    <h2 class="jt-filter-title">
+                        <i class="ph-bold ph-funnel"></i>
+                        SEARCH CRITERIA
+                    </h2>
+                </div>
+                <div class="jt-filter-body">
+
+                    <!-- Tag Input with Dual Search/Select Logic -->
+                    <div style="min-width: 300px;">
+                        <label class="gnfc-modal-label">TAG NUMBER</label>
+                        <div class="flex items-center gap-8px">
+                            <input type="text" id="dcs-search-tag" placeholder="Search Tag..."
+                                class="gnfc-modal-input font-13px uppercase flex-1">
+                            <div class="flex-1">
+                                <select id="dcs-tag-select" class="gnfc-modal-input">
+                                    <option value="">-- Select --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controller Select -->
+                    <div style="min-width: 200px;">
+                        <label class="gnfc-modal-label">CONTROLLER NO</label>
+                        <select id="dcs-controller-select" class="gnfc-modal-input">
+                            <option value="ALL">ALL</option>
+                            <option value="1A1-TTUR">1A1-TTUR</option>
+                            <option value="1A2-TTUR">1A2-TTUR</option>
+                            <option value="2A1-ESD">2A1-ESD</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="plant-table-container">
+                <!-- DCS Tables Container -->
+                <div class="user-table-wrapper">
+                    <table class="user-table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th class="text-left" style="width: 150px;">CHANNEL_NO</th>
+                                <th class="text-left">TAG_NO</th>
+                                <th class="text-left">DESCRIPTION</th>
+                                <th class="text-left">BARRIER</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dcs-tables-container">
+                            <!-- Group: 1A1-TTUR -->
+                            <tr class="user-table-date" data-controller="1A1-TTUR">
+                                <td class="user-table-bold" colspan="2">IO MODULE : /0 / J0 / 1A1-TTUR</td>
+                                <td class="user-table-bold">LOCATION:1A1<br>FIM MODULE : </td>
+                                <td class="user-table-bold">TYPE:VTUR<br>IOLINK:</td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A1-TTUR" data-tag="space">
+                                <td class="user-table-center user-table-secondary">1</td>
+                                <td><span class="spare-text">SPACE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A1-TTUR" data-tag="tts(pn_rpm)">
+                                <td class="user-table-center user-table-secondary">2</td>
+                                <td><a class="dcs-tag-link" data-tag="TTS(pn_rpm)">TTS(pn_rpm)</a></td>
+                                <td>STARTING DIESEL MAGNETIC PICKUP</td>
+                                <td></td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A1-TTUR" data-tag="spare">
+                                <td class="user-table-center user-table-secondary">3</td>
+                                <td><span class="spare-text">SPARE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A1-TTUR" data-tag="spare">
+                                <td class="user-table-center user-table-secondary">4</td>
+                                <td><span class="spare-text">SPARE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A1-TTUR" data-tag="spare">
+                                <td class="user-table-center user-table-secondary">5</td>
+                                <td><span class="spare-text">SPARE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <!-- Group: 1A2-TTUR -->
+                            <tr class="user-table-date" data-controller="1A2-TTUR">
+                                <td class="user-table-bold" colspan="2">IO MODULE : /0 / J0 / 1A2-TTUR</td>
+                                <td class="user-table-bold">LOCATION:1A2<br>FIM MODULE : FIM-02</td>
+                                <td class="user-table-bold">TYPE:VTUR<br>IOLINK:IOLINK-A</td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A2-TTUR" data-tag="spare">
+                                <td class="user-table-center user-table-secondary">1</td>
+                                <td><span class="spare-text">SPARE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A2-TTUR" data-tag="spare">
+                                <td class="user-table-center user-table-secondary">2</td>
+                                <td><span class="spare-text">SPARE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A2-TTUR" data-tag="ft-101">
+                                <td class="user-table-center user-table-secondary">3</td>
+                                <td><a class="dcs-tag-link" data-tag="FT-101">FT-101</a></td>
+                                <td>FUEL GAS FLOW TRANSMITTER</td>
+                                <td>MT-101</td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A2-TTUR" data-tag="pt-102">
+                                <td class="user-table-center user-table-secondary">4</td>
+                                <td><a class="dcs-tag-link" data-tag="PT-102">PT-102</a></td>
+                                <td>STEAM DRUM PRESSURE</td>
+                                <td>MT-102</td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="1A2-TTUR" data-tag="spare">
+                                <td class="user-table-center user-table-secondary">5</td>
+                                <td><span class="spare-text">SPARE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <!-- Group: 2A1-ESD -->
+                            <tr class="user-table-date" data-controller="2A1-ESD">
+                                <td class="user-table-bold" colspan="2">IO MODULE : /0 / J0 / 2A1-ESD</td>
+                                <td class="user-table-bold">LOCATION:2A1<br>FIM MODULE : FIM-05</td>
+                                <td class="user-table-bold">TYPE:ESD<br>IOLINK:IOLINK-B</td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="2A1-ESD" data-tag="zs-201">
+                                <td class="user-table-center user-table-secondary">1</td>
+                                <td><a class="dcs-tag-link" data-tag="ZS-201">ZS-201</a></td>
+                                <td>SHUTDOWN VALVE POSITION ZS</td>
+                                <td>B-201</td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="2A1-ESD" data-tag="te-205">
+                                <td class="user-table-center user-table-secondary">2</td>
+                                <td><a class="dcs-tag-link" data-tag="TE-205">TE-205</a></td>
+                                <td>BEARING TEMPERATURE ELEMENT</td>
+                                <td></td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="2A1-ESD" data-tag="spare">
+                                <td class="user-table-center user-table-secondary">3</td>
+                                <td><span class="spare-text">SPARE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="2A1-ESD" data-tag="spare">
+                                <td class="user-table-center user-table-secondary">4</td>
+                                <td><span class="spare-text">SPARE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="user-table-row" data-controller-row="2A1-ESD" data-tag="spare">
+                                <td class="user-table-center user-table-secondary">5</td>
+                                <td><span class="spare-text">SPARE</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        $(document).ready(function () {
+            const allTags = [];
+            $('.dcs-tag-link').each(function () {
+                const tag = $(this).text();
+                if (tag && tag.trim() !== "") {
+                    allTags.push(tag.trim());
+                }
+            });
+            allTags.sort((a, b) => a.localeCompare(b));
+            const uniqueTags = [...new Set(allTags)];
+
+            const $tagSelect = $('#dcs-tag-select');
+            uniqueTags.forEach(tag => {
+                $tagSelect.append(`<option value="${tag}">${tag}</option>`);
+            });
+
+            // Filter Apply Event
+            $('#btn-apply-filter').on('click', function () {
+                const selectedController = $('#dcs-controller-select').val();
+
+                if (selectedController === 'ALL') {
+                    // Show all groups
+                    $('.user-table-date').show();
+                    $('.user-table-row').show();
+                } else {
+                    // Hide all, then show selected group
+                    $('.user-table-date').hide();
+                    $('.user-table-row').hide();
+
+                    $(`.user-table-date[data-controller="${selectedController}"]`).show();
+                    $(`.user-table-row[data-controller-row="${selectedController}"]`).show();
+                }
+
+                const tagVal = $('#dcs-search-tag').val();
+                if (tagVal) {
+                    setTimeout(() => {
+                        searchTag(tagVal);
+                    }, 100);
+                }
+            });
+
+            // Filter Reset Event
+            $('#btn-reset-filter').on('click', function () {
+                $('#dcs-search-tag').val('').removeClass('is-invalid-tag');
+                $('#dcs-tag-select').val('');
+                $('#dcs-controller-select').val('ALL');
+
+                $('.user-table-date').show();
+                $('.user-table-row').show();
+            });
+
+            // Search Tag Event Logic
+            function searchTag(query) {
+                if (!query) return;
+                query = query.toLowerCase();
+
+                let $matchedRow = null;
+                $('#dcs-tables-container tr').each(function () {
+                    if ($(this).data('tag') === query) {
+                        $matchedRow = $(this);
+                        return false;
+                    }
+                });
+
+                if ($matchedRow) {
+                    const ctrl = $matchedRow.data('controller-row');
+
+                    // Auto-switch controller if we are currently filtering a different one
+                    if ($('#dcs-controller-select').val() !== 'ALL' && $('#dcs-controller-select').val() !== ctrl) {
+                        $('#dcs-controller-select').val(ctrl);
+                        $('.user-table-date').hide();
+                        $('.user-table-row').hide();
+                        $(`.user-table-date[data-controller="${ctrl}"]`).show();
+                        $(`.user-table-row[data-controller-row="${ctrl}"]`).show();
+                    } else if ($('#dcs-controller-select').val() === 'ALL') {
+                        // Ensure all are visible
+                        $('.user-table-date').show();
+                        $('.user-table-row').show();
+                    }
+
+                    $('.highlighted-row').removeClass('highlighted-row');
+                    $matchedRow.addClass('highlighted-row');
+                    $matchedRow[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    setTimeout(() => {
+                        $matchedRow.removeClass('highlighted-row');
+                    }, 3000);
+                } else {
+                    Swal.fire({
+                        title: 'Not Found',
+                        text: `Tag "${query.toUpperCase()}" could not be found.`,
+                        icon: 'error',
+                        confirmButtonColor: '#2563eb'
+                    });
+                }
+            }
+
+            // --- Smart Tag Autocomplete Helper from pm_master.html ---
+            function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+                const $input = $(inputSelector);
+                const $select = $(selectSelector);
+                let snapBackTimeout = null;
+                let snapBackInterval = null;
+                let isAutoRemoving = false;
+
+                function getAvailableTags() {
+                    let tags = [];
+                    $select.find('option').each(function () {
+                        if ($(this).val()) tags.push($(this).val());
+                    });
+                    return tags;
+                }
+
+                function stopAutoRemove() {
+                    clearTimeout(snapBackTimeout);
+                    clearInterval(snapBackInterval);
+                    isAutoRemoving = false;
+                }
+
+                const tags = getAvailableTags();
+
+                $input.on('input', function (e) {
+                    const cursorStart = this.selectionStart;
+                    const cursorEnd = this.selectionEnd;
+                    const rawVal = $(this).val();
+                    const upperVal = rawVal.toUpperCase();
+                    if (rawVal !== upperVal) {
+                        $(this).val(upperVal);
+                        this.setSelectionRange(cursorStart, cursorEnd);
+                    }
+
+                    const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+                    const isDeleting = inputType && inputType.startsWith('delete');
+
+                    if (isDeleting) stopAutoRemove();
+
+                    let inputVal = $(this).val().toUpperCase();
+
+                    if (isDeleting) {
+                        let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+                        if (hasMatch) {
+                            $(this).removeClass('is-invalid-tag');
+                        } else {
+                            $(this).addClass('is-invalid-tag');
+                        }
+
+                        let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+                        $select.val(exactMatch || '');
+                        if (exactMatch && onMatch) onMatch(exactMatch);
+                        return;
+                    }
+
+                    let longestValidPrefix = "";
+                    for (let i = inputVal.length; i >= 0; i--) {
+                        let sub = inputVal.substring(0, i);
+                        if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+                            longestValidPrefix = sub;
+                            break;
+                        }
+                    }
+
+                    if (inputVal.length > longestValidPrefix.length + 3) {
+                        inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+                        $(this).val(inputVal);
+                    }
+
+                    if (inputVal.length > longestValidPrefix.length) {
+                        $(this).addClass('is-invalid-tag');
+                        $select.val('');
+                        stopAutoRemove();
+
+                        const self = this;
+                        const targetPrefix = longestValidPrefix;
+                        snapBackTimeout = setTimeout(() => {
+                            isAutoRemoving = true;
+                            snapBackInterval = setInterval(() => {
+                                let currentVal = $input.val();
+                                if (currentVal.length > targetPrefix.length) {
+                                    currentVal = currentVal.substring(0, currentVal.length - 1);
+                                    $input.val(currentVal);
+                                } else {
+                                    clearInterval(snapBackInterval);
+                                    isAutoRemoving = false;
+                                    $input.removeClass('is-invalid-tag');
+
+                                    let val = $input.val().toUpperCase();
+                                    if (val.length > 0) {
+                                        let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(val));
+                                        if (firstMatch) {
+                                            $input.val(firstMatch);
+                                            self.setSelectionRange(val.length, firstMatch.length);
+                                            $select.val(firstMatch);
+                                            if (onMatch) onMatch(firstMatch);
+                                        }
+                                    } else {
+                                        $select.val('');
+                                    }
+                                }
+                            }, 150);
+                        }, 800);
+                        return;
+                    }
+
+                    stopAutoRemove();
+                    $(this).removeClass('is-invalid-tag');
+
+                    if (inputVal.length > 0) {
+                        let firstMatch = tags.find(tag => tag.toUpperCase().startsWith(inputVal));
+                        if (firstMatch) {
+                            $(this).val(firstMatch);
+                            this.setSelectionRange(inputVal.length, firstMatch.length);
+                            $select.val(firstMatch);
+                            if (onMatch) onMatch(firstMatch);
+                        }
+                    } else {
+                        $select.val('');
+                    }
+                });
+
+                $input.on('keydown', function (e) {
+                    if (isAutoRemoving && e.key !== 'Enter') stopAutoRemove();
+                    if (e.key === 'Enter') {
+                        stopAutoRemove();
+                        const currentVal = $(this).val();
+                        if (currentVal && !$(this).hasClass('is-invalid-tag')) {
+                            e.preventDefault();
+                            $(this).val(currentVal);
+                            this.setSelectionRange(currentVal.length, currentVal.length);
+                            $(this).addClass('tag-confirmed');
+                            setTimeout(() => $(this).removeClass('tag-confirmed'), 500);
+
+                            // Immediately search on exact enter
+                            if (onMatch) onMatch(currentVal);
+                        }
+                    }
+                });
+
+                $select.on('change', function () {
+                    stopAutoRemove();
+                    let val = $(this).val();
+                    $input.val(val);
+                    if (val && onMatch) onMatch(val);
+                });
+            }
+
+            // Initialize Tag Autocomplete for DCS
+            initTagAutocomplete('#dcs-search-tag', '#dcs-tag-select', (val) => {
+                if (val) searchTag(val);
+            });
+
+            // Tag click details popup
+            $(document).on('click', '.dcs-tag-link', function (e) {
+                e.preventDefault();
+                const tagName = $(this).data('tag');
+                const row = $(this).closest('tr');
+                const channel = row.find('td:eq(0)').text();
+                const desc = row.find('td:eq(2)').text();
+                const barrier = row.find('td:eq(3)').text();
+                const controllerRow = row.prevAll('.user-table-date').first();
+                const controllerText = controllerRow.find('td:eq(0)').text();
+                const controller = controllerText.split('/').pop().trim();
+
+                Swal.fire({
+                    title: `<span style="color:#2563eb">${tagName}</span>`,
+                    html: `
+                        <div style="text-align: left; font-size: 14px; line-height: 1.6;">
+                            <p><b>Controller:</b> ${controller}</p>
+                            <p><b>Channel:</b> Channel ${channel}</p>
+                            <p><b>Description:</b> ${desc}</p>
+                            <p><b>Barrier:</b> ${barrier || 'None'}</p>
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonColor: '#2563eb',
+                    cancelButtonColor: '#475569',
+                    confirmButtonText: 'Open in Instrument Data',
+                    cancelButtonText: 'Close'
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        window.location.href = `boiler_inst_data.html?tag=${encodeURIComponent(tagName)}`;
+                    }
+                });
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>

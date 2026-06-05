@@ -39,30 +39,30 @@
     </div>
 
     <!-- Page Content Area -->
-    <div class="app-content-area">
+    <div class="iso-app-content">
 
       <!-- Document Management System Card -->
-      <div class="dms-container">
+      <div class="iso-dms-container">
         <!-- Badge & Path Info Row -->
-        <div class="dms-meta-row">
-          <div class="dms-code-badge">
+        <div class="iso-dms-meta">
+          <div class="iso-dms-code">
             ISO14000 DMS CODE: IMS/F/INST/12
           </div>
-          <div class="dms-path-badge">
+          <div class="iso-dms-path">
             <i class="ph-fill ph-folder-open"></i>
             <span>ISO/AUDIT/EXTERNAL/</span>
           </div>
         </div>
 
         <!-- Toolbar controls -->
-        <div class="dms-toolbar">
-          <button class="dms-toolbar-btn" onclick="history.back()" title="Up one folder">
+        <div class="iso-dms-toolbar">
+          <button class="iso-dms-toolbar-1" onclick="history.back()" title="Up one folder">
             <i class="ph-bold ph-arrow-u-up-left"></i>
           </button>
-          <button class="dms-toolbar-btn" id="btn-create-folder" title="Create New Folder">
+          <button class="iso-dms-toolbar-1" id="btn-create-folder" title="Create New Folder">
             <i class="ph ph-folder-plus"></i>
           </button>
-          <button class="dms-toolbar-btn" id="btn-upload-file" title="Upload document">
+          <button class="iso-dms-toolbar-1" id="btn-upload-file" title="Upload document">
             <i class="ph ph-upload-simple"></i>
           </button>
         </div>
@@ -82,10 +82,10 @@
             </thead>
             <tbody>
               <tr>
-                <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
+                <td class="user-table-center font-14pxfw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
                 <td>
-                  <div class="file-name-cell">
-                    <i class="ph-fill ph-file-pdf file-icon-pdf"></i>
+                  <div class="iso-file-name">
+                    <i class="ph-fill ph-file-pdf iso-file-icon-3"></i>
                     <span>external-audit-2025.pdf</span>
                   </div>
                 </td>
@@ -94,20 +94,20 @@
                 <td>12/10/2025</td>
                 <td class="user-table-center">
                   <div class="flex items-center justify-center gap-8px">
-                    <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                      <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                    <button class="iso-table-action-1 color-secondary hover-color-primary btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-font-18px"></i>
                     </button>
-                    <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                      <i class="ph-bold ph-trash font-18px"></i>
+                    <button class="iso-table-action-1 iso-table-action btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-font-18px"></i>
                     </button>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">2</td>
+                <td class="user-table-center font-14pxfw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">2</td>
                 <td>
-                  <div class="file-name-cell">
-                    <i class="ph-fill ph-file-doc file-icon-doc"></i>
+                  <div class="iso-file-name">
+                    <i class="ph-fill ph-file-doc iso-file-icon-1"></i>
                     <span>iso-compliance-report.doc</span>
                   </div>
                 </td>
@@ -116,11 +116,11 @@
                 <td>05/11/2025</td>
                 <td class="user-table-center">
                   <div class="flex items-center justify-center gap-8px">
-                    <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                      <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                    <button class="iso-table-action-1 color-secondary hover-color-primary btn-rename" title="Rename">
+                      <i class="ph-bold ph-pencil-simple-line iso-font-18px"></i>
                     </button>
-                    <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                      <i class="ph-bold ph-trash font-18px"></i>
+                    <button class="iso-table-action-1 iso-table-action btn-delete" title="Delete">
+                      <i class="ph-bold ph-trash iso-font-18px"></i>
                     </button>
                   </div>
                 </td>
@@ -187,7 +187,7 @@
           <!-- Rows injected here -->
         </div>
 
-        <button type="button" id="btn-add-attachment-row" class="attachment-add-btn">
+        <button type="button" id="btn-add-attachment-row" class="iso-attachment-add">
           <i class="ph-bold ph-plus"></i>
           Add File
         </button>
@@ -198,7 +198,7 @@
         <div class="flex items-center gap-12px">
           <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-20px" id="btn-cancel-upload-modal">Cancel</button>
           <button type="button" id="btn-save-attachments" class="gnfc-modal-btn gnfc-modal-btn-primary px-24px flex items-center gap-8px">
-            <i class="ph-fill ph-floppy-disk font-18px"></i>
+            <i class="ph-fill ph-floppy-disk iso-font-18px"></i>
             Save Files
           </button>
         </div>
@@ -238,7 +238,7 @@
         </div>
 
         <!-- Log Table -->
-        <div class="user-table-wrapper" style="max-height: 400px; overflow-y: auto;">
+        <div class="user-table" style="max-height: 400px; overflow-y: auto;">
           <table class="user-table">
             <thead>
               <tr>
@@ -358,12 +358,12 @@
       // New Row Generator for consistency
       function generateTableRow(name, type, size, date) {
         const isFolder = type === 'Folder' || type === '<Folder>';
-        const iconClass = isFolder ? 'ph-fill ph-folder file-icon-folder' : 'ph-fill ph-file file-icon-doc';
+        const iconClass = isFolder ? 'ph-fill ph-folder iso-file-icon-2' : 'ph-fill ph-file iso-file-icon-1';
         return `
           <tr>
-            <td class="user-table-center font-14px fw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
+            <td class="user-table-center font-14pxfw-600 cursor-pointer color-blue hover-underline btn-open-log" title="View Audit Log">1</td>
             <td>
-              <div class="file-name-cell">
+              <div class="iso-file-name">
                 <i class="${iconClass}"></i>
                 <span>${name}</span>
               </div>
@@ -373,11 +373,11 @@
             <td>${date}</td>
             <td class="user-table-center">
               <div class="flex items-center justify-center gap-8px">
-                <button class="table-action-btn color-secondary hover-color-primary btn-rename" title="Rename">
-                  <i class="ph-bold ph-pencil-simple-line font-18px"></i>
+                <button class="iso-table-action-1 color-secondary hover-color-primary btn-rename" title="Rename">
+                  <i class="ph-bold ph-pencil-simple-line iso-font-18px"></i>
                 </button>
-                <button class="table-action-btn table-action-btn-danger btn-delete" title="Delete">
-                  <i class="ph-bold ph-trash font-18px"></i>
+                <button class="iso-table-action-1 iso-table-action btn-delete" title="Delete">
+                  <i class="ph-bold ph-trash iso-font-18px"></i>
                 </button>
               </div>
             </td>
@@ -394,12 +394,12 @@
       // Upload Handlers
       $('#btn-upload-file').on('click', function() {
         const initialRow = `
-          <div class="attachment-row">
-            <div class="attachment-file-info">
-              <i class="ph-bold ph-file font-18px color-secondary"></i>
-              <span class="attachment-file-name">No file chosen...</span>
+          <div class="iso-attachment-row">
+            <div class="iso-attachment-file">
+              <i class="ph-bold ph-file iso-font-18px color-secondary"></i>
+              <span class="iso-attachment-file-1">No file chosen...</span>
             </div>
-            <label class="attachment-browse-label">
+            <label class="iso-attachment-browse">
               Browse..
               <input type="file" class="hidden-file-input hidden">
             </label>
@@ -418,12 +418,12 @@
 
       $('#btn-add-attachment-row').on('click', function() {
         const newRow = `
-          <div class="attachment-row">
-            <div class="attachment-file-info">
-              <i class="ph-bold ph-file font-18px color-secondary"></i>
-              <span class="attachment-file-name">No file chosen...</span>
+          <div class="iso-attachment-row">
+            <div class="iso-attachment-file">
+              <i class="ph-bold ph-file iso-font-18px color-secondary"></i>
+              <span class="iso-attachment-file-1">No file chosen...</span>
             </div>
-            <label class="attachment-browse-label">
+            <label class="iso-attachment-browse">
               Browse..
               <input type="file" class="hidden-file-input hidden">
             </label>
@@ -466,7 +466,7 @@
       // Rename Handlers
       $(document).on('click', '.btn-rename', function() {
         $activeRenameRow = $(this).closest('tr');
-        const currentName = $activeRenameRow.find('.file-name-cell span').text();
+        const currentName = $activeRenameRow.find('.iso-file-name span').text();
         $('#rename-current-name').text(currentName);
         $('#rename-new-name').val(currentName);
         $renameOverlay.addClass('is-open');
@@ -479,7 +479,7 @@
       $('#rename-folder-form').on('submit', function(e) {
         e.preventDefault();
         const newName = $('#rename-new-name').val().trim().toUpperCase();
-        $activeRenameRow.find('.file-name-cell span').text(newName);
+        $activeRenameRow.find('.iso-file-name span').text(newName);
         $renameOverlay.removeClass('is-open');
 
         Swal.fire({
@@ -494,7 +494,7 @@
       // Delete Handlers
       $(document).on('click', '.btn-delete', function() {
         const $row = $(this).closest('tr');
-        const itemName = $row.find('.file-name-cell span').text();
+        const itemName = $row.find('.iso-file-name span').text();
         
         Swal.fire({
           title: 'Are you sure?',
@@ -549,8 +549,8 @@
 
           // Handle Name column (Icon + Text)
           if (column === 1) {
-            valA = $(a).find('.file-name-cell span').text().trim().toLowerCase();
-            valB = $(b).find('.file-name-cell span').text().trim().toLowerCase();
+            valA = $(a).find('.iso-file-name span').text().trim().toLowerCase();
+            valB = $(b).find('.iso-file-name span').text().trim().toLowerCase();
           }
 
           // Handle Size column (e.g. "441Kb")

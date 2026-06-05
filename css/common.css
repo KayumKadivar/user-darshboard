@@ -903,7 +903,7 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
 }
 
 .ui-btn--secondary:hover {
-    background:  var(--typo-blue);
+    background: var(--typo-blue);
     border-color: var(--app-border);
     color: var(--typo-primary);
 }
@@ -1047,11 +1047,18 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
 }
 
 
-.fixed { position: fixed !important; }
+.fixed {
+    position: fixed !important;
+}
 
 @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .animate-spin {
@@ -1090,7 +1097,67 @@ html[data-theme="light"] .sidebar-collapsed .admin-sidebar-exit::after {
 }
 
 .sidebar-container {
-  display: flex;
-  flex-direction: column;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.day-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.day-chip {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--app-border);
+    background: var(--app-bg);
+    color: var(--typo-secondary);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.day-chip:hover {
+    border-color: var(--typo-blue);
+    color: var(--typo-blue);
+    transform: translateY(-2px);
+    background: rgba(87, 148, 242, 0.05);
+}
+
+.day-chip.is-selected {
+    background: var(--typo-blue);
+    border-color: var(--typo-blue);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(87, 148, 242, 0.35);
+}
+
+.day-chip.is-selected:hover {
+    background: #4a85e2;
+    transform: translateY(-1px);
+}
+
+/* Animation for selection */
+.day-chip::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.day-chip:active::after {
+    opacity: 1;
 }

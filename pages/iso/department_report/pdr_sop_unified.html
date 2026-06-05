@@ -40,7 +40,7 @@
     </div>
 
     <!-- Page Content Area -->
-    <div class="app-content-area flex flex-col justify-between pdr-dashboard-wrapper">
+    <div class="iso-app-content flex flex-col justify-between pdr-dashboard-wrapper">
 
       <div>
         
@@ -79,7 +79,7 @@
         <!-- ──────────────────────────────────────────────────────── -->
         <div id="panel-edit-configs" class="unified-tab-panel">
           <!-- Section 1: Procedure Deviation Register (PDR) Edit -->
-          <div class="config-block">
+          <div class="iso-config-block">
             <div class="section-header-row">
               <div class="flex items-center gap-8px">
                 <i class="ph-bold ph-list-dashes font-20px color-orange" style="color: var(--typo-orange);"></i>
@@ -87,7 +87,7 @@
               </div>
               <div class="flex items-center gap-12px">
                 <label for="plant-select-pdr" class="font-12px fw-700 color-hint uppercase">Select Plant:</label>
-                <select id="plant-select-pdr" class="filter-select w-160px pdr-plant-changer" style="padding: 4px 8px; height: 32px;">
+                <select id="plant-select-pdr" class="iso-filter-select w-160px pdr-plant-changer" style="padding: 4px 8px; height: 32px;">
                   <option value="BOILER">BOILER</option>
                   <option value="CPP" selected>CPP</option>
                   <option value="AMMONIA">AMMONIA</option>
@@ -97,40 +97,40 @@
               </div>
             </div>
 
-            <div class="config-grid">
+            <div class="iso-config-grid">
               <!-- Card: Static Fields -->
-              <div class="premium-config-card">
+              <div class="iso-premium-config">
                 <div>
-                  <div class="premium-card-icon">
+                  <div class="iso-premium-card">
                     <i class="ph-bold ph-database"></i>
                   </div>
                   <h4 class="font-15px fw-700 color-primary uppercase mb-6px">PDR Static Fields</h4>
                   <p class="font-12px color-hint line-height-md">Configure core benchmarks, environmental impacts, and target limits for the process register.</p>
                 </div>
                 <div class="premium-btn-group">
-                  <button class="btn-orange-fill" onclick="handlePdrAction('Static', 'Add', '#plant-select-pdr')">
+                  <button class="iso-btn-orange" onclick="handlePdrAction('Static', 'Add', '#plant-select-pdr')">
                     <i class="ph-bold ph-plus"></i> Add
                   </button>
-                  <button class="btn-orange-outline" onclick="handlePdrAction('Static', 'View', '#plant-select-pdr')">
+                  <button class="iso-btn-orange-1" onclick="handlePdrAction('Static', 'View', '#plant-select-pdr')">
                     <i class="ph-bold ph-eye"></i> View
                   </button>
                 </div>
               </div>
 
               <!-- Card: Monthly Status -->
-              <div class="premium-config-card">
+              <div class="iso-premium-config">
                 <div>
-                  <div class="premium-card-icon">
+                  <div class="iso-premium-card">
                     <i class="ph-bold ph-calendar-blank"></i>
                   </div>
                   <h4 class="font-15px fw-700 color-primary uppercase mb-6px">PDR Monthly Status</h4>
                   <p class="font-12px color-hint line-height-md">Record, modify, and review monthly deviation observations, corrective updates and preventive action plans.</p>
                 </div>
                 <div class="premium-btn-group">
-                  <button class="btn-orange-fill" onclick="handlePdrAction('Monthly', 'Add', '#plant-select-pdr')">
+                  <button class="iso-btn-orange" onclick="handlePdrAction('Monthly', 'Add', '#plant-select-pdr')">
                     <i class="ph-bold ph-plus"></i> Add
                   </button>
-                  <button class="btn-orange-outline" onclick="handlePdrAction('Monthly', 'View', '#plant-select-pdr')">
+                  <button class="iso-btn-orange-1" onclick="handlePdrAction('Monthly', 'View', '#plant-select-pdr')">
                     <i class="ph-bold ph-eye"></i> View
                   </button>
                 </div>
@@ -139,7 +139,7 @@
           </div>
 
           <!-- Section 2: Procedure Deviation Register - SOP (PDR-SOP) Edit -->
-          <div class="config-block">
+          <div class="iso-config-block">
             <div class="section-header-row">
               <div class="flex items-center gap-8px">
                 <i class="ph-bold ph-book-open font-20px color-orange" style="color: var(--typo-orange);"></i>
@@ -147,7 +147,7 @@
               </div>
               <div class="flex items-center gap-12px">
                 <label for="plant-select-sop" class="font-12px fw-700 color-hint uppercase">Select Plant:</label>
-                <select id="plant-select-sop" class="filter-select w-160px sop-plant-changer" style="padding: 4px 8px; height: 32px;">
+                <select id="plant-select-sop" class="iso-filter-select w-160px sop-plant-changer" style="padding: 4px 8px; height: 32px;">
                   <option value="BOILER">BOILER</option>
                   <option value="CPP" selected>CPP</option>
                   <option value="AMMONIA">AMMONIA</option>
@@ -157,21 +157,21 @@
               </div>
             </div>
 
-            <div class="config-grid" style="grid-template-columns: 1fr;">
+            <div class="iso-config-grid" style="grid-template-columns: 1fr;">
               <!-- Card: SOP Monthly Status -->
-              <div class="premium-config-card">
+              <div class="iso-premium-config">
                 <div>
-                  <div class="premium-card-icon">
+                  <div class="iso-premium-card">
                     <i class="ph-bold ph-notebook"></i>
                   </div>
                   <h4 class="font-15px fw-700 color-primary uppercase mb-6px">SOP Monthly Status</h4>
                   <p class="font-12px color-hint line-height-md">Track deviations directly linked to Standard Operating Procedures (SOPs). Update logs, analyze root causes, and submit preventive actions for validation.</p>
                 </div>
                 <div class="premium-btn-group" style="justify-content: flex-start; max-width: 320px;">
-                  <button class="btn-orange-fill" onclick="handleSopEditAction('Add', '#plant-select-sop')">
+                  <button class="iso-btn-orange" onclick="handleSopEditAction('Add', '#plant-select-sop')">
                     <i class="ph-bold ph-plus"></i> Add SOP Status
                   </button>
-                  <button class="btn-orange-outline" onclick="handleSopEditAction('View', '#plant-select-sop')">
+                  <button class="iso-btn-orange-1" onclick="handleSopEditAction('View', '#plant-select-sop')">
                     <i class="ph-bold ph-eye"></i> View SOP Status
                   </button>
                 </div>
@@ -185,16 +185,16 @@
         <!-- ──────────────────────────────────────────────────────── -->
         <div id="panel-mir-panel" class="unified-tab-panel" style="display: none;">
           <!-- Report Header Title Bar with Timeline controls -->
-          <div class="report-title-banner">
+          <div class="iso-report-title">
             <div>
-              <div class="report-banner-title" style="margin-bottom: 4px;">MONTHLY INSPECTION REPORT(MIR)</div>
+              <div class="iso-report-banner" style="margin-bottom: 4px;">MONTHLY INSPECTION REPORT(MIR)</div>
               <div class="report-banner-meta">Month: MAY 2026 | Status: ACTIVE</div>
             </div>
-            <div class="mini-nav-row">
+            <div class="iso-mini-nav">
               <span class="timeline-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
-              <button class="mini-nav-btn" onclick="handleTimeline('prev', 'MIR')"><i class="ph-bold ph-caret-left"></i></button>
-              <button class="mini-nav-btn" onclick="handleTimeline('reset', 'MIR')"><i class="ph-bold ph-circle"></i></button>
-              <button class="mini-nav-btn" onclick="handleTimeline('next', 'MIR')"><i class="ph-bold ph-caret-right"></i></button>
+              <button class="iso-mini-nav-1" onclick="handleTimeline('prev', 'MIR')"><i class="ph-bold ph-caret-left"></i></button>
+              <button class="iso-mini-nav-1" onclick="handleTimeline('reset', 'MIR')"><i class="ph-bold ph-circle"></i></button>
+              <button class="iso-mini-nav-1" onclick="handleTimeline('next', 'MIR')"><i class="ph-bold ph-caret-right"></i></button>
             </div>
           </div>
 
@@ -220,7 +220,7 @@
               <tbody>
                 <!-- OCP Entry 1 (Unregistered sections) -->
                 <tr class="user-table-row">
-                  <td rowspan="4" class="user-table-center font-14px fw-600 color-hint">-</td>
+                  <td rowspan="4" class="user-table-center font-14pxfw-600 color-hint">-</td>
                   <td rowspan="4" class="color-hint italic font-13px">No static parameters registered for this section</td>
                   <td rowspan="4" class="color-hint italic font-13px">-</td>
                   <td class="user-table-center"><span class="status-badge neutral">N L</span></td>
@@ -245,7 +245,7 @@
 
                 <!-- OCP Entry 2 (OCP 8) -->
                 <tr class="user-table-row">
-                  <td rowspan="2" class="user-table-center font-14px fw-600">8</td>
+                  <td rowspan="2" class="user-table-center font-14pxfw-600">8</td>
                   <td rowspan="2" class="fw-500">Safe disposal of used cotton waste, hand gloves, teflon/asbestos gaskets and S.S./M.S. scrap.</td>
                   <td rowspan="2">To reduce land, water and air pollution</td>
                   <td rowspan="2" class="user-table-center"><span class="status-badge neutral">N L</span></td>
@@ -258,7 +258,7 @@
 
                 <!-- OCP Entry 3 (OCP 9) -->
                 <tr class="user-table-row">
-                  <td rowspan="2" class="user-table-center font-14px fw-600">9</td>
+                  <td rowspan="2" class="user-table-center font-14pxfw-600">9</td>
                   <td rowspan="2" class="fw-500">Safe disposal of chemical containers, hazardous fluids, and acidic wastewater streams.</td>
                   <td rowspan="2">To prevent contamination of wastewater streams and soil</td>
                   <td rowspan="2" class="user-table-center"><span class="status-badge neutral">N L</span></td>
@@ -278,12 +278,12 @@
         <!-- ──────────────────────────────────────────────────────── -->
         <div id="panel-pdr-reports" class="unified-tab-panel" style="display: none;">
           <!-- Selection Form Card -->
-          <div class="filter-panel-card">
+          <div class="iso-filter-panel">
             <form id="pdr-report-filter-form">
-              <div class="filter-row">
-                <div class="filter-group">
-                  <label class="filter-label">Plant</label>
-                  <select id="pdr-rep-plant" class="filter-select">
+              <div class="iso-filter-row">
+                <div class="iso-filter-group">
+                  <label class="gnfc-modal-label">Plant</label>
+                  <select id="pdr-rep-plant" class="iso-filter-select">
                     <option value="BOILER">BOILER</option>
                     <option value="CPP" selected>CPP</option>
                     <option value="AMMONIA">AMMONIA</option>
@@ -291,16 +291,16 @@
                     <option value="ACETIC ACID">ACETIC ACID</option>
                   </select>
                 </div>
-                <div class="filter-group">
-                  <label class="filter-label">OCP Number</label>
-                  <select id="pdr-rep-ocp" class="filter-select">
+                <div class="iso-filter-group">
+                  <label class="gnfc-modal-label">OCP Number</label>
+                  <select id="pdr-rep-ocp" class="iso-filter-select">
                     <option value="7">7</option>
                     <option value="8">8</option>
                     <option value="9">9</option>
                     <option value="10">10</option>
                   </select>
                 </div>
-                <button type="submit" class="btn-orange-fill" style="height: 38px; padding: 0 32px;">
+                <button type="submit" class="iso-btn-orange" style="height: 38px; padding: 0 32px;">
                   <i class="ph-bold ph-funnel"></i> View Report
                 </button>
               </div>
@@ -309,16 +309,16 @@
 
           <!-- Report Results Section -->
           <div id="pdr-report-results">
-            <div class="report-title-banner">
+            <div class="iso-report-title">
               <div>
-                <div class="report-banner-title" style="margin-bottom: 4px;">PROCEDURE DEVIATION REGISTER(PDR)</div>
+                <div class="iso-report-banner" style="margin-bottom: 4px;">PROCEDURE DEVIATION REGISTER(PDR)</div>
                 <div class="report-banner-meta">Plant: <span id="pdr-res-plant">CPP</span> | Year: 2026 | OCP No: <span id="pdr-res-ocp">7</span></div>
               </div>
-              <div class="mini-nav-row">
+              <div class="iso-mini-nav">
                 <span class="timeline-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
-                <button class="mini-nav-btn" onclick="handleTimeline('prev', 'PDR')"><i class="ph-bold ph-caret-left"></i></button>
-                <button class="mini-nav-btn" onclick="handleTimeline('reset', 'PDR')"><i class="ph-bold ph-circle"></i></button>
-                <button class="mini-nav-btn" onclick="handleTimeline('next', 'PDR')"><i class="ph-bold ph-caret-right"></i></button>
+                <button class="iso-mini-nav-1" onclick="handleTimeline('prev', 'PDR')"><i class="ph-bold ph-caret-left"></i></button>
+                <button class="iso-mini-nav-1" onclick="handleTimeline('reset', 'PDR')"><i class="ph-bold ph-circle"></i></button>
+                <button class="iso-mini-nav-1" onclick="handleTimeline('next', 'PDR')"><i class="ph-bold ph-caret-right"></i></button>
               </div>
             </div>
 
@@ -336,28 +336,28 @@
                 </thead>
                 <tbody id="pdr-report-tbody">
                   <tr class="user-table-row" data-plant="BOILER" data-ocp="7">
-                    <td class="user-table-center font-14px fw-600">12/05/2026</td>
+                    <td class="user-table-center font-14pxfw-600">12/05/2026</td>
                     <td class="fw-500">Bypass feed water control valve PV-4012 during auxiliary calibration.</td>
                     <td>Shift technician manually stabilized primary line valves.</td>
                     <td>Valve actuator seals replacement scheduled in weekend shutdown.</td>
                     <td>Load stabilized, compliance logs recorded.</td>
                   </tr>
                   <tr class="user-table-row" data-plant="BOILER" data-ocp="8">
-                    <td class="user-table-center font-14px fw-600">19/05/2026</td>
+                    <td class="user-table-center font-14pxfw-600">19/05/2026</td>
                     <td class="fw-500">Superheater outlet pressure gauge deviation of +0.4 bar.</td>
                     <td>Re-zeroed pressure transmitters and verified line pressure.</td>
                     <td>Calibrated secondary master gauge in next shift.</td>
                     <td>Deviation cleared.</td>
                   </tr>
                   <tr class="user-table-row" data-plant="CPP" data-ocp="7">
-                    <td class="user-table-center font-14px fw-600">08/05/2026</td>
+                    <td class="user-table-center font-14pxfw-600">08/05/2026</td>
                     <td class="fw-500">Condensate conductivity briefly spiked above 0.3 uS/cm limit.</td>
                     <td>Switched to backup Polishers and blew down steam condensate.</td>
                     <td>Configured automated limit warnings in central DCS system.</td>
                     <td>Returned to safe limits without operation delay.</td>
                   </tr>
                   <tr class="user-table-row" data-plant="CPP" data-ocp="8">
-                    <td class="user-table-center font-14px fw-600">10/05/2026</td>
+                    <td class="user-table-center font-14pxfw-600">10/05/2026</td>
                     <td class="fw-500">Turbine bearing temperature high alarm triggered due to oil flow lag.</td>
                     <td>Cleaned lube oil filters and adjusted pressure controller.</td>
                     <td>Added alarm setpoints validation in regular preventive checklist.</td>
@@ -374,12 +374,12 @@
         <!-- ──────────────────────────────────────────────────────── -->
         <div id="panel-sop-reports" class="unified-tab-panel" style="display: none;">
           <!-- Selection Form Card -->
-          <div class="filter-panel-card">
+          <div class="iso-filter-panel">
             <form id="sop-report-filter-form">
-              <div class="filter-row">
-                <div class="filter-group">
-                  <label class="filter-label">Plant</label>
-                  <select id="sop-rep-plant" class="filter-select">
+              <div class="iso-filter-row">
+                <div class="iso-filter-group">
+                  <label class="gnfc-modal-label">Plant</label>
+                  <select id="sop-rep-plant" class="iso-filter-select">
                     <option value="BOILER">BOILER</option>
                     <option value="CPP" selected>CPP</option>
                     <option value="AMMONIA">AMMONIA</option>
@@ -387,16 +387,16 @@
                     <option value="ACETIC ACID">ACETIC ACID</option>
                   </select>
                 </div>
-                <div class="filter-group">
-                  <label class="filter-label">SOP Number</label>
-                  <select id="sop-rep-no" class="filter-select">
+                <div class="iso-filter-group">
+                  <label class="gnfc-modal-label">SOP Number</label>
+                  <select id="sop-rep-no" class="iso-filter-select">
                     <option value="SOP-01">SOP-01</option>
                     <option value="SOP-02">SOP-02</option>
                     <option value="SOP-03">SOP-03</option>
                     <option value="SOP-04">SOP-04</option>
                   </select>
                 </div>
-                <button type="submit" class="btn-orange-fill" style="height: 38px; padding: 0 32px;">
+                <button type="submit" class="iso-btn-orange" style="height: 38px; padding: 0 32px;">
                   <i class="ph-bold ph-funnel"></i> View Report
                 </button>
               </div>
@@ -405,16 +405,16 @@
 
           <!-- Report Results Section -->
           <div id="sop-report-results">
-            <div class="report-title-banner">
+            <div class="iso-report-title">
               <div>
-                <div class="report-banner-title" style="margin-bottom: 4px;">PDR-SOP REPORT</div>
+                <div class="iso-report-banner" style="margin-bottom: 4px;">PDR-SOP REPORT</div>
                 <div class="report-banner-meta">Plant: <span id="sop-res-plant">CPP</span> | Year: 2026 | SOP No: <span id="sop-res-no">SOP-01</span></div>
               </div>
-              <div class="mini-nav-row">
+              <div class="iso-mini-nav">
                 <span class="timeline-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
-                <button class="mini-nav-btn" onclick="handleTimeline('prev', 'SOP')"><i class="ph-bold ph-caret-left"></i></button>
-                <button class="mini-nav-btn" onclick="handleTimeline('reset', 'SOP')"><i class="ph-bold ph-circle"></i></button>
-                <button class="mini-nav-btn" onclick="handleTimeline('next', 'SOP')"><i class="ph-bold ph-caret-right"></i></button>
+                <button class="iso-mini-nav-1" onclick="handleTimeline('prev', 'SOP')"><i class="ph-bold ph-caret-left"></i></button>
+                <button class="iso-mini-nav-1" onclick="handleTimeline('reset', 'SOP')"><i class="ph-bold ph-circle"></i></button>
+                <button class="iso-mini-nav-1" onclick="handleTimeline('next', 'SOP')"><i class="ph-bold ph-caret-right"></i></button>
               </div>
             </div>
 
@@ -434,7 +434,7 @@
                 </thead>
                 <tbody id="sop-report-tbody">
                   <tr class="user-table-row" data-plant="CPP" data-sop="SOP-01">
-                    <td class="user-table-center font-14px fw-600">SOP-01</td>
+                    <td class="user-table-center font-14pxfw-600">SOP-01</td>
                     <td class="fw-500">Start-up of Boiler Feed Pump (BFP)</td>
                     <td>Ensure lube oil pressure &gt; 1.5 kg/cm2 before main pump trigger.</td>
                     <td>Lube oil pressure fell to 1.3 kg/cm2 during priming step.</td>
@@ -443,7 +443,7 @@
                     <td>Pressure restored to 1.6 kg/cm2, BFP started safely.</td>
                   </tr>
                   <tr class="user-table-row" data-plant="CPP" data-sop="SOP-02">
-                    <td class="user-table-center font-14px fw-600">SOP-02</td>
+                    <td class="user-table-center font-14pxfw-600">SOP-02</td>
                     <td class="fw-500">Turbine Gland Sealing System operation</td>
                     <td>Maintain gland steam header pressure at 0.15 to 0.25 bar.</td>
                     <td>Gland pressure dropped to 0.08 bar for 15 minutes during start.</td>
@@ -452,7 +452,7 @@
                     <td>Gland vacuum restored, no turbine exhaust disturbance recorded.</td>
                   </tr>
                   <tr class="user-table-row" data-plant="BOILER" data-sop="SOP-01">
-                    <td class="user-table-center font-14px fw-600">SOP-01</td>
+                    <td class="user-table-center font-14pxfw-600">SOP-01</td>
                     <td class="fw-500">Boiler Hydro-Test procedure</td>
                     <td>Hold drum test pressure at 125 kg/cm2 for 10 minutes.</td>
                     <td>Hydro pressure decayed by 2 kg/cm2 during hold period.</td>
@@ -471,29 +471,29 @@
         <!-- ──────────────────────────────────────────────────────── -->
         <div id="panel-sot-report" class="unified-tab-panel" style="display: none;">
           <!-- Cohesive Control Banner for SOT -->
-          <div class="report-title-banner" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-radius: 8px; margin-bottom: 20px; background: rgba(234, 88, 12, 0.04); border: 1px solid rgba(234, 88, 12, 0.15);">
+          <div class="iso-report-title" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-radius: 8px; margin-bottom: 20px; background: rgba(234, 88, 12, 0.04); border: 1px solid rgba(234, 88, 12, 0.15);">
             <div class="flex items-center gap-10px">
               <div class="flex items-center justify-center" style="width: 36px; height: 36px; border-radius: 6px; background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
-                <i class="ph-bold ph-target font-18px"></i>
+                <i class="ph-bold ph-target iso-font-18px"></i>
               </div>
               <div style="text-align: left;">
-                <div class="report-banner-title" style="margin-bottom: 2px; font-size: 13.5px; font-weight: 800; text-transform: uppercase;">Status of Objectives and Targets (SOT)</div>
+                <div class="iso-report-banner" style="margin-bottom: 2px; font-size: 13.5px; font-weight: 800; text-transform: uppercase;">Status of Objectives and Targets (SOT)</div>
                 <div class="report-banner-meta" style="font-size: 11px;">YEAR: <span id="sot-tab-active-year">2025 - 2026</span></div>
               </div>
             </div>
             
             <div style="display: flex; align-items: center; gap: 24px;">
               <!-- Timeline navigation -->
-              <div class="mini-nav-row" style="margin-bottom: 0;">
+              <div class="iso-mini-nav" style="margin-bottom: 0;">
                 <span class="timeline-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-right: 8px; letter-spacing: 0.05em;">Timeline:</span>
-                <button class="mini-nav-btn" onclick="handleSotTabTimeline('prev')"><i class="ph-bold ph-caret-left"></i></button>
-                <button class="mini-nav-btn" onclick="handleSotTabTimeline('reset')"><i class="ph-bold ph-circle"></i></button>
-                <button class="mini-nav-btn" onclick="handleSotTabTimeline('next')"><i class="ph-bold ph-caret-right"></i></button>
+                <button class="iso-mini-nav-1" onclick="handleSotTabTimeline('prev')"><i class="ph-bold ph-caret-left"></i></button>
+                <button class="iso-mini-nav-1" onclick="handleSotTabTimeline('reset')"><i class="ph-bold ph-circle"></i></button>
+                <button class="iso-mini-nav-1" onclick="handleSotTabTimeline('next')"><i class="ph-bold ph-caret-right"></i></button>
               </div>
 
               <!-- Search and count -->
               <div class="flex items-center gap-12px">
-                <input type="text" id="sot-tab-search" class="filter-select" placeholder="Search objectives..." style="height: 34px; width: 200px; border-radius: 6px; padding: 0 10px; font-size: 12px; border: 1.5px solid var(--app-border, #cbd5e1);">
+                <input type="text" id="sot-tab-search" class="iso-filter-select" placeholder="Search objectives..." style="height: 34px; width: 200px; border-radius: 6px; padding: 0 10px; font-size: 12px; border: 1.5px solid var(--app-border, #cbd5e1);">
                 <div style="font-size: 12px; font-weight: 700; color: #64748b; white-space: nowrap;">
                   Showing: <span id="sot-tab-count-badge" style="color: var(--typo-orange);">5</span> Records
                 </div>
@@ -640,10 +640,10 @@
         <!-- ──────────────────────────────────────────────────────── -->
         <div id="panel-consumption-reg" class="unified-tab-panel" style="display: none;">
           <!-- Select plant dropdown / Header Bar -->
-          <div class="report-title-banner" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-radius: 8px; margin-bottom: 24px; background: rgba(234, 88, 12, 0.04); border: 1px solid rgba(234, 88, 12, 0.15);">
+          <div class="iso-report-title" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-radius: 8px; margin-bottom: 24px; background: rgba(234, 88, 12, 0.04); border: 1px solid rgba(234, 88, 12, 0.15);">
             <div class="flex items-center gap-10px">
               <div class="flex items-center justify-center" style="width: 36px; height: 36px; border-radius: 6px; background: rgba(234, 88, 12, 0.1); color: var(--typo-orange);">
-                <i class="ph-bold ph-factory font-18px"></i>
+                <i class="ph-bold ph-factory iso-font-18px"></i>
               </div>
               <div style="text-align: left;">
                 <h3 style="font-size: 14px; font-weight: 800; color: var(--typo-primary); text-transform: uppercase; margin: 0; letter-spacing: 0.02em;">Consumption Parameters Setup</h3>
@@ -651,8 +651,8 @@
               </div>
             </div>
             <div class="flex items-center gap-12px">
-              <label for="plant-select-cons-tab" class="filter-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-bottom: 0; letter-spacing: 0.05em;">Select Plant:</label>
-              <select id="plant-select-cons-tab" class="filter-select w-200px" style="cursor: pointer; height: 38px; border-radius: 6px; font-weight: 600; padding: 0 12px; border: 1.5px solid var(--app-border, #cbd5e1);">
+              <label for="plant-select-cons-tab" class="gnfc-modal-label" style="font-size: 11px; font-weight: 700; color: var(--typo-orange); text-transform: uppercase; margin-bottom: 0; letter-spacing: 0.05em;">Select Plant:</label>
+              <select id="plant-select-cons-tab" class="iso-filter-select w-200px" style="cursor: pointer; height: 38px; border-radius: 6px; font-weight: 600; padding: 0 12px; border: 1.5px solid var(--app-border, #cbd5e1);">
                 <option value="BOILER">BOILER</option>
                 <option value="CPP">CPP</option>
                 <option value="AMMONIA">AMMONIA</option>
@@ -663,37 +663,37 @@
           </div>
 
           <!-- Configuration Flow cards -->
-          <div class="config-grid">
+          <div class="iso-config-grid">
             <!-- Card 1: Static Fields -->
-            <div class="premium-config-card">
+            <div class="iso-premium-config">
               <div>
-                <div class="premium-card-icon">
+                <div class="iso-premium-card">
                   <i class="ph-bold ph-database"></i>
                 </div>
                 <h4 class="font-15px fw-700 color-primary uppercase mb-6px">Static Fields</h4>
                 <p class="font-12px color-hint line-height-md">Configure base materials, measurement formulas, baseline volumes, and active target units for the consumption registry.</p>
               </div>
               <div class="premium-btn-group">
-                <button class="btn-orange-fill" onclick="handleConsumptionTab('Static', 'Add')">
+                <button class="iso-btn-orange" onclick="handleConsumptionTab('Static', 'Add')">
                   <i class="ph-bold ph-plus"></i> Add
                 </button>
-                <button class="btn-orange-outline" onclick="handleConsumptionTab('Static', 'View')">
+                <button class="iso-btn-orange-1" onclick="handleConsumptionTab('Static', 'View')">
                   <i class="ph-bold ph-eye"></i> View
                 </button>
               </div>
             </div>
 
             <!-- Card 2: Monthly Status -->
-            <div class="premium-config-card">
+            <div class="iso-premium-config">
               <div>
-                <div class="premium-card-icon">
+                <div class="iso-premium-card">
                   <i class="ph-bold ph-calendar-check"></i>
                 </div>
                 <h4 class="font-15px fw-700 color-primary uppercase mb-6px">Monthly Status</h4>
                 <p class="font-12px color-hint line-height-md">Review actual values entered, progressive totals, month-on-month resource performance ratios, and generate compliance graphs.</p>
               </div>
               <div class="premium-btn-group">
-                <button class="btn-orange-fill" onclick="handleConsumptionTab('Monthly', 'View')">
+                <button class="iso-btn-orange" onclick="handleConsumptionTab('Monthly', 'View')">
                   <i class="ph-bold ph-eye"></i> View
                 </button>
               </div>

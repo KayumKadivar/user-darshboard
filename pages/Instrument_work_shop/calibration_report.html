@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE iso-html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -63,7 +63,7 @@
   <script src="../../../js/header.js" defer></script>
 
   <script>
-    window.activePage = 'iso';
+    window.activePage = 'inst_ws';
   </script>
 </head>
 
@@ -74,21 +74,21 @@
   <main class="main-wrapper">
     <!-- Header Container -->
     <div id="header-container" data-back="test_equipment.html" data-title="CALIBRATION REPORT"
-      data-breadcrumb="ISO Dashboard:../iso.html,INSTRUMENT WORKSHOP:instrumentworkshop.html,TEST EQUIPMENT:test_equipment.html,Calibration Report:active">
+      data-breadcrumb="ISO Dashboard:../iso.html,Instument Work Shop:Instrumentworkshop.html,TEST EQUIPMENT:test_equipment.html,Calibration Report:active">
     </div>
 
     <!-- Page Content Area -->
-    <div class="app-content-area">
+    <div class="inws-app-content">
 
-      <div class="dms-container">
-        <div class="iso-header-row" style="align-items: flex-start;">
+      <div class="inws-dms-container">
+        <div class="inws-header-row" style="align-items: flex-start;">
 
           <!-- Left side: Item, Model, Serial -->
-          <div class="iso-flex-col-gap-4">
-            <div class="iso-header-title-wrapper" style="font-size: 20px; color: var(--color-blue); border-bottom: none; margin-bottom: 0;">
+          <div class="flex-col-gap-4">
+            <div class="inws-header-title-wrapper" style="font-size: 20px; color: var(--color-blue); border-bottom: none; margin-bottom: 0;">
               <span id="rep-item" class="fw-700">Item: BLR-001 (PRESSURE CALIBRATOR)</span>
             </div>
-            <div class="fw-600 iso-flex-gap-2" style="gap: 40px;">
+            <div class="fw-600 flex-gap-2" style="gap: 40px;">
               <span id="rep-model" class="color-blue" style="font-size: 16px;">Model: DPI612 pFlex</span>
               <span id="rep-serial" class="color-blue" style="font-size: 16px;">Serial No: 5877129</span>
             </div>
@@ -97,8 +97,8 @@
           <!-- Right side: Plantcode and Toolbar controls -->
           <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
             <div class="fw-700" id="rep-plant" style="font-size: 16px; color: var(--typo-primary);">Plantcode: BOILER</div>
-            <div class="dms-toolbar mb-0px" style="margin-top: 4px;">
-              <button class="dms-toolbar-btn" id="btn-save-doc" title="Save Document to Server">
+            <div class="inws-dms-toolbar mb-0px" style="margin-top: 4px;">
+              <button class="inws-dms-toolbar-1" id="btn-save-doc" title="Save Document to Server">
                 <i class="ph-bold ph-folder-plus"></i>
               </button>
             </div>
@@ -107,7 +107,7 @@
       </div>
 
       <!-- Corporate Table system from style.css -->
-      <div class="iso-table-wrapper card-shadow" style="margin-top: 16px;">
+      <div class="iso-table-wrapper inws-card-shadow" style="margin-top: 16px;">
         <table class="iso-table">
           <thead>
             <tr>
@@ -120,8 +120,8 @@
           <tbody>
             <tr>
               <td>
-                <div class="file-name-cell">
-                  <i class="ph-fill ph-file-xls file-icon-doc" style="color: #10b981;"></i>
+                <div class="inws-file-name">
+                  <i class="ph-fill ph-file-xls inws-file-icon-1" style="color: #10b981;"></i>
                   <a href="#" class="color-blue hover-underline fw-600" id="file-name-1">blr 001.xlsx</a>
                 </div>
               </td>
@@ -131,8 +131,8 @@
             </tr>
             <tr>
               <td>
-                <div class="file-name-cell">
-                  <i class="ph-fill ph-file-xls file-icon-doc" style="color: #10b981;"></i>
+                <div class="inws-file-name">
+                  <i class="ph-fill ph-file-xls inws-file-icon-1" style="color: #10b981;"></i>
                   <a href="#" class="color-blue hover-underline fw-600" id="file-name-2">cal1-blr 001.xlsx</a>
                 </div>
               </td>
@@ -163,13 +163,13 @@
           <span class="fw-700 color-blue font-16px" id="modal-plant-name">BOILER</span>
         </div>
 
-        <div id="attachment-rows-container" class="iso-flex-col-gap-12 mb-20px">
-          <div class="attachment-row">
-            <div class="attachment-file-info">
+        <div id="attachment-rows-container" class="flex-col-gap-12 mb-20px">
+          <div class="inws-attachment-row">
+            <div class="inws-attachment-file">
               <i class="ph-bold ph-file iso-icon-18 iso-color-secondary"></i>
-              <span class="attachment-file-name">No file chosen...</span>
+              <span class="inws-attachment-file-1">No file chosen...</span>
             </div>
-            <label class="attachment-browse-label">
+            <label class="inws-attachment-browse">
               Browse..
               <input type="file" class="hidden-file-input iso-hidden">
             </label>
@@ -179,7 +179,7 @@
 
       <div class="gnfc-modal-footer iso-modal-footer-between">
         <span class="iso-note-danger">Note : Max size 10Mb at a time !!</span>
-        <div class="iso-flex-items-center-gap-12">
+        <div class="flex-items-center-gap-12">
           <button type="button" id="btn-save-attachments" class="gnfc-modal-btn gnfc-modal-btn-primary px-24px">Save</button>
           <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary px-24px" id="btn-cancel-upload-modal">Cancel</button>
         </div>
@@ -219,22 +219,22 @@
         
         // Reset file input
         $('#attachment-rows-container .attachment-row').each(function () {
-          $(this).find('.attachment-file-name').text('No file chosen...').removeClass('is-active');
+          $(this).find('.attachment-file-name').text('No file chosen...').removeClass('iso-is-active');
           $(this).find('i').removeClass('ph-check-circle iso-color-blue').addClass('ph-file iso-color-secondary');
           $(this).find('.hidden-file-input').val('');
         });
         
-        $uploadOverlay.addClass('is-open');
+        $uploadOverlay.addClass('iso-is-open');
       });
 
       $('#btn-close-upload-modal, #btn-cancel-upload-modal').on('click', function() {
-        $uploadOverlay.removeClass('is-open');
+        $uploadOverlay.removeClass('iso-is-open');
       });
 
       $(document).on('change', '.hidden-file-input', function () {
         const fileName = this.files.length ? this.files[0].name : 'No file chosen...';
         const $row = $(this).closest('.attachment-row');
-        $row.find('.attachment-file-name').text(fileName).addClass('is-active');
+        $row.find('.attachment-file-name').text(fileName).addClass('iso-is-active');
         $row.find('i').removeClass('ph-file iso-color-secondary').addClass('ph-check-circle iso-color-blue');
       });
 
@@ -249,7 +249,7 @@
           return;
         }
 
-        $uploadOverlay.removeClass('is-open');
+        $uploadOverlay.removeClass('iso-is-open');
         Swal.fire({
           title: 'Saved!',
           text: 'Document uploaded successfully.',

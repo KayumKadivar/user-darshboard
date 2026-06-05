@@ -1,0 +1,971 @@
+
+.inws-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--app-panel);
+}
+
+.inws-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  min-height: 70px;
+  text-align: center;
+  text-decoration: none !important;
+  color: var(--typo-primary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--app-border);
+  border-right: 1px solid var(--app-border);
+  transition: all 0.2s ease;
+}
+
+/* Grid borders logic to match table border structure */
+.inws-cell:nth-child(2n) {
+  border-right: none;
+}
+
+.inws-cell:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+/* Hover effect for clickable cells */
+a.inws-cell:hover {
+  background: rgba(255, 153, 0, 0.04);
+  color: var(--typo-orange);
+}
+
+.inws-cell.inws-empty-cell {
+  background: transparent;
+  cursor: default;
+}
+
+/* Responsive Grid styling */
+@media (max-width: 768px) {
+  .inws-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inws-cell {
+    border-right: none !important;
+  }
+
+  .inws-cell:not(:last-child) {
+    border-bottom: 1px solid var(--app-border) !important;
+  }
+}
+
+/* ── Test Equipment Calibration Register Page Styles ── */
+.inws-results-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  padding: 16px 24px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.inws-results-header-info h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--typo-orange);
+  margin: 0 0 4px 0;
+}
+
+.inws-results-header-info p {
+  font-size: 12px;
+  color: var(--typo-secondary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.inws-results-header-info .inws-meta-tag {
+  display: inline-block;
+  background: rgba(255, 153, 0, 0.1);
+  color: var(--typo-orange);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.inws-results-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.inws-plant-selector-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inws-plant-selector-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--typo-primary);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.inws-selector-select {
+  min-width: 180px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--app-panel-alt);
+  border: 1px solid var(--app-border);
+  color: var(--typo-primary);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inws-selector-select:focus {
+  border-color: var(--typo-orange);
+}
+
+.inws-selector-btn {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.inws-selector-btn-primary {
+  background: var(--typo-orange);
+  color: #fff;
+}
+
+.inws-selector-btn-primary:hover {
+  background: #e68a00;
+}
+
+.inws-selector-btn-secondary {
+  background: transparent;
+  border-color: var(--app-border);
+  color: var(--typo-secondary);
+}
+
+.inws-selector-btn-secondary:hover {
+  background: var(--app-hover);
+  color: var(--typo-primary);
+}
+
+.inws-table-section-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--typo-primary);
+  margin: 16px 0px;
+  border-left: 4px solid var(--typo-orange);
+  padding-left: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Split column cell styles */
+.inws-split-cell {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  height: 100%;
+  min-height: 52px;
+  justify-content: center;
+}
+
+.inws-split-top,
+.inws-split-bottom {
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.inws-split-top {
+  border-bottom: 1px solid var(--app-border);
+}
+
+.inws-split-bottom {
+  font-size: 12px;
+}
+
+.inws-cal-report-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+}
+
+.inws-cal-report-link {
+  color: var(--typo-secondary);
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.inws-cal-report-link:hover {
+  color: var(--typo-orange);
+}
+
+/* Custom Form Table Styles in Modal using standard Theme variables */
+.inws-modal-form-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--gnfc-modal-shell-border);
+  background: var(--gnfc-modal-shell-bg);
+  margin: 0 auto;
+}
+
+.inws-modal-form-table th, 
+.inws-modal-form-table td {
+  border: 1px solid var(--gnfc-modal-shell-border);
+  padding: 0;
+  vertical-align: middle;
+}
+
+.inws-form-main-header {
+  background: var(--gnfc-modal-header-bg) !important;
+  color: var(--gnfc-modal-title-color) !important;
+  font-weight: 800;
+  font-size: 15px;
+  text-align: center;
+  padding: 10px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.inws-form-cell {
+  background: var(--gnfc-modal-body-bg);
+}
+
+.inws-form-cell-label {
+  background: var(--gnfc-modal-header-bg);
+  color: var(--gnfc-modal-subtitle-color);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--gnfc-modal-shell-border);
+  letter-spacing: 0.03em;
+}
+
+.inws-form-cell-content {
+  padding: 10px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--gnfc-modal-body-bg);
+}
+
+/* Actions cell customization */
+.inws-form-actions-cell {
+  padding: 16px !important;
+  text-align: center;
+  background: var(--gnfc-modal-footer-bg);
+  border-top: 1px solid var(--gnfc-modal-shell-border);
+}
+
+/* Custom Dropdown select indicator inside modal forms */
+select.inws-form-cell-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff9900' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E") !important; */
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 14px !important;
+  padding-right: 28px !important;
+  cursor: pointer;
+}
+
+html[data-theme="dark"] select.inws-form-cell-input option {
+  background-color: #1a1d21;
+  color: #ffffff;
+}
+
+/* Job number link styling to avoid inline CSS */
+.inws-job-no-link {
+  font-weight: 700;
+  color: var(--typo-blue);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.inws-job-no-link:hover {
+  color: var(--typo-orange);
+}
+
+/* ── Job History Page Styles ── */
+/* Search Criteria Layout styling */
+.inws-search-criteria-card {
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.inws-search-criteria-header {
+  background: var(--app-panel-alt);
+  border-bottom: 1px solid var(--app-border);
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inws-search-criteria-header h3 {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--typo-orange);
+  letter-spacing: 0.05em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.inws-search-criteria-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inws-search-criteria-row {
+  display: flex;
+  border-bottom: 1px solid var(--app-border);
+  transition: background-color 0.2s ease;
+  align-items: stretch;
+}
+
+.inws-search-criteria-row:last-child {
+  border-bottom: none;
+}
+
+.inws-search-criteria-row.is-disabled {
+  opacity: 0.55;
+}
+
+.inws-search-criteria-row.is-active {
+  background: transparent;
+}
+
+.inws-criteria-select-col {
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--app-border);
+  background: transparent;
+}
+
+.inws-criteria-radio {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--app-border);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.inws-criteria-radio:checked {
+  border-color: var(--typo-orange);
+  background-color: transparent;
+}
+
+.inws-criteria-radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 8px;
+  background: var(--typo-orange);
+  border-radius: 50%;
+}
+
+.inws-criteria-fields-col {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.inws-grid-row-2 {
+  grid-template-columns: 1fr 2fr;
+}
+
+.inws-grid-row-3 {
+  grid-template-columns: 1fr 2fr;
+}
+
+.inws-criteria-field-box {
+  border-right: 1px solid var(--app-border);
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px 12px 12px;
+  gap: 6px;
+}
+
+.inws-criteria-field-box:last-child {
+  border-right: none;
+}
+
+.inws-criteria-field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--typo-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.inws-criteria-field-input-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.inws-criteria-input {
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  color: var(--typo-primary);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.inws-criteria-input:focus {
+  border-color: var(--typo-orange);
+}
+
+.inws-criteria-input:disabled {
+  background: var(--app-panel-alt);
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.inws-date-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.inws-date-label-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inws-date-btn-select {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--typo-blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.inws-date-btn-select:hover {
+  color: var(--typo-orange);
+}
+
+.inws-date-btn-select:disabled {
+  color: var(--typo-hint);
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+.inws-date-flex-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.inws-date-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inws-clear-btn-wrapper {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 2px;
+}
+
+.inws-btn-clear-date {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--app-panel-alt);
+  border: 1px solid var(--app-border);
+  color: var(--typo-secondary);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inws-btn-clear-date:hover:not(:disabled) {
+  background: var(--app-hover);
+  color: var(--typo-primary);
+  border-color: var(--typo-orange);
+}
+
+.inws-btn-clear-date:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.inws-report-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.inws-btn-report {
+  background: var(--typo-orange);
+  color: #fff;
+  border: none;
+  padding: 10px 36px;
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 8px rgba(255, 153, 0, 0.2);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inws-btn-report:hover {
+  background: #e68a00;
+  box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.inws-btn-report:active {
+  transform: translateY(0);
+}
+
+select.inws-criteria-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff9900' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 14px !important;
+  padding-right: 28px !important;
+  cursor: pointer;
+}
+
+html[data-theme="dark"] select.inws-criteria-input option {
+  background-color: #1a1d21;
+  color: #ffffff;
+}
+
+.inws-empty-results-row {
+  text-align: center;
+  font-weight: 700;
+  color: var(--typo-red);
+  padding: 24px 0;
+}
+
+.inws-empty-results-row i {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Log Action Buttons */
+.inws-log-btn {
+  background: var(--app-panel-alt);
+  border: 1px solid var(--app-border);
+  color: var(--typo-secondary);
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inws-log-btn i {
+  font-size: 16px;
+}
+
+.inws-log-btn:hover {
+  background: var(--app-hover);
+  color: var(--typo-primary);
+  border-color: var(--typo-orange);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.inws-log-btn.inws-log-btn-active {
+  background: rgba(255, 153, 0, 0.1);
+  color: var(--typo-orange);
+  border-color: rgba(255, 153, 0, 0.4);
+}
+
+/* Replaced Inline Styles */
+.inws-criteria-spacer-box {
+  background: var(--app-panel-alt);
+}
+
+.inws-header-flex-right {
+  display: flex;
+  gap: 10px;
+}
+.inws-table-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inws-btn-add-job {
+  margin: 0;
+  padding: 4px 16px;
+  font-size: 13px;
+  text-transform: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: none;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.inws-textarea-min-80 {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.inws-modal-footer-flex {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 8px;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.ws-normal {
+  white-space: normal;
+}
+
+/* Inline Dates and Centered Report Button */
+.inws-date-label-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inws-date-label-wrapper .inws-criteria-field-label {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.inws-criteria-spacer-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.inws-btn-report-auto {
+  width: auto !important;
+  padding: 8px 32px !important;
+}
+
+
+/* Migrated from iso.css */
+.inws-card-shadow {
+  box-shadow:0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+/* Global Reset for ISO Workspace Area using Corporate Theme Variables */
+.inws-app-content {
+  background: var(--app-bg);
+  padding: 24px;
+  color: var(--typo-primary);
+  transition: background 0.4s ease;
+}
+/* ==============================================================================
+   ─── 4. SHARED DMS CARD & TABLE LAYOUTS ───
+   ============================================================================== */
+.inws-dms-container {
+  background: var(--app-panel);
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 8px 30px rgba(255, 153, 0, 0.05);
+  margin-bottom: 16px;
+}
+.inws-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+/* ─── 6. PREMIUM ACTION BAR SYSTEM ─── */
+.inws-action-bar-3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--card-bg);
+  border: 1px solid var(--app-border);
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border-left: 5px solid var(--typo-orange);
+}
+.inws-action-bar-4 {
+  display: flex;
+  flex-direction: column;
+}
+/* Attachment Modal Styles (Joblist Style) */
+.inws-attachment-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--app-border);
+  background: var(--app-panel);
+  transition: all 0.2s ease;
+}
+.inws-attachment-row:hover {
+  border-color: var(--typo-blue);
+  background: rgba(var(--typo-secondary-rgb), 0.02);
+}
+.inws-attachment-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+.inws-attachment-file-1 {
+  font-size: 0.852rem;
+  font-weight: 500;
+  color: var(--typo-secondary);
+}
+.inws-attachment-file-1.is-active {
+  color: var(--typo-primary);
+  font-weight: 600;
+}
+.inws-attachment-browse {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--app-border);
+  background: var(--app-panel);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.inws-attachment-browse:hover {
+  background: var(--app-panel-light);
+  border-color: var(--typo-secondary);
+}
+/* Folder Actions Toolbar */
+.inws-dms-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.inws-dms-toolbar-1 {
+  background: var(--app-panel-alt);
+  border: 1px solid var(--app-border);
+  color: var(--typo-primary);
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.inws-dms-toolbar-1:hover {
+  border-color: var(--typo-blue);
+  color: var(--typo-primary);
+  background: var(--typo-blue);
+}
+/* Cell alignments & icon styles inside tables */
+.inws-file-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--typo-primary);
+  font-weight: 600;
+}
+.inws-file-name:hover span,
+.inws-file-name:hover a,
+.inws-file-name span:hover,
+.inws-file-name a:hover {
+  color: var(--typo-blue, #3b82f6);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.inws-file-icon-1 {
+  color: #2b579a;
+  font-size: 1.25rem;
+}
+.iso-report-modern-10.inws-tech {
+  color: var(--typo-blue);
+  background: rgba(26, 115, 232, 0.08);
+}
+/* ==============================================================================
+   ─── 8. CALIBRATION PAGE ACTION BAR & WIDGETS ───
+   ============================================================================== */
+.inws-calib-action-5 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--app-border);
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border-left: 5px solid var(--typo-orange);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.inws-calib-action-12 {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.inws-calib-action-8 {
+  background: rgba(255, 153, 0, 0.1);
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--typo-orange);
+  font-size: 1.5rem;
+}
+.inws-calib-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.inws-calib-action-10 {
+  
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--typo-primary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.inws-calib-action-2 {
+  background: rgba(255, 153, 0, 0.08);
+  color: var(--typo-orange);
+  border: 1px solid rgba(255, 153, 0, 0.2);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  
+  letter-spacing: 0.5px;
+}
+.inws-calib-action-1 {
+  font-size: 0.85rem;
+  color: var(--typo-secondary);
+  margin: 0;
+  font-weight: 500;
+}
+.iso-calib-action-9 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ff9900 0%, #e05300 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  
+  font-size: 0.875rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(255, 153, 0, 0.25);
+  text-decoration: none;
+}
+.iso-calib-action-9 i {
+  font-size: 1.1rem;
+}
+/* ─── Radioactive Page Modifier Styles ─── */
+.iso-calib-action-3 {
+  border-left-color: #198754;
+}
+.iso-calib-action-11 {
+  background: rgba(25, 135, 84, 0.1);
+  color: #198754;
+}
+.iso-calib-action-4 {
+  color: #198754;
+}
+.iso-calib-action-6 {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border-color: rgba(220, 53, 69, 0.2);
+}
+.iso-calib-action-7 {
+  background: #198754;
+  box-shadow: 0 4px 15px rgba(25, 135, 84, 0.25);
+}
+.iso-calib-action-7:hover {
+  background: #146c43;
+}
+.inws-header-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+}

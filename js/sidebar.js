@@ -70,7 +70,7 @@ $(function () {
           <span class="sidebar-text">SPP</span>
         </a>
 
-        <a href="${basePath}pages/iso/INSTRUMENTWORKSHOP/instrumentworkshop.html" class="sidebar-link" data-id="inst_ws">
+        <a href="${basePath}pages/Instrument_work_shop/instrumentworkshop.html" class="sidebar-link" data-id="inst_ws">
           <i class="ph ph-bold ph-desktop"></i>
           <span class="sidebar-text">INST WS</span>
         </a>

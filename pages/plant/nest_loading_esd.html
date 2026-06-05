@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nest Loading ESD | GNFC</title>
+    <link rel="stylesheet" href="../../css/phosphor.css">
+    <link rel="stylesheet" href="../../css/theme-vars.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/style.css">
+    <link rel="stylesheet" href="../../css/pages/plant.css">
+    <link rel="stylesheet" href="../../css/utilities.css">
+
+    <style>
+        /* --- Floating Navigation Menu Styles --- */
+        .main-wrapper {
+            position: relative;
+        }
+
+        .floating-nav-menu {
+            position: absolute;
+            top: 150px;
+            left: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: stretch;
+            transform: translateX(-202px); /* Hide panel width + border */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .floating-nav-menu:hover,
+        .floating-nav-menu.is-open {
+            transform: translateX(0);
+        }
+
+        .nav-menu-panel {
+            width: 200px;
+            background: #0f2240;
+            border: 2px solid #000000;
+            border-left: none;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 0 0 8px 0;
+        }
+
+        .nav-menu-header {
+            height: 40px;
+            background: #1a365d;
+            border-bottom: 2px solid #000000;
+        }
+
+        .nav-menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+            background: #ffffff;
+        }
+
+        .nav-menu-list li {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .nav-menu-list a {
+            display: block;
+            padding: 12px 15px;
+            color: #334155;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: Arial, sans-serif;
+            transition: all 0.2s;
+        }
+
+        .nav-menu-list a:hover {
+            background: #f1f5f9;
+            color: #2563eb;
+        }
+
+        .nav-menu-list a.active {
+            background: #e0f2fe;
+            color: #0284c7;
+            font-weight: 700;
+            border-left: 4px solid #0284c7;
+            padding-left: 11px;
+        }
+
+        .nav-menu-footer {
+            height: 40px;
+            background: #3366cc;
+            border-top: 2px solid #000000;
+        }
+
+        .nav-menu-toggle {
+            width: 32px;
+            background: #0f2240;
+            color: #ffffff;
+            border: 2px solid #000000;
+            border-left: none;
+            box-sizing: border-box;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 1.25;
+            text-align: center;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 0 4px 4px 0;
+            padding: 15px 0;
+            user-select: none;
+        }
+    </style>
+
+    <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="../../js/theme-control.js"></script>
+    <script src="../../js/sidebar.js" defer></script>
+    <script src="../../js/header.js" defer></script>
+    <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
+    <script>window.activePage = 'plants';</script>
+</head>
+
+<body class="dashboard-body">
+
+    <div class="sidebar-container"></div>
+
+    <!-- Floating Navigation Menu -->
+    <div id="floating-nav-menu" class="floating-nav-menu">
+        <div class="nav-menu-panel">
+            <div class="nav-menu-header"></div>
+            <ul class="nav-menu-list">
+                <li><a href="nest_loading_esd.html" class="active">Nest Loading ESD</a></li>
+                <li><a href="nest_loading_dcs.html">Nest Loading DCS</a></li>
+                <li><a href="calibration_format.html">Calibration Format</a></li>
+                <li><a href="change_password.html">Change Password</a></li>
+                <li><a href="#" class="dev-link">MAINTENANCE MANUAL</a></li>
+                <li><a href="boiler_doc_explorer.html">File Index</a></li>
+                <li><a href="boiler_other_doc.html">Soft Doc Index</a></li>
+            </ul>
+            <div class="nav-menu-footer"></div>
+        </div>
+   
+    </div>
+
+    <main class="main-wrapper">
+
+        <div id="header-container" data-title="Nest Loading ESD"
+            data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,Nest Loading ESD:active"
+            data-back="boiler_dashboard.html"></div>
+
+        <div class="dashboard-content dashboard-scroll">
+        
+
+            <div class="plant-table-container">
+                <!-- <div class="plant-table-card__header">
+
+                </div> -->
+                <div class="user-table-wrapper">
+                <table class="user-table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="text-left">IO_CHANNEL_NO</th>
+                            <th class="text-left" >TAG_NO</th>
+                        </tr>
+                    </thead>
+                    <tbody class="plant-table-body">
+                        <!-- Group 1 -->
+                        <tr class="user-table-date">
+                            <td class="user-table-bold" >IO MODULE : 1A1-TTUR</td>
+                            <td class="user-table-bold">LOCATION:1A1</td>
+                        </tr>
+                        <tr class="user-table-row"><td></td><td>25/25X/25P</td></tr>
+                        <tr class="user-table-row"><td></td><td>20A</td></tr>
+                        <tr class="user-table-row"><td></td><td>45FTX(1-45FTX)</td></tr>
+                        <tr class="user-table-row"><td></td><td>77MT-1(mh_x)</td></tr>
+                        <tr class="user-table-row"><td></td><td>77MT-2(mh_y)</td></tr>
+                        <tr class="user-table-row"><td></td><td>77MT-3(mh_z)</td></tr>
+                        <tr class="user-table-row"><td></td><td>INC PT(ex)</td></tr>
+                        <tr class="user-table-row"><td></td><td>RUN PT(evl)</td></tr>
+                        <tr class="user-table-row"><td>2</td><td>77S(pn_rpm)</td></tr>
+
+                        <!-- Group 2 -->
+                        <tr class="user-table-date">
+                            <td class="user-table-bold">IO MODULE : 1A2 TBTC</td>
+                            <td class="user-table-bold">LOCATION:1A2</td>
+                        </tr>
+                        <tr class="user-table-row"><td>1</td><td>TT-XD-2(ttxd_2)</td></tr>
+                        <tr class="user-table-row"><td>2</td><td>TT-XD-5(ttxd_5)</td></tr>
+                        <tr class="user-table-row"><td>3</td><td>TT-XD-8(ttxd_8)</td></tr>
+                        <tr class="user-table-row"><td>4</td><td>TT-XD-11(ttxd_11)</td></tr>
+                        <tr class="user-table-row"><td>5</td><td>TT-XD-14(ttxd_14)</td></tr>
+                        <tr class="user-table-row"><td>6</td><td>TT-XD-17(ttxd_17)</td></tr>
+                        <tr class="user-table-row"><td>7</td><td>LT-B2D A(ltb2d1)</td></tr>
+                        <tr class="user-table-row"><td>10</td><td>LT-TH-1B(ltth1b)</td></tr>
+                        <tr class="user-table-row"><td>12</td><td>DT-DA-2(dtda2)</td></tr>
+                        <tr class="user-table-row"><td>13</td><td>TT-W31F1-2(ttws1f12)</td></tr>
+                        <tr class="user-table-row"><td>14</td><td>TT-W32F0-1(ttws2fo1)</td></tr>
+                        <tr class="user-table-row"><td>15</td><td>TT-W32A0-2(ttws2ao2)</td></tr>
+                        <tr class="user-table-row"><td>16</td><td>TT-W33A0-1(ttws3ao1)</td></tr>
+                        <tr class="user-table-row"><td>17</td><td>BT-J1-2A(btj1_2)</td></tr>
+                        <tr class="user-table-row"><td>19</td><td>BT-RGP1-1A(btrgp1_1)</td></tr>
+                        <tr class="user-table-row"><td>21</td><td>BT-RGP2-1A(btrgp2_1)</td></tr>
+                        <tr class="user-table-row"><td>24</td><td>DT-IF-2A(dtif2a)</td></tr>
+
+                        <!-- Group 3 -->
+                        <tr class="user-table-date">
+                            <td class="user-table-bold">IO MODULE : 1A3-TBTC</td>
+                            <td class="user-table-bold">LOCATION:1A3</td>
+                        </tr>
+                        <tr class="user-table-row"><td>1</td><td>TT-XD-3(ttxd_3)</td></tr>
+                        <tr class="user-table-row"><td>2</td><td>TT-XD-6(ttxd_6)</td></tr>
+                        <tr class="user-table-row"><td>3</td><td>TT-XD-9(ttxd_9)</td></tr>
+                        <tr class="user-table-row"><td>4</td><td>TT-XD-12(ttxd_12)</td></tr>
+                        <tr class="user-table-row"><td>5</td><td>TT-XD-15(ttxd_15)</td></tr>
+                        <tr class="user-table-row"><td>6</td><td>TT-XD-18(ttxd_18)</td></tr>
+                        <tr class="user-table-row"><td>7</td><td>BT-S1-3(bts13)</td></tr>
+
+                        <!-- Group 4 -->
+                        <tr class="user-table-date">
+                            <td class="user-table-bold">IO MODULE : 0</td>
+                            <td class="user-table-bold">LOCATION:</td>
+                        </tr>
+                        <tr class="user-table-row"><td></td><td>2ADT</td></tr>
+                        <tr class="user-table-row"><td></td><td>3ADT</td></tr>
+                        <tr class="user-table-row"><td></td><td>COMP-1</td></tr>
+                        <tr class="user-table-row"><td></td><td>COMP-2</td></tr>
+                        <tr class="user-table-row"><td></td><td>DFA_PLC</td></tr>
+                        <tr class="user-table-row"><td></td><td>FS4</td></tr>
+                        <tr class="user-table-row"><td></td><td>FS5</td></tr>
+                        <tr class="user-table-row"><td></td><td>FS6</td></tr>
+                        <tr class="user-table-row"><td></td><td>FS7</td></tr>
+                        <tr class="user-table-row"><td></td><td>FT-1</td></tr>
+                        <tr class="user-table-row"><td></td><td>FT-2</td></tr>
+                        <tr class="user-table-row"><td></td><td>FT-3</td></tr>
+                        <tr class="user-table-row"><td></td><td>FT-4</td></tr>
+                        <tr class="user-table-row"><td></td><td>HP-PT</td></tr>
+                        <tr class="user-table-row"><td></td><td>LT-1</td></tr>
+                        <tr class="user-table-row"><td></td><td>LT-150SILO</td></tr>
+                        <tr class="user-table-row"><td></td><td>LT1504</td></tr>
+                        <tr class="user-table-row"><td></td><td>LT-2</td></tr>
+                        <tr class="user-table-row"><td></td><td>LT-250SILO</td></tr>
+                        <tr class="user-table-row"><td></td><td>LT-INTERSILO</td></tr>
+                        <tr class="user-table-row"><td></td><td>PLC_ASH</td></tr>
+                        <tr class="user-table-row"><td></td><td>PS-01</td></tr>
+                        <tr class="user-table-row"><td></td><td>PS-101</td></tr>
+                        <tr class="user-table-row"><td></td><td>PS-102</td></tr>
+                        <tr class="user-table-row"><td></td><td>PS-201</td></tr>
+                        <tr class="user-table-row"><td></td><td>PS-202</td></tr>
+                        <tr class="user-table-row"><td></td><td>PS-301</td></tr>
+                        <tr class="user-table-row"><td></td><td>PS-302</td></tr>
+                        <tr class="user-table-row"><td></td><td>PT-1</td></tr>
+                        <tr class="user-table-row"><td></td><td>PT-2</td></tr>
+                        <tr class="user-table-row"><td></td><td>PT-3</td></tr>
+
+                        <!-- Group 5 -->
+                        <tr class="user-table-date">
+                            <td class="user-table-bold">IO MODULE : 1B4-TBAI</td>
+                            <td class="user-table-bold">LOCATION:1B4</td>
+                        </tr>
+                        <tr class="user-table-row"><td>1</td><td>96CD-1C(cqd1c)</td></tr>
+                        <tr class="user-table-row"><td>2</td><td>96FG-2C(fgq2c)</td></tr>
+                        <tr class="user-table-row"><td>3</td><td>96GW-3(dwwt3)</td></tr>
+                        <tr class="user-table-row"><td>4</td><td>96TF-2B(96tf2b)</td></tr>
+                        <tr class="user-table-row"><td>5</td><td>96E1-2(96et2)</td></tr>
+
+                        <!-- Group 6 -->
+                        <tr class="user-table-date">
+                            <td class="user-table-bold">IO MODULE : 1B5-TPRO</td>
+                            <td class="user-table-bold">LOCATION:1B5</td>
+                        </tr>
+                        <tr class="user-table-row"><td></td><td>77HT-1(mh_ca_x)</td></tr>
+                        <tr class="user-table-row"><td></td><td>77HT-2(mh_ca_y)</td></tr>
+                        <tr class="user-table-row"><td></td><td>77HT-3(mh_ca_z)</td></tr>
+                        <tr class="user-table-row"><td></td><td>DV(DV_VPRO)</td></tr>
+                        <tr class="user-table-row"><td></td><td>SVL(SVL_VPRO)</td></tr>
+
+                        <!-- Group 7 -->
+                        <tr class="user-table-date">
+                            <td class="user-table-bold">IO MODULE : 1C1-TRLY</td>
+                            <td class="user-table-bold">LOCATION:1C1</td>
+                        </tr>
+                        <tr class="user-table-row"><td>1</td><td>20CB-1(120cc1x)</td></tr>
+                        <tr class="user-table-row"><td>2</td><td>20CB-1(120cc1s)</td></tr>
+                        <tr class="user-table-row"><td>3</td><td>20TW-1(t20w1x)</td></tr>
+                        <tr class="user-table-row"><td>4</td><td>20BS-1(20bs1x)</td></tr>
+                        <tr class="user-table-row"><td>8</td><td>83LV(l83lx)</td></tr>
+                        <tr class="user-table-row"><td>9</td><td>03E(e03e)</td></tr>
+                        <tr class="user-table-row"><td>10</td><td>4wxwx36817x-1(t4wwx1)</td></tr>
+
+                        <!-- Group 8 -->
+                        <tr class="user-table-date">
+                            <td class="user-table-bold">IO MODULE : 1C2-TRLY</td>
+                            <td class="user-table-bold">LOCATION:1C2</td>
+                        </tr>
+                        <tr class="user-table-row"><td>1</td><td>20VG-1(t20vg1x)</td></tr>
+                        <tr class="user-table-row"><td>2</td><td>20BJ-1(t20bj1x)</td></tr>
+                        <tr class="user-table-row"><td>3</td><td>20TW-1(t4tw1x)</td></tr>
+                    </tbody>
+                    </div>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        $(document).ready(function() {
+            // --- Floating Navigation Menu Scripts ---
+            const $menu = $('#floating-nav-menu');
+            $('.nav-menu-toggle').on('click', function(e) {
+                e.stopPropagation();
+                $menu.toggleClass('is-open');
+            });
+            
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('#floating-nav-menu').length) {
+                    $menu.removeClass('is-open');
+                }
+            });
+
+            // Interactive alerts for unfinished menu options
+            $('.nav-menu-list a').on('click', function(e) {
+                const targetUrl = $(this).attr('href');
+                if (targetUrl === '#' || $(this).hasClass('dev-link')) {
+                    e.preventDefault();
+                    const pageName = $(this).text();
+                    Swal.fire({
+                        icon: 'info',
+                        title: pageName,
+                        text: `You have selected ${pageName}. This module is currently under development.`,
+                        confirmButtonColor: '#2563eb'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

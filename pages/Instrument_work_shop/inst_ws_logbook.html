@@ -1,0 +1,918 @@
+<!DOCTYPE iso-html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instrument Logbook | GNFC E-Logbook</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../iso.css">
+  <link rel="stylesheet" href="inst-ws.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'inst_ws';
+  </script>
+
+  <!-- Internal styles moved to inst-ws.css -->
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header Container -->
+    <div id="header-container" data-back="Instrumentworkshop.html"
+      data-breadcrumb="Instument Work Shop:Instrumentworkshop.html,Logbook:active">
+    </div>
+
+    <!-- Page Content Area -->
+    <div class="inws-app-content">
+
+      <!-- Results Screen -->
+      <div id="results-screen" class="results-section">
+
+        <!-- Search Criteria Panel -->
+        <div class="inws-search-criteria-card">
+          <div class="inws-search-criteria-header">
+            <h3>Search Criteria</h3>
+            <div class="inws-header-flex-right">
+              <button type="button" class="inws-log-btn log-btn-small" id="btn-today-log">
+                <i class="ph-bold ph-calendar-blank"></i> Today Log
+              </button>
+              <button type="button" class="inws-log-btn log-btn-small" id="btn-prevday-log">
+                <i class="ph-bold ph-clock-counter-clockwise"></i> PrevDay Log
+              </button>
+              <button type="button" class="inws-log-btn log-btn-small" id="btn-weekly-log">
+                <i class="ph-bold ph-calendar-check"></i> Weekly Log
+              </button>
+              <button type="button" class="inws-log-btn inws-log-btn-active log-btn-small" id="btn-all-log">
+                <i class="ph-bold ph-files"></i> All Log
+              </button>
+              <button type="button" class="inws-selector-btn inws-selector-btn-primary inws-btn-add-job"
+                data-open-modal="add-job-modal">
+                <i class="ph-bold ph-plus"></i> Add Job
+              </button>
+            </div>
+          </div>
+          <div class="inws-search-criteria-table">
+
+            <!-- Row 1: Plant, Type, Status -->
+            <div class="inws-search-criteria-row iso-is-active" id="row-group-1">
+              <div class="inws-criteria-select-col">
+                <input type="radio" name="criteria-selection" class="inws-criteria-radio" id="radio-1" checked>
+              </div>
+              <div class="inws-criteria-fields-col">
+                <!-- Plant Select -->
+                <div class="inws-criteria-field-box">
+                  <span class="inws-criteria-field-label">Plant</span>
+                  <div class="inws-criteria-field-input-container">
+                    <select id="crit-plant" class="inws-criteria-input">
+                      <option value="ALL" selected>ALL</option>
+                      <option value="BOILER">BOILER</option>
+                      <option value="ACETIC ACID">ACETIC ACID</option>
+                      <option value="METHANOL-1">METHANOL-1</option>
+                      <option value="AMMONIA">AMMONIA</option>
+                      <option value="UREA">UREA</option>
+                      <option value="DM">DM</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- Type Select -->
+                <div class="inws-criteria-field-box">
+                  <span class="inws-criteria-field-label">Type</span>
+                  <div class="inws-criteria-field-input-container">
+                    <select id="crit-type" class="inws-criteria-input">
+                      <option value="ALL" selected>ALL</option>
+                      <option value="TRANSMITTER">TRANSMITTER</option>
+                      <option value="DCS">DCS</option>
+                      <option value="ESD">ESD</option>
+                      <option value="ANALYZER">ANALYZER</option>
+                      <option value="FLAME/TEMP SCANNER">FLAME/TEMP SCANNER</option>
+                      <option value="RECORDER/PRINTER">RECORDER/PRINTER</option>
+                      <option value="TEST EQUIPMENT">TEST EQUIPMENT</option>
+                      <option value="OTHER">OTHER</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- Status Select -->
+                <div class="inws-criteria-field-box">
+                  <span class="inws-criteria-field-label">Status</span>
+                  <div class="inws-criteria-field-input-container">
+                    <select id="crit-status" class="inws-criteria-input">
+                      <option value="ALL" selected>ALL</option>
+                      <option value="OVER">OVER</option>
+                      <option value="PENDING">PENDING</option>
+                      <option value="NOT REPARABLE">NOT REPARABLE</option>
+                      <option value="U/P">U/P</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Remark, Dates -->
+            <div class="inws-search-criteria-row is-disabled" id="row-group-2">
+              <div class="inws-criteria-select-col">
+                <input type="radio" name="criteria-selection" class="inws-criteria-radio" id="radio-2">
+              </div>
+              <div class="inws-criteria-fields-col inws-grid-row-2">
+                <!-- Remark Box -->
+                <div class="inws-criteria-field-box">
+                  <span class="inws-criteria-field-label" style="padding-top: 8px;">REMARKS</span>
+                </div>
+                <!-- Dates Box -->
+                <div class="inws-criteria-field-box">
+                  <div class="inws-criteria-field-input-container">
+                    <div class="inws-date-flex-row">
+                      <div class="inws-date-block">
+                        <div class="inws-date-label-wrapper">
+                          <label for="crit-start-date" class="inws-criteria-field-label">START DATE : </label>
+                          <input type="date" id="crit-start-date" class="inws-criteria-input" disabled>
+                        </div>
+                      </div>
+                      <div class="inws-date-block">
+                        <div class="inws-date-label-wrapper">
+                          <label for="crit-end-date" class="inws-criteria-field-label">END DATE :</label>
+                          <input type="date" id="crit-end-date" class="inws-criteria-input" disabled>
+                        </div>
+                      </div>
+                      <div class="inws-clear-btn-wrapper">
+                        <button type="button" class="inws-btn-clear-date" id="btn-clear-dates" disabled>Clear</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 3: Serial No -->
+            <div class="inws-search-criteria-row is-disabled" id="row-group-3">
+              <div class="inws-criteria-select-col">
+                <input type="radio" name="criteria-selection" class="inws-criteria-radio" id="radio-3">
+              </div>
+              <div class="inws-criteria-fields-col inws-grid-row-3">
+                <!-- Serial No Box -->
+                <div class="inws-criteria-field-box">
+                  <span class="inws-criteria-field-label">Serial No</span>
+                  <div class="inws-criteria-field-input-container">
+                    <select id="crit-serialno" class="inws-criteria-input" disabled>
+                      <option value="ALL" selected>ALL</option>
+                      <option value="SN-FL-902">SN-FL-902 (Flame Ignitor)</option>
+                      <option value="SN-FS-881">SN-FS-881 (Flame Scanner)</option>
+                      <option value="SN-FS-882">SN-FS-882 (Flame Scanner)</option>
+                      <option value="SN-RL-042">SN-RL-042 (Flame Relay)</option>
+                      <option value="SN-RL-041">SN-RL-041 (Flame Relay)</option>
+                      <option value="SN-TX-1051">SN-TX-1051 (Flow Transmitter)</option>
+                      <option value="SN-TX-3051">SN-TX-3051 (Pressure Transmitter)</option>
+                      <option value="SN-CAL-754">SN-CAL-754 (Fluke Calibrator)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="inws-criteria-field-box inws-criteria-spacer-box">
+              <button type="button" id="btn-search-report" class="inws-btn-report inws-btn-report-auto">
+                <i class="ph-bold ph-file-text"></i> Report
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- Table Section: Logbook Results -->
+        <div class="inws-table-section-title inws-table-header-flex">
+          <span>Logbook Results</span>
+
+        </div>
+        <div class="user-table-wrapper">
+          <table class="user-table-1 min-w-1440px">
+            <thead>
+              <tr>
+                <th class="user-table-center w-50px">Sr</th>
+                <th class="w-80px">Plant</th>
+                <th class="w-200px p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">Type</div>
+                    <div class="inws-split-bottom">Subtype</div>
+                  </div>
+                </th>
+                <th>Description</th>
+                <th class="w-100px">SerialNo</th>
+                <th class="w-80px p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">Tech</div>
+                    <div class="inws-split-bottom">Eng</div>
+                  </div>
+                </th>
+                <th class="w-120px p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">Date</div>
+                    <div class="inws-split-bottom">Status</div>
+                  </div>
+                </th>
+                <th class="w-140px p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">CostRecovery</div>
+                    <div class="inws-split-bottom">CostOfRepair</div>
+                  </div>
+                </th>
+                <th class="w-300px">Remarks</th>
+              </tr>
+            </thead>
+            <tbody id="logbook-tbody">
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">1</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">TRANSMITTER</div>
+                    <div class="inws-split-bottom">Level Transmitter</div>
+                  </div>
+                </td>
+                <td>Checked and found one track open , so jumper provided.Operation checked and now its working ok.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">MHT</div>
+                    <div class="inws-split-bottom">JJK</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">22/12/2006</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">90000</div>
+                    <div class="inws-split-bottom">0</div>
+                  </div>
+                </td>
+                <td class="ws-normal">Good fault finding, keep it up [written by : JJK Date : 23/12/2006 ]</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">2</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">OTHER</div>
+                    <div class="inws-split-bottom">Earth leakage detector</div>
+                  </div>
+                </td>
+                <td>Checked and found its 1 A semiconductor fuse and DC to DC convertor defective, replaced them, now
+                  working ok.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">TKC</div>
+                    <div class="inws-split-bottom">KGS</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">22/03/2006</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top"></div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="ws-normal">DC to DC convertor module replaced and ok. [written by : KGS Date : 28/03/2006 ]
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">3</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">DCS</div>
+                    <div class="inws-split-bottom">Communication failure</div>
+                  </div>
+                </td>
+                <td>New 5180 installed and card send to plant for checking.</td>
+                <td class="user-table-center">1895+32799</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">MHT</div>
+                    <div class="inws-split-bottom">KGS</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">05/06/2007</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">500000</div>
+                    <div class="inws-split-bottom">500</div>
+                  </div>
+                </td>
+                <td class="ws-normal">OK. [written by : KGS Date : 09/06/2007 ]<br>Card tested on line in M-1 DCS system
+                  on 08/06/07 and found working ok. Kept under observation. Good job done again Keep it up ! [written by
+                  : TMV Date : 09/06/2007 ]</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">4</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">DCS</div>
+                    <div class="inws-split-bottom">-</div>
+                  </div>
+                </td>
+                <td>Two 470 ohm resistors replaced and it is to be check in plant.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">MHT</div>
+                    <div class="inws-split-bottom">VSR</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">21/02/2007</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top"></div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="ws-normal"></td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">5</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">DCS</div>
+                    <div class="inws-split-bottom">FDMH</div>
+                  </div>
+                </td>
+                <td>On checking found one pulse transformer secondary winding short for pin of two channels. Checked for
+                  another transformer from another FDM card, but same transformer not available. So card is not
+                  repairable.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">TMV</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">21/11/2006</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top"></div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="ws-normal">Pl. check up with SID(KD) for availibilty of same type of non-repairable cards for
+                  transformer discarded in the plant and confirm. [written by : TMV Date : 22/11/2006 ] OK [written by :
+                  MCP Date : 22/11/2006 ]</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">6</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">DCS</div>
+                    <div class="inws-split-bottom">CRT</div>
+                  </div>
+                </td>
+                <td>Checked and found one capacitor faulty, so replaced it.Now its working ok.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">MHT</div>
+                    <div class="inws-split-bottom">TMV</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">05/09/2006</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">250000</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="ws-normal"></td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">7</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">DCS</div>
+                    <div class="inws-split-bottom">Communications Processor 1.0</div>
+                  </div>
+                </td>
+                <td>Card tested at plant and found working ok. Replaced 1.8 K And 470 Ohm resistor.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">TKC</div>
+                    <div class="inws-split-bottom">TMV</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">21/12/2005</div>
+                    <div class="inws-split-bottom">OVER</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">300000</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="ws-normal">Card is working as informed by SJE(SHL) , job to be over. [written by : VSR Date :
+                  21/12/2005 ] [ Written By : VSR 22/12/2005 ]</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">8</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">DCS</div>
+                    <div class="inws-split-bottom">AWEJ01</div>
+                  </div>
+                </td>
+                <td>Based on our M-2 DNDI problem on Blue patch or communication problem we have verified all SMD
+                  resistors of Date bus and found all ok. No visual defect observed.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">TMV</div>
+                    <div class="inws-split-bottom">TMV</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">21/10/2005</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top"></div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="ws-normal">DMHI card found ok. No component failure observed [ Written By : TMV 22/03/2006 ]
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">9</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">TRANSMITTER</div>
+                    <div class="inws-split-bottom">LT card</div>
+                  </div>
+                </td>
+                <td>Compare with new card ,pot adjusted as per new card and now its responding as per new card. It is
+                  further checked in plant.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">MHT</div>
+                    <div class="inws-split-bottom">TMV</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">17/08/2005</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top"></div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="ws-normal">Value of resistance in the two trim pots at center of the cards set as per new ok
+                  card issued from store. After setting resistance response (O/P) found in line with ok card. Further
+                  card to be tested in the plant and feedback to be given. [written by : TMV Date : 18/08/2005 ]</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">10</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">ESD</div>
+                    <div class="inws-split-bottom">ELD module</div>
+                  </div>
+                </td>
+                <td>Checked and found dc to dc convertor not working ,so replaced with new one.Operation checked and now
+                  its working ok.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">MHT</div>
+                    <div class="inws-split-bottom">TMV</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">18/07/2005</div>
+                    <div class="inws-split-bottom"></div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">25000</div>
+                    <div class="inws-split-bottom">1200</div>
+                  </div>
+                </td>
+                <td class="ws-normal">As discussed with M(MCP) to prevent failure of ELD at the time of plant shutdown,
+                  all ELD module to be isolated before main power of system cabinets to be switched off [ Written by :
+                  TMV 20/07/2005 ]</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">11</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">DCS</div>
+                    <div class="inws-split-bottom">DCS MODULE</div>
+                  </div>
+                </td>
+                <td>Replaced two SMD ICs 5180, card tested working ok at plant.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">JJK</div>
+                    <div class="inws-split-bottom">VSR</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">29/06/2005</div>
+                    <div class="inws-split-bottom">OVER</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">~50000</div>
+                    <div class="inws-split-bottom">1000</div>
+                  </div>
+                </td>
+                <td class="ws-normal">Job is already over [written by : VSR Date : 29/06/2005 ]</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center font-14pxfw-600">12</td>
+                <td class="user-table-center">M1</td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top fw-700">ANALYZER</div>
+                    <div class="inws-split-bottom">H2 ANALYZER</div>
+                  </div>
+                </td>
+                <td>Checked and found 4 mA o/p current at 160 mV i/p. Further checked amplifier board by feeding mV
+                  directly on Amp. board and found working ok. Further checked all resistors and diode in i/p ckt found
+                  ok. On analysis found variation in (down) to card changing by varying RV1 (50 ohm). Removed RV1
+                  resistor and fixed 200 ohm pot, set the pot so as to feed 0 mV to Amp. card when i/p is 65 mV. Further
+                  to be installed at plant and set calibration. Analyzer is returned to plant.</td>
+                <td class="user-table-center"></td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">JJK</div>
+                    <div class="inws-split-bottom">VSR</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">11/05/2005</div>
+                    <div class="inws-split-bottom">OVER</div>
+                  </div>
+                </td>
+                <td class="p-0">
+                  <div class="inws-split-cell">
+                    <div class="inws-split-top">200000</div>
+                    <div class="inws-split-bottom">0</div>
+                  </div>
+                </td>
+                <td class="ws-normal">Installed in plant. Calibration done with new pot.same thing shwn to m-1 people.
+                  [written by : VSR Date : 11/05/2005 ] [ Written By : VSR 13/05/2005 ]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add Job Modal -->
+  <div id="add-job-modal" class="gnfc-modal-overlay">
+    <div class="iso-gnfc-modal gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">LOGBOOK</h3>
+          <p class="gnfc-modal-subtitle">Instrument WorkShop</p>
+        </div>
+        <button type="button" class="gnfc-modal-close" data-close-modal="add-job-modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <form id="add-job-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12 gap-16px">
+
+            <!-- PLANT -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">PLANT</label>
+              <select class="gnfc-modal-input">
+                <option>N/A</option>
+                <option>BOILER</option>
+              </select>
+            </div>
+
+            <!-- TYPE -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">TYPE</label>
+              <select class="gnfc-modal-input">
+                <option value="">Select Type</option>
+              </select>
+            </div>
+
+            <!-- SUBTYPE -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">SUBTYPE</label>
+              <input type="text" class="gnfc-modal-input" placeholder="Enter subtype">
+            </div>
+
+            <!-- SERIAL NO -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">SERIAL NO</label>
+              <input type="text" class="gnfc-modal-input" placeholder="e.g. SN-1234">
+            </div>
+
+            <!-- JOB DESCRIPTION -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input inws-textarea-min-80"
+                placeholder="Detailed description of the job..."></textarea>
+            </div>
+
+            <!-- DATE -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="text" class="gnfc-modal-input" value="01/06/2026">
+            </div>
+
+            <!-- STATUS -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">STATUS</label>
+              <select class="gnfc-modal-input">
+                <option value="">Select Status</option>
+              </select>
+            </div>
+
+            <!-- TECH -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">TECH</label>
+              <select class="gnfc-modal-input">
+                <option value="">Select Tech</option>
+              </select>
+            </div>
+
+            <!-- ENG -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">ENG</label>
+              <input type="text" class="gnfc-modal-input" value="ENG_TESTER">
+            </div>
+
+            <!-- COST RECOVERY -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">COST RECOVERY (RS)</label>
+              <input type="number" class="gnfc-modal-input" placeholder="Integer value only">
+            </div>
+
+            <!-- COST OF REPAIR -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">COST OF REPAIR (RS)</label>
+              <input type="number" class="gnfc-modal-input" placeholder="Integer value only">
+            </div>
+
+            <!-- REMARKS -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">REMARKS</label>
+              <textarea class="gnfc-modal-input inws-textarea-min-80" placeholder="Optional remarks..."></textarea>
+            </div>
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- JS Implementation -->
+  <script>
+    $(function () {
+
+      // Handle radio selection toggling
+      $('input[name="criteria-selection"]').on('change', function () {
+        const selectedId = $(this).attr('id');
+
+        // Deactivate all rows
+        $('.inws-search-criteria-row').addClass('is-disabled').removeClass('iso-is-active');
+        $('.inws-criteria-input, .inws-date-btn-select, .inws-btn-clear-date').attr('disabled', true);
+
+        if (selectedId === 'radio-1') {
+          $('#row-group-1').removeClass('is-disabled').addClass('iso-is-active');
+          $('#crit-plant, #crit-type, #crit-status').removeAttr('disabled');
+        } else if (selectedId === 'radio-2') {
+          $('#row-group-2').removeClass('is-disabled').addClass('iso-is-active');
+          $('#crit-remark, #crit-start-date, #crit-end-date, #btn-select-start, #btn-select-end, #btn-clear-dates').removeAttr('disabled');
+        } else if (selectedId === 'radio-3') {
+          $('#row-group-3').removeClass('is-disabled').addClass('iso-is-active');
+          $('#crit-serialno').removeAttr('disabled');
+        }
+      });
+
+      // Quick-select date buttons (focus/opens date input native picker if possible)
+      $('#btn-select-start').on('click', function () {
+        $('#crit-start-date').focus().click();
+      });
+
+      $('#btn-select-end').on('click', function () {
+        $('#crit-end-date').focus().click();
+      });
+
+      // Clear Date filters
+      $('#btn-clear-dates').on('click', function () {
+        $('#crit-start-date, #crit-end-date').val('');
+        $('#crit-remark').val('');
+      });
+
+      // Row clicking selects the corresponding radio button
+      $('.inws-search-criteria-row').on('click', function (e) {
+        // Prevent selection trigger loop if clicking interactive elements inside
+        if ($(e.target).is('select, input, button, a')) return;
+
+        const $radio = $(this).find('.inws-criteria-radio');
+        if (!$radio.prop('checked')) {
+          $radio.prop('checked', true).trigger('change');
+        }
+      });
+
+      // Report Search functionality
+      $('#btn-search-report').on('click', function () {
+        const activeRadioId = $('input[name="criteria-selection"]:checked').attr('id');
+        let filteredData = [...jobHistoryDb];
+
+        if (activeRadioId === 'radio-1') {
+          const plantVal = $('#crit-plant').val();
+          const typeVal = $('#crit-type').val();
+          const statusVal = $('#crit-status').val();
+
+          if (plantVal !== 'ALL') {
+            filteredData = filteredData.filter(item => item.plant === plantVal);
+          }
+          if (typeVal !== 'ALL') {
+            filteredData = filteredData.filter(item => item.type === typeVal);
+          }
+          if (statusVal !== 'ALL') {
+            filteredData = filteredData.filter(item => item.status === statusVal);
+          }
+        }
+        else if (activeRadioId === 'radio-2') {
+          const remarkVal = $('#crit-remark').val().trim().toLowerCase();
+          const startDateVal = $('#crit-start-date').val();
+          const endDateVal = $('#crit-end-date').val();
+
+          if (remarkVal) {
+            filteredData = filteredData.filter(item =>
+              (item.engRemark && item.engRemark.toLowerCase().includes(remarkVal)) ||
+              (item.execRemark && item.execRemark.toLowerCase().includes(remarkVal)) ||
+              (item.description && item.description.toLowerCase().includes(remarkVal))
+            );
+          }
+
+          // Parse DD/MM/YYYY for comparison
+          const parseDateString = (dateStr) => {
+            const parts = dateStr.split('/');
+            return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+          };
+
+          if (startDateVal) {
+            const startLimit = new Date(startDateVal);
+            filteredData = filteredData.filter(item => parseDateString(item.date) >= startLimit);
+          }
+
+          if (endDateVal) {
+            const endLimit = new Date(endDateVal);
+            filteredData = filteredData.filter(item => parseDateString(item.date) <= endLimit);
+          }
+        }
+        else if (activeRadioId === 'radio-3') {
+          const serialVal = $('#crit-serialno').val();
+          if (serialVal !== 'ALL') {
+            filteredData = filteredData.filter(item => item.serialNo === serialVal);
+          }
+        }
+
+        renderTable(filteredData);
+
+        // Display nice notification about results count
+        Swal.fire({
+          icon: filteredData.length > 0 ? 'success' : 'info',
+          title: 'Search Completed',
+          text: `Found ${filteredData.length} records matching search criteria.`,
+          timer: 1500,
+          showConfirmButton: false,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+
+      // Modal open/close logic
+      $(document).on('click', '[data-open-modal]', function () {
+        const modalId = $(this).data('open-modal');
+        $('#' + modalId).addClass('iso-is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      $(document).on('click', '[data-close-modal]', function () {
+        const modalId = $(this).data('close-modal');
+        $('#' + modalId).removeClass('iso-is-open');
+        $('body').css('overflow', '');
+      });
+
+      // Form submit handler
+      $('#add-job-form').on('submit', function (e) {
+        e.preventDefault();
+        $('#add-job-modal').removeClass('iso-is-open');
+        $('body').css('overflow', '');
+        Swal.fire({
+          icon: 'success',
+          title: 'Job Added Successfully',
+          showConfirmButton: false,
+          timer: 1500,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+
+      // Log Filter Actions
+      $('.inws-log-btn').on('click', function () {
+        $('.inws-log-btn').removeClass('inws-log-btn-active');
+        $(this).addClass('inws-log-btn-active');
+
+        // Simulating log filter loading
+        const filterName = $(this).text().trim();
+        Swal.fire({
+          icon: 'info',
+          title: 'Applying Filter',
+          text: `Loading ${filterName}...`,
+          timer: 800,
+          showConfirmButton: false,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+
+    });
+  </script>
+</body>
+
+</html>
