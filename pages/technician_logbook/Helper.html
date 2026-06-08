@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helper Attendance and OT | GNFC</title>
+
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/pages/plant.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'helper';
+  </script>
+</head>
+<body class="dashboard-body plant-page">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <div id="header-container" data-title="Plant Detail"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Helper Attendance:active" data-back="plant_detail.html"></div>
+
+    <section class="dashboard-content-tech-logbook">
+      <!-- Plant Navigation Container -->
+      <div id="plant-nav-container"></div>
+      
+      <!-- Toolbar with Add Button -->
+      <section class="ui-card plant-toolbar-card my-20px">
+        <div class="plant-toolbar">
+          <div class="plant-toolbar__left">
+             <h2 class="view-title">Helper Attendance and OT</h2>
+          </div>
+          <div class="plant-toolbar__right">
+            <button type="button" class="plant-nav-pill is-active" data-open-modal="helper-new-entry-modal">
+              <i class="ph-bold ph-plus" aria-hidden="true"></i>
+              <span>New Entry</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Table Section -->
+      <section class="plant-table-card">
+         <div class="user-table-wrapper">
+            <table class="user-table min-w-1000px" id="helperAttendanceTable">
+              <thead>
+                <tr>
+                  <th class="" style="width: 15%; padding-left:16px;">ENTRY BY</th>
+                  <th class="text-center" style="width: 15%;">DATE</th>
+                  <th class="text-center" style="width: 12%;">Regular</th>
+                  <th class="text-center" style="width: 12%;">Regular OT</th>
+                  <th class="text-center" style="width: 12%;">Extra</th>
+                  <th class="text-center" style="width: 12%;">Extra OT</th>
+                  <th class="text-center" style="width: 15%;">PLANT</th>
+                  <th class="text-center" style="width: 7%;">Action</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-row">
+                  <td class="user-table-bold" style="padding-left:16px;">TRC</td>
+                  <td class="text-center">10/07/2026</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">BOILER</td>
+                  <td class="text-center">
+                    <button type="button" class="plant-inline-button" title="Delete"><i class="ph-bold ph-trash" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-bold" style="padding-left:16px;">TRC</td>
+                  <td class="text-center">08/07/2026</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">BOILER</td>
+                  <td class="text-center">
+                    <button type="button" class="plant-inline-button" title="Delete"><i class="ph-bold ph-trash" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-bold" style="padding-left:16px;">TRC</td>
+                  <td class="text-center">06/07/2026</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">BOILER</td>
+                  <td class="text-center">
+                    <button type="button" class="plant-inline-button" title="Delete"><i class="ph-bold ph-trash" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-bold" style="padding-left:16px;">TRC</td>
+                  <td class="text-center">04/07/2026</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">BOILER</td>
+                  <td class="text-center">
+                    <button type="button" class="plant-inline-button" title="Delete"><i class="ph-bold ph-trash" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="user-table-bold" style="padding-left:16px;">TRC</td>
+                  <td class="text-center">02/07/2026</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">0</td>
+                  <td class="text-center">BOILER</td>
+                  <td class="text-center">
+                    <button type="button" class="plant-inline-button" title="Delete"><i class="ph-bold ph-trash" aria-hidden="true"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+         </div>
+      </section>
+    </section>
+  </main>
+  
+  <!-- Helper New Entry Modal -->
+  <div id="helper-new-entry-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Helper Attendance and OT - New Entry</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="helper-new-entry-modal" aria-label="Close modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <form id="helper-entry-form">
+        <div class="gnfc-modal-body gnfc-modal-body--tight" style="overflow-y:auto;">
+          <div class="form-grid grid-cols-12">
+            
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">ENTRY BY</label>
+              <input type="text" class="gnfc-modal-input" id="entry-by" value="ENG_TESTER" required>
+            </div>
+            
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="date" class="gnfc-modal-input" id="entry-date" value="2026-06-08" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">PLANT</label>
+              <input type="text" class="gnfc-modal-input" id="plant" value="BOILER" readonly>
+            </div>
+            
+          
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">REGULAR <span class="color-hint text-xs">(Number only)</span></label>
+              <input type="number" class="gnfc-modal-input" id="regular-hrs" placeholder="0" min="0" required>
+            </div>
+            
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">REGULAR OT <span class="color-hint text-xs">(Number only)</span></label>
+              <input type="number" class="gnfc-modal-input" id="regular-ot-hrs" placeholder="0" min="0" required>
+            </div>
+            
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">EXTRA <span class="color-hint text-xs">(Number only)</span></label>
+              <input type="number" class="gnfc-modal-input" id="extra-hrs" placeholder="0" min="0" required>
+            </div>
+            
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">EXTRA OT <span class="color-hint text-xs">(Number only)</span></label>
+              <input type="number" class="gnfc-modal-input" id="extra-ot-hrs" placeholder="0" min="0" required>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="helper-new-entry-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      // Modal open logic
+      $('[data-open-modal]').on('click', function() {
+        const modalId = $(this).attr('data-open-modal');
+        $('#' + modalId).addClass('is-open');
+      });
+
+      // Modal close logic
+      $('[data-close-modal]').on('click', function() {
+        $(this).closest('.gnfc-modal-overlay').removeClass('is-open');
+      });
+      
+      // Close modal on outside click
+      $('.gnfc-modal-overlay').on('mousedown', function(e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          $(this).removeClass('is-open');
+        }
+      });
+      
+      // Form submit logic
+      $('#helper-entry-form').on('submit', function(e) {
+         e.preventDefault();
+         // Simulate saving
+         $('#helper-new-entry-modal').removeClass('is-open');
+         Swal.fire({
+            title: "Saved!",
+            text: "New entry added successfully.",
+            icon: "success",
+            confirmButtonColor: "var(--primary-color)"
+         });
+         this.reset();
+         $('#entry-by').val('ENG_TESTER');
+         $('#entry-date').val('2026-06-08');
+         $('#plant').val('BOILER');
+      });
+      
+      // Delete button
+      $('.plant-inline-button[title="Delete"]').on('click', function() {
+         let tr = $(this).closest('tr');
+         Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "var(--danger-color)",
+            cancelButtonColor: "var(--secondary-color)",
+            confirmButtonText: "Yes, delete it!"
+         }).then((result) => {
+            if (result.isConfirmed) {
+                tr.fadeOut(300, function() { $(this).remove(); });
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success",
+                    confirmButtonColor: "var(--primary-color)"
+                });
+            }
+         });
+      });
+    });
+  </script>
+</body>
+</html>

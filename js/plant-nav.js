@@ -52,7 +52,10 @@ function renderPlantNav(activePageId) {
         {
             items: [
                 { id: 'modifications', label: 'Modifications', icon: 'ph-gear-fine', href: 'modifications.html' },
-                { id: 'doc_change', label: 'Doc. Change', icon: 'ph-file-doc', href: 'doc_change.html' }
+                { id: 'doc_change', label: 'Doc. Change', icon: 'ph-file-doc', href: 'doc_change.html' },
+                { id: 'helper', label: 'Helper', icon: 'ph-users', href: 'Helper.html' },
+                { id: 'cost_saving', label: 'Cost Saving', icon: 'ph-coins', href: 'cost_saving.html' },
+                { id: 'c_lab', label: 'C-Lab', icon: 'ph-flask', href: 'c-lab.html' }
             ]
         },
         {

@@ -59,6 +59,18 @@
           </div>
 
           <div class="plant-toolbar__right">
+
+
+            <button type="button" class="plant-nav-pill" data-open-modal="add-inst-modal">
+              <i class="ph-bold ph-plus"></i> Add inst
+            </button>
+            <button type="button" class="plant-nav-pill" onclick="window.location.href='Assign_today_inst.html'">
+              <i class="ph-bold ph-calendar-check"></i> Assign Today inst
+            </button>
+            <button type="button" class="plant-nav-pill" data-open-modal="Assign_tomorrow_inst.html">
+              <i class="ph-bold ph-calendar-plus"></i> Assign Tomorrow inst
+            </button>
+
             <button type="button" class="plant-nav-pill" data-open-modal="technician-job-assign">
               <i class="ph-bold ph-plus" aria-hidden="true"></i>
               <span>Add</span>
@@ -1397,7 +1409,344 @@
 
   </main>
 
-  <!-- Modal 1: Log Book Entry Modal -->
+  <!-- Modal: Add Inst Modal -->
+  <div id="add-inst-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add Inst</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="add-inst-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form id="add-inst-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12">
+            <!-- Row 1 -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="date" class="gnfc-modal-input" value="2026-06-08">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB NO</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB TITLE</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">PLANT NAME</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <!-- Row 2 -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Type</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OTHER">OTHER</option>
+                <option value="DCS">DCS</option>
+                <option value="ESD">ESD</option>
+                <option value="CONTROLLER/INDICATOR">CONTROLLER/INDICATOR</option>
+                <option value="RECORDER/PRINTER">RECORDER/PRINTER</option>
+                <option value="MONITOR/CRT">MONITOR/CRT</option>
+                <option value="SPEED SYSTEM">SPEED SYSTEM</option>
+                <option value="VIBRATION SYSTEM">VIBRATION SYSTEM</option>
+                <option value="FLAME/TEMP SCANNER">FLAME/TEMP SCANNER</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="TEST EQUIPMENT">TEST EQUIPMENT</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="WEIGHING SYSTEM">WEIGHING SYSTEM</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">SubType</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+              </select>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input" rows="3"></textarea>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB STATUS</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OVER">OVER</option>
+                <option value="U/P">U/P</option>
+                <option value="NOT REPAIRABLE">NOT REPAIRABLE</option>
+                <option value="RETURN TO PLANT">RETURN TO PLANT</option>
+                <option value="PENDING FOR COMPONENT">PENDING FOR COMPONENT</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">TECH</label>
+              <select class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">ENG</label>
+              <select class="gnfc-modal-input">
+                <option value="balbhadra">balbhadra</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">DEFECT</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label font-10px">EXTRA DUTY HRS</label>
+              <div class="flex gap-4px">
+                <select class="gnfc-modal-input px-2px"><option>HR</option></select>
+                <select class="gnfc-modal-input px-2px"><option>MIN</option></select>
+              </div>
+            </div>
+            <div class="col-span-1 text-center">
+              <label class="gnfc-modal-label font-10px">EMERGENCY</label>
+              <input type="checkbox" class="mt-10px">
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn-primary">Save</button>
+          <button type="button" class="gnfc-modal-btn-cancel" data-close-modal="add-inst-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Assign Today Inst Modal -->
+  <div id="assign-today-inst-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Assign Today Inst</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="assign-today-inst-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form id="assign-today-inst-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12">
+            <!-- Row 1 -->
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="date" class="gnfc-modal-input" value="2026-06-08">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB NO</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB TITLE</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">PLANT NAME</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <!-- Row 2 -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">Type</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OTHER">OTHER</option>
+                <option value="DCS">DCS</option>
+                <option value="ESD">ESD</option>
+                <option value="CONTROLLER/INDICATOR">CONTROLLER/INDICATOR</option>
+                <option value="RECORDER/PRINTER">RECORDER/PRINTER</option>
+                <option value="MONITOR/CRT">MONITOR/CRT</option>
+                <option value="SPEED SYSTEM">SPEED SYSTEM</option>
+                <option value="VIBRATION SYSTEM">VIBRATION SYSTEM</option>
+                <option value="FLAME/TEMP SCANNER">FLAME/TEMP SCANNER</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="TEST EQUIPMENT">TEST EQUIPMENT</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="WEIGHING SYSTEM">WEIGHING SYSTEM</option>
+              </select>
+            </div>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">SubType</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+              </select>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input" rows="3"></textarea>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">JOB STATUS</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OVER">OVER</option>
+                <option value="U/P">U/P</option>
+                <option value="NOT REPAIRABLE">NOT REPAIRABLE</option>
+                <option value="RETURN TO PLANT">RETURN TO PLANT</option>
+                <option value="PENDING FOR COMPONENT">PENDING FOR COMPONENT</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">TECH</label>
+              <select class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">ENG</label>
+              <select class="gnfc-modal-input">
+                <option value="balbhadra">balbhadra</option>
+              </select>
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">DEFECT</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-1">
+              <label class="gnfc-modal-label font-10px">EXTRA DUTY HRS</label>
+              <div class="flex gap-4px">
+                <select class="gnfc-modal-input px-2px"><option>HR</option></select>
+                <select class="gnfc-modal-input px-2px"><option>MIN</option></select>
+              </div>
+            </div>
+            <div class="col-span-1 text-center">
+              <label class="gnfc-modal-label font-10px">EMERGENCY</label>
+              <input type="checkbox" class="mt-10px">
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn-primary">Save</button>
+          <button type="button" class="gnfc-modal-btn-cancel" data-close-modal="assign-today-inst-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Assign Tomorrow Inst Modal -->
+  <div id="assign-tomorrow-inst-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Assign Tomorrow Inst</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="assign-tomorrow-inst-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form id="assign-tomorrow-inst-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12">
+            <!-- Row 1 -->
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="date" class="gnfc-modal-input" value="2026-06-08">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB NO</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB TITLE</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">PLANT NAME</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <!-- Row 2 -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">Type</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OTHER">OTHER</option>
+                <option value="DCS">DCS</option>
+                <option value="ESD">ESD</option>
+                <option value="CONTROLLER/INDICATOR">CONTROLLER/INDICATOR</option>
+                <option value="RECORDER/PRINTER">RECORDER/PRINTER</option>
+                <option value="MONITOR/CRT">MONITOR/CRT</option>
+                <option value="SPEED SYSTEM">SPEED SYSTEM</option>
+                <option value="VIBRATION SYSTEM">VIBRATION SYSTEM</option>
+                <option value="FLAME/TEMP SCANNER">FLAME/TEMP SCANNER</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="TEST EQUIPMENT">TEST EQUIPMENT</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="WEIGHING SYSTEM">WEIGHING SYSTEM</option>
+              </select>
+            </div>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">SubType</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+              </select>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input" rows="3"></textarea>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">JOB STATUS</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OVER">OVER</option>
+                <option value="U/P">U/P</option>
+                <option value="NOT REPAIRABLE">NOT REPAIRABLE</option>
+                <option value="RETURN TO PLANT">RETURN TO PLANT</option>
+                <option value="PENDING FOR COMPONENT">PENDING FOR COMPONENT</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">TECH</label>
+              <select class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">ENG</label>
+              <select class="gnfc-modal-input">
+                <option value="balbhadra">balbhadra</option>
+              </select>
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">DEFECT</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-1">
+              <label class="gnfc-modal-label font-10px">EXTRA DUTY HRS</label>
+              <div class="flex gap-4px">
+                <select class="gnfc-modal-input px-2px"><option>HR</option></select>
+                <select class="gnfc-modal-input px-2px"><option>MIN</option></select>
+              </div>
+            </div>
+            <div class="col-span-1 text-center">
+              <label class="gnfc-modal-label font-10px">EMERGENCY</label>
+              <input type="checkbox" class="mt-10px">
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn-primary">Save</button>
+          <button type="button" class="gnfc-modal-btn-cancel" data-close-modal="assign-tomorrow-inst-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>  <!-- Modal 1: Log Book Entry Modal -->
   <div id="job-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="gnfc-modal-shell--xl gnfc-modal-shell--xl">
       <div class="gnfc-modal-header">

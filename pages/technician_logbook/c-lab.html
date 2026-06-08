@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C-Lab | GNFC</title>
+
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/pages/plant.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'c_lab';
+  </script>
+</head>
+<body class="dashboard-body plant-page">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <div id="header-container" data-title="Plant Detail"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,C-Lab:active" data-back="plant_detail.html"></div>
+
+    <section class="dashboard-content-tech-logbook">
+      <!-- Plant Navigation Container -->
+      <div id="plant-nav-container"></div>
+      
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card mt-20px">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-flask"></i>
+            C-LAB : SEARCH CRITERIA
+          </h2>
+        </div>
+
+        <div class="jt-filter-body" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <!-- Start Date -->
+          <div>
+            <label class="gnfc-modal-label">Start Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="startDateFilter" class="gnfc-modal-input" value="2026-05-14">
+            </div>
+          </div>
+
+          <!-- End Date -->
+          <div>
+            <label class="gnfc-modal-label">End Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="endDateFilter" class="gnfc-modal-input">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TABLE CARD ── -->
+      <div class="jt-table-card mt-20px" id="c-lab-results">
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-table"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Selected Plant: CLAB</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1000px">
+            <thead>
+              <tr>
+                <th class="user-table-center" rowspan="2" style="width: 50px;">Sr</th>
+                <th class="user-table-center" style="width: 100px;">Serial</th>
+                <th class="" style="width: 150px;">Type</th>
+                <th class="" style="width: 200px;">SubType</th>
+                <th class="" rowspan="2" style="width: 300px;">Description</th>
+                <th class="user-table-center" style="width: 100px;">Status</th>
+                <th class="" rowspan="2" style="width: 200px;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="user-table-center">JobNo</th>
+                <th class="">Tagno</th>
+                <th class="">Deffect</th>
+                <th class="user-table-center user-table-border-right">Tech</th>
+              </tr>
+            </thead>
+            <tbody id="plant-table-body">
+              <!-- Date Group 1 -->
+              <tr class="user-table-date">
+                 <td colspan="7" class="user-table-bold user-table-date">
+                    <i class="ph-fill ph-calendar-blank"></i>
+                    05/06/2026
+                 </td>
+              </tr>
+              <!-- Item 1 -->
+              <tr class="user-table-row jt-data-row">
+                <td class="user-table-center">1</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>1012</div>
+                    <div class="user-table-blue user-table-bold">17167</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>OTHER</div>
+                    <div>Heating Mantle</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Heating Mantle</div>
+                    <div>Temperature is over shooting</div>
+                  </div>
+                </td>
+                <td>check if found its thermostat is not working replace the same with new one. (05/06/2026)</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>OVER</div>
+                    <div>ALD</div>
+                  </div>
+                </td>
+                <td></td>
+              </tr>
+
+              <!-- Item 2 -->
+              <tr class="user-table-row jt-data-row">
+                <td class="user-table-center">2</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>1012</div>
+                    <div class="user-table-blue user-table-bold">17161</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>OTHER</div>
+                    <div>Battery Operated Sampling Pump</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>1 L Heating Mantle AMM Lab</div>
+                    <div>Thermostat not working</div>
+                  </div>
+                </td>
+                <td>replace the battery with new one. (05/06/2026)</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>OVER</div>
+                    <div>ALD</div>
+                  </div>
+                </td>
+                <td></td>
+              </tr>
+
+              <!-- Date Group 2 -->
+              <tr class="user-table-date">
+                 <td colspan="7" class="user-table-bold user-table-date">
+                    <i class="ph-fill ph-calendar-blank"></i>
+                    26/05/2026
+                 </td>
+              </tr>
+              <!-- Item 3 -->
+              <tr class="user-table-row jt-data-row">
+                <td class="user-table-center">3</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>T-01</div>
+                    <div class="user-table-blue user-table-bold">17109</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>TURBIDITY</div>
+                    <div>Turbidity meter</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Turbidity meter</div>
+                    <div>Calibration Knob problem</div>
+                  </div>
+                </td>
+                <td>over</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>OVER</div>
+                    <div>ALD</div>
+                  </div>
+                </td>
+                <td><span style="color: var(--primary-color);">Over [written by : HAS Date : 26/05/2026]</span></td>
+              </tr>
+
+              <!-- Item 4 -->
+              <tr class="user-table-row jt-data-row">
+                <td class="user-table-center">4</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>450</div>
+                    <div class="user-table-blue user-table-bold">17126</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>TURBIDITY</div>
+                    <div>Turbidity meter</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Turbidity meter - TU2</div>
+                    <div>Not Working</div>
+                  </div>
+                </td>
+                <td>over</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>OVER</div>
+                    <div>ALD</div>
+                  </div>
+                </td>
+                <td><span style="color: var(--primary-color);">Over [written by : HAS Date : 26/05/2026]</span></td>
+              </tr>
+              
+              <!-- Item 5 -->
+              <tr class="user-table-row jt-data-row">
+                <td class="user-table-center">5</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>T-02</div>
+                    <div class="user-table-blue user-table-bold">17133</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>TURBIDITY</div>
+                    <div>Turbidity meter</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Turbidity meter</div>
+                    <div>Not working</div>
+                  </div>
+                </td>
+                <td>clean the instrument and set it for proper calibration. now it is responding nicely</td>
+                <td>
+                  <div class="user-table-cell-stack text-center">
+                    <div>OVER</div>
+                    <div>ALD</div>
+                  </div>
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <script>
+        $(document).ready(function() {
+          $('#btn-close').on('click', function(e) {
+            e.preventDefault();
+            $('#startDateFilter').val('');
+            $('#endDateFilter').val('');
+          });
+        });
+      </script>
+    </section>
+  </main>
+</body>
+</html>

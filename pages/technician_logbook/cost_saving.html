@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cost Saving Report | GNFC</title>
+
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/pages/plant.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'cost_saving';
+  </script>
+</head>
+<body class="dashboard-body plant-page">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <div id="header-container" data-title="Plant Detail"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Cost Saving:active" data-back="plant_detail.html"></div>
+
+    <section class="dashboard-content-tech-logbook">
+      <!-- Plant Navigation Container -->
+      <div id="plant-nav-container"></div>
+      
+      <!-- Toolbar with Title -->
+      <section class="ui-card plant-toolbar-card my-20px">
+        <div class="plant-toolbar" style="align-items: center;">
+          <div class="plant-toolbar__left">
+             <h2 class="view-title uppercase fw-700 font-24px" style="font-family: serif; letter-spacing: 1px;">COST SAVING REPORT : INSTWS</h2>
+          </div>
+          <div class="plant-toolbar__right text-right">
+             <span class="user-table-bold" style="color: #c00000; text-transform: uppercase;">COST SAVING OF JOBS DONE AT INSTWS</span>
+          </div>
+        </div>
+        <div class="plant-toolbar mt-10px border-top pt-10px">
+           <div class="plant-toolbar__left flex align-center gap-10px">
+              <span class="user-table-bold" style="color: var(--primary-color);">Year:2012</span>
+              <div class="ui-switcher" role="group" aria-label="Pagination">
+                 <button type="button" class="ui-switcher-btn">Prev</button>
+                 <button type="button" class="ui-switcher-btn is-active">0</button>
+                 <button type="button" class="ui-switcher-btn">Next</button>
+              </div>
+           </div>
+        </div>
+      </section>
+
+      <!-- Table Section -->
+      <section class="plant-table-card">
+         <div class="user-table-wrapper">
+            <table class="user-table min-w-1000px" id="costSavingTable">
+              <thead>
+                <tr>
+                  <th class="text-center" style="width: 12%;">PLANT</th>
+                  <th class="text-center" style="width: 10%;">JOBNO</th>
+                  <th class="text-center" style="width: 40%;">JOB</th>
+                  <th class="text-center" style="width: 12%;">JOB DATE</th>
+                  <th class="text-center" style="width: 12%;">COST SAVING<br>(in Rs)</th>
+                  <th class="text-center" style="width: 14%;">REMARK</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-row" style="background-color: var(--bg-secondary, #f5f6f8);">
+                   <td colspan="6" class="user-table-bold" style="padding-left:16px;">Dec</td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="text-center user-table-bold">BOILER</td>
+                  <td class="text-center">8175</td>
+                  <td>
+                    <div class="font-14px">pantech instrument</div>
+                    <div class="font-14px">not working.</div>
+                  </td>
+                  <td class="text-center">26/12/2012</td>
+                  <td class="text-center">0</td>
+                  <td></td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="text-center user-table-bold">BOILER</td>
+                  <td class="text-center">8174</td>
+                  <td>
+                    <div class="font-14px">Merical</div>
+                    <div class="font-14px">it is to be repairedand schedule calibration</div>
+                  </td>
+                  <td class="text-center">27/12/2012</td>
+                  <td class="text-center">0</td>
+                  <td></td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="text-center user-table-bold">AA</td>
+                  <td class="text-center">8096</td>
+                  <td>
+                    <div class="font-14px">HP Inkjet printer</div>
+                    <div class="font-14px">Printer not getting ready after replacement of Ink cartridges.(By:PBS : 27/12/2012)</div>
+                  </td>
+                  <td class="text-center">27/12/2012</td>
+                  <td class="text-center">0</td>
+                  <td></td>
+                </tr>
+                <tr class="user-table-row">
+                  <td class="text-center user-table-bold">ANITDI</td>
+                  <td class="text-center">8146</td>
+                  <td>
+                    <div class="font-14px">AIP827 - Functional Keyboard</div>
+                    <div class="font-14px">Neumeric Keys 0 and 1 are not working properly (By:PBS : 31/12/2012)</div>
+                  </td>
+                  <td class="text-center">31/12/2012</td>
+                  <td class="text-center">0</td>
+                  <td></td>
+                </tr>
+                <tr class="user-table-row" style="background-color: var(--bg-secondary, #f5f6f8);">
+                  <td colspan="3"></td>
+                  <td class="text-center user-table-bold">Total</td>
+                  <td class="text-center user-table-bold">0</td>
+                  <td></td>
+                </tr>
+                <tr class="user-table-row" style="background-color: #e5e7eb;">
+                  <td colspan="3"></td>
+                  <td class="text-center user-table-bold">Grand Total</td>
+                  <td class="text-center user-table-bold">0</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+         </div>
+         <div class="mt-20px text-center user-table-bold" style="padding-bottom: 20px;">
+            Total : 4
+         </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
