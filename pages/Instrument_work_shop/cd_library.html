@@ -56,6 +56,11 @@
             <p class="inws-calib-action-1">Manage and track software program backups and electronic documentation CDs</p>
           </div>
         </div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <button type="button" class="inws-selector-btn inws-selector-btn-primary" data-open-modal="add-cd-modal" style="display: flex; align-items: center; gap: 6px;">
+            <i class="ph-bold ph-plus"></i> Add
+          </button>
+        </div>
       </div>
 
       <!-- Corporate Table System -->
@@ -127,6 +132,103 @@
 
     </div>
   </main>
+
+  <!-- Add CD Modal -->
+  <div id="add-cd-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">CD LIBRARY</h3>
+          <p class="gnfc-modal-subtitle">Add New Record</p>
+        </div>
+        <button type="button" data-close-modal="add-cd-modal" class="gnfc-modal-close">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <form id="add-cd-form" style="margin: 0;">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12 gap-16px" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px;">
+
+            <!-- ID NO -->
+            <div class="col-span-4" style="grid-column: span 4;">
+              <label class="gnfc-modal-label" for="add-idno">ID NO</label>
+              <input type="text" id="add-idno" class="gnfc-modal-input" placeholder="Enter ID NO">
+            </div>
+
+            <!-- CD TYPE -->
+            <div class="col-span-8" style="grid-column: span 8;">
+              <label class="gnfc-modal-label" for="add-cdtype">CD TYPE</label>
+              <input type="text" id="add-cdtype" class="gnfc-modal-input" placeholder="e.g. MISC, PRODUCT CATALOG">
+            </div>
+
+            <!-- MAKE -->
+            <div class="col-span-4" style="grid-column: span 4;">
+              <label class="gnfc-modal-label" for="add-make">MAKE</label>
+              <input type="text" id="add-make" class="gnfc-modal-input" placeholder="e.g. HP">
+            </div>
+
+            <!-- DATE -->
+            <div class="col-span-4" style="grid-column: span 4;">
+              <label class="gnfc-modal-label" for="add-date">DATE</label>
+              <input type="text" id="add-date" class="gnfc-modal-input" placeholder="DD/MM/YYYY">
+            </div>
+
+            <!-- CDNO -->
+            <div class="col-span-4" style="grid-column: span 4;">
+              <label class="gnfc-modal-label" for="add-cdno">CDNO</label>
+              <input type="text" id="add-cdno" class="gnfc-modal-input" placeholder="e.g. M-3">
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="col-span-12" style="grid-column: span 12;">
+              <label class="gnfc-modal-label" for="add-desc">DESCRIPTION</label>
+              <textarea id="add-desc" class="gnfc-modal-input" placeholder="Enter detailed description" style="min-height: 80px; resize: vertical;"></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+          <button type="button" data-close-modal="add-cd-modal" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // Modal open
+      $(document).on('click', '[data-open-modal]', function() {
+        const modalId = $(this).data('open-modal');
+        $('#' + modalId).addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      // Modal close
+      $(document).on('click', '[data-close-modal]', function() {
+        const modalId = $(this).data('close-modal');
+        $('#' + modalId).removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      // Form submit
+      $('#add-cd-form').on('submit', function(e) {
+        e.preventDefault();
+        $('#add-cd-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'CD Record Saved',
+          showConfirmButton: false,
+          timer: 1500,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

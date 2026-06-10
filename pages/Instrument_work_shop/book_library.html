@@ -56,6 +56,11 @@
             <p class="inws-calib-action-1">Manage and track book inventory, publishers, and registration records</p>
           </div>
         </div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <button type="button" class="inws-selector-btn inws-selector-btn-primary" data-open-modal="add-book-modal" style="display: flex; align-items: center; gap: 6px;">
+            <i class="ph-bold ph-plus"></i> Add
+          </button>
+        </div>
       </div>
 
       <!-- Corporate Table System -->
@@ -175,6 +180,126 @@
     </div>
   </main>
 
+  <!-- Add Book Modal -->
+  <div id="add-book-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">BOOK LIBRARY</h3>
+          <p class="gnfc-modal-subtitle">Add New Book Record</p>
+        </div>
+        <button type="button" data-close-modal="add-book-modal" class="gnfc-modal-close">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+      <form id="add-book-form" style="margin: 0;">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12 gap-16px" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px;">
+
+            <!-- BOOK NO -->
+            <div class="col-span-3" style="grid-column: span 3;">
+              <label class="gnfc-modal-label" for="add-bookno">BOOK NO</label>
+              <input type="text" id="add-bookno" class="gnfc-modal-input" placeholder="e.g. 101">
+            </div>
+
+            <!-- SHORT NAME -->
+            <div class="col-span-9" style="grid-column: span 9;">
+              <label class="gnfc-modal-label" for="add-shortname">SHORT NAME</label>
+              <input type="text" id="add-shortname" class="gnfc-modal-input" placeholder="Enter short name">
+            </div>
+
+            <!-- BOOK TITLE -->
+            <div class="col-span-12" style="grid-column: span 12;">
+              <label class="gnfc-modal-label" for="add-title">BOOK TITLE</label>
+              <input type="text" id="add-title" class="gnfc-modal-input" placeholder="Enter full book title">
+            </div>
+
+            <!-- REG.NO -->
+            <div class="col-span-3" style="grid-column: span 3;">
+              <label class="gnfc-modal-label" for="add-regno">REG.NO</label>
+              <input type="text" id="add-regno" class="gnfc-modal-input" placeholder="e.g. 110">
+            </div>
+
+            <!-- ACC.NO -->
+            <div class="col-span-3" style="grid-column: span 3;">
+              <label class="gnfc-modal-label" for="add-accno">ACC.NO</label>
+              <input type="text" id="add-accno" class="gnfc-modal-input" placeholder="e.g. 652">
+            </div>
+
+            <!-- WS.NO -->
+            <div class="col-span-2" style="grid-column: span 2;">
+              <label class="gnfc-modal-label" for="add-wsno">WS.NO</label>
+              <input type="text" id="add-wsno" class="gnfc-modal-input" placeholder="e.g. 1">
+            </div>
+
+            <!-- PUBLISHERS -->
+            <div class="col-span-4" style="grid-column: span 4;">
+              <label class="gnfc-modal-label" for="add-publisher">PUBLISHERS</label>
+              <input type="text" id="add-publisher" class="gnfc-modal-input" placeholder="e.g. BPB Publications">
+            </div>
+
+            <!-- CATEGORY -->
+            <div class="col-span-12" style="grid-column: span 12;">
+              <label class="gnfc-modal-label" for="add-category">CATEGORY</label>
+              <input type="text" id="add-category" class="gnfc-modal-input" placeholder="Enter category">
+            </div>
+
+            <!-- ISSUED TO -->
+            <div class="col-span-6" style="grid-column: span 6;">
+              <label class="gnfc-modal-label" for="add-issuedto">ISSUED TO</label>
+              <input type="text" id="add-issuedto" class="gnfc-modal-input" placeholder="Enter name">
+            </div>
+
+            <!-- ISSUED ON -->
+            <div class="col-span-6" style="grid-column: span 6;">
+              <label class="gnfc-modal-label" for="add-issuedon">ISSUED ON</label>
+              <input type="text" id="add-issuedon" class="gnfc-modal-input" placeholder="DD/MM/YYYY">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+          <button type="button" data-close-modal="add-book-modal" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(function() {
+      // Modal open
+      $(document).on('click', '[data-open-modal]', function() {
+        const modalId = $(this).data('open-modal');
+        $('#' + modalId).addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      // Modal close
+      $(document).on('click', '[data-close-modal]', function() {
+        const modalId = $(this).data('close-modal');
+        $('#' + modalId).removeClass('is-open');
+        $('body').css('overflow', '');
+      });
+
+      // Form submit
+      $('#add-book-form').on('submit', function(e) {
+        e.preventDefault();
+        $('#add-book-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Book Record Saved',
+          showConfirmButton: false,
+          timer: 1500,
+          background: 'var(--app-panel)',
+          color: 'var(--typo-primary)'
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

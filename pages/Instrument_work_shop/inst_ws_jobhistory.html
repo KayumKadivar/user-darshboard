@@ -797,6 +797,7 @@
 
       // Report Search functionality
       $('#btn-search-report').on('click', function () {
+        const jobHistoryDb = []; // Mock data array
         const activeRadioId = $('input[name="criteria-selection"]:checked').attr('id');
         let filteredData = [...jobHistoryDb];
 
@@ -868,20 +869,20 @@
       // Modal open/close logic
       $(document).on('click', '[data-open-modal]', function () {
         const modalId = $(this).data('open-modal');
-        $('#' + modalId).addClass('iso-is-open');
+        $('#' + modalId).addClass('is-open');
         $('body').css('overflow', 'hidden');
       });
 
       $(document).on('click', '[data-close-modal]', function () {
         const modalId = $(this).data('close-modal');
-        $('#' + modalId).removeClass('iso-is-open');
+        $('#' + modalId).removeClass('is-open');
         $('body').css('overflow', '');
       });
 
       // Form submit handler
       $('#add-job-form').on('submit', function (e) {
         e.preventDefault();
-        $('#add-job-modal').removeClass('iso-is-open');
+        $('#add-job-modal').removeClass('is-open');
         $('body').css('overflow', '');
         Swal.fire({
           icon: 'success',

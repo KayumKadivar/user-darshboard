@@ -353,13 +353,13 @@
           $('#modal-plant-subtitle').text(currentPlant);
           $('#add-duedate').val('365');
         }
-        $('#' + targetModal).addClass('iso-is-open');
+        $('#' + targetModal).addClass('is-open');
         $('body').css('overflow', 'hidden');
       });
 
       $(document).on('click', '[data-close-modal]', function() {
         const targetModal = $(this).data('close-modal');
-        $('#' + targetModal).removeClass('iso-is-open');
+        $('#' + targetModal).removeClass('is-open');
         $('body').css('overflow', '');
       });
 
@@ -392,7 +392,7 @@
         $('#add-duedate').val('365');
         
         // Open the modal
-        $('#add-calib-modal').addClass('iso-is-open');
+        $('#add-calib-modal').addClass('is-open');
         $('body').css('overflow', 'hidden');
       });
 
@@ -414,7 +414,7 @@
 
         // Reset and Close Modal
         $('#add-calib-form')[0].reset();
-        $('#add-calib-modal').removeClass('iso-is-open');
+        $('#add-calib-modal').removeClass('is-open');
         $('body').css('overflow', '');
 
         Swal.fire({
@@ -443,7 +443,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             // Close the modal
-            $('#add-calib-modal').removeClass('iso-is-open');
+            $('#add-calib-modal').removeClass('is-open');
             $('body').css('overflow', '');
             
             // Show success message

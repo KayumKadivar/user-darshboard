@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Wise Filter | GNFC</title>
+  <meta name="description" content="GNFC Historical Job Records Filtered by Search Keyword">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'searchwise_filter';
+  </script>
+  
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Searching Log Book...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Search Wise Filter"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,Search Wise Filter:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-magnifying-glass"></i>
+            Search Tag / ELogBook
+          </h2>
+          <!-- Year Selector inside filter card header to match top right image layout -->
+          <div class="jt-year-selector-container">
+            <span class="font-12px color-label mr-5px">First Select Year</span>
+            <button type="button" class="jt-year-arrow" id="btn-prev-year" title="Previous Year">
+              <i class="ph-fill ph-caret-left"></i>
+            </button>
+            <span class="jt-year-dot"></span>
+            <button type="button" class="jt-year-arrow" id="btn-next-year" title="Next Year">
+              <i class="ph-fill ph-caret-right"></i>
+            </button>
+            <span class="jt-year-text">Year: <span id="active-year">2026</span></span>
+          </div>
+        </div>
+        <div class="jt-filter-body">
+
+          <!-- Search keyword input -->
+          <div style="flex: 1;">
+            <label class="gnfc-modal-label">Search Keyword</label>
+            <div class="flex items-center gap-8px">
+              <input type="text" id="searchInput" placeholder="Enter keyword (e.g. test, boiler, card, etc.)..."
+                class="gnfc-modal-input font-13px flex-1" value="test">
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filter">
+              <i class="ph-bold ph-magnifying-glass"></i> Go
+            </button>
+            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
+              Reset
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── REPORT CONTAINER ── -->
+      <div id="report-container" class="jt-table-card">
+
+        <div class="jt-report-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-notebook"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Search Results</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Area</th>
+                <th class="user-table-center" style="width: 130px;">LoopNo</th>
+                <th class="user-table-center" style="width: 280px;">Job</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th class="user-table-center" style="width: 80px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="user-table-center">TagNo</th>
+                <th class="user-table-center">TypeOfJob</th>
+                <th class="user-table-center user-table-border-right">Eng</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Dynamically populated by JS based on search keyword -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      let currentYear = 2026;
+      const years = [2026, 2025, 2024];
+
+      // Full database of records matching screenshot
+      const database = [
+        // Year 2026
+        {
+          year: 2026,
+          date: "09/06/2026",
+          sr: 1,
+          area: "BOILER",
+          loopNo: "",
+          tagNo: "17179",
+          job: "test2",
+          typeOfJob: "test1",
+          tech: "ALD",
+          description: "test3",
+          tech2: "ENG_TESTER",
+          eng: "ENG_TESTER",
+          status: "OVER",
+          remarks: "Test Remarks 4 [written by : ENG_TESTER Date : 09/06/2026 ]",
+          remarkColor: "color-purple-remark",
+          highlight: true
+        },
+        {
+          year: 2026,
+          date: "09/06/2026",
+          sr: 2,
+          area: "BOILER",
+          loopNo: "",
+          tagNo: "17181",
+          job: "Test Item",
+          typeOfJob: "Scheduled Calibration",
+          tech: "ALD",
+          description: "Test description",
+          tech2: "ENG_TESTER",
+          eng: "ENG_TESTER",
+          status: "OVER",
+          remarks: "test [written by : PMP Date : 09/06/2026 ]",
+          remarkColor: "color-green-remark",
+          highlight: true
+        },
+        {
+          year: 2026,
+          date: "06/06/2026",
+          sr: 3,
+          area: "INSTWS",
+          loopNo: "",
+          tagNo: "17160",
+          job: "",
+          typeOfJob: "Test1",
+          tech: "ALD",
+          description: "over test",
+          tech2: "PMP",
+          eng: "HAS",
+          status: "U/P",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "23/05/2026",
+          sr: 4,
+          area: "AMM",
+          loopNo: "",
+          tagNo: "16910",
+          job: "",
+          typeOfJob: "TMS300-24",
+          tech: "ALD",
+          description: "replace its all capacitors with new one. found it not got power one. some smd components and ics are not working but we cannot test it, hence it cannot repaired.",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "NOT REPAIRABLE",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "13/05/2026",
+          sr: 5,
+          area: "BOILER",
+          loopNo: "",
+          tagNo: "16632",
+          job: "",
+          typeOfJob: "UV flame scanner power supply",
+          tech: "ALD",
+          description: "replace its capacitors with new one. now same to be test in plant.",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "OVER",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "10/04/2026",
+          sr: 6,
+          area: "AMM",
+          loopNo: "",
+          tagNo: "17092",
+          job: "",
+          typeOfJob: "OEM module",
+          tech: "ALD",
+          description: "check discrete components in cold condition found o.k, hence it cannot repair as smd ics on board testing cannot done by us. (10/04/2026)",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "NOT REPAIRABLE",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "08/04/2026",
+          sr: 7,
+          area: "AMM",
+          loopNo: "",
+          tagNo: "17109",
+          job: "",
+          typeOfJob: "PSC AI card",
+          tech: "ALD",
+          description: "clean the connector and ic socket. check discrete components in cold condition found o.k. same to be test in plant",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "OVER",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "19/03/2026",
+          sr: 8,
+          area: "BOILER",
+          loopNo: "",
+          tagNo: "16912",
+          job: "",
+          typeOfJob: "Hydrastep PCB Card",
+          tech: "ALD",
+          description: "replace its transformer with new one. same to be test in plant.",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "OVER",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "16/03/2026",
+          sr: 9,
+          area: "ANITD2",
+          loopNo: "",
+          tagNo: "16519",
+          job: "",
+          typeOfJob: "DOD Card",
+          tech: "ALD",
+          description: "remove all old capacitors. clean the card. solder new capacitors. same to be test in plant.",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "OVER",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "16/03/2026",
+          sr: 10,
+          area: "ANITD2",
+          loopNo: "",
+          tagNo: "16520",
+          job: "",
+          typeOfJob: "DOD Card",
+          tech: "ALD",
+          description: "remove all old capacitors. clean the card. solder new capacitors. same to be test in plant.",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "OVER",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "10/03/2026",
+          sr: 11,
+          area: "UREA",
+          loopNo: "",
+          tagNo: "17053",
+          job: "",
+          typeOfJob: "Hydraulic test pump",
+          tech: "ALD",
+          description: "it boot program is corrupt. hence cannot repaired.",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "NOT REPAIRABLE",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "07/03/2026",
+          sr: 12,
+          area: "ANPF",
+          loopNo: "",
+          tagNo: "17050",
+          job: "",
+          typeOfJob: "TRANSDUCER",
+          tech: "ALD",
+          description: "check its discrete components in cold condition found filter capacitors becomes dry, replace all 6 with new one. power on it. found o.k. same to be test in plant.",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "OVER",
+          remarks: "",
+          remarkColor: ""
+        },
+        {
+          year: 2026,
+          date: "06/03/2026",
+          sr: 13,
+          area: "BOILER",
+          loopNo: "",
+          tagNo: "16655",
+          job: "",
+          typeOfJob: "Power supply card",
+          tech: "ALD",
+          description: "check its discrete components in cold condition found filter capacitors dry, replace with new one. power on it. found o.k.",
+          tech2: "ALD",
+          eng: "HAS",
+          status: "OVER",
+          remarks: "",
+          remarkColor: ""
+        },
+        
+        // Year 2025
+        {
+          year: 2025,
+          date: "18/04/2025",
+          sr: 1,
+          area: "BOILER-2",
+          loopNo: "N.A",
+          tagNo: "2PV1379B",
+          job: "PROCESS REQMT",
+          typeOfJob: "PROCESS REQMT",
+          tech: "JMD",
+          description: "Reported valve not operates, as operation checked from d/w with process and found its operation is ok.",
+          tech2: "JMD",
+          eng: "J",
+          status: "OVER",
+          remarks: "AO card R1M7 is faulty. [written by : ARP Date : 18/04/2025 ]",
+          remarkColor: "color-purple-remark"
+        },
+        {
+          year: 2025,
+          date: "15/04/2025",
+          sr: 2,
+          area: "ASH",
+          loopNo: "N.A",
+          tagNo: "CD-2",
+          job: "Actuator passing",
+          typeOfJob: "DEFECT MAINTENANCE",
+          tech: "BSU",
+          description: "Actuator was heavily passing. Spare actuator not available. So drawn and replaced. New seal pressure is ok.",
+          tech2: "BSU",
+          eng: "B",
+          status: "OVER",
+          remarks: "Actuator overhauled and checked OK. [written by : ARP Date : 15/04/2025 ]",
+          remarkColor: "color-green-remark",
+          highlight: true
+        }
+      ];
+
+      const renderSearch = () => {
+        const keyword = $('#searchInput').val().toLowerCase().trim();
+        const activeYearText = $('#active-year').text().trim();
+        const yearInt = parseInt(activeYearText);
+
+        // Filter by Year and Keyword
+        const filtered = database.filter(item => {
+          if (item.year !== yearInt) return false;
+          if (!keyword) return true; // Show all for this year if search is empty
+
+          return (
+            item.area.toLowerCase().includes(keyword) ||
+            item.tagNo.toLowerCase().includes(keyword) ||
+            item.job.toLowerCase().includes(keyword) ||
+            item.typeOfJob.toLowerCase().includes(keyword) ||
+            item.description.toLowerCase().includes(keyword) ||
+            item.remarks.toLowerCase().includes(keyword) ||
+            item.tech.toLowerCase().includes(keyword) ||
+            item.tech2.toLowerCase().includes(keyword) ||
+            item.eng.toLowerCase().includes(keyword) ||
+            item.status.toLowerCase().includes(keyword)
+          );
+        });
+
+        // Group filtered records by date
+        const grouped = {};
+        filtered.forEach(item => {
+          if (!grouped[item.date]) {
+            grouped[item.date] = [];
+          }
+          grouped[item.date].push(item);
+        });
+
+        // Build HTML
+        let html = "";
+        if (filtered.length === 0) {
+          html = `
+            <tr>
+              <td colspan="9" class="user-table-center user-table-secondary">No records found matching "${keyword}" for Year ${yearInt}.</td>
+            </tr>
+          `;
+        } else {
+          // Sort dates descending
+          const sortedDates = Object.keys(grouped).sort((a, b) => {
+            const partsA = a.split('/');
+            const partsB = b.split('/');
+            const dateA = new Date(partsA[2], partsA[1] - 1, partsA[0]);
+            const dateB = new Date(partsB[2], partsB[1] - 1, partsB[0]);
+            return dateB - dateA;
+          });
+
+          sortedDates.forEach(date => {
+            // Add Date group header row
+            html += `
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold" style="background-color: var(--bg-secondary); padding: 8px 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">
+                  <i class="ph-fill ph-calendar-blank"></i> ${date}
+                </td>
+              </tr>
+            `;
+
+            // Add records under this date
+            grouped[date].forEach(item => {
+              const highlightClass = item.highlight ? 'row-highlight-yellow' : '';
+              const remarkColorClass = item.remarkColor || '';
+              
+              html += `
+                <tr class="user-table-row ${highlightClass}">
+                  <td class="user-table-center user-table-secondary user-table-bold">${item.sr}</td>
+                  <td class="user-table-center">${item.area}</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div>${item.loopNo || ''}</div>
+                      <div class="user-table-secondary user-table-blue">${item.tagNo}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-bold">${item.job || ''}</div>
+                      <div class="user-table-secondary">${item.typeOfJob}</div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">${item.tech}</td>
+                  <td>${item.description}</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">${item.tech2}</span>
+                      <span class="user-table-center">${item.eng}</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">${item.status}</td>
+                  <td class="${remarkColorClass}">${item.remarks || ''}</td>
+                </tr>
+              `;
+            });
+          });
+        }
+
+        $('#reportTableBody').html(html);
+      };
+
+      const changeYear = (delta) => {
+        let index = years.indexOf(currentYear);
+        index = index + delta;
+
+        if (index < 0) index = years.length - 1;
+        if (index >= years.length) index = 0;
+
+        currentYear = years[index];
+
+        $('#active-year').text(currentYear);
+        
+        // Refresh filter when year changes
+        renderSearch();
+      };
+
+      // Event Listeners
+      $('#btn-prev-year').on('click', () => changeYear(-1));
+      $('#btn-next-year').on('click', () => changeYear(1));
+
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          renderSearch();
+        }, 800);
+      });
+
+      $('#btn-reset-filter').on('click', function() {
+        $('#searchInput').val('');
+        renderSearch();
+      });
+
+      // Handle Enter key in search input
+      $('#searchInput').on('keypress', function(e) {
+        if(e.which === 13) {
+          $('#btn-apply-filter').trigger('click');
+        }
+      });
+
+      // Initial execution
+      renderSearch();
+    });
+  </script>
+</body>
+
+</html>

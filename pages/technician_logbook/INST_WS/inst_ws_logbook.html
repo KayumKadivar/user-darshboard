@@ -1,0 +1,3654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INST WS | GNFC</title>
+
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../../../css/pages/plant.css">
+
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activePage = 'technician_logbook';
+  </script>
+
+</head>
+
+<body class="dashboard-body plant-page">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <div id="header-container" data-title="INST WS"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:active" data-back="../technicianlogbook.html"></div>
+
+    <section class="dashboard-content-tech-logbook">
+      <!-- Plant Navigation Container -->
+      <div id="plant-nav-container"></div>
+
+      <!-- Toolbar -->
+      <section class="ui-card plant-toolbar-card my-20px">
+        <div class="plant-toolbar">
+          <div class="plant-toolbar__left">
+            <div class="ui-switcher" role="group" aria-label="Select period">
+              <button type="button" class="ui-switcher-btn" data-view="tomorrow">Tomorrow</button>
+              <button type="button" class="ui-switcher-btn is-active" data-view="today">Today</button>
+              <button type="button" class="ui-switcher-btn" data-view="prev">PrevDay</button>
+              <span class="plant-period-switcher__divider" aria-hidden="true"></span>
+              <button type="button" class="ui-switcher-btn" data-view="weekly">Weekly</button>
+              <button type="button" class="ui-switcher-btn" data-view="monthly">Monthly</button>
+            </div>
+          </div>
+
+          <div class="plant-toolbar__right">
+            <button type="button" class="plant-nav-pill" data-open-modal="add-inst-modal">
+              <i class="ph-bold ph-plus"></i> Add inst
+            </button>
+            <button type="button" class="plant-nav-pill" onclick="window.location.href='../Assign_today_inst.html'">
+              <i class="ph-bold ph-calendar-check"></i> Assign Today inst
+            </button>
+            <button type="button" class="plant-nav-pill" data-open-modal="Assign_tomorrow_inst.html">
+              <i class="ph-bold ph-calendar-plus"></i> Assign Tomorrow inst
+            </button>
+
+            <span class="plant-toolbar__tools-divider" aria-hidden="true"></span>
+            <div class="plant-toolbar__tools">
+              <button type="button" class="plant-nav-pill" id="toggle-pending-btn">
+                <i class="ph-bold ph-clock" aria-hidden="true"></i>
+                <span>Pending</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter Bar -->
+      <section class="plant-filter-card is-hidden" id="job-filter-bar">
+        <div class="plant-filter-bar">
+          <div class="plant-filter-field-group">
+            <span class="plant-filter-label">Range:</span>
+            <input type="date" id="start-date" class="plant-filter-input">
+            <span class="plant-filter-separator">-</span>
+            <input type="date" id="end-date" class="plant-filter-input">
+          </div>
+
+          <div class="plant-filter-field-group plant-filter-field-group--wide">
+            <span class="plant-filter-label">Type:</span>
+            <select id="job-type-select" class="plant-filter-input plant-filter-select">
+              <option value="">All Jobs</option>
+              <option value="PROCESS REQMT">PROCESS REQMT</option>
+              <option value="CMS JOB">CMS JOB</option>
+              <option value="PM JOB">PM JOB</option>
+              <option value="BREAKDOWN">BREAKDOWN</option>
+              <option value="N.A.">N.A.</option>
+            </select>
+          </div>
+
+          <button type="button" class="plant-filter-close" id="close-filter-bar" aria-label="Close filters">
+            <i class="ph-bold ph-x" aria-hidden="true"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- Log Book table -->
+      <section class="plant-table-card">
+
+        <!-- Tomorrow Log Book -->
+        <div id="table-container-tomorrow" class="plant-table-container is-hidden">
+
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Tomorrow Log Book</span>
+              <span class="plant-view-date tomorrow-date-text">( --.--.---- )</span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count"> Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTableTomorrow">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th class="" rowspan="2" style="width: 80px;">JobNo</th>
+                  <th class="" style="width: 260px;">Title</th>
+                  <th class="" rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th class="" rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th class="" rowspan="2" style="width: auto;">Description</th>
+                  <th class="" rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th class="" rowspan="2" style="width: 20%;">Remarks</th>
+                  <th class="" rowspan="2" id="">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-row" data-record-id="5" data-view="today" data-job-type="DEFECT MAINTENANCE">
+                  
+                  <td class="user-table-center user-table-secondary user-table-cell-pending" style="background-color: #ffc0cb !important; color: #000 !important;">
+                    <div class="plant-sr-edit-container">
+                      <button type="button" class="area-edit-icon" title="Edit Job" style="color: #000 !important;">
+                        <i class="ph-bold ph-caret-right"></i>
+                      </button>
+                      <span>1</span>
+                      <hr class="plant-sr-divider" style="border-top: 1px solid rgba(0, 0, 0, 0.2) !important;">
+                      <button type="button" class="sr-edit-icon" title="Edit Job">
+                        <i class="ph-bold ph-pencil-simple-line" style="color: #000 !important;"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-005</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Both GBTV Actuators not fully open to be checked. (By: ARP : 22/04/2026)</span>
+                      <span>DEFECT MAINTENANCE</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="plant-area-cell">
+                      <span>BOILER-3</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">BDR</td>
+                  <td class="italic color-hint"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center"></span>
+                      <span class="user-table-center"></span>
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p> </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Today Log Book -->
+        <div id="table-container-today" class="plant-table-container">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Today Log Book</span>
+              <span class="plant-view-date today-date-text">( --.--.---- )</span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count">0 Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTableToday">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th class="" rowspan="2" style="width: 80px;">JobNo</th>
+                  <th class="" style="width: 260px;">Title</th>
+                  <th class="" rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th class="" rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th class="" rowspan="2" style="width: auto;">Description</th>
+                  <th class="" rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th class="" rowspan="2" style="width: 20%;">Remarks</th>
+                  <th class="" rowspan="2" id="priority-column-header-today">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+
+                <!-- Record 1 -->
+                <tr class="user-table-row" data-record-id="1" data-view="today" data-job-type="PROCESS REQMT">
+                  
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-001</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Sox Analyser PM with service Engineer.(By:ARP : 21/04/2026)</span>
+                      <span>PROCESS REQMT</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>COMMON</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td>Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner
+                    checked found OK.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">BSU</span>
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <!-- Record 2 -->
+                <tr class="user-table-row" data-record-id="2" data-view="today" data-job-type="PM">
+                  
+                  <td class="user-table-center user-table-secondary">2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-002</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Nox Analyser PM with service Engineer.(By:ARP : 21/04/2026)</span>
+                      <span>PM</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>BOILER-1</span>
+
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td>Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">JMD</span>
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <!-- Record 3 -->
+                <tr class="user-table-row" data-record-id="3" data-view="today" data-job-type="DEFECT MAINTENANCE">
+                  
+                  <td class="user-table-center user-table-secondary">3</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-003</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span></span>
+                      <span>DEFECT MAINTENANCE</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>BOILER-2</span>
+
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td class="font-14px">3 Nos of bottom temp. elements are removed as per Mech.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">JDB</span>
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          3 Nos of bottom temp. elements are removed as per Mech.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <!-- Record 4 -->
+                <tr class="user-table-row" data-record-id="4" data-view="today" data-job-type="DEFECT MAINTENANCE">
+                  
+                  <td class="user-table-center user-table-secondary">4</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-004</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span></span>
+                      <span>DEFECT MAINTENANCE</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>ASH</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td class="font-14px">Seal pressure is not coming so inst. side check found ok, bypass it, inform to
+                    optr.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">JDB</span>
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p> </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <!-- Record 5 (Pending) -->
+                <tr class="user-table-row" data-record-id="5" data-view="today" data-job-type="DEFECT MAINTENANCE">
+                  
+                  <td class="user-table-center user-table-secondary user-table-cell-pending" style="background-color: #ffc0cb !important; color: #000 !important;">
+                    <div class="plant-sr-edit-container">
+                      <button type="button" class="area-edit-icon" title="Edit Job" style="color: #000 !important;">
+                        <i class="ph-bold ph-caret-right"></i>
+                      </button>
+                      <span>5</span>
+                      <hr class="plant-sr-divider" style="border-top: 1px solid rgba(0, 0, 0, 0.2) !important;">
+                      <button type="button" class="sr-edit-icon" title="Edit Job">
+                        <i class="ph-bold ph-pencil-simple-line" style="color: #000 !important;"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-005</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Both GBTV Actuators not fully open to be checked. (By: ARP : 22/04/2026)</span>
+                      <span>DEFECT MAINTENANCE</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="plant-area-cell">
+                      <span>BOILER-3</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">BDR</td>
+                  <td class="italic color-hint"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center"></span>
+                      <span class="user-table-center"></span>
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p> </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <!-- Record 6 (Pending) -->
+                <tr class="user-table-row" data-record-id="6" data-view="today" data-job-type="PROCESS REQMT">
+                  
+                  <td class="user-table-center user-table-secondary user-table-cell-pending" style="background-color: #ffc0cb !important; color: #000 !important;">
+                    <div class="plant-sr-edit-container">
+                      <button type="button" class="area-edit-icon" title="Edit Job" style="color: #000 !important;">
+                        <i class="ph-bold ph-caret-right"></i>
+                      </button>
+                      <span>6</span>
+                      <hr class="plant-sr-divider" style="border-top: 1px solid rgba(0, 0, 0, 0.2) !important;">
+                      <button type="button" class="sr-edit-icon" title="Edit Job">
+                        <i class="ph-bold ph-pencil-simple-line" style="color: #000 !important;"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-006</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Compressor trial to be taken with Expert and CMG Dept. (By: ARP : 22/04/2026)</span>
+                      <span>PROCESS REQMT</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="plant-area-cell">
+                      <span>ASH</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">JMD</td>
+                  <td class="italic color-hint"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center"></span>
+                      <span class="user-table-center"></span>
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p> </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <!-- Record 7 (Pending) -->
+                <tr class="user-table-row" data-record-id="7" data-view="today" data-job-type="DEFECT MAINTENANCE">
+                  
+                  <td class="user-table-center user-table-secondary user-table-cell-pending" style="background-color: #ffc0cb !important; color: #000 !important;">
+                    <div class="plant-sr-edit-container">
+                      <button type="button" class="area-edit-icon" title="Edit Job" style="color: #000 !important;">
+                        <i class="ph-bold ph-caret-right"></i>
+                      </button>
+                      <span>7</span>
+                      <hr class="plant-sr-divider" style="border-top: 1px solid rgba(0, 0, 0, 0.2) !important;">
+                      <button type="button" class="sr-edit-icon" title="Edit Job">
+                        <i class="ph-bold ph-pencil-simple-line" style="color: #000 !important;"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-007</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Analyzer to be checked for no sample flow. (By: TRS : 22/04/2026)</span>
+                      <span>DEFECT MAINTENANCE</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="plant-area-cell">
+                      <span>CPSU-HRSG</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">KBD</td>
+                  <td class="italic color-hint"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center"></span>
+                      <span class="user-table-center"></span>
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p> </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Prev Day Log Book -->
+        <div id="table-container-prev" class="plant-table-container is-hidden">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Previous Day Log Book From</span>
+              <span class="plant-view-date prev-date-text">( --.--.---- )</span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count">6 Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTablePrev">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th class="" rowspan="2" style="width: 80px;">JobNo</th>
+                  <th class="" style="width: 260px;">Title</th>
+                  <th class="" rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th class="" rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th class="" rowspan="2" style="width: auto;">Description</th>
+                  <th class="" rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th class="" rowspan="2" style="width: 20%;">Remarks</th>
+                  <th class="" rowspan="2" id="">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <!-- Record 1 -->
+                <tr class="user-table-row" data-record-id="1" data-view="prev" data-job-type="PROCESS REQMT">
+                  
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-001</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold"></span>
+                      <span>PROCESS REQMT</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span>N.A</span>
+                      <p class="reassign-text-link user-table-blue user-table-bold" title="ReAssign Job"><i
+                          class="ph-bold ph-arrows-clockwise"></i></p>
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td>Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">BSU</span>
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+                <!-- Record 2 -->
+                <tr class="user-table-row" data-record-id="2" data-view="prev" data-job-type="PM">
+                  
+                  <td class="user-table-center user-table-secondary">2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-002</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold"></span>
+                      <span>PM</span>
+                    </div>
+                  </td>
+                  <td class=" user-table-center">N.A</td>
+                  <td class="user-table-center"></td>
+                  <td>Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">JMD</span>
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Weekly Log Book -->
+        <div id="table-container-weekly" class="plant-table-container is-hidden">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Last Week Log Book From </span>
+              <span class="plant-view-date weekly-date-text">( 21.03.2026 - 27.03.2026 )</span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count">4 Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTableWeekly">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th class="" rowspan="2" style="width: 80px;">JobNo</th>
+                  <th class="" style="width: 260px;">Title</th>
+                  <th class="" rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th class="" rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th class="" rowspan="2" style="width: auto;">Description</th>
+                  <th class="" rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th class="" rowspan="2" style="width: 20%;">Remarks</th>
+                  <th class="" rowspan="2" id="">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+
+                <!-- Record 1 -->
+                <tr class="user-table-date">
+                  <td colspan="11" class="user-table-bold">
+                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
+                    27/03/2026
+                  </td>
+                </tr>
+
+                <!-- Record 2 -->
+                <tr class="user-table-row" data-record-id="1" data-view="weekly" data-job-type="PROCESS REQMT">
+                  <td class="user-table-center user-table-secondary">01</td>
+                  <td>
+                    <div class="user-table-cell-stack  user-table-center">
+                      <span>N.A</span>
+                      <p class="reassign-text-link user-table-blue user-table-bold" title="ReAssign Job"><i
+                          class="ph-bold ph-arrows-clockwise"></i></p>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack ">
+                      <span>NA</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-003</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Routine Check</span>
+                      <span class="user-table-secondary color-orange">TRANSMITTER</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">NRK</td>
+                  <td>Assigned. Awaiting technician log entry.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">--</span>
+                      <span class="user-table-center">NA</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="jt-analysis-td is-hidden"><span class="plant-priority-chip">1</span></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <!-- Record 3 -->
+                <tr class="user-table-row" data-record-id="2" data-view="weekly" data-job-type="FIELD JOB">
+                  <td class="user-table-center user-table-secondary">02</td>
+                  <td class=" user-table-center">MF</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-004</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Abnormality</span>
+                      <span class="user-table-secondary color-orange">CONTROL VALVE</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">DPB</td>
+                  <td><span>Valve position hunting observed near 44%.</span></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">AMS</span>
+                      <span class="user-table-center">A</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="jt-analysis-td is-hidden"><span class="plant-priority-chip">2</span></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Monthly Log Book -->
+        <div id="table-container-monthly" class="plant-table-container is-hidden">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Last 40 Days Log Book From </span>
+              <span class="plant-view-date monthly-date-text"></span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count">6 Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTableMonthly">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th class="" rowspan="2" style="width: 80px;">JobNo</th>
+                  <th class="" style="width: 260px;">Title</th>
+                  <th class="" rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th class="" rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th class="" rowspan="2" style="width: auto;">Description</th>
+                  <th class="" rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th class="" rowspan="2" style="width: 20%;">Remarks</th>
+                  <th class="" rowspan="2" id="">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-date">
+                  <td colspan="11" class="user-table-bold">
+                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
+                    01/03/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row" data-record-id="101" data-view="monthly" data-job-type="PM">
+                  <td class="user-table-center user-table-secondary">01</td>
+                  <td class=" user-table-center">
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <p class="reassign-text-link user-table-blue user-table-bold" title="ReAssign Job"><i
+                          class="ph-bold ph-arrows-clockwise"></i></p>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-005</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Calibration</span>
+                      <span class="user-table-secondary color-orange">TRANSMITTER</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">BPB</td>
+                  <td>Monthly PM calibration completed. Found within tolerance.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">SHC</span>
+                      <span class="user-table-center">S</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="jt-analysis-td is-hidden"><span class="plant-priority-chip">2</span></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+                <tr class="user-table-row" data-record-id="102" data-view="monthly" data-job-type="DEFECT MAINTENANCE">
+                  <td class="user-table-center user-table-secondary">02</td>
+                  <td class=" user-table-center">UTIL</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-006</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Faulty Card</span>
+                      <span class="user-table-secondary color-orange">DCS</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">NRK</td>
+                  <td>DCS I/O card failed, replaced with spare and verified.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">MAJ</span>
+                      <span class="user-table-center">M</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="jt-analysis-td is-hidden"><span class="plant-priority-chip">1</span></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <tr class="user-table-date">
+                  <td colspan="11"><i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i> 02/03/2026</td>
+                </tr>
+                <tr class="user-table-row" data-record-id="103" data-view="monthly" data-job-type="PM">
+                  <td class="user-table-center user-table-secondary">03</td>
+                  <td class=" user-table-center">FA</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-007</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Routine Check</span>
+                      <span class="user-table-secondary color-orange">TRANSMITTER</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">NRK</td>
+                  <td>Monthly PM activity completed as per schedule. Found OK.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">AMS</span>
+                      <span class="user-table-center">A</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="jt-analysis-td is-hidden"><span class="plant-priority-chip">2</span></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <tr class="user-table-date">
+                  <td colspan="11"><i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i> 03/03/2026</td>
+                </tr>
+                <tr class="user-table-row" data-record-id="104" data-view="monthly" data-job-type="DEFECT MAINTENANCE">
+                  <td class="user-table-center user-table-secondary">04</td>
+                  <td class=" user-table-center">AA</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-008</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Valve Gland Leak</span>
+                      <span class="user-table-secondary color-orange">CONTROL VALVE</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">BPB</td>
+                  <td>Valve gland tightened and leak arrested. Job completed.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">CKV</span>
+                      <span class="user-table-center">K</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="jt-analysis-td is-hidden"><span class="plant-priority-chip">1</span></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <tr class="user-table-date">
+                  <td colspan="11"><i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i> 04/03/2026</td>
+                </tr>
+                <tr class="user-table-row" data-record-id="105" data-view="monthly" data-job-type="PROCESS REQMT">
+                  <td class="user-table-center user-table-secondary">05</td>
+                  <td class=" user-table-center">DCS</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-009</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>System Upgrade</span>
+                      <span class="user-table-secondary color-orange">DCS</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">SHC</td>
+                  <td>DCS software patch applied and system health checked.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">MAJ</span>
+                      <span class="user-table-center">M</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="jt-analysis-td is-hidden"><span class="plant-priority-chip">3</span></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+                <tr class="user-table-date">
+                  <td colspan="11"><i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i> 05/03/2026</td>
+                </tr>
+                <tr class="user-table-row" data-record-id="106" data-view="monthly" data-job-type="PM">
+                  <td class="user-table-center user-table-secondary">06</td>
+                  <td class=" user-table-center">METH</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-010</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Calibration</span>
+                      <span class="user-table-secondary color-orange">TRANSMITTER</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">PBS</td>
+                  <td>FT102B calibration done. Error within 1%. Job OVER.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center">CKV</span>
+                      <span class="user-table-center">K</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>
+                          Boiler CPP CPSU system round taken found OK.
+                        </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="jt-analysis-td is-hidden"><span class="plant-priority-chip">2</span></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pending Log Book -->
+        <div id="table-container-pending" class="plant-table-container is-hidden">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary pending-header-summary">
+              <div class="pending-title-group">
+                <i class="ph-fill ph-clock-counter-clockwise" aria-hidden="true"></i>
+                <span class="view-title plant-table-card__title">Pending Log Report</span>
+              </div>
+            </div>
+
+            <div class="plant-table-card__actions pending-actions-wrap">
+              <button type="button" class="ui-btn ui-btn--danger ui-btn--danger-sm" id="delete-all-pending-btn">
+                <i class="ph-bold ph-trash" aria-hidden="true"></i>
+                <span class="font-14px">Delete All</span>
+              </button>
+              <span class="record-count">14 Records</span>
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTablePending">
+              <thead>
+                <tr>
+                  <th class=" text-center" style="width: 40px;">Sr</th>
+                  <th class=" text-center" style="width: 50px;">Del</th>
+                  <th class=" text-center" style="width: 80px;">ReAssign</th>
+                  <th class="" style="width: 120px;">TagNo</th>
+                  <th class="" style="width: 350px;">Job</th>
+                  <th class="" style="width: 80px;">Tech</th>
+                  <th class="" style="width: auto;">Description</th>
+                  <th class="" style="width: 80px;">Tech</th>
+                  <th class=" text-center" style="width: 100px;">Status</th>
+                  <th class="" style="width: 20%;">Remarks</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <!-- Record 1 -->
+                <tr class="user-table-row" data-record-id="p1" data-view="pending">
+                  
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td class="user-table-center">
+                    <p class="reassign-text-link user-table-blue user-table-bold" title="ReAssign Job"><i
+                        class="ph-bold ph-arrows-clockwise"></i></p>
+                  </td>
+                  <td class="user-table-bold user-table-blue">NOTAG</td>
+                  <td class="user-table-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i
+                        class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                  <td class="user-table-primary">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.(By
+                    ARP : 18/03/2026)</td>
+                  <td class="user-table-center user-table-bold">PVS</td>
+                  <td></td>
+                  <td class="user-table-center"></td>
+                  <td class="user-table-center user-table-secondary"></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+                <!-- Record 2 -->
+                <tr class="user-table-row" data-record-id="p2" data-view="pending">
+                  
+                  <td class="user-table-center user-table-secondary">2</td>
+                  <td class="user-table-center">
+                    <p class="reassign-text-link user-table-blue user-table-bold" title="ReAssign Job"><i
+                        class="ph-bold ph-arrows-clockwise"></i></p>
+                  </td>
+                  <td class="user-table-bold user-table-blue">NOTAG</td>
+                  <td class="user-table-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i
+                        class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                  <td class="user-table-primary">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.(By
+                    ARP : 19/03/2026)</td>
+                  <td class="user-table-center user-table-bold">PVS</td>
+                  <td></td>
+                  <td class="user-table-center"></td>
+                  <td class="user-table-center user-table-secondary"></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+                <!-- Record 3 -->
+                <tr class="user-table-row" data-record-id="p3" data-view="pending">
+                  
+                  <td class="user-table-center user-table-secondary">3</td>
+                  <td class="user-table-center">
+                    <p class="reassign-text-link user-table-blue user-table-bold" title="ReAssign Job"><i
+                        class="ph-bold ph-arrows-clockwise"></i></p>
+                  </td>
+                  <td class="user-table-bold user-table-blue">NOTAG</td>
+                  <td class="user-table-center">
+                    <button type="button" class="delete-row-btn" title="Delete Pending Log"><i
+                        class="ph-bold ph-trash color-red"></i></button>
+                  </td>
+                  <td class="user-table-primary">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.(By
+                    MMD : 20/03/2026)</td>
+                  <td class="user-table-center user-table-bold">PVS</td>
+                  <td></td>
+                  <td class="user-table-center"></td>
+                  <td class="user-table-center user-table-secondary"></td>
+                  <td class="user-table-center"><a href="#" class="plant-tag-link" data-open-modal="add-history-modal">Add</a></td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+    </section>
+
+  </main>
+
+  <!-- Modal: Add Inst Modal -->
+  <div id="add-inst-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add Inst</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="add-inst-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form id="add-inst-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12">
+            <!-- Row 1 -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="date" class="gnfc-modal-input" value="2026-06-08">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB NO</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB TITLE</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">PLANT NAME</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <!-- Row 2 -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Type</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OTHER">OTHER</option>
+                <option value="DCS">DCS</option>
+                <option value="ESD">ESD</option>
+                <option value="CONTROLLER/INDICATOR">CONTROLLER/INDICATOR</option>
+                <option value="RECORDER/PRINTER">RECORDER/PRINTER</option>
+                <option value="MONITOR/CRT">MONITOR/CRT</option>
+                <option value="SPEED SYSTEM">SPEED SYSTEM</option>
+                <option value="VIBRATION SYSTEM">VIBRATION SYSTEM</option>
+                <option value="FLAME/TEMP SCANNER">FLAME/TEMP SCANNER</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="TEST EQUIPMENT">TEST EQUIPMENT</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="WEIGHING SYSTEM">WEIGHING SYSTEM</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">SubType</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+              </select>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input" rows="3"></textarea>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB STATUS</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OVER">OVER</option>
+                <option value="U/P">U/P</option>
+                <option value="NOT REPAIRABLE">NOT REPAIRABLE</option>
+                <option value="RETURN TO PLANT">RETURN TO PLANT</option>
+                <option value="PENDING FOR COMPONENT">PENDING FOR COMPONENT</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">TECH</label>
+              <select class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">ENG</label>
+              <select class="gnfc-modal-input">
+                <option value="balbhadra">balbhadra</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">DEFECT</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label font-10px">EXTRA DUTY HRS</label>
+              <div class="flex gap-4px">
+                <select class="gnfc-modal-input px-2px"><option>HR</option></select>
+                <select class="gnfc-modal-input px-2px"><option>MIN</option></select>
+              </div>
+            </div>
+            <div class="col-span-1 text-center">
+              <label class="gnfc-modal-label font-10px">EMERGENCY</label>
+              <input type="checkbox" class="mt-10px">
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-cancel" data-close-modal="add-inst-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Assign Today Inst Modal -->
+  <div id="assign-today-inst-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Assign Today Inst</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="assign-today-inst-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form id="assign-today-inst-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12">
+            <!-- Row 1 -->
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="date" class="gnfc-modal-input" value="2026-06-08">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB NO</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB TITLE</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">PLANT NAME</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <!-- Row 2 -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">Type</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OTHER">OTHER</option>
+                <option value="DCS">DCS</option>
+                <option value="ESD">ESD</option>
+                <option value="CONTROLLER/INDICATOR">CONTROLLER/INDICATOR</option>
+                <option value="RECORDER/PRINTER">RECORDER/PRINTER</option>
+                <option value="MONITOR/CRT">MONITOR/CRT</option>
+                <option value="SPEED SYSTEM">SPEED SYSTEM</option>
+                <option value="VIBRATION SYSTEM">VIBRATION SYSTEM</option>
+                <option value="FLAME/TEMP SCANNER">FLAME/TEMP SCANNER</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="TEST EQUIPMENT">TEST EQUIPMENT</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="WEIGHING SYSTEM">WEIGHING SYSTEM</option>
+              </select>
+            </div>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">SubType</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+              </select>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input" rows="3"></textarea>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">JOB STATUS</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OVER">OVER</option>
+                <option value="U/P">U/P</option>
+                <option value="NOT REPAIRABLE">NOT REPAIRABLE</option>
+                <option value="RETURN TO PLANT">RETURN TO PLANT</option>
+                <option value="PENDING FOR COMPONENT">PENDING FOR COMPONENT</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">TECH</label>
+              <select class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">ENG</label>
+              <select class="gnfc-modal-input">
+                <option value="balbhadra">balbhadra</option>
+              </select>
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">DEFECT</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-1">
+              <label class="gnfc-modal-label font-10px">EXTRA DUTY HRS</label>
+              <div class="flex gap-4px">
+                <select class="gnfc-modal-input px-2px"><option>HR</option></select>
+                <select class="gnfc-modal-input px-2px"><option>MIN</option></select>
+              </div>
+            </div>
+            <div class="col-span-1 text-center">
+              <label class="gnfc-modal-label font-10px">EMERGENCY</label>
+              <input type="checkbox" class="mt-10px">
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn-primary">Save</button>
+          <button type="button" class="gnfc-modal-btn-cancel" data-close-modal="assign-today-inst-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Assign Tomorrow Inst Modal -->
+  <div id="assign-tomorrow-inst-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Assign Tomorrow Inst</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="assign-tomorrow-inst-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form id="assign-tomorrow-inst-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12">
+            <!-- Row 1 -->
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="date" class="gnfc-modal-input" value="2026-06-08">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB NO</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB TITLE</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">PLANT NAME</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <!-- Row 2 -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">Type</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OTHER">OTHER</option>
+                <option value="DCS">DCS</option>
+                <option value="ESD">ESD</option>
+                <option value="CONTROLLER/INDICATOR">CONTROLLER/INDICATOR</option>
+                <option value="RECORDER/PRINTER">RECORDER/PRINTER</option>
+                <option value="MONITOR/CRT">MONITOR/CRT</option>
+                <option value="SPEED SYSTEM">SPEED SYSTEM</option>
+                <option value="VIBRATION SYSTEM">VIBRATION SYSTEM</option>
+                <option value="FLAME/TEMP SCANNER">FLAME/TEMP SCANNER</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="TEST EQUIPMENT">TEST EQUIPMENT</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="WEIGHING SYSTEM">WEIGHING SYSTEM</option>
+              </select>
+            </div>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">SubType</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+              </select>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input" rows="3"></textarea>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">JOB STATUS</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+                <option value="OVER">OVER</option>
+                <option value="U/P">U/P</option>
+                <option value="NOT REPAIRABLE">NOT REPAIRABLE</option>
+                <option value="RETURN TO PLANT">RETURN TO PLANT</option>
+                <option value="PENDING FOR COMPONENT">PENDING FOR COMPONENT</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">TECH</label>
+              <select class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
+              </select>
+            </div>
+            <div class="col-span-2">
+              <label class="gnfc-modal-label">ENG</label>
+              <select class="gnfc-modal-input">
+                <option value="balbhadra">balbhadra</option>
+              </select>
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">DEFECT</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-1">
+              <label class="gnfc-modal-label font-10px">EXTRA DUTY HRS</label>
+              <div class="flex gap-4px">
+                <select class="gnfc-modal-input px-2px"><option>HR</option></select>
+                <select class="gnfc-modal-input px-2px"><option>MIN</option></select>
+              </div>
+            </div>
+            <div class="col-span-1 text-center">
+              <label class="gnfc-modal-label font-10px">EMERGENCY</label>
+              <input type="checkbox" class="mt-10px">
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn-primary">Save</button>
+          <button type="button" class="gnfc-modal-btn-cancel" data-close-modal="assign-tomorrow-inst-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>  <!-- Modal 1: Log Book Entry Modal -->
+  <div id="job-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell--xl gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add Logbook</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="job-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
+      </div>
+      <form id="job-modal-form">
+        <div class="gnfc-modal-body gnfc-modal-body--tight plant-modal-body--scroll">
+          <div class="form-grid grid-cols-12">
+
+            <!-- Assigned Information (Read-only) -->
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-date">Date</label>
+              <input id="job-date" type="text" readonly class="gnfc-modal-input">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-assigned-to">Assigned To</label>
+              <input id="job-assigned-to" type="text" readonly class="gnfc-modal-input" placeholder="Technician">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-assigned-by">By</label>
+              <input id="job-assigned-by" type="text" readonly class="gnfc-modal-input" placeholder="Engineer">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-date-2">Date</label>
+              <input id="job-date-2" type="text" readonly class="gnfc-modal-input">
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-loop">Loop Name</label>
+              <input type="text" id="job-loop-input" readonly class="gnfc-modal-input" placeholder="Loop Name">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-tag">InstTag</label>
+              <input type="text" id="job-tag-input" readonly class="gnfc-modal-input" placeholder="InstTag">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-type">Type Of Job</label>
+              <input type="text" id="job-type" readonly class="gnfc-modal-input" placeholder="Type Of Job">
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-inst">Type Of Inst</label>
+              <div class="plant-select-wrap">
+                <select id="job-inst" class="gnfc-modal-input">
+                  <option value="ANALYZER">ANALYZER</option>
+                  <option value="C/V">C/V</option>
+                  <option value="TX">TX</option>
+                  <option value="SWITCH">SWITCH</option>
+                  <option value="PRIMARY ELEMENT">PRIMARY ELEMENT</option>
+                  <option value="TG/PG">TG/PG</option>
+                  <option value="SCANNER">SCANNER</option>
+                  <option value="PCV">PCV</option>
+                  <option value="ROTAMETER">ROTAMETER</option>
+                  <option value="ENVIRON MONITORING">ENVIRON MONITORING</option>
+                  <option value="MACHINE MONITORING">MACHINE MONITORING</option>
+                  <option value="PA SYSTEM">PA SYSTEM</option>
+                  <option value="PC">PC</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-12">
+              <label class="gnfc-modal-label" for="job-assigned-info">Job</label>
+              <textarea id="job-assigned-info" 4rows="2" readonly class="gnfc-modal-input"
+                placeholder="Assigned job details..."></textarea>
+            </div>
+
+            <div class="col-span-12"><hr></div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-status">Job Status <span class="required">*</span></label>
+              <div class="plant-select-wrap">
+                <select id="job-status" class="gnfc-modal-input">
+                  <option value="">Select Job Status</option>
+                  <option value="OVER">OVER</option>
+                  <option value="PEND">PEND</option>
+                  <option value="U/O">U/O</option>
+                  <option value="U/P">U/P</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-tech">Tech Name</label>
+              <div class="plant-select-wrap">
+                <select id="job-tech" class="gnfc-modal-input">
+                  <option value="">Select Tech</option>
+                  <option value="PVS">PVS</option>
+                  <option value="BDR">BDR</option>
+                  <option value="PRP">PRP</option>
+                  <option value="JDB">JDB</option>
+                  <option value="JMD">JMD</option>
+                  <option value="BSU">BSU</option>
+                  <option value="CNJ_ISD">CNJ_ISD</option>
+                  <option value="TECH_TESTER">TECH_TESTER</option>
+                  <option value="KBD">KBD</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-eng">Engineer</label>
+              <div class="plant-select-wrap">
+                <select id="job-eng" class="gnfc-modal-input">
+                  <option value="">Please Select ENG</option>
+                  <option value="TRC">TRC</option>
+                  <option value="ARP">ARP</option>
+                  <option value="YMG_ISD">YMG_ISD</option>
+                  <option value="ENG_TESTER" selected>ENG_TESTER</option>
+                  <option value="PMP">PMP</option>
+                  <option value="NONE">NONE</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-area">Plant Area</label>
+              <div class="plant-select-wrap">
+                <select id="job-area" class="gnfc-modal-input">
+                  <option value="N.A.">N.A.</option>
+                  <option value="BOILER-1">BOILER-1</option>
+                  <option value="BOILER-2">BOILER-2</option>
+                  <option value="BOILER-3">BOILER-3</option>
+                  <option value="BOILER-4">BOILER-4</option>
+                  <option value="TG-1">TG-1</option>
+                  <option value="TG-2">TG-2</option>
+                  <option value="COMMON">COMMON</option>
+                  <option value="CPSU-HRSG">CPSU-HRSG</option>
+                  <option value="CPSU-GT">CPSU-GT</option>
+                  <option value="CPSU-BOP">CPSU-BOP</option>
+                  <option value="CPSU-BMS">CPSU-BMS</option>
+                  <option value="CHP">CHP</option>
+                  <option value="ASH">ASH</option>
+                  <option value="NG STN">NG STN</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-12">
+              <label class="gnfc-modal-label" for="job-desc">Job Description <span class="required">*</span></label>
+              <textarea id="job-desc" rows="4" class="gnfc-modal-input" placeholder="Enter job description"></textarea>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Extra Duty Hrs</label>
+              <div class="flex gap-8px items-center">
+                <div class="plant-select-wrap flex-1">
+                  <select id="job-hrs-ha" class="gnfc-modal-input">
+                    <option value="">HR</option>
+                    <option value="0">00</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                </div>
+                <span>:</span>
+                <div class="plant-select-wrap flex-1">
+                  <select id="job-hrs-mn" class="gnfc-modal-input">
+                    <option value="">MIN</option>
+                    <option value="0">00</option>
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                    <option value="54">54</option>
+                    <option value="55">55</option>
+                    <option value="56">56</option>
+                    <option value="57">57</option>
+                    <option value="58">58</option>
+                    <option value="59">59</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="col-span-8 flex h-full">
+              <div class="plant-checkbox-row">
+                <label class="plant-checkbox-label">
+                  <input type="checkbox" id="job-emergency" class="plant-checkbox"> Emergency Call
+                </label>
+                <label class="plant-checkbox-label">
+                  <input type="checkbox" id="job-mod-req" class="plant-checkbox"> Modificaton Required
+                </label>
+                <label class="plant-checkbox-label">
+                  <input type="checkbox" id="job-doc-chg" class="plant-checkbox"> Documentation Change Required
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="job-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Edit Assigned Job Modal -->
+  <div id="edit-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">Add Logbook</h3>
+        </div>
+        <button type="button" class="gnfc-modal-close" data-close-modal="edit-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
+      </div>
+      <form id="edit-modal-form">
+        <input id="edit-job-id" type="hidden">
+        <div class="gnfc-modal-body plant-modal-body--scroll">
+          <div class="form-grid grid-cols-12">
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="edit-job-date">Date</label>
+              <input id="edit-job-date" type="text" class="gnfc-modal-input" value="22/04/2026">
+            </div>
+
+            <div class="col-span-8">
+              <label class="gnfc-modal-label" for="edit-job-assigned-to">Assigned to</label>
+              <div class="flex gap-4px">
+                <input type="text" id="edit-job-assigned-to-input" class="gnfc-modal-input flex-1">
+                <div class="plant-select-wrap flex-1">
+                  <select id="edit-job-assigned-to-select" class="gnfc-modal-input">
+                    <option value="">Select Tech</option>
+                    <option value="PVS">PVS</option>
+                    <option value="BDR">BDR</option>
+                    <option value="PRP">PRP</option>
+                    <option value="JDB">JDB</option>
+                    <option value="JMD">JMD</option>
+                    <option value="BSU">BSU</option>
+                    <option value="CNJ_ISD">CNJ_ISD</option>
+                    <option value="TECH_TESTER">TECH_TESTER</option>
+                    <option value="KBD">KBD</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="edit-job-area">Area</label>
+              <div class="plant-select-wrap">
+                <select id="edit-job-area" class="gnfc-modal-input">
+                  <option value="N.A.">N.A.</option>
+                  <option value="BOILER-1">BOILER-1</option>
+                  <option value="BOILER-2">BOILER-2</option>
+                  <option value="BOILER-3">BOILER-3</option>
+                  <option value="BOILER-4">BOILER-4</option>
+                  <option value="TG-1">TG-1</option>
+                  <option value="TG-2">TG-2</option>
+                  <option value="COMMON">COMMON</option>
+                  <option value="CPSU-HRSG">CPSU-HRSG</option>
+                  <option value="CPSU-GT">CPSU-GT</option>
+                  <option value="CPSU-BOP">CPSU-BOP</option>
+                  <option value="CPSU-BMS">CPSU-BMS</option>
+                  <option value="CHP">CHP</option>
+                  <option value="ASH">ASH</option>
+                  <option value="NG STN">NG STN</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label class="gnfc-modal-label" for="edit-job-loop-select">Loop Name</label>
+              <div class="plant-select-wrap">
+                <select id="edit-job-loop-select" class="gnfc-modal-input">
+                  <option value="N.A">N.A</option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="edit-job-type">Type Of Job</label>
+              <div class="plant-select-wrap">
+                <select id="edit-job-type" class="gnfc-modal-input">
+                  <option value="PM">PM</option>
+                  <option value="DOCUMENTATION">DOCUMENTATION</option>
+                  <option value="HOUSE KEEPING">HOUSE KEEPING</option>
+                  <option value="ABNORMALITY">ABNORMALITY</option>
+                  <option value="MODIFICATION">MODIFICATION</option>
+                  <option value="ISO14001">ISO14001</option>
+                  <option value="FIELD JOB">FIELD JOB</option>
+                  <option value="REVAMP">REVAMP</option>
+                  <option value="DEFECT MAINTENANCE">DEFECT MAINTENANCE</option>
+                  <option value="CONFIGURATION">CONFIGURATION</option>
+                  <option value="SPARE REPAIR">SPARE REPAIR</option>
+                  <option value="SCRAP">SCRAP</option>
+                  <option value="MATL RETURN">MATL RETURN</option>
+                  <option value="RANGE CHANGE">RANGE CHANGE</option>
+                  <option value="CARD FAILURE">CARD FAILURE</option>
+                  <option value="INST FAILURE">INST FAILURE</option>
+                  <option value="INSPECTION">INSPECTION</option>
+                  <option value="CASH PURCHASE">CASH PURCHASE</option>
+                  <option value="PROCESS REQMT">PROCESS REQMT</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-8">
+              <label class="gnfc-modal-label" for="edit-job-tag-no">Tag No</label>
+              <div class="flex gap-4px">
+                <input type="text" id="edit-job-tag-no" class="gnfc-modal-input flex-1 uppercase">
+                <div class="plant-select-wrap flex-1">
+                  <select id="edit-job-tag-select" class="gnfc-modal-input">
+                    <option value="TAG-001">TAG-001</option>
+                    <option value="TAG-002">TAG-002</option>
+                    <option value="TAG-003">TAG-003</option>
+                    <option value="TAG-004">TAG-004</option>
+                    <option value="TAG-005">TAG-005</option>
+                    <option value="TAG-006">TAG-006</option>
+                    <option value="TAG-007">TAG-007</option>
+                    <option value="TAG-008">TAG-008</option>
+                    <option value="TAG-009">TAG-009</option>
+                    <option value="TAG-010">TAG-010</option>
+                    <option value="NOTAG">NOTAG</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="edit-job-inst">Type Of Inst</label>
+              <div class="plant-select-wrap">
+                <select id="edit-job-inst" class="gnfc-modal-input">
+                  <option value="ANALYZER">ANALYZER</option>
+                  <option value="C/V">C/V</option>
+                  <option value="TX">TX</option>
+                  <option value="SWITCH">SWITCH</option>
+                  <option value="PRIMARY ELEMENT">PRIMARY ELEMENT</option>
+                  <option value="TG/PG">TG/PG</option>
+                  <option value="SCANNER">SCANNER</option>
+                  <option value="PCV">PCV</option>
+                  <option value="ROTAMETER">ROTAMETER</option>
+                  <option value="ENVIRON MONITORING">ENVIRON MONITORING</option>
+                  <option value="MACHINE MONITORING">MACHINE MONITORING</option>
+                  <option value="PA SYSTEM">PA SYSTEM</option>
+                  <option value="PC">PC</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-12">
+              <label class="gnfc-modal-label sr-only" for="edit-job-desc">Job</label>
+              <textarea id="edit-job-desc" rows="4" class="gnfc-modal-input"
+                placeholder="Job description..."></textarea>
+            </div>
+          </div>
+
+          <div id="edit-warning" class="plant-inline-alert is-hidden mt-16px">
+            <i class="ph-bold ph-warning" aria-hidden="true"></i>
+            <p id="edit-warning-text"></p>
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="edit-modal">cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Remark Modal -->
+  <div id="remark-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell  gnfc-modal-shell--xl--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Remark</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="remark-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
+      </div>
+
+      <form id="remark-modal-form">
+        <input id="remark-job-id" type="hidden">
+        <div class="gnfc-modal-body plant-modal-body">
+          <div class="plant-remark-strip">
+            <span>Remark By: <span id="remark-by-display">ENGINEER</span></span>
+          </div>
+          <div class="plant-modal-stack">
+            <div class="">
+              <label class="gnfc-modal-label" for="remark-text">New Remark</label>
+              <textarea id="remark-text" rows="4" class="gnfc-modal-input plant-remark-textarea"
+                placeholder="Enter remark..."></textarea>
+            </div>
+            <label class="plant-check-row"><input id="remark-status-over" type="checkbox"><span>Mark the job status as
+                "OVER"</span></label>
+            <label class="plant-check-row"><input id="remark-ack-tech" type="checkbox"><span>Remark Acknowledgement By
+                Technician</span></label>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="remark-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Priority Modal -->
+  <div id="priority-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Job Priority</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="priority-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
+      </div>
+      <form id="priority-modal-form">
+        <input id="priority-job-id" type="hidden">
+        <div class="gnfc-modal-body plant-modal-body">
+          <div class="">
+            <label class="gnfc-modal-label" for="priority-select">Job Priority</label>
+            <div class="plant-select-wrap">
+              <select id="priority-select" class="gnfc-modal-input">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="priority-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Apply</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 6: History Type Modal -->
+  <div id="history-type-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <p class="gnfc-modal-title">Add To History</p>
+        <div>
+          <button type="button" data-close-modal="history-type-modal" class="gnfc-modal-close"><i
+              class="ph-bold ph-x text-lg"></i></button>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          data-close-modal="history-type-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 7: System History Modal -->
+  <div id="system-history-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">System Job History</h3>
+        </div>
+        <button type="button" class="gnfc-modal-close" data-close-modal="system-history-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
+      </div>
+      <form id="system-history-modal-form">
+        <div class="gnfc-modal-body plant-modal-body--scroll">
+          <div class="form-grid grid-cols-12">
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="sys-hist-date">Date</label>
+              <input id="sys-hist-date" type="text" class="gnfc-modal-input" value="21/04/2026">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="sys-hist-system">System <span class="required">*</span></label>
+              <div class="plant-select-wrap">
+                <select id="sys-hist-system" class="gnfc-modal-input">
+                  <option value="">Select System</option>
+                  <option value="MAX DCS">MAX DCS</option>
+                  <option value="HAIL DCS">HAIL DCS</option>
+                  <option value="DSC">DSC</option>
+                  <option value="ESD">ESD</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="sys-hist-category">Category <span class="required">*</span></label>
+              <div class="plant-select-wrap">
+                <select id="sys-hist-category" class="gnfc-modal-input">
+                  <option value="">Select Category</option>
+                  <option value="HARDWARE PROBLEM">HARDWARE PROBLEM</option>
+                  <option value="SOFTWARE PROBLEM">SOFTWARE PROBLEM</option>
+                  <option value="MAINTENANCE">MAINTENANCE</option>
+                  <option value="MAJOR UPGRADE">MAJOR UPGRADE</option>
+                  <option value="SYSTEM BACKUP">SYSTEM BACKUP</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="sys-hist-hardware">Type Of Hardware <span
+                  class="required">*</span></label>
+              <div class="plant-select-wrap">
+                <select id="sys-hist-hardware" class="gnfc-modal-input">
+                  <option value="">Select Hardware</option>
+                  <option value="STATIONS">STATIONS</option>
+                  <option value="CONTROL MODULES">CONTROL MODULES</option>
+                  <option value="IO MODULES">IO MODULES</option>
+                  <option value="COM MODULES">COM MODULES</option>
+                  <option value="PERIPHERALS">PERIPHERALS</option>
+                  <option value="CABLES/CONNECTORS">CABLES/CONNECTORS</option>
+                  <option value="CRT">CRT</option>
+                  <option value="POWER SUPPLY">POWER SUPPLY</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="sys-hist-tech">Tech Name</label>
+              <div class="plant-select-wrap">
+                <select id="sys-hist-tech" class="gnfc-modal-input">
+                  <option value="">Select Tech</option>
+                  <option value="PVS">PVS</option>
+                  <option value="BDR">BDR</option>
+                  <option value="PRP">PRP</option>
+                  <option value="JDB">JDB</option>
+                  <option value="JMD">JMD</option>
+                  <option value="BSU">BSU</option>
+                  <option value="CNJ_ISD">CNJ_ISD</option>
+                  <option value="TECH_TESTER">TECH_TESTER</option>
+                  <option value="KBD">KBD</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="sys-hist-eng">ENG</label>
+              <div class="plant-select-wrap">
+                <select id="sys-hist-eng" class="gnfc-modal-input">
+                  <option value="TRC">TRC</option>
+                  <option value="ARP">ARP</option>
+                  <option value="YMG_ISD">YMG_ISD</option>
+                  <option value="ENG_TESTER" selected>ENG_TESTER</option>
+                  <option value="PMP">PMP</option>
+                  <option value="NONE">NONE</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-12">
+              <label class="gnfc-modal-label" for="sys-hist-desc">Job Description</label>
+              <textarea id="sys-hist-desc" rows="4" class="gnfc-modal-input"
+                placeholder="Enter job description">Boiler CPP CPSU system round taken found OK. All visible and UV flame scanner checked found OK.</textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="system-history-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 8: General History Modal -->
+  <div id="general-history-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">General Job History</h3>
+        </div>
+        <button type="button" class="gnfc-modal-close" data-close-modal="general-history-modal"><i class="ph-bold ph-x"
+            aria-hidden="true"></i></button>
+      </div>
+      <form id="general-history-modal-form">
+        <div class="gnfc-modal-body plant-modal-body--scroll">
+          <div class="form-grid grid-cols-12">
+
+            <div class="col-span-2">
+              <label class="gnfc-modal-label" for="hist-date">Date</label>
+              <input id="hist-date" type="text" class="gnfc-modal-input" value="21/04/2026">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="hist-loop-select">Loop Name</label>
+              <div class="plant-select-wrap">
+                <select id="hist-loop-select" class="gnfc-modal-input">
+                  <option value="N.A">N.A</option>
+                  <option value="BOILER-1">BOILER-1</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">INST TAG </label>
+              <div class="flex gap-4px">
+                <input id="hist-tag-input" type="text" class="gnfc-modal-input flex-1" value="TAG-001">
+                <select id="hist-tag-select" class="gnfc-modal-input flex-1">
+                  <option value="TAG-001">TAG-001</option>
+                  <option value="TAG-002">TAG-002</option>
+                  <option value="TAG-003">TAG-003</option>
+                  <option value="TAG-004">TAG-004</option>
+                  <option value="TAG-005">TAG-005</option>
+                  <option value="TAG-006">TAG-006</option>
+                  <option value="TAG-007">TAG-007</option>
+                  <option value="TAG-008">TAG-008</option>
+                  <option value="TAG-009">TAG-009</option>
+                  <option value="TAG-010">TAG-010</option>
+                  <option value="NOTAG">NOTAG</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="hist-job-type">Type of Job</label>
+              <div class="plant-select-wrap">
+                <select id="hist-job-type" class="gnfc-modal-input">
+                  <option value="PM">PM</option>
+                  <option value="DOCUMENTATION">DOCUMENTATION</option>
+                  <option value="HOUSE KEEPING">HOUSE KEEPING</option>
+                  <option value="ABNORMALITY">ABNORMALITY</option>
+                  <option value="MODIFICATION">MODIFICATION</option>
+                  <option value="ISO14001">ISO14001</option>
+                  <option value="FIELD JOB">FIELD JOB</option>
+                  <option value="REVAMP">REVAMP</option>
+                  <option value="DEFECT MAINTENANCE">DEFECT MAINTENANCE</option>
+                  <option value="CONFIGURATION">CONFIGURATION</option>
+                  <option value="SPARE REPAIR">SPARE REPAIR</option>
+                  <option value="SCRAP">SCRAP</option>
+                  <option value="MATL RETURN">MATL RETURN</option>
+                  <option value="RANGE CHANGE">RANGE CHANGE</option>
+                  <option value="CARD FAILURE">CARD FAILURE</option>
+                  <option value="INST FAILURE">INST FAILURE</option>
+                  <option value="INSPECTION">INSPECTION</option>
+                  <option value="CASH PURCHASE">CASH PURCHASE</option>
+                  <option value="PROCESS REQMT">PROCESS REQMT</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="hist-inst-type">Type of Inst</label>
+              <div class="plant-select-wrap">
+                <select id="hist-inst-type" class="gnfc-modal-input">
+                  <option value="ANALYZER">ANALYZER</option>
+                  <option value="C/V">C/V</option>
+                  <option value="TX">TX</option>
+                  <option value="SWITCH">SWITCH</option>
+                  <option value="PRIMARY ELEMENT">PRIMARY ELEMENT</option>
+                  <option value="TG/PG">TG/PG</option>
+                  <option value="SCANNER">SCANNER</option>
+                  <option value="PCV">PCV</option>
+                  <option value="ROTAMETER">ROTAMETER</option>
+                  <option value="ENVIRON MONITORING">ENVIRON MONITORING</option>
+                  <option value="MACHINE MONITORING">MACHINE MONITORING</option>
+                  <option value="PA SYSTEM">PA SYSTEM</option>
+                  <option value="PC">PC</option>
+                  <option value="N.A.">N.A.</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="hist-area">Area</label>
+              <div class="plant-select-wrap">
+                <select id="hist-area" class="gnfc-modal-input">
+                  <option value="N.A.">N.A.</option>
+                  <option value="BOILER-1">BOILER-1</option>
+                  <option value="BOILER-2">BOILER-2</option>
+                  <option value="BOILER-3">BOILER-3</option>
+                  <option value="BOILER-4">BOILER-4</option>
+                  <option value="TG-1">TG-1</option>
+                  <option value="TG-2">TG-2</option>
+                  <option value="COMMON">COMMON</option>
+                  <option value="CPSU-HRSG">CPSU-HRSG</option>
+                  <option value="CPSU-GT">CPSU-GT</option>
+                  <option value="CPSU-BOP">CPSU-BOP</option>
+                  <option value="CPSU-BMS">CPSU-BMS</option>
+                  <option value="CHP">CHP</option>
+                  <option value="ASH">ASH</option>
+                  <option value="NG STN">NG STN</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="hist-status">Job Status</label>
+              <div class="plant-select-wrap">
+                <select id="hist-status" class="gnfc-modal-input">
+                  <option value="Job Status">Job Status</option>
+                  <option value="OVER" selected>OVER</option>
+                  <option value="PEND">PEND</option>
+                  <option value="U/P">U/P</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="hist-tech">Tech Name</label>
+              <div class="plant-select-wrap">
+                <select id="hist-tech" class="gnfc-modal-input">
+                  <option value="">Select Tech</option>
+                  <option value="PVS">PVS</option>
+                  <option value="BDR">BDR</option>
+                  <option value="PRP">PRP</option>
+                  <option value="JDB">JDB</option>
+                  <option value="JMD">JMD</option>
+                  <option value="BSU">BSU</option>
+                  <option value="CNJ_ISD">CNJ_ISD</option>
+                  <option value="TECH_TESTER">TECH_TESTER</option>
+                  <option value="KBD">KBD</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="hist-eng">ENG</label>
+              <div class="plant-select-wrap">
+                <select id="hist-eng" class="gnfc-modal-input">
+                  <option value="TRC">TRC</option>
+                  <option value="ARP">ARP</option>
+                  <option value="YMG_ISD">YMG_ISD</option>
+                  <option value="ENG_TESTER" selected>ENG_TESTER</option>
+                  <option value="PMP">PMP</option>
+                  <option value="NONE">NONE</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 4: Description -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label" for="hist-desc">Job Description</label>
+              <textarea id="hist-desc" rows="4" class="gnfc-modal-input" placeholder="Enter job details"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+            data-close-modal="general-history-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Add To History</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 9: Technician Job Assign Modal -->
+  <!-- <div id="technician-job-assign" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header">
+        <h3 id="job-modal-title" class="gnfc-modal-title">Assign Job</h3>
+        <button type="button" data-close-modal="technician-job-assign" class="gnfc-modal-close"><i
+            class="ph-bold ph-x text-lg"></i></button>
+      </div>
+      <form id="job-modal-form">
+        <div class="gnfc-modal-body gnfc-modal-body--tight" style="overflow-y:auto;">
+          <div class="form-grid grid-cols-12">
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">DATE</label>
+              <input id="assign-job-date" type="text" readonly class="gnfc-modal-input">
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="assign-job-loop-select">LOOP NAME</label>
+              <select id="assign-job-loop-select" class="gnfc-modal-input">
+                <option value="N.A">N.A</option>
+              </select>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">INSTTAG <span class="required">*</span></label>
+              <div class="flex gap-4px">
+                <input id="assign-job-tag-input" type="text" class="gnfc-modal-input flex-1" placeholder="Search Tag">
+                <select id="assign-job-tag-select" class="gnfc-modal-input flex-1">
+                  <option value="TAG-001">TAG-001</option>
+                  <option value="TAG-002">TAG-002</option>
+                  <option value="TAG-003">TAG-003</option>
+                  <option value="TAG-004">TAG-004</option>
+                  <option value="TAG-005">TAG-005</option>
+                  <option value="TAG-006">TAG-006</option>
+                  <option value="TAG-007">TAG-007</option>
+                  <option value="TAG-008">TAG-008</option>
+                  <option value="TAG-009">TAG-009</option>
+                  <option value="TAG-010">TAG-010</option>
+                  <option value="NOTAG">NOTAG</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">TYPE OF JOB <span class="required">*</span></label>
+              <select id="assign-job-type" class="gnfc-modal-input">
+                <option value="PM">PM</option>
+                <option value="DOCUMENTATION">DOCUMENTATION</option>
+                <option value="HOUSE KEEPING">HOUSE KEEPING</option>
+                <option value="ABNORMALITY">ABNORMALITY</option>
+                <option value="MODIFICATION">MODIFICATION</option>
+                <option value="ISO14001">ISO14001</option>
+                <option value="FIELD JOB">FIELD JOB</option>
+                <option value="REVAMP">REVAMP</option>
+                <option value="DEFECT MAINTENANCE">DEFECT MAINTENANCE</option>
+                <option value="CONFIGURATION">CONFIGURATION</option>
+                <option value="SPARE REPAIR">SPARE REPAIR</option>
+                <option value="SCRAP">SCRAP</option>
+                <option value="MATL RETURN">MATL RETURN</option>
+                <option value="RANGE CHANGE">RANGE CHANGE</option>
+                <option value="CARD FAILURE">CARD FAILURE</option>
+                <option value="INST FAILURE">INST FAILURE</option>
+                <option value="INSPECTION">INSPECTION</option>
+                <option value="CASH PURCHASE">CASH PURCHASE</option>
+                <option value="PROCESS REQMT">PROCESS REQMT</option>
+                <option value="N.A.">N.A.</option>
+              </select>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">TYPE OF INST <span class="required">*</span></label>
+              <select id="assign-job-inst" class="gnfc-modal-input">
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="C/V">C/V</option>
+                <option value="TX">TX</option>
+                <option value="SWITCH">SWITCH</option>
+                <option value="PRIMARY ELEMENT">PRIMARY ELEMENT</option>
+                <option value="TG/PG">TG/PG</option>
+                <option value="SCANNER">SCANNER</option>
+                <option value="PCV">PCV</option>
+                <option value="ROTAMETER">ROTAMETER</option>
+                <option value="ENVIRON MONITORING">ENVIRON MONITORING</option>
+                <option value="MACHINE MONITORING">MACHINE MONITORING</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="PC">PC</option>
+                <option value="N.A.">N.A.</option>
+              </select>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">AREA <span class="required">*</span></label>
+              <select id="assign-job-area" class="gnfc-modal-input">
+                <option value="N.A.">N.A.</option>
+                <option value="BOILER-1">BOILER-1</option>
+                <option value="BOILER-2">BOILER-2</option>
+                <option value="BOILER-3">BOILER-3</option>
+                <option value="BOILER-4">BOILER-4</option>
+                <option value="TG-1">TG-1</option>
+                <option value="TG-2">TG-2</option>
+                <option value="COMMON">COMMON</option>
+                <option value="CPSU-HRSG">CPSU-HRSG</option>
+                <option value="CPSU-GT">CPSU-GT</option>
+                <option value="CPSU-BOP">CPSU-BOP</option>
+                <option value="CPSU-BMS">CPSU-BMS</option>
+                <option value="CHP">CHP</option>
+                <option value="ASH">ASH</option>
+                <option value="NG STN">NG STN</option>
+              </select>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB STATUS <span class="required">*</span></label>
+              <select id="assign-job-status" class="gnfc-modal-input" placeholder="Select Job Status">
+                <option value="Job Status">Job Status</option>
+                <option value="OVER" selected>OVER</option>
+                <option value="PEND">PEND</option>
+                <option value="U/P">U/P</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">TECH NAME</label>
+              <select id="assign-job-tech" class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
+              </select>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">ENG <span class="required">*</span></label>
+              <select id="assign-job-eng" class="gnfc-modal-input">
+                <option value="TRC">TRC</option>
+                <option value="ARP">ARP</option>
+                <option value="YMG_ISD">YMG_ISD</option>
+                <option value="ENG_TESTER" selected>ENG_TESTER</option>
+                <option value="PMP">PMP</option>
+                <option value="NONE">NONE</option>
+              </select>
+            </div>
+
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DISCRIPTION <span class="required">*</span></label>
+              <textarea id="assign-job-desc" rows="4" class="gnfc-modal-input w-full"
+                placeholder="Enter detailed job description..."></textarea>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">EXTRA DUTY HRS</label>
+              <div class="flex gap-4px">
+                <select id="assign-job-hr" class="gnfc-modal-input">
+                  <option value="">HR</option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                </select>
+                <select id="assign-job-min" class="gnfc-modal-input">
+                  <option value="">MIN</option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                  <option value="32">32</option>
+                  <option value="33">33</option>
+                  <option value="34">34</option>
+                  <option value="35">35</option>
+                  <option value="36">36</option>
+                  <option value="37">37</option>
+                  <option value="38">38</option>
+                  <option value="39">39</option>
+                  <option value="40">40</option>
+                  <option value="41">41</option>
+                  <option value="42">42</option>
+                  <option value="43">43</option>
+                  <option value="44">44</option>
+                  <option value="45">45</option>
+                  <option value="46">46</option>
+                  <option value="47">47</option>
+                  <option value="48">48</option>
+                  <option value="49">49</option>
+                  <option value="50">50</option>
+                  <option value="51">51</option>
+                  <option value="52">52</option>
+                  <option value="53">53</option>
+                  <option value="54">54</option>
+                  <option value="55">55</option>
+                  <option value="56">56</option>
+                  <option value="57">57</option>
+                  <option value="58">58</option>
+                  <option value="59">59</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-span-8 flex h-full">
+              <div class="plant-checkbox-row">
+                <label class="plant-checkbox-label">
+                  <input type="checkbox" id="assign-job-emergency" class="plant-checkbox"> Emergency Call
+                </label>
+                <label class="plant-checkbox-label">
+                  <input type="checkbox" id="assign-job-mod" class="plant-checkbox"> Modificaton Required
+                </label>
+                <label class="plant-checkbox-label">
+                  <input type="checkbox" id="assign-job-doc" class="plant-checkbox"> Documentation Change Required
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gnfc-modal-footer">
+          <button type="button" data-close-modal="technician-job-assign"
+            class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div> -->
+
+  <!-- Modal: Add History Modal -->
+  <div id="add-history-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">ADD TO HISTORY </h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="add-history-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form id="add-history-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12">
+            
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Type</label>
+              <input type="text" class="gnfc-modal-input" value="OTHER">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">SubType</label>
+              <input type="text" class="gnfc-modal-input" value="test">
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="date" class="gnfc-modal-input" value="2026-06-09">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOBNO</label>
+              <input type="text" class="gnfc-modal-input" value="17179">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB TITLE</label>
+              <input type="text" class="gnfc-modal-input" value="test2">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">PLANT</label>
+              <input type="text" class="gnfc-modal-input" value="BOILER">
+            </div>
+
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DISCRIPTION</label>
+              <textarea class="gnfc-modal-input" rows="4" style="resize: none;">test3</textarea>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB STATUS</label>
+              <select class="gnfc-modal-input">
+                <option value="OVER">OVER</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">TECH NAME</label>
+              <select class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">ENG</label>
+              <select class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">COST RECOVERY</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">COST OF REPAIRE</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <!-- Row 5 -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">SERIAL NO</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="add-history-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+<script>
+  $(function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlView = urlParams.get('view');
+    let selectedView = (urlView && ["tomorrow", "today", "prev", "weekly", "monthly"].includes(urlView))
+      ? urlView
+      : (localStorage.getItem('plantLogbookSelectedView') || 'today');
+
+    if (urlView) {
+      localStorage.setItem('plantLogbookSelectedView', selectedView);
+    }
+    let jobTypeFilter = '';
+    let currentRowData = {}; // Store row data for history modals
+
+    // Helper to sync dropdown with a single value
+    function syncSingleOptionSelect(selectId, value) {
+      const $select = $('#' + selectId);
+      $select.empty();
+      if (value && value !== 'N.A.' && value !== 'N.A') {
+        $select.append(`<option value="${value}">${value}</option>`);
+        $select.val(value);
+      } else {
+        $select.append('<option value="">N.A.</option>');
+        $select.val('');
+      }
+    }
+
+    function filterTable($targetContainer) {
+      const $activeContainer = $targetContainer || $('.plant-table-container:not(.is-hidden)');
+      if ($activeContainer.length === 0) return;
+
+      const isPending = $activeContainer.attr('id') === 'table-container-pending';
+      const localSearchTerm = $activeContainer.find('.table-search').val()?.toLowerCase() || '';
+      let visibleCount = 0;
+
+      // First, remove all existing highlights in this container
+      $activeContainer.find('.search-highlight').each(function () {
+        $(this).replaceWith($(this).text());
+      });
+
+      // Normalize text nodes
+      $activeContainer[0].normalize();
+
+      $activeContainer.find('.plant-table-body tr').not('.user-table-date').each(function () {
+        const $row = $(this);
+        const rowType = $row.data('job-type') || "";
+
+        // Search ONLY in Tag No
+        let $tagElement;
+        if (isPending) {
+          $tagElement = $row.find('td').eq(1);
+        } else {
+          $tagElement = $row.find('.plant-tag-link');
+        }
+
+        const tagText = $tagElement.text().toLowerCase();
+        const typeMatch = !jobTypeFilter || rowType === jobTypeFilter;
+        const textMatch = !localSearchTerm || tagText.indexOf(localSearchTerm) !== -1;
+
+        if (typeMatch && textMatch) {
+          $row.show();
+          visibleCount++;
+
+          // Apply highlighting ONLY to the Tag No element
+          if (localSearchTerm && $tagElement.length) {
+            highlightTextNodes($tagElement[0], localSearchTerm);
+          }
+        } else {
+          $row.hide();
+        }
+      });
+
+      $activeContainer.find('.record-count').text(visibleCount + ' Records');
+
+      $activeContainer.find('.user-table-date').each(function () {
+        const $dateRow = $(this);
+        const $nextRows = $dateRow.nextUntil('.user-table-date', 'tr:not(.user-table-date)');
+        const hasVisibleChild = $nextRows.filter(':visible').length > 0;
+
+        // Note: For date rows, we use localSearchTerm here
+        if (hasVisibleChild || (!localSearchTerm && !jobTypeFilter)) {
+          $dateRow.show();
+        } else {
+          $dateRow.hide();
+        }
+      });
+    }
+
+    // Helper function to safely highlight text within an element
+    function highlightTextNodes(node, term) {
+      const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
+      const textNodes = [];
+      let n;
+      while (n = walk.nextNode()) {
+        if (n.parentNode.tagName !== 'SCRIPT' && n.parentNode.tagName !== 'STYLE' && !$(n.parentNode).hasClass('search-highlight')) {
+          textNodes.push(n);
+        }
+      }
+
+      textNodes.forEach(n => {
+        const val = n.nodeValue;
+        const regex = new RegExp(`(${term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
+        if (regex.test(val)) {
+          const fragment = document.createDocumentFragment();
+          val.split(regex).forEach(part => {
+            if (part && part.toLowerCase() === term.toLowerCase()) {
+              const mark = document.createElement('mark');
+              mark.className = 'search-highlight';
+              mark.textContent = part;
+              fragment.appendChild(mark);
+            } else if (part) {
+              fragment.appendChild(document.createTextNode(part));
+            }
+          });
+          n.parentNode.replaceChild(fragment, n);
+        }
+      });
+    }
+
+    $('.ui-switcher-btn').on('click', function () {
+      const $btn = $(this);
+      const view = $btn.data('view');
+      $('#data-loader-overlay').removeClass('hidden');
+
+      setTimeout(() => {
+        $('.ui-switcher-btn').removeClass('is-active');
+        $('#toggle-pending-btn').removeClass('is-active');
+        $btn.addClass('is-active');
+        selectedView = view;
+        localStorage.setItem('plantLogbookSelectedView', selectedView);
+
+        // Toggle Containers
+        $('.plant-table-container').addClass('is-hidden');
+        $('#table-container-' + selectedView).removeClass('is-hidden');
+
+        filterTable();
+        $('#data-loader-overlay').addClass('hidden');
+      }, 600);
+    });
+
+    $(`.ui-switcher-btn[data-view="${selectedView}"]`).trigger('click');
+
+    // Search (Delegated for multiple inputs) - Localized to each table
+    $(document).on('input', '.table-search', function () {
+      const $container = $(this).closest('.plant-table-container');
+      filterTable($container);
+    });
+
+    // Job Type Filter
+    $('#job-type-select').on('change', function () {
+      jobTypeFilter = $(this).val();
+      filterTable();
+    });
+
+    $(document).on('click', '[data-close-modal]', function () {
+      const modalId = $(this).data('close-modal');
+      $('#' + modalId).removeClass('is-open');
+      $('body').css('overflow', '');
+    });
+
+    // Modal Open Handler (Generic)
+    $(document).on('click', '[data-open-modal]', function () {
+      const modalId = $(this).data('open-modal');
+      if (modalId) {
+        $('#' + modalId).addClass('is-open');
+        $('body').css('overflow', 'hidden');
+
+        // If it's the assign modal, initialize date and tech list
+        if (modalId === 'technician-job-assign') {
+          const today = new Date().toLocaleDateString('en-GB');
+          $('#assign-job-date').val(today);
+        }
+      }
+    });
+
+    // History Button - Store Row Data
+    $(document).on('click', '[data-action="history"]', function () {
+      const $row = $(this).closest('tr');
+      currentRowData = {
+        tech: $row.find('td').eq(6).find('span').first().text().trim(),
+        eng: $row.find('td').eq(6).find('span').last().text().trim(),
+        tag: $row.find('.plant-tag-link').text().trim(),
+        area: $row.find('td').eq(1).text().trim(),
+        loop: $row.find('td').eq(2).find('span').first().text().trim()
+      };
+    });
+
+    // System History Open
+    $('#history-system-btn').on('click', function () {
+      syncSingleOptionSelect('sys-hist-tech', currentRowData.tech);
+      syncSingleOptionSelect('sys-hist-eng', currentRowData.eng);
+      $('#history-type-modal').removeClass('is-open');
+      $('#system-history-modal').addClass('is-open');
+    });
+
+    // General History Open
+    $('#history-general-btn').on('click', function () {
+      if (currentHistoryRow) {
+        const $row = currentHistoryRow;
+        const date = $row.prevAll('.user-table-date').first().text().trim() || todayStr;
+
+        // Extraction matching Edit Job Modal logic
+        const area = $row.find('td').eq(1).text().trim();
+        const loopName = $row.find('td').eq(2).find('span').first().text().trim();
+        const tagNo = $row.find('.plant-tag-link').first().text().trim();
+
+        const jobTitle = $row.find('td').eq(3).find('span').first().text().trim();
+        const jobType = $row.find('td').eq(3).find('span').last().text().trim();
+        const instType = $row.find('td').eq(3).find('.user-table-secondary').text().trim() || 'N.A.';
+
+        const actualTech = $row.find('td').eq(6).find('span').first().text().trim();
+        const engineer = $row.find('td').eq(6).find('span').last().text().trim();
+
+        $('#hist-date').val(date);
+        $('#hist-loop-input').val(loopName || 'N.A.').trigger('input');
+        $('#hist-tag-input').val(tagNo || 'N.A.').trigger('input');
+
+        // Populate fields matching Edit Modal behavior
+        $('#hist-job-type').val(jobType);
+        $('#hist-inst-type').val(instType);
+
+        const formattedArea = (area === 'N.A' || !area) ? 'N.A.' : area;
+        $('#hist-area').val(formattedArea);
+
+        $('#hist-status').val('OVER');
+
+        syncSingleOptionSelect('hist-tech', actualTech && actualTech !== 'N.A' ? actualTech : 'PVS');
+        syncSingleOptionSelect('hist-eng', engineer && engineer !== 'N.A' ? engineer : 'ENG_TESTER');
+
+        $('#hist-desc').val(jobTitle);
+      }
+
+      $('#history-type-modal').removeClass('is-open');
+      $('#general-history-modal').addClass('is-open');
+    });
+
+    window.filterTagsForLoop = function () {
+      console.log("Filtering tags for loop...");
+    };
+
+    // --- Smart Tag Autocomplete Helper ---
+    function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+      const $input = $(inputSelector);
+      const $select = $(selectSelector);
+      let snapBackTimeout = null;
+      let snapBackInterval = null;
+      let isAutoRemoving = false;
+
+      function getAvailableTags() {
+        let tags = [];
+        $select.find('option').each(function () {
+          if ($(this).val()) tags.push($(this).val());
+        });
+        return tags;
+      }
+
+      function stopAutoRemove() {
+        clearTimeout(snapBackTimeout);
+        clearInterval(snapBackInterval);
+        isAutoRemoving = false;
+      }
+
+      const tags = getAvailableTags();
+
+      $input.on('input', function (e) {
+        const cursorStart = this.selectionStart;
+        const cursorEnd = this.selectionEnd;
+        const rawVal = $(this).val();
+        const upperVal = rawVal.toUpperCase();
+        if (rawVal !== upperVal) {
+          $(this).val(upperVal);
+          this.setSelectionRange(cursorStart, cursorEnd);
+        }
+
+        const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+        const isDeleting = inputType && inputType.startsWith('delete');
+
+        if (isDeleting) {
+          stopAutoRemove();
+        }
+
+        let inputVal = $(this).val().toUpperCase();
+
+        if (isDeleting) {
+          let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+          if (hasMatch) {
+            $(this).removeClass('is-invalid-tag');
+          } else {
+            $(this).addClass('is-invalid-tag');
+          }
+
+          let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+          $select.val(exactMatch || '');
+          if (onMatch) onMatch(exactMatch || '');
+          return;
+        }
+
+
+        // 1. Find Longest Valid Prefix
+        let longestValidPrefix = "";
+        for (let i = inputVal.length; i >= 0; i--) {
+          let sub = inputVal.substring(0, i);
+          if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+            longestValidPrefix = sub;
+            break;
+          }
+        }
+
+        // 2. Tolerance: Allow max 3 extra "wrong" characters
+        if (inputVal.length > longestValidPrefix.length + 3) {
+          inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+          $(this).val(inputVal);
+        }
+
+        // 3. Invalid chars detected → show red border, then auto-remove one-by-one
+        if (inputVal.length > longestValidPrefix.length) {
+          $(this).addClass('is-invalid-tag');
+          $select.val('');
+          if (onMatch) onMatch('');
+
+          stopAutoRemove();
+
+          const self = this;
+          const targetPrefix = longestValidPrefix;
+          snapBackTimeout = setTimeout(() => {
+            isAutoRemoving = true;
+            snapBackInterval = setInterval(() => {
+              let currentVal = $input.val();
+              if (currentVal.length > targetPrefix.length) {
+                currentVal = currentVal.substring(0, currentVal.length - 1);
+                $input.val(currentVal);
+              } else {
+                clearInterval(snapBackInterval);
+                isAutoRemoving = false;
+                $input.removeClass('is-invalid-tag');
+
+                let exactMatch = tags.find(tag => tag.toUpperCase() === currentVal);
+                $select.val(exactMatch || '');
+                if (onMatch) onMatch(exactMatch || '');
+              }
+            }, 150);
+          }, 800);
+        } else {
+          stopAutoRemove();
+          $(this).removeClass('is-invalid-tag');
+
+          let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+          $select.val(exactMatch || '');
+          if (onMatch) onMatch(exactMatch || '');
+        }
+      });
+
+      $select.on('change', function () {
+        const val = $(this).val();
+        if (val) {
+          $input.val(val).removeClass('is-invalid-tag');
+          stopAutoRemove();
+          if (onMatch) onMatch(val);
+        } else {
+          $input.val('');
+        }
+      });
+    }
+
+    initTagAutocomplete('#edit-job-tag-no', '#edit-job-tag-select');
+    initTagAutocomplete('#assign-job-tag-input', '#assign-job-tag-select');
+
+    $('#edit-modal-form').on('submit', function (e) {
+      e.preventDefault();
+
+      Swal.fire({
+        title: 'Apply Changes?',
+        text: 'Are you sure you want to save these changes?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#2563eb',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, apply it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Applied!',
+            text: 'Your changes have been saved successfully.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+          $('#edit-modal').removeClass('is-open');
+          $('body').css('overflow', '');
+        }
+      });
+    });
+
+    // Handle SR Edit Icon Click (Pencil) -> Show Warning SweetAlert
+    $(document).on('click', '.sr-edit-icon', function () {
+      const $row = $(this).closest('tr');
+      const techName = $row.find('td').eq(4).text().trim() || 'N/A';
+      const loggedInTech = "ENG_TESTER"; // This can be dynamic if available
+
+      Swal.fire({
+        title: 'Warning !!!!',
+        text: `Assigned Tech Name ( ${techName} ) and Logged in Tech name ( ${loggedInTech} ) are different`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#2563eb',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Continue',
+        cancelButtonText: 'Cancel',
+        background: 'var(--app-panel)',
+        color: 'var(--typo-primary)',
+        iconColor: '#ef4444'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Extract data from row
+          const date = $row.prevAll('.user-table-date').first().text().trim() || todayStr;
+          const area = $row.find('td').eq(1).text().trim();
+          const loopName = $row.find('td').eq(2).find('span').first().text().trim();
+          const tagNo = $row.find('td').eq(2).find('.plant-tag-link').text().trim();
+          const jobTitle = $row.find('td').eq(3).find('span').first().text().trim();
+          const jobType = $row.data('job-type') || $row.find('td').eq(3).find('span').last().text().trim();
+          const instType = $row.find('td').eq(3).find('.user-table-secondary').text().trim();
+          const assignedTech = $row.find('td').eq(4).text().trim();
+          const workDesc = $row.find('td').eq(5).text().trim();
+          const actualTech = $row.find('td').eq(6).find('span').first().text().trim();
+          const engineer = $row.find('td').eq(6).find('span').last().text().trim();
+          const status = $row.find('td').eq(7).text().trim();
+
+          // Populate modal fields
+          $('#job-date').val(date);
+          $('#job-date-2').val(todayStr); // Default to today's date
+          $('#job-assigned-to').val(assignedTech);
+          $('#job-assigned-by').val(engineer);
+          $('#job-assigned-info').val(jobTitle);
+
+          $('#job-loop-input').val(loopName);
+          $('#job-tag-input').val(tagNo);
+          $('#job-type').val(jobType);
+          $('#job-inst').val(instType);
+          $('#job-status').val(status === 'P' ? 'PEND' : (status === 'O' ? 'OVER' : status));
+          $('#job-area').val(area);
+
+          // Restrict dropdowns to row data
+          syncSingleOptionSelect('job-tech', assignedTech !== 'N.A.' ? assignedTech : 'ENG_TESTER');
+          syncSingleOptionSelect('job-eng', engineer !== 'N.A.' ? engineer : 'ARP');
+
+          $('#job-desc').val(workDesc);
+
+          // Open the Log Book modal
+          $('#job-modal').addClass('is-open');
+          $('body').css('overflow', 'hidden');
+        }
+      });
+    });
+
+    // Handle Area Edit Icon Click (Caret) -> Open Edit Modal
+    $(document).on('click', '.area-edit-icon', function () {
+      const $row = $(this).closest('tr');
+      const recordId = $row.data('record-id');
+
+      // Extract data from row
+      const date = $row.prevAll('.user-table-date').first().text().trim() || todayStr;
+      const area = $row.find('td').eq(1).text().trim();
+      const loopName = $row.find('td').eq(2).find('span').first().text().trim();
+      const tagNo = $row.find('td').eq(2).find('.plant-tag-link').text().trim();
+      const jobTitle = $row.find('td').eq(3).find('span').first().text().trim();
+      const jobType = $row.find('td').eq(3).find('span').last().text().trim();
+      const instType = $row.find('td').eq(3).find('.user-table-secondary').text().trim() || 'N.A.';
+      const assignedTech = $row.find('td').eq(4).text().trim();
+
+      // Populate modal with row data
+      $('#edit-job-id').val(recordId);
+      $('#edit-job-date').val(date);
+
+      // Populate Assigned To
+      $('#edit-job-assigned-to-input').val(assignedTech).trigger('input');
+      syncSingleOptionSelect('edit-job-assigned-to-select', assignedTech);
+
+      $('#edit-job-area').val(area);
+
+      // Populate Loop Name
+      $('#edit-job-loop-select').val(loopName);
+
+      // Populate Tag No
+      $('#edit-job-tag-no').val(tagNo).trigger('input');
+      syncSingleOptionSelect('edit-job-tag-select', tagNo);
+
+      $('#edit-job-type').val(jobType);
+      $('#edit-job-inst').val(instType);
+      $('#edit-job-desc').val(jobTitle);
+
+      // Open the modal
+      $('#edit-modal').addClass('is-open');
+      $('body').css('overflow', 'hidden');
+    });
+
+    // Remark Button Logic (Chat Icon)
+    $(document).on('click', '[data-action="remark"]', function () {
+      const $row = $(this).closest('tr');
+      const recordId = $row.data('record-id');
+      const loopTag = $row.find('.plant-tag-link').first().text() || 'N.A';
+
+      $('#remark-job-id').val(recordId);
+      $('#remark-text').val('');
+
+      const modalId = $(this).data('open-modal') || 'remark-modal';
+      $('#' + modalId).addClass('is-open');
+      $('body').css('overflow', 'hidden');
+    });
+
+    // Edit Remark Button Logic (Pencil Icon)
+    $(document).on('click', '[data-action="edit-remark"]', function () {
+      const $row = $(this).closest('tr');
+      const recordId = $row.data('record-id');
+      const existingRemark = $(this).closest('.user-table-secondary').find('p').text().trim();
+
+      $('#remark-job-id').val(recordId);
+      $('#remark-text').val(existingRemark);
+
+      const modalId = $(this).data('open-modal') || 'remark-modal';
+      $('#' + modalId).addClass('is-open');
+      $('body').css('overflow', 'hidden');
+    });
+
+    // Remark Modal Form Submit
+    $('#remark-modal-form').on('submit', function (e) {
+      e.preventDefault();
+
+      Swal.fire({
+        title: 'Save Remark?',
+        text: 'Are you sure you want to save this remark?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#2563eb',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, save it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Saved!',
+            text: 'Your remark has been saved successfully.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+          $('#remark-modal').removeClass('is-open');
+          $('body').css('overflow', '');
+        }
+      });
+    });
+
+    let currentHistoryRow = null;
+
+    // History Button Logic
+    $(document).on('click', '[data-action="history"]', function () {
+      currentHistoryRow = $(this).closest('tr');
+      const $row = currentHistoryRow;
+
+      // Extract data for currentRowData
+      currentRowData = {
+        tech: $row.find('td').eq(6).find('span').first().text().trim(),
+        eng: $row.find('td').eq(6).find('span').last().text().trim(),
+        tag: $row.find('.plant-tag-link').text().trim(),
+        area: $row.find('td').eq(1).text().trim(),
+        loop: $row.find('td').eq(2).find('span').first().text().trim()
+      };
+
+      const modalId = $(this).data('open-modal') || 'history-type-modal';
+      $('#' + modalId).addClass('is-open');
+      $('body').css('overflow', 'hidden');
+    });
+
+
+
+    // Priority Chip Click
+    $(document).on('click', '.plant-priority-chip', function () {
+      const $row = $(this).closest('tr');
+      const recordId = $row.data('record-id');
+      const currentPriority = $(this).text().trim();
+
+      $('#priority-job-id').val(recordId);
+      $('#priority-select').val(currentPriority);
+      $('#priority-modal').addClass('is-open');
+      $('body').css('overflow', 'hidden');
+    });
+
+    // Priority Modal Form Submit
+    $('#priority-modal-form').on('submit', function (e) {
+      e.preventDefault();
+      const recordId = $('#priority-job-id').val();
+      const newPriority = $('#priority-select').val();
+
+      // Update the chip in the visible container for this record
+      const $activeBody = $('.plant-table-container:not(.is-hidden) .plant-table-body');
+      const $row = $activeBody.find('tr[data-record-id="' + recordId + '"]');
+      $row.find('.plant-priority-chip').text(newPriority);
+
+      $('#priority-modal').removeClass('is-open');
+      $('body').css('overflow', '');
+    });
+
+    // Initialize Smart Autocomplete for History Fields
+    initTagAutocomplete('#hist-tag-input', '#hist-tag-select');
+
+    // Date Initializations
+    const today = new Date();
+    const todayStr = today.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    $('.today-date-text').text("( " + todayStr + " )");
+
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(today.getDate() + 1);
+    const tomorrowStr = tomorrowDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    $('.tomorrow-date-text').text("( " + tomorrowStr + " )");
+
+    const prevDate = new Date();
+    prevDate.setDate(today.getDate() - 1);
+    const prevStr = prevDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    $('.prev-date-text').text("( " + prevStr + " )");
+
+    // Weekly date range (last 7 days)
+    const weekAgo = new Date();
+    weekAgo.setDate(today.getDate() - 6);
+    const weekAgoStr = weekAgo.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    $('.weekly-date-text').text("( " + weekAgoStr + " - " + todayStr + " )");
+
+    // Monthly Range (Last 40 Days)
+    const fortyDaysAgo = new Date();
+    fortyDaysAgo.setDate(today.getDate() - 40);
+    const fortyDaysAgoStr = fortyDaysAgo.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    $('.monthly-date-text').text("( " + fortyDaysAgoStr + " - " + todayStr + " )");
+
+    // Toggle Pending View
+    $('#toggle-pending-btn').on('click', function () {
+      const $btn = $(this);
+      $('#data-loader-overlay').removeClass('hidden');
+
+      setTimeout(() => {
+        $('.ui-switcher-btn').removeClass('is-active');
+        $btn.addClass('is-active');
+        $('.plant-table-container').addClass('is-hidden');
+        $('#table-container-pending').removeClass('is-hidden');
+
+        // Update view-chip
+        $('#plant-view-chip').text('View: Pending');
+
+        filterTable();
+        $('#data-loader-overlay').addClass('hidden');
+      }, 600);
+    });
+
+    // Individual Row Delete (Pending)
+    $(document).on('click', '.delete-row-btn', function (e) {
+      e.stopPropagation();
+      const $row = $(this).closest('tr');
+      const recordId = $row.data('record-id');
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $row.fadeOut(300, function () {
+            $(this).remove();
+            // Update count
+            const count = $('#plantLogbookTablePending tbody tr').length;
+            $('#table-container-pending .record-count').text(count + ' Records');
+          });
+          Swal.fire(
+            'Deleted!',
+            'Your record has been deleted.',
+            'success'
+          );
+        }
+      });
+    });
+
+    // ReAssign Job Logic
+    $(document).on('click', '.reassign-text-link', function (e) {
+      e.preventDefault();
+      const $row = $(this).closest('tr');
+      const tagNo = $row.find('td').eq(3).text().trim();
+
+      Swal.fire({
+        title: 'ReAssign Job?',
+        text: `Are you sure you want to reassign the job for Tag: ${tagNo}?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#2563eb',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, reassign it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Reassigned!',
+            text: 'The job has been reassigned successfully.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        }
+      });
+    });
+
+    // Delete All Pending
+    $('#delete-all-pending-btn').on('click', function () {
+      const rowCount = $('#plantLogbookTablePending tbody tr').length;
+
+      if (rowCount === 0) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Empty',
+          text: 'No records to delete!'
+        });
+        return;
+      }
+
+      Swal.fire({
+        title: 'Delete All Records?',
+        text: "This will permanently remove all pending records from the report!",
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete all!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $('#plantLogbookTablePending tbody').empty();
+          $('#table-container-pending .record-count').text('0 Records');
+
+          Swal.fire(
+            'Cleared!',
+            'All pending records have been deleted.',
+            'success'
+          );
+        }
+      });
+    });
+
+    // --- Search & Suggest Functionality for Modals ---
+    function initSelectSearch(inputId, selectId) {
+      const $input = $('#' + inputId);
+      const $select = $('#' + selectId);
+      const $options = $select.find('option');
+      let isDeleting = false;
+
+      $input.on('keydown', function (e) {
+        // Track if user is deleting so we don't auto-suggest
+        isDeleting = e.key === 'Backspace' || e.key === 'Delete';
+      });
+
+      $input.on('input', function () {
+        const val = $(this).val().toLowerCase();
+        const originalLen = $(this).val().length;
+        let firstMatch = null;
+        let firstMatchFullText = "";
+
+        $options.each(function () {
+          const $opt = $(this);
+          const text = $opt.text().toLowerCase();
+          const isMatch = text.includes(val);
+
+          if (isMatch) {
+            $opt.show();
+            if (!firstMatch && val.length > 0) {
+              firstMatch = $opt.val();
+              firstMatchFullText = $opt.text();
+            }
+          } else {
+            if ($opt.val() !== "") $opt.hide();
+          }
+        });
+
+        // 1. Suggest Next (Type-Ahead)
+        if (firstMatch && !isDeleting && val.length > 0) {
+          // Only autocomplete if it actually starts with the input for a more natural feel
+          if (firstMatchFullText.toLowerCase().startsWith(val)) {
+            $(this).val(firstMatchFullText);
+            this.setSelectionRange(originalLen, firstMatchFullText.length);
+          }
+        }
+
+        // 2. Sync Dropdown Selection (Highlight)
+        if (firstMatch) {
+          $select.val(firstMatch);
+        } else if (val.length === 0) {
+          $select.val("");
+        }
+      });
+
+      // Sync dropdown back to input when changed manually
+      $select.on('change', function () {
+        const selectedText = $(this).find('option:selected').text();
+        if ($(this).val() !== "") {
+          $input.val(selectedText);
+        } else {
+          $input.val("");
+        }
+      });
+    }
+
+    initSelectSearch('job-tag-input', 'job-tag-select');
+
+    // Initialize
+    filterTable();
+  });
+</script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Wise Filter | GNFC</title>
+  <meta name="description" content="GNFC Historical Job Records Filtered by Job Number">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'jobwise_filter';
+  </script>
+  
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Job Wise Filter"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,Job Wise Filter:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
+          </h2>
+        </div>
+        <div class="jt-filter-body">
+
+          <!-- Job Input with Dual Search/Select Logic -->
+          <div>
+            <label class="gnfc-modal-label">Job Number</label>
+            <div class="flex items-center gap-8px">
+              <input type="text" id="jobNoInput" placeholder="Search Job Number..."
+                class="gnfc-modal-input font-13px uppercase flex-1" value="">
+              <div class="flex-1">
+                <select id="jobNoSelect" class="gnfc-modal-input">
+                  <option value="">-- Select --</option>
+                  <option value="17179">17179</option>
+                  <option value="17181">17181</option>
+                  <option value="17163">17163</option>
+                  <option value="15319">15319</option>
+                  <option value="15348">15348</option>
+                  <option value="15630">15630</option>
+                  <option value="15592">15592</option>
+                  <option value="15674">15674</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filter">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
+              Reset
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── REPORT CONTAINER ── -->
+      <div id="report-container" class="jt-table-card" style="display: none;">
+
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-magnifying-glass"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Job-wise History Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">JobNo</th>
+                <th class="user-table-center" style="width: 280px;">Title</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Plant</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="user-table-center user-table-border-right">Job</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Dynamically populated by JS based on select filter -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      
+      // Mock data store mapping job numbers to row HTML strings
+      const jobData = {
+        "17179": `
+          <tr class="user-table-row row-highlight-yellow">
+            <td class="user-table-center user-table-secondary user-table-bold">1</td>
+            <td class="user-table-center user-table-bold user-table-blue">17179</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <div class="user-table-bold">test2</div>
+                <div class="user-table-secondary">test1 (By:ENG_TESTER : 09/06/2026)</div>
+              </div>
+            </td>
+            <td class="user-table-center">BOILER</td>
+            <td class="user-table-center">ALD</td>
+            <td>test3</td>
+            <td class="user-table-center">ENG_TESTER</td>
+            <td class="user-table-center">OVER</td>
+            <td class="color-purple-remark">
+              Test Remarks 4 [written by : ENG_TESTER Date : 09/06/2026 ]
+            </td>
+          </tr>
+        `,
+        "17181": `
+          <tr class="user-table-row">
+            <td class="user-table-center user-table-secondary user-table-bold">1</td>
+            <td class="user-table-center user-table-bold user-table-blue">17181</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <div class="user-table-bold">Test Item</div>
+                <div class="user-table-secondary">Scheduled Calibration (By:ENG_TESTER : 09/06/2026)</div>
+              </div>
+            </td>
+            <td class="user-table-center">BOILER</td>
+            <td class="user-table-center">ALD</td>
+            <td>Test description</td>
+            <td class="user-table-center">ENG_TESTER</td>
+            <td class="user-table-center">OVER</td>
+            <td class="color-green-remark">
+              test [written by : PMP Date : 09/06/2026 ]
+            </td>
+          </tr>
+        `,
+        "17163": `
+          <tr class="user-table-row">
+            <td class="user-table-center user-table-secondary user-table-bold">1</td>
+            <td class="user-table-center user-table-bold user-table-blue">17163</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <div class="user-table-bold">DELL MOUSE</div>
+                <div class="user-table-secondary">NOT WORKING. (By:HAS : 04/06/2026)</div>
+              </div>
+            </td>
+            <td class="user-table-center">AMM</td>
+            <td class="user-table-center">ALD</td>
+            <td>over (05/06/2026)</td>
+            <td class="user-table-center">ALD</td>
+            <td class="user-table-center">OVER</td>
+            <td class="color-purple-remark">
+              Replacement given. [written by : HAS Date : 04/06/2026 ]
+            </td>
+          </tr>
+        `,
+        "15319": `
+          <tr class="user-table-row">
+            <td class="user-table-center user-table-secondary user-table-bold">1</td>
+            <td class="user-table-center user-table-bold user-table-blue">15319</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <div class="user-table-bold">FTA for ESD</div>
+                <div class="user-table-secondary">Channel check and calibration</div>
+              </div>
+            </td>
+            <td class="user-table-center">AMM</td>
+            <td class="user-table-center">ALD</td>
+            <td>Channel 1 and 2 are faulty.</td>
+            <td class="user-table-center">ALD</td>
+            <td class="user-table-center">PENDING</td>
+            <td class="color-purple-remark">
+              Pending for component replacement. [written by : ALD Date : 31/08/2023 ]
+            </td>
+          </tr>
+        `,
+        "15348": `
+          <tr class="user-table-row">
+            <td class="user-table-center user-table-secondary user-table-bold">1</td>
+            <td class="user-table-center user-table-bold user-table-blue">15348</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <div class="user-table-bold">TRICONEX DI MODULE</div>
+                <div class="user-table-secondary">Faulty point diagnosis</div>
+              </div>
+            </td>
+            <td class="user-table-center">AMM</td>
+            <td class="user-table-center">WM</td>
+            <td>REPAIRED AT INST WORKSHOP 12 NOS PVD1352 REPLACED AFTER THAT EXTERNAL STATUS MISSMATCH ERRORS.</td>
+            <td class="user-table-center">WM</td>
+            <td class="user-table-center">OVER</td>
+            <td class="color-green-remark">
+              Module successfully repaired and tested. [written by : WM Date : 19/10/2023 ]
+            </td>
+          </tr>
+        `,
+        "15630": `
+          <tr class="user-table-row">
+            <td class="user-table-center user-table-secondary user-table-bold">1</td>
+            <td class="user-table-center user-table-bold user-table-blue">15630</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <div class="user-table-bold">16-channel AI card</div>
+                <div class="user-table-secondary">Card failure troubleshooting</div>
+              </div>
+            </td>
+            <td class="user-table-center">AMM</td>
+            <td class="user-table-center">PRP</td>
+            <td>Complete module faulty appeared.</td>
+            <td class="user-table-center">PRP</td>
+            <td class="user-table-center">OVER</td>
+            <td class="color-purple-remark">
+              Replaced AI card with new spare. [written by : PRP Date : 27/07/2024 ]
+            </td>
+          </tr>
+        `,
+        "15592": `
+          <tr class="user-table-row">
+            <td class="user-table-center user-table-secondary user-table-bold">1</td>
+            <td class="user-table-center user-table-bold user-table-blue">15592</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <div class="user-table-bold">32 channel DI card</div>
+                <div class="user-table-secondary">Triconex DI card error</div>
+              </div>
+            </td>
+            <td class="user-table-center">AMM</td>
+            <td class="user-table-center">BDR</td>
+            <td>In Triconex DI card, Channel no. 32 found faulty.</td>
+            <td class="user-table-center">BDR</td>
+            <td class="user-table-center">OVER</td>
+            <td class="color-green-remark">
+              Repaired bad point on DI Card. [written by : BDR Date : 08/06/2024 ]
+            </td>
+          </tr>
+        `,
+        "15674": `
+          <tr class="user-table-row">
+            <td class="user-table-center user-table-secondary user-table-bold">1</td>
+            <td class="user-table-center user-table-bold user-table-blue">15674</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <div class="user-table-bold">ABB SYCON BOARD</div>
+                <div class="user-table-secondary">Analyzer system issue</div>
+              </div>
+            </td>
+            <td class="user-table-center">AMM</td>
+            <td class="user-table-center">ALD</td>
+            <td>SYCON BOARD found faulty due to which analyzer not working.</td>
+            <td class="user-table-center">ALD</td>
+            <td class="user-table-center">U/P</td>
+            <td class="color-purple-remark">
+              Analyzer board sent for servicing. [written by : ALD Date : 31/08/2024 ]
+            </td>
+          </tr>
+        `
+      };
+
+      // --- Autocomplete Helper logic for Job Number ---
+      function initJobNoAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let snapBackTimeout = null;
+        let snapBackInterval = null;
+        let isAutoRemoving = false;
+
+        function getAvailableJobs() {
+          let jobs = [];
+          $select.find('option').each(function () {
+            if ($(this).val()) jobs.push($(this).val());
+          });
+          return jobs;
+        }
+
+        function stopAutoRemove() {
+          clearTimeout(snapBackTimeout);
+          clearInterval(snapBackInterval);
+          isAutoRemoving = false;
+        }
+
+        const jobs = getAvailableJobs();
+
+        $input.on('input', function (e) {
+          const cursorStart = this.selectionStart;
+          const cursorEnd = this.selectionEnd;
+          const rawVal = $(this).val();
+          
+          const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+          const isDeleting = inputType && inputType.startsWith('delete');
+
+          if (isDeleting) {
+            stopAutoRemove();
+          }
+
+          let inputVal = $(this).val().trim();
+
+          if (isDeleting) {
+            let hasMatch = inputVal.length === 0 || jobs.some(job => job.startsWith(inputVal));
+            if (hasMatch) {
+              $(this).removeClass('is-invalid-tag');
+            } else {
+              $(this).addClass('is-invalid-tag');
+            }
+
+            let exactMatch = jobs.find(job => job === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          let longestValidPrefix = "";
+          for (let i = inputVal.length; i >= 0; i--) {
+            let sub = inputVal.substring(0, i);
+            if (jobs.some(job => job.startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+            $(this).val(inputVal);
+          }
+
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            $select.val('');
+            if (onMatch) onMatch('');
+
+            stopAutoRemove();
+
+            const self = this;
+            const targetPrefix = longestValidPrefix;
+            snapBackTimeout = setTimeout(() => {
+              isAutoRemoving = true;
+              snapBackInterval = setInterval(() => {
+                let currentVal = $input.val();
+                if (currentVal.length > targetPrefix.length) {
+                  currentVal = currentVal.substring(0, currentVal.length - 1);
+                  $input.val(currentVal);
+                } else {
+                  clearInterval(snapBackInterval);
+                  isAutoRemoving = false;
+                  $input.removeClass('is-invalid-tag');
+
+                  let exactMatch = jobs.find(job => job === currentVal);
+                  $select.val(exactMatch || '');
+                  if (onMatch) onMatch(exactMatch || '');
+                }
+              }, 150);
+            }, 800);
+          } else {
+            stopAutoRemove();
+            $(this).removeClass('is-invalid-tag');
+
+            let exactMatch = jobs.find(job => job === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+          }
+        });
+
+        $select.on('change', function () {
+          const val = $(this).val();
+          if (val) {
+            $input.val(val).removeClass('is-invalid-tag');
+            stopAutoRemove();
+            if (onMatch) onMatch(val);
+          } else {
+            $input.val('');
+          }
+        });
+      }
+
+      // Initialize Autocomplete
+      initJobNoAutocomplete('#jobNoInput', '#jobNoSelect');
+
+      const showReport = () => {
+        const jobNo = $('#jobNoInput').val().trim();
+        if (!jobNo) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Please select or enter a valid Job Number.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary'
+            }
+          });
+          return;
+        }
+
+        const matchedRow = jobData[jobNo];
+        if (matchedRow) {
+          $('#reportTableBody').html(matchedRow);
+          $('#report-container').stop().hide().fadeIn(300);
+        } else {
+          $('#reportTableBody').html(`
+            <tr>
+              <td colspan="9" class="user-table-center user-table-secondary">No records found for Job Number: ${jobNo}</td>
+            </tr>
+          `);
+          $('#report-container').stop().hide().fadeIn(300);
+        }
+      };
+
+      const resetView = () => {
+        $('#jobNoInput').val('').removeClass('is-invalid-tag');
+        $('#jobNoSelect').val('');
+        $('#report-container').fadeOut(200);
+      };
+
+      // Event Listeners
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          showReport();
+        }, 1200);
+      });
+      $('#btn-reset-filter').on('click', resetView);
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Status Report | GNFC</title>
+  <meta name="description" content="GNFC Job Status Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/plant-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'Job_status';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Job Status Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,Job Status Report:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content ">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
+          </h2>
+        </div>
+
+        <div class="jt-filter-body">
+
+          <!-- Time Range -->
+          <!-- Start Date -->
+          <div>
+            <label class="gnfc-modal-label">Start Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="startDateFilter" class="gnfc-modal-input">
+            </div>
+          </div>
+
+          <!-- End Date -->
+          <div>
+            <label class="gnfc-modal-label">End Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="endDateFilter" class="gnfc-modal-input">
+            </div>
+          </div>
+
+          <!-- Job Status Select -->
+          <div>
+            <label class="gnfc-modal-label" for="job-status-select">Select Job Status</label>
+            <div class="jt-select-wrap">
+              <select id="job-status-select" class="gnfc-modal-input">
+                <option value="" selected>Select Job Status</option>
+                <option value="OVER">OVER</option>
+                <option value="U/P">U/P</option>
+                <option value="NOT REPAIRABLE">NOT REPAIRABLE</option>
+                <option value="RETURN TO PLANT">RETURN TO PLANT</option>
+                <option value="PENDING FOR COMPONENT">PENDING FOR COMPONENT</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filters">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button type="button" class="jt-btn-reset" id="btn-reset-filters">
+              Reset
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="jt-table-card">
+
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-table"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Job Status Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px" id="jt-main-table">
+
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Area</th>
+                <th class="user-table-center" style="width: 130px;">Job No</th>
+                <th class="user-table-center" style="width: 280px;">Job</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th class="user-table-center" style="width: 80px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 180px;">Status</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">REMARKS</th>
+                <th rowspan="2" class="user-table-center" style="width: 60px;">ADD</th>
+              </tr>
+              <tr>
+                <th class="user-table-center">Type</th>
+                <th class="user-table-center">Type of Job</th>
+                <th class="user-table-center user-table-border-right">ENG</th>
+              </tr>
+            </thead>
+            <tbody id="plant-table-body">
+
+              <!-- ── DATE GROUP: 14/03/2026 ── -->
+              <tr class="user-table-date" data-date-group="14/03/2026">
+                <td colspan="10" class="user-table-bold user-table-date">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  14/03/2026
+                </td>
+              </tr>
+
+              <!-- Row 1 -->
+              <tr class="user-table-row jt-data-row" data-date="14/03/2026" data-job-status="PENDING FOR COMPONENT">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">BOILER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">17074</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Visible Flame Scanner Power Supply Card</div>
+                    <div>N.A</div>
+                  </div>
+                </td>
+                <td class="user-table-center">ALD</td>
+                <td>check its switch but we have no spare. hence same to be arrange.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">ALD</span>
+                    <span class="user-table-center">-</span>
+                  </div>
+                </td>
+                <td class="user-table-center">PENDING FOR COMPONENT</td>
+                <td></td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── DATE GROUP: 13/03/2026 ── -->
+              <tr class="user-table-date" data-date-group="13/03/2026">
+                <td colspan="10" class="user-table-bold user-table-date">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  13/03/2026
+                </td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr class="user-table-row jt-data-row" data-date="13/03/2026" data-job-status="PENDING FOR COMPONENT">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">BOILER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">17069</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Ignition Flame Relay</div>
+                    <div>N.A</div>
+                  </div>
+                </td>
+                <td class="user-table-center">ALD</td>
+                <td>check its discrete component in cold found ok power on it check its transformer o/p not coming need replace transformer.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">ALD</span>
+                    <span class="user-table-center">-</span>
+                  </div>
+                </td>
+                <td class="user-table-center">PENDING FOR COMPONENT</td>
+                <td></td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="user-table-row jt-data-row" data-date="13/03/2026" data-job-status="PENDING FOR COMPONENT">
+                <td class="user-table-center">3</td>
+                <td class="user-table-center">BOILER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">17071</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Ignition Flame Relay</div>
+                    <div>N.A</div>
+                  </div>
+                </td>
+                <td class="user-table-center">ALD</td>
+                <td>check its discrete component in cold found ok power on it check its transformer o/p not coming need replace transformer.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">ALD</span>
+                    <span class="user-table-center">-</span>
+                  </div>
+                </td>
+                <td class="user-table-center">PENDING FOR COMPONENT</td>
+                <td></td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 4 -->
+              <tr class="user-table-row jt-data-row" data-date="13/03/2026" data-job-status="PENDING FOR COMPONENT">
+                <td class="user-table-center">4</td>
+                <td class="user-table-center">BOILER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">17072</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Ignition Flame Relay</div>
+                    <div>N.A</div>
+                  </div>
+                </td>
+                <td class="user-table-center">ALD</td>
+                <td>check its discrete component in cold found ok power on it check its transformer o/p not coming need replace transformer.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">ALD</span>
+                    <span class="user-table-center">-</span>
+                  </div>
+                </td>
+                <td class="user-table-center">PENDING FOR COMPONENT</td>
+                <td></td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── DATE GROUP: 29/01/2026 ── -->
+              <tr class="user-table-date" data-date-group="29/01/2026">
+                <td colspan="10" class="user-table-bold user-table-date">
+                  <i class="ph-fill ph-calendar-blank"></i>
+                  29/01/2026
+                </td>
+              </tr>
+
+              <!-- Row 8 -->
+              <tr class="user-table-row jt-data-row" data-date="29/01/2026" data-job-status="PENDING FOR COMPONENT">
+                <td class="user-table-center">8</td>
+                <td class="user-table-center">INSTWS</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">N.A</div>
+                    <div class="user-table-blue">17015</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-primary">Power adapter</div>
+                    <div>N.A</div>
+                  </div>
+                </td>
+                <td class="user-table-center">ALD</td>
+                <td>check its discrete components in cold condition found 2 capacitors faulty. we have no spare.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">ALD</span>
+                    <span class="user-table-center">-</span>
+                  </div>
+                </td>
+                <td class="user-table-center">PENDING FOR COMPONENT</td>
+                <td><span style="color: purple;">Elect cap. 4.7 mfd 450V is not available. So, Job is pending [written by : HAB Date : 30/01/2026]</span></td>
+                <td class="jt-analysis-td jt-analysis-td--nopadding text-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" data-action="history"
+                        title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" data-action="pm" title="PM Job">PM</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Empty state (hidden by default) -->
+              <tr class="user-table-row" id="jt-empty-row" style="display: none;">
+                <td colspan="10" class="user-table-center p-16px" >
+                  No records found matching your selected criteria.
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /TABLE CARD -->
+
+    </section>
+  </main>
+
+  <!-- Filter Logic (jQuery version) -->
+  <script>
+    $(document).ready(function () {
+      const $jobStatusSelect = $('#job-status-select');
+      const $startDateInput = $('#startDateFilter');
+      const $endDateInput = $('#endDateFilter');
+      const $dataRows = $('.jt-data-row');
+      const $groupRows = $('.user-table-date[data-date-group]');
+      const $emptyRow = $('#jt-empty-row');
+
+      function parseRowDate(dateStr) {
+        if (!dateStr || typeof dateStr !== 'string') return null;
+        const parts = dateStr.trim().split('/');
+        if (parts.length !== 3) return null;
+        const date = new Date(parts[2], parts[1] - 1, parts[0]);
+        return isNaN(date.getTime()) ? null : date;
+      }
+
+      function parseInputDate(dateStr, isEndOfDay) {
+        if (!dateStr || typeof dateStr !== 'string') return null;
+        const parts = dateStr.trim().split('-');
+        if (parts.length !== 3) return null;
+        const date = new Date(parts[0], parts[1] - 1, parts[2]);
+        if (isNaN(date.getTime())) return null;
+        if (isEndOfDay) date.setHours(23, 59, 59, 999);
+        else date.setHours(0, 0, 0, 0);
+        return date;
+      }
+
+      function applyFilters() {
+        const jobStatus = ($jobStatusSelect.val() || "").trim();
+        const startVal = ($startDateInput.val() || "").trim();
+        const endVal = ($endDateInput.val() || "").trim();
+
+        const startDate = parseInputDate(startVal, false);
+        const endDate = parseInputDate(endVal, true);
+
+        // Data shows UNLESS a filter explicitly hides it
+        const isFilterActive = !!jobStatus || !!startDate || !!endDate;
+
+        const visibleDates = {};
+        let anyVisible = false;
+
+        $dataRows.each(function () {
+          const $row = $(this);
+          let show = true;
+
+          if (isFilterActive) {
+            const rowStatus = ($row.attr('data-job-status') || "").trim();
+            const rowDateStr = $row.attr('data-date');
+
+            if (jobStatus && rowStatus !== jobStatus) {
+              show = false;
+            }
+
+            if (show && (startDate || endDate)) {
+              const rowDate = parseRowDate(rowDateStr);
+              if (rowDate) {
+                const rowTime = rowDate.getTime();
+                if (startDate && rowTime < startDate.getTime()) show = false;
+                if (show && endDate && rowTime > endDate.getTime()) show = false;
+              }
+            }
+          }
+
+          $row.toggle(show);
+          if (show) {
+            const rowDateStr = $row.attr('data-date');
+            if (rowDateStr) visibleDates[rowDateStr] = true;
+            anyVisible = true;
+          }
+        });
+
+        $groupRows.each(function () {
+          const $groupRow = $(this);
+          const groupDate = $groupRow.attr('data-date-group');
+          $groupRow.toggle(!!visibleDates[groupDate]);
+        });
+
+        if ($emptyRow.length) {
+          $emptyRow.toggle(isFilterActive && !anyVisible);
+        }
+      }
+
+      function handleApplyFilters() {
+        applyFilters();
+      }
+
+      function resetFilters() {
+        $startDateInput.val('');
+        $endDateInput.val('');
+        $jobStatusSelect.val('');
+        applyFilters();
+      }
+
+      // Event Listeners
+      $('#btn-apply-filters').on('click', function() {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          handleApplyFilters();
+        }, 1500);
+      });
+      $('#btn-reset-filters').on('click', resetFilters);
+
+      // Trigger picker on icon click
+      $('.jt-input-icon').on('click', function () {
+        const $input = $(this).siblings('input');
+        if ($input.length && typeof $input[0].showPicker === 'function') {
+          $input[0].showPicker();
+        }
+      });
+
+      // Run once on load (will hide all data because no filters are selected)
+      applyFilters();
+    });
+  </script>
+
+</body>
+
+</html>

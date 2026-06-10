@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name Wise Report | GNFC</title>
+  <meta name="description" content="GNFC Historical Job Records Filtered by Technician Name">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'namewise_report';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Name Wise Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,Name Wise Report:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card" style="max-width: 800px; margin: 0 auto 20px auto;">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-user-list"></i>
+            SEARCH CRITERIA
+          </h2>
+        </div>
+        <div class="jt-filter-body" style="display: block; padding: 20px;">
+          
+          <!-- Exact Layout Table for Filter -->
+          <table class="user-table w-100 mb-20px" style="border: 1px solid var(--border-color);">
+            <thead>
+              <tr>
+                <th class="user-table-center" style="width: 50%;">START DATE</th>
+                <th class="user-table-center" style="width: 50%;">END DATE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="user-table-center" style="padding: 12px;">
+                  <input type="date" id="startDate" class="gnfc-modal-input user-table-center" value="2026-05-10" style="max-width: 250px; display: inline-block; margin: 0 auto;">
+                </td>
+                <td class="user-table-center" style="padding: 12px;">
+                  <input type="date" id="endDate" class="gnfc-modal-input user-table-center" value="2026-06-10" style="max-width: 250px; display: inline-block; margin: 0 auto;">
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="user-table-center" style="background-color: var(--bg-secondary); padding: 12px;">
+                  <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                    <span class="user-table-bold">SELECT NAME :</span>
+                    <select id="techSelect" class="gnfc-modal-input" style="max-width: 200px;">
+                      <option value="ALL">ALL</option>
+                      <option value="CBP">CBP</option>
+                      <option value="ALD">ALD</option>
+                      <option value="PMP">PMP</option>
+                      <option value="ENG_TESTER">ENG_TESTER</option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Action Buttons -->
+          <div class="jt-filter-btn" style="justify-content: center;">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filter" style="min-width: 150px;">
+              <i class="ph-bold ph-magnifying-glass"></i> SEARCH
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── REPORT CONTAINER ── -->
+      <div id="report-container" class="jt-table-card">
+
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-user-list"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Name-wise History Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1200px">
+            <thead>
+              <tr>
+                <th class="user-table-center" style="width: 50px;">Sr</th>
+                <th class="user-table-center" style="width: 110px;">Date</th>
+                <th class="user-table-center" style="width: 100px;">Tech</th>
+                <th class="user-table-center" style="width: 100px;">TagNo</th>
+                <th class="user-table-center" style="width: 250px;">Type Of Job</th>
+                <th class="user-table-center" style="min-width: 400px;">Description</th>
+                <th class="user-table-center" style="width: 250px;">Remarks</th>
+                <th class="user-table-center" style="width: 80px;">OT Hour</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Static Sample Data based on screenshot -->
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                <td class="user-table-center">11/05/2026</td>
+                <td class="user-table-center user-table-bold">ALD</td>
+                <td class="user-table-center">17118</td>
+                <td class="user-table-center">Yokogawa temp. Simulator</td>
+                <td>done scheduled calibration and fill the report</td>
+                <td></td>
+                <td class="user-table-center">0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                <td class="user-table-center">11/05/2026</td>
+                <td class="user-table-center user-table-bold">ALD</td>
+                <td class="user-table-center">17123</td>
+                <td class="user-table-center">DCS Power supply from 110VAC to 24 VDC.</td>
+                <td>check it found it is fully black due to burning. clean with ipa. found its pcb is got damage due to burning. hence cannot repaired.</td>
+                <td></td>
+                <td class="user-table-center">0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                <td class="user-table-center">11/05/2026</td>
+                <td class="user-table-center user-table-bold">ALD</td>
+                <td class="user-table-center">17128</td>
+                <td class="user-table-center">Digital Multimeter MECO 23SMK-11</td>
+                <td>done scheduled calibration and fill the report</td>
+                <td></td>
+                <td class="user-table-center">0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">46</td>
+                <td class="user-table-center">06/06/2026</td>
+                <td class="user-table-center user-table-bold">ALD</td>
+                <td class="user-table-center">17145</td>
+                <td class="user-table-center">CA1 CARD</td>
+                <td>replace all electrolyte capacitors with new one.</td>
+                <td></td>
+                <td class="user-table-center">0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">48</td>
+                <td class="user-table-center">06/06/2026</td>
+                <td class="user-table-center user-table-bold">PMP</td>
+                <td class="user-table-center">17168</td>
+                <td class="user-table-center">Test1</td>
+                <td>over test</td>
+                <td></td>
+                <td class="user-table-center">0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">51</td>
+                <td class="user-table-center">09/06/2026</td>
+                <td class="user-table-center user-table-bold">ENG_TESTER</td>
+                <td class="user-table-center">17179</td>
+                <td class="user-table-center">test2</td>
+                <td>test3</td>
+                <td class="user-table-center">
+                  <span style="font-size: 13px;">Test Remarks 4 [written by : ENG_TESTER Date : 09/06/2026 ]</span>
+                </td>
+                <td class="user-table-center">0</td>
+              </tr>
+              <!-- Summary Footer Row -->
+              <tr>
+                <td colspan="7" class="user-table-center user-table-bold" style="background-color: var(--bg-secondary); padding: 12px; font-size: 14px; text-transform: uppercase;">
+                  SELECTED NAME ALL
+                </td>
+                <td style="background-color: var(--bg-secondary);"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      
+      // Event Listeners
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        
+        // Simple mock reload simulation
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          const name = $('#techSelect').val();
+          // Find the selected name footer cell and update it
+          $('td[colspan="7"]').text(`SELECTED NAME ${name}`);
+        }, 800); 
+      });
+      
+    });
+  </script>
+</body>
+
+</html>

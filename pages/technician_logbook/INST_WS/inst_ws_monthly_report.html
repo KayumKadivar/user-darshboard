@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monthly Report | GNFC</title>
+  <meta name="description" content="GNFC Instrument Workshop Monthly Maintenance Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'monthly_report';
+  </script>
+  
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Monthly Report...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Monthly Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,Monthly Report:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER / SELECTOR CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-calendar"></i>
+            SELECT MONTH & YEAR
+          </h2>
+        </div>
+        <div class="jt-filter-body" style="gap: 16px;">
+          <!-- Month Dropdown -->
+          <div style="flex: 1;">
+            <label class="gnfc-modal-label">Month</label>
+            <select id="monthSelect" class="gnfc-modal-input">
+              <option value="0">January</option>
+              <option value="1">February</option>
+              <option value="2">March</option>
+              <option value="3">April</option>
+              <option value="4">May</option>
+              <option value="5" selected>June</option>
+              <option value="6">July</option>
+              <option value="7">August</option>
+              <option value="8">September</option>
+              <option value="9">October</option>
+              <option value="10">November</option>
+              <option value="11">December</option>
+            </select>
+          </div>
+
+          <!-- Year Dropdown -->
+          <div style="flex: 1;">
+            <label class="gnfc-modal-label">Year</label>
+            <select id="yearSelect" class="gnfc-modal-input">
+              <option value="2026" selected>2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+            </select>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" id="btn-fetch-report">
+              <i class="ph-bold ph-lightning"></i> FETCH
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── REPORT CONTAINER ── -->
+      <div id="report-container" class="jt-table-card">
+
+        <div class="jt-report-header" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px;">
+          <div class="monthly-report-title-left">INST_WS : Monthly Report</div>
+          <div class="monthly-report-date-right" id="report-period-text">Jun 2026</div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">PLANT</th>
+                <th rowspan="2" style="width: 250px;">TAG</th>
+                <th rowspan="2" style="width: 350px;">DEFECT</th>
+                <th rowspan="2" style="min-width: 450px;">JOB DESCRIPTION</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">STATUS</th>
+                <th class="user-table-center" style="width: 100px;">Add2Cost</th>
+              </tr>
+              <tr>
+                <th class="user-table-center user-table-border-right">Add</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Dynamically populated by JS based on selection -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ── ADD COST SAVING MODAL ── -->
+  <div id="add-cost-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add to Cost Saving</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="add-cost-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form id="add-cost-form">
+        <div class="gnfc-modal-body plant-modal-body form-grid grid-cols-12 gap-y-16px">
+          
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Plant</label>
+            <input type="text" id="modal-plant" class="gnfc-modal-input" readonly style="background-color: var(--bg-secondary);">
+          </div>
+          
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Tag</label>
+            <input type="text" id="modal-tag" class="gnfc-modal-input" readonly style="background-color: var(--bg-secondary);">
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Cost Saving (in Rs)</label>
+            <input type="number" id="modal-cost-saving" class="gnfc-modal-input" placeholder="Enter cost saving amount..." required>
+          </div>
+
+          <div class="col-span-12">
+            <label class="gnfc-modal-label">Remark</label>
+            <textarea id="modal-remark" class="gnfc-modal-input" rows="3" placeholder="Enter saving remarks..."></textarea>
+          </div>
+
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="add-cost-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      
+      // Full database of monthly records grouped by Month-Year
+      const database = {
+        "5-2026": [ // June 2026
+          {
+            plant: "AMM",
+            tag: "CELL MOUSE",
+            defect: "NOT WORKING (By:HAS : 04/06/2026)",
+            jobDesc: "over",
+            status: "OVER",
+            rowspan: 1
+          },
+          {
+            plant: "ANITD1",
+            tag: "HIS 280 MOUSE.",
+            defect: "Right click is not working properly (By:HAS : 03/06/2026)",
+            jobDesc: "over",
+            status: "OVER",
+            rowspan: 7
+          },
+          {
+            plant: "ANITD1",
+            tag: "CA1 CARD",
+            defect: "REFURBISHMENT TO BE CARRIED OUT (By:HAS : 05/06/2026)",
+            jobDesc: "replace all ele. capacitors with new one.",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "ANITD1",
+            tag: "CA1 CARD",
+            defect: "REFURBISHMENT TO BE CARRIED OUT (By:HAS : 05/06/2026)",
+            jobDesc: "replace all ele. capacitors with new one.",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "ANITD1",
+            tag: "CA1 CARD",
+            defect: "REFURBISHMENT TO BE CARRIED OUT (By:HAS : 06/06/2026)",
+            jobDesc: "replace all electrolyte capacitors with new one.",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "ANITD1",
+            tag: "CA1 CARD",
+            defect: "REFURBISHMENT TO BE CARRIED OUT (By:HAS : 06/06/2026)",
+            jobDesc: "replace all electrolyte capacitors with new one.",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "ANITD1",
+            tag: "CA1 CARD",
+            defect: "REFURBISHMENT TO BE CARRIED OUT (By:HAS : 06/06/2026)",
+            jobDesc: "replace all electrolyte capacitors with new one.",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "ANITD1",
+            tag: "CA1 CARD",
+            defect: "REFURBISHMENT TO BE CARRIED OUT (By:HAS : 08/06/2026)",
+            jobDesc: "replace all electrolyte capacitors with new one.",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "BOILER",
+            tag: "PA SYSTEM",
+            defect: "Buffer Amplifier is not powering ON, to be checked (By:HAS : 03/06/2026)",
+            jobDesc: "repalce its capcitors, found now dc supply is o.k. still now no supply coming from transformer for the amplifier. job under progress.",
+            status: "U/P",
+            rowspan: 4
+          },
+          {
+            plant: "BOILER",
+            tag: "PA SYSTEM",
+            defect: "Buffer Amplifier is not powering ON, to be checked (By:HAS : 04/06/2026)",
+            jobDesc: "check its all components in cold condition found o.k. but transformer also not coming",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "BOILER",
+            tag: "test2",
+            defect: "test1 (By:ENG_TESTER : 09/06/2026)",
+            jobDesc: "test3",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "BOILER",
+            tag: "Test Item",
+            defect: "Scheduled Calibration (By:ENG_TESTER : 09/06/2026)",
+            jobDesc: "Test description",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "CLAB",
+            tag: "Battery Operated Sampling Pump",
+            defect: "Battery Not working (By:HAS : 04/06/2026)",
+            jobDesc: "replace the battery with new one.",
+            status: "OVER",
+            rowspan: 2
+          },
+          {
+            plant: "CLAB",
+            tag: "Heating Mantle",
+            defect: "Temperature is overshooting (By:HAS : 04/06/2026)",
+            jobDesc: "check & found its thermostatic is not working, replace the same with new one.",
+            status: "OVER",
+            rowspan: 0
+          },
+          {
+            plant: "INSTWS",
+            tag: "Test1",
+            defect: "Test3 (By:PMP : 03/06/2026)",
+            jobDesc: "over test",
+            status: "U/P",
+            rowspan: 1
+          },
+          {
+            plant: "NPP",
+            tag: "Braun speed module",
+            defect: "Not getting power ON to be check (By:HAS : 03/06/2026)",
+            jobDesc: "check & found its power regulator is get burst, replace the same with new one. also replace its filter capacitor, power on it and check it found it smps transformer not giving any response hence cannot repaired.",
+            status: "NOT REPAIRABLE",
+            rowspan: 1
+          }
+        ]
+      };
+
+      const renderReport = () => {
+        const month = $('#monthSelect').val();
+        const year = $('#yearSelect').val();
+        const key = `${month}-${year}`;
+        const monthText = $('#monthSelect option:selected').text().substring(0, 3);
+        
+        // Update header period text
+        $('#report-period-text').text(`${monthText} ${year}`);
+
+        const items = database[key] || [];
+        let html = "";
+
+        if (items.length === 0) {
+          html = `
+            <tr>
+              <td colspan="6" class="user-table-center user-table-secondary">No records found for the selected month and year.</td>
+            </tr>
+          `;
+        } else {
+          items.forEach(item => {
+            html += `<tr class="user-table-row">`;
+            
+            // Add rowspan-based Plant cell
+            if (item.rowspan > 0) {
+              html += `
+                <td rowspan="${item.rowspan}" class="user-table-center user-table-bold" style="vertical-align: middle; border-right: 1px solid var(--border-color); background-color: var(--card-bg);">
+                  ${item.plant}
+                </td>
+              `;
+            }
+
+            html += `
+              <td>${item.tag}</td>
+              <td>${item.defect}</td>
+              <td>${item.jobDesc}</td>
+              <td class="user-table-center">${item.status}</td>
+              <td class="user-table-center">
+                <button type="button" class="btn-add-cost" data-plant="${item.plant}" data-tag="${item.tag}">Add</button>
+              </td>
+            </tr>
+            `;
+          });
+        }
+
+        $('#reportTableBody').html(html);
+      };
+
+      // Modal Triggers
+      $(document).on('click', '.btn-add-cost', function () {
+        const plant = $(this).data('plant');
+        const tag = $(this).data('tag');
+
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `Do you want to add "${tag}" (${plant}) to Cost Saving?`,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, add it!',
+          cancelButtonText: 'No, cancel',
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary mr-10px',
+            cancelButton: 'gnfc-modal-btn gnfc-modal-btn-secondary'
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('#modal-plant').val(plant);
+            $('#modal-tag').val(tag);
+            $('#modal-cost-saving').val('');
+            $('#modal-remark').val('');
+
+            $('#add-cost-modal').addClass('is-open');
+          }
+        });
+      });
+
+      // Close modal
+      $(document).on('click', '[data-close-modal="add-cost-modal"]', function () {
+        $('#add-cost-modal').removeClass('is-open');
+      });
+
+      // Form submit handler
+      $('#add-cost-form').on('submit', function (e) {
+        e.preventDefault();
+        const plant = $('#modal-plant').val();
+        const tag = $('#modal-tag').val();
+        const cost = $('#modal-cost-saving').val();
+        const remark = $('#modal-remark').val();
+
+        $('#add-cost-modal').removeClass('is-open');
+
+        Swal.fire({
+          title: 'Success!',
+          text: `Successfully added ₹${cost} cost saving details for ${tag} (${plant}).`,
+          icon: 'success',
+          confirmButtonText: 'OK',
+          buttonsStyling: false,
+          customClass: {
+            confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary'
+          }
+        });
+      });
+
+      // Fetch button trigger
+      $('#btn-fetch-report').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          renderReport();
+        }, 1000);
+      });
+
+      // Initial render
+      renderReport();
+    });
+  </script>
+</body>
+
+</html>

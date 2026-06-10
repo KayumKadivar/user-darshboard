@@ -603,7 +603,7 @@
             const serialNo = $row.find('td').eq(3).find('.inws-split-bottom').text().trim();
             const defect = $row.find('td').eq(4).text().trim();
             const enteredBy = $row.find('td').eq(5).text().trim();
-            const inws-tech = $row.find('td').eq(6).text().trim();
+            const inwsTech = $row.find('td').eq(6).text().trim();
             const status = $row.find('td').eq(7).text().trim();
             const completed = $row.find('td').eq(8).text().trim();
             const remark = $row.find('td').eq(9).text().trim();
@@ -617,7 +617,7 @@
             $('#add-type').val('OTHER'); // Default type to OTHER
             $('#add-subtype').val(instName); // Subtype is instName in the legacy form
             $('#add-defect').val(defect);
-            $('#add-tech').val(tech);
+            $('#add-tech').val(inwsTech);
             $('#add-completed').val(completed);
             $('#add-status').val(status);
             $('#add-delivered').val(delivery);
@@ -630,13 +630,13 @@
             $('#btn-delete-job').hide();
           }
         }
-        $('#' + targetModal).addClass('iso-is-open');
+        $('#' + targetModal).addClass('is-open');
         $('body').css('overflow', 'hidden');
       });
 
       $(document).on('click', '[data-close-modal]', function() {
         const targetModal = $(this).data('close-modal');
-        $('#' + targetModal).removeClass('iso-is-open');
+        $('#' + targetModal).removeClass('is-open');
         $('body').css('overflow', '');
       });
 
@@ -654,7 +654,7 @@
           color: 'var(--typo-primary)'
         }).then((result) => {
           if (result.isConfirmed) {
-            $('#add-job-modal').removeClass('iso-is-open');
+            $('#add-job-modal').removeClass('is-open');
             $('body').css('overflow', '');
             Swal.fire({
               icon: 'success',
@@ -687,7 +687,7 @@
 
         // Reset and Close Modal
         $('#add-job-form')[0].reset();
-        $('#add-job-modal').removeClass('iso-is-open');
+        $('#add-job-modal').removeClass('is-open');
         $('body').css('overflow', '');
 
         Swal.fire({

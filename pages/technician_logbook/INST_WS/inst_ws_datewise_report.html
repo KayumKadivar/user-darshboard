@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Wise Report | GNFC</title>
+  <meta name="description" content="GNFC Historical Job Records Filtered by Date">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'datewise_report';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Date Wise Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,Date Wise Report:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-calendar-dots"></i>
+            SEARCH CRITERIA
+          </h2>
+        </div>
+        <div class="jt-filter-body">
+
+          <!-- Date Input -->
+          <div>
+            <label class="gnfc-modal-label">Select Date</label>
+            <input type="date" id="dateInput" class="gnfc-modal-input font-13px" value="2026-06-09">
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filter">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
+              Reset
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── REPORT CONTAINER ── -->
+      <div id="report-container" class="jt-table-card">
+
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-calendar"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Date-wise History Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">JobNo</th>
+                <th class="user-table-center" style="width: 280px;">Title</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Plant</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="user-table-center user-table-border-right">Job</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Static Sample Data -->
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold" style="background-color: var(--bg-secondary); padding: 8px 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">
+                  <i class="ph-fill ph-calendar-blank"></i> 09/06/2026
+                </td>
+              </tr>
+              <tr class="user-table-row row-highlight-yellow">
+                <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                <td class="user-table-center user-table-bold user-table-blue">17179</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold">Pressure Transmitter Calibration</div>
+                    <div class="user-table-secondary">Routine Check (By:ENG_TESTER : 09/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BOILER</td>
+                <td class="user-table-center">ALD</td>
+                <td>Perform multipoint calibration and check zero/span settings.</td>
+                <td class="user-table-center">ENG_TESTER</td>
+                <td class="user-table-center">OVER</td>
+                <td class="color-purple-remark">
+                  Calibration completed successfully. Found within tolerance. [written by : ENG_TESTER Date : 09/06/2026 ]
+                </td>
+              </tr>
+              <tr class="user-table-row row-highlight-yellow">
+                <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                <td class="user-table-center user-table-bold user-table-blue">17181</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold">Level Sensor Malfunction</div>
+                    <div class="user-table-secondary">Corrective Maintenance (By:ENG_TESTER : 09/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BOILER</td>
+                <td class="user-table-center">ALD</td>
+                <td>Sensor showing erratic reading under high pressure.</td>
+                <td class="user-table-center">ENG_TESTER</td>
+                <td class="user-table-center">OVER</td>
+                <td class="color-green-remark">
+                  Cleaned contacts and tightened terminal block. Fixed issue. [written by : PMP Date : 09/06/2026 ]
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                <td class="user-table-center user-table-bold user-table-blue">17205</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold">Flow Meter Diagnostics</div>
+                    <div class="user-table-secondary">Inspection (By:PBS : 09/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">AMM</td>
+                <td class="user-table-center">JMD</td>
+                <td>Flow meter reading fluctuating. Need to check impulse lines and manifold.</td>
+                <td class="user-table-center">JMD</td>
+                <td class="user-table-center">U/P</td>
+                <td>
+                  Found minor leak in manifold. Parts ordered. [written by : JMD Date : 09/06/2026 ]
+                </td>
+              </tr>
+              <tr class="user-table-date">
+                <td colspan="9" class="user-table-bold" style="background-color: var(--bg-secondary); padding: 8px 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">
+                  <i class="ph-fill ph-calendar-blank"></i> 06/06/2026
+                </td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">4</td>
+                <td class="user-table-center user-table-bold user-table-blue">17160</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold">Valve Positioner Test</div>
+                    <div class="user-table-secondary">Overhaul (By:HAS : 06/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">INSTWS</td>
+                <td class="user-table-center">ALD</td>
+                <td>Overhaul and stroke test of control valve.</td>
+                <td class="user-table-center">PMP</td>
+                <td class="user-table-center">U/P</td>
+                <td>Waiting for spare parts. Delay of 2 days expected.</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary user-table-bold">5</td>
+                <td class="user-table-center user-table-bold user-table-blue">17165</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold">Temperature Controller Replacement</div>
+                    <div class="user-table-secondary">Breakdown (By:HAS : 06/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">UREA</td>
+                <td class="user-table-center">BSU</td>
+                <td>Controller display blank. Replaced with new unit from stores and configured parameters.</td>
+                <td class="user-table-center">BSU</td>
+                <td class="user-table-center">OVER</td>
+                <td class="color-green-remark">
+                  System back online and running normally. [written by : BSU Date : 06/06/2026 ]
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      
+      const resetView = () => {
+        $('#dateInput').val('');
+      };
+
+      // Event Listeners
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+        }, 800); // Simulated delay for visual effect
+      });
+      
+      $('#btn-reset-filter').on('click', resetView);
+    });
+  </script>
+</body>
+
+</html>
