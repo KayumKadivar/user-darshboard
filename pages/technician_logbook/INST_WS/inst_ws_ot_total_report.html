@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OT Total Report | GNFC</title>
+  <meta name="description" content="GNFC Instrument Workshop Overtime Total Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'ot_statement';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="OT Total Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,OT Statement:inst_ws_ot_statement.html,OT Total Report:active"
+      data-back="inst_ws_ot_statement.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── REPORT CONTAINER ── -->
+      <div id="report-container" class="jt-table-card">
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-file-text color-blue"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Over Time Total Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-32px flex flex-col gap-24px">
+          <div class="border-bottom-dark-border pb-16px">
+            <p class="font-18px color-primary fw-700">
+              Over Time Summary for the Month of : 
+              <span id="tot-month-year" class="color-blue ml-8px"></span>
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-24px py-16px border-bottom-dark-border">
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label block font-12px color-secondary">TOTAL PERSONS</label>
+              <div id="tot-persons" class="font-22px fw-800 color-blue"></div>
+            </div>
+
+            <div class="flex flex-col gap-8px">
+              <label class="gnfc-modal-label block font-12px color-secondary">GRAND TOTAL TIME</label>
+              <div class="font-18px color-primary fw-600">
+                <span id="tot-hr" class="color-blue fw-800 font-22px"></span> Hr : 
+                <span id="tot-min" class="color-blue fw-800 font-22px"></span> Min
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex justify-end items-center gap-16px pt-16px">
+            <button type="button" class="jt-btn-primary px-32px h-40px" onclick="window.location.href='inst_ws_ot_statement.html'">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      // Parse parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const month = urlParams.get('month') || '--';
+      const year = urlParams.get('year') || '--';
+      const hrs = urlParams.get('hrs') || '0';
+      const mins = urlParams.get('mins') || '0';
+      const persons = urlParams.get('persons') || '0';
+
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      const monthIdx = parseInt(month, 10) - 1;
+      const monthName = monthNames[monthIdx] || month;
+
+      $('#tot-month-year').text(`${monthName} ${year}`);
+      $('#tot-persons').text(persons);
+      $('#tot-hr').text(hrs);
+      $('#tot-min').text(mins);
+    });
+  </script>
+</body>
+
+</html>

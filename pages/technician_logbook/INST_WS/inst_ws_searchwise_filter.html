@@ -115,8 +115,7 @@
             <thead>
               <tr>
                 <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
-                <th rowspan="2" class="user-table-center" style="width: 100px;">Area</th>
-                <th class="user-table-center" style="width: 130px;">LoopNo</th>
+                <th class="user-table-center" style="width: 130px;">Area</th>
                 <th class="user-table-center" style="width: 280px;">Job</th>
                 <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
                 <th rowspan="2" style="min-width: 400px;">Description</th>
@@ -125,7 +124,7 @@
                 <th rowspan="2" class="user-table-center" style="min-width: 300px;">Remarks</th>
               </tr>
               <tr>
-                <th class="user-table-center">TagNo</th>
+                <th class="user-table-center">JobNo</th>
                 <th class="user-table-center">TypeOfJob</th>
                 <th class="user-table-center user-table-border-right">Eng</th>
               </tr>
@@ -448,7 +447,7 @@
         if (filtered.length === 0) {
           html = `
             <tr>
-              <td colspan="9" class="user-table-center user-table-secondary">No records found matching "${keyword}" for Year ${yearInt}.</td>
+              <td colspan="8" class="user-table-center user-table-secondary">No records found matching "${keyword}" for Year ${yearInt}.</td>
             </tr>
           `;
         } else {
@@ -465,7 +464,7 @@
             // Add Date group header row
             html += `
               <tr class="user-table-date">
-                <td colspan="9" class="user-table-bold" style="background-color: var(--bg-secondary); padding: 8px 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">
+                <td colspan="8" class="user-table-bold" style="background-color: var(--bg-secondary); padding: 8px 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">
                   <i class="ph-fill ph-calendar-blank"></i> ${date}
                 </td>
               </tr>
@@ -479,10 +478,9 @@
               html += `
                 <tr class="user-table-row ${highlightClass}">
                   <td class="user-table-center user-table-secondary user-table-bold">${item.sr}</td>
-                  <td class="user-table-center">${item.area}</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <div>${item.loopNo || ''}</div>
+                      <div>${item.area}</div>
                       <div class="user-table-secondary user-table-blue">${item.tagNo}</div>
                     </div>
                   </td>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OT Hours Report | GNFC</title>
+  <meta name="description" content="GNFC Instrument Workshop Overtime Hours Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'ot_hours';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="OT Hours Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,OT Hours:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── SEARCH CRITERIA ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            OT HOURS REPORT SEARCH
+          </h2>
+        </div>
+        <div class="jt-filter-body gap-16px">
+          <!-- Start Date -->
+          <div class="flex-1">
+            <label class="gnfc-modal-label">Start Date</label>
+            <input type="date" id="startDate" class="gnfc-modal-input" value="2006-01-01">
+          </div>
+
+          <!-- End Date -->
+          <div class="flex-1">
+            <label class="gnfc-modal-label">End Date</label>
+            <input type="date" id="endDate" class="gnfc-modal-input" value="2026-06-15">
+          </div>
+
+          <!-- Select Name -->
+          <div class="flex-1">
+            <label class="gnfc-modal-label">Select Name</label>
+            <select id="techSelect" class="gnfc-modal-input">
+              <option value="ALL">ALL</option>
+              <option value="ALD">ALD</option>
+              <option value="HAS">HAS</option>
+              <option value="BSU">BSU</option>
+              <option value="PMP">PMP</option>
+              <option value="ENG_TESTER">ENG_TESTER</option>
+              <option value="MHT">MHT</option>
+            </select>
+          </div>
+
+          <!-- Actions -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filter">
+              Apply
+            </button>
+            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TABLE CARD ── -->
+      <div class="jt-table-card">
+        <div class="jt-report-header justify-between">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-clock"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">O.T. Hours Report</h3>
+            </div>
+          </div>
+          <div class="jt-report-actions">
+            <button type="button" class="jt-btn-primary jt-btn-sm" id="btn-monthly-statement">
+              <i class="ph-bold ph-file-text"></i> Monthly Statement
+            </button>
+          </div>
+        </div>
+
+        <!-- Table Wrapper -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th class="user-table-center w-120px">Date</th>
+                <th class="user-table-center w-100px">Tech</th>
+                <th class="user-table-center w-200px">Tag No</th>
+                <th class="user-table-center w-120px">Type Of Job</th>
+                <th class="user-table-left">Description</th>
+                <th class="user-table-center w-100px">OT Hour</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Static Records for INST WS -->
+              <tr class="user-table-row" data-tech="ENG_TESTER">
+                <td class="user-table-center user-table-secondary">09/06/2026</td>
+                <td class="user-table-center user-table-blue">ENG_TESTER</td>
+                <td class="user-table-center user-table-secondary">17179</td>
+                <td class="user-table-center">CALIBRATION</td>
+                <td class="user-table-primary">Routine Calibration check done. zero check done.</td>
+                <td class="user-table-center user-table-primary ot-hour-cell">2:0</td>
+              </tr>
+              <tr class="user-table-row" data-tech="HAS">
+                <td class="user-table-center user-table-secondary">06/06/2026</td>
+                <td class="user-table-center user-table-blue">HAS</td>
+                <td class="user-table-center user-table-secondary">17160</td>
+                <td class="user-table-center">VALVE TEST</td>
+                <td class="user-table-primary">Valve positioner test and overhaul stroke check.</td>
+                <td class="user-table-center user-table-primary ot-hour-cell">3:0</td>
+              </tr>
+              <tr class="user-table-row" data-tech="BSU">
+                <td class="user-table-center user-table-secondary">06/06/2026</td>
+                <td class="user-table-center user-table-blue">BSU</td>
+                <td class="user-table-center user-table-secondary">17165</td>
+                <td class="user-table-center">REPLACEMENT</td>
+                <td class="user-table-primary">Temperature controller replacement at urea block.</td>
+                <td class="user-table-center user-table-primary ot-hour-cell">1:0</td>
+              </tr>
+              <tr class="user-table-row" data-tech="MHT">
+                <td class="user-table-center user-table-secondary">14/03/2009</td>
+                <td class="user-table-center user-table-blue">MHT</td>
+                <td class="user-table-center user-table-secondary">5108</td>
+                <td class="user-table-center">REPAIR</td>
+                <td class="user-table-primary">Annunciator card repaired by replacing capacitors.</td>
+                <td class="user-table-center user-table-primary ot-hour-cell">3:0</td>
+              </tr>
+            </tbody>
+            <tfoot class="user-table-tfoot">
+              <tr>
+                <td colspan="5" class="text-right px-20px py-12px">TOTAL OT HOURS:</td>
+                <td class="user-table-center py-12px" id="total-ot-display">9:0</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      
+      const parseDateDMY = (dateStr) => {
+        const parts = dateStr.split('/');
+        if (parts.length !== 3) return null;
+        return new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+      };
+
+      const calculateTotalOT = () => {
+        let totalMinutes = 0;
+        $('#reportTableBody tr:visible').each(function() {
+          const timeStr = $(this).find('.ot-hour-cell').text().trim();
+          if (timeStr && timeStr.includes(':')) {
+            const parts = timeStr.split(':');
+            const hh = parseInt(parts[0], 10) || 0;
+            const mm = parseInt(parts[1], 10) || 0;
+            totalMinutes += (hh * 60) + mm;
+          }
+        });
+        
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        $('#total-ot-display').text(`${hours}:${String(minutes).padStart(1, '0')}`);
+      };
+
+      const filterReport = () => {
+        const tech = $('#techSelect').val();
+        const startDateVal = $('#startDate').val();
+        const endDateVal = $('#endDate').val();
+
+        // Remove no records row if exists
+        $('#no-records-row').remove();
+
+        const startDate = startDateVal ? new Date(startDateVal) : null;
+        const endDate = endDateVal ? new Date(endDateVal) : null;
+
+        let visibleRecordsCount = 0;
+
+        $('#reportTableBody tr').each(function () {
+          const rowDateStr = $(this).find('td:nth-child(1)').text(); // DD/MM/YYYY
+          const rowTech = $(this).attr('data-tech');
+
+          const rowDate = parseDateDMY(rowDateStr);
+          if (!rowDate) return;
+
+          let isVisible = true;
+
+          if (tech !== 'ALL' && rowTech !== tech) isVisible = false;
+          if (startDate && rowDate < startDate) isVisible = false;
+          if (endDate && rowDate > endDate) isVisible = false;
+
+          if (isVisible) {
+            $(this).show();
+            visibleRecordsCount++;
+          } else {
+            $(this).hide();
+          }
+        });
+
+        calculateTotalOT();
+
+        // If no records are visible, append "No records found"
+        if (visibleRecordsCount === 0) {
+          $('#reportTableBody').append(`
+            <tr id="no-records-row">
+              <td colspan="6" class="user-table-center user-table-secondary" style="padding: 24px;">No records found for the selected criteria.</td>
+            </tr>
+          `);
+        }
+      };
+
+      const resetView = () => {
+        $('#startDate').val('2006-01-01');
+        $('#endDate').val('2026-06-15');
+        $('#techSelect').val('ALL');
+        filterReport();
+      };
+
+      // Open Monthly Statement Modal
+      $('#btn-monthly-statement').on('click', function () {
+        const startDateVal = $('#startDate').val();
+        const endDateVal = $('#endDate').val();
+        const totalDisplay = $('#total-ot-display').text();
+
+        const fmt = (dStr) => {
+          if (!dStr) return '-';
+          const p = dStr.split('-');
+          if (p.length !== 3) return dStr;
+          return `${p[2]}/${p[1]}/${p[0]}`;
+        };
+
+        $('#ms-duration').text(`${fmt(startDateVal)} To ${fmt(endDateVal)}`);
+        $('#ms-total-hours').text(totalDisplay.replace(':', ' : '));
+        $('#ms-reason').val('');
+
+        $('#monthly-statement-modal').addClass('is-open');
+      });
+
+      // Modal close logic
+      $('[data-close-modal]').on('click', function() {
+        $(this).closest('.gnfc-modal-overlay').removeClass('is-open');
+      });
+      
+      // Close modal on outside click
+      $('.gnfc-modal-overlay').on('mousedown', function(e) {
+        if ($(e.target).hasClass('gnfc-modal-overlay')) {
+          $(this).removeClass('is-open');
+        }
+      });
+
+      // Export Monthly Statement logic
+      $('#btn-export').on('click', function () {
+        const reason = $('#ms-reason').val().trim();
+        if (!reason) {
+          Swal.fire({
+            title: 'Reason Required',
+            text: 'Please enter a reason before exporting.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary'
+            }
+          });
+          return;
+        }
+
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          Swal.fire({
+            title: 'Export Successful!',
+            text: 'Monthly OT Statement PDF has been generated and downloaded.',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary'
+            }
+          }).then(() => {
+            $('#monthly-statement-modal').removeClass('is-open');
+          });
+        }, 1200);
+      });
+
+      // Event Listeners
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          filterReport();
+        }, 600);
+      });
+
+      $('#btn-reset-filter').on('click', resetView);
+
+      // Initial filter run
+      filterReport();
+    });
+  </script>
+
+  <!-- Monthly OT Statement Modal -->
+  <div id="monthly-statement-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">
+          <i class="ph-fill ph-file-text mr-8px"></i> Monthly OT Statement
+        </h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="monthly-statement-modal" aria-label="Close modal">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <div class="gnfc-modal-body gnfc-modal-body--tight">
+        <div class="flex flex-col gap-24px">
+          <div class="text-center border-bottom-dark-border pb-16px">
+            <p class="font-18px color-secondary fw-700">
+              Duration: 
+              <span id="ms-duration" class="color-blue fw-800 ml-8px"></span>
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-24px py-16px border-bottom-dark-border">
+            <div class="flex flex-col gap-4px">
+              <label class="gnfc-modal-label block font-12px color-secondary">PLANT</label>
+              <div class="font-20px fw-800 color-primary">INSTWS</div>
+            </div>
+
+            <div class="flex flex-col gap-4px text-right">
+              <label class="gnfc-modal-label block font-12px color-secondary">TOTAL HOURS</label>
+              <div id="ms-total-hours" class="font-22px fw-800 color-blue"></div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label" for="ms-reason">REASON / REMARK:</label>
+            <input type="text" id="ms-reason" class="gnfc-modal-input w-full" placeholder="Enter reason for OT statement...">
+          </div>
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer">
+        <button type="button" class="jt-btn-secondary" data-close-modal="monthly-statement-modal">Cancel</button>
+        <button type="button" class="jt-btn-primary" id="btn-export">
+          <i class="ph-bold ph-export mr-8px"></i> EXPORT PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

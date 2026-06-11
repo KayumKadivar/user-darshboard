@@ -63,43 +63,32 @@
         </div>
         <div class="jt-filter-body">
 
-          <!-- Job Input with Dual Search/Select Logic -->
           <div>
             <label class="gnfc-modal-label">Job Number</label>
-            <div class="flex items-center gap-8px">
-              <input type="text" id="jobNoInput" placeholder="Search Job Number..."
-                class="gnfc-modal-input font-13px uppercase flex-1" value="">
-              <div class="flex-1">
-                <select id="jobNoSelect" class="gnfc-modal-input">
-                  <option value="">-- Select --</option>
-                  <option value="17179">17179</option>
-                  <option value="17181">17181</option>
-                  <option value="17163">17163</option>
-                  <option value="15319">15319</option>
-                  <option value="15348">15348</option>
-                  <option value="15630">15630</option>
-                  <option value="15592">15592</option>
-                  <option value="15674">15674</option>
-                </select>
-              </div>
-            </div>
+            <input type="text" id="jobNoInput" placeholder="Search Job Number..."
+              class="gnfc-modal-input uppercase" value="">
           </div>
 
-          <!-- Action Buttons -->
-          <div class="jt-filter-btn">
-            <button type="button" class="jt-btn-primary" id="btn-apply-filter">
-              <i class="ph-bold ph-lightning"></i> APPLY
-            </button>
-            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
-              Reset
-            </button>
+          <div>
+            <label class="gnfc-modal-label">Job Select</label>
+            <select id="jobNoSelect" class="gnfc-modal-input">
+              <option value="">-- Select --</option>
+              <option value="17179">17179</option>
+              <option value="17181">17181</option>
+              <option value="17163">17163</option>
+              <option value="15319">15319</option>
+              <option value="15348">15348</option>
+              <option value="15630">15630</option>
+              <option value="15592">15592</option>
+              <option value="15674">15674</option>
+            </select>
           </div>
 
         </div>
       </div>
 
       <!-- ── REPORT CONTAINER ── -->
-      <div id="report-container" class="jt-table-card" style="display: none;">
+      <div id="report-container" class="jt-table-card">
 
         <div class="jt-report-header">
           <div class="jt-report-title">
@@ -130,7 +119,158 @@
               </tr>
             </thead>
             <tbody id="reportTableBody">
-              <!-- Dynamically populated by JS based on select filter -->
+              <!-- Row 1: 15319 -->
+              <tr class="user-table-row" data-job-no="15319">
+                <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                <td class="user-table-center">15319</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>FTA for ESD</div>
+                    <div class="user-table-secondary">Channel check and calibration</div>
+                  </div>
+                </td>
+                <td class="user-table-center">AMM</td>
+                <td class="user-table-center">ALD</td>
+                <td>Channel 1 and 2 are faulty.</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">PENDING</td>
+                <td>
+                  Pending for component replacement. [written by : ALD Date : 31/08/2023 ]
+                </td>
+              </tr>
+              <!-- Row 2: 15348 -->
+              <tr class="user-table-row" data-job-no="15348">
+                <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                <td class="user-table-center">15348</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>TRICONEX DI MODULE</div>
+                    <div class="user-table-secondary">Faulty point diagnosis</div>
+                  </div>
+                </td>
+                <td class="user-table-center">AMM</td>
+                <td class="user-table-center">WM</td>
+                <td>REPAIRED AT INST WORKSHOP 12 NOS PVD1352 REPLACED AFTER THAT EXTERNAL STATUS MISSMATCH ERRORS.</td>
+                <td class="user-table-center">WM</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  Module successfully repaired and tested. [written by : WM Date : 19/10/2023 ]
+                </td>
+              </tr>
+              <!-- Row 3: 15592 -->
+              <tr class="user-table-row" data-job-no="15592">
+                <td class="user-table-center user-table-secondary user-table-bold">3</td>
+                <td class="user-table-center">15592</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>32 channel DI card</div>
+                    <div class="user-table-secondary">Triconex DI card error</div>
+                  </div>
+                </td>
+                <td class="user-table-center">AMM</td>
+                <td class="user-table-center">BDR</td>
+                <td>In Triconex DI card, Channel no. 32 found faulty.</td>
+                <td class="user-table-center">BDR</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  Repaired bad point on DI Card. [written by : BDR Date : 08/06/2024 ]
+                </td>
+              </tr>
+              <!-- Row 4: 15630 -->
+              <tr class="user-table-row" data-job-no="15630">
+                <td class="user-table-center user-table-secondary user-table-bold">4</td>
+                <td class="user-table-center">15630</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>16-channel AI card</div>
+                    <div class="user-table-secondary">Card failure troubleshooting</div>
+                  </div>
+                </td>
+                <td class="user-table-center">AMM</td>
+                <td class="user-table-center">PRP</td>
+                <td>Complete module faulty appeared.</td>
+                <td class="user-table-center">PRP</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  Replaced AI card with new spare. [written by : PRP Date : 27/07/2024 ]
+                </td>
+              </tr>
+              <!-- Row 5: 15674 -->
+              <tr class="user-table-row" data-job-no="15674">
+                <td class="user-table-center user-table-secondary user-table-bold">5</td>
+                <td class="user-table-center">15674</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>ABB SYCON BOARD</div>
+                    <div class="user-table-secondary">Analyzer system issue</div>
+                  </div>
+                </td>
+                <td class="user-table-center">AMM</td>
+                <td class="user-table-center">ALD</td>
+                <td>SYCON BOARD found faulty due to which analyzer not working.</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">U/P</td>
+                <td>
+                  Analyzer board sent for servicing. [written by : ALD Date : 31/08/2024 ]
+                </td>
+              </tr>
+              <!-- Row 6: 17163 -->
+              <tr class="user-table-row" data-job-no="17163">
+                <td class="user-table-center user-table-secondary user-table-bold">6</td>
+                <td class="user-table-center">17163</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>DELL MOUSE</div>
+                    <div class="user-table-secondary">NOT WORKING. (By:HAS : 04/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">AMM</td>
+                <td class="user-table-center">ALD</td>
+                <td>over (05/06/2026)</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  Replacement given. [written by : HAS Date : 04/06/2026 ]
+                </td>
+              </tr>
+              <!-- Row 7: 17179 -->
+              <tr class="user-table-row row-highlight-yellow" data-job-no="17179">
+                <td class="user-table-center user-table-secondary user-table-bold">7</td>
+                <td class="user-table-center">17179</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>test2</div>
+                    <div class="user-table-secondary">test1 (By:ENG_TESTER : 09/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BOILER</td>
+                <td class="user-table-center">ALD</td>
+                <td>test3</td>
+                <td class="user-table-center">ENG_TESTER</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  Test Remarks 4 [written by : ENG_TESTER Date : 09/06/2026 ]
+                </td>
+              </tr>
+              <!-- Row 8: 17181 -->
+              <tr class="user-table-row" data-job-no="17181">
+                <td class="user-table-center user-table-secondary user-table-bold">8</td>
+                <td class="user-table-center">17181</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Test Item</div>
+                    <div class="user-table-secondary">Scheduled Calibration (By:ENG_TESTER : 09/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BOILER</td>
+                <td class="user-table-center">ALD</td>
+                <td>Test description</td>
+                <td class="user-table-center">ENG_TESTER</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  test [written by : PMP Date : 09/06/2026 ]
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -141,170 +281,6 @@
 
   <script>
     $(document).ready(function () {
-      
-      // Mock data store mapping job numbers to row HTML strings
-      const jobData = {
-        "17179": `
-          <tr class="user-table-row row-highlight-yellow">
-            <td class="user-table-center user-table-secondary user-table-bold">1</td>
-            <td class="user-table-center user-table-bold user-table-blue">17179</td>
-            <td>
-              <div class="user-table-cell-stack">
-                <div class="user-table-bold">test2</div>
-                <div class="user-table-secondary">test1 (By:ENG_TESTER : 09/06/2026)</div>
-              </div>
-            </td>
-            <td class="user-table-center">BOILER</td>
-            <td class="user-table-center">ALD</td>
-            <td>test3</td>
-            <td class="user-table-center">ENG_TESTER</td>
-            <td class="user-table-center">OVER</td>
-            <td class="color-purple-remark">
-              Test Remarks 4 [written by : ENG_TESTER Date : 09/06/2026 ]
-            </td>
-          </tr>
-        `,
-        "17181": `
-          <tr class="user-table-row">
-            <td class="user-table-center user-table-secondary user-table-bold">1</td>
-            <td class="user-table-center user-table-bold user-table-blue">17181</td>
-            <td>
-              <div class="user-table-cell-stack">
-                <div class="user-table-bold">Test Item</div>
-                <div class="user-table-secondary">Scheduled Calibration (By:ENG_TESTER : 09/06/2026)</div>
-              </div>
-            </td>
-            <td class="user-table-center">BOILER</td>
-            <td class="user-table-center">ALD</td>
-            <td>Test description</td>
-            <td class="user-table-center">ENG_TESTER</td>
-            <td class="user-table-center">OVER</td>
-            <td class="color-green-remark">
-              test [written by : PMP Date : 09/06/2026 ]
-            </td>
-          </tr>
-        `,
-        "17163": `
-          <tr class="user-table-row">
-            <td class="user-table-center user-table-secondary user-table-bold">1</td>
-            <td class="user-table-center user-table-bold user-table-blue">17163</td>
-            <td>
-              <div class="user-table-cell-stack">
-                <div class="user-table-bold">DELL MOUSE</div>
-                <div class="user-table-secondary">NOT WORKING. (By:HAS : 04/06/2026)</div>
-              </div>
-            </td>
-            <td class="user-table-center">AMM</td>
-            <td class="user-table-center">ALD</td>
-            <td>over (05/06/2026)</td>
-            <td class="user-table-center">ALD</td>
-            <td class="user-table-center">OVER</td>
-            <td class="color-purple-remark">
-              Replacement given. [written by : HAS Date : 04/06/2026 ]
-            </td>
-          </tr>
-        `,
-        "15319": `
-          <tr class="user-table-row">
-            <td class="user-table-center user-table-secondary user-table-bold">1</td>
-            <td class="user-table-center user-table-bold user-table-blue">15319</td>
-            <td>
-              <div class="user-table-cell-stack">
-                <div class="user-table-bold">FTA for ESD</div>
-                <div class="user-table-secondary">Channel check and calibration</div>
-              </div>
-            </td>
-            <td class="user-table-center">AMM</td>
-            <td class="user-table-center">ALD</td>
-            <td>Channel 1 and 2 are faulty.</td>
-            <td class="user-table-center">ALD</td>
-            <td class="user-table-center">PENDING</td>
-            <td class="color-purple-remark">
-              Pending for component replacement. [written by : ALD Date : 31/08/2023 ]
-            </td>
-          </tr>
-        `,
-        "15348": `
-          <tr class="user-table-row">
-            <td class="user-table-center user-table-secondary user-table-bold">1</td>
-            <td class="user-table-center user-table-bold user-table-blue">15348</td>
-            <td>
-              <div class="user-table-cell-stack">
-                <div class="user-table-bold">TRICONEX DI MODULE</div>
-                <div class="user-table-secondary">Faulty point diagnosis</div>
-              </div>
-            </td>
-            <td class="user-table-center">AMM</td>
-            <td class="user-table-center">WM</td>
-            <td>REPAIRED AT INST WORKSHOP 12 NOS PVD1352 REPLACED AFTER THAT EXTERNAL STATUS MISSMATCH ERRORS.</td>
-            <td class="user-table-center">WM</td>
-            <td class="user-table-center">OVER</td>
-            <td class="color-green-remark">
-              Module successfully repaired and tested. [written by : WM Date : 19/10/2023 ]
-            </td>
-          </tr>
-        `,
-        "15630": `
-          <tr class="user-table-row">
-            <td class="user-table-center user-table-secondary user-table-bold">1</td>
-            <td class="user-table-center user-table-bold user-table-blue">15630</td>
-            <td>
-              <div class="user-table-cell-stack">
-                <div class="user-table-bold">16-channel AI card</div>
-                <div class="user-table-secondary">Card failure troubleshooting</div>
-              </div>
-            </td>
-            <td class="user-table-center">AMM</td>
-            <td class="user-table-center">PRP</td>
-            <td>Complete module faulty appeared.</td>
-            <td class="user-table-center">PRP</td>
-            <td class="user-table-center">OVER</td>
-            <td class="color-purple-remark">
-              Replaced AI card with new spare. [written by : PRP Date : 27/07/2024 ]
-            </td>
-          </tr>
-        `,
-        "15592": `
-          <tr class="user-table-row">
-            <td class="user-table-center user-table-secondary user-table-bold">1</td>
-            <td class="user-table-center user-table-bold user-table-blue">15592</td>
-            <td>
-              <div class="user-table-cell-stack">
-                <div class="user-table-bold">32 channel DI card</div>
-                <div class="user-table-secondary">Triconex DI card error</div>
-              </div>
-            </td>
-            <td class="user-table-center">AMM</td>
-            <td class="user-table-center">BDR</td>
-            <td>In Triconex DI card, Channel no. 32 found faulty.</td>
-            <td class="user-table-center">BDR</td>
-            <td class="user-table-center">OVER</td>
-            <td class="color-green-remark">
-              Repaired bad point on DI Card. [written by : BDR Date : 08/06/2024 ]
-            </td>
-          </tr>
-        `,
-        "15674": `
-          <tr class="user-table-row">
-            <td class="user-table-center user-table-secondary user-table-bold">1</td>
-            <td class="user-table-center user-table-bold user-table-blue">15674</td>
-            <td>
-              <div class="user-table-cell-stack">
-                <div class="user-table-bold">ABB SYCON BOARD</div>
-                <div class="user-table-secondary">Analyzer system issue</div>
-              </div>
-            </td>
-            <td class="user-table-center">AMM</td>
-            <td class="user-table-center">ALD</td>
-            <td>SYCON BOARD found faulty due to which analyzer not working.</td>
-            <td class="user-table-center">ALD</td>
-            <td class="user-table-center">U/P</td>
-            <td class="color-purple-remark">
-              Analyzer board sent for servicing. [written by : ALD Date : 31/08/2024 ]
-            </td>
-          </tr>
-        `
-      };
 
       // --- Autocomplete Helper logic for Job Number ---
       function initJobNoAutocomplete(inputSelector, selectSelector, onMatch) {
@@ -417,58 +393,59 @@
             if (onMatch) onMatch(val);
           } else {
             $input.val('');
+            if (onMatch) onMatch('');
           }
         });
       }
 
-      // Initialize Autocomplete
-      initJobNoAutocomplete('#jobNoInput', '#jobNoSelect');
+      function updateSerialNumbers() {
+        let count = 1;
+        $('#reportTableBody tr:visible').not('.empty-row').each(function() {
+          $(this).find('td').first().text(count++);
+        });
+      }
 
-      const showReport = () => {
-        const jobNo = $('#jobNoInput').val().trim();
-        if (!jobNo) {
-          Swal.fire({
-            title: 'Error',
-            text: 'Please select or enter a valid Job Number.',
-            icon: 'warning',
-            confirmButtonText: 'OK',
-            buttonsStyling: false,
-            customClass: {
-              confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary'
+      function filterTable() {
+        const inputVal = $('#jobNoInput').val().trim();
+        if (!inputVal) {
+          $('#reportTableBody tr').show();
+          $('#no-records-row').remove();
+        } else {
+          let hasAnyMatch = false;
+          $('#reportTableBody tr').not('.empty-row').each(function() {
+            const rowJobNo = $(this).attr('data-job-no') || '';
+            if (rowJobNo.includes(inputVal)) {
+              $(this).show();
+              hasAnyMatch = true;
+            } else {
+              $(this).hide();
             }
           });
-          return;
+          
+          $('#no-records-row').remove();
+          if (!hasAnyMatch) {
+            $('#reportTableBody').append(`
+              <tr id="no-records-row" class="empty-row">
+                <td colspan="9" class="user-table-center user-table-secondary" style="padding: 24px;">No records found for Job Number: ${inputVal}</td>
+              </tr>
+            `);
+          }
         }
+        updateSerialNumbers();
+      }
 
-        const matchedRow = jobData[jobNo];
-        if (matchedRow) {
-          $('#reportTableBody').html(matchedRow);
-          $('#report-container').stop().hide().fadeIn(300);
-        } else {
-          $('#reportTableBody').html(`
-            <tr>
-              <td colspan="9" class="user-table-center user-table-secondary">No records found for Job Number: ${jobNo}</td>
-            </tr>
-          `);
-          $('#report-container').stop().hide().fadeIn(300);
-        }
-      };
+      // Set initial serial numbers
+      updateSerialNumbers();
 
-      const resetView = () => {
-        $('#jobNoInput').val('').removeClass('is-invalid-tag');
-        $('#jobNoSelect').val('');
-        $('#report-container').fadeOut(200);
-      };
-
-      // Event Listeners
-      $('#btn-apply-filter').on('click', function () {
-        $('#data-loader-overlay').removeClass('hidden');
-        setTimeout(() => {
-          $('#data-loader-overlay').addClass('hidden');
-          showReport();
-        }, 1200);
+      // Initialize Autocomplete with filter callback
+      initJobNoAutocomplete('#jobNoInput', '#jobNoSelect', function(val) {
+        filterTable();
       });
-      $('#btn-reset-filter').on('click', resetView);
+
+      // Filter on manual input typing
+      $('#jobNoInput').on('input', function() {
+        filterTable();
+      });
     });
   </script>
 </body>

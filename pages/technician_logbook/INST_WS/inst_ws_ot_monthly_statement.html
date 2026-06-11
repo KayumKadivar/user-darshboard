@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monthly OT Statement | GNFC</title>
+  <meta name="description" content="GNFC Instrument Workshop Monthly Overtime Statement Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'ot_hours';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Exporting Statement...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Monthly OT Statement"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,OT Hours:inst_ws_ot_hours.html,Monthly Statement:active"
+      data-back="inst_ws_ot_hours.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── REPORT CONTAINER ── -->
+      <div id="report-container" class="jt-table-card">
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-file-text color-blue"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Monthly OT Statement Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-32px flex flex-col gap-24px">
+          <div class="text-center border-bottom-dark-border pb-16px">
+            <p class="font-18px color-secondary fw-700">
+              Duration: 
+              <span id="ms-duration" class="color-blue fw-800 ml-8px"></span>
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-24px py-16px border-bottom-dark-border">
+            <div class="flex flex-col gap-4px">
+              <label class="gnfc-modal-label block font-12px color-secondary">PLANT</label>
+              <div class="font-20px fw-800 color-primary">INSTWS</div>
+            </div>
+
+            <div class="flex flex-col gap-4px text-right">
+              <label class="gnfc-modal-label block font-12px color-secondary">TOTAL HOURS</label>
+              <div id="ms-total-hours" class="font-22px fw-800 color-blue"></div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="gnfc-modal-label" for="ms-reason">REASON / REMARK:</label>
+            <input type="text" id="ms-reason" class="gnfc-modal-input w-full" placeholder="Enter reason for OT statement...">
+          </div>
+
+          <!-- Actions -->
+          <div class="flex justify-end items-center gap-16px pt-16px">
+            <button type="button" class="jt-btn-reset px-24px h-40px" onclick="window.location.href='inst_ws_ot_hours.html'">
+              Cancel
+            </button>
+            <button type="button" class="jt-btn-primary px-32px h-40px" id="btn-export">
+              <i class="ph-bold ph-export mr-8px"></i> EXPORT PDF
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      // Parse parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const start = urlParams.get('start') || '';
+      const end = urlParams.get('end') || '';
+      const total = urlParams.get('total') || '0:0';
+
+      const fmt = (dStr) => {
+        if (!dStr) return '-';
+        const p = dStr.split('-');
+        if (p.length !== 3) return dStr;
+        return `${p[2]}/${p[1]}/${p[0]}`;
+      };
+
+      $('#ms-duration').text(`${fmt(start)} To ${fmt(end)}`);
+      $('#ms-total-hours').text(total.replace(':', ' : '));
+
+      $('#btn-export').on('click', function () {
+        const reason = $('#ms-reason').val().trim();
+        if (!reason) {
+          Swal.fire({
+            title: 'Reason Required',
+            text: 'Please enter a reason before exporting.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary'
+            }
+          });
+          return;
+        }
+
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          Swal.fire({
+            title: 'Export Successful!',
+            text: 'Monthly OT Statement PDF has been generated and downloaded.',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary'
+            }
+          }).then(() => {
+            window.location.href = 'inst_ws_ot_hours.html';
+          });
+        }, 1200);
+      });
+    });
+  </script>
+</body>
+
+</html>

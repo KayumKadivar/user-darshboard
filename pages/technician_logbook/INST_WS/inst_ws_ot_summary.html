@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OT Summary | GNFC</title>
+  <meta name="description" content="GNFC Instrument Workshop Overtime Summary Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'ot_statement';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Exporting Summary...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Overtime Summary"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,OT Statement:inst_ws_ot_statement.html,OT Summary:active"
+      data-back="inst_ws_ot_statement.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── REPORT CONTAINER ── -->
+      <div id="report-container" class="jt-table-card">
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-chart-bar color-blue"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Over Time Summary Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-32px flex flex-col gap-24px">
+          <div class="text-center border-bottom-dark-border pb-16px">
+            <p class="font-18px color-primary fw-700">
+              Over Time Summary for the Month of 
+              <span id="summ-month-year" class="color-blue ml-8px"></span>
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-24px py-16px border-bottom-dark-border">
+            <div class="flex flex-col gap-4px">
+              <label class="gnfc-modal-label block font-12px color-secondary">NO OF PERSONS</label>
+              <div id="summ-persons" class="font-20px fw-800 color-primary"></div>
+            </div>
+            
+            <div class="flex flex-col gap-4px">
+              <label class="gnfc-modal-label block font-12px color-secondary">GRAND TOTAL TIME</label>
+              <div class="flex items-center gap-12px whitespace-nowrap">
+                <div class="flex items-center gap-8px">
+                  <span class="color-secondary font-14px">Hr :</span>
+                  <input type="text" id="summ-hr" class="gnfc-modal-input w-64px text-center" readonly style="background-color: var(--bg-secondary);">
+                </div>
+                <div class="flex items-center gap-8px">
+                  <span class="color-secondary font-14px">Min :</span>
+                  <input type="text" id="summ-min" class="gnfc-modal-input w-64px text-center" readonly style="background-color: var(--bg-secondary);">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8px">
+            <label class="fw-700 color-secondary font-14px" for="summ-reason">REASON / REMARK :</label>
+            <textarea id="summ-reason" class="gnfc-modal-input w-full" rows="4" placeholder="Enter reason for OT summary..."></textarea>
+          </div>
+
+          <!-- Bottom Footer buttons -->
+          <div class="flex justify-end items-center gap-16px pt-16px">
+            <button type="button" class="jt-btn-reset px-24px h-40px" onclick="window.location.href='inst_ws_ot_statement.html'">
+              Cancel
+            </button>
+            <button type="button" class="jt-btn-primary px-32px h-40px" id="btn-export">
+              <i class="ph-bold ph-export mr-8px"></i> EXPORT PDF
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      // Parse parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const month = urlParams.get('month') || '--';
+      const year = urlParams.get('year') || '--';
+      const hrs = urlParams.get('hrs') || '0';
+      const mins = urlParams.get('mins') || '0';
+      const persons = urlParams.get('persons') || '0';
+
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      const monthIdx = parseInt(month, 10) - 1;
+      const monthName = monthNames[monthIdx] || month;
+
+      $('#summ-month-year').text(`${monthName} ${year}`);
+      $('#summ-persons').text(persons);
+      $('#summ-hr').val(hrs);
+      $('#summ-min').val(mins);
+
+      $('#btn-export').on('click', function () {
+        const reason = $('#summ-reason').val().trim();
+        if (!reason) {
+          Swal.fire({
+            title: 'Reason Required',
+            text: 'Please enter a reason before exporting.',
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary'
+            }
+          });
+          return;
+        }
+
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          Swal.fire({
+            title: 'Export Successful!',
+            text: 'Over Time Summary PDF has been generated and downloaded.',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: 'gnfc-modal-btn gnfc-modal-btn-primary'
+            }
+          }).then(() => {
+            window.location.href = 'inst_ws_ot_statement.html';
+          });
+        }, 1200);
+      });
+    });
+  </script>
+</body>
+
+</html>

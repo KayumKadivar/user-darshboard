@@ -2,6 +2,12 @@ function renderInstWsNav(activePageId) {
     const $navContainer = $('#plant-nav-container');
     if (!$navContainer.length) return;
 
+    // Determine path prefixes dynamically based on folder depth of the current page
+    const isInsideInstWs = window.location.pathname.toUpperCase().includes('/INST_WS/');
+    const prefixToInstWs = isInsideInstWs ? '' : 'INST_WS/';
+    const prefixToParent = isInsideInstWs ? '../' : '';
+    const prefixToRoot = isInsideInstWs ? '../../' : '../';
+
     // Determine if an item is active
     const isActive = (id) => id === activePageId ? 'is-active' : '';
     const isDropdownActive = (ids) => ids.includes(activePageId) ? 'is-active' : '';
@@ -9,7 +15,7 @@ function renderInstWsNav(activePageId) {
     const html = `
       <div class="plant-nav-wrapper">
         <nav class="plant-nav-links">
-          <a href="inst_ws_logbook.html" class="plant-nav-pill ${isActive('inst_ws_logbook')}">
+          <a href="${prefixToInstWs}inst_ws_logbook.html" class="plant-nav-pill ${isActive('inst_ws_logbook')}">
             <i class="ph-bold ph-list-dashes filter-icon"></i> Logs
           </a>
           <div class="plant-nav-separator"></div>
@@ -20,52 +26,48 @@ function renderInstWsNav(activePageId) {
               <i class="ph-bold ph-caret-down dropdown-caret"></i>
             </button>
             <div id="reports-dd" class="pn-dropdown-portal">
-                <a href="../job_types.html" class="pn-dropdown-item ${isActive('job_types')}"><i class="ph-bold ph-wrench"></i> Type Of Job</a>
-                <a href="../instrument_types.html" class="pn-dropdown-item ${isActive('instrument_types')}"><i class="ph-bold ph-cpu"></i> Type Of Inst</a>
-                <a href="inst_ws_remarks_report.html" class="pn-dropdown-item ${isActive('remark_reports')}"><i class="ph-bold ph-note"></i> Remark Report</a>
-                <a href="../tagwise_filter.html" class="pn-dropdown-item ${isActive('tagwise_filter')}"><i class="ph-bold ph-funnel"></i> Tag Wise Filter</a>
-                <a href="inst_ws_jobwiserfilter.html" class="pn-dropdown-item ${isActive('jobwise_filter')}"><i class="ph-bold ph-magnifying-glass"></i> Job Wise Filter</a>
-                <a href="inst_ws_searchwise_filter.html" class="pn-dropdown-item ${isActive('searchwise_filter')}"><i class="ph-bold ph-magnifying-glass-plus"></i> Search Wise Filter</a>
-                <a href="inst_ws_monthly_report.html" class="pn-dropdown-item ${isActive('monthly_report')}"><i class="ph-bold ph-calendar-blank"></i> Monthly Report</a>
-                <a href="inst_ws_datewise_report.html" class="pn-dropdown-item ${isActive('datewise_report')}"><i class="ph-bold ph-calendar-dots"></i> Date Wise Report</a>
-                <a href="inst_ws_namewise_report.html" class="pn-dropdown-item ${isActive('namewise_report')}"><i class="ph-bold ph-user-list"></i> Name Wise Report</a>
-                <a href="../name_date_report.html" class="pn-dropdown-item ${isActive('name_date_report')}"><i class="ph-bold ph-users-three"></i> Name & Tag Wise Report</a>
+                <a href="${prefixToParent}job_types.html" class="pn-dropdown-item ${isActive('job_types')}"><i class="ph-bold ph-wrench"></i> Type Of Job</a>
+                <a href="${prefixToParent}instrument_types.html" class="pn-dropdown-item ${isActive('instrument_types')}"><i class="ph-bold ph-cpu"></i> Type Of Inst</a>
+                <a href="${prefixToInstWs}inst_ws_remarks_report.html" class="pn-dropdown-item ${isActive('remark_reports')}"><i class="ph-bold ph-note"></i> Remark Report</a>
+
+                <a href="${prefixToInstWs}inst_ws_jobwiserfilter.html" class="pn-dropdown-item ${isActive('jobwise_filter')}"><i class="ph-bold ph-magnifying-glass"></i> Job Wise Filter</a>
+                <a href="${prefixToInstWs}inst_ws_searchwise_filter.html" class="pn-dropdown-item ${isActive('searchwise_filter')}"><i class="ph-bold ph-magnifying-glass-plus"></i> Search Wise Filter</a>
+                <a href="${prefixToInstWs}inst_ws_monthly_report.html" class="pn-dropdown-item ${isActive('monthly_report')}"><i class="ph-bold ph-calendar-blank"></i> Monthly Report</a>
+                <a href="${prefixToInstWs}inst_ws_datewise_report.html" class="pn-dropdown-item ${isActive('datewise_report')}"><i class="ph-bold ph-calendar-dots"></i> Date Wise Report</a>
+                <a href="${prefixToInstWs}inst_ws_namewise_report.html" class="pn-dropdown-item ${isActive('namewise_report')}"><i class="ph-bold ph-user-list"></i> Name Wise Report</a>
+                <a href="${prefixToParent}name_date_report.html" class="pn-dropdown-item ${isActive('name_date_report')}"><i class="ph-bold ph-users-three"></i> Name & Tag Wise Report</a>
             </div>
           </div>
                 
           <div class="plant-nav-separator"></div>
 
-          <a href="../ot_hours.html" class="plant-nav-pill ${isActive('ot_hours')}">
+          <a href="${prefixToInstWs}inst_ws_ot_hours.html" class="plant-nav-pill ${isActive('ot_hours')}">
             <i class="ph-bold ph-timer filter-icon"></i> OT Hrs
           </a>
-          <div class="plant-nav-separator"></div>
-          <div class="plant-nav-separator"></div>
-          <a href="../doc_change.html" class="plant-nav-pill ${isActive('doc_change')}">
-            <i class="ph-bold ph-file-doc filter-icon"></i> Doc. Change
-          </a>
-          <div class="plant-nav-separator"></div>
-          <a href="../Helper.html" class="plant-nav-pill ${isActive('helper')}">
+        
+          <a href="${prefixToInstWs}inst_ws_helper.html" class="plant-nav-pill ${isActive('helper')}">
             <i class="ph-bold ph-users filter-icon"></i> Helper
           </a>
-          <div class="plant-nav-separator"></div>
-          <a href="../cost_saving.html" class="plant-nav-pill ${isActive('cost_saving')}">
+          <a href="${prefixToInstWs}cost_saving.html" class="plant-nav-pill ${isActive('cost_saving')}">
             <i class="ph-bold ph-coins filter-icon"></i> Cost Saving
           </a>
           <div class="plant-nav-separator"></div>
-          <a href="../c-lab.html" class="plant-nav-pill ${isActive('c_lab')}">
+          <a href="${prefixToInstWs}c-lab.html" class="plant-nav-pill ${isActive('c_lab')}">
             <i class="ph-bold ph-flask filter-icon"></i> C-Lab
           </a>
-          <div class="plant-nav-separator"></div>
-          <a href="Job_status.html" class="plant-nav-pill ${isActive('Job_status')}">
+          <a href="${prefixToInstWs}Job_status.html" class="plant-nav-pill ${isActive('Job_status')}">
             <i class="ph-bold ph-clipboard filter-icon"></i> Job Status
+          </a>
+          <a href="${prefixToRoot}Instrument_work_shop/inst_ws_jobhistory.html" class="plant-nav-pill ${isActive('inst_ws_jobhistory')}">
+            <i class="ph-bold ph-clock-counter-clockwise filter-icon"></i> History
           </a>
         </nav>
         <div class="plant-nav-tools">
-          <button type="button" onclick="window.location.href='../ot_statement.html'" class="btn-ot-sm ${isActive('ot_statement')}">
+          <button type="button" onclick="window.location.href='${prefixToInstWs}inst_ws_ot_statement.html'" class="btn-ot-sm ${isActive('ot_statement')}">
             <i class="ph-bold ph-clock-user"></i>
             <span class="btn-text-sm">O.T.</span>
           </button>
-          <button type="button" onclick="window.location.href='../emg_call.html'" class="btn-emg-sm ${isActive('emg_call')}">
+          <button type="button" onclick="window.location.href='${prefixToInstWs}inst_ws_emg_call.html'" class="btn-emg-sm ${isActive('emg_call')}">
             <i class="ph-bold ph-siren"></i>
             <span class="btn-text-sm">EMG Call</span>
           </button>

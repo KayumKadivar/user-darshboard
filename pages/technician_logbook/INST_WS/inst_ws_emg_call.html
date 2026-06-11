@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Call Report | GNFC</title>
+  <meta name="description" content="GNFC Instrument Workshop Emergency Call Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'emg_call';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Emergency Call Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,Emergency Call:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── SEARCH CRITERIA ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-calendar-dots"></i>
+            SEARCH CRITERIA
+          </h2>
+        </div>
+        <div class="jt-filter-body gap-16px">
+          <!-- Start Date Input -->
+          <div class="flex-1">
+            <label class="gnfc-modal-label">START DATE</label>
+            <input type="date" id="startDateInput" class="gnfc-modal-input font-13px" value="2006-01-01">
+          </div>
+
+          <!-- End Date Input -->
+          <div class="flex-1">
+            <label class="gnfc-modal-label">END DATE</label>
+            <input type="date" id="endDateInput" class="gnfc-modal-input font-13px" value="2026-06-15">
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filter">
+              GO
+            </button>
+            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── REPORT CONTAINER ── -->
+      <div id="report-container" class="jt-table-card">
+
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-siren color-red"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Emergency Call Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th class="user-table-center" style="width: 120px;">Date</th>
+                <th class="user-table-center" style="width: 150px;">Tech</th>
+                <th class="user-table-center" style="width: 150px;">TagNo</th>
+                <th style="width: 280px;">Type Of Job</th>
+                <th style="min-width: 500px;">Description</th>
+                <th class="user-table-center" style="width: 120px ;">OT Hour</th>
+              </tr>
+            </thead>
+            <tbody id="emgTableBody">
+              <!-- Static Records matching the uploaded image -->
+              <tr class="user-table-row" data-date="09/06/2026">
+                <td class="user-table-center user-table-secondary">09/06/2026</td>
+                <td class="user-table-center">ENG_TESTER</td>
+                <td class="user-table-center">17179</td>
+                <td>test2</td>
+                <td>test3</td>
+                <td class="user-table-center ot-hr-val">0</td>
+              </tr>
+              <tr class="user-table-row" data-date="20/06/2015">
+                <td class="user-table-center user-table-secondary">20/06/2015</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">10140</td>
+                <td>Krohne Mag flow transmitter FT35011</td>
+                <td>check it found its power supply capacitor 1000 and 470 mfd faulty. replace the same. but still problem is there. check the flexible pcb connections found it got damaged. remove it and install a flexible cable but still problem is there</td>
+                <td class="user-table-center ot-hr-val">0</td>
+              </tr>
+              <tr class="user-table-row border-bottom-dark-border" data-date="14/03/2009">
+                <td class="user-table-center user-table-secondary">14/03/2009</td>
+                <td class="user-table-center">MHT</td>
+                <td class="user-table-center">5108</td>
+                <td>Annudator card of IIC fada</td>
+                <td>Checked and found that cards were from amm plant and they were modified ,so rectified problem by removing modification ,now its working ok.</td>
+                <td class="user-table-center ot-hr-val">3</td>
+              </tr>
+            </tbody>
+            <tfoot class="user-table-tfoot">
+              <tr>
+                <td colspan="5" class="text-right px-20px py-12px">TOTAL EXTRA DUTY HOURS :</td>
+                <td id="total-ot-hours" class="user-table-center py-12px">3</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      
+      const parseDateDMY = (dateStr) => {
+        const parts = dateStr.split('/');
+        if (parts.length !== 3) return null;
+        return new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+      };
+
+      const filterReport = () => {
+        const startDateVal = $('#startDateInput').val();
+        const endDateVal = $('#endDateInput').val();
+
+        // Remove no records row if exists
+        $('#no-records-row').remove();
+
+        const startDate = startDateVal ? new Date(startDateVal) : null;
+        const endDate = endDateVal ? new Date(endDateVal) : null;
+
+        let visibleRecordsCount = 0;
+        let totalOT = 0;
+
+        $('#emgTableBody tr').each(function () {
+          const dateStr = $(this).attr('data-date');
+          if (!dateStr) return;
+
+          const rowDate = parseDateDMY(dateStr);
+          if (!rowDate) return;
+
+          let isVisible = true;
+          if (startDate && rowDate < startDate) isVisible = false;
+          if (endDate && rowDate > endDate) isVisible = false;
+
+          if (isVisible) {
+            $(this).show();
+            visibleRecordsCount++;
+            const otVal = parseFloat($(this).find('.ot-hr-val').text()) || 0;
+            totalOT += otVal;
+          } else {
+            $(this).hide();
+          }
+        });
+
+        // Update total
+        $('#total-ot-hours').text(totalOT);
+
+        // If no records are visible, append "No records found"
+        if (visibleRecordsCount === 0) {
+          $('#emgTableBody').append(`
+            <tr id="no-records-row">
+              <td colspan="6" class="user-table-center user-table-secondary" style="padding: 24px;">No records found for the selected date range.</td>
+            </tr>
+          `);
+        }
+      };
+
+      const resetView = () => {
+        $('#startDateInput').val('2006-01-01');
+        $('#endDateInput').val('2026-06-15');
+        filterReport();
+      };
+
+      // Event Listeners
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          filterReport();
+        }, 600); // Simulated delay for premium visual effect
+      });
+      
+      $('#btn-reset-filter').on('click', resetView);
+
+      // Initial filter run
+      filterReport();
+    });
+  </script>
+</body>
+
+</html>

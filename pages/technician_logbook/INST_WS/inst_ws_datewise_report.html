@@ -60,12 +60,18 @@
             SEARCH CRITERIA
           </h2>
         </div>
-        <div class="jt-filter-body">
+        <div class="jt-filter-body" style="gap: 16px;">
 
-          <!-- Date Input -->
-          <div>
-            <label class="gnfc-modal-label">Select Date</label>
-            <input type="date" id="dateInput" class="gnfc-modal-input font-13px" value="2026-06-09">
+          <!-- Start Date Input -->
+          <div style="flex: 1;">
+            <label class="gnfc-modal-label">Start Date</label>
+            <input type="date" id="startDateInput" class="gnfc-modal-input font-13px" value="2026-06-01">
+          </div>
+
+          <!-- End Date Input -->
+          <div style="flex: 1;">
+            <label class="gnfc-modal-label">End Date</label>
+            <input type="date" id="endDateInput" class="gnfc-modal-input font-13px" value="2026-06-15">
           </div>
 
           <!-- Action Buttons -->
@@ -99,9 +105,8 @@
             <thead>
               <tr>
                 <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
-                <th rowspan="2" class="user-table-center" style="width: 100px;">JobNo</th>
+                <th class="user-table-center" style="width: 140px;">JobNo</th>
                 <th class="user-table-center" style="width: 280px;">Title</th>
-                <th rowspan="2" class="user-table-center" style="width: 100px;">Plant</th>
                 <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
                 <th rowspan="2" style="min-width: 400px;">Description</th>
                 <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
@@ -109,26 +114,31 @@
                 <th rowspan="2" class="user-table-center" style="min-width: 300px;">Remarks</th>
               </tr>
               <tr>
+                <th class="user-table-center user-table-border-right">Plant</th>
                 <th class="user-table-center user-table-border-right">Job</th>
               </tr>
             </thead>
             <tbody id="reportTableBody">
               <!-- Static Sample Data -->
-              <tr class="user-table-date">
-                <td colspan="9" class="user-table-bold" style="background-color: var(--bg-secondary); padding: 8px 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">
+              <tr class="user-table-date report-row" data-date="2026-06-09">
+                <td colspan="8" class="user-table-bold" style="background-color: var(--bg-secondary); padding: 8px 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">
                   <i class="ph-fill ph-calendar-blank"></i> 09/06/2026
                 </td>
               </tr>
-              <tr class="user-table-row row-highlight-yellow">
+              <tr class="user-table-row row-highlight-yellow report-row" data-date="2026-06-09">
                 <td class="user-table-center user-table-secondary user-table-bold">1</td>
-                <td class="user-table-center user-table-bold user-table-blue">17179</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold user-table-blue">17179</div>
+                    <div class="user-table-secondary">BOILER</div>
+                  </div>
+                </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-bold">Pressure Transmitter Calibration</div>
                     <div class="user-table-secondary">Routine Check (By:ENG_TESTER : 09/06/2026)</div>
                   </div>
                 </td>
-                <td class="user-table-center">BOILER</td>
                 <td class="user-table-center">ALD</td>
                 <td>Perform multipoint calibration and check zero/span settings.</td>
                 <td class="user-table-center">ENG_TESTER</td>
@@ -137,16 +147,20 @@
                   Calibration completed successfully. Found within tolerance. [written by : ENG_TESTER Date : 09/06/2026 ]
                 </td>
               </tr>
-              <tr class="user-table-row row-highlight-yellow">
+              <tr class="user-table-row row-highlight-yellow report-row" data-date="2026-06-09">
                 <td class="user-table-center user-table-secondary user-table-bold">2</td>
-                <td class="user-table-center user-table-bold user-table-blue">17181</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold user-table-blue">17181</div>
+                    <div class="user-table-secondary">BOILER</div>
+                  </div>
+                </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-bold">Level Sensor Malfunction</div>
                     <div class="user-table-secondary">Corrective Maintenance (By:ENG_TESTER : 09/06/2026)</div>
                   </div>
                 </td>
-                <td class="user-table-center">BOILER</td>
                 <td class="user-table-center">ALD</td>
                 <td>Sensor showing erratic reading under high pressure.</td>
                 <td class="user-table-center">ENG_TESTER</td>
@@ -155,16 +169,20 @@
                   Cleaned contacts and tightened terminal block. Fixed issue. [written by : PMP Date : 09/06/2026 ]
                 </td>
               </tr>
-              <tr class="user-table-row">
+              <tr class="user-table-row report-row" data-date="2026-06-09">
                 <td class="user-table-center user-table-secondary user-table-bold">3</td>
-                <td class="user-table-center user-table-bold user-table-blue">17205</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold user-table-blue">17205</div>
+                    <div class="user-table-secondary">AMM</div>
+                  </div>
+                </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-bold">Flow Meter Diagnostics</div>
                     <div class="user-table-secondary">Inspection (By:PBS : 09/06/2026)</div>
                   </div>
                 </td>
-                <td class="user-table-center">AMM</td>
                 <td class="user-table-center">JMD</td>
                 <td>Flow meter reading fluctuating. Need to check impulse lines and manifold.</td>
                 <td class="user-table-center">JMD</td>
@@ -173,37 +191,45 @@
                   Found minor leak in manifold. Parts ordered. [written by : JMD Date : 09/06/2026 ]
                 </td>
               </tr>
-              <tr class="user-table-date">
-                <td colspan="9" class="user-table-bold" style="background-color: var(--bg-secondary); padding: 8px 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">
+              <tr class="user-table-date report-row" data-date="2026-06-06">
+                <td colspan="8" class="user-table-bold" style="background-color: var(--bg-secondary); padding: 8px 12px; font-weight: bold; border-bottom: 1px solid var(--border-color);">
                   <i class="ph-fill ph-calendar-blank"></i> 06/06/2026
                 </td>
               </tr>
-              <tr class="user-table-row">
+              <tr class="user-table-row report-row" data-date="2026-06-06">
                 <td class="user-table-center user-table-secondary user-table-bold">4</td>
-                <td class="user-table-center user-table-bold user-table-blue">17160</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold user-table-blue">17160</div>
+                    <div class="user-table-secondary">INSTWS</div>
+                  </div>
+                </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-bold">Valve Positioner Test</div>
                     <div class="user-table-secondary">Overhaul (By:HAS : 06/06/2026)</div>
                   </div>
                 </td>
-                <td class="user-table-center">INSTWS</td>
                 <td class="user-table-center">ALD</td>
                 <td>Overhaul and stroke test of control valve.</td>
                 <td class="user-table-center">PMP</td>
                 <td class="user-table-center">U/P</td>
                 <td>Waiting for spare parts. Delay of 2 days expected.</td>
               </tr>
-              <tr class="user-table-row">
+              <tr class="user-table-row report-row" data-date="2026-06-06">
                 <td class="user-table-center user-table-secondary user-table-bold">5</td>
-                <td class="user-table-center user-table-bold user-table-blue">17165</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-bold user-table-blue">17165</div>
+                    <div class="user-table-secondary">UREA</div>
+                  </div>
+                </td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div class="user-table-bold">Temperature Controller Replacement</div>
                     <div class="user-table-secondary">Breakdown (By:HAS : 06/06/2026)</div>
                   </div>
                 </td>
-                <td class="user-table-center">UREA</td>
                 <td class="user-table-center">BSU</td>
                 <td>Controller display blank. Replaced with new unit from stores and configured parameters.</td>
                 <td class="user-table-center">BSU</td>
@@ -223,8 +249,64 @@
   <script>
     $(document).ready(function () {
       
+      const filterReport = () => {
+        const startDateVal = $('#startDateInput').val();
+        const endDateVal = $('#endDateInput').val();
+
+        // Remove no records row if exists
+        $('#no-records-row').remove();
+
+        if (!startDateVal || !endDateVal) {
+          $('.report-row').show();
+          return;
+        }
+
+        const startDate = new Date(startDateVal);
+        const endDate = new Date(endDateVal);
+
+        let visibleRecordsCount = 0;
+
+        // Loop through report-row elements
+        $('.report-row').each(function () {
+          const rowDateStr = $(this).attr('data-date');
+          if (!rowDateStr) return;
+
+          const rowDate = new Date(rowDateStr);
+
+          if (rowDate >= startDate && rowDate <= endDate) {
+            $(this).show();
+            // Count record rows only (not date headers)
+            if (!$(this).hasClass('user-table-date')) {
+              visibleRecordsCount++;
+            }
+          } else {
+            $(this).hide();
+          }
+        });
+
+        // Hide date header rows if they don't have any visible child rows
+        $('.user-table-date').each(function () {
+          const date = $(this).attr('data-date');
+          const siblingRecords = $(`.report-row[data-date="${date}"]:not(.user-table-date):visible`);
+          if (siblingRecords.length === 0) {
+            $(this).hide();
+          }
+        });
+
+        // If no records are visible, append "No records found"
+        if (visibleRecordsCount === 0) {
+          $('#reportTableBody').append(`
+            <tr id="no-records-row">
+              <td colspan="8" class="user-table-center user-table-secondary" style="padding: 24px;">No records found for the selected date range.</td>
+            </tr>
+          `);
+        }
+      };
+
       const resetView = () => {
-        $('#dateInput').val('');
+        $('#startDateInput').val('2026-06-01');
+        $('#endDateInput').val('2026-06-15');
+        filterReport();
       };
 
       // Event Listeners
@@ -232,10 +314,14 @@
         $('#data-loader-overlay').removeClass('hidden');
         setTimeout(() => {
           $('#data-loader-overlay').addClass('hidden');
+          filterReport();
         }, 800); // Simulated delay for visual effect
       });
       
       $('#btn-reset-filter').on('click', resetView);
+
+      // Initial filter on load
+      filterReport();
     });
   </script>
 </body>
