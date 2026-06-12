@@ -59,7 +59,7 @@ $(function () {
           <span class="sidebar-text">Utility</span>
         </a>
 
-        <a href="#" class="sidebar-link" data-id="cms">
+        <a href="${basePath}pages/cms/cms.html" class="sidebar-link" data-id="cms">
           <i class="ph ph-bold ph-monitor"></i>
           <span class="sidebar-text">CMS</span>
         </a>

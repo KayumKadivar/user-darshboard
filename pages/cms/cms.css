@@ -1,0 +1,241 @@
+/* cms.css - Extracted styles for CMS Dashboard */
+
+.cms-header-margin {
+  margin-bottom: 24px;
+}
+
+.cms-main-card {
+  padding: 22px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.cms-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+
+.cms-global-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.cms-global-btn {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: #111827;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.cms-global-btn-dms:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+}
+
+.cms-global-btn-dms .ph-folder-open {
+  color: #3b82f6;
+  font-size: 20px;
+}
+
+.cms-global-btn-date:hover {
+  background: #fdf4ff;
+  border-color: #d946ef;
+}
+
+.cms-global-btn-date .ph-calendar {
+  color: #d946ef;
+  font-size: 20px;
+}
+
+.cms-mode-toggle {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  width: fit-content;
+}
+
+.cms-mode-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748b;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.cms-mode-label:hover {
+  background: #f1f5f9;
+}
+
+/* Add Job Active State (Blue) */
+.cms-mode-label:has(input[value="Add Job"]:checked) {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+  box-shadow: 0 1px 2px rgba(59, 130, 246, 0.1);
+}
+.cms-mode-label:has(input[value="Add Job"]:checked) .cms-mode-icon {
+  color: #2563eb;
+}
+
+/* Report Active State (Orange) */
+.cms-mode-label:has(input[value="Report"]:checked) {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+  box-shadow: 0 1px 2px rgba(217, 119, 6, 0.1);
+}
+.cms-mode-label:has(input[value="Report"]:checked) .cms-mode-icon {
+  color: #d97706;
+}
+.cms-mode-label:has(input[value="Report"]:checked) .cms-mode-radio {
+  accent-color: #d97706;
+}
+
+.cms-mode-radio {
+  width: 18px;
+  height: 18px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+.cms-mode-icon {
+  color: inherit;
+}
+
+.cms-job-grid-override {
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.cms-layout-split {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 40px;
+}
+@media (max-width: 900px) {
+  .cms-layout-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cms-global-actions-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cms-btn-minimal-dms {
+  background-color: #f8fafc;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cms-btn-minimal-dms:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+.cms-btn-minimal-dms i {
+  font-size: 18px;
+  color: #3b82f6;
+}
+
+.cms-btn-minimal-date {
+  background-color: var(--brand-primary, #2563eb);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cms-btn-minimal-date:hover {
+  background-color: #1d4ed8;
+}
+.cms-btn-minimal-date i {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.cms-top-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+.cms-top-right {
+  text-align: right;
+}
+
+.cms-section-title-inline {
+  font-size: 14px;
+  font-weight: 700;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.cms-global-actions-right {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+
+.cms-mode-toggle-inline {
+  display: flex;
+  gap: 32px;
+  padding: 6px 8px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  width: fit-content;
+  margin: 0;
+}

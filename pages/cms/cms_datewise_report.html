@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Wise Report | GNFC</title>
+
+  <!-- External CSS from Dashboard -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="cms.css">
+  
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <style>
+
+
+    /* Report Content Area */
+    .report-result-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      display: none; /* Hidden until generated */
+    }
+
+    .report-header-bar {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: #ffffff;
+      padding: 16px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .report-list {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .report-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      transition: all 0.3s ease;
+    }
+
+    .report-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+      border-color: #cbd5e1;
+    }
+
+    .report-item-title {
+      font-weight: 800;
+      color: #0f172a;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .report-item-title::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: #3b82f6;
+      border-radius: 50%;
+    }
+
+    .report-item-desc {
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.6;
+      padding-left: 16px;
+      border-left: 2px solid #f1f5f9;
+      margin-left: 3px;
+    }
+  </style>
+
+  <script>
+    window.activePage = 'cms';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Dashboard Header -->
+    <div id="header-container" data-title="CMS" data-breadcrumb="CMS|cms.html,Date Wise Report:active"
+      data-back="cms.html">
+    </div>
+
+    <!-- Page Content -->
+    <div class="app-content-area dashboard-scroll">
+      <!-- Date Filter Section -->
+      <div class="jt-filter-card mb-24px">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i> SEARCH CRITERIA
+          </h3>
+        </div>
+        <div class="jt-filter-body grid grid-cols-2 lg-grid-cols-4 gap-16px">
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label" for="startDate">START DATE</label>
+            <input type="date" id="startDate" class="gnfc-modal-input jt-date-input" value="2020-01-01" onchange="generateReport()">
+          </div>
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label" for="endDate">END DATE</label>
+            <input type="date" id="endDate" class="gnfc-modal-input jt-date-input" value="2026-11-06" onchange="generateReport()">
+          </div>
+        </div>
+      </div>
+      <!-- Report Result Section -->
+      <div class="report-result-card" id="report-result">
+        <div class="report-header-bar" id="report-dynamic-header">
+          Date wise job report during 1/1/2020 and 6/11/2026
+        </div>
+        <div class="report-list">
+          <!-- Item 1 -->
+          <div class="report-item">
+            <div class="report-item-title">FV0204BA</div>
+            <div class="report-item-desc">Valve was dropped during unit shutdown, found erosion in plug part so sent to M/s. Hitech, Open valve and found erosion on plug, body & Seat found ok so new spare plug was replaced & done overhauling.</div>
+          </div>
+          <!-- Item 2 -->
+          <div class="report-item">
+            <div class="report-item-title">FV7820</div>
+            <div class="report-item-desc">FV 7820 GULDE CV received from plant for passing problem cv tested at CMS but it was ful pass so open from bonnet and checked its plug and seat and found damaged so decided to sent to HI tech for repairing its plug seat repaired by metal filing and machining its stem found bent so manufactured from SS 316L and provided all gasket and gland replaced valve tested at require pressure</div>
+          </div>
+          <!-- Item 3 -->
+          <div class="report-item">
+            <div class="report-item-title">PV556</div>
+            <div class="report-item-desc">PV 556 2 X 600 GULDE XOMOX cv received from plant for passing sent to hi tech for repairing on 12 05 2020 valve dis mental and found its plug seat eroded so repaired by metal filing and machining its body welding and machining done its cage machining done all gasket and gland replaced valve tested at require pressure after repairing valve received from hi tech and sent to plant.</div>
+          </div>
+          <!-- Item 4 -->
+          <div class="report-item">
+            <div class="report-item-title">FV1316</div>
+            <div class="report-item-desc">FV 1316 3 X 2500 GULDE ANGLE VALVE received from plant for passing problem sent to hi tech for repairing on 13 05 2020. after opening found its body, plug and seat erosion, stem sealing area damaged,cage damaged its actuator overhauling done its o ring found damaged,gasket seating surface damaged. All actuator bolt rusted. its body repaired by metal filing and machining in our central workshop after body sent to Hi tech for cv assembling. All internal parts repaired by metal filing and machining its cage both side lapping done. All gaskets and gland replaced all actuator bolt 48 no replaced 2 no o ring replaced. Valve tested at require pressure. cv received after repair sent to plant for installation</div>
+          </div>
+          <!-- Item 5 -->
+          <div class="report-item">
+            <div class="report-item-title">V5B-FV0201B</div>
+            <div class="report-item-desc">FV 0201B V5B GULDE CV 3" X 1500 # received for its actuator leaking from o ring so checked and hydro testing done at 110 kg/cm2 no any passing observed so sent to hi tech for its actuator P 450/4F overhauling its all o ring found hard so replaced its spindle bent at top side so draw spare spindle from store and sent but its thread found differ from old so rework done as per old removed spindle actuator assembled and fitted on body testing done at 3 kg/cm2 act operation found ok no any air leakages.</div>
+          </div>
+          <!-- Item 6 -->
+          <div class="report-item">
+            <div class="report-item-title">TV1347</div>
+            <div class="report-item-desc">TV 1347 1 X 1500 GULDE cv received from plant for passing and gland leakage sent to hi tech for repairing on 13 05 2020 its plug and seat found eroded so repaired by metal filing and machining its modified du bush replaced all gaskets and gland replaced valve tested at require pressure after repairing cv received from hi tech on 26 05 2020</div>
+          </div>
+          <!-- Item 7 -->
+          <div class="report-item">
+            <div class="report-item-title">PV301</div>
+            <div class="report-item-desc">FRC 301 A 4 X 300 GULDE XOMOX cv Actuator G41 received from plant for passing sent to hi tech for repairing on 13 05 2020 after dis mental cv found its plug seat and cage and bonnet eroded so new spare plug with stem 427728033D and cage 427728803 D replaced its new plug machining done to match with cage its seat also repaired by metal filing and machining its bonnet repaired by metal filing and machining its guide bush replaced by new manufactured its actuator bottom side yoke gasket replaced and o ring replaced in actuator all gaskets and gland replaced valve tested at require pressure after repairing cv received from hi tech on 26 05 2020. its all old parts received with cv. cv sent to plant for installation.</div>
+          </div>
+          <!-- Item 8 -->
+          <div class="report-item">
+            <div class="report-item-title">HV0207A</div>
+            <div class="report-item-desc">HV0207A actuator with bonnet and plug received from plant for not opening full when it was in line. So complete Actuator overhauling done. its hand wheel assembly overhauling done cracks found on plug so new spare plug provided its actuator spindle was found damaged so spare spindle provided its actuator soft seal kit replaced its bearing, allen bolt replaced its actuator liner polishing done. Its old removed plug and actuator spindle damaged so both scrap.</div>
+          </div>
+          <!-- Item 9 -->
+          <div class="report-item">
+            <div class="report-item-title">PV1049B</div>
+            <div class="report-item-desc">PV 1049 B L 1x300 C/V received for passing so sent to HI tech for repairing its both plug and seat found worn so repaired by metal filing and machining. All gaskets and gland replaced valve tested at require pressure .</div>
+          </div>
+          <!-- Item 10 -->
+          <div class="report-item">
+            <div class="report-item-title">PDV322</div>
+            <div class="report-item-desc">PDCV 322 L VST 4 X 150 RF CV 175 LINEAR CHARC. valve received from plant for its body pin hole puncture so New WCB BODY with out trim received from IL so cv sent to hi tech for new body replacement in place of old body its plug and seat provided and for tight shut off minor machining done its stem found bent so new stem manufactured from SS 316 and provided valve tested at require pressure no any passing observed valve received from hi tech after repair. cv returned to store. its old removed body seems to be scrap CV new code taken for comp cv 457735004 D and returned to store on 28 05 2020.</div>
+          </div>
+          <!-- Item 11 -->
+          <div class="report-item">
+            <div class="report-item-title">PCV4146</div>
+            <div class="report-item-desc">PCV 4146 FISHER drawn from store for inspection checking. complete PCV dis mental and checked its diaphragm found damaged its plug and seat found ok again assembled valve new OEM Diaphragm replaced new CAF GASKET made from sheet size 102 mm x 88 mm x 2 mm for body and bonnet job done by CMS Group. its setting is 8.0 kg/cm2 fine tuning to be carried out on line</div>
+          </div>
+          <!-- Item 12 -->
+          <div class="report-item">
+            <div class="report-item-title">FV301B</div>
+            <div class="report-item-desc">FRC 301 B FISHER 3X300 Sr. no IA17100 received from plant for its plug broken so open from bonnet and found its plug broke and its guide bush and cage also found defective so its plug with stem , cage and seat replaced by spare one its plug stem and seat is provided with nitriding coating All gaskets and gland replaced cv tested at require pressure no any passing observed. Complete cv code no 457725120 D job carried out at CMS</div>
+          </div>
+          <!-- Item 13 -->
+          <div class="report-item">
+            <div class="report-item-title">PV301B</div>
+            <div class="report-item-desc">PRC 301 B 4 X 300 CVL 1199 cv Actuator GA 1 41 received from plant for passing sent to hi tech for repairing on 30 05 2020 after dis mental cv found its plug seat and cage eroded so new spare plug with stem 427728032D and cage 427728037 D replaced its new plug machining done to match with cage its seat also repaired by metal filing and machining its both pillars for actuator are found corroded so replaced with SS 316 its guide bush replaced by new manufactured its actuator bottom side yoke gasket replaced and o ring replaced in actuator all gaskets and gland replaced valve tested at require pressure after repairing cv received from hi tech on 07 07 2020. its all old parts received with cv. cv returned to store on 11 07 2020 with code no 427728031 D.</div>
+          </div>
+          <!-- Item 14 -->
+          <div class="report-item">
+            <div class="report-item-title">V8C-XV0219C</div>
+            <div class="report-item-desc">XV 0219 C V8C cv IL VST VA7R 2 X 1500 RTJ received from plant for its Bonnet leakage and actuator bolts heavily corroded. Passing observed. at CMS cv hydro testing done but passing at 0 kg/cm2 so decided to sent to HI Tech for</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    function generateReport() {
+      const startDate = $('#startDate').val();
+      const endDate = $('#endDate').val();
+      
+      if(!startDate || !endDate) {
+        alert("Please select both Start Date and End Date.");
+        return;
+      }
+
+      // Format dates (e.g. 2020-01-01 to 1/1/2020)
+      const d1 = new Date(startDate);
+      const formattedStart = `${d1.getDate()}/${d1.getMonth()+1}/${d1.getFullYear()}`;
+      
+      const d2 = new Date(endDate);
+      const formattedEnd = `${d2.getDate()}/${d2.getMonth()+1}/${d2.getFullYear()}`;
+
+      // Update Header Text
+      $('#report-dynamic-header').text(`Date wise job report during ${formattedStart} and ${formattedEnd}`);
+
+      // Show Report Area with a slight fade animation
+      $('#report-result').hide().fadeIn(400);
+    }
+
+    function resetFilters() {
+      $('#startDate').val('');
+      $('#endDate').val('');
+      $('#report-result').hide();
+    }
+
+    // Automatically generate and show report on page load
+    $(document).ready(function() {
+      generateReport();
+    });
+  </script>
+</body>
+
+</html>

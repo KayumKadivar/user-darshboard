@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Plant Report | GNFC</title>
+
+  <!-- External CSS from Dashboard -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'cms';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+
+    <div id="header-container" data-title="CMS" data-breadcrumb="CMS|cms.html,Plant Report:active" data-back="cms.html">
+    </div>
+    <div class="app-content-area">
+
+      <div class="jt-table-card ">
+
+      <div class="jt-report-header jt-report-header--flex">
+        <div class="jt-report-title">
+          <i class="ph-fill ph-notebook"></i>
+          <div class="jt-title-stack">
+            <h3 class="jt-main-title">Detailed Remark Report</h3>
+          </div>
+        </div>
+        <!-- Year Selector with Change Icons -->
+        <div class="jt-year-selector">
+          <button type="button" class="jt-year-nav-btn" id="btn-prev-year" title="Previous Year">
+            <i class="ph-bold ph-caret-left"></i>
+          </button>
+          <div class="jt-year-display">
+            Year: <span id="active-year">2025</span>
+          </div>
+          <button type="button" class="jt-year-nav-btn" id="btn-next-year" title="Next Year">
+            <i class="ph-bold ph-caret-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="user-table-wrapper">
+        <table class="user-table min-w-1440px">
+          <thead>
+            <tr>
+              <th class="user-table-center" style="width: 50px;">Sr</th>
+              <th style="width: 150px;">TagID</th>
+              <th style="width: 120px;">TagNo</th>
+              <th style="width: 400px;">Defect</th>
+              <th class="user-table-center" style="width: 100px; padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">Date</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">BY</div>
+                </div>
+              </th>
+              <th class="user-table-center" style="width: auto;">Job Description</th>
+              <th class="user-table-center" style="width: 80px;">Eng</th>
+              <th class="user-table-center" style="width: 100px;">Date</th>
+              <th class="user-table-center" style="width: 50px;"></th>
+              <th class="user-table-center" style="width: 50px;"></th>
+            </tr>
+          </thead>
+          <tbody class="plant-table-body">
+
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue">1</td>
+              <td>4SV1662F_Seal Kit</td>
+              <td class="user-table-blue">4SV1662F</td>
+              <td>Seal kit and diaphragm cap for cylinder repairing purpose</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">20/05/2026</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">TRC</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><i class="ph-bold ph-trash icon-delete"></i></td>
+            </tr>
+            
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue" style="cursor: pointer; text-decoration: underline;" onclick="openJobSheetModal()">2</td>
+              <td>4SV1662F</td>
+              <td class="user-table-blue">4SV1662F</td>
+              <td>Power cylinder passing and full stroke is not getting achieved, complete overhauling to be done.</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">12/05/2026</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">ARP</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><i class="ph-bold ph-trash icon-delete"></i></td>
+            </tr>
+            
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue" style="cursor: pointer; text-decoration: underline;" onclick="openJobSheetModal()">3</td>
+              <td>4SV1662F</td>
+              <td class="user-table-blue">4SV1662F</td>
+              <td>Power cylinder passing and full stroke is not getting achieved, complete overhauling to be done.</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">12/05/2026</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">ARP</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><i class="ph-bold ph-trash icon-delete"></i></td>
+            </tr>
+            
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue" style="cursor: pointer; text-decoration: underline;" onclick="openJobSheetModal()">4</td>
+              <td>4SV1662F</td>
+              <td class="user-table-blue">4SV1662F</td>
+              <td>Power cylinder passing and full stroke is not getting achieved, complete overhauling to be done.</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">12/05/2026</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">ARP</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><i class="ph-bold ph-trash icon-delete"></i></td>
+            </tr>
+            
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue" style="cursor: pointer; text-decoration: underline;" onclick="openJobSheetModal()">5</td>
+              <td>XV17901</td>
+              <td class="user-table-blue">XV17901</td>
+              <td>Actuator complete overhauling.</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">09/04/2026</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">TRC</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><i class="ph-bold ph-trash icon-delete"></i></td>
+            </tr>
+            
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue" style="cursor: pointer; text-decoration: underline;" onclick="openJobSheetModal()">6</td>
+              <td>XV17901_Repair Kit</td>
+              <td class="user-table-blue">XV17901</td>
+              <td>Repair Kit for XV17901</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">31/03/2026</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">TRC</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><i class="ph-bold ph-trash icon-delete"></i></td>
+            </tr>
+            
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue" style="cursor: pointer; text-decoration: underline;" onclick="openJobSheetModal()">7</td>
+              <td>XV17901</td>
+              <td class="user-table-blue">XV17901</td>
+              <td>Passing from Top bushing.</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">31/03/2026</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">TRC</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><i class="ph-bold ph-trash icon-delete"></i></td>
+            </tr>
+            
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue" style="cursor: pointer; text-decoration: underline;" onclick="openJobSheetModal()">8</td>
+              <td>35V2590_CD3</td>
+              <td class="user-table-blue">35V2590_CD3</td>
+              <td>complete actuator overhauling job.</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">02/03/2026</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">ARP</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><i class="ph-bold ph-trash icon-delete"></i></td>
+            </tr>
+            
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue" style="cursor: pointer; text-decoration: underline;" onclick="openJobSheetModal()">9</td>
+              <td></td>
+              <td class="user-table-blue">TV151107</td>
+              <td>test1</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">14/02/2026</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">PMP</div>
+                </div>
+              </td>
+              <td>test 1 cnty as a CMS</td>
+              <td class="user-table-center">PMP</td>
+              <td class="user-table-center">14/02/2026</td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><span class="icon-history">H</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Job Sheet Modal -->
+  <div id="jobSheetModal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+      
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">CONTROL VALVE JOB SHEET</h3>
+          <p class="gnfc-modal-subtitle" style="margin-top: 4px;">Central Maintenance Services - Instrument Department</p>
+        </div>
+        <button class="gnfc-modal-close" onclick="closeJobSheetModal()">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <div class="gnfc-modal-body dashboard-scroll" style="max-height: 80vh;">
+        <div class="flex flex-col gap-24px">
+
+          <!-- Top Row -->
+          <div class="grid grid-cols-4 lg-grid-cols-8 gap-16px">
+            <div>
+              <label class="gnfc-modal-label">JOB NO</label>
+              <input type="text" value="3076" class="gnfc-modal-input">
+            </div>
+            <div>
+              <label class="gnfc-modal-label">TAG ID</label>
+              <input type="text" value="3TCV1536" class="gnfc-modal-input">
+            </div>
+            <div>
+              <label class="gnfc-modal-label">TAG NO</label>
+              <input type="text" value="3TCV1536" class="gnfc-modal-input">
+            </div>
+            <div>
+              <label class="gnfc-modal-label">SIZE</label>
+              <input type="text" value="1 INCH A" class="gnfc-modal-input">
+            </div>
+            <div>
+              <label class="gnfc-modal-label">PLANT</label>
+              <input type="text" value="BOILER" class="gnfc-modal-input">
+            </div>
+            <div>
+              <label class="gnfc-modal-label">MAKE</label>
+              <input type="text" value="IL" class="gnfc-modal-input">
+            </div>
+            <div>
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="text" value="21/11/2023" class="gnfc-modal-input">
+            </div>
+            <div>
+              <label class="gnfc-modal-label">Entered By</label>
+              <input type="text" value="NMD" class="gnfc-modal-input">
+            </div>
+          </div>
+
+          <!-- Info / Defect -->
+          <div class="grid grid-cols-2 gap-16px">
+            <div>
+              <label class="gnfc-modal-label">IMPORTANT INFORMATION</label>
+              <textarea class="gnfc-modal-input" style="height: 60px; resize: vertical;">Spare handwheel assembly for 3TCV1536</textarea>
+            </div>
+            <div>
+              <label class="gnfc-modal-label">DEFECT REPORTED</label>
+              <textarea class="gnfc-modal-input" style="height: 60px; resize: vertical;">Spare handwheel assembly for 3TCV1536</textarea>
+            </div>
+          </div>
+
+          <!-- Attachments -->
+          <div>
+            <label class="gnfc-modal-label">ATTACHMENTS</label>
+            <div class="gjh-create-attach-grid" style="margin-top: 8px;">
+              <div class="gjh-create-attach-card">
+                <div class="gjh-create-attach-top">
+                  <div class="gjh-create-attach-icon">
+                    <i class="ph-fill ph-paperclip color-blue text-lg"></i>
+                  </div>
+                  <span class="gjh-create-attach-badge">
+                    <i class="ph-bold ph-lock"></i> EDIT ONLY
+                  </span>
+                </div>
+                <div class="gjh-create-attach-meta">
+                  <span class="gjh-create-attach-title" style="text-transform: uppercase;">ATTACH 1</span>
+                  <p class="gjh-create-attach-text">Attachments are supported only in Edit mode, not in Create mode.</p>
+                </div>
+              </div>
+
+              <div class="gjh-create-attach-card">
+                <div class="gjh-create-attach-top">
+                  <div class="gjh-create-attach-icon">
+                    <i class="ph-fill ph-paperclip color-blue text-lg"></i>
+                  </div>
+                  <span class="gjh-create-attach-badge">
+                    <i class="ph-bold ph-lock"></i> EDIT ONLY
+                  </span>
+                </div>
+                <div class="gjh-create-attach-meta">
+                  <span class="gjh-create-attach-title" style="text-transform: uppercase;">ATTACH 2</span>
+                  <p class="gjh-create-attach-text">Attachments are supported only in Edit mode, not in Create mode.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Defect Observed -->
+          <div>
+            <label class="gnfc-modal-label">DEFECT OBSERVED</label>
+            <input type="text" class="gnfc-modal-input">
+          </div>
+
+          <!-- Job Description / Testing -->
+          <div class="grid grid-cols-2 gap-16px">
+            <div>
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input" style="height: 100px; resize: vertical;"></textarea>
+            </div>
+            <div>
+              <label class="gnfc-modal-label">TESTING</label>
+              <div class="flex flex-col gap-12px mt-8px">
+                <div class="flex items-center gap-12px">
+                  <label class="flex items-center gap-8px cursor-pointer w-200px color-primary font-12px fw-600">
+                    <input type="checkbox" class="accent-gnfc-blue"> Testing for Passing
+                  </label>
+                  <input type="text" class="gnfc-modal-input flex-1">
+                </div>
+                <div class="flex items-center gap-12px">
+                  <label class="flex items-center gap-8px cursor-pointer w-200px color-primary font-12px fw-600">
+                    <input type="checkbox" class="accent-gnfc-blue"> Testing for complete Body
+                  </label>
+                  <input type="text" class="gnfc-modal-input flex-1">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parts Section -->
+          <div class="grid grid-cols-1 lg-grid-cols-4 gap-24px">
+            <!-- Repaired -->
+            <div>
+              <label class="gnfc-modal-label">PARTS REPAIRED</label>
+              <input type="text" class="gnfc-modal-input mb-12px">
+              <div class="grid grid-cols-2 gap-8px color-primary font-12px fw-600">
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Plug</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Stem</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Seat</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Guide</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Cage</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Body</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Bottom Flange</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Packing Follower</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Bonnet</label>
+              </div>
+            </div>
+            
+            <!-- Replaced -->
+            <div>
+              <label class="gnfc-modal-label">PARTS REPLACED</label>
+              <input type="text" class="gnfc-modal-input mb-12px">
+              <div class="grid grid-cols-2 gap-8px color-primary font-12px fw-600">
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Plug</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Stem</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Seat</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Diaphragm</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Seal rings</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Gland Packing</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Body</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Bottom Flange</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Packing Follower</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="checkbox" class="accent-gnfc-blue"> Bonnet Gasket</label>
+              </div>
+            </div>
+
+            <!-- Painting -->
+            <div>
+              <label class="gnfc-modal-label">PAINTING</label>
+              <div class="flex flex-col gap-12px mt-12px color-primary font-12px fw-600">
+                <label class="flex items-center gap-8px cursor-pointer"><input type="radio" name="painting" class="accent-gnfc-blue"> Yes</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="radio" name="painting" checked class="accent-gnfc-blue"> No</label>
+                <label class="flex items-center gap-8px cursor-pointer"><input type="radio" name="painting" class="accent-gnfc-blue"> Not Req</label>
+              </div>
+            </div>
+
+            <!-- Job Carried Out By -->
+            <div>
+              <label class="gnfc-modal-label">JOB CARRIED OUT BY</label>
+              <div class="flex flex-col gap-12px">
+                <input type="text" class="gnfc-modal-input">
+                <div>
+                  <span class="font-12px fw-600 color-primary block mb-4px text-center border-t border-dark pt-8px">Contractor Cost</span>
+                </div>
+                <div>
+                  <span class="font-12px fw-600 color-primary block mb-8px text-center bg-panel border border-dark p-4px">Attachments</span>
+                  <div class="flex flex-col gap-8px">
+                    <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary w-full text-center">Attach3</button>
+                    <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary w-full text-center">Attach4</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Fields -->
+          <div>
+            <label class="gnfc-modal-label">PARTS MANUFACTURED</label>
+            <input type="text" class="gnfc-modal-input">
+          </div>
+          <div>
+            <label class="gnfc-modal-label">REMARK</label>
+            <textarea class="gnfc-modal-input" style="height: 60px; resize: vertical;"></textarea>
+          </div>
+
+          <div class="grid grid-cols-3 gap-16px">
+            <div>
+              <label class="gnfc-modal-label">WITNESS</label>
+              <select class="gnfc-modal-input gnfc-select-custom cursor-pointer">
+                <option>N.A.</option>
+              </select>
+            </div>
+            <div>
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="text" value="12/05/2026" class="gnfc-modal-input">
+            </div>
+            <div>
+              <label class="gnfc-modal-label">ENGR. INCHARGE</label>
+              <input type="text" value="ENG_TESTER" class="gnfc-modal-input">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="gnfc-modal-footer px-16px py-12px">
+        <div class="flex gap-12px">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="closeJobSheetModal()">Cancel</button>
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary">Update</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      // Extract plant name from URL query params
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant');
+      if (plant) {
+        $('#dynamic-plant-name').text('PLANT: ' + plant.toUpperCase());
+      }
+    });
+
+    function openJobSheetModal() {
+      document.getElementById('jobSheetModal').style.display = 'flex';
+    }
+
+    function closeJobSheetModal() {
+      document.getElementById('jobSheetModal').style.display = 'none';
+    }
+  </script>
+</body>
+
+</html>

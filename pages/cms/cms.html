@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Dashboard | GNFC</title>
+
+  <!-- External CSS from Dashboard -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../joblist/joblist.css">
+  <link rel="stylesheet" href="cms.css">
+  
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'cms';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Dashboard Header -->
+    <div id="header-container" data-title="CMS Dashboard" data-breadcrumb="CMS:active"
+      data-back="../../dashboard.html">
+    </div>
+
+    <!-- CMS Content -->
+    <div class="app-content-area dashboard-scroll">
+
+
+      <!-- Main UI Card -->
+      <div class="cms-main-card">
+        
+        <!-- Top Controls Row -->
+        <div class="cms-top-controls">
+          
+          <!-- Left: Plant Actions Toggle -->
+          <div>
+            <h3 class="cms-section-title-inline">Plant Specific Jobs & Reports</h3>
+            <div class="cms-mode-toggle-inline">
+              <label class="cms-mode-label">
+                <input type="radio" name="cmsAction" value="Add Job" checked class="cms-mode-radio">
+                <i class="ph-bold ph-plus cms-mode-icon"></i> Add Job
+              </label>
+              <label class="cms-mode-label">
+                <input type="radio" name="cmsAction" value="Report" class="cms-mode-radio">
+                <i class="ph-bold ph-file-text cms-mode-icon"></i> Report
+              </label>
+            </div>
+          </div>
+
+          <!-- Right: Global Actions -->
+          <div class="cms-top-right">
+            <h3 class="cms-section-title-inline">Global Actions</h3>
+            <div class="cms-global-actions-right">
+              <button class="cms-btn-minimal-dms" onclick="alert('Opening DMS...')">
+                <i class="ph-fill ph-folder-open"></i> DMS
+              </button>
+              <button class="cms-btn-minimal-date" onclick="window.location.href='cms_datewise_report.html'">
+                <i class="ph-fill ph-calendar"></i> DateWise Report
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+          <!-- Plant Grid -->
+          <div class="job-unit-grid cms-job-grid-override" id="job-grid">
+            <div class="job-unit-card" onclick="handleUnitClick('ACETIC ACID')"><span class="job-unit-name">ACETIC ACID</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('METHANOL-1')"><span class="job-unit-name">METHANOL-1</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('METHANOL-2')"><span class="job-unit-name">METHANOL-2</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('FORMIC ACID')"><span class="job-unit-name">FORMIC ACID</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('AMMONIA')"><span class="job-unit-name">AMMONIA</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('NITRO PHOSPHATE')"><span class="job-unit-name">NITRO PHOSPHATE</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('DM')"><span class="job-unit-name">DM</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('BOILER')"><span class="job-unit-name">BOILER</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('UREA')"><span class="job-unit-name">UREA</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('CMS')"><span class="job-unit-name">CMS</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('BAGGING')"><span class="job-unit-name">BAGGING</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('ANITDI')"><span class="job-unit-name">ANITDI</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('CPSU')"><span class="job-unit-name">CPSU</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('ANIP FILLING')"><span class="job-unit-name">ANIP FILLING</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('ASGP')"><span class="job-unit-name">ASGP</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('ETHYL ACETATE')"><span class="job-unit-name">ETHYL ACETATE</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('MINMAX')"><span class="job-unit-name">MINMAX</span></div>
+            <div class="job-unit-card" onclick="handleUnitClick('AAQM')"><span class="job-unit-name">AAQM</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    $(function () {
+      // Restore selected action from localStorage if it exists
+      const savedAction = localStorage.getItem('selectedCmsAction');
+      if (savedAction) {
+        $(`input[name="cmsAction"][value="${savedAction}"]`).prop('checked', true);
+      }
+
+      // Save selected action to localStorage when changed
+      $('input[name="cmsAction"]').on('change', function() {
+        localStorage.setItem('selectedCmsAction', $(this).val());
+      });
+
+      window.handleUnitClick = function (unit) {
+        const selectedAction = $('input[name="cmsAction"]:checked').val() || "Add Job";
+        console.log(`Clicked Unit: ${unit}, Action: ${selectedAction}`);
+
+        let url = "#";
+        if (selectedAction === "Add Job") {
+          url = `add_job.html?plant=${encodeURIComponent(unit)}`;
+        } else if (selectedAction === "Report") {
+          url = `cms_plant_report.html?plant=${encodeURIComponent(unit)}`;
+        }
+        
+        window.location.href = url;
+      };
+    });
+  </script>
+</body>
+
+</html>
