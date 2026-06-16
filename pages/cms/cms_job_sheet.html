@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Valve Job Sheet | GNFC</title>
+
+  <!-- External CSS from Dashboard -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="cms.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+
+
+  <script>
+    window.activePage = 'cms';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header injected dynamically -->
+    <div id="header-container" data-title="Job Sheet Preview"></div>
+    <script>
+      // Early setup of headers before header.js is executed
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant') || 'BOILER';
+      const headerContainer = document.getElementById('header-container');
+      headerContainer.setAttribute('data-breadcrumb', `CMS|cms.html,Plant Report:cms_plant_report.html?plant=${encodeURIComponent(plant)},Job Sheet Preview:active`);
+      headerContainer.setAttribute('data-back', `cms_plant_report.html?plant=${encodeURIComponent(plant)}`);
+    </script>
+
+    <!-- Page Content -->
+    <div class="app-content-area dashboard-scroll">
+
+      <div class="job-sheet-card">
+        <!-- Top Screen-only Actions -->
+        <div class="job-sheet-actions no-print">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="window.print()">
+            <i class="ph-bold ph-printer"></i>
+            <span>Print Report</span>
+          </button>
+        </div>
+
+        <div class="job-sheet-print-container">
+          <!-- Logo & Header Block -->
+          <div class="job-sheet-header">
+            <div class="job-sheet-logo">
+              <img src="../../assets/images/gnfc-sidebar-logo-short.png" alt="GNFC Logo">
+            </div>
+            <div class="job-sheet-title-stack">
+              <h1>Gujarat Narmada Valley Fertilizers & Chemicals Limited</h1>
+              <h2>Central Maintenance Services - Instrument Department</h2>
+              <h3>CONTROL VALVE JOB SHEET</h3>
+            </div>
+          </div>
+
+          <!-- Structured Report Grid -->
+          <div class="job-sheet-grid">
+            
+            <!-- Row 1: jobNo, tagId, tagNo, size -->
+            <div class="grid-row">
+              <div class="grid-cell col-span-3">
+                <span class="cell-label">JOB NO.</span>
+                <span class="cell-value" id="val-jobNo">5052</span>
+              </div>
+              <div class="grid-cell col-span-3">
+                <span class="cell-label">TAG ID</span>
+                <span class="cell-value" id="val-tagId">4SV1662F_Seal Kit</span>
+              </div>
+              <div class="grid-cell col-span-3">
+                <span class="cell-label">TAG NO.</span>
+                <span class="cell-value" id="val-tagNo">4SV1662F</span>
+              </div>
+              <div class="grid-cell col-span-3">
+                <span class="cell-label">SIZE & RATING</span>
+                <span class="cell-value" id="val-size">200M</span>
+              </div>
+            </div>
+
+            <!-- Row 2: plant, make, date, enteredBy -->
+            <div class="grid-row">
+              <div class="grid-cell col-span-3">
+                <span class="cell-label">PLANT</span>
+                <span class="cell-value" id="val-plant">BOILER</span>
+              </div>
+              <div class="grid-cell col-span-3">
+                <span class="cell-label">MAKE</span>
+                <span class="cell-value" id="val-make">MARTONAIR</span>
+              </div>
+              <div class="grid-cell col-span-3">
+                <span class="cell-label">DATE</span>
+                <span class="cell-value" id="val-date">20/05/2026</span>
+              </div>
+              <div class="grid-cell col-span-3">
+                <span class="cell-label">Entered By</span>
+                <span class="cell-value" id="val-enteredBy">TRC</span>
+              </div>
+            </div>
+
+            <!-- Row 3: Important Info and Defect Reported -->
+            <div class="grid-row border-b">
+              <div class="grid-cell col-span-6 border-r">
+                <span class="cell-label">IMPORTANT INFORMATION</span>
+                <span class="cell-value block-value" id="val-importantInfo">Seal kit and diaphragm cap for cylinder repairing purpose</span>
+              </div>
+              <div class="grid-cell col-span-6">
+                <span class="cell-label">DEFECT REPORTED</span>
+                <span class="cell-value block-value" id="val-defectReported">Seal kit and diaphragm cap for cylinder repairing purpose</span>
+              </div>
+            </div>
+
+            <!-- Row 4: Attachments -->
+            <div class="grid-row border-b">
+              <div class="grid-cell col-span-6 border-r">
+                <span class="cell-label">ATTACHEMENT - 1</span>
+                <div class="attachment-preview-box" id="val-attach1-box" onclick="alert('Viewing attachment 1 document...')">
+                  <i class="ph-fill ph-file-pdf font-24px text-red"></i>
+                  <span class="attach-file-name" id="val-attach1">N/A</span>
+                </div>
+              </div>
+              <div class="grid-cell col-span-6">
+                <span class="cell-label">ATTACHEMENT - 2</span>
+                <div class="attachment-preview-box" id="val-attach2-box" onclick="alert('Viewing attachment 2 document...')">
+                  <i class="ph-fill ph-file-xls font-24px text-green"></i>
+                  <span class="attach-file-name" id="val-attach2">N/A</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 5: Defect Observed -->
+            <div class="grid-row border-b">
+              <div class="grid-cell col-span-12">
+                <span class="cell-label">DEFECT OBSERVED</span>
+                <span class="cell-value block-value" id="val-defectObserved">Seal leakage observed in actuator cylinder assembly. Diaphragm integrity compromised.</span>
+              </div>
+            </div>
+
+            <!-- Row 6: Job Description & Testing -->
+            <div class="grid-row border-b">
+              <div class="grid-cell col-span-6 border-r">
+                <span class="cell-label">JOB DESCRIPTION</span>
+                <span class="cell-value block-value" id="val-jobDescription">Disassembled actuator cylinder, cleaned body cavity, replaced seals and cylinder diaphragm. Calibrated and tested on stand.</span>
+              </div>
+              <div class="grid-cell col-span-6">
+                <span class="cell-label">TESTING</span>
+                <div class="testing-results">
+                  <div class="testing-item">
+                    <input type="checkbox" id="test-passing" checked disabled>
+                    <label for="test-passing">Testing for Passing:</label>
+                    <span class="test-value">OK (Full Stroke achieved)</span>
+                  </div>
+                  <div class="testing-item">
+                    <input type="checkbox" id="test-body" checked disabled>
+                    <label for="test-body">Testing for complete Body:</label>
+                    <span class="test-value">OK (No external leaks)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 7: Parts Repaired / Replaced checklists & Contractor info -->
+            <div class="grid-row border-b">
+              <div class="grid-cell col-span-4 border-r">
+                <span class="cell-label">PARTS REPAIRED</span>
+                <div class="parts-checklist" id="list-parts-repaired">
+                  <!-- Injected via JavaScript -->
+                </div>
+              </div>
+              <div class="grid-cell col-span-4 border-r">
+                <span class="cell-label">PARTS REPLACED</span>
+                <div class="parts-checklist" id="list-parts-replaced">
+                  <!-- Injected via JavaScript -->
+                </div>
+              </div>
+              <div class="grid-cell col-span-4">
+                <span class="cell-label">PAINTING</span>
+                <span class="cell-value font-semibold" id="val-painting">NO</span>
+                
+                <div class="job-sheet-carried-by-wrapper">
+                  <span class="cell-label">JOB CARRIED OUT BY</span>
+                  <span class="cell-value font-semibold" id="val-carriedBy">TRC</span>
+                </div>
+
+                <div class="job-sheet-cost-wrapper">
+                  <span class="cell-label">CONTRACTOR COST</span>
+                  <span class="cell-value font-semibold" id="val-contractorCost">Rs. 450.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 8: Parts Manufactured & Remarks -->
+            <div class="grid-row border-b">
+              <div class="grid-cell col-span-12">
+                <span class="cell-label">PARTS MANUFACTURED</span>
+                <span class="cell-value" id="val-partsManufactured">N/A</span>
+              </div>
+            </div>
+            <div class="grid-row border-b">
+              <div class="grid-cell col-span-12">
+                <span class="cell-label">REMARK</span>
+                <span class="cell-value block-value" id="val-remark">Checked alignment of stem connection. Valve operates smoothly without passing. Re-installed in field.</span>
+              </div>
+            </div>
+
+            <!-- Row 9: Witness, Date, Engr. Incharge -->
+            <div class="grid-row border-b-none">
+              <div class="grid-cell col-span-4 border-r">
+                <span class="cell-label">WITNESS</span>
+                <span class="cell-value" id="val-witness">N.A.</span>
+              </div>
+              <div class="grid-cell col-span-4 border-r">
+                <span class="cell-label">DATE</span>
+                <span class="cell-value" id="val-witnessDate">20/05/2026</span>
+              </div>
+              <div class="grid-cell col-span-4">
+                <span class="cell-label">ENGR. INCHARGE</span>
+                <span class="cell-value" id="val-engrIncharge">ENG_TESTER</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Screen-only Attachments display -->
+          <div class="job-sheet-footer-attachments no-print">
+            <h4 class="font-13px fw-700 color-primary mb-12px job-sheet-footer-title">
+              <i class="ph-fill ph-paperclip text-lg job-sheet-paperclip-icon"></i> Additional Server Attachments
+            </h4>
+            <div class="flex gap-12px job-sheet-footer-flex">
+              <button class="gnfc-modal-btn gnfc-modal-btn-secondary job-sheet-footer-btn" onclick="alert('Downloading Attach3.doc...')">
+                <i class="ph-bold ph-file-doc"></i> Attach3.doc
+              </button>
+              <button class="gnfc-modal-btn gnfc-modal-btn-secondary job-sheet-footer-btn" onclick="alert('Downloading Attach4.xls...')">
+                <i class="ph-bold ph-file-xls"></i> Attach4.xls
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    $(document).ready(function() {
+      // Parse parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant') || 'BOILER';
+      const sr = urlParams.get('sr') || '1';
+      const tagId = urlParams.get('tagId') || '4SV1662F_Seal Kit';
+      const tagNo = urlParams.get('tagNo') || '4SV1662F';
+      const defect = urlParams.get('defect') || 'Seal kit and diaphragm cap for cylinder repairing purpose';
+      const date = urlParams.get('date') || '20/05/2026';
+      const by = urlParams.get('by') || 'TRC';
+      const jobDesc = urlParams.get('jobDesc') || '';
+      const eng = urlParams.get('eng') || 'ENG_TESTER';
+      const completionDate = urlParams.get('completionDate') || date;
+
+      // Calculate a realistic Job No based on SR
+      const jobNoVal = 5000 + parseInt(sr);
+
+      // Populate text fields
+      $('#val-jobNo').text(jobNoVal);
+      $('#val-tagId').text(tagId);
+      $('#val-tagNo').text(tagNo);
+      $('#val-plant').text(plant.toUpperCase());
+      $('#val-date').text(date);
+      $('#val-enteredBy').text(by);
+      $('#val-importantInfo').text(defect);
+      $('#val-defectReported').text(defect);
+      $('#val-carriedBy').text(by);
+      $('#val-witnessDate').text(completionDate);
+      $('#val-engrIncharge').text(eng || 'ENG_TESTER');
+
+      // Specific mock values based on data fields
+      if (jobDesc) {
+        $('#val-jobDescription').text(jobDesc);
+        $('#val-defectObserved').text("Defect observed aligns with reported defect: " + defect);
+      } else {
+        // Use realistic default descriptions
+        $('#val-jobDescription').text("Disassembled cylinder. Cleaned all surfaces. Replaced seal kit, gasket, and diaphragm. Assembled and verified strokes.");
+        $('#val-defectObserved').text("Severe wear on seal rings resulting in cylinder pressure drop. Diaphragm showing micro cracks.");
+      }
+
+      // Check boxes for testing
+      $('#test-passing').prop('checked', true);
+      $('#test-body').prop('checked', true);
+
+      // Setup Attachments mock filenames
+      if (sr === '1') {
+        $('#val-attach1').text('1FCV402.pdf');
+        $('#val-attach2').text('1LCV201_CDV313.XLS');
+        $('#val-attach1-box').show();
+        $('#val-attach2-box').show();
+      } else if (sr === '2') {
+        $('#val-attach1').text('1LCV202_CDV317.pdf');
+        $('#val-attach2').text('N/A');
+        $('#val-attach1-box').show();
+        $('#val-attach2-box').hide();
+      } else {
+        $('#val-attach1').text('N/A');
+        $('#val-attach2').text('N/A');
+        $('#val-attach1-box').hide();
+        $('#val-attach2-box').hide();
+      }
+
+      // Render parts checklist
+      const partsRepairedOptions = ['Plug', 'Stem', 'Seat', 'Guide', 'Cage', 'Body', 'Bottom Flange', 'Packing Follower', 'Bonnet'];
+      const partsReplacedOptions = ['Plug', 'Stem', 'Seat', 'Diaphragm', 'Seal rings', 'Gland Packing', 'Body', 'Bottom Flange', 'Packing Follower', 'Bonnet Gasket'];
+
+      // Setup pre-checked items depending on the job details
+      let repairedChecks = [];
+      let replacedChecks = [];
+
+      if (tagId.toLowerCase().includes('seal') || tagId.toLowerCase().includes('kit')) {
+        repairedChecks = ['Body', 'Bonnet'];
+        replacedChecks = ['Diaphragm', 'Seal rings', 'Bonnet Gasket', 'Gland Packing'];
+      } else if (tagId.toLowerCase().includes('actuator')) {
+        repairedChecks = ['Plug', 'Stem', 'Guide'];
+        replacedChecks = ['Diaphragm', 'Seal rings'];
+      } else {
+        repairedChecks = ['Seat', 'Guide'];
+        replacedChecks = ['Plug', 'Bonnet Gasket'];
+      }
+
+      // Render Repaired Parts
+      let repairedHtml = '';
+      partsRepairedOptions.forEach(part => {
+        const checked = repairedChecks.includes(part) ? 'checked' : '';
+        repairedHtml += `
+          <div class="parts-item">
+            <input type="checkbox" disabled ${checked}>
+            <span>${part}</span>
+          </div>
+        `;
+      });
+      $('#list-parts-repaired').html(repairedHtml);
+
+      // Render Replaced Parts
+      let replacedHtml = '';
+      partsReplacedOptions.forEach(part => {
+        const checked = replacedChecks.includes(part) ? 'checked' : '';
+        replacedHtml += `
+          <div class="parts-item">
+            <input type="checkbox" disabled ${checked}>
+            <span>${part}</span>
+          </div>
+        `;
+      });
+      $('#list-parts-replaced').html(replacedHtml);
+    });
+  </script>
+</body>
+
+</html>

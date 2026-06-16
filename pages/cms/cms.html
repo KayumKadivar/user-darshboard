@@ -45,24 +45,8 @@
         <!-- Top Controls Row -->
         <div class="cms-top-controls">
           
-          <!-- Left: Plant Actions Toggle -->
-          <div>
-            <h3 class="cms-section-title-inline">Plant Specific Jobs & Reports</h3>
-            <div class="cms-mode-toggle-inline">
-              <label class="cms-mode-label">
-                <input type="radio" name="cmsAction" value="Add Job" checked class="cms-mode-radio">
-                <i class="ph-bold ph-plus cms-mode-icon"></i> Add Job
-              </label>
-              <label class="cms-mode-label">
-                <input type="radio" name="cmsAction" value="Report" class="cms-mode-radio">
-                <i class="ph-bold ph-file-text cms-mode-icon"></i> Report
-              </label>
-            </div>
-          </div>
-
           <!-- Right: Global Actions -->
           <div class="cms-top-right">
-            <h3 class="cms-section-title-inline">Global Actions</h3>
             <div class="cms-global-actions-right">
               <button class="cms-btn-minimal-dms" onclick="alert('Opening DMS...')">
                 <i class="ph-fill ph-folder-open"></i> DMS
@@ -104,29 +88,8 @@
 
   <script>
     $(function () {
-      // Restore selected action from localStorage if it exists
-      const savedAction = localStorage.getItem('selectedCmsAction');
-      if (savedAction) {
-        $(`input[name="cmsAction"][value="${savedAction}"]`).prop('checked', true);
-      }
-
-      // Save selected action to localStorage when changed
-      $('input[name="cmsAction"]').on('change', function() {
-        localStorage.setItem('selectedCmsAction', $(this).val());
-      });
-
       window.handleUnitClick = function (unit) {
-        const selectedAction = $('input[name="cmsAction"]:checked').val() || "Add Job";
-        console.log(`Clicked Unit: ${unit}, Action: ${selectedAction}`);
-
-        let url = "#";
-        if (selectedAction === "Add Job") {
-          url = `add_job.html?plant=${encodeURIComponent(unit)}`;
-        } else if (selectedAction === "Report") {
-          url = `cms_plant_report.html?plant=${encodeURIComponent(unit)}`;
-        }
-        
-        window.location.href = url;
+        window.location.href = `cms_plant_report.html?plant=${encodeURIComponent(unit)}`;
       };
     });
   </script>

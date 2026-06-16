@@ -17,6 +17,9 @@
   <script src="js/theme-control.js"></script>
   <script src="js/sidebar.js" defer></script>
   <script src="js/header.js" defer></script>
+  <script>
+    window.activePage = 'dashboard';
+  </script>
 </head>
 
 <body class="dashboard-body">
@@ -38,6 +41,22 @@
           <p>Plant operations overview for today</p>
         </div>
         <div class="status-widgets">
+          <button type="button" class="welcome-action-btn" id="btn-open-4c-reservation">
+            <i class="ph-bold ph-clipboard-text"></i>
+            <span>4C Reservation Request</span>
+          </button>
+          <button type="button" class="welcome-action-btn" id="btn-open-mrs-slip">
+            <i class="ph-bold ph-file-text"></i>
+            <span>MRS Slip</span>
+          </button>
+          <button type="button" class="welcome-action-btn" id="btn-open-param-request">
+            <i class="ph-bold ph-activity"></i>
+            <span>Parameter Request</span>
+          </button>
+          <button type="button" class="welcome-action-btn" id="btn-open-pending-inspections">
+            <i class="ph-bold ph-hourglass-high"></i>
+            <span>Pending Inspections</span>
+          </button>
           <div class="widget-item">
             <i class="ph ph-calendar-blank color-blue"></i>
             <span id="live-date" class="widget-text">Monday, 23 Feb 2026</span>
@@ -363,6 +382,659 @@
     </div>
   </div>
 
+  <!-- ─── 4C RESERVATION MODAL ─── -->
+  <div id="res-4c-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h2 class="gnfc-modal-title">4C RESERVATION / REQUEST TO TAKE ACTION</h2>
+          <p class="gnfc-modal-subtitle">Review active material reservations and status</p>
+        </div>
+        <button class="gnfc-modal-close" id="close-res-4c-modal">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="gnfc-modal-body">
+        <div class="table-responsive">
+          <table class="gnfc-table">
+            <thead>
+              <tr>
+                <th class="res-cell-sr">Sr</th>
+                <th class="res-cell-reqby">Req.By</th>
+                <th class="res-cell-plant">Plant</th>
+                <th class="res-cell-just">Justification</th>
+                <th class="res-cell-cat">Category</th>
+                <th class="res-cell-desc">Item Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Row 1 -->
+              <tr>
+                <td class="res-cell-sr">1</td>
+                <td class="res-cell-reqby">VBT</td>
+                <td class="res-cell-plant">NPP</td>
+                <td class="res-cell-just">For FV33115</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C7735300D/EP POSI,4-20MA,3763,SINGLEACTING,SAMSON</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">11/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr>
+                <td class="res-cell-sr">2</td>
+                <td class="res-cell-reqby">DKV</td>
+                <td class="res-cell-plant">AMM</td>
+                <td class="res-cell-just">Installation in FT423</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C4760044D/DPT,266DSH-H,0-1600MBAR,ST-210 BAR,SS316</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">10/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr>
+                <td class="res-cell-sr">3</td>
+                <td class="res-cell-reqby">FHS</td>
+                <td class="res-cell-plant">AA</td>
+                <td class="res-cell-just">Required for maintenance of valve PV0218 S.PV77089</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C7735200D/POSITIONER E/P,MCD.3582I,4-20ma,FISHER</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">10/06/2026</td>
+                      </tr>
+                      <tr>
+                        <td class="res-cell-sr">2</td>
+                        <td>4C7735401D/RELAY FOR E/P POSI,MODEL 8013,REF 20 MIL</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">10/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 4 -->
+              <tr>
+                <td class="res-cell-sr">4</td>
+                <td class="res-cell-reqby">DKV</td>
+                <td class="res-cell-plant">AMM</td>
+                <td class="res-cell-just">Faulty regulator replacement</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C0112055D/SINGLESTAGE PR REG HYDROGEN R/G-II MESSER</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">09/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 5 -->
+              <tr>
+                <td class="res-cell-sr">5</td>
+                <td class="res-cell-reqby">FHS</td>
+                <td class="res-cell-plant">AA</td>
+                <td class="res-cell-just">Required for repairing of Fisher positioner FV0218</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C7735203D/RELAY KIT,R359CXRS012,POSI. 3582I FISHER</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">09/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 6 -->
+              <tr>
+                <td class="res-cell-sr">6</td>
+                <td class="res-cell-reqby">HNP</td>
+                <td class="res-cell-plant">AN-TDI</td>
+                <td class="res-cell-just">For Scheme S201271 - LS Provision at AN-TDI Cooling Tower, the procurement of
+                  control cable was initiated against PR No. 10137945. Subsequently, this PR was merged with NPP PR No.
+                  10137946 for consolidated procurement. The final PO No. 6200031778 was placed, and the material has
+                  been received at the CS/CO storage location. Accordingly the material for AN-TDI Scheme 8501271 has
+                  been transferred from project stock to WBS No. B-00112.03 and issued through Movement Type 221.</td>
+                <td class="res-cell-cat">SCHEME</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C0215001D/CONTROL CABLE,1PX1.5MM2,ARM,CV SHLD</td>
+                        <td class="nested-qty">200</td>
+                        <td class="nested-date">08/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 7 -->
+              <tr>
+                <td class="res-cell-sr">7</td>
+                <td class="res-cell-reqby">VBT</td>
+                <td class="res-cell-plant">NPP</td>
+                <td class="res-cell-just">For LV35016 and FV41001</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C7735489D/TURNBUCKLE LINK,L=63 MM,PNEU. POSI.,MIL</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">08/06/2026</td>
+                      </tr>
+                      <tr>
+                        <td class="res-cell-sr">2</td>
+                        <td>4C7735400D/E/P POSI,MODEL 8013,4-20MA DC, MIL</td>
+                        <td class="nested-qty">2</td>
+                        <td class="nested-date">08/06/2026</td>
+                      </tr>
+                      <tr>
+                        <td class="res-cell-sr">3</td>
+                        <td>4C6363107D/OLD PROX SW NCN20+U1+Z2/ NEW NBB20-U1-Z2</td>
+                        <td class="nested-qty">2</td>
+                        <td class="nested-date">08/06/2026</td>
+                      </tr>
+                      <tr>
+                        <td class="res-cell-sr">4</td>
+                        <td>TURNBUCKLE LINK,L=108 MM,PNEU. POSI.,MIL4C7735489D</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">08/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 8 -->
+              <tr>
+                <td class="res-cell-sr">8</td>
+                <td class="res-cell-reqby">JBS</td>
+                <td class="res-cell-plant">NPP</td>
+                <td class="res-cell-just">For AT41009/3C001 CPCB indication provision</td>
+                <td class="res-cell-cat">MODIFICATION</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C5853001D/Signal Duplicator, Phenix,MINI MCR-SL-..</td>
+                        <td class="nested-qty">2</td>
+                        <td class="nested-date">08/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 9 -->
+              <tr>
+                <td class="res-cell-sr">9</td>
+                <td class="res-cell-reqby">KSR</td>
+                <td class="res-cell-plant">EA</td>
+                <td class="res-cell-just">Required for EA Plant Chlorination System</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C1211051D/DIAPH PG AG,0-21KG/CM2,1/2 inch BSPM 4 inch DIAL</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">08/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 10 -->
+              <tr>
+                <td class="res-cell-sr">10</td>
+                <td class="res-cell-reqby">KSR</td>
+                <td class="res-cell-plant">MG</td>
+                <td class="res-cell-just">Required for Chlorination system</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C1211011D/PRESSURE REGULATING VALVE,CL2</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">08/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 11 -->
+              <tr>
+                <td class="res-cell-sr">11</td>
+                <td class="res-cell-reqby">ARP</td>
+                <td class="res-cell-plant">BOILER</td>
+                <td class="res-cell-just">Required for boiler 2 Mill B Exh O/L damper</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C6363113D/PROX.SENSOR NJ20-U1-N,P+F</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">05/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 12 -->
+              <tr>
+                <td class="res-cell-sr">12</td>
+                <td class="res-cell-reqby">ARP</td>
+                <td class="res-cell-plant">BOILER</td>
+                <td class="res-cell-just">Required for Boiler 2 Mill C HAG</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C6363115D/PROX.SENSOR NJ40+U1+N,P+F</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">05/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 13 -->
+              <tr>
+                <td class="res-cell-sr">13</td>
+                <td class="res-cell-reqby">KSR</td>
+                <td class="res-cell-plant">MG</td>
+                <td class="res-cell-just">For implementation of scheme B-501395</td>
+                <td class="res-cell-cat">SCHEME</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C4758057D/Smart TT Universal ip,24VDC</td>
+                        <td class="nested-qty">1</td>
+                        <td class="nested-date">05/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- Row 14 -->
+              <tr>
+                <td class="res-cell-sr">14</td>
+                <td class="res-cell-reqby">ARP</td>
+                <td class="res-cell-plant">BOILER</td>
+                <td class="res-cell-just">Required for Boiler 1,2,3,CPP,CPSU maintenance</td>
+                <td class="res-cell-cat">MAINTENANCE</td>
+                <td class="res-cell-desc">
+                  <table class="nested-res-table">
+                    <thead>
+                      <tr>
+                        <th class="res-cell-sr">Sr</th>
+                        <th>Item</th>
+                        <th class="nested-qty">Qty</th>
+                        <th class="nested-date">Req.Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="res-cell-sr">1</td>
+                        <td>4C0132101D/DIAPHRAGM GASKET, CL2</td>
+                        <td class="nested-qty">2</td>
+                        <td class="nested-date">05/06/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-close-res-4c-modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── MATERIAL REQUISITION SLIP MODAL ─── -->
+  <div id="mrs-slip-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide delete-confirm-shell">
+
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h2 class="gnfc-modal-title">Material Requisition Slip</h2>
+          <p class="gnfc-modal-subtitle">Track and return issued department material</p>
+        </div>
+        <button class="gnfc-modal-close" id="close-mrs-slip-modal">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="gnfc-modal-body">
+
+        <div class="table-responsive">
+          <table class="gnfc-table">
+            <thead>
+              <tr>
+                <th class="mrs-w-40 mrs-text-center">Sr</th>
+                <th class="mrs-w-70 mrs-text-center">Plant</th>
+                <th>Description</th>
+                <th class="mrs-w-60 mrs-text-center">Qty</th>
+                <th class="mrs-w-60 mrs-text-center">Days</th>
+                <th class="mrs-w-120 mrs-p-0">
+                  <div class="table-header-stack">
+                    <div class="stack-top">Receiver</div>
+                    <div class="stack-bottom">Ecno</div>
+                  </div>
+                </th>
+                <th class="mrs-w-110 mrs-text-center">Request Date</th>
+                <th class="mrs-w-100 mrs-text-center">Issued By</th>
+                <th class="mrs-w-110 mrs-text-center">Duedate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mrs-text-center mrs-font-bold">1</td>
+                <td class="mrs-text-center mrs-font-semibold">AA</td>
+                <td>Laptop with charger</td>
+                <td class="mrs-text-center">1</td>
+                <td class="mrs-text-center">60</td>
+                <td class="mrs-p-0">
+                  <div class="table-cell-stack">
+                    <div class="stack-top">DAB</div>
+                    <div class="stack-bottom">10870</div>
+                  </div>
+                </td>
+                <td class="mrs-text-center">20/05/2024</td>
+                <td class="mrs-text-center mrs-font-semibold">PHS</td>
+                <td class="mrs-text-center mrs-font-bold color-red">19/07/2024</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-close-mrs-slip-modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── PARAMETER IN-LINE REQUEST MODAL ─── -->
+  <div id="param-request-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--wide delete-confirm-shell">
+
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h2 class="gnfc-modal-title">Parameter In-Line Request</h2>
+          <p class="gnfc-modal-subtitle">Review active bypass requests and take action</p>
+        </div>
+        <button class="gnfc-modal-close" id="close-param-request-modal">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="gnfc-modal-body">
+
+        <div class="table-responsive">
+          <table class="gnfc-table">
+            <thead>
+              <tr>
+                <th class="mrs-w-120 mrs-text-center">PLANT</th>
+                <th class="mrs-w-120 mrs-text-center">TAG NO</th>
+                <th>ACTION</th>
+                <th class="mrs-w-250">IN-LINE REQUEST</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mrs-text-center mrs-font-bold">BOILER</td>
+                <td class="mrs-text-center mrs-font-semibold color-blue">2FT1501C</td>
+                <td>
+                  <div class="param-action-details">
+                    <strong class="color-red">BYPASS</strong><br>
+                    <span><strong>Purpose:</strong> due to boiler low load operation MS flow value to be changed from
+                      130 to 110 TPH</span><br>
+                    <span><strong>MS FLOW</strong></span><br>
+                    <span><strong>Ref:</strong> -</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="param-request-status">
+                    <span class="status-indicator-dot"></span>
+                    <span class="mrs-font-semibold">13/06/2026 11:02:00(NIR)</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-close-param-request-modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── PENDING INSPECTIONS MODAL ─── -->
+  <div id="pending-inspections-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium delete-confirm-shell">
+
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h2 class="gnfc-modal-title">Pending Inspections</h2>
+          <p class="gnfc-modal-subtitle">Spare Procurement & Planning overview</p>
+        </div>
+        <button class="gnfc-modal-close" id="close-pending-inspections-modal">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="gnfc-modal-body">
+        <div class="table-responsive">
+          <table class="gnfc-table">
+            <thead>
+              <tr>
+                <th class="mrs-w-100 mrs-text-center">SAPPRNO</th>
+                <th class="mrs-w-110 mrs-text-center">PONO</th>
+                <th class="mrs-w-100 mrs-text-center">PODATE</th>
+                <th>DESCRIPTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mrs-text-center mrs-font-semibold">10141661</td>
+                <td class="mrs-text-center mrs-font-semibold color-orange">6200024729</td>
+                <td class="mrs-text-center">04/02/2026</td>
+                <td class="mrs-font-medium">SS flexible hose for DFA plant and GT</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer">
+        <button class="gnfc-modal-btn gnfc-modal-btn-secondary" id="btn-close-pending-inspections-modal">Close</button>
+      </div>
+
+    </div>
+  </div>
 
   <!-- JavaScript Logic -->
   <script>
@@ -490,6 +1162,74 @@
       $('#calibration-alert-card, #kpi-card-cal').css('cursor', 'pointer').on('click', function () {
         $('#calibration-modal').addClass('is-open');
         $('body').css('overflow', 'hidden');
+      });
+
+      // 4C Reservation Modal Toggle
+      $('#btn-open-4c-reservation').on('click', function () {
+        $('#res-4c-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      const closeRes4cModal = () => {
+        $('#res-4c-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      };
+
+      $('#close-res-4c-modal, #btn-close-res-4c-modal').on('click', closeRes4cModal);
+
+      // Material Requisition Slip Modal Toggle
+      $('#btn-open-mrs-slip').on('click', function () {
+        $('#mrs-slip-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      const closeMrsSlipModal = () => {
+        $('#mrs-slip-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      };
+
+      $('#close-mrs-slip-modal, #btn-close-mrs-slip-modal').on('click', closeMrsSlipModal);
+
+      // Parameter In-Line Request Modal Toggle
+      $('#btn-open-param-request').on('click', function () {
+        $('#param-request-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      const closeParamRequestModal = () => {
+        $('#param-request-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      };
+
+      $('#close-param-request-modal, #btn-close-param-request-modal').on('click', closeParamRequestModal);
+
+      // Pending Inspections Modal Toggle
+      $('#btn-open-pending-inspections').on('click', function () {
+        $('#pending-inspections-modal').addClass('is-open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      const closePendingInspectionsModal = () => {
+        $('#pending-inspections-modal').removeClass('is-open');
+        $('body').css('overflow', '');
+      };
+
+      $('#close-pending-inspections-modal, #btn-close-pending-inspections-modal').on('click', closePendingInspectionsModal);
+
+      // Add to Escape key listeners
+      $(document).on('keydown', function (e) {
+        if (e.key === 'Escape' && $('#res-4c-modal').hasClass('is-open')) {
+          closeRes4cModal();
+        }
+        if (e.key === 'Escape' && $('#mrs-slip-modal').hasClass('is-open')) {
+          closeMrsSlipModal();
+        }
+        if (e.key === 'Escape' && $('#param-request-modal').hasClass('is-open')) {
+          closeParamRequestModal();
+        }
+        if (e.key === 'Escape' && $('#pending-inspections-modal').hasClass('is-open')) {
+          closePendingInspectionsModal();
+        }
       });
 
     });

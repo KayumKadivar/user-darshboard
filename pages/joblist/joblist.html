@@ -33,8 +33,7 @@
 
   <main class="main-wrapper">
     <!-- Header Container -->
-    <div id="header-container" data-title="JOB LIST" data-back="../../dashboard.html"
-      data-breadcrumb="Dashboard:../../dashboard.html,Job List:active">
+    <div id="header-container" data-title="Job List" data-back="../../dashboard.html" data-breadcrumb="Job List:active">
     </div>
 
     <!-- Page Content -->
@@ -129,8 +128,7 @@
             <input type="radio" name="jobFilter" class="filter-radio" value="JOB Planner">
             <span>JOB Planner</span>
           </label>
-        <!-- </div> -->
-        <!-- <div class="filter-row"> -->
+     
           <label class="filter-option">
             <input type="radio" name="jobFilter" class="filter-radio" value="Weekly Planner">
             <span>Weekly Planner</span>
@@ -147,13 +145,11 @@
 
   <script>
     $(function () {
-      // Restore selected filter from localStorage if it exists
       const savedFilter = localStorage.getItem('selectedJobFilter');
       if (savedFilter) {
         $(`input[name="jobFilter"][value="${savedFilter}"]`).prop('checked', true);
       }
 
-      // Save selected filter to localStorage when changed
       $('input[name="jobFilter"]').on('change', function() {
         localStorage.setItem('selectedJobFilter', $(this).val());
       });
@@ -162,7 +158,6 @@
         const selectedFilter = $('input[name="jobFilter"]:checked').val() || "Unknown";
         console.log(`Clicked Unit: ${unit}, Mode: ${selectedFilter}`);
 
-        // Navigate based on mode
         let url = "";
         if (selectedFilter === "S/D Joblist") {
           url = `sdjoblist.html`;

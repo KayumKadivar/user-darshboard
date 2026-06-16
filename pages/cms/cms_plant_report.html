@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../../css/modal-ui.css">
   <link rel="stylesheet" href="../../css/pages/style.css">
   <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="cms.css">
 
   <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
   <script src="../../js/theme-control.js"></script>
@@ -43,16 +44,24 @@
             <h3 class="jt-main-title">Detailed Remark Report</h3>
           </div>
         </div>
-        <!-- Year Selector with Change Icons -->
-        <div class="jt-year-selector">
-          <button type="button" class="jt-year-nav-btn" id="btn-prev-year" title="Previous Year">
-            <i class="ph-bold ph-caret-left"></i>
-          </button>
-          <div class="jt-year-display">
-            Year: <span id="active-year">2025</span>
+        <!-- Controls Group -->
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <!-- Year Selector with Change Icons -->
+          <div class="jt-year-selector">
+            <button type="button" class="jt-year-nav-btn" id="btn-prev-year" title="Previous Year">
+              <i class="ph-bold ph-caret-left"></i>
+            </button>
+            <div class="jt-year-display">
+              Year: <span id="active-year">2025</span>
+            </div>
+            <button type="button" class="jt-year-nav-btn" id="btn-next-year" title="Next Year">
+              <i class="ph-bold ph-caret-right"></i>
+            </button>
           </div>
-          <button type="button" class="jt-year-nav-btn" id="btn-next-year" title="Next Year">
-            <i class="ph-bold ph-caret-right"></i>
+          <!-- Add Job Button -->
+          <button type="button" class="plant-nav-pill" id="btn-add-job" onclick="goToAddJobPage()">
+            <i class="ph-bold ph-plus"></i>
+            <span>Add Job</span>
           </button>
         </div>
       </div>
@@ -489,15 +498,433 @@
     </div>
   </div>
 
+  <!-- Attachment Selection Modal -->
+  <div id="attachmentModal" class="gnfc-modal-overlay" style="z-index: 140;">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow" style="background: var(--gnfc-modal-body-bg, #ffffff);">
+      
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">CONTROL VALVE JOB SHEET</h3>
+          <p class="gnfc-modal-subtitle" id="attachment-modal-title" style="margin-top: 4px;">ATTACHMENT: 1</p>
+        </div>
+        <button class="gnfc-modal-close" type="button" onclick="closeAttachmentModal()">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <div class="gnfc-modal-body" style="padding: 20px 24px;">
+        <!-- Banner Info -->
+        <div class="attach-header-banner">SELECTION FROM LOCAL MACHINE</div>
+
+        <!-- File Upload Field -->
+        <div style="margin-top: 16px;">
+          <label class="gnfc-modal-label" style="display: block; margin-bottom: 8px;">Select File</label>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="text" id="attachment-file-display" readonly class="gnfc-modal-input" placeholder="No file selected">
+            <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" style="height: 38px; font-size: 13px;" onclick="document.getElementById('attachment-file-input').click()">Browse...</button>
+            <input type="file" id="attachment-file-input" style="display: none;" onchange="document.getElementById('attachment-file-display').value = this.files[0] ? this.files[0].name : ''">
+          </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--gnfc-modal-shell-border, #cbd5e1); margin: 20px 0 16px 0;">
+
+        <!-- Server Option Link -->
+        <div style="text-align: left;">
+          <a class="attach-link" href="#" onclick="openServerAttachmentModal()">
+            <i class="ph ph-hard-drive" style="vertical-align: middle; margin-right: 4px;"></i> ATTACHMENT FROM SERVER
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer px-16px py-12px">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" onclick="saveAttachmentSelection()">OK</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="closeAttachmentModal()">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Server Attachment Selection Modal -->
+  <div id="serverAttachmentModal" class="gnfc-modal-overlay" style="z-index: 150;">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium" style="background: var(--gnfc-modal-body-bg, #ffffff);">
+      
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">CONTROL VALVE JOB SHEET</h3>
+          <p class="gnfc-modal-subtitle" id="server-attachment-modal-title" style="margin-top: 4px;">ATTACHMENT: 2</p>
+        </div>
+        <button class="gnfc-modal-close" type="button" onclick="closeServerAttachmentModal()">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <div class="gnfc-modal-body" style="padding: 20px 24px; max-height: 70vh; overflow-y: auto;">
+        <!-- Banner Info -->
+        <div class="attach-header-banner">SELECTION FROM SERVER</div>
+
+        <!-- Filter Row -->
+        <div style="background: var(--app-panel-alt, #edf2f8); border-radius: 4px; padding: 10px 14px; margin-bottom: 16px; border: 1px solid var(--gnfc-modal-secondary-border, #cbd5e1); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+          <div style="font-weight: 700; color: var(--gnfc-modal-title-color); font-size: 13px;">Browse And Select File</div>
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <input type="text" id="server-file-search" class="gnfc-modal-input" style="height: 32px; width: 180px; font-size: 12px; padding: 4px 8px;" placeholder="Search files...">
+            <a href="#" class="attach-link" onclick="closeServerAttachmentModal()" style="font-size: 13px;">Cancel</a>
+          </div>
+        </div>
+
+        <!-- Files Table -->
+        <div class="user-table-wrapper" style="max-height: 40vh; overflow-y: auto;">
+          <table class="user-table min-w-full" style="font-size: 13px;">
+            <thead>
+              <tr>
+                <th style="text-align: left; padding: 8px;">File Name</th>
+                <th style="width: 100px; text-align: right; padding: 8px;">Size</th>
+                <th style="width: 200px; text-align: left; padding: 8px;">Type</th>
+              </tr>
+            </thead>
+            <tbody id="server-files-table-body">
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1FCV402.pdf')">1FCV402.pdf</a></td>
+                <td style="text-align: right;">229213</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1LCV201_CDV313.XLS')">1LCV201_CDV313.XLS</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1LCV202_CDV317.pdf')">1LCV202_CDV317.pdf</a></td>
+                <td style="text-align: right;">1279411</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('11cv202_cdv317.xls')">11cv202_cdv317.xls</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('11cv203x_cdv326.xls')">11cv203x_cdv326.xls</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1LCV203Y_CDV323.XLS')">1LCV203Y_CDV323.XLS</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1LCV204_CDV329.pdf')">1LCV204_CDV329.pdf</a></td>
+                <td style="text-align: right;">1216385</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('11cv204_cdv329.xls')">11cv204_cdv329.xls</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1LCV302DM_CDV430.pdf')">1LCV302DM_CDV430.pdf</a></td>
+                <td style="text-align: right;">1132862</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1LCV302DM_CDV430.XLS')">1LCV302DM_CDV430.XLS</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('11cv402x_cdv297.pdf')">11cv402x_cdv297.pdf</a></td>
+                <td style="text-align: right;">640252</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1LCV402X_CDV297.XLS')">1LCV402X_CDV297.XLS</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1LCV402Y_CDV301.XLS')">1LCV402Y_CDV301.XLS</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1PCV1631.xls')">1PCV1631.xls</a></td>
+                <td style="text-align: right;">34304</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1PCV205_SV111.XLS')">1PCV205_SV111.XLS</a></td>
+                <td style="text-align: right;">35328</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1PCV206_SV77.pdf')">1PCV206_SV77.pdf</a></td>
+                <td style="text-align: right;">1204170</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1PCV206_SV77.XLS')">1PCV206_SV77.XLS</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1PCV207_SV82.pdf')">1PCV207_SV82.pdf</a></td>
+                <td style="text-align: right;">1154577</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1PCV207_SV82.XLS')">1PCV207_SV82.XLS</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1PCV208_EXV149.pdf')">1PCV208_EXV149.pdf</a></td>
+                <td style="text-align: right;">1249523</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1PCV208_EXV149.XLS')">1PCV208_EXV149.XLS</a></td>
+                <td style="text-align: right;">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1tcv1570g.pdf')">1tcv1570g.pdf</a></td>
+                <td style="text-align: right;">228838</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1TCV1631.xls')">1TCV1631.xls</a></td>
+                <td style="text-align: right;">34304</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('1TCV305.pdf')">1TCV305.pdf</a></td>
+                <td style="text-align: right;">229203</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('2FCV1631F_A_B_GSPL_NG flow cv.pdf')">2FCV1631F_A_B_GSPL_NG flow cv.pdf</a></td>
+                <td style="text-align: right;">100719</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('2hv1641-ng to sggu.pdf')">2hv1641-ng to sggu.pdf</a></td>
+                <td style="text-align: right;">510932</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('2PCV205_SV111.XLS')">2PCV205_SV111.XLS</a></td>
+                <td style="text-align: right;">35328</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('2PCV205_SV111_IL.jpg')">2PCV205_SV111_IL.jpg</a></td>
+                <td style="text-align: right;">136768</td>
+                <td>JPEG Image</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('3fcv1631f-ani tdi ngfcv.pdf')">3fcv1631f-ani tdi ngfcv.pdf</a></td>
+                <td style="text-align: right;">2343995</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('4FCV16012A_B.xls')">4FCV16012A_B.xls</a></td>
+                <td style="text-align: right;">37888</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('4FCV1602A_B.pdf')">4FCV1602A_B.pdf</a></td>
+                <td style="text-align: right;">887367</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold" onclick="selectServerFile('4FCV1606.pdf')">4FCV1606.pdf</a></td>
+                <td style="text-align: right;">900827</td>
+                <td>PDF File</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer px-16px py-12px">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="closeServerAttachmentModal()">Cancel</button>
+      </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteConfirmModal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow delete-confirm-shell">
+      
+      <!-- Header -->
+      <div class="gnfc-modal-header delete-confirm-header">
+        <div>
+          <h3 class="gnfc-modal-title delete-confirm-title"><i class="ph-bold ph-warning-circle delete-confirm-warn-icon"></i>Confirm Delete</h3>
+        </div>
+        <button class="gnfc-modal-close" type="button" onclick="closeDeleteConfirmModal()">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="gnfc-modal-body delete-confirm-body">
+        <p class="delete-confirm-text">
+          Are you sure you want to delete this job record? This action cannot be undone.
+        </p>
+        <div class="delete-confirm-info-box">
+          <strong>Tag ID:</strong> <span id="delete-confirm-tagid" class="delete-confirm-tagid-val"></span><br>
+          <strong class="delete-confirm-label">Defect:</strong> <span id="delete-confirm-defect" class="delete-confirm-defect-val"></span>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer px-16px py-12px delete-confirm-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="closeDeleteConfirmModal()">Cancel</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-danger" id="btn-confirm-delete-action">Delete</button>
+      </div>
+
+    </div>
+  </div>
+
   <script>
     $(document).ready(function () {
       // Extract plant name from URL query params
       const urlParams = new URLSearchParams(window.location.search);
-      const plant = urlParams.get('plant');
+      const plant = urlParams.get('plant') || 'BOILER';
       if (plant) {
         $('#dynamic-plant-name').text('PLANT: ' + plant.toUpperCase());
       }
+
+      // Redirect to Add Job page if action=add query parameter is present
+      const action = urlParams.get('action');
+      if (action === 'add') {
+        goToAddJobPage();
+      }
+
+      // Load custom jobs from localStorage and append them to table
+      const customJobs = JSON.parse(localStorage.getItem('custom_jobs') || '[]');
+      customJobs.forEach(function(job) {
+        const activePlantName = plant.toLowerCase();
+        const jobPlantName = (job.plant || 'BOILER').toLowerCase();
+        if (jobPlantName === activePlantName) {
+          const rowHtml = `
+            <tr class="user-table-row">
+              <td class="user-table-center user-table-secondary user-table-blue"></td>
+              <td>${job.tagId}</td>
+              <td class="user-table-blue">${job.tagNo}</td>
+              <td>${job.defect}</td>
+              <td style="padding: 0;">
+                <div class="user-table-cell-stack">
+                  <div class="user-table-center" style="padding: 12px 16px;">${job.date}</div>
+                  <div class="user-table-center" style="padding: 12px 16px;">${job.by}</div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="user-table-center"><i class="ph ph-file-text icon-file"></i></td>
+              <td class="user-table-center"><i class="ph-bold ph-trash icon-delete"></i></td>
+            </tr>
+          `;
+          $('.plant-table-body').append(rowHtml);
+        }
+      });
+      reindexTableRows();
+
+      // Bind click event to report file icons to navigate to Job Sheet page
+      $(document).on('click', '.icon-file', function(e) {
+        e.preventDefault();
+        openJobSheetPage(this);
+      });
+
+      // Bind click event to delete icons to open confirmation modal
+      $(document).on('click', '.icon-delete', function(e) {
+        e.preventDefault();
+        openDeleteConfirmModal(this);
+      });
+
+      // Bind confirm action button on delete modal
+      $('#btn-confirm-delete-action').on('click', function() {
+        if (rowToDelete) {
+          const tagId = rowToDelete.find('td').eq(1).text().trim();
+          rowToDelete.fadeOut(400, function() {
+            $(this).remove();
+            reindexTableRows();
+          });
+
+          // Also remove it from localStorage custom_jobs if present
+          let customJobs = JSON.parse(localStorage.getItem('custom_jobs') || '[]');
+          customJobs = customJobs.filter(function(job) {
+            return job.tagId !== tagId;
+          });
+          localStorage.setItem('custom_jobs', JSON.stringify(customJobs));
+        }
+        closeDeleteConfirmModal();
+      });
     });
+
+    let rowToDelete = null;
+
+    function openDeleteConfirmModal(el) {
+      rowToDelete = $(el).closest('tr');
+      const tagId = rowToDelete.find('td').eq(1).text().trim();
+      const defect = rowToDelete.find('td').eq(3).text().trim();
+      
+      $('#delete-confirm-tagid').text(tagId);
+      $('#delete-confirm-defect').text(defect);
+      
+      document.getElementById('deleteConfirmModal').style.display = 'flex';
+    }
+
+    function closeDeleteConfirmModal() {
+      document.getElementById('deleteConfirmModal').style.display = 'none';
+      rowToDelete = null;
+    }
+
+    function reindexTableRows() {
+      $('.plant-table-body tr').each(function(index) {
+        $(this).find('td').first().text(index + 1);
+      });
+    }
+
+    function openJobSheetPage(el) {
+      const row = $(el).closest('tr');
+      const sr = row.find('td').eq(0).text().trim();
+      const tagId = row.find('td').eq(1).text().trim();
+      const tagNo = row.find('td').eq(2).text().trim();
+      const defect = row.find('td').eq(3).text().trim();
+      
+      const cellStack = row.find('td').eq(4).find('.user-table-center');
+      const dateStr = cellStack.length > 0 ? cellStack.eq(0).text().trim() : '';
+      const enteredBy = cellStack.length > 1 ? cellStack.eq(1).text().trim() : '';
+      
+      const jobDesc = row.find('td').eq(5).text().trim();
+      const eng = row.find('td').eq(6).text().trim();
+      const completionDate = row.find('td').eq(7).text().trim();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant') || 'BOILER';
+
+      const params = new URLSearchParams({
+        plant: plant,
+        sr: sr,
+        tagId: tagId,
+        tagNo: tagNo,
+        defect: defect,
+        date: dateStr,
+        by: enteredBy,
+        jobDesc: jobDesc,
+        eng: eng,
+        completionDate: completionDate
+      });
+
+      window.location.href = 'cms_job_sheet.html?' + params.toString();
+    }
 
     function openJobSheetModal() {
       document.getElementById('jobSheetModal').style.display = 'flex';
@@ -506,6 +933,69 @@
     function closeJobSheetModal() {
       document.getElementById('jobSheetModal').style.display = 'none';
     }
+
+    function goToAddJobPage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant') || 'BOILER';
+      window.location.href = `cms_add_job.html?plant=${encodeURIComponent(plant)}`;
+    }
+
+    let currentAttachmentNum = 1;
+
+    function openAttachmentModal(num) {
+      currentAttachmentNum = num;
+      document.getElementById('attachment-modal-title').innerText = 'ATTACHMENT:' + num;
+      document.getElementById('attachment-file-display').value = '';
+      document.getElementById('attachment-file-input').value = '';
+      document.getElementById('attachmentModal').style.display = 'flex';
+    }
+
+    function closeAttachmentModal() {
+      document.getElementById('attachmentModal').style.display = 'none';
+    }
+
+    function saveAttachmentSelection() {
+      const fileName = document.getElementById('attachment-file-display').value;
+      if (fileName) {
+        document.getElementById('btn-attach-' + currentAttachmentNum + '-label').innerText = fileName;
+      }
+      closeAttachmentModal();
+    }
+
+    function openServerAttachmentModal() {
+      // Close local attachment modal
+      closeAttachmentModal();
+      document.getElementById('server-attachment-modal-title').innerText = 'ATTACHMENT:' + currentAttachmentNum;
+      document.getElementById('server-file-search').value = '';
+      $('#server-files-table-body tr').show();
+      document.getElementById('serverAttachmentModal').style.display = 'flex';
+    }
+
+    function closeServerAttachmentModal() {
+      document.getElementById('serverAttachmentModal').style.display = 'none';
+      // Go back to the local file attachment modal
+      openAttachmentModal(currentAttachmentNum);
+    }
+
+    function selectServerFile(fileName) {
+      document.getElementById('btn-attach-' + currentAttachmentNum + '-label').innerText = fileName;
+      document.getElementById('serverAttachmentModal').style.display = 'none';
+    }
+
+    // Live search filtering for server files
+    $(document).ready(function() {
+      $('#server-file-search').on('input', function() {
+        const val = $(this).val().toLowerCase();
+        $('#server-files-table-body tr').each(function() {
+          const text = $(this).find('td').first().text().toLowerCase();
+          if (text.includes(val)) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+    });
   </script>
 </body>
 

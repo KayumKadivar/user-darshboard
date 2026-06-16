@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Job | GNFC</title>
+
+  <!-- External CSS from Dashboard -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="cms.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'cms';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+    <!-- Header injected dynamically -->
+    <div id="header-container" data-title="Add New Job"></div>
+    <script>
+      // Early setup of headers before header.js is executed
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant') || 'BOILER';
+      const headerContainer = document.getElementById('header-container');
+      headerContainer.setAttribute('data-breadcrumb', `CMS|cms.html,Plant Report:cms_plant_report.html?plant=${encodeURIComponent(plant)},Add Job:active`);
+      headerContainer.setAttribute('data-back', `cms_plant_report.html?plant=${encodeURIComponent(plant)}`);
+    </script>
+
+    <!-- Page Content -->
+    <div class="app-content-area dashboard-scroll">
+
+      <div class="job-sheet-card">
+
+        <!-- Add Job Form Form -->
+        <form id="add-job-form">
+          <div class="flex flex-col gap-24px add-job-form-body">
+
+            <!-- Form Grid -->
+            <div class="grid grid-cols-4 lg-grid-cols-12 gap-16px">
+
+              <!-- TAG ID -->
+              <div class="col-span-3">
+                <label class="gnfc-modal-label">TAG ID</label>
+                <input type="text" id="job-tag-id" class="gnfc-modal-input" placeholder="e.g. 4SV1662F_Seal Kit">
+              </div>
+
+              <!-- TAG NO -->
+              <div class="col-span-6">
+                <label class="gnfc-modal-label">TAG NO</label>
+                <div class="flex gap-4px">
+                  <input type="text" id="job-tag-no-search" class="gnfc-modal-input flex-1" placeholder="Search Tag">
+                  <select id="job-tag-no-select" class="gnfc-modal-input flex-1">
+                    <option value=""></option>
+                    <option value="4SV1662F">4SV1662F</option>
+                    <option value="XV17901">XV17901</option>
+                    <option value="35V2590_CD3">35V2590_CD3</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- SIZE & RATING -->
+              <div class="col-span-3">
+                <label class="gnfc-modal-label">SIZE & RATING</label>
+                <input type="text" id="job-size" class="gnfc-modal-input" placeholder="e.g. 200M">
+              </div>
+
+              <!-- PLANT -->
+              <div class="col-span-3">
+                <label class="gnfc-modal-label">PLANT</label>
+                <input type="text" id="job-plant" class="gnfc-modal-input" value="BOILER" readonly>
+              </div>
+
+              <!-- MAKE -->
+              <div class="col-span-3">
+                <label class="gnfc-modal-label">MAKE</label>
+                <select id="job-make" class="gnfc-modal-input">
+                  <option value=""></option>
+                  <option value="IL" selected>IL</option>
+                  <option value="MARTONAIR">MARTONAIR</option>
+                  <option value="OTHER">OTHER</option>
+                </select>
+              </div>
+
+              <!-- DATE -->
+              <div class="col-span-3">
+                <label class="gnfc-modal-label">DATE</label>
+                <input type="text" id="job-date" class="gnfc-modal-input" value="15/06/2026">
+              </div>
+
+              <!-- Entered By -->
+              <div class="col-span-3">
+                <label class="gnfc-modal-label">Entered By</label>
+                <input type="text" id="job-entered-by" class="gnfc-modal-input" value="ENG_TESTER">
+              </div>
+
+            </div>
+
+            <!-- Information / Defect Grid -->
+            <div class="grid grid-cols-1 lg-grid-cols-2 gap-16px">
+              <div>
+                <label class="gnfc-modal-label">IMPORTANT INFORMATION</label>
+                <textarea id="job-important-info" class="gnfc-modal-input" style="height: 80px; resize: vertical;"
+                  placeholder="Enter any important notes..."></textarea>
+              </div>
+              <div>
+                <label class="gnfc-modal-label">DEFECT REPORTED</label>
+                <textarea id="job-defect-reported" class="gnfc-modal-input" style="height: 80px; resize: vertical;"
+                  placeholder="Enter defect description..."></textarea>
+              </div>
+            </div>
+
+            <!-- Attachments Row -->
+            <div>
+              <label class="gnfc-modal-label">ATTACHMENTS</label>
+              <div class="grid grid-cols-1 lg-grid-cols-2 gap-16px attachments-row-grid">
+
+                <div>
+                  <label class="gnfc-modal-label attachment-label-sub">ATTACHEMENT - 1</label>
+                  <div class="mt-4">
+                    <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary w-full attachment-btn"
+                      onclick="openAttachmentModal(1)" id="btn-attach-1-label">Attach1</button>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="gnfc-modal-label attachment-label-sub">ATTACHEMENT - 2</label>
+                  <div class="mt-4">
+                    <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary w-full attachment-btn"
+                      onclick="openAttachmentModal(2)" id="btn-attach-2-label">Attach2</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="form-actions-row">
+              <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary btn-padding-large"
+                id="btn-cancel-job">
+                Cancel
+              </button>
+              <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary btn-padding-large">
+                Save Job
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Attachment Selection Modal -->
+  <div id="attachmentModal" class="gnfc-modal-overlay z-index-140">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">CONTROL VALVE JOB SHEET</h3>
+          <p class="gnfc-modal-subtitle modal-subtitle-mt" id="attachment-modal-title">ATTACHMENT: 1</p>
+        </div>
+        <button class="gnfc-modal-close" type="button" onclick="closeAttachmentModal()">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <div class="gnfc-modal-body modal-body-padded">
+        <!-- Banner Info -->
+        <div class="attach-header-banner">SELECTION FROM LOCAL MACHINE</div>
+
+        <!-- File Upload Field -->
+        <div class="add-job-form-body">
+          <label class="gnfc-modal-label modal-label-block">Select File</label>
+          <div class="flex-align-center-gap8">
+            <input type="text" id="attachment-file-display" readonly class="gnfc-modal-input"
+              placeholder="No file selected">
+            <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary btn-browse"
+              onclick="document.getElementById('attachment-file-input').click()">Browse...</button>
+            <input type="file" id="attachment-file-input" class="hidden"
+              onchange="document.getElementById('attachment-file-display').value = this.files[0] ? this.files[0].name : ''">
+          </div>
+        </div>
+
+        <hr class="modal-divider">
+
+        <!-- Server Option Link -->
+        <div class="text-left">
+          <a class="attach-link" href="#" onclick="openServerAttachmentModal()">
+            <i class="ph ph-hard-drive icon-align"></i> ATTACHMENT FROM SERVER
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer px-16px py-12px">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary"
+          onclick="saveAttachmentSelection()">OK</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="closeAttachmentModal()">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Server Attachment Selection Modal -->
+  <div id="serverAttachmentModal" class="gnfc-modal-overlay z-index-150">
+    <div class="gnfc-modal-shell gnfc-modal-shell--medium">
+
+      <!-- Header -->
+      <div class="gnfc-modal-header">
+        <div>
+          <h3 class="gnfc-modal-title">CONTROL VALVE JOB SHEET</h3>
+          <p class="gnfc-modal-subtitle modal-subtitle-mt" id="server-attachment-modal-title">ATTACHMENT: 2</p>
+        </div>
+        <button class="gnfc-modal-close" type="button" onclick="closeServerAttachmentModal()">
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <div class="gnfc-modal-body modal-body-scrollable">
+        <!-- Banner Info -->
+        <div class="attach-header-banner">SELECTION FROM SERVER</div>
+
+        <!-- Filter Row -->
+        <div class="filter-row-container">
+          <div class="filter-title">Browse And Select File</div>
+          <div class="flex-align-center-gap12">
+            <input type="text" id="server-file-search" class="gnfc-modal-input search-input-small"
+              placeholder="Search files...">
+            <a href="#" class="attach-link cancel-link-font" onclick="closeServerAttachmentModal()">Cancel</a>
+          </div>
+        </div>
+
+        <!-- Files Table -->
+        <div class="user-table-wrapper table-wrapper-scrollable">
+          <table class="user-table min-w-full table-font-small">
+            <thead>
+              <tr>
+                <th class="th-align-left-padded">File Name</th>
+                <th class="th-align-right-padded">Size</th>
+                <th class="th-type-padded">Type</th>
+              </tr>
+            </thead>
+            <tbody id="server-files-table-body">
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('1FCV402.pdf')">1FCV402.pdf</a></td>
+                <td class="td-align-right">229213</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('1LCV201_CDV313.XLS')">1LCV201_CDV313.XLS</a></td>
+                <td class="td-align-right">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('1LCV202_CDV317.pdf')">1LCV202_CDV317.pdf</a></td>
+                <td class="td-align-right">1279411</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('11cv202_cdv317.xls')">11cv202_cdv317.xls</a></td>
+                <td class="td-align-right">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('11cv203x_cdv326.xls')">11cv203x_cdv326.xls</a></td>
+                <td class="td-align-right">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('1LCV203Y_CDV323.XLS')">1LCV203Y_CDV323.XLS</a></td>
+                <td class="td-align-right">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('1LCV204_CDV329.pdf')">1LCV204_CDV329.pdf</a></td>
+                <td class="td-align-right">1216385</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('11cv204_cdv329.xls')">11cv204_cdv329.xls</a></td>
+                <td class="td-align-right">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('1LCV302DM_CDV430.pdf')">1LCV302DM_CDV430.pdf</a></td>
+                <td class="td-align-right">1132862</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('1LCV302DM_CDV430.XLS')">1LCV302DM_CDV430.XLS</a></td>
+                <td class="td-align-right">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('11cv402x_cdv297.pdf')">11cv402x_cdv297.pdf</a></td>
+                <td class="td-align-right">640252</td>
+                <td>PDF File</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('1LCV402X_CDV297.XLS')">1LCV402X_CDV297.XLS</a></td>
+                <td class="td-align-right">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+              <tr class="user-table-row">
+                <td><a href="#" class="user-table-blue font-semibold"
+                    onclick="selectServerFile('1LCV402Y_CDV301.XLS')">1LCV402Y_CDV301.XLS</a></td>
+                <td class="td-align-right">34816</td>
+                <td>Microsoft Excel Worksheet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="gnfc-modal-footer px-16px py-12px">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
+          onclick="closeServerAttachmentModal()">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant') || 'BOILER';
+
+      // Set plant name in field
+      $('#job-plant').val(plant.toUpperCase());
+
+      // Sync Search Tag input with Tag Select dropdown
+      $('#job-tag-no-search').on('input', function () {
+        const query = $(this).val().toLowerCase();
+        $('#job-tag-no-select option').each(function () {
+          const val = $(this).val();
+          if (val && !val.toLowerCase().includes(query)) {
+            $(this).hide();
+          } else {
+            $(this).show();
+          }
+        });
+      });
+
+      $('#job-tag-no-select').on('change', function () {
+        const val = $(this).val();
+        if (val) {
+          $('#job-tag-no-search').val(val);
+          // Auto-fill Tag ID if empty
+          if (!$('#job-tag-id').val()) {
+            $('#job-tag-id').val(val + '_Job');
+          }
+        }
+      });
+
+      // Set default date to today in DD/MM/YYYY format
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+      $('#job-date').val(`${dd}/${mm}/${yyyy}`);
+
+      // Handle Cancel Button
+      $('#btn-cancel-job').on('click', function (e) {
+        e.preventDefault();
+        window.location.href = `cms_plant_report.html?plant=${encodeURIComponent(plant)}`;
+      });
+
+      // Handle Form Submit
+      $('#add-job-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const tagId = $('#job-tag-id').val().trim();
+        const tagNo = $('#job-tag-no-search').val().trim() || $('#job-tag-no-select').val();
+        const defect = $('#job-defect-reported').val().trim();
+
+        if (!tagId || !tagNo || !defect) {
+          alert('Please fill out Tag ID, Tag No, and Defect Reported.');
+          return;
+        }
+
+        const size = $('#job-size').val().trim() || 'N/A';
+        const make = $('#job-make').val();
+        const dateVal = $('#job-date').val().trim();
+        const enteredBy = $('#job-entered-by').val().trim();
+        const importantInfo = $('#job-important-info').val().trim();
+
+        const attach1 = $('#btn-attach-1-label').text();
+        const attach2 = $('#btn-attach-2-label').text();
+
+        // Create new job object
+        const newJob = {
+          tagId: tagId,
+          tagNo: tagNo,
+          defect: defect,
+          size: size,
+          make: make,
+          date: dateVal,
+          by: enteredBy,
+          importantInfo: importantInfo,
+          attach1: attach1 !== 'Attach1' ? attach1 : 'N/A',
+          attach2: attach2 !== 'Attach2' ? attach2 : 'N/A',
+          plant: plant
+        };
+
+        // Fetch existing custom jobs from localStorage
+        const customJobs = JSON.parse(localStorage.getItem('custom_jobs') || '[]');
+        customJobs.push(newJob);
+        localStorage.setItem('custom_jobs', JSON.stringify(customJobs));
+
+        // Redirect back to plant report
+        window.location.href = `cms_plant_report.html?plant=${encodeURIComponent(plant)}`;
+      });
+    });
+
+    // Attachment Modal Dialog handlers
+    let currentAttachmentNum = 1;
+
+    function openAttachmentModal(num) {
+      currentAttachmentNum = num;
+      document.getElementById('attachment-modal-title').innerText = 'ATTACHMENT:' + num;
+      document.getElementById('attachment-file-display').value = '';
+      document.getElementById('attachment-file-input').value = '';
+      document.getElementById('attachmentModal').style.display = 'flex';
+    }
+
+    function closeAttachmentModal() {
+      document.getElementById('attachmentModal').style.display = 'none';
+    }
+
+    function saveAttachmentSelection() {
+      const fileName = document.getElementById('attachment-file-display').value;
+      if (fileName) {
+        document.getElementById('btn-attach-' + currentAttachmentNum + '-label').innerText = fileName;
+      }
+      closeAttachmentModal();
+    }
+
+    function openServerAttachmentModal() {
+      closeAttachmentModal();
+      document.getElementById('server-attachment-modal-title').innerText = 'ATTACHMENT:' + currentAttachmentNum;
+      document.getElementById('server-file-search').value = '';
+      $('#server-files-table-body tr').show();
+      document.getElementById('serverAttachmentModal').style.display = 'flex';
+    }
+
+    function closeServerAttachmentModal() {
+      document.getElementById('serverAttachmentModal').style.display = 'none';
+      openAttachmentModal(currentAttachmentNum);
+    }
+
+    function selectServerFile(fileName) {
+      document.getElementById('btn-attach-' + currentAttachmentNum + '-label').innerText = fileName;
+      document.getElementById('serverAttachmentModal').style.display = 'none';
+    }
+
+    // Live search filtering for server files
+    $(document).ready(function () {
+      $('#server-file-search').on('input', function () {
+        const val = $(this).val().toLowerCase();
+        $('#server-files-table-body tr').each(function () {
+          const text = $(this).find('td').first().text().toLowerCase();
+          if (text.includes(val)) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
