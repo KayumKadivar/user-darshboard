@@ -428,11 +428,35 @@
             <div class="col-span-3">
               <label class="gnfc-modal-label">FORMAT </label>
               <select id="modal-field-format" class="gnfc-modal-input" required>
-               
+                <option value="CO SENSOR">CO SENSOR</option>
+                <option value="GAS SENSOR">GAS SENSOR</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="PH TRANSMITTER">PH TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="CONTROL VALVE">CONTROL VALVE</option>
+                <option value="TC/RTD">TC/RTD</option>
+                <option value="SWITCH">SWITCH</option>
+                <option value="SPARK PLUG">SPARK PLUG</option>
                 <option value="CPCB_ANALYZER">CPCB_ANALYZER</option>
                 <option value="CPCB_ANALYZER_MULPNT">CPCB_ANALYZER_MULPNT</option>
                 <option value="CPCB_ANALYZER_IN_SITU">CPCB_ANALYZER_IN_SITU</option>
               </select>
+            </div>
+
+            <!-- Row 1.5: Application, Process OCP No, Quoted Accuracy -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">APPLICATION </label>
+              <input id="modal-field-application" type="text" class="gnfc-modal-input" placeholder="e.g. CO DETECTOR" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">PROCESS OCP NO </label>
+              <input id="modal-field-ocp" type="text" class="gnfc-modal-input" placeholder="e.g. OCP-1" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">QUOTED ACCURACY </label>
+              <input id="modal-field-accuracy" type="text" class="gnfc-modal-input" placeholder="e.g. 5%" required>
             </div>
 
             <!-- Row 2: Frequency of Check via Tabs -->
@@ -567,10 +591,35 @@
             <div class="col-span-3">
               <label class="gnfc-modal-label">Format </label>
               <select id="edit-field-format" class="gnfc-modal-input" required>
+                <option value="CO SENSOR">CO SENSOR</option>
+                <option value="GAS SENSOR">GAS SENSOR</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="PH TRANSMITTER">PH TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="CONTROL VALVE">CONTROL VALVE</option>
+                <option value="TC/RTD">TC/RTD</option>
+                <option value="SWITCH">SWITCH</option>
+                <option value="SPARK PLUG">SPARK PLUG</option>
                 <option value="CPCB_ANALYZER">CPCB_ANALYZER</option>
                 <option value="CPCB_ANALYZER_MULPNT">CPCB_ANALYZER_MULPNT</option>
                 <option value="CPCB_ANALYZER_IN_SITU">CPCB_ANALYZER_IN_SITU</option>
               </select>
+            </div>
+
+            <!-- Row 1.5: Application, Process OCP No, Quoted Accuracy -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Application </label>
+              <input id="edit-field-application" type="text" class="gnfc-modal-input" placeholder="e.g. CO DETECTOR" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Process OCP NO </label>
+              <input id="edit-field-ocp" type="text" class="gnfc-modal-input" placeholder="e.g. OCP-1" required>
+            </div>
+
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Quoted Accuracy </label>
+              <input id="edit-field-accuracy" type="text" class="gnfc-modal-input" placeholder="e.g. 5%" required>
             </div>
 
             <!-- Row 2: Frequency of Check via Tabs -->
@@ -1185,7 +1234,7 @@
       }
 
       // Click handler to redirect to Calibration History Page instead of opening a modal
-      $(document).on('click', '.clickable-tag', function (e) {
+      $(document).on('click', '.iso-clickable-tag', function (e) {
         e.preventDefault();
         const $row = $(this).closest('tr');
         const clickedTag = $(this).text().trim();
@@ -1226,7 +1275,7 @@
       });
 
       // View Report click handler with dynamic parent row matching and data population
-      $(document).on('click', '.action-view-btn', function () {
+      $(document).on('click', '.iso-action-view', function () {
         const $historyRow = $(this).closest('tr');
         const rptDoneDate = $historyRow.find('td').eq(1).text().trim();
         const rptTechName = $historyRow.find('td').eq(2).text().trim();
@@ -1234,7 +1283,7 @@
 
         // Match parent row for additional static instrument details
         const activeTag = $('#pm-records-tag-no').text().trim();
-        const $mainRow = $('td.clickable-tag').filter(function () {
+        const $mainRow = $('td.iso-clickable-tag').filter(function () {
           return $(this).text().trim() === activeTag;
         }).closest('tr');
 
@@ -1264,7 +1313,7 @@
       });
 
       // Delete History Record click handler with details and automatic serial reindexing
-      $(document).on('click', '.action-del-btn', function () {
+      $(document).on('click', '.iso-action-del', function () {
         const $row = $(this).closest('tr');
         const tagNo = $('#pm-records-tag-no').text().trim();
         const pmDate = $row.find('td').eq(1).text().trim();
@@ -1372,6 +1421,11 @@
             const today = new Date().toISOString().split('T')[0];
             $('#modal-field-last-done').val(today);
             
+            // Clear new fields
+            $('#modal-field-application').val('');
+            $('#modal-field-ocp').val('');
+            $('#modal-field-accuracy').val('');
+
             // Reset Frequency Tabs in Add modal to default (interval)
             $('#mode-tabs-add .mode-tab').removeClass('is-active');
             $('#mode-tabs-add .mode-tab[data-mode="interval"]').addClass('is-active');
@@ -1395,6 +1449,9 @@
         // Extract values from cells
         const tag = $row.find('td').eq(1).text().trim();
         const type = $row.find('td').eq(2).text().trim();
+        const ocp = $row.find('td').eq(3).text().trim();
+        const app = $row.find('td').eq(4).text().trim();
+        const accuracy = $row.find('td').eq(7).text().trim();
         const procedure = $row.find('td').eq(8).text().trim();
         const freq = $row.find('td').eq(9).text().trim();
 
@@ -1418,6 +1475,9 @@
         }
         $('#edit-field-procedure').val(procedure);
         $('#edit-field-format').val(type);
+        $('#edit-field-application').val(app);
+        $('#edit-field-ocp').val(ocp);
+        $('#edit-field-accuracy').val(accuracy);
 
         // Handle schedule logic mapping in Edit
         // Default to interval tab first
@@ -1566,6 +1626,9 @@
             const lastDone = $('#modal-field-last-done').val();
             const procedure = $('#modal-field-procedure').val();
             const freq = getSelectedFrequency('-add');
+            const application = $('#modal-field-application').val();
+            const ocp = $('#modal-field-ocp').val();
+            const accuracy = $('#modal-field-accuracy').val();
 
             let lastDoneStr = "—";
             let dueDateStr = "—";
@@ -1596,8 +1659,8 @@
                 <td class="user-table-center font-14pxfw-600 iso-clickable-cell" data-open-modal="technician-job-edit">${nextIndex}</td>
                 <td class="iso-clickable-tag">${tag}</td>
                 <td>${format}</td>
-                <td>OCP-1</td>
-                <td>—</td>
+                <td>${ocp}</td>
+                <td>${application}</td>
                 <td>
                   <div class="user-table-cell-stack">
                     <div>HONEYWELL</div>
@@ -1605,7 +1668,7 @@
                   </div>
                 </td>
                 <td>SR-${Math.floor(Math.random() * 900000 + 100000)}</td>
-                <td>5%</td>
+                <td>${accuracy}</td>
                 <td>${procedure}</td>
                 <td class="user-table-center">${freq}</td>
                 <td>
@@ -1651,9 +1714,15 @@
               const lastDone = $('#edit-field-last-done').val();
               const procedure = $('#edit-field-procedure').val();
               const freq = getSelectedFrequency('-edit');
+              const app = $('#edit-field-application').val();
+              const ocp = $('#edit-field-ocp').val();
+              const accuracy = $('#edit-field-accuracy').val();
 
               activeEditRow.find('td').eq(1).text(tag);
               activeEditRow.find('td').eq(2).text(format);
+              activeEditRow.find('td').eq(3).text(ocp);
+              activeEditRow.find('td').eq(4).text(app);
+              activeEditRow.find('td').eq(7).text(accuracy);
               activeEditRow.find('td').eq(8).text(procedure);
               activeEditRow.find('td').eq(9).text(freq);
 

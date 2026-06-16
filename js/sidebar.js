@@ -35,7 +35,7 @@ $(function () {
         <a href="#" class="sidebar-link" data-id="shift_logbook_officer">
           <i class="ph ph-bold ph-notebook"></i>
           <span class="sidebar-text">Officer Logbook</span>
-        </a>
+        </a> 
 
         <a href="${basePath}pages/technician_logbook/technicianlogbook.html" class="sidebar-link" data-id="technician_logbook">
           <i class="ph ph-bold ph-factory"></i>

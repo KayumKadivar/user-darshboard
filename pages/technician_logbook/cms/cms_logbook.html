@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Logbook | GNFC</title>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../../../css/pages/plant.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'technician_logbook';
+  </script>
+
+  <style>
+    /* Theme-aware styling for highlighted log book rows (PROCESS REQMT and PM JOB) */
+    .user-table-row--highlight {
+      background-color: rgba(255, 193, 7, 0.15) !important; /* soft dark gold/yellow in dark theme */
+    }
+    html[data-theme="light"] .user-table-row--highlight {
+      background-color: #ffffcc !important; /* light yellow in light theme */
+    }
+    
+    /* Ensure child text remains readable in dark mode */
+    html:not([data-theme="light"]) .user-table-row--highlight td {
+      color: var(--app-text, #ffffff) !important;
+    }
+
+    /* Emergency row coloring */
+    .user-table-row--emergency {
+      background-color: rgba(242, 73, 92, 0.15) !important;
+    }
+    html[data-theme="light"] .user-table-row--emergency {
+      background-color: #ffe6e6 !important;
+    }
+
+    /* Centered Date Banner */
+    .cms-table-banner {
+      text-align: center;
+      padding: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      background: var(--app-panel-alt);
+      border: 1px solid var(--app-border);
+      border-radius: 6px;
+      margin-bottom: 20px;
+      color: var(--typo-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Stacked header borders */
+    .user-table th {
+      border: 1px solid var(--app-border) !important;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    /* Soft status styles */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .status-over {
+      background: rgba(115, 191, 105, 0.15);
+      color: var(--typo-green);
+    }
+
+    .status-pending {
+      background: rgba(255, 153, 0, 0.15);
+      color: var(--typo-orange);
+    }
+  </style>
+</head>
+
+<body class="dashboard-body plant-page">
+
+  <!-- Loader overlay -->
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <!-- Header Container -->
+    <div id="header-container" data-title="CMS Logbook"
+      data-breadcrumb="Logbook:../technicianlogbook.html,CMS Logbook:active" data-back="../technicianlogbook.html">
+    </div>
+
+    <section class="dashboard-content-tech-logbook">
+
+      <!-- Row 1: Reports and utilities -->
+      <div class="plant-nav-wrapper mb-12px">
+        <div class="plant-nav-links">
+          <button type="button" class="plant-nav-pill" id="btn-remark-report">
+            <i class="ph-bold ph-note filter-icon"></i> Remark Report
+          </button>
+          <button type="button" class="plant-nav-pill" id="btn-tag-filter">
+            <i class="ph-bold ph-funnel filter-icon"></i> Tag-wise Filter
+          </button>
+          <button type="button" class="plant-nav-pill" id="btn-monthly-report">
+            <i class="ph-bold ph-calendar-blank filter-icon"></i> Monthly Report
+          </button>
+          <button type="button" class="plant-nav-pill" id="btn-datewise-report">
+            <i class="ph-bold ph-calendar-dots filter-icon"></i> DateWiseReport
+          </button>
+          <button type="button" class="plant-nav-pill" id="btn-ot-hrs">
+            <i class="ph-bold ph-timer filter-icon"></i> OT hrs
+          </button>
+          <button type="button" class="plant-nav-pill" id="btn-namewise-report">
+            <i class="ph-bold ph-user-list filter-icon"></i> Name Wise
+          </button>
+        </div>
+        <div class="plant-nav-tools">
+          <button type="button" class="btn-ot-sm" id="btn-ot-statement">
+            <i class="ph-bold ph-clock-user"></i>
+            <span class="btn-text-sm">O.T.</span>
+          </button>
+          <button type="button" class="btn-emg-sm" id="btn-emg-call">
+            <i class="ph-bold ph-siren"></i>
+            <span class="btn-text-sm">EMG Call</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Row 2: Logs and actions -->
+      <section class="ui-card plant-toolbar-card my-20px p-12px">
+        <div class="plant-toolbar">
+          <div class="plant-toolbar__left">
+            <div class="ui-switcher" role="group" aria-label="Select period">
+              <button type="button" class="ui-switcher-btn cms-tab-btn is-active" data-view="today">Today</button>
+              <button type="button" class="ui-switcher-btn cms-tab-btn" data-view="prev">PrevDay</button>
+              <button type="button" class="ui-switcher-btn cms-tab-btn" data-view="weekly">Weekly</button>
+              <button type="button" class="ui-switcher-btn cms-tab-btn" data-view="monthly">Monthly</button>
+            </div>
+          </div>
+
+          <div class="plant-toolbar__right">
+            <button type="button" class="plant-nav-pill" data-open-modal="add-cms-job-modal">
+              <i class="ph-bold ph-plus"></i> Add(Tech)
+            </button>
+            <button type="button" class="plant-nav-pill" id="btn-assign-jobs">
+              <i class="ph-bold ph-calendar-check"></i> AssignJobs(Eng)
+            </button>
+            <button type="button" class="plant-nav-pill" id="btn-helper">
+              <i class="ph-bold ph-users"></i> Helper
+            </button>
+
+            <span class="plant-toolbar__tools-divider" aria-hidden="true"></span>
+            <div class="plant-toolbar__tools">
+              <button type="button" class="plant-nav-pill" id="cms-btn-pending">
+                <i class="ph-bold ph-clock" aria-hidden="true"></i>
+                <span>Pending Log</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Center Dynamic Header Banner -->
+      <div class="cms-table-banner">
+        <span id="cms-banner-text">16/06/2026 Today Log Book</span>
+      </div>
+
+      <!-- Log Tables Wrapper -->
+      <section class="plant-table-card">
+
+        <!-- Today Log Container -->
+        <div id="table-container-today" class="plant-table-container">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="plant-table-card__title">Today Log Book</span>
+            </div>
+            <div class="plant-table-card__actions">
+              <span class="record-count">3 Records</span>
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTableToday">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th rowspan="2" style="width: 80px;">JobNo</th>
+                  <th style="width: 260px;">Title</th>
+                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 20%;">Remarks</th>
+                  <th rowspan="2" id="priority-column-header-today">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-date">
+                  <td colspan="10" class="user-table-bold">
+                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
+                    16/06/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row jt-data-row" data-record-id="1" data-view="today" data-job-type="BREAKDOWN">
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>18101</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Stack Analyzer</span>
+                      <span>OPACITY MONITOR PM (By:JJK : 16/06/2026)</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">UREA</td>
+                  <td class="user-table-center">MHT</td>
+                  <td>Wiped dry analyzer lens, calibrated zero point. Cleaned receiver hood. Checked purge blower.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">JJK</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
+                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <button type="button" class="plant-inline-button" data-action="history"
+                      data-open-modal="history-type-modal" title="History">H</button>
+                  </td>
+                </tr>
+                <tr class="user-table-row jt-data-row user-table-row--emergency" data-record-id="2" data-view="today" data-job-type="EMERGENCY">
+                  <td class="user-table-center user-table-secondary">2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>18102</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>CPCB Server Link</span>
+                      <span>CRITICAL TELEMETRY FAULT (By:ARP : 16/06/2026)</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">COMMON</td>
+                  <td class="user-table-center">RKN</td>
+                  <td>Server connection dropped. Rebooted network gateway router. Verified raw telemetry data pushing stream.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
+                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <button type="button" class="plant-inline-button" data-action="history"
+                      data-open-modal="history-type-modal" title="History">H</button>
+                  </td>
+                </tr>
+                <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="3" data-view="today" data-job-type="PM">
+                  <td class="user-table-center user-table-secondary">3</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>18105</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Dust Monitor</span>
+                      <span>ALIGNMENT & TUNING (By:ARP : 16/06/2026)</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">BOILER-2</td>
+                  <td class="user-table-center">BDR</td>
+                  <td>Sensor alignment check. Found mounting bolts loose. Retightened flange.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">PENDING</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
+                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <button type="button" class="plant-inline-button" data-action="history"
+                      data-open-modal="history-type-modal" title="History">H</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Prev Day Log Container -->
+        <div id="table-container-prev" class="plant-table-container is-hidden">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="plant-table-card__title">Previous Day Log Book</span>
+            </div>
+            <div class="plant-table-card__actions">
+              <span class="record-count">2 Records</span>
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTablePrev">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th rowspan="2" style="width: 80px;">JobNo</th>
+                  <th style="width: 260px;">Title</th>
+                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 20%;">Remarks</th>
+                  <th rowspan="2" id="priority-column-header-prev">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-date">
+                  <td colspan="10" class="user-table-bold">
+                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
+                    15/06/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row jt-data-row" data-record-id="11" data-view="prev" data-job-type="BREAKDOWN">
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>18088</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>pH Transmitter</span>
+                      <span>CALIBRATION CHECK (By:KGS : 15/06/2026)</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">ANIPF</td>
+                  <td class="user-table-center">TKC</td>
+                  <td>pH electrode cleaned with HCl and calibrated with standard buffers (4.0 & 7.0). Verified reading in loop.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">KGS</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
+                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <button type="button" class="plant-inline-button" data-action="history"
+                      data-open-modal="history-type-modal" title="History">H</button>
+                  </td>
+                </tr>
+                <tr class="user-table-row jt-data-row" data-record-id="12" data-view="prev" data-job-type="BREAKDOWN">
+                  <td class="user-table-center user-table-secondary">2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>18089</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>CO2 Monitor</span>
+                      <span>OPTICS CLEANING (By:ARP : 15/06/2026)</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">AMMONIA</td>
+                  <td class="user-table-center">BDR</td>
+                  <td>Transmitter optical path wiped. Checked laser head alignment. Zero calibration adjusted.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
+                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <button type="button" class="plant-inline-button" data-action="history"
+                      data-open-modal="history-type-modal" title="History">H</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Weekly Log Container -->
+        <div id="table-container-weekly" class="plant-table-container is-hidden">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="plant-table-card__title">Weekly Log Book</span>
+            </div>
+            <div class="plant-table-card__actions">
+              <span class="record-count">2 Records</span>
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTableWeekly">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th rowspan="2" style="width: 80px;">JobNo</th>
+                  <th style="width: 260px;">Title</th>
+                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 20%;">Remarks</th>
+                  <th rowspan="2" id="priority-column-header-weekly">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-date">
+                  <td colspan="10" class="user-table-bold">
+                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
+                    12/06/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row jt-data-row" data-record-id="21" data-view="weekly" data-job-type="PM">
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>18012</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>NH3 Analyzer</span>
+                      <span>DETECTOR SWAP (By:ARP : 12/06/2026)</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">UREA</td>
+                  <td class="user-table-center">KBD</td>
+                  <td>Swapped NH3 gas detector module. Checked sensor response against standard span gas.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
+                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <button type="button" class="plant-inline-button" data-action="history"
+                      data-open-modal="history-type-modal" title="History">H</button>
+                  </td>
+                </tr>
+                <tr class="user-table-date">
+                  <td colspan="10" class="user-table-bold">
+                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
+                    10/06/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row jt-data-row" data-record-id="22" data-view="weekly" data-job-type="BREAKDOWN">
+                  <td class="user-table-center user-table-secondary">2</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>17998</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>SO2 Rotameter</span>
+                      <span>REPLACEMENT (By:ARP : 10/06/2026)</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">CPSU</td>
+                  <td class="user-table-center">BSU</td>
+                  <td>Rotameter tube cracked, replaced with spare flow rotameter. Calibrated loop flow.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
+                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <button type="button" class="plant-inline-button" data-action="history"
+                      data-open-modal="history-type-modal" title="History">H</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Monthly Log Container -->
+        <div id="table-container-monthly" class="plant-table-container is-hidden">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="plant-table-card__title">Monthly Log Book</span>
+            </div>
+            <div class="plant-table-card__actions">
+              <span class="record-count">1 Records</span>
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTableMonthly">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th rowspan="2" style="width: 80px;">JobNo</th>
+                  <th style="width: 260px;">Title</th>
+                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 20%;">Remarks</th>
+                  <th rowspan="2" id="priority-column-header-monthly">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-date">
+                  <td colspan="10" class="user-table-bold">
+                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
+                    05/06/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row jt-data-row" data-record-id="31" data-view="monthly" data-job-type="PM">
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>17890</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>CO/CO2 Bench</span>
+                      <span>INFRARED LAMP REPLACEMENT (By:TMV : 05/06/2026)</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">M2</td>
+                  <td class="user-table-center">TMV</td>
+                  <td>Infrared source bulb burned out, replaced IR source unit. Realignment of optical bench zero calibration.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">TMV</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
+                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <button type="button" class="plant-inline-button" data-action="history"
+                      data-open-modal="history-type-modal" title="History">H</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pending Log Container -->
+        <div id="table-container-pending" class="plant-table-container is-hidden">
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="plant-table-card__title">Pending Log Book</span>
+            </div>
+            <div class="plant-table-card__actions">
+              <span class="record-count">1 Records</span>
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTablePending">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
+                  <th rowspan="2" style="width: 80px;">JobNo</th>
+                  <th style="width: 260px;">Title</th>
+                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
+                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 20%;">Remarks</th>
+                  <th rowspan="2" id="priority-column-header-pending">Hist</th>
+                </tr>
+                <tr>
+                  <th class="user-table-border-right">Job</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-date">
+                  <td colspan="10" class="user-table-bold">
+                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
+                    16/06/2026
+                  </td>
+                </tr>
+                <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="41" data-view="today" data-job-type="PM">
+                  <td class="user-table-center user-table-secondary">3</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>18105</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Dust Monitor</span>
+                      <span>ALIGNMENT & TUNING (By:ARP : 16/06/2026)</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">BOILER-2</td>
+                  <td class="user-table-center">BDR</td>
+                  <td>Sensor alignment check. Found mounting bolts loose. Retightened flange.</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-center">ARP</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">PENDING</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
+                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <button type="button" class="plant-inline-button" data-action="history"
+                      data-open-modal="history-type-modal" title="History">H</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+    </section>
+  </main>
+
+  <!-- Add Job Modal -->
+  <div id="add-cms-job-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl--wide">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Add CMS Job</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="add-cms-job-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form id="add-cms-job-form">
+        <div class="gnfc-modal-body">
+          <div class="form-grid grid-cols-12">
+            <!-- Row 1 -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">DATE</label>
+              <input type="date" class="gnfc-modal-input" id="new-job-date">
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">PLANT NAME</label>
+              <select class="gnfc-modal-input" required>
+                <option value="UREA">UREA</option>
+                <option value="AMMONIA">AMMONIA</option>
+                <option value="BOILER">BOILER</option>
+                <option value="ANIPF">ANIPF</option>
+                <option value="CPSU">CPSU</option>
+                <option value="M2">M2</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">TAG NO</label>
+              <input type="text" class="gnfc-modal-input" placeholder="e.g. CMS-TAG-101" required>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">JOB TITLE</label>
+              <input type="text" class="gnfc-modal-input" placeholder="e.g. Opacity Analyzer Check" required>
+            </div>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">JOB STATUS</label>
+              <select class="gnfc-modal-input" required>
+                <option value="OVER">OVER</option>
+                <option value="PENDING">PENDING</option>
+              </select>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
+              <textarea class="gnfc-modal-input" rows="3" placeholder="Enter detailed job description here..." required></textarea>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">TECH</label>
+              <select class="gnfc-modal-input">
+                <option value="MHT">MHT</option>
+                <option value="RKN">RKN</option>
+                <option value="BDR">BDR</option>
+                <option value="TKC">TKC</option>
+                <option value="JMD">JMD</option>
+                <option value="KBD">KBD</option>
+                <option value="BSU">BSU</option>
+                <option value="TMV">TMV</option>
+              </select>
+            </div>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">ENG</label>
+              <select class="gnfc-modal-input">
+                <option value="JJK">JJK</option>
+                <option value="ARP">ARP</option>
+                <option value="KGS">KGS</option>
+                <option value="TMV">TMV</option>
+              </select>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">REMARKS</label>
+              <textarea class="gnfc-modal-input" rows="2" placeholder="Optional comments..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="gnfc-modal-footer">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-cancel"
+            data-close-modal="add-cms-job-modal">Cancel</button>
+          <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save Job</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Switcher & Search Actions logic -->
+  <script>
+    $(function () {
+      // Set current date in modal by default
+      const defaultDate = new Date().toISOString().split('T')[0];
+      $('#new-job-date').val(defaultDate);
+
+      // Date Calculations for Center Banner
+      const today = new Date();
+      const todayStr = today.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+      const prevDate = new Date();
+      prevDate.setDate(today.getDate() - 1);
+      const prevStr = prevDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+      const weekAgo = new Date();
+      weekAgo.setDate(today.getDate() - 6);
+      const weekAgoStr = weekAgo.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+      // Update Center Banner Text
+      function updateBanner(view) {
+        let text = "";
+        if (view === "today") {
+          text = `${todayStr} Today Log Book`;
+        } else if (view === "prev") {
+          text = `${prevStr} Prev Day Log Book`;
+        } else if (view === "weekly") {
+          text = `${weekAgoStr} to ${todayStr} Weekly Log Book`;
+        } else if (view === "monthly") {
+          text = `${todayStr} Monthly Log Book`;
+        } else if (view === "pending") {
+          text = `Pending Log Book`;
+        }
+        $('#cms-banner-text').text(text);
+      }
+
+      // Handle Switcher Buttons (Row 2 tab buttons)
+      $('.cms-tab-btn').on('click', function () {
+        const view = $(this).data('view');
+
+        // Toggle active buttons/tabs
+        $('.cms-tab-btn, #cms-btn-pending').removeClass('is-active');
+        $(this).addClass('is-active');
+
+        // Toggle visibility of target table container
+        $('.plant-table-container').addClass('is-hidden');
+        $(`#table-container-${view}`).removeClass('is-hidden');
+
+        updateBanner(view);
+      });
+
+      // Handle Pending button
+      $('#cms-btn-pending').on('click', function () {
+        $('.cms-tab-btn, #cms-btn-pending').removeClass('is-active');
+        $(this).addClass('is-active');
+
+        $('.plant-table-container').addClass('is-hidden');
+        $('#table-container-pending').removeClass('is-hidden');
+
+        updateBanner('pending');
+      });
+
+      // Row 1 buttons click redirection
+      $('#btn-remark-report').on('click', () => window.location.href = '../remark_reports.html?plant=CMS');
+      $('#btn-tag-filter').on('click', () => window.location.href = '../tagwise_filter.html?plant=CMS');
+      $('#btn-monthly-report').on('click', () => window.location.href = '../monthly_report.html?plant=CMS');
+      $('#btn-datewise-report').on('click', () => window.location.href = '../datewise_report.html?plant=CMS');
+      $('#btn-emg-call').on('click', () => window.location.href = '../emg_call.html?plant=CMS');
+      $('#btn-ot-hrs').on('click', () => window.location.href = '../ot_hours.html?plant=CMS');
+      $('#btn-namewise-report').on('click', () => window.location.href = '../namewise_report.html?plant=CMS');
+      $('#btn-ot-statement').on('click', () => window.location.href = '../ot_statement.html?plant=CMS');
+
+      // Row 2 actions click redirection
+      $('#btn-assign-jobs').on('click', () => window.location.href = 'assigntodaycms.html');
+      $('#btn-helper').on('click', () => window.location.href = '../Helper.html?plant=CMS');
+
+      // Handle Modal generic open/close triggers
+      $(document).on('click', '[data-open-modal]', function () {
+        const modalId = $(this).data('open-modal');
+        if (modalId) {
+          $('#' + modalId).addClass('is-open');
+          $('body').css('overflow', 'hidden');
+        }
+      });
+
+      $(document).on('click', '[data-close-modal]', function () {
+        const modalId = $(this).data('close-modal');
+        if (modalId) {
+          $('#' + modalId).removeClass('is-open');
+          $('body').css('overflow', '');
+        }
+      });
+
+      // Handle Search bar inputs inside tables
+      $('.table-search').on('input', function () {
+        const val = $(this).val().toLowerCase();
+        const $tbody = $(this).closest('.plant-table-container').find('.plant-table-body');
+        $tbody.find('tr').each(function () {
+          const text = $(this).text().toLowerCase();
+          $(this).toggle(text.includes(val));
+        });
+      });
+
+      // Handle Form Submit
+      $('#add-cms-job-form').on('submit', function (e) {
+        e.preventDefault();
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'New CMS logbook entry has been created successfully.',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          $('#add-cms-job-modal').removeClass('is-open');
+          $('body').css('overflow', '');
+          this.reset();
+        });
+      });
+
+      // Initialize
+      updateBanner('today');
+    });
+  </script>
+
+</body>
+
+</html>

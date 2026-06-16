@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assign Today CMS | GNFC E-Logbook</title>
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Dependencies -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'technician_logbook';
+  </script>
+</head>
+
+<body class="dashboard-body plant-page">
+
+  <!-- Sidebar Container -->
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+
+    <!-- Top Dynamic Header -->
+    <div id="header-container" data-title="Assign Today CMS"
+      data-breadcrumb="Logbook:../technicianlogbook.html,CMS Logbook:cms_logbook.html,Assign Today:active"
+      data-back="cms_logbook.html"></div>
+
+    <div class="assign-content custom-scroll">
+
+      <!-- Stats / Top Bar -->
+      <div class="assign-top-bar">
+        <div class="assign-info-group">
+          <div class="assign-info-divider">
+            <div class="flex items-center gap-8px">
+              <i class="ph-duotone ph-calendar color-blue font-18px"></i>
+              <span id="assign-header-date" class="fw-700 font-16px color-primary">16/06/2026</span>
+            </div>
+          </div>
+          <div class="flex gap-16px items-center">
+            <div class="flex items-center gap-8px">
+              <label class="font-14px color-label">Plant:</label>
+              <span class="fw-700 color-blue font-14px">CMS</span>
+            </div>
+            <div class="flex items-center gap-8px">
+              <label class="font-14px color-label">Engineer:</label>
+              <span class="fw-700 color-primary font-14px">ENG_TESTER</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="assign-full-container flex flex-col gap-16px">
+        <!-- Job Assignment Form Card -->
+        <div class="assign-form-card">
+          <div class="assign-form-header">
+            <i class="ph-duotone ph-note-pencil color-blue font-16px"></i>
+            <span class="fw-700 color-primary font-14px">JOB ASSIGNMENT FORM</span>
+          </div>
+
+          <form id="assign-today-cms-form" class="form-grid grid-cols-12 p-16px">
+            <!-- Row 1: Date, Assigned to, By -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Date <span class="required">*</span></label>
+              <input type="text" class="gnfc-modal-input" id="assign-date" value="16/06/2026" required>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">Assigned to <span class="required">*</span></label>
+              <div class="flex flex-col gap-6px">
+                <select id="assigned-to-select" class="gnfc-modal-input">
+                  <option value="">Select Tech</option>
+                  <option value="MHT">MHT</option>
+                  <option value="RKN">RKN</option>
+                  <option value="BDR">BDR</option>
+                  <option value="TKC">TKC</option>
+                  <option value="JMD">JMD</option>
+                  <option value="KBD">KBD</option>
+                  <option value="BSU">BSU</option>
+                  <option value="TMV">TMV</option>
+                </select>
+                <input id="assigned-to-input" type="text" placeholder="Or enter tech name..." class="gnfc-modal-input" required>
+              </div>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">By</label>
+              <input type="text" class="gnfc-modal-input" id="by-input" value="ENG_TESTER" readonly style="background-color: var(--bg-secondary);">
+            </div>
+
+            <!-- Row 2: Tag No (Flexible input field + select dropdown + suffix text input) -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">Tag No</label>
+              <div class="flex items-center gap-12px">
+                <input id="tag-no-prefix" type="text" placeholder="Prefix..." class="gnfc-modal-input flex-1">
+                <div class="flex-1">
+                  <select id="tag-no-select" class="gnfc-modal-input">
+                    <option value="NOTAG">NOTAG</option>
+                    <option value="CMS-TAG-101">CMS-TAG-101</option>
+                    <option value="CMS-TAG-102">CMS-TAG-102</option>
+                    <option value="CMS-TAG-103">CMS-TAG-103</option>
+                  </select>
+                </div>
+                <input id="tag-no-suffix" type="text" placeholder="Suffix..." class="gnfc-modal-input flex-1">
+              </div>
+            </div>
+
+            <!-- Row 3: Make, Plant -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">Make</label>
+              <select id="make-select" class="gnfc-modal-input">
+                <option value="">-- Select Make --</option>
+                <option value="ABB">ABB</option>
+                <option value="YOKOGAWA">YOKOGAWA</option>
+                <option value="EMERSON">EMERSON</option>
+                <option value="HONEYWELL">HONEYWELL</option>
+              </select>
+            </div>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label">Plant</label>
+              <select id="plant-select" class="gnfc-modal-input">
+                <option value="">-- Select Plant --</option>
+                <option value="UREA">UREA</option>
+                <option value="AMMONIA">AMMONIA</option>
+                <option value="BOILER">BOILER</option>
+                <option value="ANIPF">ANIPF</option>
+                <option value="CPSU">CPSU</option>
+                <option value="M2">M2</option>
+              </select>
+            </div>
+
+            <!-- Row 4: Job -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">Job <span class="required">*</span></label>
+              <textarea id="job-textarea" rows="3" class="gnfc-modal-input" placeholder="Enter job description..." required></textarea>
+            </div>
+
+            <!-- Form Buttons inside grid footer -->
+            <div class="assign-form-footer col-span-12 flex justify-end gap-12px" style="border-top: 1px solid var(--border-color); margin-top: 8px;">
+              <button type="submit" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+              <button type="button" id="btn-cancel" class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Weekly Pending Jobs Section -->
+        <div class="ui-card pt-10px" style="background-color: var(--card-bg);">
+          <div class="text-center mb-10px">
+            <h3 class="font-16px fw-700 color-primary uppercase">Weekly Pending Jobs</h3>
+          </div>
+          <div class="user-table-wrapper max-h-50vh">
+            <table class="user-table min-w-1000px" id="pending-jobs-table">
+              <thead>
+                <tr>
+                  <th class="user-table-center w-50px">SrNo</th>
+                  <th class="user-table-center w-120px">DATE</th>
+                  <th class="w-150px">Tag</th>
+                  <th class="w-180px">JOB</th>
+                  <th>Description</th>
+                  <th class="user-table-center w-120px">Status</th>
+                  <th class="user-table-center w-100px">Tech</th>
+                  <th class="user-table-center w-120px">ReAssign</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td class="user-table-center user-table-secondary">12/06/2026</td>
+                  <td class="user-table-bold user-table-blue">CMS-TAG-101</td>
+                  <td class="user-table-primary">Stack Analyzer PM</td>
+                  <td class="user-table-desc">Perform weekly PM check, dry lens, verify zero and span calibration.</td>
+                  <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
+                  <td class="user-table-center user-table-secondary">MHT</td>
+                  <td class="user-table-center">
+                    <button type="button" class="btn-assign-ui reassign-btn" data-tech="MHT" data-tag="CMS-TAG-101" data-job="Stack Analyzer PM" data-desc="Perform weekly PM check, dry lens, verify zero and span calibration.">ReAssign</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="user-table-center user-table-secondary">2</td>
+                  <td class="user-table-center user-table-secondary">15/06/2026</td>
+                  <td class="user-table-bold user-table-blue">NOTAG</td>
+                  <td class="user-table-primary">CPCB Link Error</td>
+                  <td class="user-table-desc">Investigate server communication drop, verify telemetry pushes.</td>
+                  <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
+                  <td class="user-table-center user-table-secondary">RKN</td>
+                  <td class="user-table-center">
+                    <button type="button" class="btn-assign-ui reassign-btn" data-tech="RKN" data-tag="NOTAG" data-job="CPCB Link Error" data-desc="Investigate server communication drop, verify telemetry pushes.">ReAssign</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="user-table-center user-table-secondary">3</td>
+                  <td class="user-table-center user-table-secondary">16/06/2026</td>
+                  <td class="user-table-bold user-table-blue">CMS-TAG-103</td>
+                  <td class="user-table-primary">Dust Monitor Alignment</td>
+                  <td class="user-table-desc">Check alignment flanges and tighten mounting hardware.</td>
+                  <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
+                  <td class="user-table-center user-table-secondary">BDR</td>
+                  <td class="user-table-center">
+                    <button type="button" class="btn-assign-ui reassign-btn" data-tech="BDR" data-tag="CMS-TAG-103" data-job="Dust Monitor Alignment" data-desc="Check alignment flanges and tighten mounting hardware.">ReAssign</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      // Set Default Date
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+      const todayFormatted = dd + '/' + mm + '/' + yyyy;
+      
+      $('#assign-date').val(todayFormatted);
+      $('#assign-header-date').text(todayFormatted);
+
+      // Handle Assigned to select change event
+      $('#assigned-to-select').on('change', function () {
+        const val = $(this).val();
+        $('#assigned-to-input').val(val);
+      });
+
+      // Handle Tag No dropdown select change event
+      $('#tag-no-select').on('change', function () {
+        const val = $(this).val();
+        if (val === "NOTAG") {
+          $('#tag-no-prefix').val("");
+          $('#tag-no-suffix').val("");
+        } else {
+          const parts = val.split('-');
+          $('#tag-no-prefix').val(parts[0] || "");
+          $('#tag-no-suffix').val(parts[2] || "");
+        }
+      });
+
+      // Form submit action (Save)
+      $('#assign-today-cms-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const date = $('#assign-date').val();
+        const techName = $('#assigned-to-input').val();
+        const tagSelectVal = $('#tag-no-select').val();
+        const makeVal = $('#make-select').val();
+        const plantVal = $('#plant-select').val();
+        const desc = $('#job-textarea').val();
+
+        if (!techName) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Missing Technician',
+            text: 'Please select a technician or type one in.'
+          });
+          return;
+        }
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Job has been assigned successfully.',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          // Append entry dynamically to table
+          const tbody = $('#pending-jobs-table tbody');
+          const nextSr = tbody.find('tr').length + 1;
+          const newRow = `
+            <tr>
+              <td class="user-table-center user-table-secondary">${nextSr}</td>
+              <td class="user-table-center user-table-secondary">${date}</td>
+              <td class="user-table-bold user-table-blue">${tagSelectVal}</td>
+              <td class="user-table-primary">CMS Assigned Job</td>
+              <td class="user-table-desc">${desc}</td>
+              <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
+              <td class="user-table-center user-table-secondary">${techName}</td>
+              <td class="user-table-center">
+                <button type="button" class="btn-assign-ui reassign-btn" data-tech="${techName}" data-tag="${tagSelectVal}" data-job="CMS Assigned Job" data-desc="${desc}">ReAssign</button>
+              </td>
+            </tr>
+          `;
+          tbody.append(newRow);
+
+          // Reset Form but keep Date and Engineer
+          $('#assigned-to-select').val("");
+          $('#assigned-to-input').val("");
+          $('#tag-no-select').val("NOTAG");
+          $('#tag-no-prefix').val("");
+          $('#tag-no-suffix').val("");
+          $('#make-select').val("");
+          $('#plant-select').val("");
+          $('#job-textarea').val("");
+        });
+      });
+
+      // Cancel button action
+      $('#btn-cancel').on('click', function () {
+        window.location.href = 'cms_logbook.html';
+      });
+
+      // ReAssign button click handler
+      $(document).on('click', '.reassign-btn', function () {
+        const tech = $(this).data('tech');
+        const tag = $(this).data('tag');
+        const job = $(this).data('job');
+        const desc = $(this).data('desc');
+
+        $('#assigned-to-select').val(tech).trigger('change');
+        $('#tag-no-select').val(tag).trigger('change');
+        $('#job-textarea').val(job + ': ' + desc);
+
+        Swal.fire({
+          icon: 'info',
+          title: 'Details Loaded',
+          text: `Loaded details for tag ${tag} into input form.`,
+          timer: 1500,
+          showConfirmButton: false
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
