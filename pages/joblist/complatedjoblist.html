@@ -464,6 +464,9 @@
 
   <script>
     $(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant') ;
+      const mode = urlParams.get('mode') || 'Completed Job List';
       // Dynamic Title Update
       $('#dynamicTitle').text(`${mode} (${plant})`);
     });

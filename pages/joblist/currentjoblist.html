@@ -1138,6 +1138,8 @@
   <script>
     $(function () {
       // Initialize dynamic elements
+      const urlParams = new URLSearchParams(window.location.search);
+      const plant = urlParams.get('plant') || 'BOILER';
       $("#remarkModalPlantTitle").text(plant);
 
       // Modal Logic
@@ -1505,7 +1507,9 @@
         });
       };
 
-      renderTable();
+      if (typeof renderTable === 'function') {
+        renderTable();
+      }
     });
 
     function updateFileName(input) {
