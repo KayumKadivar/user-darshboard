@@ -60,18 +60,8 @@
         </div>
 
         <div class="assign-actions">
-          <button onclick="openCJLModal()" class="toolbar-btn">
-            <i class="ph-bold ph-list-checks"></i> Current Joblist
-          </button>
-          <button onclick="openSEModal()" class="toolbar-btn">
-            <i class="ph-bold ph-warning-circle"></i> S/D
-          </button>
-          <button onclick="openSearchModal()" class="toolbar-btn">
-            <i class="ph ph-magnifying-glass"></i> Search Tag
-          </button>
-          <button type="button" onclick="openHSOModal()" class="btn-assign-iso">
-            <i class="ph-bold ph-plus-circle"></i> Assign ISO
-          </button>
+          <button onclick="openSearchModal()" class="toolbar-btn">Search Tag</button>
+          <button type="button" onclick="openHSOModal()" class="btn-assign-iso">Assign ISO</button>
         </div>
       </div>
 
@@ -191,17 +181,24 @@
         <div class="assign-main-content">
           <!-- Tabs Navigation -->
           <div class="assign-tabs">
-            <div class="flex justify-between items-center">
+            <div class="flex items-center gap-12px">
               <button id="tab-pending" onclick="switchTab('pending')" class="tab-btn is-active">
                 <i class="ph-bold ph-timer"></i> Weekly Pending Jobs
               </button>
               <button id="tab-ojr" onclick="switchTab('ojr')" class="tab-btn">
                 <i class="ph-bold ph-article"></i> Operation Job Register
               </button>
+              <button id="tab-cjl" onclick="switchTab('cjl')" class="tab-btn">
+                <i class="ph-bold ph-list-bullets"></i> Current Joblist
+              </button>
+              <button id="tab-sd" onclick="switchTab('sd')" class="tab-btn">
+                <i class="ph-bold ph-warning-circle"></i> S/D Joblist
+              </button>
+              <button id="tab-revamp" onclick="switchTab('revamp')" class="tab-btn">
+                <i class="ph-bold ph-wrench"></i> Revamp Joblist
+              </button>
             </div>
             <div class="assign-tabs-right flex items-center gap-12px">
-              <span id="ojr-count-badge" class="badge-count hidden">15 Records</span>
-              <span id="pending-count-badge" class="badge-count badge-count--amber">10 Records</span>
               <div class="assign-select-wrap" style="width: 130px;">
                 <select class="gnfc-modal-input font-14px fw-700 ">
                   <option>RUNNING</option>
@@ -232,45 +229,45 @@
                 <tbody class="user-table-center">
                   <tr>
                     <td>1</td>
-                    <td class="user-table-secondary">30/03/2026</td>
+                    <td>30/03/2026</td>
                     <td class="user-table-bold user-table-blue">LT-102</td>
-                    <td class="user-table-secondary">BOILER-1</td>
-                    <td class="user-table-primary">Routine check of level sensor accuracy</td>
-                    <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
-                    <td class="user-table-bold user-table-secondary">PVS</td>
+                    <td>BOILER-1</td>
+                    <td class="">Routine check of level sensor accuracy</td>
+                    <td class="user-table-center">Pending</td>
+                    <td class="user-table-bold">PVS</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button>
                     </td>
                   </tr>
                   <tr>
                     <td>2</td>
-                    <td class="user-table-secondary">30/03/2026</td>
+                    <td>30/03/2026</td>
                     <td class="user-table-bold user-table-blue">PT-301</td>
-                    <td class="user-table-secondary">BOILER-2</td>
-                    <td class="user-table-primary">Pressure transmitter calibration due</td>
-                    <td class="user-table-center"><span class="ui-badge ui-badge--info">IN PROGRESS</span></td>
-                    <td class="user-table-bold user-table-secondary">VWM</td>
+                    <td>BOILER-2</td>
+                    <td class="">Pressure transmitter calibration due</td>
+                    <td class="user-table-center">In Progress</td>
+                    <td class="user-table-bold">VWM</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button>
                     </td>
                   </tr>
                   <tr>
                     <td>3</td>
-                    <td class="user-table-secondary">30/03/2026</td>
+                    <td>30/03/2026</td>
                     <td class="user-table-bold user-table-blue">TT-504</td>
-                    <td class="user-table-secondary">TG-1</td>
-                    <td class="user-table-primary">Temperature fluctuation observed</td>
+                    <td>TG-1</td>
+                    <td class="">Temperature fluctuation observed</td>
                     <td class="user-table-center"><span class="ui-badge ui-badge--danger">HOLD</span></td>
-                    <td class="user-table-bold user-table-secondary">BDR</td>
+                    <td class="user-table-bold">BDR</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button>
                     </td>
                   </tr>
                   <tr>
                     <td>4</td>
-                    <td class="user-table-secondary">30/03/2026</td>
+                    <td>30/03/2026</td>
                     <td class="user-table-bold user-table-blue">FT-201</td>
-                    <td class="user-table-secondary">COMMON</td>
-                    <td class="user-table-primary">Flow meter reading erratic</td>
+                    <td>COMMON</td>
+                    <td class="">Flow meter reading erratic</td>
                     <td class="user-table-center"><span class="ui-badge ui-badge--success">COMPLETED</span></td>
-                    <td class="user-table-bold user-table-secondary">PRP</td>
+                    <td class="user-table-bold">PRP</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button>
                     </td>
                   </tr>
@@ -298,13 +295,301 @@
                 <tbody class="user-table-center">
                   <tr>
                     <td>1</td>
-                    <td class="user-table-secondary">28/03/2026</td>
+                    <td>28/03/2026</td>
                     <td class="user-table-bold user-table-blue">LT-102</td>
-                    <td class="user-table-primary">Routine check of level sensor accuracy</td>
-                    <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
-                    <td class="user-table-bold user-table-secondary">PVS</td>
+                    <td class="">Routine check of level sensor accuracy</td>
+                    <td class="user-table-center">Pending</td>
+                    <td class="user-table-bold">PVS</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">ReAssign</button>
                     </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Current Joblist Panel -->
+          <div id="panel-cjl" class="tab-panel hidden">
+            <div class="user-table-wrapper">
+              <table class="user-table">
+                <thead>
+                  <tr>
+                    <th class="user-table-center" style="width: 40px;">Sr</th>
+                    <th style="width: 120px;">Area/Tag</th>
+                    <th style="width: 200px;">Description</th>
+                    <th style="width: 100px;">Category</th>
+                    <th style="width: 80px;">Target</th>
+                    <th style="width: 70px;">Status</th>
+                    <th style="width: 180px">Remark</th>
+                    <th class="user-table-center w-100px">Assign</th>
+                  </tr>
+                </thead>
+                <tbody class="user-table-center">
+                  <tr>
+                    <td>1</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>BOILER-1</span>
+                        <span>LT-102</span>
+                      </div>
+                    </td>
+                    <td class="user-table-left ">Routine check of level sensor accuracy</td>
+                    <td>OJR</td>
+                    <td>30/03/2026</td>
+                    <td class="user-table-center">Pending</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>BOILER-2</span>
+                        <span>PT-301</span>
+                      </div>
+                    </td>
+                    <td class="user-table-left ">Pressure transmitter calibration due</td>
+                    <td>OJR</td>
+                    <td>30/03/2026</td>
+                    <td class="user-table-center">In Progress</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- S/D Joblist Panel -->
+          <div id="panel-sd" class="tab-panel hidden">
+            <div class="user-table-wrapper">
+              <table class="user-table min-w-1440px">
+                <thead>
+                  <tr>
+                    <th class="user-table-center" style="width: 50px;">Sr</th>
+                    <th style="width: 150px;">Area / Tag</th>
+                    <th style="width: 300px;">Description</th>
+                    <th style="width: 110px;">Category</th>
+                    <th style="width: 160px;">Mat Reqmnt</th>
+                    <th style="width: 160px;">Pre S/D Activity</th>
+                    <th style="width: 180px;">Int Dep Coordination</th>
+                    <th style="width: 180px;">Ext Dep Coordination</th>
+                    <th style="width: 200px;">Remarks</th>
+                    <th class="user-table-center w-100px">Assign</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="user-table-center">1</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>COMMON</span>
+                        <span>CPCV2716</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">CJFD1 R1 M7 AO Card channel 3 was faulty, so spare channel 8 used field side and marshalling rack side ferrule to be changed</td>
+                    <td>C/I</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">2</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>COMMON</span>
+                        <span>DCS_COMSEC</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">Scheme No.-S-501-343 Supply of Low Sulphur oil to Boiler by interconnecting of P-2102A/B/C (Low sulphur fuel oil pump) and P-2103A/B (High sulphur fuel oil pump) discharge line at Chem. Hazardous plant related 2 nos. MOV logic development and DCS wiring related job.</td>
+                    <td>DCS</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Electrical dept</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">3</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>BOILER-1</span>
+                        <span>NOTAG</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">Boiler 1 AB elevation, the visible flame scanner 2/4 contact was not coming. Upon checking, it was found that the DCS DI card R3M3 CH 11 (PB 3,6) was faulty. The channel was interchanged with the spare channel CH 12 (PB 3,13). CH 11 to be checked during shutdown and CH 12 connection to be checked.</td>
+                    <td>DCS</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">4</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>BOILER-1</span>
+                        <span>1TE1563_3</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">FSH metal temp element showing higher side.</td>
+                    <td>FIELD INST</td>
+                    <td>Element issue from store</td>
+                    <td>Element issue from store</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">5</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>NG STN</span>
+                        <span>GC</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">GC shed structure welding work to be done.</td>
+                    <td>FIELD INST</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Revamp Joblist Panel -->
+          <div id="panel-revamp" class="tab-panel hidden">
+            <div class="user-table-wrapper">
+              <table class="user-table min-w-1440px">
+                <thead>
+                  <tr>
+                    <th class="user-table-center" style="width: 50px;">Sr</th>
+                    <th style="width: 120px;">Area / Tag</th>
+                    <th style="width: 300px;">Description</th>
+                    <th style="width: 120px;">Category</th>
+                    <th style="width: 120px;">Target</th>
+                    <th style="width: 100px;">Status</th>
+                    <th style="width: 300px;">Remark</th>
+                    <th class="user-table-center w-100px">Assign</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="user-table-center">1</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>N.A</span>
+                        <span>BASEFRAME</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">Baseframe detailing</td>
+                    <td class="user-table-center">Before S/D</td>
+                    <td></td>
+                    <td class="user-table-center">Pending</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">2</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>N.A</span>
+                        <span>MASTER TX LIST</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">FLC tags list and cable shifting to new cabinet detailing</td>
+                    <td class="user-table-center">Before S/D</td>
+                    <td></td>
+                    <td class="user-table-center">Pending</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">3</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>N.A</span>
+                        <span>110 UPE</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">Secondary feeder for New ESD system Note to be raised to electrical dept</td>
+                    <td class="user-table-center">Before S/D</td>
+                    <td></td>
+                    <td class="user-table-center">Pending</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">4</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>N.A</span>
+                        <span>4C</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">4C requirement for annual shutdown ESD and DCS Upgradations.</td>
+                    <td class="user-table-center">Before S/D</td>
+                    <td></td>
+                    <td class="user-table-center">Pending</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">5</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>N.A</span>
+                        <span>SERVER ROOM</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">DCS Server room location and note to operation group.</td>
+                    <td class="user-table-center">Before S/D</td>
+                    <td></td>
+                    <td class="user-table-center">Pending</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">6</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>N.A</span>
+                        <span>CIVIL</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">Note to civil for Server room, furniture and partitionations.</td>
+                    <td class="user-table-center">Before S/D</td>
+                    <td></td>
+                    <td class="user-table-center">Pending</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
+                  </tr>
+                  <tr>
+                    <td class="user-table-center">7</td>
+                    <td>
+                      <div class="user-table-cell-stack">
+                        <span>N.A</span>
+                        <span>MCC Electrical Cables</span>
+                      </div>
+                    </td>
+                    <td class="user-table-desc">Electrical Note for MCC side cable removal and re Installation in new PLC Cabinet.</td>
+                    <td class="user-table-center">S/D</td>
+                    <td></td>
+                    <td class="user-table-center">Pending</td>
+                    <td></td>
+                    <td class="user-table-center"><button type="button" class="btn-assign-ui">Assign</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -313,128 +598,6 @@
         </div>
       </div>
     </div>
-    </div>
-
-    <!-- Modals (Refactored to Static) -->
-    <div id="cjl-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="gnfc-modal-shell gnfc-modal-shell--full">
-        <div class="gnfc-modal-header">
-          <div>
-            <h3 class="gnfc-modal-title">Current Job List</h3>
-            <p class="gnfc-modal-subtitle">Plant: BOILER</p>
-          </div>
-          <button type="button" onclick="closeCJLModal()" class="gnfc-modal-close">
-            <i class="ph-bold ph-x"></i>
-          </button>
-        </div>
-        <div class="gnfc-modal-body gnfc-modal-body--tight">
-          <div class="user-table-wrapper max-h-68vh">
-            <table class="user-table min-w-1440px">
-              <thead>
-                <tr>
-                  <th class="user-table-center">Sr</th>
-                  <th>Area/Tag</th>
-                  <th>Description</th>
-                  <th>Category</th>
-                  <th>Target</th>
-                  <th class="user-table-center">Status</th>
-                  <th>EngRemark</th>
-                  <th>ExRemark</th>
-                </tr>
-              </thead>
-              <tbody class="user-table-center">
-                <tr>
-                  <td class="user-table-secondary">1</td>
-                  <td class="user-table-left">
-                    <div class="user-table-cell-stack">
-                      <span class="user-table-bold user-table-blue">BOILER-1</span>
-                      <span class="user-table-secondary">LT-102</span>
-                    </div>
-                  </td>
-                  <td class="user-table-left user-table-primary">Routine check of level sensor accuracy</td>
-                  <td class="user-table-secondary">OJR</td>
-                  <td class="user-table-secondary">30/03/2026</td>
-                  <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
-                  <td class="user-table-left user-table-secondary">Tech: PVS</td>
-                  <td class="user-table-left user-table-secondary">-</td>
-                </tr>
-                <tr>
-                  <td class="user-table-secondary">2</td>
-                  <td class="user-table-left">
-                    <div class="user-table-cell-stack">
-                      <span class="user-table-bold user-table-blue">BOILER-2</span>
-                      <span class="user-table-secondary">PT-301</span>
-                    </div>
-                  </td>
-                  <td class="user-table-left user-table-primary">Pressure transmitter calibration due</td>
-                  <td class="user-table-secondary">OJR</td>
-                  <td class="user-table-secondary">30/03/2026</td>
-                  <td class="user-table-center"><span class="ui-badge ui-badge--info">IN PROGRESS</span></td>
-                  <td class="user-table-left user-table-secondary">Tech: VWM</td>
-                  <td class="user-table-left user-table-secondary">-</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="gnfc-modal-footer">
-          <button type="button" onclick="closeCJLModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- S/D Modal -->
-    <div id="sd-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="gnfc-modal-shell gnfc-modal-shell--full">
-        <div class="gnfc-modal-header">
-          <div>
-            <h3 class="gnfc-modal-title">Shutdown Job List</h3>
-            <p class="gnfc-modal-subtitle">Plant: BOILER</p>
-          </div>
-          <button type="button" onclick="closeSEModal()" class="gnfc-modal-close">
-            <i class="ph-bold ph-x"></i>
-          </button>
-        </div>
-        <div class="gnfc-modal-body gnfc-modal-body--tight">
-          <div class="user-table-wrapper" style="max-height: 68vh;">
-            <table class="user-table min-w-1440px">
-              <thead>
-                <tr>
-                  <th class="user-table-center w-50px">Sr</th>
-                  <th class="w-150px">Area / Tag</th>
-                  <th>Description</th>
-                  <th class="w-150px">MatReqmnt</th>
-                  <th class="w-150px">PreSDActivity</th>
-                  <th class="w-120px">int Dep</th>
-                  <th class="w-120px">Ext Dep</th>
-                  <th class="w-200px">Remarks</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="user-table-center">1</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span class="user-table-bold user-table-primary">BOILER-1</span>
-                      <span class="user-table-blue">1TE1563_3</span>
-                    </div>
-                  </td>
-                  <td class="user-table-desc">Boiler 1 AB elevation, the visible flame scanner 2/4 contact was not
-                    coming.</td>
-                  <td class="user-table-secondary">-</td>
-                  <td class="user-table-secondary">-</td>
-                  <td class="user-table-secondary">-</td>
-                  <td class="user-table-secondary">-</td>
-                  <td><span class="user-table-secondary">Card replacement required.</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="gnfc-modal-footer">
-          <button type="button" onclick="closeSEModal()" class="gnfc-modal-btn gnfc-modal-btn-secondary">Close</button>
-        </div>
-      </div>
     </div>
 
     <!-- ISO Modal -->
@@ -477,13 +640,13 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="user-table-center user-table-secondary">1</td>
+                      <td class="user-table-center">1</td>
                       <td class="user-table-bold user-table-blue">LT-2</td>
-                      <td class="user-table-primary">ASH SLURRY SUMP LEVEL</td>
-                      <td class="user-table-secondary">ULTRASONIC LEVEL : SENSOR TO BE CLEANED AND RESPONSE TO BE
+                      <td class="">ASH SLURRY SUMP LEVEL</td>
+                      <td>ULTRASONIC LEVEL : SENSOR TO BE CLEANED AND RESPONSE TO BE
                         CHECKED.</td>
-                      <td class="user-table-center user-table-secondary">90</td>
-                      <td class="user-table-center user-table-bold user-table-primary">28/04/2026</td>
+                      <td class="user-table-center">90</td>
+                      <td class="user-table-center user-table-bold ">28/04/2026</td>
                     </tr>
                   </tbody>
                 </table>
@@ -528,7 +691,7 @@
                 </thead>
                 <tbody>
                   <tr class="user-table-row">
-                    <td class="user-table-primary fw-600">1FE1501C</td>
+                    <td class=" fw-600">1FE1501C</td>
                     <td>TX</td>
                     <td>Critical</td>
                     <td>RUNNING</td>
@@ -604,51 +767,51 @@
                 <tbody>
                   <tr class="user-table-row">
                     <td class="user-table-center">1</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">CPP / CPSU all DCS Panels, OCSs to be vacuum cleaned. FAN operation to be checked.</td>
-                    <td class="user-table-center user-table-secondary">180</td>
+                    <td>NOTAG</td>
+                    <td class="">CPP / CPSU all DCS Panels, OCSs to be vacuum cleaned. FAN operation to be checked.</td>
+                    <td class="user-table-center">180</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
                   </tr>
                   <tr class="user-table-row">
                     <td class="user-table-center">2</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.</td>
-                    <td class="user-table-center user-table-secondary">45</td>
+                    <td>NOTAG</td>
+                    <td class="">Dry Fly Ash Remote Cabinets and CHP Station to be vacuum cleaned.</td>
+                    <td class="user-table-center">45</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
                   </tr>
                   <tr class="user-table-row">
                     <td class="user-table-center">3</td>
-                    <td class="user-table-blue fw-600">SILO_INTR_BAG</td>
-                    <td class="user-table-primary">Bag filter SOVs to be checked. SOV connection tightness to be checked.its timer JB and Radar LT cleaning to be done.</td>
-                    <td class="user-table-center user-table-secondary">30</td>
+                    <td>SILO_INTR_BAG</td>
+                    <td class="">Bag filter SOVs to be checked. SOV connection tightness to be checked.its timer JB and Radar LT cleaning to be done.</td>
+                    <td class="user-table-center">30</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
                   </tr>
                   <tr class="user-table-row">
                     <td class="user-table-center">4</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">Control room document file to be updated. Boiler, CPP, CPSU, ASH and CHP control room.</td>
-                    <td class="user-table-center user-table-secondary">60</td>
+                    <td>NOTAG</td>
+                    <td class="">Control room document file to be updated. Boiler, CPP, CPSU, ASH and CHP control room.</td>
+                    <td class="user-table-center">60</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
                   </tr>
                   <tr class="user-table-row">
                     <td class="user-table-center">5</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">BHEL BLR all DCS Panels, OCSs, Ash panel and Station to be vacuum cleaned. FAN operation to be checked.</td>
-                    <td class="user-table-center user-table-secondary">45</td>
+                    <td>NOTAG</td>
+                    <td class="">BHEL BLR all DCS Panels, OCSs, Ash panel and Station to be vacuum cleaned. FAN operation to be checked.</td>
+                    <td class="user-table-center">45</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
                   </tr>
                   <tr class="user-table-row">
                     <td class="user-table-center">6</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">CH4 gas cylinder (Code no 922000195D)expiry date to be check.</td>
-                    <td class="user-table-center user-table-secondary">330</td>
+                    <td>NOTAG</td>
+                    <td class="">CH4 gas cylinder (Code no 922000195D)expiry date to be check.</td>
+                    <td class="user-table-center">330</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
                   </tr>
                   <tr class="user-table-row">
                     <td class="user-table-center">7</td>
-                    <td class="user-table-blue fw-600">NOTAG</td>
-                    <td class="user-table-primary">ATK data to be uploaded on Eserver.</td>
-                    <td class="user-table-center user-table-secondary">30</td>
+                    <td>NOTAG</td>
+                    <td class="">ATK data to be uploaded on Eserver.</td>
+                    <td class="user-table-center">30</td>
                     <td class="user-table-center"><button type="button" class="btn-assign-ui">ASSIGN</button></td>
                   </tr>
                 </tbody>
@@ -671,32 +834,9 @@
         $('.tab-btn').removeClass('is-active');
         $('.tab-panel').addClass('hidden');
 
-        // Toggle badges
-        $('#ojr-count-badge, #pending-count-badge').addClass('hidden');
-        $('#' + tabId + '-count-badge').removeClass('hidden');
-
         $('#tab-' + tabId).addClass('is-active');
         $('#panel-' + tabId).removeClass('hidden');
-
-        updateTableCounts();
       };
-
-      /** ── Update Counts ── */
-      window.updateTableCounts = function () {
-        $('.tab-panel').each(function () {
-          const panelId = $(this).attr('id');
-          const tabId = panelId.replace('panel-', '');
-          const rowCount = $(this).find('tbody tr').length;
-          const $badge = $('#' + tabId + '-count-badge');
-
-          if ($badge.length) {
-            $badge.text(rowCount + (rowCount === 1 ? ' Record' : ' Records'));
-          }
-        });
-      };
-
-      // Initial count
-      updateTableCounts();
 
       /** ── Modal Handling ── */
       window.setModalState = function (modalId, isOpen) {
@@ -708,10 +848,7 @@
         }
       };
 
-      window.openCJLModal = function () { setModalState('cjl-modal', true); };
-      window.closeCJLModal = function () { setModalState('cjl-modal', false); };
-      window.openSEModal = function () { setModalState('sd-modal', true); };
-      window.closeSEModal = function () { setModalState('sd-modal', false); };
+
       window.openHSOModal = function () { setModalState('hso-modal', true); };
       window.closeHSOModal = function () { setModalState('hso-modal', false); };
       window.openSearchModal = function () { setModalState('search-modal', true); };
@@ -850,7 +987,6 @@
         $('#form-assigned-to-input, #form-assigned-to-select, #form-job-type, #form-area, #form-inst-type, #form-jobs-desc, #assign-job-loop-input, #assign-job-tag-input').val('');
         $('#assign-job-loop-select, #assign-job-tag-select').val('');
 
-        updateTableCounts();
         Swal.fire({
           title: 'Job Assigned!',
           text: 'Job Successfully Assigned!',
