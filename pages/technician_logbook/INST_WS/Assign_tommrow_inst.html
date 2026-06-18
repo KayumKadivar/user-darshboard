@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assign Tomorrow Inst | GNFC E-Logbook</title>
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'technician_logbook';
+  </script>
+</head>
+
+<body class="dashboard-body plant-page">
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+
+    <div id="header-container" data-title="Assign Tomorrow Inst"
+      data-breadcrumb="Logbook:../technicianlogbook.html,Instrument Work shop:inst_ws_logbook.html,Assign Tomorrow Inst:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <div class="assign-content custom-scroll">
+
+      <!-- Stats / Top Bar -->
+      <div class="assign-top-bar">
+        <div class="assign-info-group">
+          <div class="assign-info-divider">
+            <div class="flex items-center gap-8px">
+              <i class="ph-duotone ph-calendar color-blue font-18px"></i>
+              <span id="assign-date" class="fw-700 font-16px color-primary">08/06/2026</span>
+            </div>
+          </div>
+          <div class="flex gap-16px items-center">
+            <div class="flex items-center gap-8px">
+              <label class="font-14px color-label">Plant:</label>
+              <span class="fw-700 color-blue font-14px">BOILER</span>
+            </div>
+            <div class="flex items-center gap-8px">
+              <label class="font-14px color-label">Engineer:</label>
+              <span class="fw-700 color-primary font-14px">ENG_TESTER</span>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="assign-full-container flex flex-col gap-16px">
+        <!-- Job Assignment Form -->
+        <div class="assign-form-card">
+          <div class="assign-form-header">
+            <i class="ph-duotone ph-note-pencil color-blue font-16px"></i>
+            <span class="fw-700 color-primary font-14px">ASSIGN TOMORROW INST FORM</span>
+          </div>
+
+          <form id="assign-tomorrow-inst-form" class="form-grid grid-cols-12 p-16px">
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Date:</label>
+              <input type="text" class="gnfc-modal-input" value="08/06/2026">
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Assigned to:</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+              </select>
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">By:</label>
+              <input type="text" class="gnfc-modal-input" value="ENG_TESTER" readonly
+                style="background-color: var(--bg-secondary);">
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Job No</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Plant</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">TagNo</label>
+              <input type="text" class="gnfc-modal-input">
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">Type</label>
+              <select class="gnfc-modal-input">
+                <option value="OTHER">OTHER</option>
+                <option value="DCS">DCS</option>
+                <option value="ESD">ESD</option>
+                <option value="CONTROLLER/INDICATOR">CONTROLLER/INDICATOR</option>
+                <option value="RECORDER/PRINTER">RECORDER/PRINTER</option>
+                <option value="MONITOR/CRT">MONITOR/CRT</option>
+                <option value="SPEED SYSTEM">SPEED SYSTEM</option>
+                <option value="VIBRATION SYSTEM">VIBRATION SYSTEM</option>
+                <option value="FLAME/TEMP SCANNER">FLAME/TEMP SCANNER</option>
+                <option value="TRANSMITTER">TRANSMITTER</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="TEST EQUIPMENT">TEST EQUIPMENT</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="WEIGHING SYSTEM">WEIGHING SYSTEM</option>
+              </select>
+            </div>
+
+            <div class="col-span-3">
+              <label class="gnfc-modal-label">SubType</label>
+              <select class="gnfc-modal-input">
+                <option value=""></option>
+              </select>
+            </div>
+            
+            <div class="col-span-12">
+              <label class="gnfc-modal-label">Deffect</label>
+              <textarea class="gnfc-modal-input" rows="3"></textarea>
+            </div>
+
+            <div class="assign-form-footer col-span-12">
+              <button type="button" onclick="saveAssignment()"
+                class="gnfc-modal-btn gnfc-modal-btn-primary">SAVE</button>
+              <button type="button" onclick="cancelAssignment()"
+                class="gnfc-modal-btn gnfc-modal-btn-secondary">Cancel</button>
+            </div>
+          </form>
+
+        </div>
+
+        <!-- PENDING JOBS TABLE -->
+        <div class="ui-card pt-10px" style="background-color: var(--card-bg);">
+          <div class="text-center mb-10px">
+            <h3 class="font-16px fw-700 color-primary uppercase">INST. LAB JOB REGISTER</h3>
+            <h4 class="font-14px fw-700 color-primary uppercase">PENDING JOBS</h4>
+          </div>
+          <div class="user-table-wrapper max-h-50vh">
+            <table class="user-table min-w-1000px">
+              <thead>
+                <tr>
+                  <th class="user-table-center w-50px">SrNo</th>
+                  <th class="w-80px">JOBNO</th>
+                  <th class="w-80px">PLANT</th>
+                  <th class="user-table-center w-100px">DATE</th>
+                  <th class="w-180px">TAGNO</th>
+                  <th>DEFECT</th>
+                  <th class="user-table-center w-80px">TECH</th>
+                  <th class="user-table-center w-150px">STATUS</th>
+                  <th class="user-table-center w-80px">PRIO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="user-table-">1</td>
+                  <td class="user-table-bold user-table-blue cursor-pointer" onclick="openJobModal(this)">15319</td>
+                  <td>AMM</td>
+                  <td class="user-table-">31/08/2023</td>
+                  <td class="user-table-primary fw-600">FTA for ESD</td>
+                  <td class="user-table-desc">Channel 1 and 2 are faulty.</td>
+                  <td class="user-table-">ALD</td>
+                  <td class="user-table-center"> FOR COMPONENT</td>
+                  <td class="user-table-">NORMAL</td>
+                </tr>
+                <tr>
+                  <td class="user-table-">2</td>
+                  <td class="user-table-bold user-table-blue cursor-pointer" onclick="openJobModal(this)">15348</td>
+                  <td>AMM</td>
+                  <td class="user-table-">19/10/2023</td>
+                  <td class="user-table-primary fw-600">TRICONEX DI MODULE</td>
+                  <td class="user-table-desc">REPAIRED AT INST WORKSHOP 12 NOS PVD1352 REPLACED AFTER THAT EXTERNAL
+                    STATUS MISSMATCH ERRORS.</td>
+                  <td class="user-table-"></td>
+                  <td class="user-table-center"></td>
+                  <td class="user-table-">NORMAL</td>
+                </tr>
+                <tr>
+                  <td class="user-table-">3</td>
+                  <td class="user-table-bold user-table-blue cursor-pointer" onclick="openJobModal(this)">15348</td>
+                  <td>AMM</td>
+                  <td class="user-table-">19/10/2023</td>
+                  <td class="user-table-primary fw-600">TRICONEX DI MODULE</td>
+                  <td class="user-table-desc">IT WAS REPAIRED AT INST WORKSHOP CHECKED AND FOUND-BAD DIGITAL INPUT
+                    POINT.</td>
+                  <td class="user-table-"></td>
+                  <td class="user-table-center"></td>
+                  <td class="user-table-">NORMAL</td>
+                </tr>
+                <tr>
+                  <td class="user-table-">4</td>
+                  <td class="user-table-bold user-table-blue cursor-pointer" onclick="openJobModal(this)">15630</td>
+                  <td>AMM</td>
+                  <td class="user-table-">27/07/2024</td>
+                  <td class="user-table-primary fw-600">16-channel AI card</td>
+                  <td class="user-table-desc">Complete module faulty appeared.</td>
+                  <td class="user-table-"></td>
+                  <td class="user-table-center"></td>
+                  <td class="user-table-">NORMAL</td>
+                </tr>
+                <tr>
+                  <td class="user-table-">5</td>
+                  <td class="user-table-bold user-table-blue cursor-pointer" onclick="openJobModal(this)">15592</td>
+                  <td>AMM</td>
+                  <td class="user-table-">08/06/2024</td>
+                  <td class="user-table-primary fw-600">32 channel DI card</td>
+                  <td class="user-table-desc">In Triconex DI card, Channel no. 32 found faulty.</td>
+                  <td class="user-table-"></td>
+                  <td class="user-table-center"></td>
+                  <td class="user-table-">NORMAL</td>
+                </tr>
+                <tr>
+                  <td class="user-table-">6</td>
+                  <td class="user-table-bold user-table-blue cursor-pointer" onclick="openJobModal(this)">15674</td>
+                  <td>AMM</td>
+                  <td class="user-table-">31/08/2024</td>
+                  <td class="user-table-primary fw-600">ABB SYCON BOARD</td>
+                  <td class="user-table-desc">SYCON BOARD found faulty due to which analyzer not working.</td>
+                  <td class="user-table-">ALD</td>
+                  <td class="user-table-center">U/P</td>
+                  <td class="user-table-">NORMAL</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal: INST WS Log Book -->
+  <div id="job-logbook-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--lg">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">INST WS Log Book</h3>
+        <button type="button" class="gnfc-modal-close" onclick="$('#job-logbook-modal').removeClass('is-open')">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body plant-modal-body--scroll">
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1000px w-full" id="jobLogbookModalTable">
+            <thead>
+              <tr>
+                <th class="text-center" rowspan="2" style="width: 40px;">Sr</th>
+                <th rowspan="2" style="width: 80px;">JobNo</th>
+                <th style="width: 260px;">Title</th>
+                <th class="text-center" rowspan="2" style="width: 80px;">Plant</th>
+                <th class="text-center" rowspan="2" style="width: 80px;">Tech</th>
+                <th rowspan="2">Description</th>
+                <th class="text-center" rowspan="2" style="width: 80px;">Tech</th>
+                <th class="text-center" style="width: 120px;">Status</th>
+                <th rowspan="2" style="width: 150px;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="user-table-border-right">Job</th>
+                <th class="user-table-border-right text-center">Date</th>
+              </tr>
+            </thead>
+            <tbody id="job-logbook-modal-body" class="plant-table-body">
+              <!-- Content will be injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="$('#job-logbook-modal').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    $(document).ready(function () {
+
+      /** ── Form Actions ── */
+      window.saveAssignment = function () {
+        // Clear form
+        $('#assign-tomorrow-inst-form')[0].reset();
+
+        Swal.fire({
+          title: 'Job Assigned!',
+          text: 'Job Successfully Assigned!',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      };
+
+      window.cancelAssignment = function () {
+        $('#assign-tomorrow-inst-form')[0].reset();
+        window.location.href = 'inst_ws_logbook.html';
+      };
+
+      // UI Enhancements
+      $(document).on('change', '.assign-select-wrap select', function () {
+        $(this).blur();
+      });
+
+
+
+      // --- Auto-open logic for Modals (Show on entry, not on refresh) ---
+      const today = new Date().toLocaleDateString('en-GB');
+      $('#assign-date').text(today);
+
+      window.openJobModal = function(elem) {
+        const $row = $(elem).closest('tr');
+        const sr = $row.find('td:eq(0)').text().trim();
+        const jobNo = $row.find('td:eq(1)').text().trim();
+        const plant = $row.find('td:eq(2)').text().trim();
+        const date = $row.find('td:eq(3)').text().trim();
+        const tagNo = $row.find('td:eq(4)').text().trim();
+        const defect = $row.find('td:eq(5)').text().trim();
+        let tech = $row.find('td:eq(6)').text().trim();
+        let status = $row.find('td:eq(7)').text().trim();
+        
+        // If the clicked row is 15319, use the exact data from the 2nd image
+        let description = '';
+        if (jobNo === '15319') {
+          description = 'check all discrete components in cold condition found o.k. but as to clear doubt need to replace 330ohm 5 w resistor. but we have no spare hence it is pending.';
+        } else {
+          description = defect;
+        }
+
+        let jobDate = date;
+        let jobBy = 'JJC';
+        if (jobNo === '15319') {
+          jobDate = '05/09/2023';
+        }
+
+        let titleJobHtml = `
+          <div class="user-table-cell-stack">
+            <span>${tagNo}</span>
+            <span class="user-table-desc">${defect} (By:${jobBy} : ${jobDate})</span>
+          </div>
+        `;
+
+        let statusDateHtml = `
+          <div class="user-table-cell-stack">
+            <span class="user-table-center">${status || 'PENDING FOR COMPONENT'}</span>
+            <span class="user-table-center">${jobDate}</span>
+          </div>
+        `;
+
+        let tbodyHtml = `
+          <tr class="user-table-row">
+            <td class="user-table-center user-table-secondary">${sr}</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <span class="user-table-bold user-table-blue">${jobNo}</span>
+              </div>
+            </td>
+            <td>
+              ${titleJobHtml}
+            </td>
+            <td class="user-table-center">${plant}</td>
+            <td class="user-table-center">${tech || 'ALD'}</td>
+            <td>${description}</td>
+            <td>
+              <div class="user-table-cell-stack">
+                <span class="user-table-center">${tech || 'ALD'}</span>
+              </div>
+            </td>
+            <td class="user-table-center">
+              ${statusDateHtml}
+            </td>
+            <td></td>
+          </tr>
+        `;
+
+        $('#job-logbook-modal-body').html(tbodyHtml);
+        $('#job-logbook-modal').addClass('is-open');
+      };
+
+    });
+  </script>
+</body>
+
+</html>

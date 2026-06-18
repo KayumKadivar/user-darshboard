@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name & Tag Wise Report | GNFC</title>
+  <meta name="description" content="GNFC Technician Specific Job Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/inst-ws-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'name_date_report';
+  </script>
+</head>
+
+<body class="dashboard-body plant-page">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Name & Tag Wise Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,INST WS:inst_ws_logbook.html,Name & Tag Wise Report:active"
+      data-back="inst_ws_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content flex flex-col gap-16px">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
+          </h3>
+        </div>
+        <div class="form-grid grid-cols-12 p-16px">
+
+          <!-- Start Date -->
+          <div class="col-span-2">
+            <label class="gnfc-modal-label">Start Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="startDateFilter" class="gnfc-modal-input">
+            </div>
+          </div>
+
+          <!-- End Date -->
+          <div class="col-span-2">
+            <label class="gnfc-modal-label">End Date </label>
+            <div class="jt-input-wrap">
+              <input type="date" id="endDateFilter" class="gnfc-modal-input">
+            </div>
+          </div>
+
+          <!-- Tag Filter -->
+          <div class="col-span-3">
+            <label class="gnfc-modal-label">Tag Number</label>
+            <div class="jt-select-wrap">
+              <select id="tagNoFilter" class="gnfc-modal-input">
+                <option value="">All Tags</option>
+                <option value="FVC0208A">FVC0208A</option>
+                <option value="LV412B">LV412B</option>
+              </select>
+
+            </div>
+          </div>
+
+          <!-- Select Name -->
+          <div class="col-span-3">
+            <label class="gnfc-modal-label">Technician Name</label>
+            <div class="jt-select-wrap">
+              <select id="nameFilter" class="jt-select">
+                <option value="">All Technicians</option>
+                <option value="PBS">PBS</option>
+                <option value="NRK">NRK</option>
+                <option value="MJ">MJ</option>
+                <option value="MR">MR</option>
+                <option value="R.R.">R.R.</option>
+                <option value="SHC">SHC</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="jt-filter-btn grid-span-1">
+            <button onclick="generateReport(true)" class="jt-btn-primary">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button onclick="resetFilters()" class="jt-btn-reset">
+              Reset
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── REPORT RESULTS ── -->
+      <div id="reportResults" class="jt-table-card" style="display: none; flex-direction: column;">
+
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-user-list"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title" id="reportTitle">Name & Date Wise Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th class="user-table-center" style="width: 50px;">Sr</th>
+                <th class="user-table-center" style="width: 110px;">Date</th>
+                <th class="user-table-center" style="width: 100px;">Job No</th>
+                <th class="user-table-center" style="width: 100px;">Tech</th>
+                <th class="user-table-center" style="width: 150px;">Type Of Job</th>
+                <th class="user-table-center" style="min-width: 300px;">Description</th>
+                <th class="user-table-center" style="width: 250px;">Remarks</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">1</td>
+                <td class="user-table-center">11/05/2026</td>
+                <td class="user-table-center">17118</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">CALIBRATION</td>
+                <td>done scheduled calibration and fill the report</td>
+                <td></td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">2</td>
+                <td class="user-table-center">11/05/2026</td>
+                <td class="user-table-center">17123</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">BREAKDOWN</td>
+                <td>check it found it is fully black due to burning. clean with ipa. found its pcb is got damage due to burning. hence cannot repaired.</td>
+                <td></td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">3</td>
+                <td class="user-table-center">11/05/2026</td>
+                <td class="user-table-center">17128</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">CALIBRATION</td>
+                <td>done scheduled calibration and fill the report</td>
+                <td></td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">4</td>
+                <td class="user-table-center">06/06/2026</td>
+                <td class="user-table-center">17145</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">DEFECT MAINTENANCE</td>
+                <td>replace all electrolyte capacitors with new one.</td>
+                <td></td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">5</td>
+                <td class="user-table-center">06/06/2026</td>
+                <td class="user-table-center">17168</td>
+                <td class="user-table-center">PMP</td>
+                <td class="user-table-center">PREVENTIVE</td>
+                <td>over test</td>
+                <td></td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">6</td>
+                <td class="user-table-center">09/06/2026</td>
+                <td class="user-table-center">17179</td>
+                <td class="user-table-center">ENG_TESTER</td>
+                <td class="user-table-center">PREVENTIVE</td>
+                <td>test3</td>
+                <td>Test Remarks 4 [written by : ENG_TESTER Date : 09/06/2026 ]</td>
+              </tr>
+              <!-- Summary Footer Row -->
+              <tr>
+                <td colspan="7" class="user-table-center">
+                  SELECTED NAME ALL
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      /** ── Global functions for onclick handlers ── */
+      window.generateReport = function (showLoader = false) {
+        if (showLoader) {
+          $('#data-loader-overlay').removeClass('hidden');
+          setTimeout(() => {
+            $('#data-loader-overlay').addClass('hidden');
+            executeGenerate();
+          }, 1500);
+        } else {
+          executeGenerate();
+        }
+
+        function executeGenerate() {
+          const selectedName = $('#nameFilter').val();
+          const startDate = $('#startDateFilter').val();
+          const endDate = $('#endDateFilter').val();
+
+          const formattedStart = startDate ? new Date(startDate).toLocaleDateString('en-GB') : '-';
+          const formattedEnd = endDate ? new Date(endDate).toLocaleDateString('en-GB') : '-';
+          const nameLabel = selectedName || 'All Technicians';
+
+          $('#reportTitle').text(`Name and Tag Wise Report: ${nameLabel} (${formattedStart} – ${formattedEnd})`);
+
+          // Show results container
+          $('#reportResults').css('display', 'flex').stop().hide().fadeIn(300);
+        }
+      };
+
+      window.resetFilters = function () {
+        const today = new Date();
+        const lastMonth = new Date(today);
+        lastMonth.setDate(lastMonth.getDate() - 30);
+        const fmt = (d) => d.toISOString().split('T')[0];
+
+        $('#nameFilter').val('');
+        $('#startDateFilter').val(fmt(lastMonth));
+        $('#endDateFilter').val(fmt(today));
+        $('#reportResults').fadeOut(200);
+      };
+
+      // Initial State
+      const today = new Date();
+      const lastMonth = new Date(today);
+      lastMonth.setDate(lastMonth.getDate() - 30);
+      const fmt = (d) => d.toISOString().split('T')[0];
+
+      $('#endDateFilter').val(fmt(today));
+      $('#startDateFilter').val(fmt(lastMonth));
+      $('#nameFilter').val('PBS');
+
+      // Date picker trigger for all date inputs using delegation
+      $(document).on('click focus', '.jt-date-input', function () {
+        if (typeof this.showPicker === 'function') {
+          try { this.showPicker(); } catch (e) { }
+        }
+      });
+      $(document).on('click', '.jt-input-icon', function () {
+        const $input = $(this).siblings('input');
+        if ($input.length && typeof $input[0].showPicker === 'function') {
+          try { $input[0].showPicker(); } catch (e) { }
+        }
+      });
+
+      // Run initial report
+      generateReport();
+    });
+  </script>
+</body>
+
+</html>

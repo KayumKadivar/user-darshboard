@@ -45,7 +45,7 @@
       <div id="plant-nav-container"></div>
 
       <!-- Toolbar -->
-      <section class="ui-card plant-toolbar-card my-20px">
+      <section class="ui-card plant-toolbar-card">
         <div class="plant-toolbar">
           <div class="plant-toolbar__left">
             <div class="ui-switcher" role="group" aria-label="Select period">
@@ -450,7 +450,7 @@
                       </button>
                       <span>5</span>
                       <hr class="plant-sr-divider" style="border-top: 1px solid rgba(0, 0, 0, 0.2) !important;">
-                      <button type="button" class="sr-edit-icon" title="Edit Job">
+                      <button type="button" class="sr-edit-icon" title="Edit Job" onclick="openEditLogbookModal(this)">
                         <i class="ph-bold ph-pencil-simple-line" style="color: #000 !important;"></i>
                       </button>
                     </div>
@@ -505,7 +505,7 @@
                       </button>
                       <span>6</span>
                       <hr class="plant-sr-divider" style="border-top: 1px solid rgba(0, 0, 0, 0.2) !important;">
-                      <button type="button" class="sr-edit-icon" title="Edit Job">
+                      <button type="button" class="sr-edit-icon" title="Edit Job" onclick="openEditLogbookModal(this)">
                         <i class="ph-bold ph-pencil-simple-line" style="color: #000 !important;"></i>
                       </button>
                     </div>
@@ -560,7 +560,7 @@
                       </button>
                       <span>7</span>
                       <hr class="plant-sr-divider" style="border-top: 1px solid rgba(0, 0, 0, 0.2) !important;">
-                      <button type="button" class="sr-edit-icon" title="Edit Job">
+                      <button type="button" class="sr-edit-icon" title="Edit Job" onclick="openEditLogbookModal(this)">
                         <i class="ph-bold ph-pencil-simple-line" style="color: #000 !important;"></i>
                       </button>
                     </div>
@@ -1406,145 +1406,110 @@
       </div>
       <form id="job-modal-form">
         <div class="gnfc-modal-body gnfc-modal-body--tight plant-modal-body--scroll">
-          <div class="form-grid grid-cols-12">
+          <div class="form-grid grid-cols-12 gap-4">
 
-            <!-- Assigned Information (Read-only) -->
-            <div class="col-span-3">
+            <!-- Row 1: Date, Assigned To, By -->
+            <div class="col-span-4">
               <label class="gnfc-modal-label" for="job-date">Date</label>
-              <input id="job-date" type="text" readonly class="gnfc-modal-input">
+              <input id="job-date" type="text" readonly class="gnfc-modal-input" value="18/06/2026">
             </div>
-            <div class="col-span-3">
+            <div class="col-span-4">
               <label class="gnfc-modal-label" for="job-assigned-to">Assigned To</label>
-              <input id="job-assigned-to" type="text" readonly class="gnfc-modal-input" placeholder="Technician">
+              <input id="job-assigned-to" type="text" readonly class="gnfc-modal-input" value="ALD">
             </div>
-            <div class="col-span-3">
+            <div class="col-span-4">
               <label class="gnfc-modal-label" for="job-assigned-by">By</label>
-              <input id="job-assigned-by" type="text" readonly class="gnfc-modal-input" placeholder="Engineer">
-            </div>
-            <div class="col-span-3">
-              <label class="gnfc-modal-label" for="job-date-2">Date</label>
-              <input id="job-date-2" type="text" readonly class="gnfc-modal-input">
+              <input id="job-assigned-by" type="text" readonly class="gnfc-modal-input" value="HAS">
             </div>
 
-            <div class="col-span-3">
-              <label class="gnfc-modal-label" for="job-loop">Loop Name</label>
-              <input type="text" id="job-loop-input" readonly class="gnfc-modal-input" placeholder="Loop Name">
-            </div>
-            <div class="col-span-3">
-              <label class="gnfc-modal-label" for="job-tag">InstTag</label>
-              <input type="text" id="job-tag-input" readonly class="gnfc-modal-input" placeholder="InstTag">
-            </div>
-            <div class="col-span-3">
-              <label class="gnfc-modal-label" for="job-type">Type Of Job</label>
-              <input type="text" id="job-type" readonly class="gnfc-modal-input" placeholder="Type Of Job">
+            <!-- Row 2: Job (Textarea) -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label" for="job-assigned-info">Job</label>
+              <textarea id="job-assigned-info" rows="2" readonly class="gnfc-modal-input">Not working (By:HAS : 10/06/2026)</textarea>
             </div>
 
-            <div class="col-span-3">
-              <label class="gnfc-modal-label" for="job-inst">Type Of Inst</label>
+            <!-- Row 3: Type, SubType -->
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="job-type">Type</label>
               <div class="plant-select-wrap">
-                <select id="job-inst" class="gnfc-modal-input">
-                  <option value="ANALYZER">ANALYZER</option>
-                  <option value="C/V">C/V</option>
-                  <option value="TX">TX</option>
-                  <option value="SWITCH">SWITCH</option>
-                  <option value="PRIMARY ELEMENT">PRIMARY ELEMENT</option>
-                  <option value="TG/PG">TG/PG</option>
-                  <option value="SCANNER">SCANNER</option>
-                  <option value="PCV">PCV</option>
-                  <option value="ROTAMETER">ROTAMETER</option>
-                  <option value="ENVIRON MONITORING">ENVIRON MONITORING</option>
-                  <option value="MACHINE MONITORING">MACHINE MONITORING</option>
-                  <option value="PA SYSTEM">PA SYSTEM</option>
-                  <option value="PC">PC</option>
-                  <option value="N.A.">N.A.</option>
+                <select id="job-type" class="gnfc-modal-input">
+                  <option value="OTHER">OTHER</option>
                 </select>
               </div>
+            </div>
+            <div class="col-span-6">
+              <label class="gnfc-modal-label" for="job-subtype">SubType</label>
+              <input type="text" id="job-subtype" class="gnfc-modal-input" value="Magnetic Stirrer">
             </div>
 
             <div class="col-span-12">
-              <label class="gnfc-modal-label" for="job-assigned-info">Job</label>
-              <textarea id="job-assigned-info" 4rows="2" readonly class="gnfc-modal-input"
-                placeholder="Assigned job details..."></textarea>
+              <hr>
             </div>
 
-            <div class="col-span-12"><hr></div>
-
+            <!-- Row 4: DATE, JONNO, JOB TITLE, PLANT -->
             <div class="col-span-3">
-              <label class="gnfc-modal-label" for="job-status">Job Status <span class="required">*</span></label>
+              <label class="gnfc-modal-label" for="job-nested-date">DATE</label>
+              <input id="job-nested-date" type="text" readonly class="gnfc-modal-input" value="10/06/2026">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-nested-jonno">JONNO</label>
+              <input id="job-nested-jonno" type="text" readonly class="gnfc-modal-input" value="17172">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-nested-jobtitle">JOB TITLE</label>
+              <input id="job-nested-jobtitle" type="text" readonly class="gnfc-modal-input" value="Magnetic Stirrer">
+            </div>
+            <div class="col-span-3">
+              <label class="gnfc-modal-label" for="job-nested-plant">PLANT</label>
+              <input id="job-nested-plant" type="text" readonly class="gnfc-modal-input" value="CLAB">
+            </div>
+
+            <div class="col-span-12">
+              <hr>
+            </div>
+
+            <!-- Row 5: JOB DISCRIPTION -->
+            <div class="col-span-12">
+              <label class="gnfc-modal-label" for="job-desc">JOB DISCRIPTION <span class="required">*</span></label>
+              <textarea id="job-desc" rows="4" class="gnfc-modal-input" placeholder="Enter job description"></textarea>
+            </div>
+
+            <!-- Row 6: JOB STATUS, TECH NAME, ENG -->
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="job-status">JOB STATUS <span class="required">*</span></label>
               <div class="plant-select-wrap">
                 <select id="job-status" class="gnfc-modal-input">
-                  <option value="">Select Job Status</option>
                   <option value="OVER">OVER</option>
-                  <option value="PEND">PEND</option>
-                  <option value="U/O">U/O</option>
-                  <option value="U/P">U/P</option>
+                  <option value="PENDING">PENDING</option>
                 </select>
               </div>
             </div>
-
-            <div class="col-span-3">
-              <label class="gnfc-modal-label" for="job-tech">Tech Name</label>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="job-tech">TECH NAME</label>
               <div class="plant-select-wrap">
                 <select id="job-tech" class="gnfc-modal-input">
-                  <option value="">Select Tech</option>
-                  <option value="PVS">PVS</option>
-                  <option value="BDR">BDR</option>
-                  <option value="PRP">PRP</option>
-                  <option value="JDB">JDB</option>
-                  <option value="JMD">JMD</option>
-                  <option value="BSU">BSU</option>
-                  <option value="CNJ_ISD">CNJ_ISD</option>
-                  <option value="TECH_TESTER">TECH_TESTER</option>
-                  <option value="KBD">KBD</option>
+                  <option value="ENG_TESTER">ENG_TESTER</option>
                 </select>
               </div>
             </div>
-
-            <div class="col-span-3">
-              <label class="gnfc-modal-label" for="job-eng">Engineer</label>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label" for="job-eng">ENG <span class="required">*</span></label>
               <div class="plant-select-wrap">
                 <select id="job-eng" class="gnfc-modal-input">
                   <option value="">Please Select ENG</option>
                   <option value="TRC">TRC</option>
                   <option value="ARP">ARP</option>
                   <option value="YMG_ISD">YMG_ISD</option>
-                  <option value="ENG_TESTER" selected>ENG_TESTER</option>
+                  <option value="ENG_TESTER">ENG_TESTER</option>
                   <option value="PMP">PMP</option>
                   <option value="NONE">NONE</option>
                 </select>
               </div>
             </div>
 
-            <div class="col-span-3">
-              <label class="gnfc-modal-label" for="job-area">Plant Area</label>
-              <div class="plant-select-wrap">
-                <select id="job-area" class="gnfc-modal-input">
-                  <option value="N.A.">N.A.</option>
-                  <option value="BOILER-1">BOILER-1</option>
-                  <option value="BOILER-2">BOILER-2</option>
-                  <option value="BOILER-3">BOILER-3</option>
-                  <option value="BOILER-4">BOILER-4</option>
-                  <option value="TG-1">TG-1</option>
-                  <option value="TG-2">TG-2</option>
-                  <option value="COMMON">COMMON</option>
-                  <option value="CPSU-HRSG">CPSU-HRSG</option>
-                  <option value="CPSU-GT">CPSU-GT</option>
-                  <option value="CPSU-BOP">CPSU-BOP</option>
-                  <option value="CPSU-BMS">CPSU-BMS</option>
-                  <option value="CHP">CHP</option>
-                  <option value="ASH">ASH</option>
-                  <option value="NG STN">NG STN</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-span-12">
-              <label class="gnfc-modal-label" for="job-desc">Job Description <span class="required">*</span></label>
-              <textarea id="job-desc" rows="4" class="gnfc-modal-input" placeholder="Enter job description"></textarea>
-            </div>
-
+            <!-- Row 7: Extra Duty Hrs, Emergency -->
             <div class="col-span-4">
-              <label class="gnfc-modal-label">Extra Duty Hrs</label>
+              <label class="gnfc-modal-label">EXTRA DUTY HRS</label>
               <div class="flex gap-8px items-center">
                 <div class="plant-select-wrap flex-1">
                   <select id="job-hrs-ha" class="gnfc-modal-input">
@@ -1633,23 +1598,15 @@
               </div>
             </div>
 
-
-
             <div class="col-span-8 flex h-full">
               <div class="plant-checkbox-row">
-                <label class="plant-checkbox-label">
-                  <input type="checkbox" id="job-emergency" class="plant-checkbox"> Emergency Call
-                </label>
-                <label class="plant-checkbox-label">
-                  <input type="checkbox" id="job-mod-req" class="plant-checkbox"> Modificaton Required
-                </label>
-                <label class="plant-checkbox-label">
-                  <input type="checkbox" id="job-doc-chg" class="plant-checkbox"> Documentation Change Required
+                <label class="plant-checkbox-label mt-5">
+                  <input type="checkbox" id="job-emergency" class="plant-checkbox"> EMERGENCY
                 </label>
               </div>
             </div>
-          </div>
-        </div>
+
+          </div></div>
         <div class="gnfc-modal-footer">
           <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary"
             data-close-modal="job-modal">Cancel</button>
@@ -2487,6 +2444,154 @@
       </form>
     </div>
   </div>
+
+  <!-- Modal: Edit Log Book -->
+  <div id="edit-logbook-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--xl">
+      <div class="gnfc-modal-header" style="background-color: #1e3a5f; color: white; justify-content: center; position: relative; border-radius: 4px 4px 0 0;">
+        <h3 class="gnfc-modal-title" style="color: white; font-weight: bold;">Log Book</h3>
+        <button type="button" class="gnfc-modal-close" onclick="$('#job-modal').removeClass('is-open')" style="color: white; position: absolute; right: 10px;">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body plant-modal-body--scroll" style="background-color: #f0ebd8; padding: 20px;">
+        <div class="form-grid grid-cols-12 gap-4" style="background-color: #e5dfc5; padding: 10px; border: 1px solid #ccc; margin-bottom: 10px;">
+          <div class="col-span-4 flex items-center gap-2">
+            <label class="gnfc-modal-label" style="min-width: 60px;">Date:</label>
+            <input type="text" class="gnfc-modal-input flex-1" id="edit-lb-date" value="18/06/2026">
+          </div>
+          <div class="col-span-4 flex items-center gap-2">
+            <label class="gnfc-modal-label" style="min-width: 80px;">Assigned To:</label>
+            <input type="text" class="gnfc-modal-input flex-1" id="edit-lb-assigned" value="ALD">
+          </div>
+          <div class="col-span-4 flex items-center gap-2">
+            <label class="gnfc-modal-label" style="min-width: 40px;">By:</label>
+            <input type="text" class="gnfc-modal-input flex-1" id="edit-lb-by" value="HAS">
+          </div>
+          
+          <div class="col-span-12 flex gap-2">
+            <label class="gnfc-modal-label" style="min-width: 60px;">Job:</label>
+            <textarea class="gnfc-modal-input flex-1" id="edit-lb-job" rows="2">Not working (By:HAS : 10/06/2026)</textarea>
+          </div>
+
+          <div class="col-span-6 flex items-center gap-2">
+            <label class="gnfc-modal-label" style="min-width: 60px;">Type:</label>
+            <input type="text" class="gnfc-modal-input flex-1" id="edit-lb-type" value="OTHER">
+          </div>
+          <div class="col-span-6 flex items-center gap-2">
+            <label class="gnfc-modal-label" style="min-width: 60px;">SubType:</label>
+            <input type="text" class="gnfc-modal-input flex-1" id="edit-lb-subtype" value="Magnetic Stirrer">
+          </div>
+        </div>
+
+        <table class="user-table min-w-full mb-4" style="background-color: white;">
+          <thead>
+            <tr>
+              <th class="text-center">DATE</th>
+              <th class="text-center">JONNO</th>
+              <th class="text-center">JOB TITLE</th>
+              <th class="text-center">PLANT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center"><input type="text" class="gnfc-modal-input text-center w-full" id="edit-lb-nested-date" value="10/06/2026"></td>
+              <td class="text-center"><input type="text" class="gnfc-modal-input text-center w-full" id="edit-lb-nested-jonno" value="17172"></td>
+              <td class="text-center"><input type="text" class="gnfc-modal-input text-center w-full" id="edit-lb-nested-jobtitle" value="Magnetic Stirrer"></td>
+              <td class="text-center"><input type="text" class="gnfc-modal-input text-center w-full" id="edit-lb-nested-plant" value="CLAB"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="background-color: #e5dfc5; padding: 10px; border: 1px solid #ccc;">
+          <label class="gnfc-modal-label block mb-2 font-bold" style="text-transform: uppercase;">Job Discription</label>
+          <textarea class="gnfc-modal-input w-full" id="edit-lb-description" rows="4"></textarea>
+        </div>
+
+        <div class="flex justify-center mt-4">
+           <table class="user-table w-auto text-center" style="background-color: white;">
+             <thead>
+               <tr>
+                 <th>JOB STATUS</th>
+                 <th>TECH NAME</th>
+                 <th>ENG</th>
+                 <th>EXTRA DUTY HRS</th>
+                 <th>EERGENCY</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr>
+                 <td>
+                   <select class="gnfc-modal-input" id="edit-lb-status">
+                     <option value="OVER">OVER</option>
+                     <option value="PENDING">PENDING</option>
+                   </select>
+                 </td>
+                 <td>
+                   <select class="gnfc-modal-input" id="edit-lb-tech">
+                     <option value="ENG_TESTER">ENG_TESTER</option>
+                   </select>
+                 </td>
+                 <td>
+                   <select class="gnfc-modal-input" id="edit-lb-eng">
+                     <option value="">Please Select ENG</option>
+                   </select>
+                 </td>
+                 <td class="flex gap-2 justify-center">
+                   <select class="gnfc-modal-input" style="width: 60px;">
+                     <option>HR</option>
+                   </select>
+                   <select class="gnfc-modal-input" style="width: 60px;">
+                     <option>MIN</option>
+                   </select>
+                 </td>
+                 <td>
+                   <input type="checkbox" class="plant-checkbox mx-auto" style="width: 20px; height: 20px;">
+                 </td>
+               </tr>
+               <tr>
+                 <td colspan="5" class="text-center py-2">
+                   <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" style="padding: 2px 10px; min-width: auto; height: auto;">Save</button>
+                   <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" style="padding: 2px 10px; min-width: auto; height: auto; margin-left: 5px;" onclick="$('#job-modal').removeClass('is-open')">cancel</button>
+                 </td>
+               </tr>
+             </tbody>
+           </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentRowForEdit = null;
+
+    function openEditLogbookModal(element) {
+      currentRowForEdit = $(element).closest('tr');
+      
+      if(currentRowForEdit) {
+        // Populate with the exact data requested
+        $('#edit-lb-date').val('18/06/2026');
+        $('#edit-lb-assigned').val('ALD');
+        $('#edit-lb-by').val('HAS');
+        $('#edit-lb-job').val('Not working (By:HAS : 10/06/2026)');
+        $('#edit-lb-type').val('OTHER');
+        $('#edit-lb-subtype').val('Magnetic Stirrer');
+        
+        $('#edit-lb-nested-date').val('10/06/2026');
+        $('#edit-lb-nested-jonno').val('17172');
+        $('#edit-lb-nested-jobtitle').val('Magnetic Stirrer');
+        $('#edit-lb-nested-plant').val('CLAB');
+        
+        $('#edit-lb-description').val('');
+        $('#edit-lb-status').val('OVER');
+        $('#edit-lb-tech').val('ENG_TESTER');
+        $('#edit-lb-eng').val('');
+      }
+
+      $('#job-modal').addClass('is-open');
+    }
+  </script></script>
 </body>
 
 <script>
@@ -2725,10 +2830,6 @@
       $('#general-history-modal').addClass('is-open');
     });
 
-    window.filterTagsForLoop = function () {
-      console.log("Filtering tags for loop...");
-    };
-
     // --- Smart Tag Autocomplete Helper ---
     function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
       const $input = $(inputSelector);
@@ -2878,67 +2979,6 @@
           });
           $('#edit-modal').removeClass('is-open');
           $('body').css('overflow', '');
-        }
-      });
-    });
-
-    // Handle SR Edit Icon Click (Pencil) -> Show Warning SweetAlert
-    $(document).on('click', '.sr-edit-icon', function () {
-      const $row = $(this).closest('tr');
-      const techName = $row.find('td').eq(4).text().trim() || 'N/A';
-      const loggedInTech = "ENG_TESTER"; // This can be dynamic if available
-
-      Swal.fire({
-        title: 'Warning !!!!',
-        text: `Assigned Tech Name ( ${techName} ) and Logged in Tech name ( ${loggedInTech} ) are different`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#2563eb',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Continue',
-        cancelButtonText: 'Cancel',
-        background: 'var(--app-panel)',
-        color: 'var(--typo-primary)',
-        iconColor: '#ef4444'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Extract data from row
-          const date = $row.prevAll('.user-table-date').first().text().trim() || todayStr;
-          const area = $row.find('td').eq(1).text().trim();
-          const loopName = $row.find('td').eq(2).find('span').first().text().trim();
-          const tagNo = $row.find('td').eq(2).find('.plant-tag-link').text().trim();
-          const jobTitle = $row.find('td').eq(3).find('span').first().text().trim();
-          const jobType = $row.data('job-type') || $row.find('td').eq(3).find('span').last().text().trim();
-          const instType = $row.find('td').eq(3).find('.user-table-secondary').text().trim();
-          const assignedTech = $row.find('td').eq(4).text().trim();
-          const workDesc = $row.find('td').eq(5).text().trim();
-          const actualTech = $row.find('td').eq(6).find('span').first().text().trim();
-          const engineer = $row.find('td').eq(6).find('span').last().text().trim();
-          const status = $row.find('td').eq(7).text().trim();
-
-          // Populate modal fields
-          $('#job-date').val(date);
-          $('#job-date-2').val(todayStr); // Default to today's date
-          $('#job-assigned-to').val(assignedTech);
-          $('#job-assigned-by').val(engineer);
-          $('#job-assigned-info').val(jobTitle);
-
-          $('#job-loop-input').val(loopName);
-          $('#job-tag-input').val(tagNo);
-          $('#job-type').val(jobType);
-          $('#job-inst').val(instType);
-          $('#job-status').val(status === 'P' ? 'PEND' : (status === 'O' ? 'OVER' : status));
-          $('#job-area').val(area);
-
-          // Restrict dropdowns to row data
-          syncSingleOptionSelect('job-tech', assignedTech !== 'N.A.' ? assignedTech : 'ENG_TESTER');
-          syncSingleOptionSelect('job-eng', engineer !== 'N.A.' ? engineer : 'ARP');
-
-          $('#job-desc').val(workDesc);
-
-          // Open the Log Book modal
-          $('#job-modal').addClass('is-open');
-          $('body').css('overflow', 'hidden');
         }
       });
     });

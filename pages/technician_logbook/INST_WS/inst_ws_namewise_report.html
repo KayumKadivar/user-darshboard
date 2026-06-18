@@ -29,7 +29,7 @@
   </script>
 </head>
 
-<body class="dashboard-body">
+<body class="dashboard-body plant-page">
   <div id="data-loader-overlay" class="gnfc-global-loader hidden">
     <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
     <div class="gnfc-global-loader-text">Loading Data...</div>
@@ -53,58 +53,240 @@
       <div id="plant-nav-container"></div>
 
       <!-- ── FILTER CARD ── -->
-      <div class="jt-filter-card" style="max-width: 800px; margin: 0 auto 20px auto;">
-        <div class="jt-filter-header">
-          <h2 class="jt-filter-title">
-            <i class="ph-bold ph-user-list"></i>
-            SEARCH CRITERIA
-          </h2>
-        </div>
-        <div class="jt-filter-body" style="display: block; padding: 20px;">
-          
-          <!-- Exact Layout Table for Filter -->
-          <table class="user-table w-100 mb-20px" style="border: 1px solid var(--border-color);">
-            <thead>
-              <tr>
-                <th class="user-table-center" style="width: 50%;">START DATE</th>
-                <th class="user-table-center" style="width: 50%;">END DATE</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="user-table-center" style="padding: 12px;">
-                  <input type="date" id="startDate" class="gnfc-modal-input user-table-center" value="2026-05-10" style="max-width: 250px; display: inline-block; margin: 0 auto;">
-                </td>
-                <td class="user-table-center" style="padding: 12px;">
-                  <input type="date" id="endDate" class="gnfc-modal-input user-table-center" value="2026-06-10" style="max-width: 250px; display: inline-block; margin: 0 auto;">
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2" class="user-table-center" style="background-color: var(--bg-secondary); padding: 12px;">
-                  <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
-                    <span class="user-table-bold">SELECT NAME :</span>
-                    <select id="techSelect" class="gnfc-modal-input" style="max-width: 200px;">
-                      <option value="ALL">ALL</option>
-                      <option value="CBP">CBP</option>
-                      <option value="ALD">ALD</option>
-                      <option value="PMP">PMP</option>
-                      <option value="ENG_TESTER">ENG_TESTER</option>
-                    </select>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <section>
 
-          <!-- Action Buttons -->
-          <div class="jt-filter-btn" style="justify-content: center;">
-            <button type="button" class="jt-btn-primary" id="btn-apply-filter" style="min-width: 150px;">
-              <i class="ph-bold ph-magnifying-glass"></i> SEARCH
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
+          </h3>
+        </div>
+        <div class="jt-filter-body">
+
+          <!-- Start Date -->
+          <div>
+            <label class="gnfc-modal-label">Start Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="startDateFilter" class="gnfc-modal-input">
+            </div>
+          </div>
+
+          <!-- End Date -->
+          <div>
+            <label class="gnfc-modal-label">End Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="endDateFilter" class="gnfc-modal-input">
+            </div>
+          </div>
+
+          <!-- Select Name -->
+          <div>
+            <label class="gnfc-modal-label">Technician Name</label>
+            <div class="jt-select-wrap">
+              <select id="nameFilter" class="gnfc-modal-input">
+                <option value="">All Technicians</option>
+                <option value="PBS">PBS</option>
+                <option value="NRK">NRK</option>
+                <option value="MJ">MJ</option>
+                <option value="MR">MR</option>
+                <option value="R.R.">R.R.</option>
+                <option value="SHC">SHC</option>
+              </select>
+              <i class="ph-bold ph-caret-down jt-select-caret"></i>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="jt-filter-btn">
+            <button onclick="generateReport(true)" class="jt-btn-primary">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button onclick="resetFilters()" class="jt-btn-reset">
+              Reset
             </button>
           </div>
 
         </div>
       </div>
+
+      <!-- ── REPORT RESULTS ── -->
+      <div id="reportResults" class="jt-table-card" style="display: none; flex-direction: column;">
+
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-user-list"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title" id="reportTitle">Name Wise Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 60px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Date</th>
+                <th class="user-table-center" style="min-width: 150px;">Assign Job</th>
+                <th class="user-table-center" style="width: 80px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 120px;">Tag No</th>
+                <th rowspan="2" class="user-table-center" style="width: 120px;">Type of Job</th>
+                <th rowspan="2" style="min-width: 300px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 250px;">REMARKS</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">OT Hr</th>
+              </tr>
+              <tr>
+                <th style="min-width: 150px;">Assign To</th>
+                <th class="user-table-center user-table-border-right">ENG</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Static Data Rows for Preview -->
+              <tr class="user-table-row">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">01/02/2005</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div></div>
+                    <div>PBS</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">PBS</span>
+                    <span class="user-table-center">P</span>
+                  </div>
+                </td>
+                <td class="user-table-center">IIMS</td>
+                <td>N.A.</td>
+                <td>Job status report generated as discussed with SM(TMV).</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p></p>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-primary">0</td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">01/02/2005</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Exceed PC network is to be removed.</div>
+                    <div>(By:SHC : 01/02/2005)</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">PBS</span>
+                    <span class="user-table-center">P</span>
+                  </div>
+                </td>
+                <td class="user-table-center">NOTAG</td>
+                <td>N.A.</td>
+                <td>Windows 98 reloaded. Exceed reloaded. All programs, applications except
+                  exceed are removed. It is now under observation.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p></p>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-primary">0</td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-center">3</td>
+                <td class="user-table-center">22/01/2005</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div></div>
+                    <div>PBS</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">PBS</span>
+                    <span class="user-table-center">P</span>
+                  </div>
+                </td>
+                <td class="user-table-center">DCS</td>
+                <td>N.A.</td>
+                <td>During house-keeping of AWS101 it is observed that vmcore file observed in /opt/crash/AWS101. After
+                  referring edoc</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p></p>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-primary">0</td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-center">4</td>
+                <td class="user-table-center">22/01/2005</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>O/P lim is to be provided.</div>
+                    <div>(By:SHC : 22/01/2005)</div>
+                    <div>PBS</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">PBS</span>
+                    <span class="user-table-center">P</span>
+                  </div>
+                </td>
+                <td class="user-table-center">LV_1413</td>
+                <td>DEFECT MAINTENANCE</td>
+                <td>It is to be done on monday after discussing with SM(SD) as per SIE(MTP).
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p></p>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-primary">0</td>
+              </tr>
+
+              <tr class="user-table-row">
+                <td class="user-table-center">5</td>
+                <td class="user-table-center">20/01/2005</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div></div>
+                    <div>PBS</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">PBS</span>
+                    <span class="user-table-center">P</span>
+                  </div>
+                </td>
+                <td class="user-table-center">DCS</td>
+                <td>N.A.</td>
+                <td>Various reports, find, filehistory, remarks history exported and verified
+                  with SM office for archival purpose.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p></p>
+                  </div>
+                </td>
+                <td class="user-table-center user-table-primary">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
 
       <!-- ── REPORT CONTAINER ── -->
       <div id="report-container" class="jt-table-card">
@@ -126,7 +308,7 @@
                 <th class="user-table-center" style="width: 50px;">Sr</th>
                 <th class="user-table-center" style="width: 110px;">Date</th>
                 <th class="user-table-center" style="width: 100px;">Tech</th>
-                <th class="user-table-center" style="width: 100px;">TagNo</th>
+                <th class="user-table-center" style="width: 100px;">Job No</th>
                 <th class="user-table-center" style="width: 250px;">Type Of Job</th>
                 <th class="user-table-center" style="min-width: 400px;">Description</th>
                 <th class="user-table-center" style="width: 250px;">Remarks</th>
@@ -136,70 +318,48 @@
             <tbody id="reportTableBody">
               <!-- Static Sample Data based on screenshot -->
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">1</td>
-                <td class="user-table-center">11/05/2026</td>
-                <td class="user-table-center user-table-bold">ALD</td>
-                <td class="user-table-center">17118</td>
-                <td class="user-table-center">Yokogawa temp. Simulator</td>
+                <td class="user-table-center user-table-secondary">1</td>
+                <td class="user-table-center">18/05/2026</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">16920</td>
+                <td>Visible flame scanner head card</td>
+                <td>replace all trim pot with new one.</td>
+                <td></td>
+                <td class="user-table-center">0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">2</td>
+                <td class="user-table-center">18/05/2026</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">16921</td>
+                <td>Visible flame scanner head card</td>
+                <td>replace all trim pot with new one.</td>
+                <td></td>
+                <td class="user-table-center">0</td>
+              </tr>
+              <tr class="user-table-row">
+                <td class="user-table-center user-table-secondary">3</td>
+                <td class="user-table-center">18/05/2026</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">17130</td>
+                <td>MULTIMETER</td>
                 <td>done scheduled calibration and fill the report</td>
                 <td></td>
                 <td class="user-table-center">0</td>
               </tr>
               <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">2</td>
-                <td class="user-table-center">11/05/2026</td>
-                <td class="user-table-center user-table-bold">ALD</td>
-                <td class="user-table-center">17123</td>
-                <td class="user-table-center">DCS Power supply from 110VAC to 24 VDC.</td>
-                <td>check it found it is fully black due to burning. clean with ipa. found its pcb is got damage due to burning. hence cannot repaired.</td>
+                <td class="user-table-center user-table-secondary">4</td>
+                <td class="user-table-center">18/05/2026</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">17131</td>
+                <td>DP gauge cum switch</td>
+                <td>done soldering as per plant requirement.</td>
                 <td></td>
-                <td class="user-table-center">0</td>
-              </tr>
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">3</td>
-                <td class="user-table-center">11/05/2026</td>
-                <td class="user-table-center user-table-bold">ALD</td>
-                <td class="user-table-center">17128</td>
-                <td class="user-table-center">Digital Multimeter MECO 23SMK-11</td>
-                <td>done scheduled calibration and fill the report</td>
-                <td></td>
-                <td class="user-table-center">0</td>
-              </tr>
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">46</td>
-                <td class="user-table-center">06/06/2026</td>
-                <td class="user-table-center user-table-bold">ALD</td>
-                <td class="user-table-center">17145</td>
-                <td class="user-table-center">CA1 CARD</td>
-                <td>replace all electrolyte capacitors with new one.</td>
-                <td></td>
-                <td class="user-table-center">0</td>
-              </tr>
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">48</td>
-                <td class="user-table-center">06/06/2026</td>
-                <td class="user-table-center user-table-bold">PMP</td>
-                <td class="user-table-center">17168</td>
-                <td class="user-table-center">Test1</td>
-                <td>over test</td>
-                <td></td>
-                <td class="user-table-center">0</td>
-              </tr>
-              <tr class="user-table-row">
-                <td class="user-table-center user-table-secondary user-table-bold">51</td>
-                <td class="user-table-center">09/06/2026</td>
-                <td class="user-table-center user-table-bold">ENG_TESTER</td>
-                <td class="user-table-center">17179</td>
-                <td class="user-table-center">test2</td>
-                <td>test3</td>
-                <td class="user-table-center">
-                  <span style="font-size: 13px;">Test Remarks 4 [written by : ENG_TESTER Date : 09/06/2026 ]</span>
-                </td>
                 <td class="user-table-center">0</td>
               </tr>
               <!-- Summary Footer Row -->
               <tr>
-                <td colspan="7" class="user-table-center user-table-bold" style="background-color: var(--bg-secondary); padding: 12px; font-size: 14px; text-transform: uppercase;">
+                <td colspan="7" class="user-table-center">
                   SELECTED NAME ALL
                 </td>
                 <td style="background-color: var(--bg-secondary);"></td>

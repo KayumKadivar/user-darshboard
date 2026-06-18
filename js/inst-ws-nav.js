@@ -26,8 +26,8 @@ function renderInstWsNav(activePageId) {
               <i class="ph-bold ph-caret-down dropdown-caret"></i>
             </button>
             <div id="reports-dd" class="pn-dropdown-portal">
-                <a href="${prefixToParent}job_types.html" class="pn-dropdown-item ${isActive('job_types')}"><i class="ph-bold ph-wrench"></i> Type Of Job</a>
-                <a href="${prefixToParent}instrument_types.html" class="pn-dropdown-item ${isActive('instrument_types')}"><i class="ph-bold ph-cpu"></i> Type Of Inst</a>
+              <!--  <a href="${prefixToParent}job_types.html" class="pn-dropdown-item ${isActive('job_types')}"><i class="ph-bold ph-wrench"></i> Type Of Job</a>  -->
+               <!-- <a href="${prefixToParent}instrument_types.html" class="pn-dropdown-item ${isActive('instrument_types')}"><i class="ph-bold ph-cpu"></i> Type Of Inst</a> -->
                 <a href="${prefixToInstWs}inst_ws_remarks_report.html" class="pn-dropdown-item ${isActive('remark_reports')}"><i class="ph-bold ph-note"></i> Remark Report</a>
 
                 <a href="${prefixToInstWs}inst_ws_jobwiserfilter.html" class="pn-dropdown-item ${isActive('jobwise_filter')}"><i class="ph-bold ph-magnifying-glass"></i> Job Wise Filter</a>
@@ -35,15 +35,13 @@ function renderInstWsNav(activePageId) {
                 <a href="${prefixToInstWs}inst_ws_monthly_report.html" class="pn-dropdown-item ${isActive('monthly_report')}"><i class="ph-bold ph-calendar-blank"></i> Monthly Report</a>
                 <a href="${prefixToInstWs}inst_ws_datewise_report.html" class="pn-dropdown-item ${isActive('datewise_report')}"><i class="ph-bold ph-calendar-dots"></i> Date Wise Report</a>
                 <a href="${prefixToInstWs}inst_ws_namewise_report.html" class="pn-dropdown-item ${isActive('namewise_report')}"><i class="ph-bold ph-user-list"></i> Name Wise Report</a>
-                <a href="${prefixToParent}name_date_report.html" class="pn-dropdown-item ${isActive('name_date_report')}"><i class="ph-bold ph-users-three"></i> Name & Tag Wise Report</a>
+                <a href="${prefixToInstWs}inst_ws_name_date_report.html" class="pn-dropdown-item ${isActive('name_date_report')}"><i class="ph-bold ph-users-three"></i> Name & Tag Wise Report</a>
             </div>
           </div>
                 
           <div class="plant-nav-separator"></div>
 
-          <a href="${prefixToInstWs}inst_ws_ot_hours.html" class="plant-nav-pill ${isActive('ot_hours')}">
-            <i class="ph-bold ph-timer filter-icon"></i> OT Hrs
-          </a>
+
         
           <a href="${prefixToInstWs}inst_ws_helper.html" class="plant-nav-pill ${isActive('helper')}">
             <i class="ph-bold ph-users filter-icon"></i> Helper
