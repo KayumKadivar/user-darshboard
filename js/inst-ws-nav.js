@@ -12,6 +12,19 @@ function renderInstWsNav(activePageId) {
     const isActive = (id) => id === activePageId ? 'is-active' : '';
     const isDropdownActive = (ids) => ids.includes(activePageId) ? 'is-active' : '';
 
+    // Determine active report label
+    const reportsItems = [
+        { id: 'remark_reports', label: 'Remark Report' },
+        { id: 'jobwise_filter', label: 'Job Wise Filter' },
+        { id: 'searchwise_filter', label: 'Search Wise Filter' },
+        { id: 'monthly_report', label: 'Monthly Report' },
+        { id: 'datewise_report', label: 'Date Wise Report' },
+        { id: 'namewise_report', label: 'Name Wise Report' },
+        { id: 'name_date_report', label: 'Name & Tag Wise Report' }
+    ];
+    const activeReportItem = reportsItems.find(i => i.id === activePageId);
+    const reportsLabel = activeReportItem ? activeReportItem.label : 'Reports';
+
     const html = `
       <div class="plant-nav-wrapper">
         <nav class="plant-nav-links">
@@ -22,7 +35,7 @@ function renderInstWsNav(activePageId) {
           
           <div class="plant-nav-dropdown-wrap" data-custom-dropdown>
             <button type="button" class="plant-nav-pill ${isDropdownActive(['job_types', 'instrument_types', 'remark_reports', 'tagwise_filter', 'jobwise_filter', 'searchwise_filter', 'monthly_report', 'datewise_report', 'namewise_report', 'name_date_report'])}" data-toggle="reports-dd">
-              <i class="ph-bold ph-chart-bar filter-icon"></i> Reports
+              <i class="ph-bold ph-chart-bar filter-icon"></i> ${reportsLabel}
               <i class="ph-bold ph-caret-down dropdown-caret"></i>
             </button>
             <div id="reports-dd" class="pn-dropdown-portal">

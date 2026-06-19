@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Tag Filter Analysis | GNFC</title>
+  <meta name="description" content="GNFC Historical CMS Job Records Filtered by Tag Number">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../../../css/pages/plant.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/cms-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'tagwise_filter';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="CMS Tag wise Filter"
+      data-breadcrumb="Logbook:../technicianlogbook.html,CMS Logbook:cms_logbook.html,Tag wise Filter:active"
+      data-back="cms_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content gap-16px">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
+          </h2>
+        </div>
+        <div class="jt-filter-body">
+
+          <!-- Tag Input with Dual Search/Select Logic -->
+          <div>
+            <label class="gnfc-modal-label">Tag Number</label>
+            <div class="flex items-center gap-8px">
+              <input type="text" id="tagInput" placeholder="Search Tag..."
+                class="gnfc-modal-input font-13px uppercase flex-1" value="PV205SA(Y)">
+              <div class="flex-1">
+                <select id="tagSelect" class="gnfc-modal-input">
+                  <option value="">-- Select --</option>
+                  <option value="PV205SA(Y)">PV205SA(Y)</option>
+                  <option value="TAG-001">TAG-001</option>
+                  <option value="TAG-002">TAG-002</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons (Standardized to jt-filter-btn) -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filter">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
+              Reset
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="report-container" class="jt-table-card">
+
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-tag"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Tag-wise History Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1000px">
+            <thead>
+              <tr>
+                <th class="user-table-center" style="width: 100px;">Date</th>
+                <th class="user-table-center" style="width: 150px;">PLANT</th>
+                <th class="user-table-center" style="width: 150px;">INSTTAG</th>
+                <th style="min-width: 400px;">Job Description</th>
+                <th class="user-table-center" style="width: 150px;">Techname</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <tr class="user-table-row">
+                <td class="user-table-center">05/08/2008</td>
+                <td class="user-table-center">AMM</td>
+                <td class="user-table-center">PV205SA(Y)</td>
+                <td>Logbook for 04/08/2008. Issued ball plug from store and checked with soft seat upto 10 bar for passing; no passing is observed. Cleaning of body parts and its spares is under progress.</td>
+                <td class="user-table-center">DGM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      // --- Smart Tag Autocomplete Helper (Ported from assigntoday.html) ---
+      function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let snapBackTimeout = null;
+        let snapBackInterval = null;
+        let isAutoRemoving = false;
+
+        function getAvailableTags() {
+          let tags = [];
+          $select.find('option').each(function () {
+            if ($(this).val()) tags.push($(this).val());
+          });
+          return tags;
+        }
+
+        function stopAutoRemove() {
+          clearTimeout(snapBackTimeout);
+          clearInterval(snapBackInterval);
+          isAutoRemoving = false;
+        }
+
+        const tags = getAvailableTags();
+
+        $input.on('input', function (e) {
+          const cursorStart = this.selectionStart;
+          const cursorEnd = this.selectionEnd;
+          const rawVal = $(this).val();
+          const upperVal = rawVal.toUpperCase();
+          if (rawVal !== upperVal) {
+            $(this).val(upperVal);
+            this.setSelectionRange(cursorStart, cursorEnd);
+          }
+
+          const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+          const isDeleting = inputType && inputType.startsWith('delete');
+
+          if (isDeleting) {
+            stopAutoRemove();
+          }
+
+          let inputVal = $(this).val().toUpperCase();
+
+          if (isDeleting) {
+            let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+            if (hasMatch) {
+              $(this).removeClass('is-invalid-tag');
+            } else {
+              $(this).addClass('is-invalid-tag');
+            }
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          let longestValidPrefix = "";
+          for (let i = inputVal.length; i >= 0; i--) {
+            let sub = inputVal.substring(0, i);
+            if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+            $(this).val(inputVal);
+          }
+
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            $select.val('');
+            if (onMatch) onMatch('');
+
+            stopAutoRemove();
+
+            const self = this;
+            const targetPrefix = longestValidPrefix;
+            snapBackTimeout = setTimeout(() => {
+              isAutoRemoving = true;
+              snapBackInterval = setInterval(() => {
+                let currentVal = $input.val();
+                if (currentVal.length > targetPrefix.length) {
+                  currentVal = currentVal.substring(0, currentVal.length - 1);
+                  $input.val(currentVal);
+                } else {
+                  clearInterval(snapBackInterval);
+                  isAutoRemoving = false;
+                  $input.removeClass('is-invalid-tag');
+
+                  let exactMatch = tags.find(tag => tag.toUpperCase() === currentVal);
+                  $select.val(exactMatch || '');
+                  if (onMatch) onMatch(exactMatch || '');
+                }
+              }, 150);
+            }, 800);
+          } else {
+            stopAutoRemove();
+            $(this).removeClass('is-invalid-tag');
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+          }
+        });
+
+        $select.on('change', function () {
+          const val = $(this).val();
+          if (val) {
+            $input.val(val).removeClass('is-invalid-tag');
+            stopAutoRemove();
+            if (onMatch) onMatch(val);
+          } else {
+            $input.val('');
+          }
+        });
+      }
+
+      // Initialize Tag Autocomplete
+      initTagAutocomplete('#tagInput', '#tagSelect');
+
+      const showReport = () => {
+        const tagValue = $('#tagInput').val();
+        if (!tagValue) return;
+
+        // Show the results section with smooth fade
+        $('#report-container').stop().hide().fadeIn(300);
+      };
+
+      const resetView = () => {
+        $('#tagInput').val('').removeClass('is-invalid-tag');
+        $('#tagSelect').val('');
+        $('#report-container').fadeOut(200);
+      };
+
+      // Event Listeners
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          showReport();
+        }, 1500);
+      });
+      $('#btn-reset-filter').on('click', resetView);
+    });
+  </script>
+</body>
+
+</html>

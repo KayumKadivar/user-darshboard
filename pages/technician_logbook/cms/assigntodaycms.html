@@ -90,7 +90,6 @@
                   <option value="BSU">BSU</option>
                   <option value="TMV">TMV</option>
                 </select>
-                <input id="assigned-to-input" type="text" placeholder="Or enter tech name..." class="gnfc-modal-input" required>
               </div>
             </div>
             <div class="col-span-4">
@@ -98,20 +97,20 @@
               <input type="text" class="gnfc-modal-input" id="by-input" value="ENG_TESTER" readonly style="background-color: var(--bg-secondary);">
             </div>
 
-            <!-- Row 2: Tag No (Flexible input field + select dropdown + suffix text input) -->
+            <!-- Row 2: Tag No (Search input + select dropdown) -->
             <div class="col-span-12">
-              <label class="gnfc-modal-label">Tag No</label>
-              <div class="flex items-center gap-12px">
-                <input id="tag-no-prefix" type="text" placeholder="Prefix..." class="gnfc-modal-input flex-1">
+              <label class="gnfc-modal-label">TAG NO</label>
+              <div class="flex items-center gap-8px">
+                <input id="tag-no-search" type="text" placeholder="Search Tag..." class="gnfc-modal-input font-13px flex-1">
                 <div class="flex-1">
                   <select id="tag-no-select" class="gnfc-modal-input">
+                    <option value="">-- Select --</option>
                     <option value="NOTAG">NOTAG</option>
                     <option value="CMS-TAG-101">CMS-TAG-101</option>
                     <option value="CMS-TAG-102">CMS-TAG-102</option>
                     <option value="CMS-TAG-103">CMS-TAG-103</option>
                   </select>
                 </div>
-                <input id="tag-no-suffix" type="text" placeholder="Suffix..." class="gnfc-modal-input flex-1">
               </div>
             </div>
 
@@ -235,25 +234,135 @@
         $('#assigned-to-input').val(val);
       });
 
-      // Handle Tag No dropdown select change event
-      $('#tag-no-select').on('change', function () {
-        const val = $(this).val();
-        if (val === "NOTAG") {
-          $('#tag-no-prefix').val("");
-          $('#tag-no-suffix').val("");
-        } else {
-          const parts = val.split('-');
-          $('#tag-no-prefix').val(parts[0] || "");
-          $('#tag-no-suffix').val(parts[2] || "");
+      // --- Smart Tag Autocomplete Helper ---
+      function initTagAutocomplete(inputSelector, selectSelector, onMatch) {
+        const $input = $(inputSelector);
+        const $select = $(selectSelector);
+        let snapBackTimeout = null;
+        let snapBackInterval = null;
+        let isAutoRemoving = false;
+
+        function getAvailableTags() {
+          let tags = [];
+          $select.find('option').each(function () {
+            if ($(this).val()) tags.push($(this).val());
+          });
+          return tags;
         }
-      });
+
+        function stopAutoRemove() {
+          clearTimeout(snapBackTimeout);
+          clearInterval(snapBackInterval);
+          isAutoRemoving = false;
+        }
+
+        const tags = getAvailableTags();
+
+        $input.on('input', function (e) {
+          const cursorStart = this.selectionStart;
+          const cursorEnd = this.selectionEnd;
+          const rawVal = $(this).val();
+          const upperVal = rawVal.toUpperCase();
+          if (rawVal !== upperVal) {
+            $(this).val(upperVal);
+            this.setSelectionRange(cursorStart, cursorEnd);
+          }
+
+          const inputType = e.originalEvent ? e.originalEvent.inputType : '';
+          const isDeleting = inputType && inputType.startsWith('delete');
+
+          if (isDeleting) {
+            stopAutoRemove();
+          }
+
+          let inputVal = $(this).val().toUpperCase();
+
+          if (isDeleting) {
+            let hasMatch = inputVal.length === 0 || tags.some(tag => tag.toUpperCase().startsWith(inputVal));
+            if (hasMatch) {
+              $(this).removeClass('is-invalid-tag');
+            } else {
+              $(this).addClass('is-invalid-tag');
+            }
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+            return;
+          }
+
+          let longestValidPrefix = "";
+          for (let i = inputVal.length; i >= 0; i--) {
+            let sub = inputVal.substring(0, i);
+            if (tags.some(tag => tag.toUpperCase().startsWith(sub))) {
+              longestValidPrefix = sub;
+              break;
+            }
+          }
+
+          if (inputVal.length > longestValidPrefix.length + 3) {
+            inputVal = inputVal.substring(0, longestValidPrefix.length + 3);
+            $(this).val(inputVal);
+          }
+
+          if (inputVal.length > longestValidPrefix.length) {
+            $(this).addClass('is-invalid-tag');
+            $select.val('');
+            if (onMatch) onMatch('');
+
+            stopAutoRemove();
+
+            const self = this;
+            const targetPrefix = longestValidPrefix;
+            snapBackTimeout = setTimeout(() => {
+              isAutoRemoving = true;
+              snapBackInterval = setInterval(() => {
+                let currentVal = $input.val();
+                if (currentVal.length > targetPrefix.length) {
+                  currentVal = currentVal.substring(0, currentVal.length - 1);
+                  $input.val(currentVal);
+                } else {
+                  clearInterval(snapBackInterval);
+                  isAutoRemoving = false;
+                  $input.removeClass('is-invalid-tag');
+
+                  let exactMatch = tags.find(tag => tag.toUpperCase() === currentVal);
+                  $select.val(exactMatch || '');
+                  if (onMatch) onMatch(exactMatch || '');
+                }
+              }, 150);
+            }, 800);
+          } else {
+            stopAutoRemove();
+            $(this).removeClass('is-invalid-tag');
+
+            let exactMatch = tags.find(tag => tag.toUpperCase() === inputVal);
+            $select.val(exactMatch || '');
+            if (onMatch) onMatch(exactMatch || '');
+          }
+        });
+
+        $select.on('change', function () {
+          const val = $(this).val();
+          if (val) {
+            $input.val(val).removeClass('is-invalid-tag');
+            stopAutoRemove();
+            if (onMatch) onMatch(val);
+          } else {
+            $input.val('');
+          }
+        });
+      }
+
+      // Initialize Autocomplete
+      initTagAutocomplete('#tag-no-search', '#tag-no-select');
 
       // Form submit action (Save)
       $('#assign-today-cms-form').on('submit', function (e) {
         e.preventDefault();
 
         const date = $('#assign-date').val();
-        const techName = $('#assigned-to-input').val();
+        const techName = $('#assigned-to-select').val();
         const tagSelectVal = $('#tag-no-select').val();
         const makeVal = $('#make-select').val();
         const plantVal = $('#plant-select').val();
@@ -263,7 +372,7 @@
           Swal.fire({
             icon: 'warning',
             title: 'Missing Technician',
-            text: 'Please select a technician or type one in.'
+            text: 'Please select a technician.'
           });
           return;
         }
@@ -275,31 +384,12 @@
           timer: 1500,
           showConfirmButton: false
         }).then(() => {
-          // Append entry dynamically to table
-          const tbody = $('#pending-jobs-table tbody');
-          const nextSr = tbody.find('tr').length + 1;
-          const newRow = `
-            <tr>
-              <td class="user-table-center user-table-secondary">${nextSr}</td>
-              <td class="user-table-center user-table-secondary">${date}</td>
-              <td class="user-table-bold user-table-blue">${tagSelectVal}</td>
-              <td class="user-table-primary">CMS Assigned Job</td>
-              <td class="user-table-desc">${desc}</td>
-              <td class="user-table-center"><span class="ui-badge ui-badge--warning">PENDING</span></td>
-              <td class="user-table-center user-table-secondary">${techName}</td>
-              <td class="user-table-center">
-                <button type="button" class="btn-assign-ui reassign-btn" data-tech="${techName}" data-tag="${tagSelectVal}" data-job="CMS Assigned Job" data-desc="${desc}">ReAssign</button>
-              </td>
-            </tr>
-          `;
-          tbody.append(newRow);
+
 
           // Reset Form but keep Date and Engineer
           $('#assigned-to-select').val("");
-          $('#assigned-to-input').val("");
           $('#tag-no-select').val("NOTAG");
-          $('#tag-no-prefix').val("");
-          $('#tag-no-suffix').val("");
+          $('#tag-no-search').val("NOTAG").removeClass('is-invalid-tag');
           $('#make-select').val("");
           $('#plant-select').val("");
           $('#job-textarea').val("");

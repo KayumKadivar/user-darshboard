@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Remark Report | GNFC</title>
+  <meta name="description" content="GNFC Detailed Remark Report for CMS Maintenance Activities">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../../../css/pages/plant.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/vendor/sweetalert2.all.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/cms-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'remark_reports';
+  </script>
+  
+</head>
+
+<body class="dashboard-body">
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="CMS Remark Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,CMS Logbook:cms_logbook.html,Remark Report:active"
+      data-back="cms_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="dashboard-content">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── TABLE CARD ── -->
+      <div class="jt-table-card">
+
+        <div class="jt-report-header jt-report-header--flex" style="align-items: center; justify-content: space-between; padding: 12px 20px;">
+          <!-- Year Selector (Match image layout) -->
+          <div class="jt-year-selector-container">
+            <button type="button" class="jt-year-arrow" id="btn-prev-year" title="Previous Year">
+              <i class="ph-fill ph-caret-left"></i>
+            </button>
+            <span class="jt-year-dot"></span>
+            <button type="button" class="jt-year-arrow" id="btn-next-year" title="Next Year">
+              <i class="ph-fill ph-caret-right"></i>
+            </button>
+            <span class="jt-year-text">Year: <span id="active-year">2026</span></span>
+          </div>
+          
+          <!-- Report Header Title (Right side) -->
+          <div class="remark-report-title-right">Remark Report</div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">JobNo</th>
+                <th class="user-table-center" style="width: 280px;">Title</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Plant</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="user-table-center user-table-border-right">Job</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+         
+              <!-- ── YEAR: 2026 ── -->
+              <!-- Record 1 -->
+              <tr class="user-table-row year-group-2026">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center user-table-bold user-table-blue">17181</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Test Item</div>
+                    <div class="user-table-secondary">Scheduled Calibration (By:ENG_TESTER : 09/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BOILER</td>
+                <td class="user-table-center">ALD</td>
+                <td>Test description</td>
+                <td class="user-table-center">ENG_TESTER</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  test [written by : PMP Date : 09/06/2026 ]
+                </td>
+              </tr>
+              
+              <!-- Record 2 -->
+              <tr class="user-table-row year-group-2026 row-highlight-yellow">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center user-table-bold user-table-blue">17179</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>test2</div>
+                    <div class="user-table-secondary">test1 (By:ENG_TESTER : 09/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BOILER</td>
+                <td class="user-table-center">ALD</td>
+                <td>test3</td>
+                <td class="user-table-center">ENG_TESTER</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  Test Remarks 4 [written by : ENG_TESTER Date : 09/06/2026 ]
+                </td>
+              </tr>
+
+              <!-- Record 3 -->
+              <tr class="user-table-row year-group-2026">
+                <td class="user-table-center">3</td>
+                <td class="user-table-center user-table-bold user-table-blue">17163</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>DELL MOUSE</div>
+                    <div class="user-table-secondary">NOT WORKING. (By:HAS : 04/06/2026)</div>
+                  </div>
+                </td>
+                <td class="user-table-center">AMM</td>
+                <td class="user-table-center">ALD</td>
+                <td>over (05/06/2026)</td>
+                <td class="user-table-center">ALD</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  Replacement given. [written by : HAS Date : 04/06/2026 ]
+                </td>
+              </tr>
+
+              <!-- ── YEAR: 2025 ── -->
+              <tr class="user-table-row year-group-2025" style="display: none;">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center user-table-bold user-table-blue">16124</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>PROCESS REQMT</div>
+                    <div class="user-table-secondary">PROCESS REQMT</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BOILER-2</td>
+                <td class="user-table-center">JMD</td>
+                <td>Reported valve not operates, as operation checked from d/w with process and found its operation is ok.</td>
+                <td class="user-table-center">JMD</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  AO card R1M7 is faulty. [written by : ARP Date : 18/04/2025 ]
+                </td>
+              </tr>
+              <tr class="user-table-row year-group-2025 row-highlight-yellow" style="display: none;">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center user-table-bold user-table-blue">16091</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>Actuator passing</div>
+                    <div class="user-table-secondary">DEFECT MAINTENANCE</div>
+                  </div>
+                </td>
+                <td class="user-table-center">ASH</td>
+                <td class="user-table-center">BSU</td>
+                <td>Actuator was heavily passing. Spare actuator not available. So drawn and replaced. New seal pressure is ok.</td>
+                <td class="user-table-center">BSU</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  Actuator overhauled and checked OK. [written by : ARP Date : 15/04/2025 ]
+                </td>
+              </tr>
+
+              <!-- ── YEAR: 2024 ── -->
+              <tr class="user-table-row year-group-2024" style="display: none;">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center user-table-bold user-table-blue">15034</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>SOV repair</div>
+                    <div class="user-table-secondary">DEFECT MAINTENANCE</div>
+                  </div>
+                </td>
+                <td class="user-table-center">BOILER-1</td>
+                <td class="user-table-center">BDR</td>
+                <td>Its sov is passing air, need to be replaced.</td>
+                <td class="user-table-center">BDR</td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  SOV replaced with new one. [written by : ARP Date : 22/11/2024 ]
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      let currentYear = 2026;
+      const years = [2026, 2025, 2024];
+
+      const changeYear = (delta) => {
+        let index = years.indexOf(currentYear);
+        index = index + delta;
+
+        if (index < 0) index = years.length - 1;
+        if (index >= years.length) index = 0;
+
+        currentYear = years[index];
+
+        $('#active-year').text(currentYear);
+
+        $('[class*="year-group-"]').stop().hide();
+        $(`.year-group-${currentYear}`).fadeIn(200);
+      };
+
+      // Event Listeners
+      $('#btn-prev-year').on('click', () => changeYear(-1));
+      $('#btn-next-year').on('click', () => changeYear(1));
+
+      // Initially show default year
+      changeYear(0);
+    });
+  </script>
+</body>
+
+</html>

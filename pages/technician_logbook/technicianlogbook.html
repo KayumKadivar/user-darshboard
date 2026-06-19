@@ -49,7 +49,6 @@
             </div>
 
             <div class="ui-switcher">
-              <button data-view="tomorrow" class="ui-switcher-btn">Tomorrow</button>
               <button data-view="today" class="ui-switcher-btn is-active">Today</button>
               <button data-view="prev" class="ui-switcher-btn">Prev Day</button>
               <button data-view="weekly" class="ui-switcher-btn">Weekly</button>
@@ -336,7 +335,7 @@
       let selectedView = localStorage.getItem('plantLogbookSelectedView') || "today";
 
       function setSelectedView(viewName, persist = true) {
-        selectedView = ["tomorrow", "today", "prev", "weekly", "monthly"].includes(viewName) ? viewName : "today";
+        selectedView = ["today", "prev", "weekly", "monthly"].includes(viewName) ? viewName : "today";
 
         $timeButtons.each(function () {
           $(this).toggleClass("is-active", $(this).data("view") === selectedView);

@@ -21,75 +21,12 @@
   <script src="../../../js/theme-control.js"></script>
   <script src="../../../js/sidebar.js" defer></script>
   <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/cms-nav.js" defer></script>
 
   <script>
     window.activePage = 'technician_logbook';
   </script>
 
-  <style>
-    /* Theme-aware styling for highlighted log book rows (PROCESS REQMT and PM JOB) */
-    .user-table-row--highlight {
-      background-color: rgba(255, 193, 7, 0.15) !important; /* soft dark gold/yellow in dark theme */
-    }
-    html[data-theme="light"] .user-table-row--highlight {
-      background-color: #ffffcc !important; /* light yellow in light theme */
-    }
-    
-    /* Ensure child text remains readable in dark mode */
-    html:not([data-theme="light"]) .user-table-row--highlight td {
-      color: var(--app-text, #ffffff) !important;
-    }
-
-    /* Emergency row coloring */
-    .user-table-row--emergency {
-      background-color: rgba(242, 73, 92, 0.15) !important;
-    }
-    html[data-theme="light"] .user-table-row--emergency {
-      background-color: #ffe6e6 !important;
-    }
-
-    /* Centered Date Banner */
-    .cms-table-banner {
-      text-align: center;
-      padding: 12px;
-      font-weight: 700;
-      font-size: 16px;
-      background: var(--app-panel-alt);
-      border: 1px solid var(--app-border);
-      border-radius: 6px;
-      margin-bottom: 20px;
-      color: var(--typo-primary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* Stacked header borders */
-    .user-table th {
-      border: 1px solid var(--app-border) !important;
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    /* Soft status styles */
-    .status-badge {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .status-over {
-      background: rgba(115, 191, 105, 0.15);
-      color: var(--typo-green);
-    }
-
-    .status-pending {
-      background: rgba(255, 153, 0, 0.15);
-      color: var(--typo-orange);
-    }
-  </style>
 </head>
 
 <body class="dashboard-body plant-page">
@@ -109,41 +46,10 @@
       data-breadcrumb="Logbook:../technicianlogbook.html,CMS Logbook:active" data-back="../technicianlogbook.html">
     </div>
 
-    <section class="dashboard-content-tech-logbook">
+    <section class="dashboard-content">
 
-      <!-- Row 1: Reports and utilities -->
-      <div class="plant-nav-wrapper mb-12px">
-        <div class="plant-nav-links">
-          <button type="button" class="plant-nav-pill" id="btn-remark-report">
-            <i class="ph-bold ph-note filter-icon"></i> Remark Report
-          </button>
-          <button type="button" class="plant-nav-pill" id="btn-tag-filter">
-            <i class="ph-bold ph-funnel filter-icon"></i> Tag-wise Filter
-          </button>
-          <button type="button" class="plant-nav-pill" id="btn-monthly-report">
-            <i class="ph-bold ph-calendar-blank filter-icon"></i> Monthly Report
-          </button>
-          <button type="button" class="plant-nav-pill" id="btn-datewise-report">
-            <i class="ph-bold ph-calendar-dots filter-icon"></i> DateWiseReport
-          </button>
-          <button type="button" class="plant-nav-pill" id="btn-ot-hrs">
-            <i class="ph-bold ph-timer filter-icon"></i> OT hrs
-          </button>
-          <button type="button" class="plant-nav-pill" id="btn-namewise-report">
-            <i class="ph-bold ph-user-list filter-icon"></i> Name Wise
-          </button>
-        </div>
-        <div class="plant-nav-tools">
-          <button type="button" class="btn-ot-sm" id="btn-ot-statement">
-            <i class="ph-bold ph-clock-user"></i>
-            <span class="btn-text-sm">O.T.</span>
-          </button>
-          <button type="button" class="btn-emg-sm" id="btn-emg-call">
-            <i class="ph-bold ph-siren"></i>
-            <span class="btn-text-sm">EMG Call</span>
-          </button>
-        </div>
-      </div>
+      <!-- Row 1: Plant Navigation Container -->
+      <div id="plant-nav-container"></div>
 
       <!-- Row 2: Logs and actions -->
       <section class="ui-card plant-toolbar-card p-12px">
@@ -164,9 +70,6 @@
             <button type="button" class="plant-nav-pill" id="btn-assign-jobs">
               <i class="ph-bold ph-calendar-check"></i> AssignJobs(Eng)
             </button>
-            <button type="button" class="plant-nav-pill" id="btn-helper">
-              <i class="ph-bold ph-users"></i> Helper
-            </button>
 
             <span class="plant-toolbar__tools-divider" aria-hidden="true"></span>
             <div class="plant-toolbar__tools">
@@ -179,10 +82,6 @@
         </div>
       </section>
 
-      <!-- Center Dynamic Header Banner -->
-      <div class="cms-table-banner">
-        <span id="cms-banner-text">16/06/2026 Today Log Book</span>
-      </div>
 
       <!-- Log Tables Wrapper -->
       <section class="plant-table-card">
@@ -207,47 +106,38 @@
             <table class="user-table min-w-1440px" id="plantLogbookTableToday">
               <thead>
                 <tr>
-                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
-                  <th rowspan="2" style="width: 80px;">JobNo</th>
-                  <th style="width: 260px;">Title</th>
-                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
-                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
-                  <th rowspan="2" style="width: auto;">Description</th>
-                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
-                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
-                  <th rowspan="2" style="width: 20%;">Remarks</th>
-                  <th rowspan="2" id="priority-column-header-today">Hist</th>
-                </tr>
-                <tr>
-                  <th class="user-table-border-right">Job</th>
+                  <th class="text-center" style="width: 40px;">Sr</th>
+                  <th style="width: 140px;">
+                    <div style="padding-bottom: 4px;">Plant</div>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 4px;">TagNo</div>
+                  </th>
+                  <th style="width: 30%;">Job</th>
+                  <th class="text-center" style="width: 80px;">Tech</th>
+                  <th style="width: auto;">Description</th>
+                  <th class="text-center" style="width: 80px;">
+                    <div style="padding-bottom: 4px;">Tech</div>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 4px;">Eng</div>
+                  </th>
+                  <th class="text-center" style="width: 100px;">Status</th>
+                  <th style="width: 20%;">Remarks</th>
                 </tr>
               </thead>
               <tbody class="plant-table-body">
-                <tr class="user-table-date">
-                  <td colspan="10" class="user-table-bold">
-                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
-                    16/06/2026
-                  </td>
-                </tr>
-                <tr class="user-table-row jt-data-row" data-record-id="1" data-view="today" data-job-type="BREAKDOWN">
+                <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="1" data-view="today" data-job-type="BREAKDOWN">
                   <td class="user-table-center user-table-secondary">1</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>18101</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">UREA</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">Stack Analyzer</span>
                     </div>
                   </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>Stack Analyzer</span>
-                      <span>OPACITY MONITOR PM (By:JJK : 16/06/2026)</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">UREA</td>
+                  <td>OPACITY MONITOR PM (By:JJK : 16/06/2026)</td>
                   <td class="user-table-center">MHT</td>
                   <td>Wiped dry analyzer lens, calibrated zero point. Cleaned receiver hood. Checked purge blower.</td>
-                  <td>
+                  <td class="user-table-center">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-center">JJK</span>
+                      <span style="padding-bottom: 4px;">JJK</span>
+                      <span style="border-top: 1px solid var(--border-color); padding-top: 4px;">-</span>
                     </div>
                   </td>
                   <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
@@ -255,36 +145,27 @@
                     <div class="user-table-cell-stack">
                       <div class="user-table-secondary">
                         <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
-                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
                         </div>
                       </div>
                     </div>
-                  </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
                   </td>
                 </tr>
                 <tr class="user-table-row jt-data-row user-table-row--emergency" data-record-id="2" data-view="today" data-job-type="EMERGENCY">
                   <td class="user-table-center user-table-secondary">2</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>18102</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">COMMON</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">CPCB Server Link</span>
                     </div>
                   </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>CPCB Server Link</span>
-                      <span>CRITICAL TELEMETRY FAULT (By:ARP : 16/06/2026)</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">COMMON</td>
+                  <td>CRITICAL TELEMETRY FAULT (By:ARP : 16/06/2026)</td>
                   <td class="user-table-center">RKN</td>
                   <td>Server connection dropped. Rebooted network gateway router. Verified raw telemetry data pushing stream.</td>
-                  <td>
+                  <td class="user-table-center">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-center">ARP</span>
+                      <span style="padding-bottom: 4px;">ARP</span>
+                      <span style="border-top: 1px solid var(--border-color); padding-top: 4px;">-</span>
                     </div>
                   </td>
                   <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
@@ -292,36 +173,27 @@
                     <div class="user-table-cell-stack">
                       <div class="user-table-secondary">
                         <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
-                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
                         </div>
                       </div>
                     </div>
-                  </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
                   </td>
                 </tr>
                 <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="3" data-view="today" data-job-type="PM">
                   <td class="user-table-center user-table-secondary">3</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>18105</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">BOILER-2</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">Dust Monitor</span>
                     </div>
                   </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>Dust Monitor</span>
-                      <span>ALIGNMENT & TUNING (By:ARP : 16/06/2026)</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">BOILER-2</td>
+                  <td>ALIGNMENT & TUNING (By:ARP : 16/06/2026)</td>
                   <td class="user-table-center">BDR</td>
                   <td>Sensor alignment check. Found mounting bolts loose. Retightened flange.</td>
-                  <td>
+                  <td class="user-table-center">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-center">ARP</span>
+                      <span style="padding-bottom: 4px;">ARP</span>
+                      <span style="border-top: 1px solid var(--border-color); padding-top: 4px;">-</span>
                     </div>
                   </td>
                   <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">PENDING</td>
@@ -329,15 +201,10 @@
                     <div class="user-table-cell-stack">
                       <div class="user-table-secondary">
                         <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
-                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
                         </div>
                       </div>
                     </div>
-                  </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
                   </td>
                 </tr>
               </tbody>
@@ -365,47 +232,38 @@
             <table class="user-table min-w-1440px" id="plantLogbookTablePrev">
               <thead>
                 <tr>
-                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
-                  <th rowspan="2" style="width: 80px;">JobNo</th>
-                  <th style="width: 260px;">Title</th>
-                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
-                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
-                  <th rowspan="2" style="width: auto;">Description</th>
-                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
-                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
-                  <th rowspan="2" style="width: 20%;">Remarks</th>
-                  <th rowspan="2" id="priority-column-header-prev">Hist</th>
-                </tr>
-                <tr>
-                  <th class="user-table-border-right">Job</th>
+                  <th class="text-center" style="width: 40px;">Sr</th>
+                  <th style="width: 140px;">
+                    <div style="padding-bottom: 4px;">Plant</div>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 4px;">TagNo</div>
+                  </th>
+                  <th style="width: 30%;">Job</th>
+                  <th class="text-center" style="width: 80px;">Tech</th>
+                  <th style="width: auto;">Description</th>
+                  <th class="text-center" style="width: 80px;">
+                    <div style="padding-bottom: 4px;">Tech</div>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 4px;">Eng</div>
+                  </th>
+                  <th class="text-center" style="width: 100px;">Status</th>
+                  <th style="width: 20%;">Remarks</th>
                 </tr>
               </thead>
               <tbody class="plant-table-body">
-                <tr class="user-table-date">
-                  <td colspan="10" class="user-table-bold">
-                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
-                    15/06/2026
-                  </td>
-                </tr>
-                <tr class="user-table-row jt-data-row" data-record-id="11" data-view="prev" data-job-type="BREAKDOWN">
+                <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="11" data-view="prev" data-job-type="BREAKDOWN">
                   <td class="user-table-center user-table-secondary">1</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>18088</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">ANIPF</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">pH Transmitter</span>
                     </div>
                   </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>pH Transmitter</span>
-                      <span>CALIBRATION CHECK (By:KGS : 15/06/2026)</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">ANIPF</td>
+                  <td>CALIBRATION CHECK (By:KGS : 15/06/2026)</td>
                   <td class="user-table-center">TKC</td>
                   <td>pH electrode cleaned with HCl and calibrated with standard buffers (4.0 & 7.0). Verified reading in loop.</td>
-                  <td>
+                  <td class="user-table-center">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-center">KGS</span>
+                      <span style="padding-bottom: 4px;">KGS</span>
+                      <span style="border-top: 1px solid var(--border-color); padding-top: 4px;">-</span>
                     </div>
                   </td>
                   <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
@@ -413,36 +271,27 @@
                     <div class="user-table-cell-stack">
                       <div class="user-table-secondary">
                         <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
-                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
-                  </td>
                 </tr>
-                <tr class="user-table-row jt-data-row" data-record-id="12" data-view="prev" data-job-type="BREAKDOWN">
+                <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="12" data-view="prev" data-job-type="BREAKDOWN">
                   <td class="user-table-center user-table-secondary">2</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>18089</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">AMMONIA</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">CO2 Monitor</span>
                     </div>
                   </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>CO2 Monitor</span>
-                      <span>OPTICS CLEANING (By:ARP : 15/06/2026)</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">AMMONIA</td>
+                  <td>OPTICS CLEANING (By:ARP : 15/06/2026)</td>
                   <td class="user-table-center">BDR</td>
                   <td>Transmitter optical path wiped. Checked laser head alignment. Zero calibration adjusted.</td>
-                  <td>
+                  <td class="user-table-center">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-center">ARP</span>
+                      <span style="padding-bottom: 4px;">ARP</span>
+                      <span style="border-top: 1px solid var(--border-color); padding-top: 4px;">-</span>
                     </div>
                   </td>
                   <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
@@ -450,15 +299,10 @@
                     <div class="user-table-cell-stack">
                       <div class="user-table-secondary">
                         <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
-                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
                         </div>
                       </div>
                     </div>
-                  </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
                   </td>
                 </tr>
               </tbody>
@@ -486,47 +330,38 @@
             <table class="user-table min-w-1440px" id="plantLogbookTableWeekly">
               <thead>
                 <tr>
-                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
-                  <th rowspan="2" style="width: 80px;">JobNo</th>
-                  <th style="width: 260px;">Title</th>
-                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
-                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
-                  <th rowspan="2" style="width: auto;">Description</th>
-                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
-                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
-                  <th rowspan="2" style="width: 20%;">Remarks</th>
-                  <th rowspan="2" id="priority-column-header-weekly">Hist</th>
-                </tr>
-                <tr>
-                  <th class="user-table-border-right">Job</th>
+                  <th class="text-center" style="width: 40px;">Sr</th>
+                  <th style="width: 140px;">
+                    <div style="padding-bottom: 4px;">Plant</div>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 4px;">TagNo</div>
+                  </th>
+                  <th style="width: 30%;">Job</th>
+                  <th class="text-center" style="width: 80px;">Tech</th>
+                  <th style="width: auto;">Description</th>
+                  <th class="text-center" style="width: 80px;">
+                    <div style="padding-bottom: 4px;">Tech</div>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 4px;">Eng</div>
+                  </th>
+                  <th class="text-center" style="width: 100px;">Status</th>
+                  <th style="width: 20%;">Remarks</th>
                 </tr>
               </thead>
               <tbody class="plant-table-body">
-                <tr class="user-table-date">
-                  <td colspan="10" class="user-table-bold">
-                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
-                    12/06/2026
-                  </td>
-                </tr>
-                <tr class="user-table-row jt-data-row" data-record-id="21" data-view="weekly" data-job-type="PM">
+                <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="21" data-view="weekly" data-job-type="PM">
                   <td class="user-table-center user-table-secondary">1</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>18012</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">UREA</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">NH3 Analyzer</span>
                     </div>
                   </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>NH3 Analyzer</span>
-                      <span>DETECTOR SWAP (By:ARP : 12/06/2026)</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">UREA</td>
+                  <td>DETECTOR SWAP (By:ARP : 12/06/2026)</td>
                   <td class="user-table-center">KBD</td>
                   <td>Swapped NH3 gas detector module. Checked sensor response against standard span gas.</td>
-                  <td>
+                  <td class="user-table-center">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-center">ARP</span>
+                      <span style="padding-bottom: 4px;">ARP</span>
+                      <span style="border-top: 1px solid var(--border-color); padding-top: 4px;">-</span>
                     </div>
                   </td>
                   <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
@@ -534,42 +369,27 @@
                     <div class="user-table-cell-stack">
                       <div class="user-table-secondary">
                         <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
-                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
-                  </td>
                 </tr>
-                <tr class="user-table-date">
-                  <td colspan="10" class="user-table-bold">
-                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
-                    10/06/2026
-                  </td>
-                </tr>
-                <tr class="user-table-row jt-data-row" data-record-id="22" data-view="weekly" data-job-type="BREAKDOWN">
+                <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="22" data-view="weekly" data-job-type="BREAKDOWN">
                   <td class="user-table-center user-table-secondary">2</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>17998</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">CPSU</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">SO2 Rotameter</span>
                     </div>
                   </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>SO2 Rotameter</span>
-                      <span>REPLACEMENT (By:ARP : 10/06/2026)</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">CPSU</td>
+                  <td>REPLACEMENT (By:ARP : 10/06/2026)</td>
                   <td class="user-table-center">BSU</td>
                   <td>Rotameter tube cracked, replaced with spare flow rotameter. Calibrated loop flow.</td>
-                  <td>
+                  <td class="user-table-center">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-center">ARP</span>
+                      <span style="padding-bottom: 4px;">ARP</span>
+                      <span style="border-top: 1px solid var(--border-color); padding-top: 4px;">-</span>
                     </div>
                   </td>
                   <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
@@ -577,15 +397,10 @@
                     <div class="user-table-cell-stack">
                       <div class="user-table-secondary">
                         <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
-                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
                         </div>
                       </div>
                     </div>
-                  </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
                   </td>
                 </tr>
               </tbody>
@@ -613,47 +428,38 @@
             <table class="user-table min-w-1440px" id="plantLogbookTableMonthly">
               <thead>
                 <tr>
-                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
-                  <th rowspan="2" style="width: 80px;">JobNo</th>
-                  <th style="width: 260px;">Title</th>
-                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
-                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
-                  <th rowspan="2" style="width: auto;">Description</th>
-                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
-                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
-                  <th rowspan="2" style="width: 20%;">Remarks</th>
-                  <th rowspan="2" id="priority-column-header-monthly">Hist</th>
-                </tr>
-                <tr>
-                  <th class="user-table-border-right">Job</th>
+                  <th class="text-center" style="width: 40px;">Sr</th>
+                  <th style="width: 140px;">
+                    <div style="padding-bottom: 4px;">Plant</div>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 4px;">TagNo</div>
+                  </th>
+                  <th style="width: 30%;">Job</th>
+                  <th class="text-center" style="width: 80px;">Tech</th>
+                  <th style="width: auto;">Description</th>
+                  <th class="text-center" style="width: 80px;">
+                    <div style="padding-bottom: 4px;">Tech</div>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 4px;">Eng</div>
+                  </th>
+                  <th class="text-center" style="width: 100px;">Status</th>
+                  <th style="width: 20%;">Remarks</th>
                 </tr>
               </thead>
               <tbody class="plant-table-body">
-                <tr class="user-table-date">
-                  <td colspan="10" class="user-table-bold">
-                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
-                    05/06/2026
-                  </td>
-                </tr>
-                <tr class="user-table-row jt-data-row" data-record-id="31" data-view="monthly" data-job-type="PM">
+                <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="31" data-view="monthly" data-job-type="PM">
                   <td class="user-table-center user-table-secondary">1</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>17890</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">M2</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">CO/CO2 Bench</span>
                     </div>
                   </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>CO/CO2 Bench</span>
-                      <span>INFRARED LAMP REPLACEMENT (By:TMV : 05/06/2026)</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">M2</td>
+                  <td>INFRARED LAMP REPLACEMENT (By:TMV : 05/06/2026)</td>
                   <td class="user-table-center">TMV</td>
                   <td>Infrared source bulb burned out, replaced IR source unit. Realignment of optical bench zero calibration.</td>
-                  <td>
+                  <td class="user-table-center">
                     <div class="user-table-cell-stack">
-                      <span class="user-table-center">TMV</span>
+                      <span style="padding-bottom: 4px;">TMV</span>
+                      <span style="border-top: 1px solid var(--border-color); padding-top: 4px;">-</span>
                     </div>
                   </td>
                   <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">OVER</td>
@@ -661,15 +467,10 @@
                     <div class="user-table-cell-stack">
                       <div class="user-table-secondary">
                         <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
-                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
                         </div>
                       </div>
                     </div>
-                  </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
                   </td>
                 </tr>
               </tbody>
@@ -685,7 +486,7 @@
               <span class="plant-table-card__title">Pending Log Book</span>
             </div>
             <div class="plant-table-card__actions">
-              <span class="record-count">1 Records</span>
+              <span class="record-count">5 Records</span>
               <label class="plant-search-field">
                 <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
                 <input type="text" class="table-search fw-600" placeholder="Search by tags...">
@@ -697,64 +498,104 @@
             <table class="user-table min-w-1440px" id="plantLogbookTablePending">
               <thead>
                 <tr>
-                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
-                  <th rowspan="2" style="width: 80px;">JobNo</th>
-                  <th style="width: 260px;">Title</th>
-                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
-                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
-                  <th rowspan="2" style="width: auto;">Description</th>
-                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
-                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
-                  <th rowspan="2" style="width: 20%;">Remarks</th>
-                  <th rowspan="2" id="priority-column-header-pending">Hist</th>
-                </tr>
-                <tr>
-                  <th class="user-table-border-right">Job</th>
+                  <th class="text-center" style="width: 40px;">Sr</th>
+                  <th class="text-center" style="width: 80px;">Plant</th>
+                  <th style="width: 160px;">
+                    <div style="padding-bottom: 4px;">TagNo</div>
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 4px;">Make</div>
+                  </th>
+                  <th style="width: 30%;">Job</th>
+                  <th class="text-center" style="width: 80px;">Tech</th>
+                  <th style="width: auto;">Description</th>
+                  <th class="text-center" style="width: 80px;">Tech</th>
+                  <th class="text-center" style="width: 80px;">Status</th>
+                  <th style="width: 15%;">Remarks</th>
                 </tr>
               </thead>
               <tbody class="plant-table-body">
-                <tr class="user-table-date">
-                  <td colspan="10" class="user-table-bold">
-                    <i class="ph ph-calendar-blank fw-600" aria-hidden="true"></i>
-                    16/06/2026
+                <tr class="user-table-row jt-data-row user-table-row--highlight">
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td class="user-table-center">AMM</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold" style="padding-bottom: 4px;">FV7801-</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">ORBIT</span>
+                    </div>
                   </td>
+                  <td>oil removed from actuator, new o-ring provided in actuator brass bush, worm gear greasing done, oil filled in actuator, actuator operation checked and found ok. (By:NPT : 15/02/2006)</td>
+                  <td class="user-table-center">PPS</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
-                <tr class="user-table-row jt-data-row user-table-row--highlight" data-record-id="41" data-view="today" data-job-type="PM">
+
+                <tr class="user-table-row jt-data-row user-table-row--highlight">
+                  <td class="user-table-center user-table-secondary">2</td>
+                  <td class="user-table-center">CMS</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class="user-table-bold" style="padding-bottom: 4px;">Documentation</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">File Doc.</span>
+                    </div>
+                  </td>
+                  <td>File updation and Lable preparation. Spare CV parts: MRV Preperation (By:HBG : 11/01/2006)</td>
+                  <td class="user-table-center">CGM</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+                <tr class="user-table-row jt-data-row user-table-row--highlight">
                   <td class="user-table-center user-table-secondary">3</td>
+                  <td class="user-table-center">CMS</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>18105</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">Documentation</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">IL</span>
                     </div>
                   </td>
+                  <td>File documentation.(By:HBG : 18/01/2006)</td>
+                  <td class="user-table-center">CGM</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+                <tr class="user-table-row jt-data-row user-table-row--highlight">
+                  <td class="user-table-center user-table-secondary">4</td>
+                  <td class="user-table-center">CMS</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span>Dust Monitor</span>
-                      <span>ALIGNMENT & TUNING (By:ARP : 16/06/2026)</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">Documentation</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">IL</span>
                     </div>
                   </td>
-                  <td class="user-table-center">BOILER-2</td>
-                  <td class="user-table-center">BDR</td>
-                  <td>Sensor alignment check. Found mounting bolts loose. Retightened flange.</td>
+                  <td>File updation ,job.(By:HBG : 19/01/2006)</td>
+                  <td class="user-table-center">CGM</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+                <tr class="user-table-row jt-data-row user-table-row--highlight">
+                  <td class="user-table-center user-table-secondary">5</td>
+                  <td class="user-table-center">CMS</td>
                   <td>
                     <div class="user-table-cell-stack">
-                      <span class="user-table-center">ARP</span>
+                      <span class="user-table-bold" style="padding-bottom: 4px;">Documentation</span>
+                      <span class="color-blue" style="border-top: 1px solid var(--border-color); padding-top: 4px;">Doc file</span>
                     </div>
                   </td>
-                  <td class="user-table-center" style="font-size: 11px; line-height: 1.2;">PENDING</td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-secondary">
-                        <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark" title="Remarks"><i
-                              class="ph-bold ph-hand-pointing" aria-hidden="true"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
-                  </td>
+                  <td>(1) Documentation update (2) MRV for material return.(By:HBG : 06/02/2006)</td>
+                  <td class="user-table-center">CGM</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>
@@ -781,47 +622,103 @@
             <!-- Row 1 -->
             <div class="col-span-4">
               <label class="gnfc-modal-label">DATE</label>
-              <input type="date" class="gnfc-modal-input" id="new-job-date">
+              <input type="text" class="gnfc-modal-input" id="new-job-date" placeholder="dd/mm/yyyy">
             </div>
             <div class="col-span-4">
-              <label class="gnfc-modal-label">PLANT NAME</label>
+              <label class="gnfc-modal-label">PLANT</label>
               <select class="gnfc-modal-input" required>
-                <option value="UREA">UREA</option>
-                <option value="AMMONIA">AMMONIA</option>
-                <option value="BOILER">BOILER</option>
-                <option value="ANIPF">ANIPF</option>
-                <option value="CPSU">CPSU</option>
+                <option value="AA">AA</option>
+                <option value="M1">M1</option>
                 <option value="M2">M2</option>
+                <option value="FA">FA</option>
+                <option value="AMM">AMM</option>
+                <option value="NPP">NPP</option>
+                <option value="DM">DM</option>
+                <option value="BOILER">BOILER</option>
+                <option value="INSTWS">INSTWS</option>
+                <option value="UREA">UREA</option>
+                <option value="CMS">CMS</option>
+                <option value="BAGG">BAGG</option>
+                <option value="UTILITY">UTILITY</option>
+                <option value="SPP">SPP</option>
+                <option value="ISO">ISO</option>
+                <option value="INCS">INCS</option>
+                <option value="PURCHASE">PURCHASE</option>
+                <option value="ANITDI">ANITDI</option>
+                <option value="CPSU">CPSU</option>
+                <option value="ANIPF">ANIPF</option>
+                <option value="ASGP">ASGP</option>
+                <option value="EA">EA</option>
+                <option value="MINMAX">MINMAX</option>
+                <option value="AAQM">AAQM</option>
+                <option value="N/A">N/A</option>
+                <option value=""></option>
               </select>
             </div>
             <div class="col-span-4">
-              <label class="gnfc-modal-label">TAG NO</label>
-              <input type="text" class="gnfc-modal-input" placeholder="e.g. CMS-TAG-101" required>
+              <label class="gnfc-modal-label">INST TAG</label>
+              <input type="text" class="gnfc-modal-input" placeholder="INSTTAG">
             </div>
 
             <!-- Row 2 -->
             <div class="col-span-6">
-              <label class="gnfc-modal-label">JOB TITLE</label>
-              <input type="text" class="gnfc-modal-input" placeholder="e.g. Opacity Analyzer Check" required>
+              <label class="gnfc-modal-label">MAKE</label>
+              <select class="gnfc-modal-input">
+                <option value="IL">IL</option>
+                <option value="GULDE">GULDE</option>
+                <option value="FISHER">FISHER</option>
+                <option value="VALTEK">VALTEK</option>
+                <option value="MIL">MIL</option>
+                <option value="NIGATA MASONIELAN">NIGATA MASONIELAN</option>
+                <option value="KITAMURA">KITAMURA</option>
+                <option value="NELES">NELES</option>
+                <option value="ABB">ABB</option>
+                <option value="CONTINENTAL">CONTINENTAL</option>
+                <option value="XOMOX">XOMOX</option>
+                <option value="MAPAG">MAPAG</option>
+                <option value="PARCOL">PARCOL</option>
+                <option value="ARCA">ARCA</option>
+                <option value="ELOMATIC">ELOMATIC</option>
+                <option value="ORBIT">ORBIT</option>
+                <option value="KSB">KSB</option>
+                <option value="W.DUME">W.DUME</option>
+                <option value="ZIKESCH">ZIKESCH</option>
+                <option value="FXIL">FXIL</option>
+                <option value="FLOWSERVE">FLOWSERVE</option>
+                <option value="METSO">METSO</option>
+                <option value="BIFFI">BIFFI</option>
+                <option value="TYCO">TYCO</option>
+                <option value="KENT INTROL">KENT INTROL</option>
+                <option value="KRAMMER">KRAMMER</option>
+                <option value=""></option>
+              </select>
             </div>
             <div class="col-span-6">
-              <label class="gnfc-modal-label">JOB STATUS</label>
-              <select class="gnfc-modal-input" required>
-                <option value="OVER">OVER</option>
-                <option value="PENDING">PENDING</option>
-              </select>
+              <label class="gnfc-modal-label">MAKE DETAILS</label>
+              <input type="text" class="gnfc-modal-input" placeholder="Make details">
             </div>
 
             <!-- Row 3 -->
             <div class="col-span-12">
-              <label class="gnfc-modal-label">JOB DESCRIPTION</label>
-              <textarea class="gnfc-modal-input" rows="3" placeholder="Enter detailed job description here..." required></textarea>
+              <label class="gnfc-modal-label">JOB DISCRIPTION</label>
+              <textarea class="gnfc-modal-input" rows="4"></textarea>
             </div>
 
             <!-- Row 4 -->
-            <div class="col-span-6">
-              <label class="gnfc-modal-label">TECH</label>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">JOB STATUS</label>
               <select class="gnfc-modal-input">
+                <option value="Job Status">Job Status</option>
+                <option value="OVER">OVER</option>
+                <option value="PEND">PEND</option>
+                <option value="U/O">U/O</option>
+                <option value="U/P">U/P</option>
+              </select>
+            </div>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">TECH NAME</label>
+              <select class="gnfc-modal-input">
+                <option value="ENG_TESTER">ENG_TESTER</option>
                 <option value="MHT">MHT</option>
                 <option value="RKN">RKN</option>
                 <option value="BDR">BDR</option>
@@ -832,20 +729,35 @@
                 <option value="TMV">TMV</option>
               </select>
             </div>
-            <div class="col-span-6">
+            <div class="col-span-4">
               <label class="gnfc-modal-label">ENG</label>
               <select class="gnfc-modal-input">
-                <option value="JJK">JJK</option>
-                <option value="ARP">ARP</option>
-                <option value="KGS">KGS</option>
-                <option value="TMV">TMV</option>
+                <option value="">Please Select ENG</option>
+                <option value="SAS">SAS</option>
+                <option value="PVP">PVP</option>
+                <option value="NKP">NKP</option>
+                <option value="TDP">TDP</option>
+                <option value="balbhadra">balbhadra</option>
+                <option value="HAS">HAS</option>
+                <option value="MAJ">MAJ</option>
+                <option value="TRC">TRC</option>
+                <option value="ENG_TESTER">ENG_TESTER</option>
               </select>
             </div>
-
-            <!-- Row 5 -->
-            <div class="col-span-12">
-              <label class="gnfc-modal-label">REMARKS</label>
-              <textarea class="gnfc-modal-input" rows="2" placeholder="Optional comments..."></textarea>
+            <div class="col-span-4">
+              <label class="gnfc-modal-label">EXTRA DUTY HRS</label>
+              <div class="flex gap-4px">
+                <select class="gnfc-modal-input">
+                  <option value="HR">HR</option>
+                </select>
+                <select class="gnfc-modal-input">
+                  <option value="MIN">MIN</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-span-2 flex items-center gap-8px pt-24px">
+              <input type="checkbox" id="emg-call-chk" class="cursor-pointer m-0px">
+              <label for="emg-call-chk" class="gnfc-modal-label cursor-pointer m-0px">Emergency Call</label>
             </div>
           </div>
         </div>
@@ -862,10 +774,11 @@
   <script>
     $(function () {
       // Set current date in modal by default
-      const defaultDate = new Date().toISOString().split('T')[0];
-      $('#new-job-date').val(defaultDate);
+      const todayDate = new Date();
+      const defaultDateStr = `${todayDate.getDate()}/${todayDate.getMonth() + 1}/${todayDate.getFullYear()}`;
+      $('#new-job-date').val(defaultDateStr);
 
-      // Date Calculations for Center Banner
+      // Date Calculations for Table Titles
       const today = new Date();
       const todayStr = today.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
@@ -877,22 +790,11 @@
       weekAgo.setDate(today.getDate() - 6);
       const weekAgoStr = weekAgo.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
-      // Update Center Banner Text
-      function updateBanner(view) {
-        let text = "";
-        if (view === "today") {
-          text = `${todayStr} Today Log Book`;
-        } else if (view === "prev") {
-          text = `${prevStr} Prev Day Log Book`;
-        } else if (view === "weekly") {
-          text = `${weekAgoStr} to ${todayStr} Weekly Log Book`;
-        } else if (view === "monthly") {
-          text = `${todayStr} Monthly Log Book`;
-        } else if (view === "pending") {
-          text = `Pending Log Book`;
-        }
-        $('#cms-banner-text').text(text);
-      }
+      // Set Titles with Dates
+      $('#table-container-today .plant-table-card__title').text(`${todayStr} Today Log Book`);
+      $('#table-container-prev .plant-table-card__title').text(`${prevStr} Previous Day Log Book`);
+      $('#table-container-weekly .plant-table-card__title').text(`${weekAgoStr} to ${todayStr} Weekly Log Book`);
+      $('#table-container-monthly .plant-table-card__title').text(`${todayStr} Monthly Log Book`);
 
       // Handle Switcher Buttons (Row 2 tab buttons)
       $('.cms-tab-btn').on('click', function () {
@@ -905,8 +807,6 @@
         // Toggle visibility of target table container
         $('.plant-table-container').addClass('is-hidden');
         $(`#table-container-${view}`).removeClass('is-hidden');
-
-        updateBanner(view);
       });
 
       // Handle Pending button
@@ -916,8 +816,6 @@
 
         $('.plant-table-container').addClass('is-hidden');
         $('#table-container-pending').removeClass('is-hidden');
-
-        updateBanner('pending');
       });
 
       // Row 1 buttons click redirection
@@ -932,7 +830,7 @@
 
       // Row 2 actions click redirection
       $('#btn-assign-jobs').on('click', () => window.location.href = 'assigntodaycms.html');
-      $('#btn-helper').on('click', () => window.location.href = '../Helper.html?plant=CMS');
+      $('#btn-helper').on('click', () => window.location.href = './cms_helper.html');
 
       // Handle Modal generic open/close triggers
       $(document).on('click', '[data-open-modal]', function () {
@@ -977,8 +875,7 @@
         });
       });
 
-      // Initialize
-      updateBanner('today');
+      // Initialize is complete
     });
   </script>
 

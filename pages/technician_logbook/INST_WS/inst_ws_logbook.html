@@ -48,7 +48,6 @@
         <div class="plant-toolbar">
           <div class="plant-toolbar__left">
             <div class="ui-switcher" role="group" aria-label="Select period">
-              <button type="button" class="ui-switcher-btn" data-view="tomorrow">Tomorrow</button>
               <button type="button" class="ui-switcher-btn is-active" data-view="today">Today</button>
               <button type="button" class="ui-switcher-btn" data-view="prev">PrevDay</button>
               <span class="plant-period-switcher__divider" aria-hidden="true"></span>
@@ -110,109 +109,6 @@
       <!-- Log Book table -->
       <section class="plant-table-card">
 
-        <!-- Tomorrow Log Book -->
-        <div id="table-container-tomorrow" class="plant-table-container is-hidden">
-
-          <div class="plant-table-card__header">
-            <div class="plant-table-card__summary">
-              <i class="ph-fill ph-table" aria-hidden="true"></i>
-              <span class="view-title plant-table-card__title">Tomorrow Log Book</span>
-              <span class="plant-view-date tomorrow-date-text">( --.--.---- )</span>
-            </div>
-
-            <div class="plant-table-card__actions">
-              <span class="record-count"> Records</span>
-
-              <label class="plant-search-field">
-                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
-                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
-              </label>
-            </div>
-          </div>
-
-          <div class="user-table-wrapper">
-            <table class="user-table min-w-1440px" id="plantLogbookTableTomorrow">
-              <thead>
-                <tr>
-                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 40px;">Sr</th>
-                  <th rowspan="2" style="width: 80px;">JobNo</th>
-                  <th style="width: 260px;">Title</th>
-                  <th rowspan="2" data-sort="area" style="width: 120px;">Plant</th>
-                  <th rowspan="2" data-sort="tech" style="width: 80px;">Tech</th>
-                  <th rowspan="2" style="width: auto;">Description</th>
-                  <th rowspan="2" data-sort="engineer" style="width: 80px;">Tech</th>
-                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
-                  <th rowspan="2" style="width: 20%;">Remarks</th>
-                  <th rowspan="2" id="priority-column-header-today">Hist</th>
-                </tr>
-                <tr>
-                  <th class="user-table-border-right">Job</th>
-                </tr>
-              </thead>
-              <tbody class="plant-table-body">
-                <tr class="user-table-row" data-record-id="5" data-view="today" data-job-type="DEFECT MAINTENANCE">
-
-                  <td class="user-table-center user-table-secondary user-table-cell-pending"
-                    style="background-color: #ffc0cb !important; color: #000 !important;">
-                    <div class="plant-sr-edit-container">
-                      <button type="button" class="area-edit-icon" title="Edit Job" style="color: #000 !important;">
-                        <i class="ph-bold ph-caret-right"></i>
-                      </button>
-                      <span>1</span>
-                      <hr class="plant-sr-divider" style="border-top: 1px solid rgba(0, 0, 0, 0.2) !important;">
-                      <button type="button" class="sr-edit-icon" title="Edit Job">
-                        <i class="ph-bold ph-pencil-simple-line" style="color: #000 !important;"></i>
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>17147</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span>Both GBTV Actuators not fully open to be checked. (By: ARP : 22/04/2026)</span>
-                      <span>DEFECT MAINTENANCE</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">
-                    <div class="plant-area-cell">
-                      <span>BOILER-3</span>
-                    </div>
-                  </td>
-                  <td class="user-table-center">BDR</td>
-                  <td class="italic color-hint"></td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <span class=" user-table-center"></span>
-                      <span class="user-table-center"></span>
-                    </div>
-                  </td>
-                  <td class="user-table-center"></td>
-                  <td>
-                    <div class="user-table-cell-stack">
-                      <div class="user-table-secondary">
-                        <p> </p>
-                        <div class="plant-inline-actions">
-                          <button type="button" class="plant-inline-button" data-action="remark"><i
-                              class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
-                          <button type="button" class="plant-inline-button" data-action="edit-remark"
-                            title="Edit Remark"><i class="ph-bold ph-pencil-simple-line"
-                              aria-hidden="true"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="user-table-center">
-                    <button type="button" class="plant-inline-button" data-action="history"
-                      data-open-modal="history-type-modal" title="History">H</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
 
         <!-- Today Log Book -->
         <div id="table-container-today" class="plant-table-container">
@@ -2118,20 +2014,23 @@
       $('#job-modal').addClass('is-open');
     }
   </script>
-  </script>
 </body>
 
 <script>
   $(function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlView = urlParams.get('view');
-    let selectedView = (urlView && ["tomorrow", "today", "prev", "weekly", "monthly"].includes(urlView))
-      ? urlView
-      : (localStorage.getItem('plantLogbookSelectedView') || 'today');
-
-    if (urlView) {
-      localStorage.setItem('plantLogbookSelectedView', selectedView);
+    function getUrlView() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let urlView = urlParams.get('view');
+      let selectedView = (urlView && ["today", "prev", "weekly", "monthly"].includes(urlView))
+        ? urlView
+        : (localStorage.getItem('plantLogbookSelectedView') || 'today');
+      return selectedView;
     }
+    
+    let selectedView = getUrlView();
+
+    localStorage.setItem('plantLogbookSelectedView', selectedView);
+
     let jobTypeFilter = '';
     let currentRowData = {}; // Store row data for history modals
 
@@ -2650,10 +2549,6 @@
   const todayStr = today.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
   $('.today-date-text').text("( " + todayStr + " )");
 
-  const tomorrowDate = new Date();
-  tomorrowDate.setDate(today.getDate() + 1);
-  const tomorrowStr = tomorrowDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  $('.tomorrow-date-text').text("( " + tomorrowStr + " )");
 
   const prevDate = new Date();
   prevDate.setDate(today.getDate() - 1);

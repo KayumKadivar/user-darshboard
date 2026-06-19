@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Over Time Statement | GNFC</title>
+  <meta name="description" content="GNFC CMS Over Time Statement">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../../../css/pages/plant.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/cms-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'ot_statement';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="CMS Over Time Statement"
+      data-breadcrumb="Logbook:../technicianlogbook.html,CMS Logbook:cms_logbook.html,OT Statement:active"
+      data-back="cms_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content gap-16px">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            STATEMENT CRITERIA
+          </h2>
+        </div>
+        <div class="jt-filter-body grid grid-cols-4 gap-16px items-end">
+
+          <!-- Month -->
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label">Month</label>
+            <select id="monthSelect" class="gnfc-modal-input">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5" selected>5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+
+          <!-- Year -->
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label">Year</label>
+            <select id="yearSelect" class="gnfc-modal-input">
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026" selected>2026</option>
+              <option value="2027">2027</option>
+            </select>
+          </div>
+
+          <!-- ECNO -->
+          <div class="jt-filter-group">
+            <label class="gnfc-modal-label">ECNO</label>
+            <input type="text" id="ecnoInput" class="gnfc-modal-input font-13px" placeholder="Enter ECNO...">
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-end gap-8px">
+            <button type="button" class="jt-btn-primary flex-1" id="btn-apply-filter">
+              <i class="ph-bold ph-lightning"></i> GO
+            </button>
+            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
+              Reset
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="report-container" class="jt-table-card">
+
+        <div class="jt-report-header flex justify-between items-center" style="padding: 16px;">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-file-text"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Over Time Statement</h3>
+            </div>
+          </div>
+          <div class="jt-report-actions">
+            <button class="jt-btn-primary jt-btn-sm" onclick="alert('Summary Modal')">Summary</button>
+            <button class="jt-btn-primary jt-btn-sm" onclick="alert('Total Report Generation')">Total Report</button>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="user-table-wrapper" style="overflow-x: auto;">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th class="user-table-center" style="width: 50px;">SRNO</th>
+                <th class="user-table-center" style="width: 80px;">ECNO</th>
+                <th class="user-table-left" style="width: 150px;">NAME</th>
+                <th class="user-table-center" style="width: 100px;">DATE</th>
+                <th class="user-table-center" style="width: 100px;">SHIFT</th>
+                <th class="user-table-center" style="width: 80px;">FROM</th>
+                <th class="user-table-center" style="width: 80px;">TO</th>
+                <th class="user-table-left" style="width: 150px;">OT REAS</th>
+                <th class="user-table-left">DETAIL REAS</th>
+                <th class="user-table-center" style="width: 60px;">HRS</th>
+                <th class="user-table-center" style="width: 60px;">MIN</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Example Row 1 -->
+              <tr class="user-table-row">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center user-table-blue">12345</td>
+                <td class="user-table-left">JOHN DOE</td>
+                <td class="user-table-center">15/05/2026</td>
+                <td class="user-table-center">A</td>
+                <td class="user-table-center">16:00</td>
+                <td class="user-table-center">18:00</td>
+                <td class="user-table-left">Plant Breakdown</td>
+                <td class="user-table-left">Assisted in boiler repair and pressure valve replacement.</td>
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">0</td>
+              </tr>
+              <!-- Example Row 2 -->
+              <tr class="user-table-row">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center user-table-blue">67890</td>
+                <td class="user-table-left">JANE SMITH</td>
+                <td class="user-table-center">18/05/2026</td>
+                <td class="user-table-center">B</td>
+                <td class="user-table-center">00:00</td>
+                <td class="user-table-center">01:30</td>
+                <td class="user-table-left">Emergency Call</td>
+                <td class="user-table-left">Fixed leak in cooling tower pipeline.</td>
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">30</td>
+              </tr>
+            </tbody>
+            <tfoot class="user-table-tfoot">
+              <tr>
+                <td colspan="9" class="user-table-right fs-18px fw-700" style="padding-right: 24px;">TOTAL</td>
+                <td class="user-table-center fw-700 fs-16px" id="total-hrs">3</td>
+                <td class="user-table-center fw-700 fs-16px" id="total-min">30</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      const showReport = () => {
+        // Show the results section with smooth fade
+        $('#report-container').stop().hide().fadeIn(300);
+      };
+
+      const resetView = () => {
+        $('#monthSelect').val('5');
+        $('#yearSelect').val('2026');
+        $('#ecnoInput').val('');
+        $('#report-container').fadeOut(200);
+      };
+
+      // Event Listeners
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          showReport();
+        }, 1500);
+      });
+      $('#btn-reset-filter').on('click', resetView);
+    });
+  </script>
+</body>
+
+</html>

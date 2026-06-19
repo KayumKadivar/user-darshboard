@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Namewise Report | GNFC</title>
+  <meta name="description" content="GNFC CMS Namewise Log Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../../css/phosphor.css">
+  <link rel="stylesheet" href="../../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../../css/utilities.css">
+  <link rel="stylesheet" href="../../../css/common.css">
+  <link rel="stylesheet" href="../../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../../css/pages/style.css">
+  <link rel="stylesheet" href="../../../css/pages/plant.css">
+
+  <!-- JS Vendors -->
+  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../../js/theme-control.js"></script>
+  <script src="../../../js/sidebar.js" defer></script>
+  <script src="../../../js/header.js" defer></script>
+  <script src="../../../js/cms-nav.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'namewise_report';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="CMS Namewise Report"
+      data-breadcrumb="Logbook:../technicianlogbook.html,CMS Logbook:cms_logbook.html,Namewise Report:active"
+      data-back="cms_logbook.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content gap-16px">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h2 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
+          </h2>
+        </div>
+        <div class="jt-filter-body">
+
+          <!-- Start Date -->
+          <div>
+            <label class="gnfc-modal-label">Start Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="startDate" class="gnfc-modal-input font-13px" value="2026-06-01">
+            </div>
+          </div>
+
+          <!-- End Date -->
+          <div>
+            <label class="gnfc-modal-label">End Date</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="endDate" class="gnfc-modal-input font-13px" value="2026-06-30">
+            </div>
+          </div>
+
+          <!-- Select Name -->
+          <div>
+            <label class="gnfc-modal-label">Select Name</label>
+            <div class="jt-select-wrap">
+              <select id="nameSelect" class="gnfc-modal-input">
+                <option value="">-- Select Name --</option>
+                <option value="PVS">PVS</option>
+                <option value="BDR">BDR</option>
+                <option value="PRP">PRP</option>
+                <option value="DGM">DGM</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="jt-filter-btn">
+            <button type="button" class="jt-btn-primary" id="btn-apply-filter">
+              <i class="ph-bold ph-lightning"></i> APPLY
+            </button>
+            <button type="button" class="jt-btn-reset" id="btn-reset-filter">
+              Reset
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="report-container" class="jt-table-card">
+
+        <div class="jt-report-header flex justify-between items-center" style="padding: 16px;">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-user"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">NameWise Report</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th class="user-table-center" style="width: 120px;">Asign Job</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Date</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 150px;">TagNo</th>
+                <th rowspan="2" class="user-table-left">Description</th>
+                <th rowspan="2" class="user-table-left" style="width: 250px;">Remarks</th>
+                <th rowspan="2" class="user-table-center" style="width: 80px;">OT Hour</th>
+              </tr>
+              <tr>
+                <th class="user-table-center border-top">Asign To</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Example Row -->
+              <tr class="user-table-row">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>PM</div>
+                    <div class="user-table-secondary user-table-blue">DGM</div>
+                  </div>
+                </td>
+                <td class="user-table-center">18/06/2026</td>
+                <td class="user-table-center">DGM</td>
+                <td class="user-table-center">PV205SA(Y)</td>
+                <td class="user-table-left">Routine check of level sensor accuracy and cleaning of body parts.</td>
+                <td class="user-table-left">Checked OK</td>
+                <td class="user-table-center">1.0</td>
+              </tr>
+              <!-- Example Row 2 -->
+              <tr class="user-table-row">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div>CM</div>
+                    <div class="user-table-secondary user-table-blue">PVS</div>
+                  </div>
+                </td>
+                <td class="user-table-center">15/06/2026</td>
+                <td class="user-table-center">PVS</td>
+                <td class="user-table-center">MAPAG VALVE</td>
+                <td class="user-table-left">Upgrade data of mapag valve in C/V DATA SHEET FINAL.</td>
+                <td class="user-table-left">Data logged</td>
+                <td class="user-table-center">2.5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      const showReport = () => {
+        // Show the results section with smooth fade
+        $('#report-container').stop().hide().fadeIn(300);
+      };
+
+      const resetView = () => {
+        $('#startDate').val('');
+        $('#endDate').val('');
+        $('#nameSelect').val('');
+        $('#report-container').fadeOut(200);
+      };
+
+      // Event Listeners
+      $('#btn-apply-filter').on('click', function () {
+        $('#data-loader-overlay').removeClass('hidden');
+        setTimeout(() => {
+          $('#data-loader-overlay').addClass('hidden');
+          showReport();
+        }, 1500);
+      });
+      $('#btn-reset-filter').on('click', resetView);
+    });
+  </script>
+</body>
+
+</html>
