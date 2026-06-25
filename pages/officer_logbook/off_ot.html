@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overtime Statement | GNFC</title>
+  
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+</head>
+<body class="dashboard-body plant-page">
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <div id="header-container" data-title="Overtime Statement" data-breadcrumb="Officer Logbook:index.html,Overtime Statement:active" data-back="index.html"></div>
+
+    <div class="assign-content custom-scroll p-24px">
+      <div class="assign-full-container flex flex-col gap-16px mx-auto">
+        
+        <!-- Header Info Card -->
+        <div class="assign-form-card">
+          <div class="assign-form-header flex justify-between items-center">
+            <div class="flex items-center gap-8px">
+              <i class="ph-duotone ph-clock color-blue font-16px"></i>
+              <span class="fw-700 color-primary font-14px uppercase">OVER TIME STATEMENT</span>
+            </div>
+            <div class="fw-700 color-blue font-16px uppercase">
+              PLANT: BOILER
+            </div>
+          </div>
+
+          <div class="p-16px flex flex-col gap-16px">
+            
+            <div class="flex items-center gap-16px">
+              <label class="assign-field-label">FOR THE MONTH OF</label>
+              <select class="gnfc-modal-input w-100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5" selected>5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+              <select class="gnfc-modal-input w-100px">
+                <option value="2025">2025</option>
+                <option value="2026" selected>2026</option>
+                <option value="2027">2027</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-24px">
+              <div class="flex items-center gap-8px">
+                <span class="assign-field-label">NAME:</span>
+                <input type="text" class="gnfc-modal-input" value="ENG_TESTER" readonly>
+              </div>
+              <div class="flex items-center gap-8px">
+                <span class="assign-field-label">ECNO:</span>
+                <input type="text" class="gnfc-modal-input" value="3101671" readonly>
+              </div>
+              <div class="flex items-center gap-8px">
+                <span class="assign-field-label">DEPT:</span>
+                <input type="text" class="gnfc-modal-input" value="INSTRUMENT" readonly>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-12px mt-8px">
+              <span class="ui-badge ui-badge--info">NO LEAVE RELIEVER (a)</span>
+              <span class="ui-badge ui-badge--warning">SHUTDOWN JOBS (b)</span>
+              <span class="ui-badge ui-badge--danger">BREAK DOWN JOBS (c)</span>
+              <span class="ui-badge ui-badge--success">OTHER THAN a b c (d)</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Add Entry Form Card -->
+        <div class="assign-form-card">
+          <div class="assign-form-header">
+            <i class="ph-duotone ph-plus-circle color-blue font-16px"></i>
+            <span class="fw-700 color-primary font-14px uppercase">ADD NEW ENTRY</span>
+          </div>
+
+          <div class="form-grid grid-cols-12 p-16px gap-16px">
+            
+            <div class="form-field-wrapper col-span-2">
+              <label class="assign-field-label">SHIFT <span class="required">*</span></label>
+              <select class="gnfc-modal-input w-full">
+                <option value="G">G</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+
+            <div class="form-field-wrapper col-span-2">
+              <label class="assign-field-label">DATE FROM <span class="required">*</span></label>
+              <input type="date" class="gnfc-modal-input w-full">
+            </div>
+
+            <div class="form-field-wrapper col-span-2">
+              <label class="assign-field-label">FROM (HH:MM) <span class="required">*</span></label>
+              <input type="time" class="gnfc-modal-input w-full" value="17:00">
+            </div>
+
+            <div class="form-field-wrapper col-span-2">
+              <label class="assign-field-label">DATE TO <span class="required">*</span></label>
+              <input type="date" class="gnfc-modal-input w-full">
+            </div>
+
+            <div class="form-field-wrapper col-span-2">
+              <label class="assign-field-label">TO (HH:MM) <span class="required">*</span></label>
+              <input type="time" class="gnfc-modal-input w-full">
+            </div>
+
+            <div class="form-field-wrapper col-span-2">
+              <label class="assign-field-label">OT REASONWISE <span class="required">*</span></label>
+              <select class="gnfc-modal-input w-full">
+                <option value="">Select</option>
+                <option value="a">a (No Leave Reliever)</option>
+                <option value="b">b (Shutdown Jobs)</option>
+                <option value="c">c (Breakdown Jobs)</option>
+                <option value="d">d (Other)</option>
+              </select>
+            </div>
+
+            <div class="form-field-wrapper col-span-6">
+              <label class="assign-field-label">DETAIL REASON <span class="required">*</span></label>
+              <input type="text" class="gnfc-modal-input w-full" placeholder="Enter reason...">
+            </div>
+
+            <div class="form-field-wrapper col-span-3">
+              <label class="assign-field-label">DURATION (HRS : MIN) <span class="required">*</span></label>
+              <div class="flex gap-8px">
+                <input type="number" class="gnfc-modal-input w-full" placeholder="Hrs">
+                <input type="number" class="gnfc-modal-input w-full" placeholder="Min">
+              </div>
+            </div>
+
+            <div class="form-field-wrapper col-span-3 flex items-end gap-8px">
+              <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary w-full">ADD</button>
+              <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary w-full">VIEW</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Records Table Card -->
+        <div class="assign-form-card">
+          <div class="assign-form-header">
+            <i class="ph-duotone ph-table color-blue font-16px"></i>
+            <span class="fw-700 color-primary font-14px uppercase">OT RECORDS</span>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table w-full">
+              <thead style="border-bottom: 1px solid var(--dark-border, #ccc);">
+                <tr>
+                  <th class="user-table-center w-50px">SRNO</th>
+                  <th class="user-table-center w-100px">DATE</th>
+                  <th class="user-table-center w-60px">SHIFT</th>
+                  <th class="user-table-center w-100px">FROM</th>
+                  <th class="user-table-center w-100px">TO</th>
+                  <th class="user-table-center w-80px">OT REAS</th>
+                  <th>DETAIL REAS</th>
+                  <th class="user-table-center w-60px">HRS</th>
+                  <th class="user-table-center w-60px">MIN</th>
+                  <th class="user-table-center w-60px">DEL</th>
+                </tr>
+              </thead>
+              <tbody class="user-table-center">
+                <!-- Example Row, ideally dynamic -->
+                <tr>
+                  <td colspan="10" class="py-16px color-hint font-14px">No overtime records found for this month.</td>
+                </tr>
+              </tbody>
+              <tfoot style="border-top: 1px solid var(--dark-border, #ccc);">
+                <tr class="fw-700">
+                  <td colspan="7" class="user-table-right p-8px font-14px uppercase">TOTAL</td>
+                  <td class="user-table-center p-8px font-14px color-primary">0</td>
+                  <td class="user-table-center p-8px font-14px color-primary">0</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div class="assign-form-footer flex justify-center gap-16px p-16px border-t border-dark">
+            <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="$('#ot-export-summary-modal').addClass('is-open')">Summary</button>
+            <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" onclick="$('#ot-summary-modal').addClass('is-open')">Total Report</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Over Time Summary Modal (Total Report) -->
+  <div id="ot-summary-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Over Time Summary</h3>
+        <button class="gnfc-modal-close" onclick="$('#ot-summary-modal').removeClass('is-open')">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body p-24px">
+        <h4 class="font-16px fw-500 color-dark mb-16px">Over Time Summary for the month of 5/2026</h4>
+        <hr class="mb-16px border-t border-dark">
+        <div class="font-16px fw-700 color-dark mb-8px">No Of Person : 0</div>
+        <div class="font-16px fw-700 color-dark">Grand Total : Hr : 0 Min : 0</div>
+      </div>
+      <div class="gnfc-modal-footer flex justify-end p-16px border-t border-dark">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="$('#ot-summary-modal').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Over Time Export Summary Modal (Summary Button) -->
+  <div id="ot-export-summary-modal" class="gnfc-modal-overlay">
+    <div class="gnfc-modal">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Over Time Summary</h3>
+        <button class="gnfc-modal-close" onclick="$('#ot-export-summary-modal').removeClass('is-open')">
+          <i class="ph ph-x"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body p-24px">
+        <h4 class="font-16px fw-500 color-dark mb-16px">Over Time Summary for the month of 5/2026</h4>
+        <hr class="mb-16px border-t border-dark">
+        
+        <div class="font-16px fw-700 color-dark mb-16px">No Of Person : 0</div>
+        
+        <div class="flex items-center gap-8px mb-24px">
+          <span class="font-16px fw-700 color-dark">Grand Total : Hr :</span>
+          <input type="text" class="gnfc-modal-input text-center w-50px" value="0" readonly>
+          <span class="font-16px fw-700 color-dark">Min :</span>
+          <input type="text" class="gnfc-modal-input text-center w-50px" value="0" readonly>
+        </div>
+
+        <div class="flex items-center gap-12px pt-16px border-t border-dark">
+          <span class="font-16px fw-700 color-dark">Reason:</span>
+          <input type="text" class="gnfc-modal-input flex-1" placeholder="Enter reason...">
+          <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary">Export</button>
+        </div>
+      </div>
+      <div class="gnfc-modal-footer flex justify-end p-16px border-t border-dark">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="$('#ot-export-summary-modal').removeClass('is-open')">Close</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

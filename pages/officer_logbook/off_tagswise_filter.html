@@ -4,28 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS Tag Filter Analysis | GNFC</title>
-  <meta name="description" content="GNFC Historical CMS Job Records Filtered by Tag Number">
+  <title>Tag Filter Analysis | GNFC</title>
+  <meta name="description" content="GNFC Historical Job Records Filtered by Tag Number">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="../../../css/phosphor.css">
-  <link rel="stylesheet" href="../../../css/theme-vars.css">
-  <link rel="stylesheet" href="../../../css/utilities.css">
-  <link rel="stylesheet" href="../../../css/common.css">
-  <link rel="stylesheet" href="../../../css/modal-ui.css">
-  <link rel="stylesheet" href="../../../css/pages/style.css">
-  <link rel="stylesheet" href="../../../css/pages/plant.css">
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
 
   <!-- JS Vendors -->
-  <script src="../../../js/vendor/jquery-3.7.1.min.js"></script>
-  <script src="../../../js/theme-control.js"></script>
-  <script src="../../../js/sidebar.js" defer></script>
-  <script src="../../../js/header.js" defer></script>
-  <script src="../../../js/cms-nav.js" defer></script>
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/plant-nav.js" defer></script>
 
   <script>
-    window.activeSidebar = 'technician_logbook';
-    window.activePage = 'tagwise_filter';
+    window.activeSidebar = 'officer_logbook';
+    window.activePage = 'off_tagswise_filter';
   </script>
 </head>
 
@@ -42,12 +41,12 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="CMS Tag wise Filter"
-      data-breadcrumb="Logbook:../technicianlogbook.html,CMS Logbook:cms_logbook.html,Tag wise Filter:active"
-      data-back="cms_logbook.html"></div>
+    <div id="header-container" data-title="Tag wise Filter"
+      data-breadcrumb="Officer Logbook:index.html,Plant Detail:plant_detail.html,Tag wise Filter:active"
+      data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
-    <section class="jt-page-content gap-16px">
+    <section class="dashboard-content ">
 
       <!-- Plant Navigation -->
       <div id="plant-nav-container"></div>
@@ -67,13 +66,18 @@
             <label class="gnfc-modal-label">Tag Number</label>
             <div class="flex items-center gap-8px">
               <input type="text" id="tagInput" placeholder="Search Tag..."
-                class="gnfc-modal-input  uppercase flex-1" value="PV205SA(Y)">
+                class="gnfc-modal-input  uppercase flex-1" value="2FT1501A">
               <div class="flex-1">
                 <select id="tagSelect" class="gnfc-modal-input">
                   <option value="">-- Select --</option>
-                  <option value="PV205SA(Y)">PV205SA(Y)</option>
+                  <option value="2FT1501A" selected>2FT1501A</option>
                   <option value="TAG-001">TAG-001</option>
                   <option value="TAG-002">TAG-002</option>
+                  <option value="TAG-003">TAG-003</option>
+                  <option value="TAG-004">TAG-004</option>
+                  <option value="TAG-005">TAG-005</option>
+                  <option value="TAG-006">TAG-006</option>
+                  <option value="TAG-007">TAG-007</option>
                 </select>
               </div>
             </div>
@@ -105,23 +109,62 @@
 
         <!-- Table Card -->
         <div class="user-table-wrapper">
-          <table class="user-table min-w-1000px">
+          <table class="user-table min-w-1024px">
             <thead>
               <tr>
-                <th class="user-table-center" style="width: 100px;">Date</th>
-                <th class="user-table-center" style="width: 150px;">PLANT</th>
-                <th class="user-table-center" style="width: 150px;">INSTTAG</th>
-                <th style="min-width: 400px;">Job Description</th>
-                <th class="user-table-center" style="width: 150px;">Techname</th>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th class="user-table-center" style="width: 100px;">Shift</th>
+                <th class="user-table-center" style="width: 180px;">TagNo</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th class="user-table-center" style="width: 80px;">Off. Name</th>
+                <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 150px;">Remarks</th>
+              </tr>
+              <tr>
+                <th class="user-table-center">Duration</th>
+                <th class="user-table-center">TypeOfJob</th>
+                <th class="user-table-center user-table-border-right">Tech</th>
               </tr>
             </thead>
             <tbody id="reportTableBody">
+              <!-- ── DATE GROUP: 02/02/2015 ── -->
+              <tr class="user-table-date">
+                <td colspan="7" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> 02/02/2015
+                </td>
+              </tr>
               <tr class="user-table-row">
-                <td class="user-table-center">05/08/2008</td>
-                <td class="user-table-center">AMM</td>
-                <td class="user-table-center">PV205SA(Y)</td>
-                <td>Logbook for 04/08/2008. Issued ball plug from store and checked with soft seat upto 10 bar for passing; no passing is observed. Cleaning of body parts and its spares is under progress.</td>
-                <td class="user-table-center">DGM</td>
+                <td class="user-table-center">1</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-center">G</div>
+                    <div class="user-table-secondary user-table-center">8 AM To 5 PM</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div class="user-table-blue text-center">2FT1501A</div>
+                    <div class="user-table-secondary text-center">CONFIGURATION</div>
+                  </div>
+                </td>
+                <td>
+                  7-day totalizer value not shifting to next day.<br>
+                  check its configuration and found it was manual<br>
+                  reset and shifting logic implemented for that.<br>
+                  same check in B-1 and found auto shifting logic<br>
+                  at every 24 hours.<br>
+                  so same configuration done for B-2.<br>
+                  CM download and taken in line and working ok.<br>
+                  Job done on 20-01-2015.
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">RBL</span>
+                    <span class="user-table-center">MSA</span>
+                  </div>
+                </td>
+                <td class="user-table-center">OVER</td>
+                <td></td>
               </tr>
             </tbody>
           </table>

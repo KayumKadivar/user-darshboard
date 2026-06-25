@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Officer Log | GNFC</title>
+  
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+</head>
+<body class="dashboard-body plant-page">
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <div id="header-container" data-title="Add Officer Log" data-breadcrumb="Officer Logbook:index.html,Add Log:active" data-back="plant_detail.html"></div>
+
+    <div class="assign-content">
+      <div class="assign-full-container flex flex-col gap-16px" style="width: 100%;">
+        
+        <!-- Officer Log Form -->
+        <div class="assign-form-card">
+          <div class="assign-form-header">
+            <i class="ph-duotone ph-note-pencil color-blue font-16px"></i>
+            <span class="fw-700 color-primary font-14px">CREATE NEW LOG ENTRY</span>
+          </div>
+
+          <div class="form-grid grid-cols-12 p-16px gap-16px">
+            
+            <!-- Row 1: Date, Shift, Time -->
+            <div class="form-field-wrapper col-span-4">
+              <label class="assign-field-label">DATE SELECTION <span class="required">*</span></label>
+              <div class="flex items-center gap-16px h-36px">
+                <label class="flex items-center gap-8px cursor-pointer">
+                  <input type="radio" name="date_opt" value="today" checked style="accent-color: var(--primary-color);">
+                  <span class="font-14px fw-500">Today</span>
+                </label>
+                <label class="flex items-center gap-8px cursor-pointer">
+                  <input type="radio" name="date_opt" value="prevday" style="accent-color: var(--primary-color);">
+                  <span class="font-14px fw-500">PrevDay</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-field-wrapper col-span-4">
+              <label class="assign-field-label">SHIFT <span class="required">*</span></label>
+              <select class="gnfc-modal-input" style="width: 100%;">
+                <option value="G">G (General)</option>
+                <option value="A">A Shift</option>
+                <option value="B">B Shift</option>
+                <option value="C">C Shift</option>
+              </select>
+            </div>
+
+            <div class="form-field-wrapper col-span-4">
+              <label class="assign-field-label">TIME (FROM - TO) <span class="required">*</span></label>
+              <div class="flex items-center gap-8px">
+                <input type="time" class="gnfc-modal-input flex-1" style="width: 100%;">
+                <span class="fw-600 color-hint">-</span>
+                <input type="time" class="gnfc-modal-input flex-1" style="width: 100%;" >
+              </div>
+            </div>
+
+            <!-- Row 2: Tag & Job Type -->
+            <div class="form-field-wrapper col-span-4">
+              <label class="assign-field-label">INST TAG <span class="required">*</span></label>
+              <div class="flex items-center gap-8px">
+                <input id="assign-job-tag-input" type="text" placeholder="Search Tag (min 3 chars)..."
+                  class="gnfc-modal-input  uppercase flex-1" style="width: 100%;">
+                <div class="flex-1">
+                  <select id="assign-job-tag-select" class="gnfc-modal-input" style="width: 100%;">
+                    <option value="">-- Select --</option>
+                    <option value="NOTAG">NOTAG</option>
+                    <option value="BOIL-101">BOIL-101</option>
+                    <option value="VALVE-42">VALVE-42</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field-wrapper col-span-4">
+              <label class="assign-field-label">TYPE OF JOB <span class="required">*</span></label>
+              <select class="gnfc-modal-input" style="width: 100%;">
+                <option value="">Select Job Type</option>
+                <option>PROCESS REQMT</option>
+                <option>CMS JOB</option>
+                <option>PM JOB</option>
+                <option>BREAKDOWN</option>
+                <option>N.A.</option>
+              </select>
+            </div>
+   <div class="form-field-wrapper col-span-4">
+              <label class="assign-field-label">JOB STATUS <span class="required">*</span></label>
+              <select class="gnfc-modal-input" style="width: 100%;">
+                <option>Job Status</option>
+                <option>OPEN</option>
+                <option>DONE</option>
+                <option>OVER</option>
+              </select>
+            </div>
+
+            <!-- Row 3: Description -->
+            <div class="form-field-wrapper col-span-12">
+              <label class="assign-field-label">JOB DESCRIPTION <span class="required">*</span></label>
+              <textarea rows="4" class="gnfc-modal-input" style="width: 100%;" placeholder="Detailed description of the job..." style="resize: vertical;"></textarea>
+            </div>         
+
+            <div class="form-field-wrapper col-span-3">
+              <label class="assign-field-label">TECH NAME</label>
+              <select class="gnfc-modal-input" style="width: 100%;">
+                <option>NONE</option>
+                <option>Mike T.</option>
+                <option>Alex K.</option>
+              </select>
+            </div>
+
+            <div class="form-field-wrapper col-span-3">
+              <label class="assign-field-label">OFFICER'S NAME <span class="required">*</span></label>
+              <select class="gnfc-modal-input" style="width: 100%;">
+                <option>ENG_TESTER</option>
+                <option>John D.</option>
+                <option>Sarah M.</option>
+              </select>
+            </div>
+
+            <!-- Row 5: Extra Details -->
+            <div class="form-field-wrapper col-span-4">
+              <label class="assign-field-label">EXTRA DUTY HRS</label>
+              <div class="flex gap-8px">
+                <select class="gnfc-modal-input flex-1" style="width: 100%;">
+                  <option>HR</option>
+                  <option>01</option>
+                  <option>02</option>
+                </select>
+                <select class="gnfc-modal-input flex-1" style="width: 100%;">
+                  <option>MIN</option>
+                  <option>00</option>
+                  <option>15</option>
+                  <option>30</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-field-wrapper col-span-2 flex items-center justify-start">
+              <label class="flex items-center gap-8px cursor-pointer">
+                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--danger-color, #ef4444);">
+                <span class="font-14px fw-700" style="color: var(--danger-color, #ef4444);">Emergency Call</span>
+              </label>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div class="assign-form-footer col-span-12 pt-12px border-top-dark-border ">
+              <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" onclick="window.history.back();">Cancel</button>
+              <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary">Save</button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(document).ready(function() {
+      // 3 character auto-select mock functionality for INST TAG
+      $('#assign-job-tag-input').on('input', function() {
+        var val = $(this).val().toUpperCase();
+        if (val.length >= 3) {
+          // If typed 3 characters, try to auto-select matching option
+          var matched = false;
+          $('#assign-job-tag-select option').each(function() {
+            if ($(this).val().indexOf(val) !== -1) {
+              $('#assign-job-tag-select').val($(this).val());
+              matched = true;
+              return false; // break
+            }
+          });
+          
+          if (!matched) {
+            // Revert to placeholder or empty if no match
+            $('#assign-job-tag-select').val('');
+          }
+        }
+      });
+      
+      // Update input when dropdown changes
+      $('#assign-job-tag-select').on('change', function() {
+        if($(this).val() !== '') {
+          $('#assign-job-tag-input').val($(this).val());
+        } else {
+          $('#assign-job-tag-input').val('');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

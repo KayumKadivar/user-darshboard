@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Officer's Logbook - Plant | GNFC</title>
+
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/pages/plant.css"> <!-- Crucial for technician layout -->
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/officer-header.js" defer></script>
+
+  <script>
+    window.activePage = 'officer_logbook';
+  </script>
+</head>
+
+<body class="dashboard-body plant-page">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <div id="header-container" data-title="Plant Detail"
+      data-breadcrumb="Logbook:index.html,Plant Detail:active" data-back="index.html"></div>
+
+    <section class="dashboard-content">
+      
+      <!-- Officer Navbar Container -->
+      <div id="officer-nav-container"></div>
+
+      
+      <!-- Filter Bar -->
+      <section class="plant-filter-card is-hidden" id="job-filter-bar">
+        <div class="plant-filter-bar">
+          <div class="plant-filter-field-group">
+            <span class="plant-filter-label">Range:</span>
+            <input type="date" id="start-date" class="plant-filter-input">
+            <span class="plant-filter-separator">-</span>
+            <input type="date" id="end-date" class="plant-filter-input">
+          </div>
+
+          <div class="plant-filter-field-group plant-filter-field-group--wide">
+            <span class="plant-filter-label">Type:</span>
+            <select id="job-type-select" class="plant-filter-input plant-filter-select">
+              <option value="">All Jobs</option>
+              <option value="PROCESS REQMT">PROCESS REQMT</option>
+              <option value="CMS JOB">CMS JOB</option>
+              <option value="PM JOB">PM JOB</option>
+              <option value="BREAKDOWN">BREAKDOWN</option>
+              <option value="N.A.">N.A.</option>
+            </select>
+          </div>
+
+          <button type="button" class="plant-filter-close" id="close-filter-bar" aria-label="Close filters">
+            <i class="ph-bold ph-x" aria-hidden="true"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- Log Book table -->
+      <section class="plant-table-card">
+        
+        
+        <div id="table-container-today" class="plant-table-container ">
+          
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-list-dashes" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Today Log Book</span>
+              <span class="plant-view-date dynamic-date-today">( Loading... )</span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count">0 Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="officerLogbookTableToday">
+              
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 50px;">Sr</th>
+                  <th style="width: 120px;" class="text-center">Shift</th>
+                  <th style="width: 150px;" class="text-center">TagNo</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th style="width: 120px;" class="text-center">Off. Name</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 25%;">Remarks</th>
+                </tr>
+                <tr>
+                  <th class="text-center">Time</th>
+                  <th class="text-center">Type of Job</th>
+                  <th class="text-center user-table-border-right">Tech</th>
+                </tr>
+              </thead>
+
+              <tbody class="plant-table-body">
+                
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">A</span>
+                      <span class="color-secondary">08:00 AM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-blue"><a href="#" class="plant-tag-link user-table-bold">BOIL-101</a></span>
+                      <span class="user-table-secondary">MAINT</span>
+                    </div>
+                  </td>
+                  <td>
+                    Routine checkup and pressure maintenance observed. Boiler is running under normal parameters.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">John D.</span>
+                      <span class="user-table-secondary">Mike T.</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">DONE</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>No abnormal readings.</p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="table-container-prev" class="plant-table-container is-hidden">
+          
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-list-dashes" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Previous Day Log Book From</span>
+              <span class="plant-view-date dynamic-date-prev">( Loading... )</span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count">0 Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="officerLogbookTablePrev">
+              
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 50px;">Sr</th>
+                  <th style="width: 120px;" class="text-center">Shift</th>
+                  <th style="width: 150px;" class="text-center">TagNo</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th style="width: 120px;" class="text-center">Off. Name</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 25%;">Remarks</th>
+                </tr>
+                <tr>
+                  <th class="text-center">Time</th>
+                  <th class="text-center">Type of Job</th>
+                  <th class="text-center user-table-border-right">Tech</th>
+                </tr>
+              </thead>
+
+              <tbody class="plant-table-body">
+                
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">A</span>
+                      <span class="color-secondary">08:00 AM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-blue"><a href="#" class="plant-tag-link user-table-bold">BOIL-101</a></span>
+                      <span class="user-table-secondary">MAINT</span>
+                    </div>
+                  </td>
+                  <td>
+                    Routine checkup and pressure maintenance observed. Boiler is running under normal parameters.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">John D.</span>
+                      <span class="user-table-secondary">Mike T.</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">DONE</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>No abnormal readings.</p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="table-container-weekly" class="plant-table-container is-hidden">
+          
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-list-dashes" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Last 7 Days Log Book From</span>
+              <span class="plant-view-date dynamic-date-weekly">( Loading... )</span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count">0 Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="officerLogbookTableWeekly">
+              
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 50px;">Sr</th>
+                  <th style="width: 120px;" class="text-center">Shift</th>
+                  <th style="width: 150px;" class="text-center">TagNo</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th style="width: 120px;" class="text-center">Off. Name</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 25%;">Remarks</th>
+                </tr>
+                <tr>
+                  <th class="text-center">Time</th>
+                  <th class="text-center">Type of Job</th>
+                  <th class="text-center user-table-border-right">Tech</th>
+                </tr>
+              </thead>
+
+              <tbody class="plant-table-body">
+                
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">A</span>
+                      <span class="color-secondary">08:00 AM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-blue"><a href="#" class="plant-tag-link user-table-bold">BOIL-101</a></span>
+                      <span class="user-table-secondary">MAINT</span>
+                    </div>
+                  </td>
+                  <td>
+                    Routine checkup and pressure maintenance observed. Boiler is running under normal parameters.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">John D.</span>
+                      <span class="user-table-secondary">Mike T.</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">DONE</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>No abnormal readings.</p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="table-container-monthly" class="plant-table-container is-hidden">
+          
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-list-dashes" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Last 40 Days Log Book From</span>
+              <span class="plant-view-date dynamic-date-monthly">( Loading... )</span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count">0 Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="officerLogbookTableMonthly">
+              
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" data-sort="sr" style="width: 50px;">Sr</th>
+                  <th style="width: 120px;" class="text-center">Shift</th>
+                  <th style="width: 150px;" class="text-center">TagNo</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th style="width: 120px;" class="text-center">Off. Name</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 25%;">Remarks</th>
+                </tr>
+                <tr>
+                  <th class="text-center">Time</th>
+                  <th class="text-center">Type of Job</th>
+                  <th class="text-center user-table-border-right">Tech</th>
+                </tr>
+              </thead>
+
+              <tbody class="plant-table-body">
+                
+                <tr class="user-table-row">
+                  <td class="user-table-center user-table-secondary">1</td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">A</span>
+                      <span class="color-secondary">08:00 AM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-blue"><a href="#" class="plant-tag-link user-table-bold">BOIL-101</a></span>
+                      <span class="user-table-secondary">MAINT</span>
+                    </div>
+                  </td>
+                  <td>
+                    Routine checkup and pressure maintenance observed. Boiler is running under normal parameters.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">John D.</span>
+                      <span class="user-table-secondary">Mike T.</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">DONE</td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p>No abnormal readings.</p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const plantName = urlParams.get('plant') || 'BOILER';
+
+    const today = new Date();
+    const formatDate = (date) => date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const todayStr = formatDate(today);
+    
+    const prevDate = new Date(today);
+    prevDate.setDate(prevDate.getDate() - 1);
+    const prevStr = formatDate(prevDate);
+
+    const weekStart = new Date(today);
+    weekStart.setDate(weekStart.getDate() - 7);
+    const weekStr = formatDate(weekStart);
+
+    const monthStart = new Date(today);
+    monthStart.setDate(monthStart.getDate() - 40);
+    const monthStr = formatDate(monthStart);
+
+    $(function () {
+      if (typeof renderHeader === 'function') {
+        renderHeader({
+          title: `Plant Detail - ${plantName}`,
+          breadcrumbs: [
+            { label: "Dashboard", href: "../../dashboard.html" },
+            { label: "Officer's Logbook", href: "index.html" },
+            { label: plantName }
+          ],
+          backLink: "index.html"
+        });
+      }
+
+      const initialView = urlParams.get('view') || 'today';
+
+      $('.dynamic-date-today').text(`( ${todayStr} )`);
+      $('.dynamic-date-prev').text(`( ${prevStr} )`);
+      $('.dynamic-date-weekly').text(`( ${weekStr} - ${todayStr} )`);
+      $('.dynamic-date-monthly').text(`( ${monthStr} - ${todayStr} )`);
+
+      function updateView(viewName) {
+        $('.plant-table-container').addClass('is-hidden');
+        $('#table-container-' + viewName).removeClass('is-hidden');
+      }
+
+      updateView(initialView);
+
+      $(document).on('officerViewChanged', function(e, view) {
+        updateView(view);
+        const newUrl = new URL(window.location);
+        newUrl.searchParams.set('view', view);
+        window.history.pushState({}, '', newUrl);
+      });
+    });
+  </script>
+
+</body>
+</html>

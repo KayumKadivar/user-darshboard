@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Officer's Log Book | GNFC</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activePage = 'officer_logbook';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <div class="sidebar-container"></div>
+
+  <main class="technician-main"> <!-- Reuse technician main class for same styling -->
+
+    <div id="header-container" data-title="Officer's Logbook" data-breadcrumb="Logbook:active"
+      data-back="../../dashboard.html">
+    </div>
+
+    <div class="main-content-scroll custom-scroll">
+      <div class="logbook-content-wrapper">
+
+        <!-- Topbar -->
+        <div class="logbook-custom-topbar animate-fade-in">
+
+          <div class="time-range-label">
+            <div class="time-label-row">
+              <span class="icon-box">
+                <i class="ph-fill ph-calendar-blank"></i>
+              </span>
+              <span>Time Range</span>
+            </div>
+
+            <div class="ui-switcher">
+              <button data-view="today" class="ui-switcher-btn is-active">Today</button>
+              <button data-view="prev" class="ui-switcher-btn">Prev Day</button>
+              <button data-view="weekly" class="ui-switcher-btn">Weekly</button>
+            </div>
+            
+            <!-- Manager Dropdown integrated into topbar -->
+            <style>
+              .manager-label {
+                font-size: 14px;
+                font-weight: 800;
+                color: var(--primary-text, #111827);
+              }
+              .manager-select {
+                appearance: none;
+                background-color: #fff;
+                border: 1px solid var(--dark-border, #d1d5db);
+                border-radius: 4px;
+                padding: 6px 32px 6px 12px;
+                font-size: 14px;
+                font-weight: 500;
+                color: var(--primary-text, #111827);
+                cursor: pointer;
+                outline: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 8px center;
+                background-size: 16px;
+                transition: all 0.2s;
+              }
+              .manager-select:focus, .manager-select:hover {
+                border-color: var(--primary-color, #3b82f6);
+                box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+              }
+              .dt-btn {
+                background-color: #fff;
+                border: 1px solid var(--dark-border, #d1d5db);
+                border-radius: 4px;
+                padding: 6px 16px;
+                font-size: 14px;
+                font-weight: 700;
+                color: var(--primary-text, #111827);
+                cursor: pointer;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+                transition: all 0.2s;
+              }
+              .dt-btn:hover {
+                background-color: #f9fafb;
+                border-color: var(--primary-color, #3b82f6);
+                color: var(--primary-color, #3b82f6);
+              }
+            </style>
+            <div class="flex items-center gap-12px ml-24px pl-24px border-left-dark-border" style="flex-wrap: wrap;">
+                <span class="manager-label">Manager & Above:</span>
+                <select class="manager-select w-160px">
+                  <option value="">Select Name</option>
+                  <option value="1">Manager 1</option>
+                  <option value="2">Manager 2</option>
+                </select>
+                <button class="dt-btn">D.T.</button>
+            </div>
+          </div>
+
+          <div class="total-count-chip">
+            <i class="ph-bold ph-factory"></i>
+            <span>Total : <span id="total-count">19</span></span>
+          </div>
+
+        </div>
+
+        <!-- Plant Panel -->
+        <div class="logbook-main-panel animate-fade-in">
+
+          <div class="flex items-center justify-between mb-16px">
+            <h3 class="section-label mb-0px plant-unit-label">ENGINEER (Select Plant Unit)</h3>
+            <a href="#" class="color-blue fw-700 font-14px hover-underline">Old Reports</a>
+          </div>
+
+          <div id="plant-grid" class="logbook-plant-list">
+            <!-- Plant list from Officer image -->
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="AA">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">AA</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="AAQM">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">AAQM</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="AVM">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">AVM</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="ANIPF">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">ANIPF</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="ANITDI">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">ANITDI</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="ASGP">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">ASGP</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="BAGG">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">BAGG</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="BOILER">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">BOILER</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="CMS">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">CMS</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="CPSU">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">CPSU</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="DM">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">DM</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="FA">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">FA</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="INSTWS">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">INSTWS</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="M1">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">M1</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="M2">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">M2</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="MINMAX">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">MINMAX</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="NPP">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">NPP</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="SPP">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">SPP</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+            <a href="#" class="ui-card ui-card--interactive plant-card" data-plant="UREA">
+              <div class="plant-card-content"><span class="plant-card-label">Unit Code</span><span class="plant-card-name">UREA</span></div><i class="ph ph-caret-right plant-card-chevron"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Access Section (Shift Logbook) -->
+        <div class="quick-access-wrapper animate-fade-in  ">
+
+          <div class="quick-access-header flex items-center justify-between" style="border-bottom: 1px solid var(--dark-border); padding-bottom: 12px; margin-bottom: 16px;">
+            <div class="flex items-center gap-12px" style="flex: 1;">
+              <h3 class="section-label mb-0px">Shift Logbook Quick Access</h3>
+            </div>
+            
+            <div class="flex items-center gap-12px ml-24px">
+               <button class="ui-card ui-card--interactive p-8px flex items-center gap-8px font-12px fw-700 bg-app-panel-alt color-secondary" style="border-radius: 4px;">Old Shift log</button>
+               <button class="ui-card ui-card--interactive p-8px flex items-center gap-8px font-12px fw-700 bg-app-panel-alt color-secondary" style="border-radius: 4px;">Logbook Login Info</button>
+            </div>
+          </div>
+
+          <div class="quick-access-grid">
+
+            <button id="qa-today" class="ui-card ui-card--interactive qa-card qa-blue">
+              <div class="qa-icon-box">
+                <i class="ph-fill ph-calendar-check"></i>
+              </div>
+              <div class="qa-content">
+                <p class="qa-label">View Report</p>
+                <h4 class="qa-title">Today</h4>
+              </div>
+              <i class="ph-bold ph-arrow-up-right qa-arrow"></i>
+            </button>
+
+            <button id="qa-prev" class="ui-card ui-card--interactive qa-card qa-teal">
+              <div class="qa-icon-box">
+                <i class="ph-fill ph-clock-counter-clockwise"></i>
+              </div>
+              <div class="qa-content">
+                <p class="qa-label">View Report</p>
+                <h4 class="qa-title">Previous Day</h4>
+              </div>
+              <i class="ph-bold ph-arrow-up-right qa-arrow"></i>
+            </button>
+
+            <button id="qa-weekly" class="ui-card ui-card--interactive qa-card qa-purple">
+              <div class="qa-icon-box">
+                <i class="ph-fill ph-calendar-plus"></i>
+              </div>
+              <div class="qa-content">
+                <p class="qa-label">View Report</p>
+                <h4 class="qa-title">Weekly</h4>
+              </div>
+              <i class="ph-bold ph-arrow-up-right qa-arrow"></i>
+            </button>
+
+            <button id="qa-monthly" class="ui-card ui-card--interactive qa-card qa-green">
+              <div class="qa-icon-box">
+                <i class="ph-fill ph-calendar"></i>
+              </div>
+              <div class="qa-content">
+                <p class="qa-label">View Report</p>
+                <h4 class="qa-title">Monthly</h4>
+              </div>
+              <i class="ph-bold ph-arrow-up-right qa-arrow"></i>
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      const $timeButtons = $(".ui-switcher-btn");
+      let selectedView = localStorage.getItem('officerLogbookSelectedView') || "today";
+
+      function renderPlantCards() {
+        const $cards = $("[data-plant]");
+        $cards.each(function () {
+          const code = $(this).data("plant");
+          $(this).attr("href", `plant_detail.html?plant=${code}&view=${selectedView}`);
+        });
+      }
+
+      function setSelectedView(viewName, persist = true) {
+        selectedView = ["today", "prev", "weekly"].includes(viewName) ? viewName : "today";
+
+        $timeButtons.each(function () {
+          $(this).toggleClass("is-active", $(this).data("view") === selectedView);
+        });
+
+        if (persist) {
+          localStorage.setItem('officerLogbookSelectedView', selectedView);
+        }
+        
+        renderPlantCards();
+      }
+
+      $timeButtons.on("click", function () {
+        setSelectedView($(this).data("view"), true);
+      });
+
+      // Initial render
+      setSelectedView(selectedView, false);
+    });
+  </script>
+
+</body>
+</html>

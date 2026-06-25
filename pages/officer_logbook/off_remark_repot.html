@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remark Report | GNFC</title>
+  
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+
+  <script>
+    window.activeSidebar = 'officer_logbook';
+    window.activePage = 'off_remark_repot';
+  </script>
+</head>
+<body class="dashboard-body plant-page">
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper plant-page__main">
+    <div id="header-container" data-title="Remark Report" data-breadcrumb="Officer Logbook:index.html,Plant Detail:plant_detail.html,Remark Report:active" data-back="plant_detail.html"></div>
+
+    <div class="assign-content p-24px custom-scroll">
+      <div class="assign-full-container flex flex-col gap-16px mx-auto">
+        
+        <!-- Report Table Card -->
+        <div class="assign-form-card" style="background-color: #fff;">
+          
+          <div class="flex justify-between items-center px-16px py-12px" style="border-bottom: 2px solid #a80000;">
+            <div class="flex items-center gap-8px fw-700 font-18px" style="color: #000080;">
+              <div class="flex items-center gap-4px" style="color: #a80000; font-size: 20px;">
+                <i class="ph-fill ph-caret-left cursor-pointer hover:opacity-80" id="btn-prev-year"></i>
+                <i class="ph-duotone ph-record cursor-pointer"></i>
+                <i class="ph-fill ph-caret-right cursor-pointer hover:opacity-80" id="btn-next-year"></i>
+              </div>
+              <span>Year:<span id="active-year">2026</span></span>
+            </div>
+            <div class="fw-700 font-18px" style="color: #a80000;">
+              Remark Report Officer's Logbook
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table w-full">
+              <thead>
+                <!-- Row 1 of Header -->
+                <tr>
+                  <th rowspan="2" class="user-table-center w-50px">Sr</th>
+                  <th class="user-table-center w-80px">Shift</th>
+                  <th class="user-table-center w-120px">TagNo</th>
+                  <th rowspan="2" class="user-table-center">Description</th>
+                  <th class="user-table-center w-100px">Eng</th>
+                  <th rowspan="2" class="user-table-center w-80px">Status</th>
+                  <th rowspan="2" class="user-table-center w-150px">Remarks</th>
+                </tr>
+                <!-- Row 2 of Header -->
+                <tr>
+                  <th class="user-table-center">Time</th>
+                  <th class="user-table-center">TypeOfJob</th>
+                  <th class="user-table-center">Tech</th>
+                </tr>
+              </thead>
+              <tbody id="reportTableBody">
+                
+                <!-- 2026 Rows -->
+                <tr class="user-table-row year-group-2026">
+                  <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">G</span>
+                      <span class="color-secondary">08:00 AM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-blue user-table-bold">2PV1379B</span>
+                      <span class="user-table-secondary text-12px">PROCESS REQMT</span>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    Reported valve not operates, as operation checked from d/w with process and found its operation is ok.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">ARP</span>
+                      <span class="user-table-secondary">MSA</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td class="text-left">
+                    <div class="user-table-cell-stack">
+                      <p>AO card R1M7 is faulty. <br><span class="text-muted text-12px">[written by: ARP Date: 18/04/2026]</span></p>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="user-table-row year-group-2026">
+                  <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">A</span>
+                      <span class="color-secondary">08:00 AM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-blue user-table-bold">CD-2</span>
+                      <span class="user-table-secondary text-12px">DEFECT MAINT</span>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    Actuator was heavily passing. Spare actuator not available. So drawn and replaced. New seal pressure is ok.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">BSU</span>
+                      <span class="user-table-secondary">B</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td class="text-left">
+                    <div class="user-table-cell-stack">
+                      <p>Actuator repaired. <br><span class="text-muted text-12px">[written by: BSU Date: 20/04/2026]</span></p>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- 2025 Rows -->
+                <tr class="user-table-row year-group-2025" style="display: none;">
+                  <td class="user-table-center user-table-secondary user-table-bold">1</td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">B</span>
+                      <span class="color-secondary">16:00 PM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-blue user-table-bold">1FSH_ACCHORN</span>
+                      <span class="user-table-secondary text-12px">DEFECT MAINT</span>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    Its sov is passing air, need to be replaced.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">BDR</span>
+                      <span class="user-table-secondary">B</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td class="text-left">
+                    <div class="user-table-cell-stack">
+                      <p>Tag No: 2PV1579A <br><span class="text-muted text-12px">[written by: ARP Date: 22/11/2025]</span></p>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="user-table-row year-group-2025" style="display: none;">
+                  <td class="user-table-center user-table-secondary user-table-bold">2</td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">C</span>
+                      <span class="color-secondary">00:00 AM</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-blue user-table-bold">A7801A</span>
+                      <span class="user-table-secondary text-12px">HOUSE KEEPING</span>
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    Cable full in hanging condition... Proper cable dressing done.
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack user-table-center">
+                      <span class="user-table-bold">ALS</span>
+                      <span class="user-table-secondary">A</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">OVER</td>
+                  <td class="text-left">
+                    <div class="user-table-cell-stack">
+                      <p>Checked ok. <br><span class="text-muted text-12px">[written by: ALS Date: 12/09/2025]</span></p>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      let currentYear = 2026;
+      const years = [2026, 2025];
+
+      const changeYear = (delta) => {
+        // Find current index
+        let index = years.indexOf(currentYear);
+        index = index + delta;
+
+        // Boundary check (circular nav)
+        if (index < 0) index = years.length - 1;
+        if (index >= years.length) index = 0;
+
+        currentYear = years[index];
+
+        // Update UI
+        $('#active-year').text(currentYear);
+
+        // Filter rows with smooth transition
+        $('[class*="year-group-"]').stop().hide();
+        $(`.year-group-${currentYear}`).fadeIn(200);
+      };
+
+      // Event Listeners
+      $('#btn-prev-year').on('click', () => changeYear(1)); // +1 index means older year in our array [2026, 2025]
+      $('#btn-next-year').on('click', () => changeYear(-1)); // -1 index means newer year
+
+      // Initially show only current year
+      changeYear(0);
+    });
+  </script>
+</body>
+</html>

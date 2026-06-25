@@ -32,7 +32,7 @@ $(function () {
         </a>
 
         <!-- Logs -->
-        <a href="#" class="sidebar-link" data-id="shift_logbook_officer">
+        <a href="${basePath}pages/officer_logbook/index.html" class="sidebar-link" data-id="officer_logbook">
           <i class="ph ph-bold ph-notebook"></i>
           <span class="sidebar-text">Officer Logbook</span>
         </a> 
