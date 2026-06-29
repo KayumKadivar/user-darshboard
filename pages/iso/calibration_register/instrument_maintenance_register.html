@@ -74,12 +74,6 @@
             <i class="ph-bold ph-eye"></i>
             <span>Analyzer</span>
           </button>
-          <button id="temp-test-phtransmitter-btn" class="iso-premium-action iso-calib-action-9"
-            data-open-modal="ph-transmitter-calibration-report-modal"
-            style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">
-            <i class="ph-bold ph-eye"></i>
-            <span>pH Transmitter</span>
-          </button>
 
           <button id="temp-test-gassensor-btn" class="iso-premium-action iso-calib-action-9"
             data-open-modal="gas-sensor-calibration-report-modal"
@@ -109,8 +103,15 @@
             data-open-modal="flares-spark-plug-maintenance-report-modal"
             style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);">
             <i class="ph-bold ph-eye"></i>
-            <span>Spark Plug</span>
+            <span>FLARES SPARK</span>
           </button>
+          <button id="temp-test-phtransmitter-btn" class="iso-premium-action iso-calib-action-9"
+            data-open-modal="ph-transmitter-calibration-report-modal"
+            style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">
+            <i class="ph-bold ph-eye"></i>
+            <span>pH Transmitter</span>
+          </button>
+
         </div>
       </div>
 
@@ -721,7 +722,7 @@
                 <td class="text-center border-r iso-report-logo-cell">
                   <img src="../../../assets/images/formatlogo.png" alt="GNFC Logo" class="iso-report-logo-img">
                 </td>
-                <td colspan="3" class="text-center fw-800 font-16px iso-report-company-cell">
+                <td colspan="3" class="iso-report-company-cell">
                   <span class="iso-report-company-text">GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS LIMITED</span>
                 </td>
               </tr>
@@ -884,14 +885,15 @@
     </div>
   </div>
 
-  <!-- Modal: Transmitter Calibration Report Form (Tabular Structure matching pmmaster) -->
+  <!-- Modal: Transmitter Calibration Report Form -->
   <div id="transmitter-calibration-report-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true"
     aria-hidden="true">
     <div class="gnfc-modal-shell gnfc-modal-shell--lg">
       <div class="gnfc-modal-header">
         <div class="flex items-center gap-12px">
           <div>
-            <h3 class="gnfc-modal-title">TRANSMITTER CALIBRATION REPORT OF :  <span id="calib-modal-tag-display"> QRA7703</span></h3>
+            <h3 class="gnfc-modal-title">TRANSMITTER CALIBRATION REPORT OF : <span id="calib-modal-tag-display">
+                QRA7703</span></h3>
           </div>
         </div>
         <button type="button" data-close-modal="transmitter-calibration-report-modal" class="gnfc-modal-close">
@@ -903,14 +905,14 @@
           <div class="flex flex-col gap-16px">
             <!-- Tabular Form Structure inside user-table -->
             <div class="user-table-wrapper">
-              <table class="user-table " style="table-layout: fixed; width: 100%;">
+              <table class="user-table" style="table-layout: fixed; width: 100%;">
                 <tbody>
                   <!-- Header format code row -->
                   <tr>
                     <td colspan="5" class="text-center border-r iso-report-logo-cell" style="width: 25%;">
                       <img src="../../../assets/images/formatlogo.png" alt="GNFC Logo" class="iso-report-logo-img">
                     </td>
-                    <td colspan="10" class="text-center fw-800 font-16px iso-report-company-cell" style="width: 50%;">
+                    <td colspan="10" class="iso-report-company-cell" style="width: 50%;">
                       <span class="iso-report-company-text">GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS
                         LIMITED</span>
                     </td>
@@ -921,17 +923,17 @@
 
                   <!-- Calibration Dates -->
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION DONE DATE :</td>
+                    <td colspan="5">CALIBRATION DONE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="calib-done-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td colspan="5" class="format-input-label">CALIBRATION DUE DATE :</td>
+                    <td colspan="5">CALIBRATION DUE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="calib-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION NEXT DUE DATE :</td>
+                    <td colspan="5">CALIBRATION NEXT DUE DATE :</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="calib-next-due-date" placeholder="DD/MM/YYYY">
                     </td>
@@ -939,51 +941,51 @@
 
                   <!-- Section: Transmitter Under Calibration -->
                   <tr>
-                    <td colspan="20" class="bg-light-panel text-left border-t">
+                    <td colspan="20" class="bg-light-panel">
                       Transmitter Under Calibration
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">TAG NO</td>
+                    <td colspan="5">TAG NO</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="calib-tag-no">
                     </td>
-                    <td colspan="5" class="format-input-label">MAKE</td>
+                    <td colspan="5">MAKE</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="calib-make">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">MODEL</td>
+                    <td colspan="5">MODEL</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="calib-model">
                     </td>
-                    <td colspan="5" class="format-input-label">SRNO</td>
+                    <td colspan="5">SRNO</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="calib-srno">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRAION RANGE</td>
+                    <td colspan="5">CALIBRAION RANGE</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="calib-range">
                     </td>
-                    <td colspan="5" class="format-input-label">ENGINEERING RANGE</td>
+                    <td colspan="5">ENGINEERING RANGE</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="calib-eng-range">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">QUOTATED ACCURACY</td>
-                    <td colspan="15">
+                    <td colspan="5">QUOTATED ACCURACY</td>
+                    <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="calib-quoted-accuracy">
                     </td>
                   </tr>
 
                   <!-- Section: Before / After Calibration -->
                   <tr>
-                    <td colspan="10" class="bg-light-panel border-r fw-700">Before Calibration</td>
-                    <td colspan="10" class="bg-light-panel fw-700">After Calibration</td>
+                    <td colspan="10" class="bg-light-panel border-r">Before Calibration</td>
+                    <td colspan="10" class="bg-light-panel">After Calibration</td>
                   </tr>
                   <tr>
                     <td colspan="5" class="text-center">0%</td>
@@ -1038,7 +1040,7 @@
 
                   <!-- Section: Standard Instrument 1 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">Standard Instrument - INST C/N</td>
+                    <td colspan="5">Standard Instrument - INST C/N</td>
                     <td colspan="5" class="border-r">
                       <select class="pm-form-input gnfc-modal-input" id="calib-std-cn-1">
                         <option value="NA">NA</option>
@@ -1051,19 +1053,19 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">ITEM DESC</td>
+                    <td colspan="5">ITEM DESC</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="calib-item-desc-1">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">Sr. No</td>
+                    <td colspan="5">Sr. No</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="calib-std-srno-1">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">Next Calibration Due DATE</td>
+                    <td colspan="5">Next Calibration Due DATE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="calib-std-due-date-1" placeholder="DD/MM/YYYY">
                     </td>
@@ -1071,7 +1073,7 @@
 
                   <!-- Section: Standard Instrument 2 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">Standard Instrument - INST C/N</td>
+                    <td colspan="5">Standard Instrument - INST C/N</td>
                     <td colspan="5" class="border-r">
                       <select class="pm-form-input gnfc-modal-input" id="calib-std-cn-2">
                         <option value="NA">NA</option>
@@ -1084,19 +1086,19 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">ITEM DESC</td>
+                    <td colspan="5">ITEM DESC</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="calib-item-desc-2">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">Sr. No</td>
+                    <td colspan="5">Sr. No</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="calib-std-srno-2">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">Next Calibration Due DATE</td>
+                    <td colspan="5">Next Calibration Due DATE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="calib-std-due-date-2" placeholder="DD/MM/YYYY">
                     </td>
@@ -1104,8 +1106,8 @@
 
                   <!-- Remarks -->
                   <tr>
-                    <td colspan="10" class="text-center bg-light-panel fw-700 border-r">TECHNICIAN REMARK</td>
-                    <td colspan="10" class="text-center bg-light-panel fw-700">ENGINEER REMARK</td>
+                    <td colspan="10" class="text-center bg-light-panel">TECHNICIAN REMARK</td>
+                    <td colspan="10" class="text-center bg-light-panel">ENGINEER REMARK</td>
                   </tr>
                   <tr>
                     <td colspan="10" class="border-r">
@@ -1118,8 +1120,8 @@
 
                   <!-- Signatures -->
                   <tr>
-                    <td colspan="10" class="text-center bg-light-panel fw-700 border-r">CALIBRATIN DONE BY TECH.</td>
-                    <td colspan="10" class="text-center bg-light-panel fw-700">VARIFIED BY ENGR.</td>
+                    <td colspan="10" class="text-center bg-light-panel">CALIBRATIN DONE BY TECH.</td>
+                    <td colspan="10" class="text-center bg-light-panel">VARIFIED BY ENGR.</td>
                   </tr>
                   <tr>
                     <td colspan="10" class="border-r">
@@ -1153,7 +1155,8 @@
       <div class="gnfc-modal-header">
         <div class="flex items-center gap-12px">
           <div>
-            <h3 class="gnfc-modal-title">ANALYZER CALIBRATION REPORT OF : <span id="analyzer-modal-tag-display">QRA7703</span>
+            <h3 class="gnfc-modal-title">ANALYZER CALIBRATION REPORT OF : <span
+                id="analyzer-modal-tag-display">QRA7703</span>
             </h3>
           </div>
         </div>
@@ -1172,29 +1175,28 @@
                     <td colspan="5" class="text-center border-r iso-report-logo-cell" style="width: 25%;">
                       <img src="../../../assets/images/formatlogo.png" alt="GNFC Logo" class="iso-report-logo-img">
                     </td>
-                    <td colspan="10" class="text-center fw-800 font-16px iso-report-company-cell" style="width: 50%;">
+                    <td colspan="10" class="iso-report-company-cell" style="width: 50%;">
                       <span class="iso-report-company-text">GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS
                         LIMITED</span>
                     </td>
-                    <td colspan="5" class="text-center iso-report-format-cell"
-                      style="width: 25%;">
+                    <td colspan="5" class="text-center iso-report-format-cell" style="width: 25%;">
                       Master Format Code: IMS/F/INST/01
                     </td>
                   </tr>
 
                   <!-- Calibration Dates -->
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION DONE DATE :</td>
+                    <td colspan="5">CALIBRATION DONE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="ph-calib-done-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td colspan="5" class="format-input-label">CALIBRATION DUE DATE :</td>
+                    <td colspan="5">CALIBRATION DUE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="ph-calib-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION NEXT DUE DATE :</td>
+                    <td colspan="5">CALIBRATION NEXT DUE DATE :</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="ph-calib-next-due-date" placeholder="DD/MM/YYYY">
                     </td>
@@ -1202,32 +1204,32 @@
 
                   <!-- Section Headers: Parallel Blocks -->
                   <tr>
-                    <td colspan="10" class="bg-light-panel text-left border-r">
+                    <td colspan="10" class="bg-light-panel">
                       ANALYZER UNDER CALIBRATION
                     </td>
-                    <td colspan="10" class="bg-light-panel text-center border-t">
+                    <td colspan="10" class="bg-light-panel">
                       STANDARD GAS(CALIBRATION GAS) DETAIL
                     </td>
                   </tr>
 
                   <!-- Parallel Block Columns Header on Right -->
                   <tr>
-                    <td colspan="5" class="format-input-label">TAG NO</td>
+                    <td colspan="5">TAG NO</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="analyzer-tag-no">
                     </td>
-                    <td colspan="4" class="format-input-label">DESCRIPTION</td>
-                    <td colspan="3" class="fw-700 text-center bg-light-panel">ZERO GAS</td>
-                    <td colspan="3" class="fw-700 text-center bg-light-panel">SPANGAS</td>
+                    <td colspan="4">DESCRIPTION</td>
+                    <td colspan="3">ZERO GAS</td>
+                    <td colspan="3">SPAN GAS</td>
                   </tr>
 
                   <!-- Parallel Row 1 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">MAKE</td>
+                    <td colspan="5">MAKE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="analyzer-make">
                     </td>
-                    <td colspan="4" class="format-input-label">SERIAL NO</td>
+                    <td colspan="4">SERIAL NO</td>
                     <td colspan="3">
                       <input type="text" class="pm-form-input" id="gas-zero-srno">
                     </td>
@@ -1238,11 +1240,11 @@
 
                   <!-- Parallel Row 2 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">MODEL</td>
+                    <td colspan="5">MODEL</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="analyzer-model">
                     </td>
-                    <td colspan="4" class="format-input-label">GAS COMPOSITION</td>
+                    <td colspan="4">GAS COMPOSITION</td>
                     <td colspan="3">
                       <input type="text" class="pm-form-input" id="gas-zero-composition">
                     </td>
@@ -1253,11 +1255,11 @@
 
                   <!-- Parallel Row 3 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">SRNO</td>
+                    <td colspan="5">SR NO</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="analyzer-srno">
                     </td>
-                    <td colspan="4" class="format-input-label">MANUFACTURER</td>
+                    <td colspan="4">MANUFACTURER</td>
                     <td colspan="3">
                       <input type="text" class="pm-form-input" id="gas-zero-mfg">
                     </td>
@@ -1268,11 +1270,11 @@
 
                   <!-- Parallel Row 4 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRAION RANGE</td>
+                    <td colspan="5">CALIBRAION RANGE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="analyzer-calib-range">
                     </td>
-                    <td colspan="4" class="format-input-label">CERTIFICATE REF.</td>
+                    <td colspan="4">CERTIFICATE REF.</td>
                     <td colspan="3">
                       <input type="text" class="pm-form-input" id="gas-zero-cert">
                     </td>
@@ -1281,26 +1283,24 @@
                     </td>
                   </tr>
 
-                  <!-- Parallel Row 5 & 6 (Validity spans or matches height) -->
+                  <!-- Parallel Row 5 (Validity spans or matches height) -->
                   <tr>
-                    <td colspan="5" class="format-input-label">ENGINEERING RANGE</td>
+                    <td colspan="5">ENGINEERING RANGE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="analyzer-eng-range">
                     </td>
-                    <td colspan="4" class="format-input-label" rowspan="2">CERTIFICATE VALIDITY DATE</td>
-                    <td colspan="3" rowspan="2">
-                      <input type="text" class="pm-form-input text-center" id="gas-zero-valid-date"
-                        placeholder="DD/MM/YYYY">
+                    <td colspan="4">CERTIFICATE VALIDITY DATE</td>
+                    <td colspan="3">
+                      <input type="text" class="pm-form-input" id="gas-zero-valid-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td colspan="3" rowspan="2">
-                      <input type="text" class="pm-form-input text-center" id="gas-span-valid-date"
-                        placeholder="DD/MM/YYYY">
+                    <td colspan="3">
+                      <input type="text" class="pm-form-input" id="gas-span-valid-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
 
                   <!-- Parallel Row 7 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">QUOTATED ACCURACY</td>
+                    <td colspan="5">QUOTATED ACCURACY</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="analyzer-accuracy">
                     </td>
@@ -1308,51 +1308,27 @@
 
                   <!-- Section: Observation / Reading (Two Point Calibration) -->
                   <tr>
-                    <td colspan="20" class=" bg-light-panel text-left">OBSERVATION / READING (TWO POINT CALIBRATION)</td>
+                    <td colspan="20" class=" bg-light-panel">OBSERVATION / READING (TWO POINT
+                      CALIBRATION)</td>
                   </tr>
+
                   <tr>
                     <td colspan="4" class="bg-light-panel">CALIBRATION GAS</td>
                     <td colspan="4" class="bg-light-panel">STANDARD GAS READING (INPUT)</td>
                     <td colspan="4" class="bg-light-panel">UUC READING IN SYSTEM(OUTPUT)</td>
-                    <td colspan="8" class="bg-light-panel">RESPONSE IN DCS/RECORDER/SYSTEM</td>
+                    <td colspan="4" class="bg-light-panel">RESPONSE IN DCS/RECORDER/SYSTEM</td>
+                    <td colspan="4" class="bg-light-panel"></td>
                   </tr>
+
                   <tr>
                     <td colspan="4"></td>
                     <td colspan="4"></td>
                     <td colspan="4"></td>
                     <td colspan="8"></td>
-                    <!-- <td colspan="4" class="text-left fw-600">ZERO</td>
-                    <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="obs-zero-input">
-                    </td>
-                    <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="obs-zero-output">
-                    </td>
-                    <td colspan="8">
-                      <input type="text" class="pm-form-input text-center" id="obs-zero-response" placeholder="Response...">
-                    </td> -->
-                  </tr>
-                  <tr>
-                    <td colspan="4"></td>
-                    <td colspan="4"></td>
-                    <td colspan="4"></td>
-                    <td colspan="8"></td>
-
-                    <!-- <td colspan="4" class="text-left fw-600">SPAN</td>
-                    <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="obs-span-input">
-                    </td>
-                    <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="obs-span-output">
-                    </td>
-                    <td colspan="8">
-                      <input type="text" class="pm-form-input text-center" id="obs-span-response" placeholder="Response...">
-                    </td> -->
                   </tr>
 
-                  <!-- Section: Response of unit during bump test -->
                   <tr>
-                    <td colspan="16" class="bg-light-panel text-left">RESPONSE OF UNIT DURING BUMP TEST : </td>
+                    <td colspan="16" class="bg-light-panel">RESPONSE OF UNIT DURING BUMP TEST : </td>
                     <td colspan="4" class="bg-light-panel">
                       <select class="pm-form-input gnfc-modal-input" id="bump-span-ok-nok">
                         <option value="OK">OK</option>
@@ -1360,48 +1336,47 @@
                       </select>
                     </td>
                   </tr>
+
                   <tr>
                     <td colspan="4"></td>
                     <td colspan="4"></td>
                     <td colspan="4"></td>
-                    <td colspan="4" class="text-center">
-                      <span class="font-10px fw-700">ALARM STATUS IN DCS</span>
+                    <td colspan="4">
+                      <span class="text-left">ALARM STATUS IN DCS</span>
                     </td>
                     <td colspan="4"></td>
                   </tr>
+
                   <tr>
                     <td colspan="4" class="text-left fw-600">ZERO:</td>
                     <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="bump-zero-input">
+                      <input type="text" class="pm-form-input" id="bump-zero-input">
                     </td>
                     <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="bump-zero-output">
+                      <input type="text" class="pm-form-input" id="bump-zero-output">
                     </td>
-                    <td colspan="4" class="text-center">
-                      <div class="flex flex-col items-center gap-2px">
-                        <select class="pm-form-input gnfc-modal-input text-center" id="bump-zero-alarm">
+                    <td colspan="4">
+                      <div class="flex flex-col gap-2px">
+                        <select class="pm-form-input gnfc-modal-input" id="bump-zero-alarm">
                           <option value="YES">YES</option>
                           <option value="NO">NO</option>
                         </select>
                       </div>
                     </td>
                     <td colspan="4">
-                      <!-- <select class="pm-form-input gnfc-modal-input text-center" id="bump-zero-ok-nok">
-                        <option value="OK">OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select> -->
+
                     </td>
                   </tr>
                   <tr>
                     <td colspan="4" class="text-left fw-600">SPAN:</td>
                     <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="bump-span-input">
+                      <input type="text" class="pm-form-input" id="bump-span-input">
                     </td>
                     <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="bump-span-output">
+                      <input type="text" class="pm-form-input" id="bump-span-output">
                     </td>
-                    <td colspan="4" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input text-center" id="bump-span-alarm">
+                    <td colspan="4">
+                      <select class="pm-form-input gnfc-modal-input" id="bump-span-alarm">
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
@@ -1413,7 +1388,8 @@
 
                   <!-- Section: Actual Response After Calibration / Adjustment -->
                   <tr>
-                    <td colspan="16" class="bg-light-panel text-left">ACTUAL RESPONSE AFTER CALIBRATION/ADJUSTMENT : </td>
+                    <td colspan="16" class="bg-light-panel">ACTUAL RESPONSE AFTER CALIBRATION/ADJUSTMENT :
+                    </td>
                     <td colspan="4" class="bg-light-panel">
                       <select class="pm-form-input gnfc-modal-input" id="actual-span-ok-nok">
                         <option value="OK">OK</option>
@@ -1425,43 +1401,37 @@
                   <tr>
                     <td colspan="4" class="text-left fw-600">ZERO:</td>
                     <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="actual-zero-input">
+                      <input type="text" class="pm-form-input" id="actual-zero-input">
                     </td>
                     <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="actual-zero-output">
+                      <input type="text" class="pm-form-input" id="actual-zero-output">
                     </td>
-                    <td colspan="4" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input text-center" id="actual-zero-alarm">
+                    <td colspan="4">
+                      <select class="pm-form-input gnfc-modal-input" id="actual-zero-alarm">
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
                     </td>
                     <td colspan="4">
-                      <!-- <select class="pm-form-input gnfc-modal-input text-center" id="actual-zero-ok-nok">
-                        <option value="OK">OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select> -->
+
                     </td>
                   </tr>
                   <tr>
                     <td colspan="4" class="text-left fw-600">SPAN:</td>
                     <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="actual-span-input">
+                      <input type="text" class="pm-form-input" id="actual-span-input">
                     </td>
                     <td colspan="4">
-                      <input type="text" class="pm-form-input text-center" id="actual-span-output">
+                      <input type="text" class="pm-form-input" id="actual-span-output">
                     </td>
-                    <td colspan="4" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-span-alarm">
+                    <td colspan="4">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="actual-span-alarm">
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
                     </td>
                     <td colspan="4">
-                      <!-- <select class="pm-form-input gnfc-modal-input w-full text-center" id="actual-span-ok-nok">
-                        <option value="OK">OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select> -->
+
                     </td>
                   </tr>
 
@@ -1469,7 +1439,7 @@
                   <tr>
                     <td colspan="12" class="text-left">Check for sufficient Sample flow / Flow alarm</td>
                     <td colspan="8">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="chk-sample-flow">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="chk-sample-flow">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                         <option value="NA">NA</option>
@@ -1480,7 +1450,7 @@
                     <td colspan="12" class="text-left">Sample system condition (Leakage / HTT tube temp/
                       Condenste pump working).</td>
                     <td colspan="8">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="chk-sample-cond">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="chk-sample-cond">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                         <option value="NA">NA</option>
@@ -1490,7 +1460,7 @@
                   <tr>
                     <td colspan="12" class="text-left">Analyser Room AC working and Temp below 24DegC.</td>
                     <td colspan="8">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="chk-room-ac">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="chk-room-ac">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                         <option value="NA">NA</option>
@@ -1501,7 +1471,7 @@
                     <td colspan="12" class="text-left">Overall condition of analyser good and running without
                       alarm.</td>
                     <td colspan="8">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="chk-overall-cond">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="chk-overall-cond">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                         <option value="NA">NA</option>
@@ -1512,7 +1482,7 @@
                     <td colspan="12" class="text-left">For GC carrier gas pressure and flow condition checked.
                     </td>
                     <td colspan="8">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="chk-gc-carrier">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="chk-gc-carrier">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                         <option value="NA">NA</option>
@@ -1524,7 +1494,7 @@
                   <tr>
                     <td colspan="10" class="text-center bg-light-panel border-r">TECHNICIAN
                       REMARK</td>
-                    <td colspan="10" class="text-center bg-light-panel ">ENGINEER REMARK</td>
+                    <td colspan="10" class="text-center bg-light-panel">ENGINEER REMARK</td>
                   </tr>
                   <tr>
                     <td colspan="10" class="border-r">
@@ -1579,7 +1549,7 @@
         <div class="flex items-center gap-12px">
 
           <div>
-            <h3 class="gnfc-modal-title">pH TRANSMITTER CALIBRATION REPORT OF : <span id="ph-calib-modal-tag-display"> : QRA7703</span></h3>
+            <h3 class="gnfc-modal-title">pH TRANSMITTER CALIBRATION REPORT OF : <span id="ph-calib-modal-tag-display"> QRA7703</span></h3>
           </div>
         </div>
         <button type="button" data-close-modal="ph-transmitter-calibration-report-modal" class="gnfc-modal-close">
@@ -1597,29 +1567,28 @@
                     <td colspan="5" class="text-center border-r iso-report-logo-cell" style="width: 25%;">
                       <img src="../../../assets/images/formatlogo.png" alt="GNFC Logo" class="iso-report-logo-img">
                     </td>
-                    <td colspan="10" class="text-center fw-800 font-16px iso-report-company-cell" style="width: 50%;">
+                    <td colspan="10" class="iso-report-company-cell" style="width: 50%;">
                       <span class="iso-report-company-text">GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS
                         LIMITED</span>
                     </td>
-                    <td colspan="5" class="text-center iso-report-format-cell"
-                      style="width: 25%;">
+                    <td colspan="5" class="text-center iso-report-format-cell" style="width: 25%;">
                       Master Format Code: IMS/F/INST/01
                     </td>
                   </tr>
 
                   <!-- Calibration Dates -->
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION DONE DATE :</td>
+                    <td colspan="5">CALIBRATION DONE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="ph-calib-done-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td colspan="5" class="format-input-label">CALIBRATION DUE DATE :</td>
+                    <td colspan="5">CALIBRATION DUE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="ph-calib-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION NEXT DUE DATE :</td>
+                    <td colspan="5">CALIBRATION NEXT DUE DATE :</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="ph-calib-next-due-date" placeholder="DD/MM/YYYY">
                     </td>
@@ -1627,32 +1596,32 @@
 
                   <!-- Section Header -->
                   <tr>
-                    <td colspan="9" class="bg-light-panel text-left border-r">
+                    <td colspan="10" class="bg-light-panel">
                       pH Transmitter Under Calibration
                     </td>
-                    <td colspan="11" class="bg-light-panel text-center border-t">
+                    <td colspan="10" class="bg-light-panel">
                       CALIBRATION OBSERVATION
                     </td>
                   </tr>
 
                   <!-- Row 1: Tag No on left, Columns Header on right -->
                   <tr>
-                    <td colspan="3" class="format-input-label">TAG NO</td>
+                    <td colspan="4">TAG NO</td>
                     <td colspan="6" class="border-r">
                       <input type="text" class="pm-form-input" id="ph-calib-tag-no">
                     </td>
-                    <td colspan="3" class="fw-700 text-center bg-light-panel">STANDARD PH</td>
-                    <td colspan="4" class="fw-700 text-center bg-light-panel">BEFORE</td>
-                    <td colspan="4" class="fw-700 text-center bg-light-panel">AFTER</td>
+                    <td colspan="3" class="bg-light-panel">STANDARD PH</td>
+                    <td colspan="4" class="bg-light-panel">BEFORE</td>
+                    <td colspan="4" class="bg-light-panel">AFTER</td>
                   </tr>
 
                   <!-- Row 2: Make on left, Standard 4 on right -->
                   <tr>
-                    <td colspan="3" class="format-input-label">MAKE</td>
+                    <td colspan="4">MAKE</td>
                     <td colspan="6" class="border-r">
                       <input type="text" class="pm-form-input" id="ph-calib-make">
                     </td>
-                    <td colspan="3" class="text-center">4.0</td>
+                    <td colspan="3" class="text-center">4</td>
                     <td colspan="4">
                       <input type="text" class="pm-form-input text-center" id="ph-calib-before-4">
                     </td>
@@ -1663,11 +1632,11 @@
 
                   <!-- Row 3: Model on left, Standard 7 on right -->
                   <tr>
-                    <td colspan="3" class="format-input-label">MODEL</td>
+                    <td colspan="4">MODEL</td>
                     <td colspan="6" class="border-r">
                       <input type="text" class="pm-form-input" id="ph-calib-model">
                     </td>
-                    <td colspan="3" class="text-center">7.0</td>
+                    <td colspan="3" class="text-center">7</td>
                     <td colspan="4">
                       <input type="text" class="pm-form-input text-center" id="ph-calib-before-7">
                     </td>
@@ -1678,11 +1647,11 @@
 
                   <!-- Row 4: Serial No on left, Standard 9 on right -->
                   <tr>
-                    <td colspan="3" class="format-input-label">SRNO</td>
+                    <td colspan="4">SRNO</td>
                     <td colspan="6" class="border-r">
                       <input type="text" class="pm-form-input" id="ph-calib-srno">
                     </td>
-                    <td colspan="3" class="text-center">9.0</td>
+                    <td colspan="3" class="text-center">9</td>
                     <td colspan="4">
                       <input type="text" class="pm-form-input text-center" id="ph-calib-before-9">
                     </td>
@@ -1693,19 +1662,16 @@
 
                   <!-- Row 5: Calibration Range on left, empty/spans on right -->
                   <tr>
-                    <td colspan="3" class="format-input-label">CALIBRAION RANGE</td>
+                    <td colspan="4">CALIBRAION RANGE</td>
                     <td colspan="6" class="border-r">
                       <input type="text" class="pm-form-input" id="ph-calib-range">
                     </td>
-                    <td colspan="11" rowspan="3" class="text-center">
-                      <div class="fw-600 font-12px color-text-secondary">Standard Buffer Solutions used for pH
-                        calibration</div>
-                    </td>
+                    
                   </tr>
 
                   <!-- Row 6: Engineering Range on left -->
                   <tr>
-                    <td colspan="3" class="format-input-label">ENGINEERING RANGE</td>
+                    <td colspan="4">ENGINEERING RANGE</td>
                     <td colspan="6" class="border-r">
                       <input type="text" class="pm-form-input" id="ph-calib-eng-range">
                     </td>
@@ -1713,7 +1679,7 @@
 
                   <!-- Row 7: Quoted Accuracy on left -->
                   <tr>
-                    <td colspan="3" class="format-input-label">QUOTATED ACCURACY</td>
+                    <td colspan="4">QUOTATED ACCURACY</td>
                     <td colspan="6" class="border-r"> <input type="text" class="pm-form-input"
                         id="ph-calib-quoted-accuracy">
                     </td>
@@ -1721,8 +1687,7 @@
 
                   <!-- Remarks -->
                   <tr>
-                    <td colspan="10" class="text-center bg-light-panel fw-700 border-r">TECHNICIAN
-                      REMARK</td>
+                    <td colspan="10" class="text-center bg-light-panel fw-700 border-r">TECHNICIAN REMARK</td>
                     <td colspan="10" class="text-center bg-light-panel fw-700">ENGINEER REMARK</td>
                   </tr>
                   <tr>
@@ -1772,7 +1737,7 @@
         <div class="flex items-center gap-12px">
 
           <div>
-            <h3 class="gnfc-modal-title">GAS SENSOR CALIBRATION REPORT OF <span id="gas-sensor-modal-tag-display"
+            <h3 class="gnfc-modal-title">GAS SENSOR CALIBRATION REPORT OF : <span id="gas-sensor-modal-tag-display"
                 class="color-blue">QRA7703</span></h3>
           </div>
         </div>
@@ -1792,28 +1757,27 @@
                     <td colspan="5" class="text-center border-r iso-report-logo-cell" style="width: 25%;">
                       <img src="../../../assets/images/formatlogo.png" alt="GNFC Logo" class="iso-report-logo-img">
                     </td>
-                    <td colspan="10" class="text-center fw-800 font-16px iso-report-company-cell" style="width: 50%;">
+                    <td colspan="10" class="iso-report-company-cell" style="width: 50%;">
                       <span class="iso-report-company-text">GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS
                         LIMITED</span>
                     </td>
-                    <td colspan="5" class="text-center iso-report-format-cell"
-                      style="width: 25%;">
+                    <td colspan="5" class="text-center iso-report-format-cell" style="width: 25%;">
                       Master Format Code: IMS/F/INST/01
                     </td>
                   </tr>
                   <!-- Calibration Dates -->
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION DONE DATE :</td>
+                    <td colspan="5">CALIBRATION DONE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="gas-sensor-done-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td colspan="5" class="format-input-label">CALIBRATION DUE DATE :</td>
+                    <td colspan="5">CALIBRATION DUE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="gas-sensor-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION NEXT DUE DATE :</td>
+                    <td colspan="5">CALIBRATION NEXT DUE DATE :</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="gas-sensor-next-due-date" placeholder="DD/MM/YYYY">
                     </td>
@@ -1822,106 +1786,104 @@
                   <!-- Section Headers: Parallel Blocks -->
                   <tr>
                     <td colspan="10"
-                      class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-center border-r">
+                      class="bg-light-panel">
                       GAS SENSOR UNDER CALIBRATION
                     </td>
                     <td colspan="10"
-                      class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-center border-t">
+                      class="bg-light-panel">
                       STANDARD GAS(CALIBRATION GAS) DETAIL
                     </td>
                   </tr>
 
                   <!-- Parallel Block Columns Header on Right -->
                   <tr>
-                    <td colspan="5" class="format-input-label">TAG NO</td>
+                    <td colspan="5">TAG NO</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="gas-sensor-tag-no">
                     </td>
-                    <td colspan="4" class="format-input-label">DESCRIPTION</td>
-                    <td colspan="3" class="fw-700 text-center bg-light-panel">ZERO GAS</td>
-                    <td colspan="3" class="fw-700 text-center bg-light-panel">SPAN GAS</td>
+                    <td colspan="4">DESCRIPTION</td>
+                    <td colspan="3">ZERO GAS</td>
+                    <td colspan="3">SPAN GAS</td>
                   </tr>
 
                   <!-- Parallel Row 1 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">MAKE</td>
+                    <td colspan="5">MAKE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="gas-sensor-make">
                     </td>
-                    <td colspan="4" class="format-input-label">SERIAL NO</td>
+                    <td colspan="4">SERIAL NO</td>
                     <td colspan="3">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-zero-srno">
+                      <input type="text" class="pm-form-input" id="gas-sensor-zero-srno">
                     </td>
                     <td colspan="3">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-span-srno">
+                      <input type="text" class="pm-form-input" id="gas-sensor-span-srno">
                     </td>
                   </tr>
 
                   <!-- Parallel Row 2 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">MODEL</td>
+                    <td colspan="5">MODEL</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="gas-sensor-model">
                     </td>
-                    <td colspan="4" class="format-input-label">GAS COMPOSITION</td>
+                    <td colspan="4">GAS COMPOSITION</td>
                     <td colspan="3">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-zero-composition">
+                      <input type="text" class="pm-form-input" id="gas-sensor-zero-composition">
                     </td>
                     <td colspan="3">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-span-composition">
+                      <input type="text" class="pm-form-input" id="gas-sensor-span-composition">
                     </td>
                   </tr>
 
                   <!-- Parallel Row 3 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">SRNO</td>
+                    <td colspan="5">SR NO</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="gas-sensor-srno">
                     </td>
-                    <td colspan="4" class="format-input-label">MANUFACTURER</td>
+                    <td colspan="4">MANUFACTURER</td>
                     <td colspan="3">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-zero-mfg">
+                      <input type="text" class="pm-form-input" id="gas-sensor-zero-mfg">
                     </td>
                     <td colspan="3">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-span-mfg">
+                      <input type="text" class="pm-form-input" id="gas-sensor-span-mfg">
                     </td>
                   </tr>
 
                   <!-- Parallel Row 4 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRAION RANGE</td>
+                    <td colspan="5">CALIBRAION RANGE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="gas-sensor-calib-range">
                     </td>
-                    <td colspan="4" class="format-input-label">CERTIFICATE REF.</td>
+                    <td colspan="4">CERTIFICATE REF.</td>
                     <td colspan="3">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-zero-cert">
+                      <input type="text" class="pm-form-input" id="gas-sensor-zero-cert">
                     </td>
                     <td colspan="3">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-span-cert">
+                      <input type="text" class="pm-form-input" id="gas-sensor-span-cert">
                     </td>
                   </tr>
 
                   <!-- Parallel Row 5 & 6 (Validity spans or matches height) -->
                   <tr>
-                    <td colspan="5" class="format-input-label">ENGINEERING RANGE</td>
+                    <td colspan="5">ENGINEERING RANGE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="gas-sensor-eng-range">
                     </td>
-                    <td colspan="4" class="format-input-label" rowspan="2">CERTIFICATE VALIDITY DATE</td>
+                    <td colspan="4" rowspan="2">CERTIFICATE VALIDITY DATE</td>
                     <td colspan="3" rowspan="2">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-zero-valid-date"
-                        placeholder="DD/MM/YYYY">
+                      <input type="text" class="pm-form-input" id="gas-sensor-zero-valid-date" placeholder="DD/MM/YYYY">
                     </td>
                     <td colspan="3" rowspan="2">
-                      <input type="text" class="pm-form-input text-center" id="gas-sensor-span-valid-date"
-                        placeholder="DD/MM/YYYY">
+                      <input type="text" class="pm-form-input" id="gas-sensor-span-valid-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
 
                   <!-- Parallel Row 7 -->
                   <tr>
-                    <td colspan="5" class="format-input-label">QUOTATED ACCURACY</td>
+                    <td colspan="5">QUOTATED ACCURACY</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="gas-sensor-accuracy">
                     </td>
@@ -1929,65 +1891,66 @@
 
                   <!-- Section: Response of unit during bump test -->
                   <tr>
-                    <td colspan="10"
-                      class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-center border-r">
-                      REMARK
-                    </td>
-                    <td colspan="4" class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-center">
-                      ALARM STATUS IN DCS
-                    </td>
-                    <td colspan="6" class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-left">
+                    <td colspan="5" class="bg-light-panel">
                       RESPONSE OF UNIT DURING BUMP TEST :
                     </td>
-                  </tr>
-                  <tr>
-                    <td colspan="10" class="border-r">
-                      <input type="text" class="pm-form-input w-full" id="gas-bump-remark"
-                        style="min-height: 80px; resize: vertical;">
+                    <td colspan="5" class="bg-light-panel">
+                      ALARM STATUS IN DCS
                     </td>
-                    <td colspan="4" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="gas-bump-alarm">
+                    <td colspan="10" class="bg-light-panel border-r">
+                      REMARK
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="5" class="text-center">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="gas-bump-ok-nok">
+                        <option value="OK">OK</option>
+                        <option value="NOT OK">NOT OK</option>
+                      </select>
+                    </td>
+                    <td colspan="5" class="text-center">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="gas-bump-alarm">
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
                     </td>
-                    <td colspan="6" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="gas-bump-ok-nok">
-                        <option value="OK">OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select>
+
+                    <td colspan="10" class="border-r">
+                      <input type="text" class="pm-form-input w-full" id="gas-bump-remark"
+                        style="min-height: 80px; resize: vertical;">
                     </td>
                   </tr>
 
                   <!-- Section: Actual Response After Calibration / Adjustment -->
                   <tr>
-                    <td colspan="10"
-                      class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-center border-r">
-                      REMARK
+                     <td colspan="5" class="bg-light-panel">
+                      ACTUAL RESPONSE AFTER CALIBRATION/ADJUSTMENT :
                     </td>
-                    <td colspan="4" class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-center">
+                    <td colspan="5" class="bg-light-panel">
                       ALARM STATUS IN DCS
                     </td>
-                    <td colspan="6" class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-left">
-                      ACTUAL RESPONSE AFTER CALIBRATION/ADJUSTMENT :
+                     <td colspan="10" class="bg-light-panel border-r">
+                      REMARK
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="10" class="border-r">
-                      <input type="text" class="pm-form-input w-full" id="gas-actual-remark"
-                        style="min-height: 80px; resize: vertical;">
+                    <td colspan="5" class="text-center">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="gas-actual-ok-nok">
+                        <option value="OK">OK</option>
+                        <option value="NOT OK">NOT OK</option>
+                      </select>
                     </td>
-                    <td colspan="4" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="gas-actual-alarm">
+                    <td colspan="5" class="text-center">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="gas-actual-alarm">
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
                       </select>
                     </td>
-                    <td colspan="6" class="text-center">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="gas-actual-ok-nok">
-                        <option value="OK">OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select>
+                  
+                      <td colspan="10" class="border-r">
+                      <input type="text" class="pm-form-input w-full" id="gas-actual-remark"
+                        style="min-height: 80px; resize: vertical;">
                     </td>
                   </tr>
 
@@ -2070,28 +2033,27 @@
                     <td colspan="5" class="text-center border-r iso-report-logo-cell" style="width: 25%;">
                       <img src="../../../assets/images/formatlogo.png" alt="GNFC Logo" class="iso-report-logo-img">
                     </td>
-                    <td colspan="10" class="text-center fw-800 font-16px iso-report-company-cell" style="width: 50%;">
+                    <td colspan="10" class="iso-report-company-cell" style="width: 50%;">
                       <span class="iso-report-company-text">GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS
                         LIMITED</span>
                     </td>
-                    <td colspan="5" class="text-center iso-report-format-cell"
-                      style="width: 25%;">
+                    <td colspan="5" class="text-center iso-report-format-cell" style="width: 25%;">
                       Master Format Code: IMS/F/INST/01
                     </td>
                   </tr>
                   <!-- Calibration Dates -->
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION DONE DATE :</td>
+                    <td colspan="5">CALIBRATION DONE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="cv-done-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td colspan="5" class="format-input-label">CALIBRATION DUE DATE :</td>
+                    <td colspan="5">CALIBRATION DUE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="cv-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION NEXT DUE DATE :</td>
+                    <td colspan="5">CALIBRATION NEXT DUE DATE :</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="cv-next-due-date" placeholder="DD/MM/YYYY">
                     </td>
@@ -2107,33 +2069,32 @@
 
                   <!-- Specs fields -->
                   <tr>
-                    <td colspan="5" class="format-input-label">Tag_no</td>
+                    <td colspan="5">Tag No</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="cv-tag-no">
                     </td>
-                    <td colspan="5" class="format-input-label">Make</td>
+                    <td colspan="5">Make</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="cv-make">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">Location</td>
+                    <td colspan="5">Location</td>
                     <td colspan="5" class="border-r">
-                      <input type="text" class="pm-form-input" id="cv-location" placeholder="Location...">
+                      <input type="text" class="pm-form-input" id="cv-location">
                     </td>
-                    <td colspan="5" class="format-input-label">Job Mode</td>
+                    <td colspan="5">Job Mode</td>
                     <td colspan="5">
-                      <input type="text" class="pm-form-input" id="cv-job-mode" placeholder="Job Mode...">
+                      <input type="text" class="pm-form-input" id="cv-job-mode">
                     </td>
                   </tr>
 
                   <!-- Checklist Header -->
                   <tr>
-                    <td colspan="15"
-                      class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-left border-r">
+                    <td colspan="15" class="bg-light-panel border-r">
                       CHECKLIST PARAMETERS
                     </td>
-                    <td colspan="5" class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-center">
+                    <td colspan="5" class="bg-light-panel">
                       STATUS
                     </td>
                   </tr>
@@ -2142,7 +2103,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Actuator leakage is there ?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-actuator-leak">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-actuator-leak">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2151,7 +2112,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Corrosion is there?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-corrosion">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-corrosion">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2160,7 +2121,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Duebushing leakage is there?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-duebushing-leak">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-duebushing-leak">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2169,7 +2130,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Stem Greasing Ok ?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-stem-greasing">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-stem-greasing">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -2178,7 +2139,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Vent tube checked ?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-vent-tube">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-vent-tube">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -2187,7 +2148,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Bonnet gland leakage is there?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-bonnet-gland-leak">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-bonnet-gland-leak">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2196,7 +2157,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Bonnet Corrosion is there?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-bonnet-corrosion">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-bonnet-corrosion">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2205,7 +2166,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Bonnet leakage is there?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-bonnet-leak">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-bonnet-leak">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2214,7 +2175,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Steam cleaning Greasing done?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-steam-greasing">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-steam-greasing">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -2223,7 +2184,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Body flange leakage is there?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-body-flange-leak">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-body-flange-leak">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2232,7 +2193,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Body leakage is there?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-body-leak">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-body-leak">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2241,7 +2202,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Body corrosion is there?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-body-corrosion">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-body-corrosion">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2250,7 +2211,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Insulation required?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-insulation">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-insulation">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                         <option value="NA">NA</option>
@@ -2260,7 +2221,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Positioner guages working?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-positioner-gauges">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-positioner-gauges">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                         <option value="NA">NA</option>
@@ -2270,7 +2231,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Air leakage is there?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-air-leak">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-air-leak">
                         <option value="Yes">Yes</option>
                         <option value="No" selected>No</option>
                       </select>
@@ -2279,7 +2240,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">General condition ok?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-gen-cond">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-gen-cond">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -2288,7 +2249,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Cable gland ok?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-cable-gland">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-cable-gland">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -2297,7 +2258,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Mounting ok?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-mounting">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-mounting">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -2306,7 +2267,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">Feedback lever condition ok?</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-feedback-lever">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-feedback-lever">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                         <option value="NA">NA</option>
@@ -2316,7 +2277,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">SOV functionality checked and found</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-sov-func">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-sov-func">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                         <option value="NA">NA</option>
@@ -2326,7 +2287,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">LS Opn/Cls functionality checked and found</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="cv-chk-ls-func">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-ls-func">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                         <option value="NA">NA</option>
@@ -2336,8 +2297,7 @@
                   <tr>
                     <td colspan="15" class="text-left border-r">All termination tightness checked</td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center"
-                        id="cv-chk-termination-tightness">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="cv-chk-termination-tightness">
                         <option value="Yes" selected>Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -2346,11 +2306,10 @@
 
                   <!-- Before/After Calibration Section Headers -->
                   <tr>
-                    <td colspan="10"
-                      class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-center border-r">
+                    <td colspan="10" class="bg-light-panel border-r">
                       Before Calibration
                     </td>
-                    <td colspan="10" class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-center">
+                    <td colspan="10" class="bg-light-panel">
                       After Calibration
                     </td>
                   </tr>
@@ -2359,51 +2318,51 @@
                   <tr>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">0%</td>
                     <td colspan="5" class="border-r">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-before-0">
+                      <input type="text" class="pm-form-input w-full" id="cv-before-0">
                     </td>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">0%</td>
                     <td colspan="5">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-after-0">
+                      <input type="text" class="pm-form-input w-full" id="cv-after-0">
                     </td>
                   </tr>
                   <tr>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">25%</td>
                     <td colspan="5" class="border-r">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-before-25">
+                      <input type="text" class="pm-form-input w-full" id="cv-before-25">
                     </td>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">25%</td>
                     <td colspan="5">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-after-25">
+                      <input type="text" class="pm-form-input w-full" id="cv-after-25">
                     </td>
                   </tr>
                   <tr>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">50%</td>
                     <td colspan="5" class="border-r">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-before-50">
+                      <input type="text" class="pm-form-input w-full" id="cv-before-50">
                     </td>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">50%</td>
                     <td colspan="5">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-after-50">
+                      <input type="text" class="pm-form-input w-full" id="cv-after-50">
                     </td>
                   </tr>
                   <tr>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">75%</td>
                     <td colspan="5" class="border-r">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-before-75">
+                      <input type="text" class="pm-form-input w-full" id="cv-before-75">
                     </td>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">75%</td>
                     <td colspan="5">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-after-75">
+                      <input type="text" class="pm-form-input w-full" id="cv-after-75">
                     </td>
                   </tr>
                   <tr>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">100%</td>
                     <td colspan="5" class="border-r">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-before-100">
+                      <input type="text" class="pm-form-input w-full" id="cv-before-100">
                     </td>
                     <td colspan="5" class="fw-700 text-center bg-light-panel border-r">100%</td>
                     <td colspan="5">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-after-100">
+                      <input type="text" class="pm-form-input w-full" id="cv-after-100">
                     </td>
                   </tr>
 
@@ -2411,7 +2370,7 @@
                   <tr>
                     <td colspan="7" class="format-input-label border-r">Standard Instrument - INST C/N</td>
                     <td colspan="8" class="border-r">
-                      <select class="pm-form-input w-full text-center " id="cv-std-inst">
+                      <select class="pm-form-input w-full" id="cv-std-inst">
                         <option value="NA">NA</option>
                         <option value="STD-01">STD-01 (Fluke 754 Calibrator)</option>
                         <option value="STD-02">STD-02 (Rosemount Hart 475)</option>
@@ -2424,7 +2383,7 @@
                   <tr>
                     <td colspan="7" class="format-input-label border-r">ITEM DESC</td>
                     <td colspan="8" class="border-r">
-                      <input type="text" class="pm-form-input w-full " id="cv-std-desc" placeholder="Description...">
+                      <input type="text" class="pm-form-input w-full " id="cv-std-desc">
                     </td>
                   </tr>
                   <tr>
@@ -2436,8 +2395,7 @@
                   <tr>
                     <td colspan="7" class="format-input-label border-r">Next Calibration Due DATE</td>
                     <td colspan="8" class="border-r">
-                      <input type="text" class="pm-form-input w-full text-center " id="cv-std-next-due"
-                        placeholder="DD/MM/YYYY">
+                      <input type="text" class="pm-form-input w-full" id="cv-std-next-due" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
 
@@ -2494,7 +2452,7 @@
         <div class="flex items-center gap-12px">
 
           <div>
-            <h3 class="gnfc-modal-title">TC / RTD MAINTENANCE REPORT OF <span id="tc-rtd-modal-tag-display"
+            <h3 class="gnfc-modal-title">TC / RTD MAINTENANCE REPORT OF : <span id="tc-rtd-modal-tag-display"
                 class="color-blue">QRA7703</span></h3>
           </div>
         </div>
@@ -2514,29 +2472,28 @@
                     <td colspan="5" class="text-center border-r iso-report-logo-cell" style="width: 25%;">
                       <img src="../../../assets/images/formatlogo.png" alt="GNFC Logo" class="iso-report-logo-img">
                     </td>
-                    <td colspan="10" class="text-center fw-800 font-16px iso-report-company-cell" style="width: 50%;">
+                    <td colspan="10" class="iso-report-company-cell" style="width: 50%;">
                       <span class="iso-report-company-text">GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS
                         LIMITED</span>
                     </td>
-                    <td colspan="5" class="text-center iso-report-format-cell"
-                      style="width: 25%;">
-                      Master Format Code: IMS/F/INST/01
+                    <td colspan="5" class="text-center iso-report-format-cell" style="width: 25%;">
+                      <!-- Master Format Code: IMS/F/INST/01 -->
                     </td>
                   </tr>
 
                   <!-- Date Rows -->
                   <tr>
-                    <td colspan="5" class="format-input-label">MAINTENANCE DONE DATE :</td>
+                    <td colspan="5">MAINTENANCE DONE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="tc-rtd-done-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td colspan="5" class="format-input-label">MAINTENANCE DUE DATE :</td>
+                    <td colspan="5">MAINTENANCE DUE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="tc-rtd-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">MAINTENANCE NEXT DUE DATE :</td>
+                    <td colspan="5">MAINTENANCE NEXT DUE DATE :</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="tc-rtd-next-due-date" placeholder="DD/MM/YYYY">
                     </td>
@@ -2544,64 +2501,55 @@
 
                   <!-- Section Header -->
                   <tr>
-                    <td colspan="20"
-                      class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-left border-r">
+                    <td colspan="20" class="text-left bg-light-panel">
                       TC RTD UNDER MAINTENANCE
                     </td>
                   </tr>
 
                   <!-- Specs fields -->
                   <tr>
-                    <td colspan="5" class="format-input-label">TAG NO</td>
+                    <td colspan="5">TAG NO</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="tc-rtd-tag-no">
                     </td>
-                    <td colspan="5" class="format-input-label">MAKE</td>
+                    <td colspan="5">MAKE</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="tc-rtd-make">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">MODEL</td>
+                    <td colspan="5">MODEL</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="tc-rtd-model">
                     </td>
-                    <td colspan="5" class="format-input-label">SRNO</td>
+                    <td colspan="5">SRNO</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="tc-rtd-srno">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRAION RANGE</td>
+                    <td colspan="5">CALIBRAION RANGE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="tc-rtd-calib-range">
                     </td>
-                    <td colspan="5" class="format-input-label">ENGINEERING RANGE</td>
+                    <td colspan="5">ENGINEERING RANGE</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="tc-rtd-eng-range">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">QUOTATED ACCURACY</td>
+                    <td colspan="5">QUOTATED ACCURACY</td>
                     <td colspan="15" class="border-r">
                       <input type="text" class="pm-form-input" id="tc-rtd-accuracy">
                     </td>
                   </tr>
 
+
                   <!-- Checklist parameters -->
                   <tr>
-                    <td colspan="15"
-                      class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-left border-r">
-                      CHECKLIST PARAMETERS
-                    </td>
-                    <td colspan="5" class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-center">
-                      STATUS
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="15" class="text-left border-r">Check physical condition of T/C or RTD Element</td>
-                    <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center"
+                    <td colspan="15" class="text-left border-r py-8px">Check physical condition of primary element. Tight electrical connection if required. Clean dust ,corrosion around element ,head cable etc. In case of any abnormality replace the element.</td>
+                    <td colspan="5" style="vertical-align: middle;">
+                      <select class="pm-form-input gnfc-modal-input w-full"
                         id="tc-rtd-chk-physical-element">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
@@ -2609,65 +2557,48 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="15" class="text-left border-r">Check condition of thermowell</td>
-                    <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-thermowell">
+                    <td colspan="15" class="text-left border-r py-8px">Indication at DCS / PLC</td>
+                    <td colspan="5" style="vertical-align: middle;">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="tc-rtd-chk-indication">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="15" class="text-left border-r">Check healthiness of termination block</td>
-                    <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-termination">
-                        <option value="OK" selected>OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="15" class="text-left border-r">Check proper tightens of termination connections</td>
-                    <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-tightness">
-                        <option value="OK" selected>OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="15" class="text-left border-r">Check continuity from element to Junction Box.</td>
-                    <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-continuity">
-                        <option value="OK" selected>OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="15" class="text-left border-r">For thermocouple Measure mv at element and matching
-                      corresponding temp indication</td>
-                    <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-mv-temp">
-                        <option value="OK" selected>OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                        <option value="NA">NA</option>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="15" class="text-left border-r">For RTD measure resistance matching with corresponding
-                      temperature</td>
-                    <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="tc-rtd-chk-resistance">
-                        <option value="OK" selected>OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                        <option value="NA">NA</option>
                       </select>
                     </td>
                   </tr>
 
-                  <!-- Remarks -->
+                  <!-- Standard Instrument -->
+                  <tr>
+                    <td colspan="6">Standard Instrument - INST C/N</td>
+                    <td colspan="9" class="bg-yellow border-r">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="tc-rtd-std-cn">
+                        <option value="NA">NA</option>
+                        <option value="CALIBRATOR VOL-23">CALIBRATOR VOL-23</option>
+                        <option value="FLUKE-87-V">FLUKE-87-V</option>
+                      </select>
+                    </td>
+                    <td colspan="5" rowspan="4" class="bg-yellow text-center" style="vertical-align: middle;">
+                      <a href="#" class="user-table-blue-link" id="tc-rtd-report-link">Report Link</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="6">ITEM DESC</td>
+                    <td colspan="9" class="bg-yellow border-r">
+                      <input type="text" class="pm-form-input w-full" id="tc-rtd-std-item-desc">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="6">Sr. No</td>
+                    <td colspan="9" class="bg-yellow border-r">
+                      <input type="text" class="pm-form-input w-full" id="tc-rtd-std-srno">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="6">Next Calibration Due DATE</td>
+                    <td colspan="9" class="bg-yellow border-r">
+                      <input type="text" class="pm-form-input w-full" id="tc-rtd-std-due-date" placeholder="DD/MM/YYYY">
+                    </td>
+                  </tr>
+
                   <tr>
                     <td colspan="10" class="text-center bg-light-panel fw-700 border-r">TECHNICIAN REMARK</td>
                     <td colspan="10" class="text-center bg-light-panel fw-700">ENGINEER REMARK</td>
@@ -2720,8 +2651,7 @@
         <div class="flex items-center gap-12px">
 
           <div>
-            <h3 class="gnfc-modal-title">SWITCH CALIBRATION REPORT OF <span id="switch-modal-tag-display"
-                class="color-blue">QRA7703</span></h3>
+            <h3 class="gnfc-modal-title">SWITCH CALIBRATION REPORT OF : QRA7703</span></h3>
           </div>
         </div>
         <button type="button" data-close-modal="switch-calibration-report-modal" class="gnfc-modal-close">
@@ -2740,112 +2670,102 @@
                     <td colspan="5" class="text-center border-r iso-report-logo-cell" style="width: 25%;">
                       <img src="../../../assets/images/formatlogo.png" alt="GNFC Logo" class="iso-report-logo-img">
                     </td>
-                    <td colspan="10" class="text-center fw-800 font-16px iso-report-company-cell" style="width: 50%;">
+                    <td colspan="10" class="iso-report-company-cell" style="width: 50%;">
                       <span class="iso-report-company-text">GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS
                         LIMITED</span>
                     </td>
-                    <td colspan="5" class="text-center iso-report-format-cell"
-                      style="width: 25%;">
+                    <td colspan="5" class="text-center iso-report-format-cell" style="width: 25%;">
                       Master Format Code: IMS/F/INST/01
                     </td>
                   </tr>
                   <!-- Date Rows -->
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION DONE DATE :</td>
+                    <td colspan="5">MAINTENANCE DONE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="switch-done-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td colspan="5" class="format-input-label">CALIBRATION DUE DATE :</td>
+                    <td colspan="5">MAINTENANCE DUE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="switch-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRATION NEXT DUE DATE :</td>
-                    <td colspan="15" class="border-r">
+                    <td colspan="5">MAINTENANCE NEXT DUE DATE :</td>
+                    <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="switch-next-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
 
                   <!-- Section Header -->
                   <tr>
-                    <td colspan="20"
-                      class="fw-800 bg-light-panel color-text py-8px uppercase ls-wide text-left border-r">
+                    <td colspan="20" class="bg-light-panel border-r">
                       SWITCH UNDER CALIBRATION
                     </td>
                   </tr>
 
                   <!-- Specs fields -->
                   <tr>
-                    <td colspan="5" class="format-input-label">TAG NO</td>
+                    <td colspan="5">TAG NO</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="switch-tag-no">
                     </td>
-                    <td colspan="5" class="format-input-label">MAKE</td>
+                    <td colspan="5">MAKE</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="switch-make">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">MODEL</td>
+                    <td colspan="5">MODEL</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="switch-model">
                     </td>
-                    <td colspan="5" class="format-input-label">SRNO</td>
+                    <td colspan="5">SRNO</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="switch-srno">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">QUOTATED ACCURACY</td>
-                    <td colspan="15" class="border-r">
+                    <td colspan="5">QUOTATED ACCURACY</td>
+                    <td colspan="5" class="border-r ">
                       <input type="text" class="pm-form-input" id="switch-accuracy">
                     </td>
                   </tr>
 
                   <!-- Engineering Range (High/Low Setting) -->
-                  <tr>
-                    <td colspan="10"
-                      class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-center border-r">
+                  <tr class="border-t">
+                    <td colspan="5" class="bg-light-panel ls-wide text-left">
                       ENGINEERING RANGE
                     </td>
-                    <td colspan="5"
-                      class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-center border-r">
+                    <td colspan="5">
+                      <input type="text" class="pm-form-input w-full" id="switch-high-after">
+                    </td>
+
+                    <td colspan="5" class="bg-light-panel ls-wide text-center">
                       Before
                     </td>
-                    <td colspan="5" class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-center">
+                    <td colspan="5" class="bg-light-panel ls-wide text-center">
                       After
                     </td>
                   </tr>
                   <tr>
                     <td colspan="10" class="format-input-label border-r">High Setting</td>
                     <td colspan="5" class="border-r">
-                      <input type="text" class="pm-form-input w-full text-center " id="switch-high-before">
+                      <input type="text" class="pm-form-input w-full" id="switch-high-before">
                     </td>
                     <td colspan="5">
-                      <input type="text" class="pm-form-input w-full text-center " id="switch-high-after">
+                      <input type="text" class="pm-form-input w-full" id="switch-high-after">
                     </td>
                   </tr>
                   <tr>
                     <td colspan="10" class="format-input-label border-r">Low Setting</td>
                     <td colspan="5" class="border-r">
-                      <input type="text" class="pm-form-input w-full text-center " id="switch-low-before">
+                      <input type="text" class="pm-form-input w-full" id="switch-low-before">
                     </td>
                     <td colspan="5">
-                      <input type="text" class="pm-form-input w-full text-center " id="switch-low-after">
+                      <input type="text" class="pm-form-input w-full" id="switch-low-after">
                     </td>
                   </tr>
 
-                  <!-- Checklist parameters -->
-                  <tr>
-                    <td colspan="15"
-                      class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-left border-r">
-                      CHECKLIST PARAMETERS
-                    </td>
-                    <td colspan="5" class="fw-800 bg-light-panel color-text py-6px uppercase ls-wide text-center">
-                      STATUS
-                    </td>
-                  </tr>
                   <tr>
                     <td colspan="15" class="text-left py-8px border-r">
                       Check physical condition of switch. Remove dust or corrosion if found. Check and Tighten
@@ -2853,18 +2773,18 @@
                       switches ,PS etc
                     </td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="switch-chk-physical">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="switch-chk-physical">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
                       </select>
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="15" class="text-left py-8px border-r">
+                    <td colspan="15" class="text-left border-r">
                       Indication at DCS / PLC
                     </td>
                     <td colspan="5">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="switch-chk-indication">
+                      <select class="pm-form-input gnfc-modal-input w-full" id="switch-chk-indication">
                         <option value="OK" selected>OK</option>
                         <option value="NOT OK">NOT OK</option>
                       </select>
@@ -2875,7 +2795,7 @@
                   <tr>
                     <td colspan="7" class="format-input-label border-r">Standard Instrument - INST C/N</td>
                     <td colspan="8" class="border-r">
-                      <select class="pm-form-input w-full text-center " id="switch-std-inst-1">
+                      <select class="pm-form-input w-full" id="switch-std-inst-1">
                         <option value="NA">NA</option>
                         <option value="STD-01">STD-01 (Fluke 754 Calibrator)</option>
                         <option value="STD-02">STD-02 (Rosemount Hart 475)</option>
@@ -2888,20 +2808,20 @@
                   <tr>
                     <td colspan="7" class="format-input-label border-r">ITEM DESC</td>
                     <td colspan="8" class="border-r">
-                      <input type="text" class="pm-form-input w-full " id="switch-std-desc-1"
+                      <input type="text" class="pm-form-input w-full" id="switch-std-desc-1"
                         placeholder="Description...">
                     </td>
                   </tr>
                   <tr>
                     <td colspan="7" class="format-input-label border-r">Sr. No</td>
                     <td colspan="8" class="border-r">
-                      <input type="text" class="pm-form-input w-full " id="switch-std-srno-1">
+                      <input type="text" class="pm-form-input w-full" id="switch-std-srno-1">
                     </td>
                   </tr>
                   <tr>
                     <td colspan="7" class="format-input-label border-r">Next Calibration Due DATE</td>
                     <td colspan="8" class="border-r">
-                      <input type="text" class="pm-form-input w-full text-center " id="switch-std-next-due-1"
+                      <input type="text" class="pm-form-input w-full" id="switch-std-next-due-1"
                         placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
@@ -2978,28 +2898,27 @@
                     <td colspan="5" class="text-center border-r iso-report-logo-cell" style="width: 25%;">
                       <img src="../../../assets/images/formatlogo.png" alt="GNFC Logo" class="iso-report-logo-img">
                     </td>
-                    <td colspan="10" class="text-center fw-800 font-16px iso-report-company-cell" style="width: 50%;">
+                    <td colspan="10" class="iso-report-company-cell" style="width: 50%;">
                       <span class="iso-report-company-text">GUJARAT NARMADA VALLEY FERTILIZERS & CHEMICALS
                         LIMITED</span>
                     </td>
-                    <td colspan="5" class="text-center iso-report-format-cell"
-                      style="width: 25%;">
+                    <td colspan="5" class="text-center iso-report-format-cell" style="width: 25%;">
                       Master Format Code: IMS/F/INST/01
                     </td>
                   </tr>
                   <!-- Date Rows -->
                   <tr>
-                    <td colspan="5" class="format-input-label">MAINTENANCE DONE DATE :</td>
+                    <td colspan="5">MAINTENANCE DONE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="spark-plug-done-date" placeholder="DD/MM/YYYY">
                     </td>
-                    <td colspan="5" class="format-input-label">MAINTENANCE DUE DATE :</td>
+                    <td colspan="5">MAINTENANCE DUE DATE :</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="spark-plug-due-date" placeholder="DD/MM/YYYY">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">MAINTENANCE NEXT DUE DATE :</td>
+                    <td colspan="5">MAINTENANCE NEXT DUE DATE :</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="spark-plug-next-due" placeholder="DD/MM/YYYY">
                     </td>
@@ -3007,61 +2926,49 @@
 
                   <!-- Section Header -->
                   <tr>
-                    <td colspan="20" class="bg-light-panel text-left border-r">
+                    <td colspan="20" class="bg-light-panel">
                       CONTACT UNDER MAITENANCE
                     </td>
                   </tr>
 
                   <!-- Specs fields -->
                   <tr>
-                    <td colspan="5" class="format-input-label">TAG NO</td>
+                    <td colspan="5">TAG NO</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="spark-plug-tag-no">
                     </td>
-                    <td colspan="5" class="format-input-label">MAKE</td>
+                    <td colspan="5">MAKE</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="spark-plug-make">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">MODEL</td>
+                    <td colspan="5">MODEL</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="spark-plug-model">
                     </td>
-                    <td colspan="5" class="format-input-label">SRNO</td>
+                    <td colspan="5">SRNO</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="spark-plug-srno">
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" class="format-input-label">CALIBRAION RANGE</td>
+                    <td colspan="5">CALIBRAION RANGE</td>
                     <td colspan="5" class="border-r">
                       <input type="text" class="pm-form-input" id="spark-plug-calib-range">
                     </td>
-                    <td colspan="5" class="format-input-label">ENGINEERING RANGE</td>
+                    <td colspan="5">ENGINEERING RANGE</td>
                     <td colspan="5">
                       <input type="text" class="pm-form-input" id="spark-plug-eng-range">
                     </td>
                   </tr>
 
-                  <!-- Checklist parameters -->
-                  <tr>
-                    <td colspan="10" class="bg-light-panel text-left border-r">
-                      CHECKLIST PARAMETERS
-                    </td>
-                    <td colspan="10" class="bg-light-panel text-center">
-                      STATUS
-                    </td>
-                  </tr>
                   <tr>
                     <td colspan="10" class="text-left py-8px border-r">
                       Function checking of Spark plug for Flares
                     </td>
                     <td colspan="10">
-                      <select class="pm-form-input gnfc-modal-input w-full text-center" id="spark-plug-chk-function">
-                        <option value="OK" selected>OK</option>
-                        <option value="NOT OK">NOT OK</option>
-                      </select>
+                     Ok
                     </td>
                   </tr>
 
