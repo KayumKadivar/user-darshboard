@@ -40,7 +40,7 @@
     <div id="header-container" data-title="Plant Detail"
       data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:active" data-back="technicianlogbook.html"></div>
 
-    <section class="dashboard-content">
+    <section class="jt-page-content">
       <!-- Plant Navigation Container -->
       <div id="plant-nav-container"></div>
 
@@ -49,6 +49,8 @@
         <div class="plant-toolbar">
           <div class="plant-toolbar__left">
             <div class="ui-switcher" role="group" aria-label="Select period">
+              <button type="button" class="ui-switcher-btn" data-view="tomorrow">Tomorrow</button>
+              <span class="plant-period-switcher__divider" aria-hidden="true"></span>
               <button type="button" class="ui-switcher-btn is-active" data-view="today">Today</button>
               <button type="button" class="ui-switcher-btn" data-view="prev">PrevDay</button>
               <span class="plant-period-switcher__divider" aria-hidden="true"></span>
@@ -65,7 +67,7 @@
             <button type="button" class="plant-nav-pill" onclick="window.location.href='assigntoday.html'">
               <span>Assign Today</span>
             </button>
-            <button type="button" class="plant-nav-pill" onclick="window.location.href='assigntomorrow.html'">
+            <button type="button" class="plant-nav-pill" onclick="window.location.href='assignTomorrow.html'">
               <span>Assign Tomorrow</span>
             </button>
             <span class="plant-toolbar__tools-divider" aria-hidden="true"></span>
@@ -110,6 +112,105 @@
       <!-- Log Book table -->
       <section class="plant-table-card">
 
+        <!-- Tomorrow Log Book -->
+        <div id="table-container-tomorrow" class="plant-table-container is-hidden">
+
+          <div class="plant-table-card__header">
+            <div class="plant-table-card__summary">
+              <i class="ph-fill ph-table" aria-hidden="true"></i>
+              <span class="view-title plant-table-card__title">Tomorrow Log Book</span>
+              <span class="plant-view-date tomorrow-date-text">( --.--.---- )</span>
+            </div>
+
+            <div class="plant-table-card__actions">
+              <span class="record-count"> Records</span>
+
+              <label class="plant-search-field">
+                <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                <input type="text" class="table-search fw-600" placeholder="Search by tags...">
+              </label>
+            </div>
+          </div>
+
+          <div class="user-table-wrapper">
+            <table class="user-table min-w-1440px" id="plantLogbookTableTomorrow">
+              <thead>
+                <tr>
+                  <th class="text-center" rowspan="2" style="width: 40px;">Sr</th>
+                  <th rowspan="2" style="width: 120px;">Area</th>
+                  <th style="width: 120px;">Loop No</th>
+                  <th style="width: 260px;">Job</th>
+                  <th rowspan="2" style="width: 80px;">Tech</th>
+                  <th rowspan="2" style="width: auto;">Description</th>
+                  <th style="width: 80px;">Tech</th>
+                  <th class="text-center" rowspan="2" style="width: 100px;">Status</th>
+                  <th rowspan="2" style="width: 20%;">Remarks</th>
+                  <th class="text-center" rowspan="2" style="width: 40px;">P</th>
+                </tr>
+                <tr>
+                  <th>Tag No</th>
+                  <th>Type of Job</th>
+                  <th class=" user-table-border-right">ENG</th>
+                </tr>
+              </thead>
+              <tbody class="plant-table-body">
+                <tr class="user-table-row" data-record-id="5" data-view="today" data-job-type="DEFECT MAINTENANCE">
+                  <td class="user-table-center user-table-secondary user-table-cell-pending" style="background-color: #ffc0cb !important; color: #000 !important;">
+                    <div class="plant-sr-edit-container">
+                      <button type="button" class="area-edit-icon" title="Edit Job" style="color: #000 !important;">
+                        <i class="ph-bold ph-caret-right"></i>
+                      </button>
+                      <span>1</span>
+                      <hr class="plant-sr-divider" style="border-top: 1px solid rgba(0, 0, 0, 0.2) !important;">
+                      <button type="button" class="sr-edit-icon" title="Edit Job">
+                        <i class="ph-bold ph-pencil-simple-line" style="color: #000 !important;"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td class="user-table-center">
+                    <div class="plant-area-cell">
+                      <span>BOILER-3</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>N.A</span>
+                      <span class="user-table-blue"><a href="#"
+                          class="plant-tag-link user-table-bold">TAG-005</a></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span>Both GBTV Actuators not fully open to be checked. (By: ARP : 22/04/2026)</span>
+                      <span>DEFECT MAINTENANCE</span>
+                    </div>
+                  </td>
+                  <td class="user-table-center">BDR</td>
+                  <td class="italic color-hint"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <span class=" user-table-center"></span>
+                      <span class="user-table-center"></span>
+                    </div>
+                  </td>
+                  <td class="user-table-center"></td>
+                  <td>
+                    <div class="user-table-cell-stack">
+                      <div class="user-table-secondary">
+                        <p> </p>
+                        <div class="plant-inline-actions">
+                          <button type="button" class="plant-inline-button" data-action="remark"><i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i></button>
+                          <button type="button" class="plant-inline-button" data-action="edit-remark" title="Edit Remark"><i class="ph-bold ph-pencil-simple-line" aria-hidden="true"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="user-table-center"><span class="plant-priority-chip">P</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
         <!-- Today Log Book -->
         <div id="table-container-today" class="plant-table-container">
@@ -159,6 +260,9 @@
                   <td class="user-table-center">
                     <div class="user-table-cell-stack">
                       <span>COMMON</span>
+                      <button type="button" class="plant-inline-button " title="ISO/CPCB">
+                        <i class="ph ph-bold ph-certificate"></i>
+                      </button>
                     </div>
                   </td>
                   <td>
@@ -2491,22 +2595,179 @@
 
       $('#job-modal').addClass('is-open');
     }
-  </script>
-</body>
+  </script></script>
 
+
+  <!-- Modal: Tag Detail Modal -->
+  <div id="tag-detail-modal" class="gnfc-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="gnfc-modal-shell gnfc-modal-shell--2xl">
+      <div class="gnfc-modal-header">
+        <h3 class="gnfc-modal-title">Tag Data</h3>
+        <button type="button" class="gnfc-modal-close" data-close-modal="tag-detail-modal">
+          <i class="ph-bold ph-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="gnfc-modal-body dashboard-scroll">
+        <div class="inst-data-view-wrapper dashboard-content" style="display: block; padding: 0;">
+
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-tag"></i> General Information</div>
+                        <div class="form-grid grid-cols-4">
+                            <div>
+                                <label class="input-label">Plant Area</label>
+                                <div id="td-f-area" class="gnfc-modal-input gnfc-modal-readonly-text"></div>
+                            </div>
+                            <div>
+                                <label class="input-label">Tag No</label>
+                                <div id="td-f-tag_no" class="gnfc-modal-input gnfc-modal-readonly-text"></div>
+                            </div>
+                            <div>
+                                <label class="input-label">Description</label>
+                                <div id="td-f-description" class="gnfc-modal-input gnfc-modal-readonly-text"></div>
+                            </div>
+                            <div>
+                                <label class="input-label">Host</label>
+                                <div id="td-f-host" class="gnfc-modal-input gnfc-modal-readonly-text"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Controller & IO Module ─── -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-cpu"></i> Controller & IO Module</div>
+                        <div class="form-grid grid-cols-4">
+                            <div><label class="input-label">Controller Type</label><div id="td-f-ctrl_type" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Controller No</label><div id="td-f-ctrl_no" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">IO Module Name</label><input type="text"
+                                    id="f-io_module_name" class="gnfc-modal-input" readonly></div>
+                            <div><label class="input-label">IO Module Location</label><div id="td-f-io_loc" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">IO Channel No</label><div id="td-f-io_channel_no" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">IO Module Type</label><div id="td-f-io_type" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">ESD Sheet No</label><div id="td-f-esd" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">ioLink</label><div id="td-f-iolink" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">fimModule</label><div id="td-f-fimmodule" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- ─── Calibration & Range ─── -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-sliders-horizontal"></i> Calibration & Range
+                            </div>
+                            <div class="form-grid grid-cols-2">
+                                <div><label class="input-label">Cal Range</label><div id="td-f-cal_range" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                                <div><label class="input-label">Eng Range</label><div id="td-f-eng_range" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            </div>
+                        </div>
+                        <!-- ─── Trip Settings ─── -->
+                        <div class="form-section">
+                            <div class="section-title"><i class="ph-fill ph-warning-circle"></i> Trip Settings</div>
+                            <div class="form-grid grid-cols-2">
+                                <div><label class="input-label">Trip L LL</label><div id="td-f-trip_l" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                                <div><label class="input-label">Trip H HH</label><div id="td-f-trip_h" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                                <div><label class="input-label">Function L LL</label><div id="td-f-func_l" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                                <div><label class="input-label">Function H HH</label><div id="td-f-func_h" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Specifications ─── -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-wrench"></i> Specifications</div>
+                        <div class="form-grid grid-cols-4">
+                            <div><label class="input-label">Inst Type</label><div id="td-f-inst_type" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Make</label><div id="td-f-make" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Model</label><div id="td-f-model" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Sr No</label><div id="td-f-srno" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Location</label><div id="td-f-location" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Loop Function</label><div id="td-f-loop_func" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">DampTX</label><div id="td-f-damp_tx" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">DampDCS</label><div id="td-f-damp_dcs" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">AFRSet</label><div id="td-f-afrset" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">AirLock</label><div id="td-f-airlock" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Other</label><div id="td-f-damp_other" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Barrier</label><div id="td-f-barrier" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Primary Element ─── -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-atom"></i> Primary Element</div>
+                        <div class="form-grid grid-cols-5">
+                            <div><label class="input-label">SpecPrim</label><div id="td-f-pe_datasheet" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">CalPrim</label><div id="td-f-pe_calc" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">DrgPrim</label><div id="td-f-pe_drawing" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">CaliPrim</label><div id="td-f-pe_calreport" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">InspPrim</label><div id="td-f-pe_inspreport" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Secondary Element ─── -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-stack"></i> Secondary Element</div>
+                        <div class="form-grid grid-cols-5">
+                            <div><label class="input-label">CalSec</label><div id="td-f-se_calc" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">DrgSec</label><div id="td-f-se_drawing" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">InspSec</label><div id="td-f-se_inspreport" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Spec</label><div id="td-f-se_datasheet" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Accessory</label><div id="td-f-se_accessory" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-link"></i> Other Links</div>
+                        <div class="form-grid grid-cols-3">
+                            <div><label class="input-label">Logic</label><div id="td-f-logic" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Loop Sheet</label><div id="td-f-loop_sheet" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">HHand</label><div id="td-f-helping" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Additional Information ─── -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-files"></i> Additional Information</div>
+                        <div class="form-grid grid-cols-4">
+                            <div><label class="input-label">Bypass</label><div id="td-f-bypass" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">CPCB</label><div id="td-f-cpcb" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Logbook</label><div id="td-f-logbook" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Ref No</label><div id="td-f-ref_no" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">MT</label><div id="td-f-meas_tech" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Working</label><div id="td-f-ana_working" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Call Tag</label><div id="td-f-call_tag" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Metadata ─── -->
+                    <div class="form-section">
+                        <div class="section-title"><i class="ph-fill ph-info"></i> Metadata & Comments</div>
+                        <div class="form-grid grid-cols-3 mb-16px">
+                            <div><label class="input-label">By</label><div id="td-f-by" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Date</label><div id="td-f-date1" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                            <div><label class="input-label">Ec No</label><div id="td-f-ecno" class="gnfc-modal-input gnfc-modal-readonly-text"></div></div>
+                        </div>
+                        <label class="input-label">Special Comment</label>
+                        <div id="td-f-comment" class="gnfc-modal-input gnfc-modal-readonly-textarea"></div>
+                    </div>
+                
+        </div>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="btn-go-to-inst-data">Go to Inst Data</button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" data-close-modal="tag-detail-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+</body>
 <script>
   $(function () {
-    function getUrlView() {
-      const urlParams = new URLSearchParams(window.location.search);
-      let urlView = urlParams.get('view');
-      let selectedView = (urlView && ["today", "prev", "weekly", "monthly"].includes(urlView))
-        ? urlView
-        : "today";
-      return selectedView;
-    }
-    
-    let selectedView = getUrlView();
-    if (selectedView) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlView = urlParams.get('view');
+    let selectedView = (urlView && ["tomorrow", "today", "prev", "weekly", "monthly"].includes(urlView))
+      ? urlView
+      : (localStorage.getItem('plantLogbookSelectedView') || 'today');
+
+    if (urlView) {
       localStorage.setItem('plantLogbookSelectedView', selectedView);
     }
     let jobTypeFilter = '';
@@ -3088,7 +3349,10 @@
     const todayStr = today.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
     $('.today-date-text').text("( " + todayStr + " )");
 
-
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(today.getDate() + 1);
+    const tomorrowStr = tomorrowDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    $('.tomorrow-date-text').text("( " + tomorrowStr + " )");
 
     const prevDate = new Date();
     prevDate.setDate(today.getDate() - 1);
@@ -3281,6 +3545,20 @@
       });
     }
 
+
+    // Tag Data Modal Logic
+    $('.plant-tag-link').on('click', function (e) {
+      e.preventDefault();
+      const tagNo = $(this).text().trim();
+      $('#td-f-tag_no').text(tagNo);
+      
+      $('#tag-detail-modal').addClass('is-open');
+    });
+
+    $('#btn-go-to-inst-data').on('click', function () {
+      window.location.href = '../plant/boiler_inst_data.html';
+    });
+
     initSelectSearch('job-tag-input', 'job-tag-select');
 
     // Initialize
@@ -3288,7 +3566,7 @@
   });
 </script>
 
-</body>
+
 
 </html>
 
