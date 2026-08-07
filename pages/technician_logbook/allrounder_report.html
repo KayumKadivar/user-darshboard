@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Allrounder Log Report | GNFC</title>
+  <meta name="description" content="GNFC Allrounder Logbook Report">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/modal-ui.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+
+  <!-- JS Vendors -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/plant-nav.js" defer></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
+  <script>
+    window.activeSidebar = 'technician_logbook';
+    window.activePage = 'allrounder_report';
+  </script>
+</head>
+
+<body class="dashboard-body">
+  <div id="data-loader-overlay" class="gnfc-global-loader hidden">
+    <i class="ph-bold ph-spinner gnfc-global-loader-icon"></i>
+    <div class="gnfc-global-loader-text">Loading Data...</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar-container"></div>
+
+  <!-- Main -->
+  <main class="main-wrapper">
+
+    <!-- Header -->
+    <div id="header-container" data-title="Allrounder Report" data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Allrounder:active" data-back="plant_detail.html"></div>
+
+    <!-- Page Content -->
+    <section class="jt-page-content gap-16px">
+
+      <!-- Plant Navigation -->
+      <div id="plant-nav-container"></div>
+
+      <!-- ── FILTER CARD ── -->
+      <div class="jt-filter-card">
+        <div class="jt-filter-header">
+          <h3 class="jt-filter-title">
+            <i class="ph-bold ph-funnel"></i>
+            SEARCH CRITERIA
+          </h3>
+        </div>
+        <div class="jt-filter-body" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <!-- Start Date -->
+          <div>
+            <label class="gnfc-modal-label">Start Date *</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="startDateFilter" class="gnfc-modal-input">
+            </div>
+          </div>
+
+          <!-- End Date -->
+          <div>
+            <label class="gnfc-modal-label">End Date *</label>
+            <div class="jt-input-wrap">
+              <input type="date" id="endDateFilter" class="gnfc-modal-input">
+            </div>
+          </div>
+
+          <!-- Area Filter -->
+          <div>
+            <label class="gnfc-modal-label">Plant / Area</label>
+            <div class="jt-select-wrap">
+              <select id="areaFilter" class="gnfc-modal-input">
+                <option value="">All Areas</option>
+                <option value="BOILER-1">BOILER-1</option>
+                <option value="BOILER-2">BOILER-2</option>
+                <option value="COMMON">COMMON</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tag Filter -->
+          <div>
+            <label class="gnfc-modal-label">Tag Number</label>
+            <div class="jt-select-wrap">
+              <select id="tagNoFilter" class="gnfc-modal-input">
+                <option value="">All Tags</option>
+                <option value="FVC0208A">FVC0208A</option>
+                <option value="LV412B">LV412B</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Job Type Filter -->
+          <div>
+            <label class="gnfc-modal-label">Type of Job</label>
+            <div class="jt-select-wrap">
+              <select id="jobTypeFilter" class="gnfc-modal-input">
+                <option value="">All Jobs</option>
+                <option value="PM">PM</option>
+                <option value="DEFECT MAINTENANCE">DEFECT MAINTENANCE</option>
+                <option value="PROCESS REQMT">PROCESS REQMT</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Instrument Type Filter -->
+          <div>
+            <label class="gnfc-modal-label" for="instTypeFilter">Type of Instrument</label>
+            <div class="jt-select-wrap">
+              <select id="instTypeFilter" class="gnfc-modal-input">
+                <option value="">All Instrument Types</option>
+                <option value="ANALYZER">ANALYZER</option>
+                <option value="C/V">C/V</option>
+                <option value="TX">TX</option>
+                <option value="SWITCH">SWITCH</option>
+                <option value="PRIMARY ELEMENT">PRIMARY ELEMENT</option>
+                <option value="SCANNER">SCANNER</option>
+                <option value="PCV">PCV</option>
+                <option value="ROTAMETER">ROTAMETER</option>
+                <option value="ENVIRON MONITORING">ENVIRON MONITORING</option>
+                <option value="MACHINE MONITORING">MACHINE MONITORING</option>
+                <option value="PA SYSTEM">PA SYSTEM</option>
+                <option value="PC">PC</option>
+                <option value="N.A.">N.A.</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tech Filter -->
+          <div>
+            <label class="gnfc-modal-label">Technician</label>
+            <div class="jt-select-wrap">
+              <select id="techFilter" class="gnfc-modal-input">
+                <option value="">All Technicians</option>
+                <option value="PVS">PVS</option>
+                <option value="JDB">JDB</option>
+                <option value="BSU">BSU</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+        <div class="jt-filter-body" style="border-top: 1px solid var(--border-color); padding-top: 16px;">
+            <!-- Actions -->
+          <div class="jt-filter-btn" style="margin-left: auto;">
+            <button onclick="generateReport(true)" class="jt-btn-primary">
+              <i class="ph-bold ph-lightning"></i> APPLY FILTER
+            </button>
+            <button onclick="resetReport()" class="jt-btn-reset">
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── REPORT CARD ── -->
+      <div class="jt-table-card" style="display: none;">
+
+        <div class="jt-report-header">
+          <div class="jt-report-title">
+            <i class="ph-fill ph-list-magnifying-glass"></i>
+            <div class="jt-title-stack">
+              <h3 class="jt-main-title">Allrounder Log Book Report</h3>
+              <p class="font-12px fw-500">
+                Period: <span id="dateDisplay"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-table-wrapper">
+          <table class="user-table min-w-1440px">
+            <thead>
+              <tr>
+                <th rowspan="2" class="user-table-center" style="width: 50px;">Sr</th>
+                <th rowspan="2" class="user-table-center" style="width: 100px;">Area</th>
+                <th class="user-table-center" style="width: 130px;">Loop No</th>
+                <th class="user-table-center" style="width: 280px;">Job</th>
+                <th rowspan="2" class="user-table-center" style="width: 70px;">Tech</th>
+                <th rowspan="2" style="min-width: 400px;">Description</th>
+                <th class="user-table-center" style="width: 80px;">Tech</th>
+                <th rowspan="2" class="user-table-center" style="width: 90px;">Status</th>
+                <th rowspan="2" class="user-table-center" style="min-width: 300px;">REMARKS</th>
+                <th rowspan="2" class="user-table-center" style="width: 60px;">ADD</th>
+              </tr>
+              <tr>
+                <th class="user-table-center">Tag No</th>
+                <th class="user-table-center">Type of Job</th>
+                <th class="user-table-center user-table-border-right">ENG</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <!-- Date Grouping Row -->
+              <tr class="user-table-date">
+                <td colspan="10" class="user-table-bold">
+                  <i class="ph-fill ph-calendar-blank"></i> <span id="groupDateDisplay">01/12/2023</span>
+                </td>
+              </tr>
+
+              <!-- Row 1 -->
+              <tr class="user-table-row">
+                <td class="user-table-center">1</td>
+                <td class="user-table-center">N.A</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>N.A</div>
+                    <div class="user-table-blue">NOTAG</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>-</div>
+                    <div>PM</div>
+                  </div>
+                </td>
+                <td class="user-table-center">-</td>
+                <td class="user-table-primary">Boiler CPP CPSU system round taken
+                  found OK. All visible and UV flame scanner checked found OK.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">PVS</span>
+                    <span class="user-table-center">P</span>
+                  </div>
+                </td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-remarks-purple">
+                      Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
+                    </p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" title="PM Job">PM</button></div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 2 -->
+              <tr class="user-table-row">
+                <td class="user-table-center">2</td>
+                <td class="user-table-center">COMMON</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>N.A.</div>
+                    <div class="user-table-blue">NOTAG</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>BHEL Boilers and CPSU Trend report to be prepared as per tags given
+                      by process dept.(By:ARP : 01/12/2025)</div>
+                    <div>PROCESS REQMT</div>
+                  </div>
+                </td>
+                <td class="user-table-center">JDB</td>
+                <td class="user-table-primary">BHEL Boilers 1 and 2 prepared as per
+                  tags given by process dept. further job u/p.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">JDB</span>
+                    <span class="user-table-center">J</span>
+                  </div>
+                </td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-remarks-purple">
+                      Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
+                    </p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" title="PM Job">PM</button></div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Row 3 -->
+              <tr class="user-table-row">
+                <td class="user-table-center">3</td>
+                <td class="user-table-center">N.A.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>N.A.</div>
+                    <div class="user-table-blue">NOTAG</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <div>UV flame scanner detector tube to be checked for
+                      PO:6200022682(By:ARP : 01/12/2025)</div>
+                    <div>INSPECTION
+                    </div>
+                  </div>
+                </td>
+                <td class="user-table-center">BSU</td>
+                <td class="user-table-primary">Four UV tube checked all found
+                  defective. Same shown to IE. Job u/p.</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <span class="user-table-center">BSU</span>
+                    <span class="user-table-center">B</span>
+                  </div>
+                </td>
+                <td class="user-table-center">OVER</td>
+                <td>
+                  <div class="user-table-cell-stack">
+                    <p class="user-table-remarks-purple">
+                      Tag No: 2PV1579A [written by: ARP Date: 22/11/2025]
+                    </p>
+                  </div>
+                </td>
+                <td class="user-table-center">
+                  <div class="user-table-cell-stack">
+                    <div><button type="button" class="plant-inline-button" title="History">H</button></div>
+                    <div><button type="button" class="plant-inline-button" title="PM Job">PM</button></div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      /** ── Global functions for onclick handlers ── */
+      window.generateReport = function (showLoader = false) {
+        if (showLoader) {
+          $('#data-loader-overlay').removeClass('hidden');
+          setTimeout(() => {
+            $('#data-loader-overlay').addClass('hidden');
+            executeGenerate();
+          }, 1000);
+        } else {
+          executeGenerate();
+        }
+
+        function executeGenerate() {
+          const start = $('#startDateFilter').val();
+          const end = $('#endDateFilter').val();
+
+          if (!start || !end) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Dates Required',
+              text: 'Please select both start and end dates to generate the report.',
+              confirmButtonColor: '#3b82f6',
+            });
+            return;
+          }
+
+          // Format for display (DD/MM/YYYY)
+          const formatDate = (dateStr) => {
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-GB');
+          };
+
+          $('#dateDisplay').text(`${formatDate(start)} to ${formatDate(end)}`);
+          $('#groupDateDisplay').text(formatDate(start));
+
+          // Show table with smooth fade
+          $('.jt-table-card').stop().hide().fadeIn(400);
+        }
+      };
+
+      window.resetReport = function () {
+        $('#startDateFilter, #endDateFilter, #areaFilter, #tagNoFilter, #jobTypeFilter, #instTypeFilter, #techFilter').val("");
+        $('.jt-table-card').fadeOut(200);
+      };
+
+      // Date picker trigger for all date inputs
+      $(document).on('click focus', '.jt-date-input', function () {
+        if (typeof this.showPicker === 'function') {
+          try { this.showPicker(); } catch (e) { }
+        }
+      });
+      $(document).on('click', '.jt-input-icon', function () {
+        const $input = $(this).siblings('input');
+        if ($input.length && typeof $input[0].showPicker === 'function') {
+          try { $input[0].showPicker(); } catch (e) { }
+        }
+      });
+      
+      // Auto-trigger if dates are already present (e.g. on back navigation)
+      if ($('#startDateFilter').val() && $('#endDateFilter').val()) {
+          generateReport();
+      }
+    });
+  </script>
+</body>
+
+</html>

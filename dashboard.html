@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/modal-ui.css">
 
   <script src="js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="js/vendor/sweetalert2.all.min.js"></script>
   <script src="js/theme-control.js"></script>
   <script src="js/sidebar.js" defer></script>
   <script src="js/header.js" defer></script>
@@ -1232,8 +1233,117 @@
         }
       });
 
+      // Automatically show Change Password Modal for demo purposes
+      $('#changePasswordModal').addClass('is-open');
+      $('body').css('overflow', 'hidden');
+
+      // Handle Password Change Submission
+      $('#submitPasswordChangeBtn').on('click', function () {
+        const email = $('#new-email').val();
+        const pwd = $('#new-password').val();
+        const confirmPwd = $('#confirm-password').val();
+        
+        let isValid = true;
+
+        if (!email) {
+          $('#email-error').show();
+          isValid = false;
+        } else {
+          $('#email-error').hide();
+        }
+
+        if (!pwd) {
+          $('#pwd-error').show();
+          isValid = false;
+        } else {
+          $('#pwd-error').hide();
+        }
+
+        if (!confirmPwd) {
+          $('#confirm-pwd-error').show().text('This field is required.');
+          isValid = false;
+        } else if (pwd && pwd !== confirmPwd) {
+          $('#confirm-pwd-error').show().text('Passwords do not match.');
+          isValid = false;
+        } else {
+          $('#confirm-pwd-error').hide();
+        }
+
+        if (!isValid) return;
+        
+        // Close modal and allow scroll
+        $('#changePasswordModal').removeClass('is-open');
+        $('body').css('overflow', '');
+        
+        // SweetAlert Confirmation
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Your password has been successfully changed.',
+          confirmButtonColor: '#2563eb',
+          background: getComputedStyle(document.documentElement).getPropertyValue('--app-panel') || '#181b1f',
+          color: getComputedStyle(document.documentElement).getPropertyValue('--app-text') || '#f1f5f9'
+        });
+      });
+
+      // Handle Cancel Button Click
+      $('#cancelPasswordChangeBtn').on('click', function () {
+        window.location.href = 'Login.html';
+      });
+
     });
   </script>
-</body>
 
+  <!-- Change Password Modal for New Users -->
+  <div class="gnfc-modal-overlay" id="changePasswordModal">
+    <div class="gnfc-modal-shell gnfc-modal-shell--narrow">
+      <div class="gnfc-modal-header">
+        <h2 class="gnfc-modal-title">Action Required</h2>
+        <!-- No close button intentionally to prevent closing -->
+      </div>
+      <div class="gnfc-modal-body">
+        <p class="gnfc-modal-subtitle gnfc-text-danger mb-8px">
+          You are a new user. Please change your password to continue.
+        </p>
+
+        <form id="changePasswordForm">
+          <div class="form-grid grid-cols-12">
+          <div class="col-span-12">
+            <label for="new-email" class="gnfc-modal-label">Email ID <span class="gnfc-req-star">*</span></label>
+            <div class="gnfc-input-group">
+              <input type="text" id="new-email" name="new-email" placeholder="Enter your email ID" class="gnfc-modal-input" required>
+              <span class="gnfc-input-suffix">@gnfc.in</span>
+            </div>
+            <p id="email-error" class="gnfc-modal-error-msg">This field is required.</p>
+          </div>
+
+          <div class="col-span-12">
+            <label for="new-password" class="gnfc-modal-label">New Password <span class="gnfc-req-star">*</span></label>
+            <div style="position: relative;">
+              <input type="password" id="new-password" name="new-password" placeholder="••••••••" class="gnfc-modal-input" required>
+            </div>
+            <p id="pwd-error" class="gnfc-modal-error-msg">This field is required.</p>
+          </div>
+
+          <div class="col-span-12">
+            <label for="confirm-password" class="gnfc-modal-label">Confirm Password <span class="gnfc-req-star">*</span></label>
+            <div style="position: relative;">
+              <input type="password" id="confirm-password" name="confirm-password" placeholder="••••••••" class="gnfc-modal-input" required>
+            </div>
+            <p id="confirm-pwd-error" class="gnfc-modal-error-msg">This field is required.</p>
+          </div>
+          </div>
+        </form>
+      </div>
+      <div class="gnfc-modal-footer">
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-secondary" id="cancelPasswordChangeBtn">
+           Cancel
+        </button>
+        <button type="button" class="gnfc-modal-btn gnfc-modal-btn-primary" id="submitPasswordChangeBtn">
+          Change Password & Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
