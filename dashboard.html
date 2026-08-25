@@ -1234,57 +1234,57 @@
       });
 
       // Automatically show Change Password Modal for demo purposes
-      $('#changePasswordModal').addClass('is-open');
-      $('body').css('overflow', 'hidden');
+      // $('#changePasswordModal').addClass('is-open');
+      // $('body').css('overflow', 'hidden');
 
       // Handle Password Change Submission
-      $('#submitPasswordChangeBtn').on('click', function () {
-        const email = $('#new-email').val();
-        const pwd = $('#new-password').val();
-        const confirmPwd = $('#confirm-password').val();
+      // $('#submitPasswordChangeBtn').on('click', function () {
+      //   const email = $('#new-email').val();
+      //   const pwd = $('#new-password').val();
+      //   const confirmPwd = $('#confirm-password').val();
         
-        let isValid = true;
+      //   let isValid = true;
 
-        if (!email) {
-          $('#email-error').show();
-          isValid = false;
-        } else {
-          $('#email-error').hide();
-        }
+      //   if (!email) {
+      //     $('#email-error').show();
+      //     isValid = false;
+      //   } else {
+      //     $('#email-error').hide();
+      //   }
 
-        if (!pwd) {
-          $('#pwd-error').show();
-          isValid = false;
-        } else {
-          $('#pwd-error').hide();
-        }
+      //   if (!pwd) {
+      //     $('#pwd-error').show();
+      //     isValid = false;
+      //   } else {
+      //     $('#pwd-error').hide();
+      //   }
 
-        if (!confirmPwd) {
-          $('#confirm-pwd-error').show().text('This field is required.');
-          isValid = false;
-        } else if (pwd && pwd !== confirmPwd) {
-          $('#confirm-pwd-error').show().text('Passwords do not match.');
-          isValid = false;
-        } else {
-          $('#confirm-pwd-error').hide();
-        }
+      //   if (!confirmPwd) {
+      //     $('#confirm-pwd-error').show().text('This field is required.');
+      //     isValid = false;
+      //   } else if (pwd && pwd !== confirmPwd) {
+      //     $('#confirm-pwd-error').show().text('Passwords do not match.');
+      //     isValid = false;
+      //   } else {
+      //     $('#confirm-pwd-error').hide();
+      //   }
 
-        if (!isValid) return;
+      //   if (!isValid) return;
         
-        // Close modal and allow scroll
-        $('#changePasswordModal').removeClass('is-open');
-        $('body').css('overflow', '');
+      //   // Close modal and allow scroll
+      //   $('#changePasswordModal').removeClass('is-open');
+      //   $('body').css('overflow', '');
         
-        // SweetAlert Confirmation
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Your password has been successfully changed.',
-          confirmButtonColor: '#2563eb',
-          background: getComputedStyle(document.documentElement).getPropertyValue('--app-panel') || '#181b1f',
-          color: getComputedStyle(document.documentElement).getPropertyValue('--app-text') || '#f1f5f9'
-        });
-      });
+      //   // SweetAlert Confirmation
+      //   Swal.fire({
+      //     icon: 'success',
+      //     title: 'Success!',
+      //     text: 'Your password has been successfully changed.',
+      //     confirmButtonColor: '#2563eb',
+      //     background: getComputedStyle(document.documentElement).getPropertyValue('--app-panel') || '#181b1f',
+      //     color: getComputedStyle(document.documentElement).getPropertyValue('--app-text') || '#f1f5f9'
+      //   });
+      // });
 
       // Handle Cancel Button Click
       $('#cancelPasswordChangeBtn').on('click', function () {
