@@ -156,6 +156,7 @@
                 <td class="user-table-cell text-center"></td>
                 <td class="user-table-cell text-center">
                   <div class="row-actions">
+                    <i class="ph-bold ph-download-simple action-icon btn-download" title="Download Folder"></i>
                     <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
                     <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
                     <i class="ph-bold ph-scissors action-icon btn-cut"></i>
@@ -181,9 +182,9 @@
                 <td class="user-table-cell text-center"></td>
                 <td class="user-table-cell text-center">
                   <div class="row-actions">
+                    <i class="ph-bold ph-download-simple action-icon btn-download" title="Download Folder"></i>
                     <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
                     <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
-
                     <i class="ph-bold ph-scissors action-icon btn-cut"></i>
                     <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
                   </div>
@@ -206,9 +207,9 @@
                 <td class="user-table-cell text-center"></td>
                 <td class="user-table-cell text-center">
                   <div class="row-actions">
+                    <i class="ph-bold ph-download-simple action-icon btn-download" title="Download Folder"></i>
                     <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
                     <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
-
                     <i class="ph-bold ph-scissors action-icon btn-cut"></i>
                     <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
                   </div>
@@ -231,9 +232,9 @@
                 <td class="user-table-cell text-center"></td>
                 <td class="user-table-cell text-center">
                   <div class="row-actions">
+                    <i class="ph-bold ph-download-simple action-icon btn-download" title="Download Folder"></i>
                     <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
                     <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
-
                     <i class="ph-bold ph-scissors action-icon btn-cut"></i>
                     <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
                   </div>
@@ -256,9 +257,9 @@
                 <td class="user-table-cell text-center"></td>
                 <td class="user-table-cell text-center">
                   <div class="row-actions">
+                    <i class="ph-bold ph-download-simple action-icon btn-download" title="Download Folder"></i>
                     <i class="ph-bold ph-pencil-simple action-icon btn-rename"></i>
                     <i class="ph-bold ph-envelope-simple action-icon btn-email-row" title="Send Mail"></i>
-
                     <i class="ph-bold ph-scissors action-icon btn-cut"></i>
                     <i class="ph-bold ph-trash action-icon delete btn-delete"></i>
                   </div>
@@ -397,51 +398,165 @@
         <button class="gnfc-modal-close"><i class="ph ph-x"></i></button>
       </div>
       <div class="gnfc-modal-body bg-dark-bg">
-        <div class="flex flex-col gap-24px p-8px">
+        <div class="flex flex-col gap-14px ">
 
           <!-- Search & Select Receiver -->
-          <div class="flex flex-col gap-8px">
-            <label class="gnfc-modal-label">Search / Select Receiver :</label>
-            <div class="flex items-center gap-12px">
-              <input id="email-search-input" type="text" placeholder="Type email or name..."
-                class="gnfc-modal-input flex-1 font-14px uppercase" style="letter-spacing: 0.02em;">
-
-              <select id="email-to-select" class="gnfc-modal-input flex-1">
-                <option value="">-- Select Contact --</option>
-                <option value="kayum.kadivar@gnfc.in">Kayum Kadivar</option>
-                <option value="admin@gnfc.in">GNFC Admin</option>
-                <option value="safety.dept@gnfc.in">Safety Department</option>
-                <option value="boiler.ops@gnfc.in">Boiler Operations</option>
-                <option value="inst.team@gnfc.in">Instrumentation Team</option>
-                <option value="maintenance.head@gnfc.in">Maintenance Head</option>
-                <option value="plant.manager@gnfc.in">Plant Manager</option>
-              </select>
+          <div class="grid grid-cols-2 gap-16px">
+            <div class="flex flex-col">
+              <label class="gnfc-modal-label">Select Plant :</label>
+              <div id="custom-plant-dropdown" class="relative" style="user-select: none;">
+                <div id="plant-dropdown-display" class="contact-dd-display gnfc-modal-input flex justify-between items-center cursor-pointer fw-600">
+                  <span id="plant-dropdown-text" class="fw-600">-- Select Plant --</span>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+                <div id="plant-dropdown-options" class="contact-dd-options absolute w-full mt-1 hidden custom-scrollbar-thin">
+                  <label class="contact-dd-item contact-dd-item-all">
+                    <input type="checkbox" id="plant-cb-all" >
+                    <span>Select All</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="plant-cb" value="ammonia" >
+                    <span>Ammonia</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="plant-cb" value="urea" >
+                    <span>Urea</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="plant-cb" value="boiler" >
+                    <span>Boiler</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="plant-cb" value="methanol" >
+                    <span>Methanol</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="plant-cb" value="nitric_acid" >
+                    <span>Nitric Acid</span>
+                  </label>
+                </div>
+              </div>
             </div>
+            <div class="flex flex-col">
+              <label class="gnfc-modal-label">Select Role :</label>
+              <div id="custom-role-dropdown" class="relative" style="user-select: none;">
+                <div id="role-dropdown-display" class="contact-dd-display gnfc-modal-input font-14px flex justify-between items-center cursor-pointer">
+                  <span id="role-dropdown-text" class="fw-600">-- Select Role --</span>
+                  <i class="ph-bold ph-caret-down"></i>
+                </div>
+                <div id="role-dropdown-options" class="contact-dd-options absolute w-full mt-1 hidden custom-scrollbar-thin">
+                  <label class="contact-dd-item contact-dd-item-all">
+                    <input type="checkbox" id="role-cb-all" >
+                    <span>Select All</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="role-cb" value="operator" >
+                    <span>Tech</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="role-cb" value="technician" >
+                    <span>IE/SIE</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="role-cb" value="manager" >
+                    <span>M</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="role-cb" value="engineer" >
+                    <span>SM</span>
+                  </label>
+                  <label class="contact-dd-item">
+                    <input type="checkbox" class="role-cb" value="supervisor" >
+                    <span>GM</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col">
+            <label class="gnfc-modal-label">Select Contact :</label>
+
+            <div id="custom-contact-dropdown" class="relative" style="user-select: none;">
+              <div id="contact-dropdown-display" class="contact-dd-display gnfc-modal-input font-14px flex justify-between items-center cursor-pointer">
+                <span id="contact-dropdown-text" class="fw-600">-- Select Contact --</span>
+                <i class="ph-bold ph-caret-down"></i>
+              </div>
+              <div id="contact-dropdown-options" class="contact-dd-options absolute w-full mt-1 hidden custom-scrollbar-thin">
+                <div class="px-12px py-8px border-b sticky top-0 z-10" style="border-bottom-color: var(--app-border, #eeeeee); background-color: var(--gnfc-modal-body-bg, #ffffff);">
+                  <div class="relative">
+                    <input type="text" id="contact-search-input" class="gnfc-modal-input font-14px w-full px-10px py-6px" placeholder="Search or type email (Enter)..." style="height: 32px; padding-right: 28px;" autocomplete="off">
+                    <i id="clear-contact-search" class="ph-bold ph-x cursor-pointer absolute hidden color-red" style="right: 8px; top: 50%; transform: translateY(-50%); font-size: 14px;" title="Clear search"></i>
+                  </div>
+                </div>
+                <label class="contact-dd-item contact-dd-item-all">
+                  <input type="checkbox" id="contact-cb-all">
+                  <span>Select All</span>
+                </label>
+                <label class="contact-dd-item">
+                  <input type="checkbox" class="contact-cb" value="kayum.kadivar@gnfc.in">
+                  <span >Kayum Kadivar</span>
+                </label>
+                <label class="contact-dd-item">
+                  <input type="checkbox" class="contact-cb" value="admin@gnfc.in">
+                  <span>GNFC Admin</span>
+                </label>
+                <label class="contact-dd-item">
+                  <input type="checkbox" class="contact-cb" value="safety.dept@gnfc.in">
+                  <span>Safety Department</span>
+                </label>
+                <label class="contact-dd-item">
+                  <input type="checkbox" class="contact-cb" value="boiler.ops@gnfc.in">
+                  <span>Boiler Operations</span>
+                </label>
+                <label class="contact-dd-item">
+                  <input type="checkbox" class="contact-cb" value="inst.team@gnfc.in">
+                  <span>Instrumentation Team</span>
+                </label>
+                <label class="contact-dd-item">
+                  <input type="checkbox" class="contact-cb" value="maintenance.head@gnfc.in">
+                  <span>Maintenance Head</span>
+                </label>
+                <label class="contact-dd-item">
+                  <input type="checkbox" class="contact-cb" value="plant.manager@gnfc.in">
+                  <span>Plant Manager</span>
+                </label>
+              </div>
+            </div>
+            <p class="font-10px">* Selecting a contact will add it to the email list below</p>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex justify-between items-center">
+              <label class="gnfc-modal-label">Selected Emails :</label>
+              <i id="clear-emails-btn" class="ph-bold ph-x-circle color-red cursor-pointer font-18px" title="Clear Emails"></i>
+            </div>
+            <textarea id="email-search-input" placeholder="Selected emails will appear here..."
+              class="gnfc-modal-input font-14px uppercase resize-none custom-scrollbar-thin" style="letter-spacing: 0.02em; height: 80px;" readonly></textarea>
           </div>
 
           <div class="grid grid-cols-2 gap-20px">
-            <div class="flex flex-col gap-8px">
+            <div class="flex flex-col">
               <label class="gnfc-modal-label">Subject</label>
               <input id="email-subject" type="text" class="gnfc-modal-input" placeholder="Document Sharing">
             </div>
-            <div class="flex flex-col gap-8px">
+            <div class="flex flex-col">
               <label class="gnfc-modal-label">File to attach</label>
-              <select id="email-file-select" class="gnfc-modal-input font-14px"></select>
+              <input id="email-file-select" type="text" class="gnfc-modal-input font-14px text-muted" style="background-color: var(--card-bg); opacity: 0.7;" disabled>
             </div>
           </div>
 
-          <div class="flex items-center gap-6px">
-            <div class="flex items-center gap-12px">
+          <div class="flex items-center gap-10px">
+            <div class="flex items-center gap-6px">
               <i class="ph-bold ph-paperclip color-blue font-20px"></i>
               <label class="gnfc-modal-label m-0">Attachment Options</label>
             </div>
-            <label class="flex items-center justify-end gap-10px  fw-700 cursor-pointer color-blue">
+            <label class="flex items-center justify-end gap-6px fw-700 cursor-pointer color-blue">
               <input id="email-link-only" type="checkbox" class="gnfc-checkbox">
               <span>As a link only <span class="opacity-60 font-11px">(If file > 1 MB)</span></span>
             </label>
           </div>
 
-          <div class="flex flex-col gap-8px">
+          <div class="flex flex-col">
             <label class="gnfc-modal-label">Message / Comments</label>
             <textarea id="email-message" rows="5" class="gnfc-modal-input resize-none"
               placeholder="Provide context or instructions for the recipient..."></textarea>
@@ -452,8 +567,8 @@
         <div class="flex gap-16px">
           <button class="gnfc-modal-btn gnfc-modal-btn-secondary"
             onclick="$('#modal-send-email').removeClass('is-open')">Cancel</button>
-          <button id="btn-send-email-submit" class="gnfc-modal-btn gnfc-modal-btn-primary px-32px">
-            <i class="ph-bold ph-paper-plane-right"></i> Send
+          <button id="btn-send-email-submit" class="gnfc-modal-btn gnfc-modal-btn-primary">
+            Send
           </button>
         </div>
       </div>
@@ -1179,7 +1294,7 @@
         <div class="flex flex-col gap-16px">
 
           <!-- Move info rows -->
-          <div class="flex flex-col gap-8px">
+          <div class="flex flex-col">
             <div class="flex items-center gap-12px p-10px radius-4px bg-dark-subtle border-dark-border">
               <i class="ph-fill ph-folder text-amber-500 font-20px"></i>
               <div class="flex flex-col gap-2px flex-1">
@@ -1702,6 +1817,7 @@
               </td>
               <td class="user-table-cell text-center">
                 <div class="row-actions">
+                  ${item.type === 'Folder' ? `<i class="ph-bold ph-download-simple action-icon btn-download color-blue" title="Download Folder"></i>` : ''}
                   <i class="ph-bold ph-pencil-simple action-icon btn-rename color-primary" title="Rename Item"></i>
                   <i class="ph-bold ph-envelope-simple action-icon btn-email-row color-amber" title="Send via Email"></i>
                   <i class="ph-bold ph-scissors action-icon btn-cut color-secondary" title="Cut to Clipboard"></i>
@@ -1747,17 +1863,7 @@
     // ── Email Helpers ──
     function populateEmailFileSelect(selectedName) {
       const $sel = $('#email-file-select');
-      $sel.empty();
-      const files = $('#explorer-tbody tr[data-type="File"]');
-      if (!files.length) {
-        $sel.append('<option value="">No files in current folder</option>');
-        return;
-      }
-      files.each(function () {
-        const name = $(this).data('name');
-        const sel = (selectedName && name === selectedName) ? ' selected' : '';
-        $sel.append('<option value="' + escapeHtml(name) + '"' + sel + '>' + escapeHtml(name) + '</option>');
-      });
+      $sel.val(selectedName || 'No file selected');
     }
 
     function renderLogTable() {
@@ -1938,10 +2044,10 @@
     });
 
     $('#btn-send-email-submit').click(function () {
-      const email = $('#email-to-select').val();
+      const email = $('#email-search-input').val().trim();
       if (!email) {
-        $('#email-search-input').addClass('is-invalid-tag');
-        return Swal.fire({ icon: 'error', title: 'Recipent Required', text: 'Please select a valid email address.' });
+        $('#email-search-input').addClass('border-red');
+        return Swal.fire({ icon: 'error', title: 'Recipient Required', text: 'Please enter or select at least one valid email address.' });
       }
       $('#modal-send-email').removeClass('is-open');
       Swal.fire({ icon: 'success', title: 'Sent', text: 'Mail sent successfully. CC sent to sender email.' });
@@ -2052,8 +2158,7 @@
       });
     }
 
-    // Initialize Email Searchable Dropdown
-    initSearchableDropdown('#email-search-input', '#email-to-select');
+    // Initialize Email Searchable Dropdown - Removed because it conflicts with multiple comma-separated emails
 
     // ── Doc Log ──
     $(document).on('click', '.btn-doc-log', function (e) {
@@ -2468,6 +2573,282 @@
         showConfirmButton: false,
       });
     });
+
+    // Toggle dropdown UI
+    $('#contact-dropdown-display').click(function(e) {
+      e.stopPropagation();
+      $('#contact-dropdown-options').toggleClass('hidden');
+      $('#role-dropdown-options').addClass('hidden');
+      $('#plant-dropdown-options').addClass('hidden');
+    });
+
+    $('#role-dropdown-display').click(function(e) {
+      e.stopPropagation();
+      $('#role-dropdown-options').toggleClass('hidden');
+      $('#contact-dropdown-options').addClass('hidden');
+      $('#plant-dropdown-options').addClass('hidden');
+    });
+
+    $('#plant-dropdown-display').click(function(e) {
+      e.stopPropagation();
+      $('#plant-dropdown-options').toggleClass('hidden');
+      $('#contact-dropdown-options').addClass('hidden');
+      $('#role-dropdown-options').addClass('hidden');
+    });
+
+    $('#contact-dropdown-options, #role-dropdown-options, #plant-dropdown-options').click(function(e) {
+      e.stopPropagation();
+    });
+
+    $(document).click(function() {
+      $('#contact-dropdown-options').addClass('hidden');
+      $('#role-dropdown-options').addClass('hidden');
+      $('#plant-dropdown-options').addClass('hidden');
+    });
+
+    function updateDropdownDisabledState() {
+      const currentVal = $('#email-search-input').val().trim();
+      const emailArr = currentVal ? currentVal.split(',').map(e => e.trim().toLowerCase()).filter(e => e) : [];
+      
+      let count = 0;
+      let total = 0;
+      $('.contact-cb').each(function() {
+        total++;
+        const val = $(this).val().toLowerCase();
+        if(emailArr.includes(val)) {
+          $(this).prop('checked', true);
+          count++;
+        } else {
+          $(this).prop('checked', false);
+        }
+      });
+      
+      if(count > 0) {
+        $('#contact-dropdown-text').text(`${count} Contact(s) Selected`);
+      } else {
+        $('#contact-dropdown-text').text(`-- Select Contact --`);
+      }
+
+      $('#contact-cb-all').prop('checked', count === total && total > 0);
+    }
+
+    function toggleEmailInInput(email, add) {
+      if(!email) return;
+      const input = $('#email-search-input');
+      let currentVal = input.val().trim();
+      let emailArr = currentVal ? currentVal.split(',').map(e => e.trim()).filter(e => e) : [];
+      
+      const lowerEmail = email.toLowerCase();
+      const existsIndex = emailArr.findIndex(existing => existing.toLowerCase() === lowerEmail);
+      
+      if(add && existsIndex === -1) {
+        emailArr.push(email);
+      } else if (!add && existsIndex !== -1) {
+        emailArr.splice(existsIndex, 1);
+      }
+      
+      input.val(emailArr.join(', '));
+      updateDropdownDisabledState();
+    }
+
+    $('#contact-dropdown-options').on('change', '.contact-cb', function() {
+      const email = $(this).val();
+      const isChecked = $(this).is(':checked');
+      toggleEmailInInput(email, isChecked);
+    });
+
+    $('#contact-search-input').on('input', function() {
+      const searchTerm = $(this).val().toLowerCase();
+      
+      if (searchTerm.length > 0) {
+        $('#clear-contact-search').removeClass('hidden');
+      } else {
+        $('#clear-contact-search').addClass('hidden');
+      }
+
+      $('.contact-dd-item').not('.contact-dd-item-all').each(function() {
+        const itemText = $(this).find('span').text().toLowerCase();
+        const itemEmail = $(this).find('input').val().toLowerCase();
+        if (itemText.includes(searchTerm) || itemEmail.includes(searchTerm)) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    });
+
+    $('#clear-contact-search').click(function(e) {
+      e.stopPropagation();
+      $('#contact-search-input').val('').trigger('input');
+      $('#contact-search-input').focus();
+    });
+
+    $('#contact-search-input').on('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const val = $(this).val().trim();
+        if (val) {
+          let exists = false;
+          $('.contact-cb').each(function() {
+            if ($(this).val().toLowerCase() === val.toLowerCase()) {
+              exists = true;
+              if (!$(this).is(':checked')) {
+                $(this).prop('checked', true);
+                toggleEmailInInput(val, true);
+              }
+            }
+          });
+          
+          if (!exists) {
+            const newOption = `
+              <label class="contact-dd-item">
+                <input type="checkbox" class="contact-cb" value="${val}" checked>
+                <span>${val}</span>
+              </label>
+            `;
+            $('#contact-dropdown-options').append(newOption);
+            toggleEmailInInput(val, true);
+          }
+          
+          $(this).val('').trigger('input');
+        }
+      }
+    });
+
+    $('#contact-cb-all').change(function() {
+      const isChecked = $(this).is(':checked');
+      if (isChecked) {
+        let allEmails = [];
+        $('.contact-cb').each(function() {
+          allEmails.push($(this).val());
+        });
+        addEmailsToInput(allEmails);
+      } else {
+        let currentVal = $('#email-search-input').val().trim();
+        let emailArr = currentVal ? currentVal.split(',').map(e => e.trim()).filter(e => e) : [];
+        let dropdownEmailsLower = [];
+        $('.contact-cb').each(function() {
+          dropdownEmailsLower.push($(this).val().toLowerCase());
+        });
+        emailArr = emailArr.filter(e => !dropdownEmailsLower.includes(e.toLowerCase()));
+        $('#email-search-input').val(emailArr.join(', '));
+        updateDropdownDisabledState();
+      }
+    });
+
+    function addEmailsToInput(emails) {
+      if(!emails || emails.length === 0) return;
+      const input = $('#email-search-input');
+      let currentVal = input.val().trim();
+      let emailArr = currentVal ? currentVal.split(',').map(e => e.trim()).filter(e => e) : [];
+      
+      emails.forEach(email => {
+        if (email) {
+          const lowerEmail = email.toLowerCase();
+          const exists = emailArr.some(existing => existing.toLowerCase() === lowerEmail);
+          if (!exists) {
+            emailArr.push(email);
+          }
+        }
+      });
+      
+      input.val(emailArr.join(', '));
+      updateDropdownDisabledState();
+    }
+
+    $('#email-search-input').on('input', updateDropdownDisabledState);
+
+    const roleEmailMap = {
+      'operator': ['operator1@gnfc.in', 'operator2@gnfc.in'],
+      'technician': ['inst.team@gnfc.in'],
+      'manager': ['plant.manager@gnfc.in', 'maintenance.head@gnfc.in'],
+      'engineer': ['admin@gnfc.in'],
+      'supervisor': ['boiler.ops@gnfc.in']
+    };
+
+    function updateRoleDropdownText() {
+      let count = $('.role-cb:checked').length;
+      if (count > 0) {
+        $('#role-dropdown-text').text(`${count} Role(s) Selected`);
+      } else {
+        $('#role-dropdown-text').text(`-- Select Role --`);
+      }
+      let total = $('.role-cb').length;
+      $('#role-cb-all').prop('checked', count === total && total > 0);
+    }
+
+    function removeEmailsFromInput(emailsToRemove) {
+      if(!emailsToRemove || emailsToRemove.length === 0) return;
+      const input = $('#email-search-input');
+      let currentVal = input.val().trim();
+      let emailArr = currentVal ? currentVal.split(',').map(e => e.trim()).filter(e => e) : [];
+      
+      const removeSet = new Set(emailsToRemove.map(e => e.toLowerCase()));
+      emailArr = emailArr.filter(e => !removeSet.has(e.toLowerCase()));
+      
+      input.val(emailArr.join(', '));
+      updateDropdownDisabledState();
+    }
+
+    $('.role-cb').change(function() {
+      const role = $(this).val();
+      const isChecked = $(this).is(':checked');
+      const emails = roleEmailMap[role] || [];
+      
+      if (isChecked) {
+        addEmailsToInput(emails);
+      } else {
+        removeEmailsFromInput(emails);
+      }
+      updateRoleDropdownText();
+    });
+
+    $('#role-cb-all').change(function() {
+      const isChecked = $(this).is(':checked');
+      let allRoleEmails = [];
+      $('.role-cb').each(function() {
+        allRoleEmails = allRoleEmails.concat(roleEmailMap[$(this).val()] || []);
+        $(this).prop('checked', isChecked);
+      });
+      
+      if (isChecked) {
+        addEmailsToInput(allRoleEmails);
+      } else {
+        removeEmailsFromInput(allRoleEmails);
+      }
+      updateRoleDropdownText();
+    });
+
+    $('#clear-emails-btn').click(function() {
+      $('#email-search-input').val('');
+      $('.role-cb').prop('checked', false);
+      $('#role-cb-all').prop('checked', false);
+      updateRoleDropdownText();
+      $('.plant-cb').prop('checked', false);
+      $('#plant-cb-all').prop('checked', false);
+      updatePlantDropdownText();
+      updateDropdownDisabledState();
+    });
+
+    function updatePlantDropdownText() {
+      let count = $('.plant-cb:checked').length;
+      if (count > 0) {
+        $('#plant-dropdown-text').text(`${count} Plant(s) Selected`);
+      } else {
+        $('#plant-dropdown-text').text(`-- Select Plant --`);
+      }
+      let total = $('.plant-cb').length;
+      $('#plant-cb-all').prop('checked', count === total && total > 0);
+    }
+
+    $('.plant-cb').change(function() {
+      updatePlantDropdownText();
+    });
+
+    $('#plant-cb-all').change(function() {
+      const isChecked = $(this).is(':checked');
+      $('.plant-cb').prop('checked', isChecked);
+      updatePlantDropdownText();    });
 
   </script>
 

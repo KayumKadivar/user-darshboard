@@ -17,6 +17,7 @@ $(function () {
          <div class="admin-sidebar-logo">
            <img src="${basePath}assets/images/gnfc-sidebar-logo-short.png" alt="GNFC Logo" class="sidebar-logo-img">
            <span class="logo-text">GNFC IIMS</span>
+           <i class="ph-bold ph-x sidebar-close-btn cursor-pointer"></i>
         </div>
 
       <nav class="sidebar-nav">
@@ -249,3 +250,6 @@ $(function () {
     $tooltip.removeClass("show").addClass("hidden");
   });
 });
+
+
+
