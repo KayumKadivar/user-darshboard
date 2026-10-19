@@ -4,8 +4,9 @@ window.ThemeControl = (function () {
   const ThemeControl = {
     settings: {
       theme: localStorage.getItem("theme") || "dark",
-      fontSize: parseInt(localStorage.getItem("fontSize")) || 16,
+      fontSize: parseInt(localStorage.getItem("fontSize"), 10) || 16,
     },
+    defaultFontSize: 16,
     minFontSize: 14,
     maxFontSize: 24,
 
@@ -41,9 +42,15 @@ window.ThemeControl = (function () {
     },
 
     applyFontSize(size) {
+      size = parseInt(size, 10);
+      if (isNaN(size)) size = this.defaultFontSize;
+      if (size < this.minFontSize) size = this.minFontSize;
+      if (size > this.maxFontSize) size = this.maxFontSize;
+
       $html.css("font-size", size + "px");
       this.settings.fontSize = size;
       localStorage.setItem("fontSize", size);
+      $(window).trigger("fontSizeChanged", { fontSize: size });
     },
 
     increaseFontSize() {
@@ -58,6 +65,10 @@ window.ThemeControl = (function () {
       }
     },
 
+    resetFontSize() {
+      this.applyFontSize(this.defaultFontSize);
+    },
+
     attachEventListeners() {
       $(document).on("click", ".themeToggleBtn", () => {
         const nextTheme = this.settings.theme === "light" ? "dark" : "light";
@@ -70,6 +81,10 @@ window.ThemeControl = (function () {
 
       $(document).on("click", ".fontDecreaseBtn", () => {
         this.decreaseFontSize();
+      });
+
+      $(document).on("click", ".fontResetBtn, #btnResetFontSize, .btn-reset-font", () => {
+        this.resetFontSize();
       });
     },
   };

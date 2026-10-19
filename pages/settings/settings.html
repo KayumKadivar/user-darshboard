@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | GNFC IIMS</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../../css/phosphor.css">
+  <link rel="stylesheet" href="../../css/theme-vars.css">
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/pages/style.css">
+  <link rel="stylesheet" href="../../css/pages/settings.css">
+  <link rel="stylesheet" href="../../css/utilities.css">
+
+  <!-- Core Scripts -->
+  <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="../../js/theme-control.js"></script>
+  <script src="../../js/sidebar.js" defer></script>
+  <script src="../../js/header.js" defer></script>
+  <script src="../../js/vendor/sweetalert2.all.min.js"></script>
+
+  <script>
+    window.activePage = 'settings';
+  </script>
+</head>
+
+<body class="dashboard-body">
+
+  <div class="sidebar-container"></div>
+
+  <main class="main-wrapper">
+
+    <!-- Top Dynamic Header -->
+    <div id="header-container" data-title="System Settings" data-breadcrumb="Settings:active" data-back="../../dashboard.html"></div>
+
+    <div class="dashboard-content dashboard-scroll">
+
+      <div class="settings-page-wrapper">
+
+
+        <!-- ─── Main Settings Content ─── -->
+        <div class="settings-grid">
+
+          <!-- Card 1: Typography & Font Scaling -->
+          <div class="settings-card" id="typographySettingsCard">
+            <div class="settings-card-header">
+              <div>
+                <div class="settings-card-title">
+                  <i class="ph-bold ph-text-aa"></i>
+                  Typography & Font Scaling
+                </div>
+                <div class="settings-card-desc">
+                  Control proportional text scaling across all GNFC modules, data tables, logbook entries, and navigation bars.
+                </div>
+              </div>
+              <!-- Prominent Reset Font Size Button -->
+              <button type="button" class="btn-reset-font-primary btn-reset-font" id="btnResetFontSize" title="Restore default 16px typography">
+                <i class="ph-bold ph-arrow-counter-clockwise"></i>
+                <span>Reset Font Size (16px)</span>
+              </button>
+            </div>
+
+            <!-- Font Metric & Stepper Box -->
+            <div class="font-showcase-box">
+              <div class="font-metric-display">
+                <div class="font-current-badge">
+                  <span class="font-value-large" id="currentFontSizeLarge">16px</span>
+                  <span class="font-value-desc" id="fontSizeLabel">(Default 100%)</span>
+                </div>
+
+                <!-- Stepper Controls -->
+                <div class="font-stepper-row">
+                  <button type="button" class="font-step-btn" id="btnDecreaseFont" title="Decrease Font Size (1px)">
+                    <i class="ph-bold ph-minus"></i>
+                  </button>
+                  <button type="button" class="btn-reset-font-primary btn-reset-font" id="btnInlineResetFont" title="Reset to 16px default">
+                    <i class="ph-bold ph-arrow-counter-clockwise"></i>
+                    <span>Reset</span>
+                  </button>
+                  <button type="button" class="font-step-btn" id="btnIncreaseFont" title="Increase Font Size (1px)">
+                    <i class="ph-bold ph-plus"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Modern Precision Range Slider -->
+              <div class="font-slider-container">
+                <div class="slider-controls-row">
+                  <span class="slider-endpoint-badge" title="Minimum font size">
+                    <i class="ph-bold ph-text-aa font-12px"></i>
+                    <span>14px</span>
+                  </span>
+
+                  <div class="slider-track-wrapper">
+                    <input type="range" class="font-range-input" id="fontRangeSlider" min="14" max="24" step="1" value="16">
+
+                    <!-- Mathematically Aligned Ticks (14 to 24) -->
+                    <div class="slider-ticks-bar">
+                      <div class="slider-tick" style="left: 0%;" data-val="14" title="14px (Compact)">
+                        <span class="tick-dot"></span>
+                        <span class="tick-label">14px</span>
+                      </div>
+                      <div class="slider-tick default-tick" style="left: 20%;" data-val="16" title="16px (Default)">
+                        <span class="tick-dot"></span>
+                        <span class="tick-label">16px (Default)</span>
+                      </div>
+                      <div class="slider-tick" style="left: 40%;" data-val="18" title="18px">
+                        <span class="tick-dot"></span>
+                        <span class="tick-label">18px</span>
+                      </div>
+                      <div class="slider-tick" style="left: 60%;" data-val="20" title="20px">
+                        <span class="tick-dot"></span>
+                        <span class="tick-label">20px</span>
+                      </div>
+                      <div class="slider-tick" style="left: 80%;" data-val="22" title="22px">
+                        <span class="tick-dot"></span>
+                        <span class="tick-label">22px</span>
+                      </div>
+                      <div class="slider-tick" style="left: 100%;" data-val="24" title="24px (Maximum)">
+                        <span class="tick-dot"></span>
+                        <span class="tick-label">24px</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <span class="slider-endpoint-badge" title="Maximum font size">
+                    <span>24px</span>
+                    <i class="ph-bold ph-text-aa font-18px"></i>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Quick Presets -->
+              <div class="font-presets-row">
+                <span class="settings-label"><i class="ph ph-lightning"></i> Quick Presets:</span>
+                <button type="button" class="font-preset-chip" data-size="14">Compact (14px)</button>
+                <button type="button" class="font-preset-chip active" data-size="16">Standard (16px) - Default</button>
+                <button type="button" class="font-preset-chip" data-size="18">Medium (18px)</button>
+                <button type="button" class="font-preset-chip" data-size="20">Large (20px)</button>
+                <button type="button" class="font-preset-chip" data-size="22">Extra Large (22px)</button>
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- Card 2: Appearance & Theme Mode -->
+          <div class="settings-card">
+            <div class="settings-card-header">
+              <div>
+                <div class="settings-card-title">
+                  <i class="ph-bold ph-palette"></i>
+                  Appearance & Theme Mode
+                </div>
+                <div class="settings-card-desc">
+                  Choose between dark mode optimized for control rooms and clean light mode for daylight offices.
+                </div>
+              </div>
+            </div>
+
+            <div class="theme-selector-grid">
+              <!-- Dark Mode Option -->
+              <div class="theme-card-option" id="themeOptionDark" data-theme="dark">
+                <div class="theme-mockup theme-mockup-dark">
+                  <div class="mockup-top-bar"></div>
+                  <div class="mockup-content-row">
+                    <div class="mockup-sidebar-bar"></div>
+                    <div class="mockup-body-area">
+                      <div class="mockup-line"></div>
+                      <div class="mockup-line short"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="theme-option-info">
+                  <div class="theme-option-title">
+                    <i class="ph-bold ph-moon"></i>
+                    <span>Dark Theme (Default)</span>
+                  </div>
+                  <div class="theme-check-icon">
+                    <i class="ph-bold ph-check"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Light Mode Option -->
+              <div class="theme-card-option" id="themeOptionLight" data-theme="light">
+                <div class="theme-mockup theme-mockup-light">
+                  <div class="mockup-top-bar"></div>
+                  <div class="mockup-content-row">
+                    <div class="mockup-sidebar-bar"></div>
+                    <div class="mockup-body-area">
+                      <div class="mockup-line"></div>
+                      <div class="mockup-line short"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="theme-option-info">
+                  <div class="theme-option-title">
+                    <i class="ph-bold ph-sun"></i>
+                    <span>Light Theme</span>
+                  </div>
+                  <div class="theme-check-icon">
+                    <i class="ph-bold ph-check"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Page Logic Script -->
+  <script>
+    $(function () {
+      // ── 1. FONT SIZE CONTROLLER & RESET BUTTON LOGIC ──
+      const minFont = ThemeControl.minFontSize || 14;
+      const maxFont = ThemeControl.maxFontSize || 24;
+      const defaultFont = ThemeControl.defaultFontSize || 16;
+
+      function updateFontUI(size) {
+        size = parseInt(size, 10) || defaultFont;
+        
+        // Large readout & percentage description
+        $('#currentFontSizeLarge').text(size + 'px');
+        const percentage = Math.round((size / defaultFont) * 100);
+        let label = '(' + percentage + '%';
+        if (size === defaultFont) {
+          label += ' - Default)';
+        } else if (size < defaultFont) {
+          label += ' - Compact)';
+        } else {
+          label += ' - Enlarged)';
+        }
+        $('#fontSizeLabel').text(label);
+
+        // Update Slider value & dynamic progress fill
+        $('#fontRangeSlider').val(size);
+        const percent = ((size - minFont) / (maxFont - minFont)) * 100;
+        const isLight = $('html').attr('data-theme') === 'light';
+        const trackBg = isLight ? '#cbd5e1' : 'rgba(255, 255, 255, 0.15)';
+        $('#fontRangeSlider').css(
+          'background',
+          `linear-gradient(to right, var(--typo-blue) 0%, var(--typo-blue) ${percent}%, ${trackBg} ${percent}%, ${trackBg} 100%)`
+        );
+
+        // Update Active Chip
+        $('.font-preset-chip').removeClass('active');
+        $(`.font-preset-chip[data-size="${size}"]`).addClass('active');
+
+        // Update Active Tick Marker
+        $('.slider-tick').removeClass('active');
+        $(`.slider-tick[data-val="${size}"]`).addClass('active');
+      }
+
+      // Initial Sync
+      const currentSize = ThemeControl.settings ? ThemeControl.settings.fontSize : (parseInt(localStorage.getItem('fontSize'), 10) || 16);
+      updateFontUI(currentSize);
+
+      // Listen for global font changes
+      $(window).on('fontSizeChanged', function (e, data) {
+        updateFontUI(data.fontSize);
+      });
+
+      // Show toast helper
+      function showToast(message, icon) {
+        $('.settings-toast').remove();
+        const iconClass = icon || 'ph-check-circle';
+        const $toast = $(`
+          <div class="settings-toast">
+            <i class="ph-fill ${iconClass}"></i>
+            <span>${message}</span>
+          </div>
+        `);
+        $('body').append($toast);
+        setTimeout(() => {
+          $toast.fadeOut(300, function () { $(this).remove(); });
+        }, 2200);
+      }
+
+      // RESET FONT SIZE BUTTON HANDLERS
+      $(document).on('click', '.btn-reset-font, #btnResetFontSize, #btnInlineResetFont', function (e) {
+        e.preventDefault();
+        ThemeControl.resetFontSize();
+        showToast('Font size reset to default (16px)', 'ph-arrow-counter-clockwise');
+      });
+
+      // Increase & Decrease Font buttons
+      $('#btnIncreaseFont').on('click', function () {
+        ThemeControl.increaseFontSize();
+      });
+
+      $('#btnDecreaseFont').on('click', function () {
+        ThemeControl.decreaseFontSize();
+      });
+
+      // Slider input
+      $('#fontRangeSlider').on('input change', function () {
+        const val = parseInt($(this).val(), 10);
+        ThemeControl.applyFontSize(val);
+      });
+
+      // Preset Chips
+      $('.font-preset-chip').on('click', function () {
+        const size = parseInt($(this).data('size'), 10);
+        if (size) {
+          ThemeControl.applyFontSize(size);
+        }
+      });
+
+      // Slider Tick Markers Click
+      $('.slider-tick').on('click', function () {
+        const size = parseInt($(this).data('val'), 10);
+        if (size) {
+          ThemeControl.applyFontSize(size);
+        }
+      });
+
+      // ── 2. THEME SWITCHING ──
+      function updateThemeCards(theme) {
+        $('.theme-card-option').removeClass('active');
+        $(`.theme-card-option[data-theme="${theme}"]`).addClass('active');
+      }
+
+      const activeTheme = ThemeControl.settings ? ThemeControl.settings.theme : (localStorage.getItem('theme') || 'dark');
+      updateThemeCards(activeTheme);
+
+      $(window).on('themeChanged', function (e, data) {
+        updateThemeCards(data.theme);
+        updateFontUI(ThemeControl.settings ? ThemeControl.settings.fontSize : 16);
+      });
+
+      $('.theme-card-option').on('click', function () {
+        const selectedTheme = $(this).data('theme');
+        ThemeControl.setMode(selectedTheme);
+        showToast(`Theme switched to ${selectedTheme === 'dark' ? 'Dark' : 'Light'} Mode`, selectedTheme === 'dark' ? 'ph-moon' : 'ph-sun');
+      });
+
+
+
+    });
+  </script>
+
+</body>
+
+</html>

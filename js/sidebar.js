@@ -98,7 +98,7 @@ $(function () {
           <span class="sidebar-text">User Info</span>
         </a>
 
-        <a href="#" class="sidebar-link" data-id="settings">
+        <a href="${basePath}pages/settings/settings.html" class="sidebar-link" data-id="settings">
           <i class="ph ph-bold ph-gear"></i>
           <span class="sidebar-text">Settings</span>
         </a>

@@ -41,6 +41,10 @@ $(function () {
                 <i class="ph ph-text-aa font-12px"></i>
               </button>
               <div class="ui-divider-v"></div>
+              <button class="fontResetBtn ui-btn-icon" title="Reset Font Size (16px)">
+                <i class="ph ph-arrow-counter-clockwise font-14px"></i>
+              </button>
+              <div class="ui-divider-v"></div>
               <button class="fontIncreaseBtn ui-btn-icon" title="Increase Font">
                 <i class="ph ph-text-aa font-18px"></i>
               </button>

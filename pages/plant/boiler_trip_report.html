@@ -4,21 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alarm Trip Settings Report | GNFC</title>
+    <title>Alarm Trip Setting Report | GNFC</title>
+
+    <!-- Project CSS -->
     <link rel="stylesheet" href="../../css/phosphor.css">
     <link rel="stylesheet" href="../../css/theme-vars.css">
     <link rel="stylesheet" href="../../css/common.css">
     <link rel="stylesheet" href="../../css/pages/style.css">
     <link rel="stylesheet" href="../../css/utilities.css">
 
+    <!-- Vendor Scripts -->
     <script src="../../js/vendor/jquery-3.7.1.min.js"></script>
     <script src="../../js/theme-control.js"></script>
     <script src="../../js/sidebar.js" defer></script>
     <script src="../../js/header.js" defer></script>
-    <script src="../../js/vendor/sweetalert2.all.min.js"></script>
 
     <script>window.activePage = 'plants';</script>
-    
 </head>
 
 <body class="dashboard-body">
@@ -27,334 +28,218 @@
 
     <main class="main-wrapper">
 
-        <div id="header-container" data-title="Alarm Trip Settings Report" data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,Trip Report:active" data-back="boiler_dashboard.html"></div>
+        <div id="header-container" 
+             data-title="Alarm Trip Setting Report" 
+             data-breadcrumb="Plant:plant.html,Boiler:boiler_dashboard.html,Trip Report:active" 
+             data-back="boiler_dashboard.html">
+        </div>
 
         <div class="dashboard-content dashboard-scroll">
-            <div class="space-y-16px">
+            <section class="plant-table-card">
 
-                <!-- TRIP REPORT CARD -->
-                <div class="jbd-card">
-                    <div class="jbd-card-header">
-                        <div class="jbd-card-header-left">
-                            <div class="icon-theme-primary radius-8px flex items-center justify-center p-6px">
-                                <i class="ph-bold ph-list-dashes font-16px"></i>
-                            </div>
-                            <span class="jbd-card-header-title">Trip Settings List</span>
-                        </div>
-                        
-                        <div class="flex items-center gap-16px">
-                            <div class="flex items-center gap-8px">
-                                <span class="font-12px fw-700 color-secondary text-uppercase tracking-wider">Filter By Area</span>
-                                <div>
-                                    <select class="jbd-input jbd-select w-full font-12px fw-600">
-                                        <option>ALL AREA</option>
-                                        <option>BOILER-1</option>
-                                        <option>BOILER-2</option>
-                                        <option>BOILER-3</option>
-                                        <option>BOILER-4</option>
-                                    </select>
-                                    <i class="ph-bold ph-caret-down jbd-caret"></i>
-                                </div>
-                            </div>
-                        </div>
+                <div class="plant-table-card__header">
+                    <div class="plant-table-card__summary">
+                        <i class="ph-fill ph-table" aria-hidden="true"></i>
+                        <span class="view-title plant-table-card__title">Alarm Trip Setting Report</span>
+                        <span class="font-14px fw-700 ml-12px" style="color: #ef4444;">Area : ALL</span>
                     </div>
 
-                    <div class="user-table-wrapper radius-0px border-0">
-                        <table class="user-table">
-                            <thead>
-                                <tr>
-                                    <th style="width:120px;">Tag No</th>
-                                    <th style="min-width:180px;">Description</th>
-                                    <th style="width:140px;">Alarm L/LL</th>
-                                    <th style="width:140px;">Alarm H/HH</th>
-                                    <th style="width:180px;">Location</th>
-                                    <th style="min-width:250px;">Function</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Row 1 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1_88_01_02</td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td>
-                                        <div class="flex items-center gap-6px">
-                                            <span class="trip-badge icon-theme-warning">LL</span>
-                                            <span class="trip-val">—</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px">FROM ELECT</td>
-                                    <td>
-                                        <span class="trip-badge icon-theme-danger fw-800">TURBINE WILL TRIP</span>
-                                    </td>
-                                </tr>
+                    <div class="plant-table-card__actions">
+                        <span class="record-count" id="recordCount">18 Records</span>
 
-                                <!-- Row 2 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1_88_U_ELEC</td>
-                                    <td class="color-secondary font-14px">CLASS A SBU FROM ELECT</td>
-                                    <td>
-                                        <div class="flex items-center gap-6px">
-                                            <span class="trip-badge icon-theme-warning">LL</span>
-                                            <span class="trip-val">—</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px">FROM ELECT</td>
-                                    <td>
-                                        <span class="trip-badge icon-theme-danger fw-800">M/C WILL TRIP.</span>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 3 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1APH_ACCHORN</td>
-                                    <td class="color-secondary font-14px">AFH ACC HORN</td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td>
-                                        <div class="flex flex-col gap-6px">
-                                            <div class="flex items-center gap-8px">
-                                                <span class="font-12px fw-800 color-label w-32px">ON</span>
-                                                <span class="trip-val color-blue">2.0 SEC</span>
-                                            </div>
-                                            <div class="flex items-center gap-8px">
-                                                <span class="font-12px fw-800 color-label w-32px">OFF</span>
-                                                <span class="trip-val">5.0 MIN</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">FIRING FLOOR, SOUTH SIDE</td>
-                                    <td class="color-secondary font-14px lh-20px italic">
-                                        HORN WILL OPERATE FOR 2.0 SEC THEN REMAIN OFF FOR 3.0 SEC. THIS SEQUENCE OPERATES FIVE TIMES AFTER EVERY 5.0 MIN.
-                                    </td>
-                                </tr>
-
-                                <!-- Row 4 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1FT1601C</td>
-                                    <td class="color-secondary font-14px">MS FLOW</td>
-                                    <td>
-                                        <div class="flex items-center gap-6px">
-                                            <span class="trip-badge icon-theme-warning">LL</span>
-                                            <span class="trip-val">54.0 T/HR</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px lh-20px">
-                                        <span class="trip-badge icon-theme-danger-15 color-red mb-4px">TRIP ACTION</span><br>
-                                        AT LL FLOW, ALL MILLS WILL TRIP PROVIDED 3 OF 4 CBTV OR DBTV ARE NOT OPEN.
-                                    </td>
-                                </tr>
-
-                                <!-- Row 5 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1LT3_61</td>
-                                    <td class="color-secondary font-14px">TURBINE LO TANK LEVEL</td>
-                                    <td>
-                                        <div class="flex flex-col gap-4px">
-                                            <div class="flex items-center gap-6px">
-                                                <span class="trip-badge icon-theme-amber">L</span>
-                                                <span class="trip-val">65.0 %</span>
-                                            </div>
-                                            <span class="color-hint">(570 MM FROM TOP)</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="flex flex-col gap-4px">
-                                            <div class="flex items-center gap-6px">
-                                                <span class="trip-badge icon-theme-warning">H</span>
-                                                <span class="trip-val">73.0 %</span>
-                                            </div>
-                                            <span class="color-hint">(470 MM FROM TOP)</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">EJECTOR FLOOR.</td>
-                                    <td>
-                                        <span class="trip-badge icon-theme-danger-15 color-red">ALARM</span>
-                                        <span class="trip-badge icon-theme-danger-15 color-red ml-4px">ALARM</span>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 6 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1LV1303</td>
-                                    <td class="color-secondary font-14px">DEAERATOR LEVEL</td>
-                                    <td>
-                                        <div class="flex flex-col gap-6px">
-                                            <div class="flex items-center gap-8px">
-                                                <span class="trip-badge icon-theme-amber">L</span>
-                                                <span class="trip-val">-50 MM</span>
-                                            </div>
-                                            <div class="flex items-center gap-8px">
-                                                <span class="trip-badge icon-theme-warning">LL</span>
-                                                <span class="trip-val">-350 MM</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="flex items-center gap-8px">
-                                            <span class="trip-badge icon-theme-warning">H</span>
-                                            <span class="trip-val">+500 MM</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">DEAERATOR FLOOR</td>
-                                    <td class="color-secondary font-14px lh-20px">
-                                        AT NWL, BFP SHALL BE STARTED MANUALLY AND RECIRCULATION VALVES WILL BE CLOSED.<br>
-                                        <span class="color-red fw-700 mt-6px inline-block">AT LL LEVEL, BFP WILL TRIP.</span>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 7 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1BOILER1</td>
-                                    <td class="color-secondary font-14px">BOILER 1 TRIPPED</td>
-                                    <td>
-                                        <div class="flex items-center gap-8px">
-                                            <span class="trip-badge icon-theme-warning">LL</span>
-                                            <span class="trip-val">—</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px lh-20px">
-                                        (1) M/C WILL UNLOAD IF 2 OF 4 BOILER TRIP PROVIDED IT IS NOT OVERRIDE.<br>
-                                        (2) M/C WILL TRIP IF 3 OF 4 BOILER WILL TRIP PROVIDED IT IS NOT OVERRIDE.
-                                    </td>
-                                </tr>
-
-                                <!-- Row 8 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1BOILER2</td>
-                                    <td class="color-secondary font-14px">BOILER 2 TRIPPED</td>
-                                    <td>
-                                        <div class="flex items-center gap-8px">
-                                            <span class="trip-badge icon-theme-warning">LL</span>
-                                            <span class="trip-val">—</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px lh-20px">
-                                        (1) M/C WILL UNLOAD IF 2 OF 4 BOILER TRIP PROVIDED IT IS NOT OVERRIDE.<br>
-                                        (2) M/C WILL TRIP IF 3 OF 4 BOILER WILL TRIP PROVIDED IT IS NOT OVERRIDE.
-                                    </td>
-                                </tr>
-
-                                <!-- Row 9 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1BOILER3</td>
-                                    <td class="color-secondary font-14px">BOILER 3 TRIPPED</td>
-                                    <td>
-                                        <div class="flex items-center gap-8px">
-                                            <span class="trip-badge icon-theme-warning">LL</span>
-                                            <span class="trip-val">—</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px lh-20px">
-                                        (1) M/C WILL UNLOAD IF 2 OF 4 BOILER TRIP PROVIDED IT IS NOT OVERRIDE.<br>
-                                        (2) M/C WILL TRIP IF 3 OF 4 BOILER WILL TRIP PROVIDED IT IS NOT OVERRIDE.
-                                    </td>
-                                </tr>
-
-                                <!-- Row 10 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1BOILER4</td>
-                                    <td class="color-secondary font-14px">BOILER 4 TRIPPED</td>
-                                    <td>
-                                        <div class="flex items-center gap-8px">
-                                            <span class="trip-badge icon-theme-warning">LL</span>
-                                            <span class="trip-val">—</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px lh-20px">
-                                        (1) M/C WILL UNLOAD IF 2 OF 4 BOILER TRIP PROVIDED IT IS NOT OVERRIDE.<br>
-                                        (2) M/C WILL TRIP IF 3 OF 4 BOILER WILL TRIP PROVIDED IT IS NOT OVERRIDE.
-                                    </td>
-                                </tr>
-
-                                <!-- Row 11 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1LT1A</td>
-                                    <td class="color-secondary font-14px">OVERHEAD LO TANK LEVEL</td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td>
-                                        <div class="flex items-center gap-8px">
-                                            <span class="trip-badge icon-theme-danger">HH</span>
-                                            <span class="trip-val">90.0 %</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">DEAERATOR FLOOR</td>
-                                    <td class="color-secondary font-14px lh-20px">
-                                        AT HH LEVEL, TURBINE READY FOR START PERMIT WILL APPEAR.
-                                    </td>
-                                </tr>
-
-                                <!-- Row 12 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1LT4_1B</td>
-                                    <td class="color-secondary font-14px">HOTWELL LEVEL</td>
-                                    <td>
-                                        <div class="flex flex-col gap-6px">
-                                            <div class="flex items-center gap-8px">
-                                                <span class="trip-badge icon-theme-amber">L</span>
-                                                <span class="trip-val">30.0 %</span>
-                                            </div>
-                                            <div class="flex items-center gap-8px">
-                                                <span class="trip-badge icon-theme-warning">LL</span>
-                                                <span class="trip-val">10.0 %</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="flex flex-col gap-6px">
-                                            <div class="flex items-center gap-8px">
-                                                <span class="trip-badge icon-theme-warning">H</span>
-                                                <span class="trip-val">65.0 %</span>
-                                            </div>
-                                            <div class="flex items-center gap-8px">
-                                                <span class="trip-badge icon-theme-danger">HH</span>
-                                                <span class="trip-val">95.0 %</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">GND FLOOR-NEAR CONDENSER.</td>
-                                    <td class="color-secondary font-14px lh-20px">
-                                        2 OF 3 LOGIC WITH 1LT4_1A AND 1LT4_1C.<br>
-                                        (1) AT H LEVEL STAND BY CEP WILL START.<br>
-                                        <span class="color-red fw-700 mt-6px inline-block">(2) AT HH LEVEL, M/C WILL TRIP AFTER 5.0 SEC.</span><br>
-                                        <span class="mt-4px inline-block">2 OF 3 LOGIC WITH 1LT4_1A AND 1LT4_1C. AT LL LEVEL, RUNNING CEP WILL TRIP.</span>
-                                    </td>
-                                </tr>
-
-                                <!-- Row 13 -->
-                                <tr>
-                                    <td class="fw-700 color-blue font-14px">1CV430</td>
-                                    <td class="color-secondary font-14px">DM MAKE UP VLV</td>
-                                    <td>
-                                        <div class="flex items-center gap-8px">
-                                            <span class="trip-badge icon-theme-warning">L</span>
-                                            <span class="trip-val">—</span>
-                                        </div>
-                                    </td>
-                                    <td class="color-secondary font-14px">—</td>
-                                    <td class="color-secondary font-14px">DEA FLOOR</td>
-                                    <td class="color-secondary font-14px lh-20px">
-                                        AT L LEVEL OF DEA(1LT303), VALVE WILL OPEN 100% and AT NWL OF DEA(1LT303), VALVE WILL IN CONTROL MODE.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <label class="plant-search-field">
+                            <i class="ph ph-magnifying-glass fw-600" aria-hidden="true"></i>
+                            <input type="text" class="table-search fw-600" id="tableSearch" placeholder="Search by tags...">
+                        </label>
                     </div>
                 </div>
 
-            </div>
+                <div class="user-table-wrapper">
+                    <table class="user-table" id="alarmTripTable">
+                        <thead>
+                            <tr>
+                                <th class="user-table-center" style="width: 140px;">TAG_NO</th>
+                                <th class="user-table-left" style="min-width: 200px;">TAG DESCRIPTION</th>
+                                <th class="user-table-center" style="width: 130px;">ALARM L/LL</th>
+                                <th class="user-table-center" style="width: 230px;">ALARM H/HH</th>
+                                <th class="user-table-left" style="width: 200px;">LOCATION</th>
+                                <th class="user-table-left" style="min-width: 320px;">FUNCTION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alarmTripTableBody">
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1_88_01_02</td>
+                                <td class="user-table-secondary">08G1/G2 FROM ELECT</td>
+                                <td class="user-table-center user-table-secondary">LL:</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">FROM ELECT.</td>
+                                <td class="user-table-primary">TURBINE WILL TRIP.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1_88_U_ELEC</td>
+                                <td class="user-table-secondary">CLASS A 85U FROM ELECT</td>
+                                <td class="user-table-center user-table-secondary">LL:</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">FROM ELECT.</td>
+                                <td class="user-table-primary">M/C WILL TRIP.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1APH_ACCHORN</td>
+                                <td class="user-table-secondary">APH ACC HORN</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">ON TIME: 2.0 SEC, OFF TIME: 5.0 MIN</td>
+                                <td class="user-table-secondary">FIRING FLOOR, SOUTH SIDE</td>
+                                <td class="user-table-primary">HORN WILL OPERATE FOR 2.0 SEC THEN REMAIN OFF FOR 3.0 SEC. THIS SEQUENCE OPERATES FIVE TIMES AFTER EVERY 5.0 MIN.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1APHBOTTOM</td>
+                                <td class="user-table-secondary">APH BOTTOM ACOUSTIC HORN</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">ON TIME: 2.0 SEC, OFF TIME: 5.0 MIN</td>
+                                <td class="user-table-secondary">—</td>
+                                <td class="user-table-primary">HORN WILL OPERATE FOR 2.0 SEC THEN REMAIN OFF FOR 3.0 SEC. THIS SEQUENCE OPERATES FIVE TIMES AFTER EVERY 5.0 MIN.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1APHTOP</td>
+                                <td class="user-table-secondary">APH TOP ACOUSTIC HORN</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">ON TIME: 2.0 SEC, OFF TIME: 5.0 MIN</td>
+                                <td class="user-table-secondary">—</td>
+                                <td class="user-table-primary">HORN WILL OPERATE FOR 2.0 SEC THEN REMAIN OFF FOR 3.0 SEC. THIS SEQUENCE OPERATES FIVE TIMES AFTER EVERY 5.0 MIN.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1BANK_ACCHORN</td>
+                                <td class="user-table-secondary">BANK TUBE ACOUSTIC HORN</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">ON TIME: 12.0 SEC, OFF TIME: 6.0 MIN</td>
+                                <td class="user-table-secondary">3RD FLOOR/WEST SIDE</td>
+                                <td class="user-table-primary">HORN WILL OPERTE FOR 12.0 SEC AFTER EVERY 6.0 MIN.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1BOILER1</td>
+                                <td class="user-table-secondary">BOILER 1 TRIPPED</td>
+                                <td class="user-table-center user-table-secondary">LL:</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">—</td>
+                                <td class="user-table-primary">(1) M/C WILL UNLOAD IF 2 OF 4 BOILER TRIP PROVIDED IT IS NOT OVERRIDE. (2) M/C WILL TRIP IF 3 OF 4 BOILER WILL TRIP PROVIDED IT IS NOT OVERRIDE.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1BOILER2</td>
+                                <td class="user-table-secondary">BOILER 2 TRIPPED</td>
+                                <td class="user-table-center user-table-secondary">LL:</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">—</td>
+                                <td class="user-table-primary">(1) M/C WILL UNLOAD IF 2 OF 4 BOILER TRIP PROVIDED IT IS NOT OVERRIDE. (2) M/C WILL TRIP IF 3 OF 4 BOILER WILL TRIP PROVIDED IT IS NOT OVERRIDE.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1BOILER3</td>
+                                <td class="user-table-secondary">BOILER 3 TRIPPED</td>
+                                <td class="user-table-center user-table-secondary">LL:</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">—</td>
+                                <td class="user-table-primary">(1) M/C WILL UNLOAD IF 2 OF 4 BOILER TRIP PROVIDED IT IS NOT OVERRIDE. (2) M/C WILL TRIP IF 3 OF 4 BOILER WILL TRIP PROVIDED IT IS NOT OVERRIDE.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1BOILER4</td>
+                                <td class="user-table-secondary">BOILER 4 TRIPPED</td>
+                                <td class="user-table-center user-table-secondary">LL:</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">—</td>
+                                <td class="user-table-primary">(1) M/C WILL UNLOAD IF 2 OF 4 BOILER TRIP PROVIDED IT IS NOT OVERRIDE. (2) M/C WILL TRIP IF 3 OF 4 BOILER WILL TRIP PROVIDED IT IS NOT OVERRIDE.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1CDV227</td>
+                                <td class="user-table-secondary">EXH HOOD SPRAY ON</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-center user-table-secondary">HH:</td>
+                                <td class="user-table-secondary">ABOVE HOTWELL PLATEFORM.</td>
+                                <td class="user-table-primary">AT HH TEMP OF EXH HOOD TEMP(1TT5_11), VALVE WILL OPEN.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1CDV313</td>
+                                <td class="user-table-secondary">HPH 1 LOW LEVEL</td>
+                                <td class="user-table-center user-table-secondary">LL:</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">—</td>
+                                <td class="user-table-primary">AT LL PRESS OF 2ND EXT, CDV313(1LCV201-HPH1 TO DEA) WILL CLOSE.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1CDV326</td>
+                                <td class="user-table-secondary">HPH 2 TO HPH1 LEVEL</td>
+                                <td class="user-table-center user-table-secondary">LL:</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">HTR FLOOR.</td>
+                                <td class="user-table-primary">AT LL PRESS OF 2ND EXT, CDV326(1LCV203-HPH2 TO HPH1) WILL CLOSE.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1CDV430</td>
+                                <td class="user-table-secondary">DM MAKE UP VLV</td>
+                                <td class="user-table-center user-table-secondary">L:</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">DEA FLOOR.</td>
+                                <td class="user-table-primary">AT L LEVEL OF DEA(1LT303), VALVE WILL OPEN 100% and AT NWL OF DEA(1LT303), VALVE WILL IN CONTROL MODE.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1CWPA_01</td>
+                                <td class="user-table-secondary">CWPA WIND TEMP</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">H: 120.0 DEG C HH 130.0 DEG C</td>
+                                <td class="user-table-secondary">ON MOTOR.</td>
+                                <td class="user-table-primary">AT HH TEMP, RUNNING PUMP WILL TRIP.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1CWPA_02</td>
+                                <td class="user-table-secondary">CWPA WIND TEMP</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">H: 120.0 DEG C HH 130.0 DEG C</td>
+                                <td class="user-table-secondary">ON MOTOR.</td>
+                                <td class="user-table-primary">AT HH TEMP, RUNNING PUMP WILL TRIP.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1CWPA_03</td>
+                                <td class="user-table-secondary">CWPA WIND TEMP</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">H: 120.0 DEG C HH 130.0 DEG C</td>
+                                <td class="user-table-secondary">ON MOTOR.</td>
+                                <td class="user-table-primary">AT HH TEMP, RUNNING PUMP WILL TRIP.</td>
+                            </tr>
+                            <tr class="user-table-row">
+                                <td class="user-table-blue user-table-bold">1CWPA_04</td>
+                                <td class="user-table-secondary">CWPA WIND TEMP</td>
+                                <td class="user-table-center user-table-secondary">—</td>
+                                <td class="user-table-secondary">H: 120.0 DEG C HH 130.0 DEG C</td>
+                                <td class="user-table-secondary">ON MOTOR.</td>
+                                <td class="user-table-primary">AT HH TEMP, RUNNING PUMP WILL TRIP.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
         </div>
+
     </main>
+
+    <script>
+        $(document).ready(function () {
+            $('#tableSearch').on('input', function () {
+                const query = $(this).val().toLowerCase().trim();
+                let visibleCount = 0;
+
+                $('#alarmTripTableBody tr').each(function () {
+                    const rowText = $(this).text().toLowerCase();
+                    if (!query || rowText.indexOf(query) !== -1) {
+                        $(this).show();
+                        visibleCount++;
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                $('#recordCount').text(`${visibleCount} Records`);
+            });
+        });
+    </script>
 
 </body>
 
