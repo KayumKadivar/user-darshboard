@@ -21,7 +21,7 @@ function renderPlantNav(activePageId) {
             id: 'reports_group',
             label: 'Reports',
             icon: 'ph-chart-bar',
-            activeIds: ['job_types', 'instrument_types', 'remark_reports', 'tagwise_filter', 'monthly_report', 'datewise_report', 'namewise_report', 'name_date_report', 'allrounder_report'],
+            activeIds: ['job_types', 'instrument_types', 'remark_reports', 'tagwise_filter', 'monthly_report', 'datewise_report', 'namewise_report', 'name_date_report', 'All_report'],
             items: [
                 { id: 'job_types', label: 'Type Of Job', icon: 'ph-wrench', href: 'job_types.html' },
                 { id: 'instrument_types', label: 'Type Of Inst', icon: 'ph-cpu', href: 'instrument_types.html' },
@@ -31,7 +31,7 @@ function renderPlantNav(activePageId) {
                 { id: 'datewise_report', label: 'Date Wise Report', icon: 'ph-calendar-dots', href: 'datewise_report.html' },
                 { id: 'namewise_report', label: 'Name Wise Report', icon: 'ph-user-list', href: 'namewise_report.html' },
                 { id: 'name_date_report', label: 'Name & Tag Wise Report', icon: 'ph-users-three', href: 'name_date_report.html' },
-                { id: 'allrounder_report', label: 'Allrounder Report', icon: 'ph-list-magnifying-glass', href: 'allrounder_report.html' }
+                { id: 'All_report', label: 'All Report', icon: 'ph-list-magnifying-glass', href: 'All_report.html' }
             ]
         },
         {

@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Allrounder Log Report | GNFC</title>
-  <meta name="description" content="GNFC Allrounder Logbook Report">
+  <title>All Log Report | GNFC</title>
+  <meta name="description" content="GNFC All Logbook Report">
 
   <!-- CSS -->
   <link rel="stylesheet" href="../../css/phosphor.css">
@@ -25,7 +25,7 @@
 
   <script>
     window.activeSidebar = 'technician_logbook';
-    window.activePage = 'allrounder_report';
+    window.activePage = 'All_report';
   </script>
 </head>
 
@@ -42,7 +42,9 @@
   <main class="main-wrapper">
 
     <!-- Header -->
-    <div id="header-container" data-title="Allrounder Report" data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,Allrounder:active" data-back="plant_detail.html"></div>
+    <div id="header-container" data-title="All Report"
+      data-breadcrumb="Logbook:technicianlogbook.html,Plant Detail:plant_detail.html,All:active"
+      data-back="plant_detail.html"></div>
 
     <!-- Page Content -->
     <section class="jt-page-content gap-16px">
@@ -52,16 +54,11 @@
 
       <!-- ── FILTER CARD ── -->
       <div class="jt-filter-card">
-        <div class="jt-filter-header">
-          <h3 class="jt-filter-title">
-            <i class="ph-bold ph-funnel"></i>
-            SEARCH CRITERIA
-          </h3>
-        </div>
+
         <div class="jt-filter-body" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
           <!-- Start Date -->
           <div>
-            <label class="gnfc-modal-label">Start Date *</label>
+            <label class="gnfc-modal-label">Start Date</label>
             <div class="jt-input-wrap">
               <input type="date" id="startDateFilter" class="gnfc-modal-input">
             </div>
@@ -69,7 +66,7 @@
 
           <!-- End Date -->
           <div>
-            <label class="gnfc-modal-label">End Date *</label>
+            <label class="gnfc-modal-label">End Date</label>
             <div class="jt-input-wrap">
               <input type="date" id="endDateFilter" class="gnfc-modal-input">
             </div>
@@ -149,12 +146,9 @@
             </div>
           </div>
 
-        </div>
-        <div class="jt-filter-body" style="border-top: 1px solid var(--border-color); padding-top: 16px;">
-            <!-- Actions -->
-          <div class="jt-filter-btn" style="margin-left: auto;">
+          <div class="jt-filter-btn">
             <button onclick="generateReport(true)" class="jt-btn-primary">
-              <i class="ph-bold ph-lightning"></i> APPLY FILTER
+              APPLY
             </button>
             <button onclick="resetReport()" class="jt-btn-reset">
               Reset
@@ -165,19 +159,6 @@
 
       <!-- ── REPORT CARD ── -->
       <div class="jt-table-card" style="display: none;">
-
-        <div class="jt-report-header">
-          <div class="jt-report-title">
-            <i class="ph-fill ph-list-magnifying-glass"></i>
-            <div class="jt-title-stack">
-              <h3 class="jt-main-title">Allrounder Log Book Report</h3>
-              <p class="font-12px fw-500">
-                Period: <span id="dateDisplay"></span>
-              </p>
-            </div>
-          </div>
-        </div>
-
         <div class="user-table-wrapper">
           <table class="user-table min-w-1440px">
             <thead>
@@ -359,24 +340,26 @@
           const start = $('#startDateFilter').val();
           const end = $('#endDateFilter').val();
 
-          if (!start || !end) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Dates Required',
-              text: 'Please select both start and end dates to generate the report.',
-              confirmButtonColor: '#3b82f6',
-            });
-            return;
-          }
-
           // Format for display (DD/MM/YYYY)
           const formatDate = (dateStr) => {
+            if (!dateStr) return '';
             const d = new Date(dateStr);
-            return d.toLocaleDateString('en-GB');
+            return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-GB');
           };
 
-          $('#dateDisplay').text(`${formatDate(start)} to ${formatDate(end)}`);
-          $('#groupDateDisplay').text(formatDate(start));
+          if (start && end) {
+            $('#dateDisplay').text(`${formatDate(start)} to ${formatDate(end)}`);
+            $('#groupDateDisplay').text(formatDate(start));
+          } else if (start) {
+            $('#dateDisplay').text(`From ${formatDate(start)}`);
+            $('#groupDateDisplay').text(formatDate(start));
+          } else if (end) {
+            $('#dateDisplay').text(`Up to ${formatDate(end)}`);
+            $('#groupDateDisplay').text(formatDate(end));
+          } else {
+            $('#dateDisplay').text('All Records');
+            $('#groupDateDisplay').text('All Dates');
+          }
 
           // Show table with smooth fade
           $('.jt-table-card').stop().hide().fadeIn(400);
@@ -400,10 +383,10 @@
           try { $input[0].showPicker(); } catch (e) { }
         }
       });
-      
+
       // Auto-trigger if dates are already present (e.g. on back navigation)
       if ($('#startDateFilter').val() && $('#endDateFilter').val()) {
-          generateReport();
+        generateReport();
       }
     });
   </script>
